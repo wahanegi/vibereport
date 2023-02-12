@@ -50,3 +50,10 @@ storage/*
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+/config/credentials/production.key
+/public/assets
+/app/assets/builds/*
+!/app/assets/builds/.keep
+/config/master.key
+*.keep
