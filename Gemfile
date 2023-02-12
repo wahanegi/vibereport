@@ -50,6 +50,8 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+gem 'rubocop-rails', require: false
+gem 'git-smart', '~> 0.1.11'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -68,6 +70,12 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  
+  # configuration not added  - gem 'letter_opener_web'
+  gem 'letter_opener_web', '~> 2.0'
+  
+  gem 'fix-db-schema-conflicts', '~> 3.1'
+  gem 'annotate'
 end
 
 group :test do
