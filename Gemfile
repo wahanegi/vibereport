@@ -1,66 +1,47 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby '3.1.2'
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4", ">= 7.0.4.2"
-
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
-
-# Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
-
-# Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
-
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
-
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
-
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails"
-
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
-
-# Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-
-# Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
-
-# Use Sass to process CSS
-# gem "sassc-rails"
-
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem 'bootsnap', require: false                 # Reduces boot times through caching; required in config/boot.rb
+gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'  # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+# gem 'image_processing', '~> 1.2'             # Use Active Storage, generating image
+gem 'jbuilder', '~> 2.11', '>= 2.11.5'         # Build JSON APIs with ease [https://github.com/rails/jbuilder]
+gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'   # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+# gem 'kredis'                                 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
+gem 'pg', '~> 1.1'                             # Postgres gem
+gem 'puma', '~> 5.0'                           # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
+gem 'rails', '~> 7.0.4', '>= 7.0.4.2'          # Ruby on Rails is a full-stack web framework.
+gem 'redis', '~> 4.0'                          # A Ruby client that tries to match Redis' API one-to-one
+# gem 'sassc-rails'                            # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
+gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'    # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'     # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'turbo-rails', '~> 1.3', '>= 1.3.3'        # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', platforms: %i[mri mingw x64_mingw] # Debugging functionality for Ruby.
+  gem 'factory_bot_rails'                         # Test data generator -- see spec/support/factory_helper.rb
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main' # Easy way to add fake data: names, email addresses, etc.
+  gem 'rspec-rails'                               # rspec-rails is a testing framework for Rails 5+.
 end
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
-
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem 'annotate'                      # Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the database schema.
+  gem 'fix-db-schema-conflicts'       # Ensures consistent output of db/schema.rb despite local differences in the database
+  gem 'git-smart'                     # Installs some additional 'smart' git commands, like `git smart-pull`.
+  gem 'letter_opener_web'             # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
+  gem 'rubocop-rails', require: false # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
+  gem 'web-console'                   # Access an IRB console on exceptions page/console
 end
 
+group :test do
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'capybara'                      # Capybara is an integration testing tool for rack based web applications. It simulates how a user would interact with a website
+  gem 'rails-controller-testing'      # Extracting `assigns` and `assert_template` from ActionDispatch.
+  gem 'selenium-webdriver'            # It aims to mimic the behaviour of a real user as it interacts with the application's HTML. It's primarily intended for web application testing, but any web-based task can automated.
+  gem 'shoulda-callback-matchers'     # Matchers to test before, after and around hooks
+  gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
+  gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
+end
