@@ -296,23 +296,23 @@ DEPENDENCIES
   capybara
   cssbundling-rails
   debug
-  factory_bot_rails (~> 6.2)
+  factory_bot_rails
   faker!
-  fix-db-schema-conflicts (~> 3.1)
-  git-smart (~> 0.1.11)
+  fix-db-schema-conflicts
+  git-smart
   jbuilder
   jsbundling-rails
-  letter_opener_web (~> 2.0)
+  letter_opener_web
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
-  rails-controller-testing (~> 1.0, >= 1.0.5)
+  rails-controller-testing
   redis (~> 4.0)
-  rspec-rails (~> 6.0, >= 6.0.1)
+  rspec-rails
   rubocop-rails
   selenium-webdriver
-  shoulda-callback-matchers (~> 1.1, >= 1.1.4)
-  shoulda-matchers (~> 5.3)
+  shoulda-callback-matchers
+  shoulda-matchers
   sprockets-rails
   stimulus-rails
   turbo-rails
