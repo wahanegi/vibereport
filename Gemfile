@@ -5,6 +5,7 @@ ruby '3.1.2'
 
 gem 'bootsnap', require: false                 # Reduces boot times through caching; required in config/boot.rb
 gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'  # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem "devise", "~> 4.8"                         # Flexible authentication solution for Rails with Warden
 # gem 'image_processing', '~> 1.2'             # Use Active Storage, generating image
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'         # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'   # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
