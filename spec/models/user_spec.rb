@@ -26,14 +26,20 @@ RSpec.describe User, type: :model do
 
   context 'Validations' do
     subject { FactoryBot.build(:user) }
+
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:password) }
-
-    it 'fails from 2 to 5 characters' do
+    it { is_expected.to validate_presence_of(:first_name) }
+    it { is_expected.to validate_presence_of(:last_name) }
+    it 'fails with one password character' do
+      user.password = 'a'
+      expect(user).to_not be_valid
+    end
+    it 'password fails with number of characters from 2 to 5' do
       user.password = Faker::Internet.password(min_length: 2, max_length: 5)
       expect(user).to_not be_valid
     end
-    it 'passes more then 6 characters' do
+    it 'password passes more then 6 characters' do
       user.password = Faker::Internet.password(min_length: 6, max_length: 128)
       expect(user.valid?).to be_truthy
     end
@@ -42,11 +48,27 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to be_truthy
     end
     it 'is not valid email' do
-      user.email = "qwerty"
+      user.email = 'qwerty'
       expect(user.valid?).to be_falsey
     end
     it 'is invalid if the email is not unique' do
       User.create(email: user.email).invalid?
+    end
+    it 'first_name fails with more then 15 characters' do
+      user.first_name = Faker::Internet.name[16..40]
+      expect(user).to_not be_valid
+    end
+    it 'last_name fails with more then 15 characters' do
+      user.last_name =  Faker::Internet.name[16..40]
+      expect(user).to_not be_valid
+    end
+    it 'first_name passes for characters from 1 to 15' do
+      user.first_name =  Faker::Internet.name[1..15]
+      expect(user.valid?).to be_truthy
+    end
+    it 'last_name passes for characters from 1 to 15' do
+      user.last_name =  Faker::Internet.name[1..15]
+      expect(user.valid?).to be_truthy
     end
   end
 end
