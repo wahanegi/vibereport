@@ -10,6 +10,6 @@
 #
 class Emotion < ApplicationRecord
     enum category: [:negative, :neutral, :positive]
-    validates :word, presence: true, length: { in: 2..25 }, uniqueness: {case_sensitive: false}
+    validates :word, presence: true, length: { in: 2..15 }, uniqueness: {case_sensitive: false}
     validates :category, inclusion: { in: Emotion::categories }
 end
