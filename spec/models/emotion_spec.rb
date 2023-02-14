@@ -11,12 +11,14 @@
 require 'rails_helper'
 
 RSpec.describe Emotion, type: :model do
+  let!(:emotion) { create :emotion }
+
   describe 'Relationships' do
   end
 
   describe 'Validations' do
     it { is_expected.to validate_presence_of :word }
-    it { is_expected.to validate_length_of(:word).is_at_most(25) }
+    it { is_expected.to validate_length_of(:word).is_at_least(2).is_at_most(25) }
     it { is_expected.to define_enum_for(:category).with_values(negative: 0, neutral: 1, positive: 2) }
   end
 end
