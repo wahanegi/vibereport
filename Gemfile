@@ -42,6 +42,7 @@ group :test do
   gem 'capybara'                      # Capybara is an integration testing tool for rack based web applications. It simulates how a user would interact with a website
   gem 'rails-controller-testing'      # Extracting `assigns` and `assert_template` from ActionDispatch.
   gem 'selenium-webdriver'            # It aims to mimic the behaviour of a real user as it interacts with the application's HTML. It's primarily intended for web application testing, but any web-based task can automated.
+  gem "simplecov", require: false     # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'shoulda-callback-matchers'     # Matchers to test before, after and around hooks
   gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
