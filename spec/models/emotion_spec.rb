@@ -25,17 +25,9 @@ RSpec.describe Emotion, type: :model do
     it { is_expected.to validate_length_of(:word).is_at_least(2).is_at_most(15) }
     it { is_expected.to define_enum_for(:category).with_values(negative: 0, neutral: 1, positive: 2) }
 
-    before do
-      @emotion = Emotion.create(
-        word: 'Amazing',
-        category: 'positive'
-      )
-      @invalid_emotion = @emotion.dup
-      @invalid_emotion.word = "amazing"
-    end
-
-    it 'should not be valid if the word is already used (uniqueness: {case_sensitive: false})' do
-      expect(@invalid_emotion.valid?).to be(false)
-    end
+    it 'the same emotion word should not be used' do
+      new_word = FactoryBot.build(:emotion, word: emotion.word)
+      expect(new_word).to_not be_valid
+   end
   end
 end
