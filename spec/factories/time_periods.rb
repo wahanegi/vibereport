@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :time_period do
-    start_date { Date.current - 14.days}
-    end_date { Date.current - 13.day }
+    sequence(:start_date) { |n| Date.current + n.days }
+    sequence(:end_date) { |n| Date.current + n.days + 6.day }
   end
 end

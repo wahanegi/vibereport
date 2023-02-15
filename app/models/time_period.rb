@@ -12,20 +12,15 @@ class TimePeriod < ApplicationRecord
 
   validates :end_date, :start_date, presence: true
   validates :end_date, comparison: { greater_than: :start_date }
-  validate :start_date_validation
 
   def self.create_time_period
+    return if current_time_period.present?
+
     start_date = Date.current.beginning_of_week(:sunday)
     end_date = start_date + 6.days
     TimePeriod.create(start_date: start_date, end_date: end_date)
   end
-
-  private
-
-  def start_date_validation
-    return true if TimePeriod.all.blank?
-    return false if start_date.blank?
-
-    errors.add(:time_period, 'invalid start_date') if start_date < TimePeriod.all.order(:end_date).last&.end_date
+  def self.current_time_period
+    TimePeriod.find_by(start_date: Date.current.., end_date: ..Date.current + 6.days)
   end
 end
