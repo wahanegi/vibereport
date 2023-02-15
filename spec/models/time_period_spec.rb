@@ -13,6 +13,13 @@ require 'rails_helper'
 RSpec.describe TimePeriod, type: :model do
   let(:time_period) { create :time_period }
 
+  context 'Create multiple factories' do
+    it 'multiple factories being instantiated works' do
+      expect(create :time_period).to be_valid
+      expect(create :time_period).to be_valid
+    end
+  end
+
   context 'Validations' do
     subject { FactoryBot.create(:time_period) }
     it { is_expected.to validate_presence_of(:start_date) }
