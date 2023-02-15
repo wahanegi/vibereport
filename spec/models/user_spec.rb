@@ -24,8 +24,12 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let!(:user) { create :user }
 
+  it 'factory works' do
+    expect(user).to be_valid
+  end
+
   context 'Validations' do
-    subject { FactoryBot.build(:user) }
+    subject { FactoryBot.create(:user) }
 
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:password) }
@@ -44,7 +48,6 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to be_truthy
     end
     it 'is valid email' do
-      user.email = Faker::Internet.email
       expect(user.valid?).to be_truthy
     end
     it 'is not valid email' do
@@ -52,7 +55,7 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to be_falsey
     end
     it 'is invalid if the email is not unique' do
-      User.create(email: user.email).invalid?
+      expect(FactoryBot.build(:user, email: user.email)).to_not be_valid
     end
     it 'first_name fails with more then 15 characters' do
       user.first_name = Faker::Internet.name[16..40]
@@ -64,11 +67,11 @@ RSpec.describe User, type: :model do
     end
     it 'first_name passes for characters from 1 to 15' do
       user.first_name =  Faker::Internet.name[1..15]
-      expect(user.valid?).to be_truthy
+      expect(user).to be_valid
     end
     it 'last_name passes for characters from 1 to 15' do
       user.last_name =  Faker::Internet.name[1..15]
-      expect(user.valid?).to be_truthy
+      expect(user).to be_valid
     end
   end
 end
