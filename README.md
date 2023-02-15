@@ -2,6 +2,8 @@
 
 ### Introduction
 
+Vibe Report is a free weekly check-in and employee recognition tool that is easily customizable, providing an engaging, user-friendly experience that your team will be thankful for. Check-in, elicit feedback, and retain your team with actionable insights. Allow your team members to share, express themselves creatively, and recognize each other no matter where they are for a thriving, collaborative, and supportive culture.
+
 The Vibe Report App is built on:
 * Ruby 3.1.2
 * Rails 7.0.4
@@ -44,8 +46,7 @@ The Vibe Report App is built on:
 20. Install the new Heroku CLI: `$ brew tap heroku/brew && brew install heroku`.
 21. Log into your Heroku account: `$ heroku login`
 22. Should be ready to roll: `$ rails s`
-23. Open a new tab in terminal and start redis: `$ redis-server`
-24. In Rubymine it's necessary to enable appropriate version of Javascript to make sure correct syntax highlighting.
+23. In Rubymine it's necessary to enable appropriate version of Javascript to make sure correct syntax highlighting.
     `Rubymine` -> `Preferences` -> `Languages & Frameworks` -> `Javascript`: Then set `Javascript language version` to "ECMA Script 6"
 
 
