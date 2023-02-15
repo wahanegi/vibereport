@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory (:emotion) do
-    word              { Faker::Lorem.characters(number: (rand 2..15)) }
+    word              { Faker::Emotion.unique.adjective.capitalize }
     category          { [:negative, :neutral, :positive].sample }
   end
 end
