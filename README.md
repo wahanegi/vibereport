@@ -18,6 +18,7 @@ The Vibe Report App is built on:
 
 [Code Submissions and Review](#code-submissions-and-reviews)
 
+[License](#license)
 
 
 ---
