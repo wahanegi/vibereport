@@ -28,6 +28,17 @@ RSpec.describe Emotion, type: :model do
     it 'the same emotion word should not be used' do
       new_word = FactoryBot.build(:emotion, word: emotion.word)
       expect(new_word).to_not be_valid
-   end
+    end
+
+    it "should lowercase words" do
+      emotion = Emotion.new(word: "Enthusiastic")
+      emotion.save!
+      expect(emotion.word).to include("enthusiastic")
+    end
+
+    it "the capitalized emotion word should not be used" do
+      new_word = FactoryBot.build(:emotion, word: emotion.word.upcase!)
+      expect(new_word).to_not be_valid
+    end
   end
 end
