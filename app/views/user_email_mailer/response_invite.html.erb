@@ -241,22 +241,22 @@
       <td>
         <!--WHEN ALL EMOTION WILL BE SAVE IN LOWER CASE NEED TO DELETE .downcase-->
         <button class="positive" style="<%= style_html_element(@positive_emotions[index]) %>">
-          <%= "#{@positive_emotions[index].word.downcase}" %>
+          <%= "#{@positive_emotions[index].word}" %>
         </button>
         <button class="positive"  style="<%= style_html_element(@positive_emotions[index+1]) %>">
-          <%= "#{@positive_emotions[index+1].word.downcase}" %>
+          <%= "#{@positive_emotions[index+1].word}" %>
         </button>
         <button class="neutral"  style="<%= style_html_element(@neutral_emotions[index]) %>">
-          <%= "#{@neutral_emotions[index].word.downcase}" %>
+          <%= "#{@neutral_emotions[index].word}" %>
         </button>
         <button class="neutral" style="<%= style_html_element(@neutral_emotions[index+1]) %>">
-          <%= "#{@neutral_emotions[index+1].word.downcase}" %>
+          <%= "#{@neutral_emotions[index+1].word}" %>
         </button>
         <button class="negative" style="<%= style_html_element(@negative_emotions[index]) %>">
-          <%= "#{@negative_emotions[index].word.downcase}" %>
+          <%= "#{@negative_emotions[index].word}" %>
         </button>
         <button class="negative" style="<%= style_html_element(@negative_emotions[index+1]) %>">
-          <%= "#{@negative_emotions[index+1].word.downcase}" %>
+          <%= "#{@negative_emotions[index+1].word}" %>
         </button>
       </td>
     </tr>
