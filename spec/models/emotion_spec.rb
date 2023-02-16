@@ -29,10 +29,14 @@ RSpec.describe Emotion, type: :model do
       new_word = FactoryBot.build(:emotion, word: emotion.word)
       expect(new_word).to_not be_valid
     end
-
-    it "the capitalized emotion word should not be used" do
-      new_word = FactoryBot.build(:emotion, word: emotion.word.upcase!)
-      expect(new_word).to_not be_valid
-    end
   end
+
+  describe 'Before actions' do
+    it 'during creates and saves it downcases the emotion.word' do
+      feeling = create(:emotion, word: 'HAPPY')
+      expect(feeling.reload.word).to eq('happy')
+      feeling.update(word: 'Enthusiastic')
+      expect(feeling.reload.word).to eq('enthusiastic')
+    end
+  end  
 end
