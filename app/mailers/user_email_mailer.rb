@@ -1,23 +1,29 @@
+# frozen_string_literal: true
 
+# Generate email letter CI-32
 class UserEmailMailer < ApplicationMailer
   default from: "do_not_reply@#{ENV.fetch('EMAIL_DOMAIN')}"
-  NUMBER_ELEMENTS = 12
+  NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 
+  # Create email letter and send to the email address of user
+  # Variable user is object with obligatory fields: email & first_name
+  # Variable time_period  is a hash object like:
+  #   # {start_date: "YYYY-MM-DD", end_date: "YYYY-MM-DD"}
   def response_invite(user, time_period)
-     @current_user = user
-     @current_time_period = "#{two_digits(time_period.start_date.day)}-#{two_digits(time_period.end_date.day)}"
-     @current_time_period += " #{time_period.end_date.strftime('%b')}"
-     @positive_emotions = Emotion.positive.sample(NUMBER_ELEMENTS)
-     @neutral_emotions = Emotion.neutral.sample(NUMBER_ELEMENTS)
-     @negative_emotions = Emotion.negative.sample(NUMBER_ELEMENTS)
-     # @negative_emotions[6].word = "misunderstooood"
-     mail(to: user.email, subject: "Hey #{@current_user.first_name}, how was your week?")
+    @user = user
+    @view_calendar_days = range_format(time_period)
+    @positive_emotions = Emotion.positive.sample(NUMBER_OF_ELEMENTS)
+    @neutral_emotions = Emotion.neutral.sample(NUMBER_OF_ELEMENTS)
+    @negative_emotions = Emotion.negative.sample(NUMBER_OF_ELEMENTS)
+    mail(to: user.email, subject: "Hey #{@user.first_name}, how was your week?")
   end
 
-    private
+  private
 
-  # Output two digits in the day of the calendar
-  def two_digits(value_of_day)
-    value_of_day.to_s.length == 1 ? "0#{value_of_day}" : value_of_day.to_s
+  # Output days in the string format like "01-06 Jan"
+  # Variable date is a hash object like:
+  # {start_date: "YYYY-MM-DD", end_date: "YYYY-MM-DD"}
+  def range_format(date)
+    "#{date.start_date.strftime('%d')}-#{date.end_date.strftime('%d')} #{date.end_date.strftime('%b')}"
   end
 end

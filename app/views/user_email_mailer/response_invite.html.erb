@@ -114,8 +114,6 @@
           color: rgba(0, 0, 0, 0.7);
       }
       .question {
-          /*font-family: Josefin Sans, serif;*/
-          /*font-style: normal;*/
           margin:0 auto;
           font-weight: 700;
           font-size: 48px;
@@ -212,6 +210,17 @@
           position: relative;
           top: 54px;
       }
+      .unsubscribe a{
+          width: 274px;
+          height: 19px;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 19px;
+          text-decoration-line: underline;
+          color: #4D4D4D;
+          position: relative;
+          top: 39px;
+      }
   </style>
 
 </head>
@@ -226,38 +235,32 @@
   <div class="left-div"><div class="part"></div></div>
   <div class="right-div"><div class="part"></div></div>
   <div class="top-div"></div>
-  <div class="time"><%= "#{@current_time_period}" %></div>
+  <div class="time"><%= "#{@view_calendar_days}" %></div>
 </div>
 <br/>
 <div class="question">Which word best describes work this week?</div>
 <table>
-  <% def style_html_element(item) %>
-    <%  width = item.word.length > 11 ? (item.word.length*11) : 127 %>
-    <% margin = item.word.length > 11 ? (25-(item.word.length*11-127)/2) : 25  %>
-    <% "width: #{width}px; margin: 0 #{margin}px" %>
-  <% end %>
   <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
+    <% emotion = [] %>
+    <% emotion.push(@positive_emotions[index].word) %>
+    <% emotion.push(@positive_emotions[index+1].word) %>
+    <% emotion.push(@neutral_emotions[index].word) %>
+    <% emotion.push(@neutral_emotions[index+1].word) %>
+    <% emotion.push(@negative_emotions[index].word) %>
+    <% emotion.push(@negative_emotions[index+1].word) %>
     <tr>
       <td>
-        <!--WHEN ALL EMOTION WILL BE SAVE IN LOWER CASE NEED TO DELETE .downcase-->
-        <button class="positive" style="<%= style_html_element(@positive_emotions[index]) %>">
-          <%= "#{@positive_emotions[index].word}" %>
-        </button>
-        <button class="positive"  style="<%= style_html_element(@positive_emotions[index+1]) %>">
-          <%= "#{@positive_emotions[index+1].word}" %>
-        </button>
-        <button class="neutral"  style="<%= style_html_element(@neutral_emotions[index]) %>">
-          <%= "#{@neutral_emotions[index].word}" %>
-        </button>
-        <button class="neutral" style="<%= style_html_element(@neutral_emotions[index+1]) %>">
-          <%= "#{@neutral_emotions[index+1].word}" %>
-        </button>
-        <button class="negative" style="<%= style_html_element(@negative_emotions[index]) %>">
-          <%= "#{@negative_emotions[index].word}" %>
-        </button>
-        <button class="negative" style="<%= style_html_element(@negative_emotions[index+1]) %>">
-          <%= "#{@negative_emotions[index+1].word}" %>
-        </button>
+        <% 6.times do |i|%>
+          <button class="<%= if i < 2
+                              "positive"
+                            else
+                              i > 3 ? "negative" : "neutral"
+                            end %>"
+                  style="width: <%= btn_special(emotion[i], :width)%>px;
+                         margin: 0 <%= btn_special(emotion[i], :margin)%>px;">
+            <%= "#{emotion[i]}" %>
+          </button>
+        <% end %>
       </td>
     </tr>
 <% end %>
@@ -270,6 +273,9 @@
 </div>
 <div class="link">
   <%= link_to "I was not working this week","#"  %>
+</div>
+<div class="unsubscribe">
+  <%= link_to "Unsubscribe from future check-ins","#"  %>
 </div>
 </body>
 </html>
