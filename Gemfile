@@ -3,20 +3,20 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
-gem 'bootsnap', require: false                 # Reduces boot times through caching; required in config/boot.rb
-gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'  # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-# gem 'image_processing', '~> 1.2'             # Use Active Storage, generating image
-gem 'jbuilder', '~> 2.11', '>= 2.11.5'         # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'   # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-# gem 'kredis'                                 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-gem 'pg', '~> 1.1'                             # Postgres gem
-gem 'puma', '~> 5.0'                           # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
-gem 'rails', '~> 7.0.4', '>= 7.0.4.2'          # Ruby on Rails is a full-stack web framework.
-gem 'redis', '~> 4.0'                          # A Ruby client that tries to match Redis' API one-to-one
-# gem 'sassc-rails'                            # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
-gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'    # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'     # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem 'turbo-rails', '~> 1.3', '>= 1.3.3'        # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
+gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
+gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem 'pg', '~> 1.1'                                            # Postgres gem
+gem 'puma', '~> 5.0'                                          # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
+gem 'rails', '~> 7.0.4', '>= 7.0.4.2'                         # Ruby on Rails is a full-stack web framework.
+gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
+gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
+gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
+gem 'rubocop-rails', '~> 2.17', '>= 2.17.4', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
+gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'turbo-rails', '~> 1.3', '>= 1.3.3'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 
 group :development, :test do
@@ -32,7 +32,6 @@ group :development do
   gem 'fix-db-schema-conflicts'       # Ensures consistent output of db/schema.rb despite local differences in the database
   gem 'git-smart'                     # Installs some additional 'smart' git commands, like `git smart-pull`.
   gem 'letter_opener_web'             # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
-  gem 'rubocop-rails', require: false # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
   gem 'web-console'                   # Access an IRB console on exceptions page/console
 end
 
