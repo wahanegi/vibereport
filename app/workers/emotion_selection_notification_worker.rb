@@ -1,0 +1,13 @@
+class EmotionSelectionNotificationWorker
+
+  attr_reader :users, :time_period
+
+  def initialize
+    @users = User.opt_in
+    @time_period = TimePeriod.current_time_period
+  end
+
+  def run_notification
+    @users.each { |user| UserEmailMailer.response_invite(user, time_period).deliver_now }
+  end
+end

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe NotificationWorkers::EmotionSelectionNotificationWorker do
+describe EmotionSelectionNotificationWorker do
   let!(:user1) { create :user }
   let!(:user2) { create :user }
-  let!(:time_period) { create :time_period }
-  let(:worker) { NotificationWorkers::EmotionSelectionNotificationWorker.new }
+  let!(:time_period) { create :time_period, start_date: Date.current, end_date: Date.current + 6.days }
+  let(:worker) { EmotionSelectionNotificationWorker.new }
   let(:run_worker) { worker.run_notification }
 
   describe '.initialize' do

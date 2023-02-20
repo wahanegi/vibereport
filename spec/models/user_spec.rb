@@ -24,7 +24,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let!(:user) { create :user, opt_out: false }
   let!(:user2) { create :user, opt_out: false }
-  let!(:user3) { create :user, opt_out: true }
+  let!(:opted_out_user) { create :user, opt_out: true }
 
   it 'factory works' do
     expect(user).to be_valid
@@ -80,6 +80,9 @@ RSpec.describe User, type: :model do
   context 'Scopes' do
     it '.opt_in' do
       expect(User.opt_in).to match_array([user, user2])
+    end
+    it 'opt_in users not include opted_out_user' do
+      expect(User.opt_in).to_not include(opted_out_user)
     end
   end
 end

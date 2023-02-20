@@ -1,6 +1,6 @@
 namespace :notifications do
   desc 'Send emotion selection email'
-  task emotion_notification: :environment do
-    NotificationWorkers::EmotionSelectionNotificationWorker.new.run_notification
+  task emotion_selection_invite_all: :environment do
+    EmotionSelectionNotificationWorker.new.run_notification
   end
 end
