@@ -22,7 +22,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let!(:user) { create :user }
+  let!(:user) { create :user, opt_out: false }
+  let!(:user2) { create :user, opt_out: false }
+  let!(:user3) { create :user, opt_out: true }
 
   it 'factory works' do
     expect(user).to be_valid
@@ -72,6 +74,12 @@ RSpec.describe User, type: :model do
     it 'last_name passes for characters from 1 to 15' do
       user.last_name =  Faker::Internet.name[1..15]
       expect(user).to be_valid
+    end
+  end
+
+  context 'Scopes' do
+    it '.opt_in' do
+      expect(User.opt_in).to match_array([user, user2])
     end
   end
 end
