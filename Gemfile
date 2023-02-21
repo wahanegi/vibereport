@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
+gem 'activeadmin', '~> 2.13', '>= 2.13.1'                     # The administration framework for Ruby on Rails
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "devise", "~> 4.8"                                        # Flexible authentication solution for Rails with Warden
@@ -15,6 +16,7 @@ gem 'redis', '~> 4.0'                                         # A Ruby client th
 gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
 gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
 gem 'rubocop-rails', '~> 2.17', '>= 2.17.4', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
+gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'turbo-rails', '~> 1.3', '>= 1.3.3'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
