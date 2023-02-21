@@ -26,6 +26,7 @@ group :development, :test do
   gem 'factory_bot_rails'                         # Test data generator -- see spec/support/factory_helper.rb
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main' # Easy way to add fake data: names, email addresses, etc.
   gem 'rspec-rails'                               # rspec-rails is a testing framework for Rails 5+.
+  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'        # Autoload dotenv in Rails.
 end
 
 group :development do

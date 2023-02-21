@@ -4,7 +4,7 @@ class EmotionSelectionNotificationWorker
 
   def initialize
     @users = User.opt_in
-    @time_period = TimePeriod.current_time_period
+    @time_period = TimePeriod.current
   end
 
   def run_notification

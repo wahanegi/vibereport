@@ -14,6 +14,10 @@ RSpec.describe TimePeriod, type: :model do
   let!(:time_period1) { create :time_period }
   let!(:time_period2) { create :time_period }
 
+  before(:each) do
+    TimePeriod.destroy_all
+  end
+
   context 'Create multiple factories' do
     it 'multiple factories being instantiated works' do
       expect(create :time_period).to be_valid
@@ -40,6 +44,13 @@ RSpec.describe TimePeriod, type: :model do
       expect{TimePeriod.create_time_period}.to change { TimePeriod.all.count }.by(1)
       expect(new_time_period.start_date).to eq(last_sunday)
       expect(new_time_period.end_date).to eq(last_sunday + 6.days)
+    end
+  end
+
+  context '#current' do
+    it 'return current time period' do
+      current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
+      expect(TimePeriod.current).to eq(current_time_period)
     end
   end
 end
