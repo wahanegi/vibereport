@@ -12,16 +12,24 @@ describe EmotionSelectionNotificationWorker do
       expect(worker.users).to match_array([user1, user2])
     end
     it 'fetch time_period' do
-      expect(worker.time_period).to eq(time_period)
+      expect(worker.time_period).to eq(TimePeriod.current)
     end
   end
 
   describe '.run_notifications' do
     it 'sends email notifications' do
+      ENV["DAY_TO_SEND_INVITES"] = Date.current.strftime("%A")
       run_worker
       mail_recipients = ActionMailer::Base.deliveries.collect { |mail| mail.to[0] }
       expect(mail_recipients.count).to eql 2
       expect(mail_recipients).to match_array([user1.email, user2.email])
+    end
+    it 'does`t sends email notifications unless the ENV variable is set on the current day' do
+      ENV["DAY_TO_SEND_INVITES"] = (Date.current + 1).strftime("%A")
+      run_worker
+      mail_recipients = ActionMailer::Base.deliveries.collect { |mail| mail.to[0] }
+      expect(mail_recipients.count).to eql 0
+      expect(mail_recipients).to be_empty
     end
   end
 end
