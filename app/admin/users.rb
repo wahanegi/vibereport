@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :password, :password_confirmation
+  permit_params :first_name, :last_name, :email, :password
 
   index do
     selectable_column
@@ -24,14 +24,6 @@ ActiveAdmin.register User do
     def create
       params[:user][:password] = Devise.friendly_token[6, 10]
       @user = User.new(permitted_params[:user])
-      #@user.skip_confirmation_notification! # Disable confirmation email notification
-      super
-    end
-
-    def update
-      # Disable confirmation email notification
-      #@user = User.find(params[:id])
-      #@user.skip_confirmation_notification!
       super
     end
   end
