@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe "Admin::Emotions", type: :request do
-  let!(:admin) { create :admin_user }
-  before { sign_in admin }
+  let!(:admin_user) { create :admin_user }
+  before { sign_in admin_user }
 
   describe "GET - index" do
     it "renders the index page" do
