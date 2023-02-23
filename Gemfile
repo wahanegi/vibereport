@@ -3,8 +3,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
+gem 'activeadmin', '~> 2.13', '>= 2.13.1'                     # The administration framework for Ruby on Rails
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem "devise", "~> 4.8"                                        # Flexible authentication solution for Rails with Warden
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'pg', '~> 1.1'                                            # Postgres gem
@@ -14,6 +16,7 @@ gem 'redis', '~> 4.0'                                         # A Ruby client th
 gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
 gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
 gem 'rubocop-rails', '~> 2.17', '>= 2.17.4', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
+gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'turbo-rails', '~> 1.3', '>= 1.3.3'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -25,6 +28,7 @@ group :development, :test do
   gem 'factory_bot_rails'                         # Test data generator -- see spec/support/factory_helper.rb
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main' # Easy way to add fake data: names, email addresses, etc.
   gem 'rspec-rails'                               # rspec-rails is a testing framework for Rails 5+.
+  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'        # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
 end
 
 group :development do
@@ -40,6 +44,7 @@ group :test do
   gem 'capybara'                      # Capybara is an integration testing tool for rack based web applications. It simulates how a user would interact with a website
   gem 'rails-controller-testing'      # Extracting `assigns` and `assert_template` from ActionDispatch.
   gem 'selenium-webdriver'            # It aims to mimic the behaviour of a real user as it interacts with the application's HTML. It's primarily intended for web application testing, but any web-based task can automated.
+  gem "simplecov", require: false     # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'shoulda-callback-matchers'     # Matchers to test before, after and around hooks
   gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
