@@ -14,6 +14,7 @@ gem 'puma', '~> 5.0'                                          # Webserver recomm
 gem 'rails', '~> 7.0.4', '>= 7.0.4.2'                         # Ruby on Rails is a full-stack web framework.
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
 gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
+gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
 gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
 gem 'rubocop-rails', '~> 2.17', '>= 2.17.4', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
 gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
@@ -21,6 +22,7 @@ gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original ass
 gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'turbo-rails', '~> 1.3', '>= 1.3.3'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem "passwordless", "~> 0.11.0"                               #A passwordless a.k.a. "magic link" login strategy
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
