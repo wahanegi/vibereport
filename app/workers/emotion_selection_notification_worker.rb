@@ -19,10 +19,6 @@ class EmotionSelectionNotificationWorker
   end
 
   def find_or_create_time_period
-    @time_period = if TimePeriod.current.present?
-                     TimePeriod.current
-                   else
-                     TimePeriod.create_time_period
-                   end
+    @time_period = TimePeriod.current || TimePeriod.create_time_period
   end
 end
