@@ -1,8 +1,13 @@
-<div class="container text-center">
-  <h2 class="my-3">Check your inbox</h2>
-  <h4>Look for an unique access link in your inbox at:</h4>
+<div class="container text-center" style="margin-top: 250px">
+  <div class="convert my-4">
+    <p>Logo/Brand</p>
+    <div class="line1"></div>
+    <div class="line2"></div>
+  </div>
+  <div class="sub-header my-4">Check your inbox!</div>
+  <h4 class="my-2">Look for an unique access link in your inbox at:</h4>
   <% if params.dig("passwordless", "email").present? %>
-    <h4 class="my-3"><%= params.dig("passwordless", "email") %></h4>
+    <h2 class="my-3 muted"><%= params.dig("passwordless", "email") %></h2>
   <% end %>
-  <h4>If you have any issues, use the help button at the bottom right of this window to contact an administrator.</h4>
+  <h4 class="muted my-4">If you have any issues, use the help button at the bottom right of this window to contact an administrator.</h4>
 </div>
