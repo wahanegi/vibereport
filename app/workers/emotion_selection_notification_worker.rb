@@ -3,7 +3,7 @@ class EmotionSelectionNotificationWorker
 
   def initialize
     @users = User.opt_in
-    @time_period = TimePeriod.current
+    find_or_create_time_period
   end
 
   def run_notification
@@ -12,7 +12,17 @@ class EmotionSelectionNotificationWorker
     run_notification!
   end
 
+  private
+
   def run_notification!
     @users.each { |user| UserEmailMailer.response_invite(user, time_period).deliver_now }
+  end
+
+  def find_or_create_time_period
+    @time_period = if TimePeriod.current.present?
+                     TimePeriod.current
+                   else
+                     TimePeriod.create_time_period
+                   end
   end
 end
