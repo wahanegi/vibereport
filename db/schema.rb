@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_21_055528) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_23_182237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_21_055528) do
     t.string "word"
   end
 
+  create_table "responses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "emotion_id", null: false
+    t.bigint "time_period_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["emotion_id"], name: "index_responses_on_emotion_id"
+    t.index ["time_period_id"], name: "index_responses_on_time_period_id"
+    t.index ["user_id"], name: "index_responses_on_user_id"
+  end
+
   create_table "time_periods", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "end_date"
@@ -68,4 +79,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_21_055528) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "responses", "emotions"
+  add_foreign_key "responses", "time_periods"
+  add_foreign_key "responses", "users"
 end

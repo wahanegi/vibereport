@@ -9,6 +9,8 @@
 #  updated_at :datetime         not null
 #
 class Emotion < ApplicationRecord
+  has_many :response, dependent: :destroy
+
   SHOW_NUMBER_PER_CATEGORY = 12
     enum category: [:negative, :neutral, :positive]
     validates :word, presence: true, length: { in: 2..15 }, uniqueness: {case_sensitive: false}

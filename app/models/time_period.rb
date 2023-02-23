@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #
 class TimePeriod < ApplicationRecord
+  has_many :response, dependent: :destroy
 
   validates :end_date, :start_date, presence: true
   validates :end_date, comparison: { greater_than: :start_date }

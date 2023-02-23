@@ -24,6 +24,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable, :rememberable, :validatable and :omniauthable
   devise :database_authenticatable, :registerable
 
+  has_many :response, dependent: :destroy
+
   MAX_NAME_LENGTH = 15
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
