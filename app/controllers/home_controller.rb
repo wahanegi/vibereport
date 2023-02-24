@@ -7,4 +7,7 @@ class HomeController < ApplicationController
 
   def app
   end
+
+  def temporary_sign_in_blank_page_for_test
+  end
 end

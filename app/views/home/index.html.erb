@@ -3,7 +3,6 @@
 
   <% if current_user.present? %>
     <%= current_user.email %>
-    <p>Authentication Successful</p>
     <%= button_to 'Sign out', auth.sign_out_path, method: :delete %>
   <% else %>
     <%= link_to 'Sign in', auth.sign_in_path %>
