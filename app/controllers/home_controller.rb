@@ -3,11 +3,11 @@ class HomeController < ApplicationController
   before_action :require_user!, only: :app
 
   def index
+    return redirect_to app_path if current_user.present?
+
+    redirect_to auth.sign_in_path
   end
 
   def app
-  end
-
-  def temporary_sign_in_blank_page_for_test
   end
 end

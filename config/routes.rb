@@ -5,10 +5,6 @@ Rails.application.routes.draw do
   passwordless_for :users, at: '/', as: :auth
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
-
-  # Temporary routes
-  get '/temporary_sign_in_blank_page_for_test', to: 'home#temporary_sign_in_blank_page_for_test'
-
   get '/app', to: 'home#app', as: :app
-  root to:"home#index"
+  root to: 'home#index'
 end

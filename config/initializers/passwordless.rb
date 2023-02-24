@@ -1,3 +1,4 @@
 Passwordless.default_from_address = "do_not_reply@#{ENV.fetch('EMAIL_DOMAIN')}"
-Passwordless.success_redirect_path  = "/temporary_sign_in_blank_page_for_test"
-Passwordless.failure_redirect_path = "/home"
+Passwordless.success_redirect_path  = "/app"
+Passwordless.failure_redirect_path = "/sign_in"
+Passwordless.expires_at = lambda { 1.week.from_now }
