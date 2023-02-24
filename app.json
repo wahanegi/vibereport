@@ -9,6 +9,7 @@
       },
       "addons": ["heroku-postgresql:in-dyno"],
       "scripts": {
+        "postdeploy": "bundle exec rails assets:precompile",
         "test": "bundle exec rspec"
       }
     }
