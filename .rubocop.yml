@@ -1,3 +1,72 @@
-require: rubocop-rails
+require:
+  - rubocop-rails
+  - rubocop-performance
+
 AllCops:
+  TargetRubyVersion: 3.1
   NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+
+Rails:
+  Enabled: true
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/Output:
+  Enabled: false
+
+Rails/MailerName:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/SymbolProc:
+  Exclude:
+    - 'app/admin/**/*'
+
+Style/MultilineIfModifier:
+  Exclude:
+    - 'app/admin/**/*'
+
+Layout/LineLength:
+  Max: 125
+  Exclude:
+    - '**/*_spec.rb'
+    - '**/factories/**.rb'
+    - 'Gemfile'
+
+Metrics/AbcSize:
+  Exclude:
+    - '**/*_spec.rb'
+
+Metrics/ModuleLength:
+  Exclude:
+    - '**/*_spec.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - '**/*_spec.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*_spec.rb'
+    - '**/factories/**.rb'
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'

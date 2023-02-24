@@ -1,5 +1,10 @@
 ## Welcome to the Vibe Report App
 
+### Badges
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/9f965e3fb37ee200760e/maintainability)](https://codeclimate.com/github/wahanegi/vibereport/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/9f965e3fb37ee200760e/test_coverage)](https://codeclimate.com/github/wahanegi/vibereport/test_coverage)
+
 ### Introduction
 
 Vibe Report is a free weekly check-in and employee recognition tool that is easily customizable, providing an engaging, user-friendly experience that your team will be thankful for. Check-in, elicit feedback, and retain your team with actionable insights. Allow your team members to share, express themselves creatively, and recognize each other no matter where they are for a thriving, collaborative, and supportive culture.
