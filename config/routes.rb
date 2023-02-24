@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
 
   # Temporary routes
-  get '/temporary_sign_in_blank_page_for_test', to: 'home#temporary_sign_in_blank_page_for_test'
+  get '/temporary_blank_page', to: 'home#temporary_sign_in_blank_page_for_test', as: :temporary_blank_page
 
   get '/app', to: 'home#app', as: :app
   root to:"home#index"
