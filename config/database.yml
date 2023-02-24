@@ -81,6 +81,10 @@ test:
 #
 production:
   <<: *default
+  adapter: postgresql
+  encoding: unicode
   database: vibereport_production
-  username: vibereport
-  password: <%= ENV["VIBEREPORT_DATABASE_PASSWORD"] %>
+  pool: 5
+  username: postgres
+  password:
+  url: <%= ENV['DATABASE_URL'] %>
