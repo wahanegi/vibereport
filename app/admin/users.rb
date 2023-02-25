@@ -23,16 +23,13 @@ ActiveAdmin.register User do
           row :opt_out
           row :created_at
           row :updated_at
-          if user.passwordless_sessions.any?
-            row :passwordless_sessions do |_|
-              user.passwordless_sessions.map do |session|
-                link_to session.expires_at.to_date, admin_user_passwordless_sessions_path(user, session)
-              end.join(', ').html_safe
-            end
-          end
         end
       end
     end
+  end
+
+  sidebar :passwordless_sessions, only: :show do
+    link_to "Go to sessions", admin_user_passwordless_sessions_path(user)
   end
 
   

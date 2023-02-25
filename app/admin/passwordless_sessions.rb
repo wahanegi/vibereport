@@ -1,24 +1,56 @@
-ActiveAdmin.register_page 'Passwordless Sessions' do
+ActiveAdmin.register Passwordless::Session do
   belongs_to :user
+  permit_params :expires_at, :timeout_at, :token, :authenticatable_id, :authenticatable_type, :claimed_at,
+                :user_agent, :remote_addr
 
-  page_action :update, method: :post do
-    session = User.find_by(id: params[:user_id]).passwordless_sessions.find_by(id: params[:id])
-    session.update(expires_at: params[:expires_at])
-    redirect_to admin_user_path(params[:user_id])
+  index do
+    selectable_column
+    id_column
+    column :expires_at
+    column :token
+    column :created_at
+    actions
   end
 
-  content do
-    session = User.find_by(id: params[:user_id]).passwordless_sessions.find_by(id: params[:format])
-    form action: "passwordless_sessions/update", method: :post do |f|
-      columns do
-        panel 'Update expires_at field' do
-          f.input :id, type: :hidden, value: session.id, name: 'id'
-          f.input :user_id, type: :hidden, value: params[:user_id], name: 'user_id'
-          f.input :expires_at, as: :datepicker, value: session.expires_at.to_date, name: 'expires_at', datepicker_options: { dateFormat: "mm/dd/yy" }
-          f.input :authenticity_token, type: :hidden, name: :authenticity_token, value: form_authenticity_token
-          f.input :submit, type: :submit
+  show do |session|
+    user = User.find_by(id: session.authenticatable_id)
+    columns do
+      column do
+        attributes_table do
+          row 'User email' do
+            user.email
+          end
+          row :expires_at
+          row :claimed_at
+          row :token
+          row :user_agent
+          row :timeout_at
+          row :created_at
+          row :updated_at
+          row 'magic link' do
+            link_to send(Passwordless.mounted_as).token_sign_in_url(session.token)
+          end
         end
       end
+    end
+  end
+
+  form do |f|
+    f.inputs 'Session' do
+      f.input :expires_at, as: :datepicker
+    end
+    f.actions
+  end
+
+  controller do
+    def create
+      params[:session][:authenticatable_id] = params[:user_id]
+      params[:session][:authenticatable_type] = "User"
+      params[:session][:user_agent] = request.env["HTTP_USER_AGENT"]
+      params[:session][:remote_addr] = request.remote_addr
+      params[:session][:token] = Passwordless.token_generator.call(self)
+      @session = Passwordless::Session.new(permitted_params[:session])
+      super
     end
   end
 end
