@@ -36,12 +36,12 @@ body {
   font-size: 40px;
   line-height: 40px;
   color: $color-muted;
-  margin: 13px 23px;
+  margin: 13px 0;
   border: 3px solid $color-blue;
   border-radius: 15px;
   padding-left: 23px;
 }
-.btn-next {
+.btn-next, .btn-next:disabled {
   width: 235px;
   height: 52px;
   background: $color-blue;
@@ -54,7 +54,4 @@ body {
   font-size: 26.6341px;
   line-height: 32px;
   color: $color-white;
-  &.disabled {
-    opacity: 0.5;
-  }
 }

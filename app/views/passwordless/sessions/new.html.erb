@@ -10,9 +10,35 @@
     <h3 class="muted my-4">Enter your email address and we’ll send you a link to access your check-in and profile</h3>
     <div class="email_field my-4">
       <% email_field_name = :"passwordless[#{@email_field}]" %>
-      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here" %>
+      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input" %>
     </div>
-    <%= f.submit 'Next', class: "btn-next my-5" %>
-    <br/>
+    <div class="row mt-5">
+      <div class="d-flex justify-content-center">
+        <%= f.submit 'Next', class: "btn btn-next", id: "next-button", disabled: true %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="d-flex justify-content-start mt-2">
+        <%= link_to 'Dashboard Log-in', new_user_session_path %>
+      </div>
+    </div>
   </div>
 <% end %>
+<script type="text/javascript">
+  window.onload = function() {
+    $(document).ready(function() {
+      // Get the input and button elements
+      const input = $("#email-input");
+      const button = $('#next-button');
+      // Attach an event listener to the input field
+      input.on('input', function() {
+        // Check if the email is valid using a regular expression
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.val())) {
+          button.attr('disabled', false);
+        } else {
+          button.attr('disabled', true);
+        }
+      });
+    });
+  }
+</script>
