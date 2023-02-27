@@ -9,6 +9,7 @@ gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'                 # Bundle and proce
 gem "devise", "~> 4.8"                                        # Flexible authentication solution for Rails with Warden
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
 gem 'pg', '~> 1.1'                                            # Postgres gem
 gem 'puma', '~> 5.0'                                          # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 gem 'rails', '~> 7.0.4', '>= 7.0.4.2'                         # Ruby on Rails is a full-stack web framework.

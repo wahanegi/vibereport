@@ -18,7 +18,7 @@ plugins:
     enabled: true
   rubocop:
     enabled: true
-    channel: "rubocop-0-83"
+    channel: "rubocop-1-31-0"
 exclude_patterns:
   - ".codeclimate.yml"
   - ".circleci/"
