@@ -23,8 +23,8 @@
 #
 FactoryBot.define do
   factory :response do
-    time_period { nil }
-    emotion { nil }
-    user { nil }
+    association :user, factory: :user
+    association :time_period, factory: :time_period
+    association :emotion, factory: :emotion
   end
 end

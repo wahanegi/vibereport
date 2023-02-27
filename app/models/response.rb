@@ -26,8 +26,7 @@ class Response < ApplicationRecord
   belongs_to :emotion
   belongs_to :user
 
-  validates :time_period, presence: true
-  validates :emotion, presence: true
-  validates :user, presence: true
+  validates :time_period, :emotion, :user, presence: true
   validates :user_id, uniqueness: {scope: :time_period_id}
+
 end
