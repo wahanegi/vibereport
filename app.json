@@ -23,9 +23,6 @@
           "url": "heroku/ruby"
         }
       ],
-      "scripts": {
-        "postdeploy": "rails db:schema:load db:seed"
-      },
       "env": {
         "DAY_TO_SEND_INVITES": "monday",
         "DOMAIN_URL": "vibereport.app",
@@ -36,6 +33,9 @@
         "SMTP_DOMAIN": "sandbox.smtp.mailtrap.io",
         "SMTP_PORT": "2525",
         "SMTP_AUTHENTICATION": "cram_md5"
+      },
+      "scripts": {
+        "postdeploy": "rails db:schema:load db:seed"
       }
     }
   }
