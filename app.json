@@ -37,23 +37,25 @@
         }
       ],
       "env": {
+        "ADMIN_USER": "admin@vibereport.app",
+        "ADMIN_PASSWORD": {
+          "description": "A randomly generated string",
+          "generator": "secret"
+        },
         "DAY_TO_SEND_INVITES": "monday",
+        "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1",
         "DOMAIN_URL": "vibereport.app",
         "EMAIL_DOMAIN": "vibereport.app",
-        "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1",
-        "SMTP_USERNAME": "xxx",
-        "SMTP_PASSWORD": "xxx",
         "SMTP_ADDRESS": "sandbox.smtp.mailtrap.io",
+        "SMTP_AUTHENTICATION": "cram_md5",
         "SMTP_DOMAIN": "sandbox.smtp.mailtrap.io",
+        "SMTP_PASSWORD": "xxx",
         "SMTP_PORT": "2525",
-        "SMTP_AUTHENTICATION": "cram_md5"
+        "SMTP_USERNAME": "xxx"
       },
       "scripts": {
         "postdeploy": "rails db:schema:load db:seed"
       }
     }
-  },
-  "expo": {
-
   }
 }
