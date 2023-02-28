@@ -15,13 +15,27 @@
     },
     "review": {
       "addons": ["heroku-postgresql:mini"],
+      "buildpacks": [
+        {
+          "url": "heroku/nodejs"
+        },
+        {
+          "url": "heroku/ruby"
+        }
+      ],
       "scripts": {
         "postdeploy": "rails db:schema:load db:seed",
         "test": "bundle exec rspec"
       },
       "env": {
-        "DAY_TO_SEND_INVITES": "monday",
-        "EMAIL_DOMAIN": "vibereport.app"
+        "DAY_TO_SEND_INVITES": {
+          "description": "The day of the week to send out invites, monday through sunday",
+          "value": "monday"
+        },
+        "EMAIL_DOMAIN": {
+          "description": "The domain URL that emails get sent from by the environment",
+          "value": "vibereport.app"
+        }
       }
     }
   }
