@@ -24,8 +24,7 @@
         }
       ],
       "scripts": {
-        "postdeploy": "rails db:schema:load db:seed",
-        "test": "bundle exec rspec"
+        "postdeploy": "rails db:schema:load db:seed"
       },
       "env": {
         "DAY_TO_SEND_INVITES": {
