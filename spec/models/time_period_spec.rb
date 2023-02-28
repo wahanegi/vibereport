@@ -53,4 +53,10 @@ RSpec.describe TimePeriod, type: :model do
       expect(TimePeriod.current).to eq(current_time_period)
     end
   end
+
+  context '#date_range' do
+    it 'returns the correct date range string' do
+      expect(time_period1.date_range).to eq("#{time_period1.start_date.strftime('%Y-%m-%d')} - #{time_period1.end_date.strftime('%Y-%m-%d')}")
+    end
+  end
 end
