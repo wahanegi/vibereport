@@ -4,11 +4,8 @@ ActiveAdmin.register Response do
   index do
     selectable_column
     id_column
-    column :start_date do |response|
-      response.time_period.start_date
-    end
-    column :end_date do |response|
-      response.time_period.end_date
+    column :time_period do |response|
+      response.time_period.date_range
     end
     column :word do |response|
       response.emotion.word
@@ -25,7 +22,7 @@ ActiveAdmin.register Response do
     f.inputs 'Response Details' do
       f.input :emotion, collection: Emotion.all.map { |e| [e.word, e.id] }
       f.input :user, collection: User.all.map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
-      f.input :time_period, collection: TimePeriod.all.map { |t| ["#{t.start_date} - #{t.end_date}", t.id] }
+      f.input :time_period, collection: TimePeriod.all.map { |t| ["#{t.date_range}", t.id] }
     end
     f.actions
   end

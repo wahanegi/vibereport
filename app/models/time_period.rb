@@ -28,4 +28,8 @@ class TimePeriod < ApplicationRecord
   def self.current
     TimePeriod.find_by(start_date: ..Date.current, end_date: Date.current..)
   end
+
+  def date_range
+    "#{start_date.strftime('%Y-%m-%d')} - #{end_date.strftime('%Y-%m-%d')}"
+  end
 end
