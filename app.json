@@ -27,18 +27,15 @@
         "postdeploy": "rails db:schema:load db:seed"
       },
       "env": {
-        "DAY_TO_SEND_INVITES": {
-          "description": "The day of the week to send out invites, monday through sunday",
-          "value": "monday"
-        },
-        "EMAIL_DOMAIN": {
-          "description": "The domain URL that emails get sent from by the environment",
-          "value": "vibereport.app"
-        },
-        "DISABLE_DATABASE_ENVIRONMENT_CHECK": {
-          "description": "Prevents bogus errors from Heroku thinking the build failed",
-          "value": "1"
-        }
+        "DAY_TO_SEND_INVITES": "monday",
+        "DOMAIN_URL": "vibereport.app",
+        "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1",
+        "SMTP_USERNAME": "",
+        "SMTP_PASSWORD": "",
+        "SMTP_ADDRESS": "sandbox.smtp.mailtrap.io",
+        "SMTP_DOMAIN": "sandbox.smtp.mailtrap.io",
+        "SMTP_PORT": "2525",
+        "SMTP_AUTHENTICATION": "cram_md5"
       }
     }
   }
