@@ -181,15 +181,15 @@ When you create encrypted credentials in Rails 7, the contents of the `config/cr
 
 To address the `OpenSSL::Cipher::CipherError` error in Rails application, you can follow these steps:
 
-Remove the `config/credentials.yml` file from the project directory.
+    - Remove the `config/credentials.yml` file from the project directory.
 
-Open a terminal and navigate to the project directory.
+    - Open a terminal and navigate to the project directory.
 
-Run the following command to open the Rails credentials file for editing:
+    - Run the following command to open the Rails credentials file for editing:
 
-`rails credentials:edit`
+        `rails credentials:edit`
 
-Save the file and exit the editor.
+    - Save the file and exit the editor.
 
 Test the application to make sure the error no longer occurs.
 
