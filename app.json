@@ -14,7 +14,7 @@
       }
     },
     "review": {
-      "addons": ["heroku-postgresql:mini"],
+      "addons": ["heroku-postgresql:mini", "mailtrap:unpaid"],
       "buildpacks": [
         {
           "url": "heroku/nodejs"
