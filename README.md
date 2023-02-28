@@ -23,6 +23,8 @@ The Vibe Report App is built on:
 
 [Code Submissions and Review](#code-submissions-and-reviews)
 
+[Start Rails server](#start-rails-server)
+
 [License](#license)
 
 
@@ -51,7 +53,7 @@ The Vibe Report App is built on:
 19. Create a new database: `$ rails db:create`
 20. Install the new Heroku CLI: `$ brew tap heroku/brew && brew install heroku`.
 21. Log into your Heroku account: `$ heroku login`
-22. Should be ready to roll: `$ rails s`
+22. Should be ready to roll: `$ rake assets:precompile` to start the Rails server use: `$ ./bin/dev`
 23. In Rubymine it's necessary to enable appropriate version of Javascript to make sure correct syntax highlighting.
     `Rubymine` -> `Preferences` -> `Languages & Frameworks` -> `Javascript`: Then set `Javascript language version` to "ECMA Script 6"
 
@@ -93,7 +95,7 @@ Every time you are ready to start work, do the following terminal commands in th
     $ rails db:migrate
 Then if your server isn't started yet:
 
-1. Tab 1: `$ rails s`
+[Start Rails server](#start-rails-server)
 
 
 At this point you can point your browser to http://localhost:3000/ and start development work.
@@ -155,6 +157,19 @@ See https://ariejan.net/2010/06/10/cherry-picking-specific-commits-from-another-
     - Set base branch to master and compare-to branch to the `CI-XXX` branch where you've done your work
     - Click "Create pull request"
     - Add a description of the pull request and start the pull request description with the story or epic ID, `CI-XXX`
+
+## Start Rails server
+
+To start a Rails server with React, you need to  use the command:
+
+`rake assets:precompile`
+
+
+NOTE: `rails s` - is not used
+
+To start the Rails server use: `./bin/dev`
+
+otherwise you won't be able to see your updated CSS and JavaScript 
 
 ## License
 
