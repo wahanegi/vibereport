@@ -1,0 +1,17 @@
+{
+  "environments": {
+    "test": {
+      "formation": {
+        "test": {
+          "size": "standard-2x",
+          "quantity": 1
+        }
+      },
+      "addons": ["heroku-postgresql:in-dyno"],
+      "scripts": {
+        "postdeploy": "bundle exec rails assets:precompile",
+        "test": "bundle exec rspec"
+      }
+    }
+  }
+}
