@@ -39,6 +39,7 @@
       "env": {
         "DAY_TO_SEND_INVITES": "monday",
         "DOMAIN_URL": "vibereport.app",
+        "EMAIL_DOMAIN": "vibereport.app",
         "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1",
         "SMTP_USERNAME": "xxx",
         "SMTP_PASSWORD": "xxx",
