@@ -162,16 +162,15 @@ See https://ariejan.net/2010/06/10/cherry-picking-specific-commits-from-another-
 
 ## Start Rails server
 
-To start a Rails server with React, you need to  use the command:
+To start a Rails server with React, you need to  use the command every time you start the server:
 
-`rake assets:precompile`
-
-
-NOTE: `rails s` - is not used
+`rake assets:precompile` 
 
 To start the Rails server use: `./bin/dev`
 
 otherwise you won't be able to see your updated CSS and JavaScript 
+
+NOTE: `rails s` - is not used
 
 ## OpenSSL::Cipher::CipherError
 
@@ -181,15 +180,15 @@ When you create encrypted credentials in Rails 7, the contents of the `config/cr
 
 To address the `OpenSSL::Cipher::CipherError` error in Rails application, you can follow these steps:
 
-    - Remove the `config/credentials.yml` file from the project directory.
+- Remove `config/credentials.yml` or `config/credentials.yml.enc` if present from the project directory.
 
-    - Open a terminal and navigate to the project directory.
+- Open a terminal and navigate to the project directory.
 
-    - Run the following command to open the Rails credentials file for editing:
+- Run the following command to open the Rails credentials file for editing:
 
-        `rails credentials:edit`
+    `EDITOR="code --wait" bin/rails credentials:edit` - just replace “code” with whatever editor you use.
 
-    - Save the file and exit the editor.
+- Save the file and exit the editor.
 
 Test the application to make sure the error no longer occurs.
 
