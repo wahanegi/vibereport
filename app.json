@@ -8,9 +8,22 @@
         }
       },
       "addons": ["heroku-postgresql:in-dyno"],
+      "buildpacks": [
+        {
+          "url": "heroku/nodejs"
+        },
+        {
+          "url": "heroku/ruby"
+        }
+      ],
+      "env": {
+        "DAY_TO_SEND_INVITES": "monday",
+        "EMAIL_DOMAIN": "vibereport.app",
+        "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1"
+      },
       "scripts": {
-        "postdeploy": "bundle exec rails assets:precompile",
-        "test": "bundle exec rspec"
+        "postdeploy": "rails db:test:prepare",
+        "test": "rspec"
       }
     },
     "review": {
@@ -38,5 +51,8 @@
         "postdeploy": "rails db:schema:load db:seed"
       }
     }
+  },
+  "expo": {
+
   }
 }
