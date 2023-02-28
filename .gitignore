@@ -59,3 +59,4 @@ yarn-debug.log*
 /config/master.key
 *.keep
 /coverage
+/config/credentials/development.key
