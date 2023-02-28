@@ -52,9 +52,11 @@ yarn-debug.log*
 .yarn-integrity
 
 /config/credentials/production.key
+/config/credentials.yml.enc
 /public/assets
 /app/assets/builds/*
 !/app/assets/builds/.keep
 /config/master.key
 *.keep
 /coverage
+/config/credentials/development.key

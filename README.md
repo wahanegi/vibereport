@@ -23,6 +23,10 @@ The Vibe Report App is built on:
 
 [Code Submissions and Review](#code-submissions-and-reviews)
 
+[Start Rails server](#start-rails-server)
+
+[OpenSSL::Cipher::CipherError](#opensslcipherciphererror)
+
 [License](#license)
 
 
@@ -51,7 +55,7 @@ The Vibe Report App is built on:
 19. Create a new database: `$ rails db:create`
 20. Install the new Heroku CLI: `$ brew tap heroku/brew && brew install heroku`.
 21. Log into your Heroku account: `$ heroku login`
-22. Should be ready to roll: `$ rails s`
+22. Should be ready to roll: `$ rake assets:precompile` to start the Rails server use: `$ ./bin/dev`
 23. In Rubymine it's necessary to enable appropriate version of Javascript to make sure correct syntax highlighting.
     `Rubymine` -> `Preferences` -> `Languages & Frameworks` -> `Javascript`: Then set `Javascript language version` to "ECMA Script 6"
 
@@ -93,7 +97,7 @@ Every time you are ready to start work, do the following terminal commands in th
     $ rails db:migrate
 Then if your server isn't started yet:
 
-1. Tab 1: `$ rails s`
+[Start Rails server](#start-rails-server)
 
 
 At this point you can point your browser to http://localhost:3000/ and start development work.
@@ -155,6 +159,38 @@ See https://ariejan.net/2010/06/10/cherry-picking-specific-commits-from-another-
     - Set base branch to master and compare-to branch to the `CI-XXX` branch where you've done your work
     - Click "Create pull request"
     - Add a description of the pull request and start the pull request description with the story or epic ID, `CI-XXX`
+
+## Start Rails server
+
+To start a Rails server with React, you need to  use the command every time you start the server:
+
+`rake assets:precompile` 
+
+To start the Rails server use: `./bin/dev`
+
+otherwise you won't be able to see your updated CSS and JavaScript 
+
+NOTE: `rails s` - is not used
+
+## OpenSSL::Cipher::CipherError
+
+When you create encrypted credentials in Rails 7, the contents of the `config/credentials.yml.enc` file are encrypted using a master key that is stored in the `config/master.key` file. This encryption process uses the `OpenSSL library`, and if there is a problem with `OpenSSL`, you might see the `OpenSSL::Cipher::CipherError` error.
+
+### Solution
+
+To address the `OpenSSL::Cipher::CipherError` error in Rails application, you can follow these steps:
+
+- Remove `config/credentials.yml` or `config/credentials.yml.enc` if present from the project directory.
+
+- Open a terminal and navigate to the project directory.
+
+- Run the following command to open the Rails credentials file for editing:
+
+    `EDITOR="code --wait" bin/rails credentials:edit` - just replace “code” with whatever editor you use.
+
+- Save the file and exit the editor.
+
+Test the application to make sure the error no longer occurs.
 
 ## License
 

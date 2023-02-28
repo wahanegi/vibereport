@@ -73,4 +73,4 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 end
 
-ENV['EMAIL_DOMAIN'] = 'vibereport.com'
+ENV['EMAIL_DOMAIN'] = 'vibereport.app'
