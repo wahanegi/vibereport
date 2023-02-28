@@ -22,7 +22,7 @@
         "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1"
       },
       "scripts": {
-        "postdeploy": "rails db:test:prepare",
+        "postdeploy": "rails assets:precompile",
         "test": "rspec"
       }
     },
