@@ -14,7 +14,7 @@
 #  index_responses_on_emotion_id                  (emotion_id)
 #  index_responses_on_time_period_id              (time_period_id)
 #  index_responses_on_user_id                     (user_id)
-#  index_responses_on_user_id_and_time_period_id  (user_id,time_period_id)
+#  index_responses_on_user_id_and_time_period_id  (user_id,time_period_id) UNIQUE
 #
 # Foreign Keys
 #
