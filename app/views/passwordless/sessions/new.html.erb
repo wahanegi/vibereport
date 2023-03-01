@@ -7,7 +7,11 @@
       <div class="line1"></div>
       <div class="line2"></div>
     </div>
-    <h3 class="muted my-4">Enter your email address and we’ll send you a link to access your check-in and profile</h3>
+    <% if flash.to_h["error"] == 'Expired!' %>
+      <h3 class="muted my-4">Your login link may have expired. Click here to get a new one</h3>
+    <% else %>
+      <h3 class="muted my-4">Enter your email address and we’ll send you a link to access your check-in and profile</h3>
+    <% end %>
     <div class="email_field my-4">
       <% email_field_name = :"passwordless[#{@email_field}]" %>
       <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input" %>
