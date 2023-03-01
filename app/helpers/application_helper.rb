@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def session_expired?
-    passwordless_session_id = session.to_h["passwordless_session_id--user"]
+    passwordless_session_id = session.to_h['passwordless_session_id--user']
     passwordless_session = Passwordless::Session.find_by(id: passwordless_session_id)
     passwordless_session.expires_at <= Time.current
   end

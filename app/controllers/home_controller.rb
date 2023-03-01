@@ -9,6 +9,5 @@ class HomeController < ApplicationController
     redirect_to auth.sign_in_path
   end
 
-  def app
-  end
+  def app; end
 end
