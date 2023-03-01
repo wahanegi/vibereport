@@ -10,7 +10,7 @@ module ApplicationHelper
   def require_user!
     return if current_user
 
-    redirect_to root_path, flash: { error: 'You are not worthy!' }
+    redirect_to root_path, flash: { error: "Sorry, you should try logging in again!" }
   end
 
   def session_expired?
