@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_182237) do
     t.bigint "user_id", null: false
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
+    t.index ["user_id", "time_period_id"], name: "index_responses_on_user_id_and_time_period_id"
     t.index ["user_id"], name: "index_responses_on_user_id"
   end
 

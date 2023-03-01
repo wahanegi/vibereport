@@ -7,5 +7,6 @@ class CreateResponses < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :responses, [:user_id, :time_period_id]
   end
 end

@@ -11,9 +11,10 @@
 #
 # Indexes
 #
-#  index_responses_on_emotion_id      (emotion_id)
-#  index_responses_on_time_period_id  (time_period_id)
-#  index_responses_on_user_id         (user_id)
+#  index_responses_on_emotion_id                  (emotion_id)
+#  index_responses_on_time_period_id              (time_period_id)
+#  index_responses_on_user_id                     (user_id)
+#  index_responses_on_user_id_and_time_period_id  (user_id,time_period_id)
 #
 # Foreign Keys
 #
@@ -26,7 +27,6 @@ class Response < ApplicationRecord
   belongs_to :emotion
   belongs_to :user
 
-  validates :time_period, :emotion, :user, presence: true
   validates :user_id, uniqueness: { scope: :time_period_id }
 
 end
