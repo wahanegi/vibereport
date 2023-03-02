@@ -8,8 +8,30 @@ ActiveAdmin.register User do
     column :last_name
     column :email
     column :created_at
+    column 'Passwordless Sessions' do |user|
+      user.passwordless_sessions.size
+    end
     actions
-  end  
+  end
+  show do |user|
+    columns do
+      column do
+        attributes_table do
+          row :email
+          row :first_name
+          row :last_name
+          row :opt_out
+          row :created_at
+          row :updated_at
+        end
+      end
+    end
+  end
+
+  sidebar :passwordless_sessions, only: :show do
+    link_to "Go to sessions", admin_user_passwordless_sessions_path(user)
+  end
+
   
   form do |f|
     f.inputs do      
