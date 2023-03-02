@@ -24,7 +24,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable, :rememberable, :validatable and :omniauthable
   devise :database_authenticatable, :registerable
 
-  has_many :response, dependent: :destroy
+  has_many :responses, dependent: :destroy
 
   MAX_NAME_LENGTH = 15
 

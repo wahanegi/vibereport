@@ -25,6 +25,12 @@ RSpec.describe TimePeriod, type: :model do
     end
   end
 
+  context 'associations' do
+    it 'has many responses' do
+      expect(time_period1).to have_many(:responses).dependent(:destroy)
+    end
+  end
+
   context 'Validations' do
     subject { FactoryBot.create(:time_period) }
     it { is_expected.to validate_presence_of(:start_date) }

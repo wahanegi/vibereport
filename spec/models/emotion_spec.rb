@@ -22,6 +22,12 @@ RSpec.describe Emotion, type: :model do
     it { expect(emotion).to be_valid }
   end
 
+  context 'associations' do
+    it 'has many responses' do
+      expect(emotion).to have_many(:responses).dependent(:destroy)
+    end
+  end
+
   describe 'Scopes' do
     it "positive scope" do
       expect(Emotion.positive).to include(emotion_positive)

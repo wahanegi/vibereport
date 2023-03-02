@@ -30,6 +30,12 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
+  context 'associations' do
+    it 'has many responses' do
+      expect(user).to have_many(:responses).dependent(:destroy)
+    end
+  end
+
   context 'Validations' do
     subject { FactoryBot.create(:user) }
 

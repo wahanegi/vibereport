@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 class Emotion < ApplicationRecord
-  has_many :response, dependent: :destroy
+  has_many :responses, dependent: :destroy
 
   SHOW_NUMBER_PER_CATEGORY = 12
     enum category: [:negative, :neutral, :positive]
