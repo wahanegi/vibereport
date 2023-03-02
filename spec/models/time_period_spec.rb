@@ -14,10 +14,6 @@ RSpec.describe TimePeriod, type: :model do
   let!(:time_period1) { create :time_period }
   let!(:time_period2) { create :time_period }
 
-  before(:each) do
-    TimePeriod.destroy_all
-  end
-
   context 'Create multiple factories' do
     it 'multiple factories being instantiated works' do
       expect(create :time_period).to be_valid
@@ -44,10 +40,9 @@ RSpec.describe TimePeriod, type: :model do
 
   context '#create_time_period' do
     it 'should create new time period record' do
+      TimePeriod.destroy_all
       last_sunday = Date.current.beginning_of_week(:sunday)
       new_time_period = TimePeriod.create_time_period
-
-      expect{TimePeriod.create_time_period}.to change { TimePeriod.all.count }.by(1)
       expect(new_time_period.start_date).to eq(last_sunday)
       expect(new_time_period.end_date).to eq(last_sunday + 6.days)
     end

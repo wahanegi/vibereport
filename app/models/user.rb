@@ -31,5 +31,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true
   validates :first_name, :last_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
+  passwordless_with :email
   scope :opt_in, -> { where(opt_out: false) }
 end
