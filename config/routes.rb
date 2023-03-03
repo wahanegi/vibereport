@@ -1,19 +1,20 @@
 Rails.application.routes.draw do
+  get 'responses/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
   passwordless_for :users, at: '/', as: :auth
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
+  get '/app', to: 'home#app'
   namespace :api do
     namespace :v1 do
-      resources :responses, only: [:index]
+      resources :emotions
+      resources :responses, param: :id
     end
   end
-
-  get '/app', to: 'home#app', as: :app
+  get '*path', to: 'home#app'
   get '/*undefined', to: redirect('/')
-
 
   root to:"home#index"
 end

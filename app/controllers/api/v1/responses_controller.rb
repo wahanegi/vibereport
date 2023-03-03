@@ -1,15 +1,41 @@
-# frozen_string_literal: true
-
 class Api::V1::ResponsesController < ApplicationController
-  NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
-  def index
-    three_set = []
-    three_set.concat(Emotion.positive.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.neutral.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.negative.sample(NUMBER_OF_ELEMENTS))
+  include ApplicationHelper
 
-    render json: EmotionSerializer.new(three_set) , status: :ok
+  protect_from_forgery with: :null_session
+  before_action :set_response, only: [:show]
+  before_action :require_user!
+
+  def index
+    render json: ResponseSerializer.new(Response.all).serializable_hash
   end
 
+  def show
+    render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_params)
+  end
 
+  def create
+    @response = current_user.responses.build(response_params)
+
+    if @response.save
+      render json: ResponseSerializer.new(@response).serializable_hash
+    else
+      render json: {error: @response.errors }, status: 422
+    end
+  end
+
+  private
+
+  def set_response
+    @response = Response.find(params[:id])
+  end
+
+  def response_params
+    params.require(:response).permit(:emotion_id, :time_period_id)
+  end
+
+  def additional_params
+    {
+      emotion: @response.emotion
+    }
+  end
 end
