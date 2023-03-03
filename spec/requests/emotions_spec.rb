@@ -5,9 +5,9 @@ NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 
 RSpec.describe Api::V1::EmotionsController do
   let!(:user) { create :user }
-  let!(:emotion) {create(:emotion, :category => "positive")}
+  let!(:emotion) { create(:emotion, :category => "positive") }
   let!(:emotion_neutral) do
-    NUMBER_OF_ELEMENTS.times { create(:emotion , :category => "neutral")}
+    NUMBER_OF_ELEMENTS.times { create(:emotion , :category => "neutral") }
   end
 
   let!(:emotion_negative) do
@@ -44,7 +44,9 @@ RSpec.describe Api::V1::EmotionsController do
     it 'should will be correct the length of a nested arrays' do
       get '/api/v1/emotions'
       expect(json_data.first[:attributes].length).to eq(2)
-      expect(json_data.count[:attributes][:category].positive)
-    end    
+      expect(count_word_in_obj('positive', json)).to eq(1)
+      expect(count_word_in_obj('neutral', json)).to eq(12)
+      expect(count_word_in_obj('negative', json)).to eq(12)
+    end
   end
 end
