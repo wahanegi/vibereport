@@ -1,5 +1,10 @@
 import React from 'react';
+import  ResponseFlow  from 'ResponseFlow';
 const App = () => {
-  return <h1>App</h1>
+  return (
+      <div className="App">
+        <ResponseFlow />
+      </div>
+  );
 }
-export default App
+export default App;
