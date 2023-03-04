@@ -2,7 +2,7 @@ class Api::V1::ResponsesController < ApplicationController
   include ApplicationHelper
 
   protect_from_forgery with: :null_session
-  before_action :set_response, only: [:show]
+  before_action :set_response, only: [:show, :update]
   before_action :require_user!
 
   def index
@@ -23,6 +23,14 @@ class Api::V1::ResponsesController < ApplicationController
     end
   end
 
+  def update
+    if @response.update(response_params)
+      render json: ResponseSerializer.new(@response).serializable_hash
+    else
+      render json: {error: @response.errors }, status: 422
+    end
+  end
+
   private
 
   def set_response
@@ -30,7 +38,7 @@ class Api::V1::ResponsesController < ApplicationController
   end
 
   def response_params
-    params.require(:response).permit(:emotion_id, :time_period_id)
+    params.require(:response).permit(:id, :emotion_id, :time_period_id, :step)
   end
 
   def additional_params

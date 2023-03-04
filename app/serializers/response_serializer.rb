@@ -3,6 +3,7 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  step           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint           not null
@@ -11,9 +12,10 @@
 #
 # Indexes
 #
-#  index_responses_on_emotion_id      (emotion_id)
-#  index_responses_on_time_period_id  (time_period_id)
-#  index_responses_on_user_id         (user_id)
+#  index_responses_on_emotion_id                  (emotion_id)
+#  index_responses_on_time_period_id              (time_period_id)
+#  index_responses_on_user_id                     (user_id)
+#  index_responses_on_user_id_and_time_period_id  (user_id,time_period_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -24,5 +26,5 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :user_id, :time_period_id, :emotion_id
+  attributes :id, :time_period_id, :emotion_id, :step
 end

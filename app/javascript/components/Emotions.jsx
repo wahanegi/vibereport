@@ -25,7 +25,7 @@ const Emotions = () => {
   if (!loaded) return <p>Loading...</p>
 
   const onHandleClick = (emotion_id, timePeriod_id, navigate) => {
-    createResponse(emotion_id, timePeriod_id, navigate)
+    createResponse(emotion_id, timePeriod_id, navigate, 'MemeSelection')
   }
 
   return loaded && <Fragment>

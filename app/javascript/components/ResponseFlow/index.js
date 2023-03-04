@@ -1,6 +1,9 @@
 import React, {useEffect, useState, Fragment} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
+import MemeSelection from "./MemeSelection";
+import EmotionEntry from "./EmotionEntry";
+import Results from "./Results";
 
 const ResponseFlow = () => {
   const [response, setResponse] = useState({})
@@ -17,21 +20,18 @@ const ResponseFlow = () => {
         setLoaded(true)
       })
       .catch(resp => console.log(resp))
-  }, [])
+  }, [response.length])
 
-  return(
-    <Fragment>
-      { loaded &&
-        <Fragment>
-          <div>Response id: {response.id}</div>
-          <div>Response user_id: {response.attributes.user_id}</div>
-          <div>Response time_period_id: {response.attributes.time_period_id}</div>
-          <div>Response emotion_id: {response.attributes.emotion_id}</div>
-          <h4>Emotion: {emotion.word}</h4>
-        </Fragment>
-      }
-    </Fragment>
-  )
+  if (!loaded) return <p>Loading...</p>
+
+  switch (response.attributes.step) {
+    case 'MemeSelection':
+      return <MemeSelection emotion={emotion} response={response} setResponse={setResponse} />
+    case 'EmotionEntry':
+      return <EmotionEntry response={response} setResponse={setResponse} />
+    case 'Results':
+      return <Results response={response} setResponse={setResponse} />
+  }
 }
 
 export default ResponseFlow
