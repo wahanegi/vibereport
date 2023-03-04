@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import {createResponse} from "./requests/axios_requests";
 import {useNavigate} from "react-router-dom";
 
-const Emotions = () => {
+const EmotionSelectionPage = () => {
   const [emotions, setEmotions] = useState([])
   const [currentUserId, setCurrentUserId] = useState({})
   const [timePeriod, setTimePeriod] = useState({})
@@ -43,4 +43,4 @@ const Emotions = () => {
   </Fragment>
 }
 
-export default Emotions
+export default EmotionSelectionPage

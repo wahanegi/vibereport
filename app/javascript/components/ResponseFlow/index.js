@@ -2,8 +2,8 @@ import React, {useEffect, useState, Fragment} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import MemeSelection from "./MemeSelection";
-import EmotionEntry from "./EmotionEntry";
-import Results from "./Results";
+import EmotionEntry from "../Pages/EmotionEntry";
+import Results from "../Pages/Results";
 
 const ResponseFlow = () => {
   const [response, setResponse] = useState({})

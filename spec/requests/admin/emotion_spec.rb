@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe "Admin::Emotions", type: :request do
+RSpec.describe "Admin::EmotionSelectionPage", type: :request do
   let!(:admin_user) { create :admin_user }
   before { sign_in admin_user }
 
