@@ -26,7 +26,7 @@ RSpec.describe Api::V1::EmotionsController do
 
     it 'should returns a proper format of the JSON response' do
       get '/api/v1/emotions'
-      expect(json.length).to eq(3)
+      expect(json.length).to eq(4)
       expected = json_data.first
       aggregate_failures do
         expect(expected[:id]).to eq(emotion.id.to_s)
