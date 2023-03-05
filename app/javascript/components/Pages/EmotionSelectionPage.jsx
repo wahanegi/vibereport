@@ -1,9 +1,9 @@
 import React, {Fragment, useEffect, useState} from "react";
 import axios from "axios";
 import {Button} from "react-bootstrap";
-import {createResponse, updateResponse} from "./requests/axios_requests";
+import {createResponse, updateResponse} from "../requests/axios_requests";
 import {useNavigate} from "react-router-dom";
-import {isEmpty} from "./helpers/helper";
+import {isEmpty} from "../helpers/helper";
 
 const EmotionSelectionPage = () => {
   const [emotions, setEmotions] = useState([])

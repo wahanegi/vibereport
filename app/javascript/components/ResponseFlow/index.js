@@ -1,9 +1,7 @@
-import React, {useEffect, useState, Fragment} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import MemeSelection from "./MemeSelection";
-import EmotionEntry from "../Pages/EmotionEntry";
-import Results from "../Pages/Results";
 
 const ResponseFlow = () => {
   const [response, setResponse] = useState({})
@@ -26,11 +24,7 @@ const ResponseFlow = () => {
 
   switch (response.attributes.step) {
     case 'MemeSelection':
-      return <MemeSelection emotion={emotion} response={response} setResponse={setResponse} />
-    case 'EmotionEntry':
-      return <EmotionEntry response={response} setResponse={setResponse} />
-    case 'Results':
-      return <Results response={response} setResponse={setResponse} />
+      return <MemeSelection emotion={emotion} />
   }
 }
 
