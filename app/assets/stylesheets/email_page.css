@@ -36,15 +36,25 @@
     border-bottom: 1px solid #000000;
     transform: rotate(-23.42deg);
 }
-.calendar {
-    width: 82px;
-    height: 68px;
-    top: -57px;
-    left: 60px;
+.left-div {
+    width: 10px;
+    top: -9px;
+    left: -25px;
     position: relative;
-    text-align: center;
-    background: #C8C9C0;
-    border-radius: 9px;
+    height: 26px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    z-index: 1
+}
+.right-div {
+    width: 10px;
+    height: 26px;
+    top: -35px;
+    left: 25px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    position: relative;
+    z-index: 1
 }
 .under-convert {
     width: 453px;
@@ -57,16 +67,62 @@
     margin: 0 auto;
     padding: 8px;
 }
-.left-div {
-    width: 10px;
-    top: -10px;
-    left: 11px;
-    position: relative;
-    height: 26px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    z-index: 1
+/*<ListEmotions>*/
+.increased-convert {
+    width: 190px;
+    height: 87px;
 }
+.field_empty {
+    margin: 0 auto;
+}
+.field_emotions{
+    width: 1115px;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+.in_left{
+    margin: 35px 0 0 41px;
+}
+.other-position{
+    margin: 66px 0 0 154px;
+}
+.offset-line2{
+    width: 207.14px;
+    margin-top: -1.5px;
+    margin-left: -9.5px;
+    transform: rotate(-24.4deg);
+}
+.offset-line1{
+    width: 207.14px;
+    margin-top: 29.3px;
+    margin-left: -9.4px;
+    transform: rotate(-155.6deg);
+}
+.offset-ld{
+    left: 11px;
+}
+.offset-rd{
+    left: 61px;
+}
+.uc-new-position{
+    position: relative;
+    top: 47px;
+}
+
+/*</ListEmotions>*/
+
+.calendar {
+    width: 82px;
+    height: 68px;
+    top: -57px;
+    left: 60px;
+    position: relative;
+    text-align: center;
+    background: #C8C9C0;
+    border-radius: 9px;
+}
+
+
 .part {
     width: 10px;
     height: 11px;
@@ -76,16 +132,7 @@
     position: relative;
     top: 15px;
 }
-.right-div {
-    width: 10px;
-    height: 26px;
-    top: -36px;
-    left: 60px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    position: relative;
-    z-index: 1
-}
+
 .top-div {
     width: 82px;
     height: 25px;
@@ -97,6 +144,7 @@
     border-top-right-radius: 9px;
 }
 .time {
+    text-transform: capitalize;
     position: relative;
     top: -46px;
     width: 82px;
@@ -120,6 +168,14 @@
     position: relative;
     top: -43px;
 }
+
+/*<ListEmotions>*/
+.q-new-pos{
+    top: -63px;
+    width: 714px;
+}
+/*</ListEmotions>*/
+
 table {
     margin: 2% auto;
     position: relative;
@@ -174,6 +230,11 @@ table td {
     color: rgba(0, 0, 0, 0.7);
     margin: 0 auto;
 }
+/*<ListEmotion*/
+.sh-new-pos{
+    margin-top: 46px;
+}
+/*</ListEmotion*/
 .own_word{
     box-sizing: border-box;
     width: 385px;
@@ -187,7 +248,7 @@ table td {
     font-size: 36px;
     line-height: 36px;
     color: rgba(0, 0, 0, 0.6);
-    margin: 13px 23px;
+    /*margin: 13px 23px;*/
     border: 3px solid #5689EB;
     border-radius: 19px;
     padding-left: 23px;

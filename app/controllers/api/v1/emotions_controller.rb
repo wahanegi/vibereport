@@ -1,7 +1,7 @@
 class Api::V1::EmotionsController < ApplicationController
   include ApplicationHelper
   before_action :require_user!
-  before_action :set_current_response, only: [:index]
+  # before_action :set_current_response, only: [:index]
 
   NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
   def index
@@ -21,20 +21,25 @@ class Api::V1::EmotionsController < ApplicationController
   def additional_params
     {
       current_user_id: current_user.id,
-      time_period: TimePeriod.current,
-      response: @current_response ? response_hash : {}
+      time_period: { start_date: TimePeriod.current.start_date, end_date: TimePeriod.current.end_date }
     }
   end
+  # <<<<<<< HEAD
+  # time_period: TimePeriod.current,
+  # response: @current_response ? response_hash : {}
 
-  def set_current_response
-    @current_response ||= Response.find_by(time_period_id: TimePeriod.current&.id, user_id: current_user.id)
-  end
+  # def set_current_response
+  #   @current_response ||= Response.find_by(time_period_id: TimePeriod.current&.id, user_id: current_user.id)
+  # end
 
-  def response_hash
-    {
-      id: @current_response.id,
-      type: 'response',
-      attributes: @current_response
-    }
-  end
+  # def response_hash
+  #   {
+  #     id: @current_response.id,
+  #     type: 'response',
+  #     attributes: @current_response
+# =======
+#       time_period: { start_date: TimePeriod.current.start_date, end_date: TimePeriod.current.end_date }
+# >>>>>>> 59735de (CI-40: Create page ListEmotions.jsx, UI elements etc)
+#     }
+  # end
 end

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/app', to: 'home#app'
   namespace :api do
     namespace :v1 do
-      resources :emotions
+      resources :emotions, only: [:index]
       resources :responses, param: :id
     end
   end

@@ -1,12 +1,22 @@
-import React from 'react';
-import Button from './Button'
+import React, {useState} from 'react';
+import {special_prop} from "../helper_functions/library";
 
 const ButtonEmotion = (props) => {
-    return (
-        <Button className={expandableCss} onClick={clickHandling}>
-        export default ButtonEmotion;    props.children
-        </Button>
-    );
+  const word = props.children
+  const expandableCss = { width: special_prop(word, 'width' ), margin: special_prop(word, 'margin') }
+
+  const clickHandling = (event) =>{
+
+  }
+
+  return (
+      <button type='button'
+            className={props.category}
+            style={expandableCss}
+            onClick={clickHandling}>
+        {props.children}
+      </button>
+  );
 };
 
 export default ButtonEmotion;

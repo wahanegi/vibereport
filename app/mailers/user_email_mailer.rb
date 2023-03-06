@@ -12,7 +12,7 @@ class UserEmailMailer < ApplicationMailer
     @positive_emotions = Emotion.positive.sample(NUMBER_OF_ELEMENTS)
     @neutral_emotions = Emotion.neutral.sample(NUMBER_OF_ELEMENTS)
     @negative_emotions = Emotion.negative.sample(NUMBER_OF_ELEMENTS)
-
+    mail(to: user.email, subject: "Hey #{@user.first_name}, how was your week?")
 
   end
 
