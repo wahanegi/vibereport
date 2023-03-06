@@ -12,12 +12,11 @@ class UserEmailMailer < ApplicationMailer
     @positive_emotions = Emotion.positive.sample(NUMBER_OF_ELEMENTS)
     @neutral_emotions = Emotion.neutral.sample(NUMBER_OF_ELEMENTS)
     @negative_emotions = Emotion.negative.sample(NUMBER_OF_ELEMENTS)
+    @time_period = time_period
     mail(to: user.email, subject: "Hey #{@user.first_name}, how was your week?")
-
   end
 
   private
-
 
   def range_format(date)
     "#{date.start_date.strftime('%d')}-#{date.end_date.strftime('%d')} #{date.end_date.strftime('%b')}"
