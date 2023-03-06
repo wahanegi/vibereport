@@ -48,5 +48,20 @@ ActiveAdmin.register User do
       @user = User.new(permitted_params[:user])
       super
     end
+
+    def update
+      user = User.find(params[:id])
+      error_message = nil
+      params[:user][:password] = Devise.friendly_token[6, 10]
+      begin
+        user.update!(permitted_params[:user])
+      rescue StandardError => e
+        error_message = e.message
+      end
+
+      redirect_to admin_users_path, notice: (unless error_message
+                                               'Successfully updated!'
+                                             end), alert: error_message
+    end
   end
 end

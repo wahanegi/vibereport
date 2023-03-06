@@ -33,7 +33,7 @@ RSpec.describe "Admin::Users", type: :request do
 
     it 'updates user' do
       patch "/admin/users/#{user.id}", params: { id: user.id, user: { email: 'user@example.com', password: 'User123456' } }
-      expect(response).to redirect_to(admin_user_path(user))
+      expect(response).to redirect_to(admin_users_path)
       expect(user.reload.email).to eq 'user@example.com'
     end
   end
