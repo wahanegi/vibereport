@@ -1,7 +1,7 @@
 class Api::V1::ResponsesController < ApplicationController
   include ApplicationHelper
 
-  before_action :set_response, only: [:show, :update]
+  before_action :set_response, only: %i[show update]
   before_action :require_user!, only: [:index, :show, :create, :update]
   skip_before_action :verify_authenticity_token, only: [:response_flow_from_email]
 

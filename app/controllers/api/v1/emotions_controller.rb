@@ -5,14 +5,11 @@ class Api::V1::EmotionsController < ApplicationController
 
   NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
   def index
-    three_set = []
-    three_set.concat(Emotion.positive.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.neutral.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.negative.sample(NUMBER_OF_ELEMENTS))
+    three_set = build_three_set
     if current_user.present?
       render json: EmotionSerializer.new(three_set).serializable_hash.merge(additional_params), status: :ok
     else
-      render json: {}, status: 401
+      render json: {}, status: :unauthorized
     end
   end
 
@@ -21,13 +18,17 @@ class Api::V1::EmotionsController < ApplicationController
   def additional_params
     {
       current_user_id: current_user.id,
-      time_period: { start_date: TimePeriod.current.start_date, end_date: TimePeriod.current.end_date },
+      time_period: { 
+        id: TimePeriod.current.id, 
+        start_date: TimePeriod.current.start_date, 
+        end_date: TimePeriod.current.end_date 
+      },
       response: @current_response ? response_hash : {}
     }
   end
 
   def set_current_response
-    @current_response ||= Response.find_by(time_period_id: TimePeriod.current&.id, user_id: current_user.id)
+    @current_response ||= Response.find_by(time_period_id: TimePeriod.current.id, user_id: current_user.id)
   end
 
   def response_hash
@@ -36,5 +37,12 @@ class Api::V1::EmotionsController < ApplicationController
       type: 'response',
       attributes: @current_response
     }
+  end
+
+  def build_three_set
+    three_set = []
+    three_set.concat(Emotion.positive.sample(NUMBER_OF_ELEMENTS))
+    three_set.concat(Emotion.neutral.sample(NUMBER_OF_ELEMENTS))
+    three_set.concat(Emotion.negative.sample(NUMBER_OF_ELEMENTS))
   end
 end

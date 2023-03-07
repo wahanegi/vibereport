@@ -5,8 +5,8 @@ const ButtonEmotion = (props) => {
   const word = props.children
   const expandableCss = { width: special_prop(word, 'width' ), margin: special_prop(word, 'margin') }
 
-  const clickHandling = (event) =>{
-
+  const clickHandling = () =>{
+    props.onClick()
   }
 
   return (

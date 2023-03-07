@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
-import MemeSelection from "./MemeSelection";
+import MemeSelection from "./Pages/MemeSelection";
 
 const ResponseFlow = () => {
   const [response, setResponse] = useState({})
