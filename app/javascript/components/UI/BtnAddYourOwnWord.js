@@ -1,13 +1,13 @@
 import React from 'react';
-import styles from './BtnAddYourOwnWord.module.css'
+import Button from "./Button";
 
 const BtnAddYourOwnWord = (props) => {
     return (
-        <Button
-            className={styles.button}
-            onClick={clickHandler}>
-            Add your own word
+      <div className='own_word'>
+        <Button className={props.className} onClick={props.onClick}>
+          {props.content}
         </Button>
+      </div>
     );
 };
 

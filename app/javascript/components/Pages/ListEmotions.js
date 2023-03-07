@@ -11,6 +11,8 @@ import {createResponse, updateResponse} from "../requests/axios_requests";
 import {useNavigate} from "react-router-dom";
 import {isEmpty} from "../helpers/helper";
 import {Button} from "react-bootstrap";
+import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
+
 
 // import styles from './ListEmotions.module.css'
 
@@ -109,16 +111,16 @@ function ListEmotions(props) {
               </div>
             <div className='field_empty'></div>
           <div className="share sh-new-pos">Share it in your own words!</div>
-          <div className="own_word">
-              <input type='text' placeholder="Add your own word"/>
-          </div>
-            <NavLink className ="link" to="">I was not working this week</NavLink>
-            <QuestionButton style={{position: 'absolute', right: 47}}/>
-            <ShoutoutButton style={{position: 'absolute', left: 45}}/>
-            <Menu style={{position: 'absolute', right: 47, top: 62}}>X% complete</Menu>
 
+
+          <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={()=>{}}/>
+          <NavLink className ="nav-link" to="">I was not working this week</NavLink>
+
+
+          <QuestionButton style={{position: 'absolute', right: 47}}/>
+          <ShoutoutButton style={{position: 'absolute', left: 45}}/>
+          <Menu style={{position: 'absolute', right: 47, top: 62}}>X% complete</Menu>
         </div>}
-
 
 
       { !isLoading && error && <p>{ error }</p> }

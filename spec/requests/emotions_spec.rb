@@ -4,6 +4,7 @@ require "passwordless/test_helpers"
 NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 
 RSpec.describe Api::V1::EmotionsController do
+  FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
   let!(:user) { create :user }
   let!(:emotion) { create(:emotion, :category => "positive") }
   let!(:emotion_neutral) do
@@ -11,7 +12,7 @@ RSpec.describe Api::V1::EmotionsController do
   end
 
   let!(:emotion_negative) do
-    18.times{ create(:emotion, :category => "negative") }
+    18.times { create(:emotion, :category => "negative") }
   end
 
   before(:each) do
@@ -27,6 +28,7 @@ RSpec.describe Api::V1::EmotionsController do
     it 'should returns a proper format of the JSON response' do
       get '/api/v1/emotions'
       expect(json.length).to eq(4)
+      expect(json[:time_period][:start_date]).to eq( Date.current.to_s )
       expected = json_data.first
       aggregate_failures do
         expect(expected[:id]).to eq(emotion.id.to_s)

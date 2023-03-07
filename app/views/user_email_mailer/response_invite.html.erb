@@ -20,8 +20,8 @@
   <div class="time"><%= "#{@view_calendar_days}" %></div>
 </div>
 <br/>
-<div class="question">Which word best describes work this week?</div>
-<table>
+<div class="question">Which word best describes how you felt work this week?</div>
+<div>
   <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
     <% emotion = [] %>
     <% emotion.push(@positive_emotions[index]) %>
@@ -30,10 +30,17 @@
     <% emotion.push(@neutral_emotions[index+1]) %>
     <% emotion.push(@negative_emotions[index]) %>
     <% emotion.push(@negative_emotions[index+1]) %>
-    <tr>
-      <td>
+    <div class="field_empty"></div>
+    <div class="field_emotions flex">
         <% 6.times do |i|%>
-          <%= button_to emotion[i].word,
+        <div class="<%= if i < 2
+                          "positive"
+                        else
+                          i > 3 ? "negative" : "neutral"
+                        end %>"
+                        style="width: <%= btn_special(emotion[i].word, :width)%>px;
+                        margin: 0 <%= btn_special(emotion[i].word, :margin)%>px;">
+          <%= link_to emotion[i].word,
                         { controller: "api/v1/responses",
                           action: "response_flow_from_email",
                           emotion_id: emotion[i].id,
@@ -41,26 +48,23 @@
                           user_id: @user.id
                         },
                         method: :post,
-                        class: "#{if i < 2
-                                    "positive"
-                                  else
-                                    i > 3 ? "negative" : "neutral"
-                                  end}",
-                        style: "width: #{btn_special(emotion[i].word, :width)}px; margin: #{btn_special(emotion[i].word, :margin)}px;" %>
+                        class: if i < 2
+                          "positive-a"
+                        else
+                          i > 3 ? "negative-a" : "neutral-a"
+                        end %>
+        </div>
           <% end %>
-      </td>
-    </tr>
+      </div>
 <% end %>
-</table>
+</div>
 <div class="share">Share it in your own words!</div>
-<!--<div class="own_word">-->
-<!--  <label>-->
-<!--    <input type="text" placeholder="Add your own word"/>-->
-<!--  </label>-->
-<!--</div>-->
-<%= button_to "Add your own word", emotion_entry_url, class: "button", method: :get %>
-
-<div class="link">
+<div class="own_word">
+  <div class="link_first">
+    <%= link_to "Add your own word", emotion_entry_url, method: :get, class:"link_text"%>
+  </div>
+</div>
+<div class="i_was_not">
   <%= link_to "I was not working this week", results_url %>
 </div>
 <div class="unsubscribe">

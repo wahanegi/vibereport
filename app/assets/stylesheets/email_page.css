@@ -80,6 +80,9 @@
     margin: 0 auto;
     margin-top: 5px;
 }
+.flex{
+    display: flex;
+}
 .in_left{
     margin: 35px 0 0 41px;
 }
@@ -176,19 +179,14 @@
 }
 /*</ListEmotions>*/
 
-table {
-    margin: 2% auto;
-    position: relative;
-    top: -10px;
-}
-table td {
-    padding: 5px;
-}
-.link {
+
+.nav-link {
     display: flex;
     justify-content: center;
     font-size: 23px;
     position: relative;
+    color: #0007A3;
+    top: 54px;
 }
 .positive,.neutral,.negative{
     /*width and margin have depends from words. See code*/
@@ -199,13 +197,28 @@ table td {
     text-align: center;
     /*margin: 0 25px;*/
     cursor: pointer;
+    padding-top: 5.6px;
 }
-.positive{
+.positive-a,.neutral-a,.negative-a{
+    font-weight: bold;
+    text-decoration: none;
+    height: 31px;
+    font-size: 19px;
+}
+.positive-a:hover,.neutral-a:hover,.negative-a:hover{
+    text-decoration: #0a53be;
+    font-weight: bold;
+    height: 31px;
+}
+.positive {
     color: #4F9B64;
     background: #CCEDD5;
     border: 1px solid #000000;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
+}
+.positive-a {
+    color: #4F9B64;
 }
 .negative{
     background: #FCDDCE;
@@ -214,6 +227,9 @@ table td {
     border-radius: 15px;
     color: #D1794E;
 }
+.negative-a {
+     color: #D1794E;
+ }
 .neutral{
     background: rgba(86, 137, 235, 0.3);
     border: 1px solid #000000;
@@ -221,6 +237,9 @@ table td {
     border-radius: 15px;
     color: #4C77CB;
 }
+.neutral-a {
+    color: #4C77CB;
+ }
 .share{
     width: 378px;
     height: 31px;
@@ -229,6 +248,7 @@ table td {
     text-align: center;
     color: rgba(0, 0, 0, 0.7);
     margin: 0 auto;
+    margin-top: 41px;
 }
 /*<ListEmotion*/
 .sh-new-pos{
@@ -242,7 +262,9 @@ table td {
     background: #FFFFFF;
     margin: 0 auto;
 }
-.own_word input{
+.link_first{
+    padding: 13px 19px 13px 27px;
+    /*padding-top: 11px;*/
     width: 385px;
     height: 70px;
     font-size: 36px;
@@ -251,9 +273,23 @@ table td {
     /*margin: 13px 23px;*/
     border: 3px solid #5689EB;
     border-radius: 19px;
-    padding-left: 23px;
+    /*padding-left: 23px;*/
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
 }
-.link{
+
+.link_text{
+    display: block;
+    width: 385px;
+    height: 70px;
+    font-size: 36px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration-line: none;
+    font-weight: 700;
+    padding: 13px;
+    margin: -15px -29px;
+}
+.i_was_not{
     width: 360px;
     height: 28px;
     font-size: 24px;

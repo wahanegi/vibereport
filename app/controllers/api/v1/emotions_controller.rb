@@ -18,10 +18,10 @@ class Api::V1::EmotionsController < ApplicationController
   def additional_params
     {
       current_user_id: current_user.id,
-      time_period: { 
-        id: TimePeriod.current.id, 
-        start_date: TimePeriod.current.start_date, 
-        end_date: TimePeriod.current.end_date 
+      time_period: {
+        id: TimePeriod.current.id,
+        start_date: TimePeriod.current.start_date,
+        end_date: TimePeriod.current.end_date
       },
       response: @current_response ? response_hash : {}
     }
