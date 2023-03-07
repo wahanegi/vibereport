@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/faker-ruby/faker.git
-  revision: 0f47ff04fec32445703323834ce824f9312a168c
-  branch: main
+  revision: a67007ae0a1b638775f0b67ecc1e32ffa9f4d417
   specs:
     faker (3.1.1)
       i18n (>= 1.8.11, < 2)
@@ -92,6 +91,7 @@ GEM
       activesupport (>= 3.0.0, < 7.1)
       ruby2_keywords (>= 0.0.2, < 1.0)
     ast (2.4.2)
+    awesome_print (1.9.2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -386,6 +386,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin (~> 2.13, >= 2.13.1)
   annotate
+  awesome_print (~> 1.9, >= 1.9.2)
   bootsnap
   capybara
   cssbundling-rails (~> 1.1, >= 1.1.2)

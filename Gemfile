@@ -4,9 +4,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 gem 'activeadmin', '~> 2.13', '>= 2.13.1'                     # The administration framework for Ruby on Rails
+gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted data structures in console.
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "devise", "~> 4.8"                                        # Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.8'                                        # Flexible authentication solution for Rails with Warden
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
@@ -25,12 +26,11 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not
 gem "passwordless", "~> 0.11.0"                               #A passwordless a.k.a. "magic link" login strategy
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[mri mingw x64_mingw] # Debugging functionality for Ruby.
-  gem 'factory_bot_rails'                         # Test data generator -- see spec/support/factory_helper.rb
-  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main' # Easy way to add fake data: names, email addresses, etc.
-  gem 'rspec-rails'                               # rspec-rails is a testing framework for Rails 5+.
-  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'        # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
+  gem 'debug', platforms: %i[mri mingw x64_mingw]                 # Debugging functionality for Ruby.
+  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'                        # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
+  gem 'factory_bot_rails'                                         # Test data generator -- see spec/support/factory_helper.rb
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git'  # Easy way to add fake data: names, email addresses, etc.
+  gem 'rspec-rails'                                               # rspec-rails is a testing framework for Rails 5+.
 end
 
 group :development do
@@ -46,8 +46,8 @@ group :test do
   gem 'capybara'                      # Capybara is an integration testing tool for rack based web applications. It simulates how a user would interact with a website
   gem 'rails-controller-testing'      # Extracting `assigns` and `assert_template` from ActionDispatch.
   gem 'selenium-webdriver'            # It aims to mimic the behaviour of a real user as it interacts with the application's HTML. It's primarily intended for web application testing, but any web-based task can automated.
-  gem "simplecov", require: false     # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'shoulda-callback-matchers'     # Matchers to test before, after and around hooks
   gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
+  gem 'simplecov', require: false     # Code coverage for Ruby. See https://github.com/simplecov-ruby/simplecov for setting options
   gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
 end
