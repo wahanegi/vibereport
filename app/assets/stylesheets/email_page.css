@@ -312,3 +312,15 @@
     position: relative;
     top: 39px;
 }
+/*FOR SVG FIX*/
+.module{
+    stroke-width: 0.111111;
+    stroke-linecap: round;
+}
+feFlood{
+    flood-opacity: 0;
+}
+filter{
+    color-interpolation-filters: sRGB;
+}
+
