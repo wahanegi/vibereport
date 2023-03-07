@@ -50,6 +50,7 @@ RSpec.describe TimePeriod, type: :model do
 
   context '#current' do
     it 'return current time period' do
+      TimePeriod.destroy_all
       current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
       expect(TimePeriod.current).to eq(current_time_period)
     end
