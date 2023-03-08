@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_04_075301) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_07_153637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,7 +63,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_04_075301) do
 
   create_table "responses", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "emotion_id", null: false
+    t.bigint "emotion_id"
+    t.boolean "not_working", default: false
     t.string "step"
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false

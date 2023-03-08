@@ -32,7 +32,7 @@
     <% emotion.push(@negative_emotions[index+1]) %>
     <div class="field_empty"></div>
     <div class="field_emotions flex">
-        <% 6.times do |i|%>
+      <% 6.times do |i|%>
         <div class="<%= if i < 2
                           "positive"
                         else
@@ -41,21 +41,21 @@
                         style="width: <%= btn_special(emotion[i].word, :width)%>px;
                         margin: 0 <%= btn_special(emotion[i].word, :margin)%>px;">
           <%= link_to emotion[i].word,
-                        { controller: "api/v1/responses",
-                          action: "response_flow_from_email",
-                          emotion_id: emotion[i].id,
-                          time_period_id: TimePeriod.current,
-                          user_id: @user.id
-                        },
-                        method: :post,
-                        class: if i < 2
-                          "positive-a"
-                        else
-                          i > 3 ? "negative-a" : "neutral-a"
-                        end %>
+                      { controller: "api/v1/responses",
+                        action: "response_flow_from_email",
+                        emotion_id: emotion[i].id,
+                        time_period_id: TimePeriod.current,
+                        user_id: @user.id
+                      },
+                      class: if i < 2
+                        "positive-a"
+                      else
+                        i > 3 ? "negative-a" : "neutral-a"
+                      end
+          %>
         </div>
-          <% end %>
-      </div>
+      <% end %>
+    </div>
 <% end %>
 </div>
 <div class="share">Share it in your own words!</div>
@@ -65,7 +65,10 @@
   </div>
 </div>
 <div class="i_was_not">
-  <%= link_to "I was not working this week", results_url %>
+  <%= link_to "I was not working this week", { controller: "api/v1/responses", action: "response_flow_from_email",
+                                               not_working: true, time_period_id: TimePeriod.current,
+                                               user_id: @user.id }
+  %>
 </div>
 <div class="unsubscribe">
   <%= link_to "Unsubscribe from future check-ins", "#"  %>

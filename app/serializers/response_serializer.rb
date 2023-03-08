@@ -3,10 +3,11 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  not_working    :boolean          default(FALSE)
 #  step           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  emotion_id     :bigint           not null
+#  emotion_id     :bigint
 #  time_period_id :bigint           not null
 #  user_id        :bigint           not null
 #

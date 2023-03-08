@@ -3,10 +3,11 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  not_working    :boolean          default(FALSE)
 #  step           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  emotion_id     :bigint           not null
+#  emotion_id     :bigint
 #  time_period_id :bigint           not null
 #  user_id        :bigint           not null
 #
@@ -25,9 +26,9 @@
 #
 class Response < ApplicationRecord
   belongs_to :time_period
-  belongs_to :emotion
+  belongs_to :emotion, optional: true
   belongs_to :user
 
   validates :user_id, uniqueness: { scope: :time_period_id }
-
+  validates :emotion_id, presence: true, unless: :not_working
 end

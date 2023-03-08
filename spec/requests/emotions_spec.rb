@@ -28,7 +28,9 @@ RSpec.describe Api::V1::EmotionsController do
     it 'should returns a proper format of the JSON response' do
       get '/api/v1/emotions'
       expect(json.length).to eq(4)
-      expect(json[:time_period][:start_date]).to eq( Date.current.to_s )
+      expect(json[:time_period][:id]).to eq( TimePeriod.current.id )
+      expect(json[:time_period][:start_date]).to eq( TimePeriod.current.start_date.to_s )
+      expect(json[:time_period][:end_date]).to eq( TimePeriod.current.end_date.to_s )
       expected = json_data.first
       aggregate_failures do
         expect(expected[:id]).to eq(emotion.id.to_s)

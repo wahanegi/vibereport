@@ -3,10 +3,11 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  not_working    :boolean          default(FALSE)
 #  step           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  emotion_id     :bigint           not null
+#  emotion_id     :bigint
 #  time_period_id :bigint           not null
 #  user_id        :bigint           not null
 #
@@ -26,9 +27,9 @@
 require 'rails_helper'
 
 RSpec.describe Response, type: :model do
-  let!(:user) { build :user}
-  let!(:time_period) { build :time_period }
-  let!(:emotion) { build :emotion }
+  let!(:user) { create :user}
+  let!(:time_period) { create :time_period }
+  let!(:emotion) { create :emotion }
   let(:response) { FactoryBot.build(:response, user: user, time_period: time_period, emotion: emotion) }
 
   context 'associations' do
@@ -41,7 +42,7 @@ RSpec.describe Response, type: :model do
     end
 
     it 'belongs to emotion' do
-      expect(response).to belong_to(:emotion)
+      expect(response).to belong_to(:emotion).optional
     end
   end
 
@@ -68,6 +69,11 @@ RSpec.describe Response, type: :model do
     it 'fails when user and time period not valid' do
       new_response = FactoryBot.build(:response, user_id: response.user_id, time_period_id: response.time_period_id)
       expect(new_response).not_to be_valid
+    end
+
+    it 'valid when emotion is absent for not worked user' do
+      response.not_working = true
+      expect(response).to be_valid
     end
   end
 end
