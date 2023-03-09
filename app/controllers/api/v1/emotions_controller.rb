@@ -13,6 +13,17 @@ class Api::V1::EmotionsController < ApplicationController
     end
   end
 
+  def create
+    # debugger
+    @emotion = Emotion.create(emotion_params)
+
+    if @emotion.save
+      render json: EmotionSerializer.new(@emotion).serializable_hash
+    else
+      render json: { error: @emotion.errors }, status: 422
+    end
+  end
+
   private
 
   def additional_params
@@ -46,5 +57,9 @@ class Api::V1::EmotionsController < ApplicationController
     three_set.concat(Emotion.positive.sample(NUMBER_OF_ELEMENTS))
     three_set.concat(Emotion.neutral.sample(NUMBER_OF_ELEMENTS))
     three_set.concat(Emotion.negative.sample(NUMBER_OF_ELEMENTS))
+  end
+
+  def emotion_params
+    params.require(:emotion).permit(:word, :category)
   end
 end

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/app', to: 'home#app'
   namespace :api do
     namespace :v1 do
-      resources :emotions, only: [:index]
+      resources :emotions, only: %i[index create]
       resources :responses, param: :id
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
     end
