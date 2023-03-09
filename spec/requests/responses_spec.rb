@@ -99,7 +99,7 @@ RSpec.describe Api::V1::ResponsesController do
   end
 
   describe '#update' do
-    subject { put "/api/v1/responses/#{user_response.id}", params: { response: {emotion_id: new_emotion.id, step: ''}, format: :json } }
+    subject { put "/api/v1/responses/#{user_response.id}", params: { response: { emotion_id: new_emotion.id, step: '' }, format: :json } }
 
     it 'update response' do
       subject

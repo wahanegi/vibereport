@@ -1,8 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
 import axios from "axios"
-import {getElementFromSelector} from "bootstrap/js/src/util";
-import Input from '../UI/Input'
 import {NavLink} from 'react-router-dom'
 import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
@@ -10,11 +8,7 @@ import ShoutoutButton from "../UI/ShoutoutButton";
 import {createResponse, updateResponse} from "../requests/axios_requests";
 import {useNavigate} from "react-router-dom";
 import {isEmpty} from "../helpers/helper";
-import {Button} from "react-bootstrap";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-
-
-// import styles from './ListEmotions.module.css'
 
 function ListEmotions(props) {
   const [emotions, setEmotions] = useState([])
@@ -54,30 +48,25 @@ function ListEmotions(props) {
           step: 'MemeSelection'
         }
       }
-      updateResponse(updatedResponse, setResponse)
-        .then(() => navigate(`/responses/${response.id}`))
+      updateResponse(updatedResponse, setResponse).then(() => navigate(`/responses/${response.id}`))
     }
   }
 
-  const range_format = tp => {
+  const rangeFormat = (tp) => {
     let start_date = new Date(tp.start_date)
     let end_date = new Date(tp.end_date)
     let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
     return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
   }
 
-  const categoryToWords = attr =>  attr === 1 ? "positive" : attr === 3 ? "negative" : "neutral"
+  const categoryToWords = (attr) =>  attr === 1 ? "positive" : attr === 3 ? "negative" : "neutral"
 
-  const mix_up = index => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
-
-  console.log( 'response:', response)
-  console.log( 'emotions:', emotions)
-  console.log( 'timePeriod:', timePeriod)
-  console.log( 'curUserId:', curUserId)
+  const mixUp = (index) => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
 
   return (
     <Fragment>
-      { !isLoading && !error &&
+        {isLoading ? ( <p>...Loading</p> ) : error ? ( <p>{error}</p>
+        ) : (
         <div>
           <div className="convert increased-convert in_left">
             <p>Logo/Brand</p>
@@ -94,7 +83,7 @@ function ListEmotions(props) {
             </div>
             <div className="top-div"></div>
             <div className="time">
-              {range_format(timePeriod)}
+              {rangeFormat(timePeriod)}
             </div>
           </div>
           <br/>
@@ -103,28 +92,21 @@ function ListEmotions(props) {
               <div className='field_emotions'>
                 {emotions.map((emotion, index) =>
                    <ButtonEmotion key={emotion.id}
-                                  category={emotions[mix_up(index+1)].attributes.category}
-                                  onClick={() => clickHandling(emotions[mix_up(index+1)].id, timePeriod.id, navigate, response)}>{emotions[mix_up(index+1)].attributes.word}
+                                  category={emotions[mixUp(index+1)].attributes.category}
+                                  onClick={() => clickHandling(emotions[mixUp(index+1)].id, timePeriod.id, navigate, response)}>{emotions[mixUp(index+1)].attributes.word}
                      
                    </ButtonEmotion>
                 )}
               </div>
             <div className='field_empty'></div>
           <div className="share sh-new-pos">Share it in your own words!</div>
-
-
           <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={()=>{}}/>
           <NavLink className ="nav-link" to="">I was not working this week</NavLink>
-
-
           <QuestionButton style={{position: 'absolute', right: 47}}/>
           <ShoutoutButton style={{position: 'absolute', left: 45}}/>
           <Menu style={{position: 'absolute', right: 47, top: 62}}>X% complete</Menu>
-        </div>}
-
-
-      { !isLoading && error && <p>{ error }</p> }
-      { isLoading && !error && <p>...Loading </p> }
+        </div>
+        )}
     </Fragment>
   );
 }

@@ -1,19 +1,19 @@
 require 'rails_helper'
-RSpec.describe "Admin::EmotionSelectionPage", type: :request do
+RSpec.describe 'Admin::EmotionSelectionPage', type: :request do
   let!(:admin_user) { create :admin_user }
   before { sign_in admin_user }
 
-  describe "GET - index" do
-    it "renders the index page" do
-      get "/admin/emotions"
+  describe 'GET - index' do
+    it 'renders the index page' do
+      get '/admin/emotions'
       expect(response).to have_http_status(200)
     end
   end
 
-  describe "GET - Show" do
+  describe 'GET - Show' do
     let(:emotion) { create :emotion }
 
-    it "renders the show page" do
+    it 'renders the show page' do
       get "/admin/emotions/#{emotion.id}"
       expect(response).to have_http_status(200)
     end

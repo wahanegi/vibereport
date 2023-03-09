@@ -20,7 +20,7 @@ module Api
         if @response.save
           render json: ResponseSerializer.new(@response).serializable_hash
         else
-          render json: {error: @response.errors }, status: 422
+          render json: { error: @response.errors }, status: :unprocessable_entity
         end
       end
 
@@ -28,7 +28,7 @@ module Api
         if @response.update(response_params)
           render json: ResponseSerializer.new(@response).serializable_hash
         else
-          render json: {error: @response.errors }, status: 422
+          render json: { error: @response.errors }, status: :unprocessable_entity
         end
       end
 
@@ -40,7 +40,7 @@ module Api
         result = ResponseFlowFromEmail.new(params, @user).call
         return redirect_to "/responses/#{result[:response].id}" if result[:success]
 
-        render json: {error: result[:error] }, status: 422
+        render json: { error: result[:error] }, status: :unprocessable_entity
       end
 
       private
@@ -69,7 +69,7 @@ module Api
         response = ResponseNotWorkingFromEmail.new(params, @user).call
         return redirect_to results_path if response[:success]
 
-        render json: {error: response[:error] }, status: 422
+        render json: { error: response[:error] }, status: :unprocessable_entity
       end
     end
   end

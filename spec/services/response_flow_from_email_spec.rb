@@ -4,7 +4,7 @@ describe Api::V1::ResponseFlowFromEmail do
   let!(:user) { create :user}
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
-  let!(:params) { { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id} }
+  let!(:params) { { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id } }
 
   subject { Api::V1::ResponseFlowFromEmail.new(params, user).call }
 
