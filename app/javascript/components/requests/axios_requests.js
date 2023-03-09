@@ -6,11 +6,11 @@ export const createCsrfToken = () => {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 }
 
-export const createResponse = async (emotion_id, time_period_id, navigate, step) => {
+export const createResponse = async (emotion_id, time_period_id, navigate, step, not_working = false) => {
   createCsrfToken()
-  await axios.post('/api/v1/responses', {emotion_id, time_period_id, step})
+  await axios.post('/api/v1/responses', {emotion_id, time_period_id, step, not_working})
     .then(resp => {
-      navigate(`/responses/${resp.data.data.id}`)
+      not_working ? navigate(`/app/results`) : navigate(`/responses/${resp.data.data.id}`)
     })
     .catch(resp => {console.log(resp)})
 }

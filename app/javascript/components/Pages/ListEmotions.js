@@ -52,6 +52,23 @@ function ListEmotions(props) {
     }
   }
 
+  const onClickNotWorking = (timePeriod_id, navigate, response) => {
+    if (isEmpty(response)) {
+      createResponse('', timePeriod_id, navigate, '', false)
+    } else {
+      const updatedResponse = {
+        ...response,
+        attributes: {
+          ...response.attributes,
+          emotion_id: '',
+          step: '',
+          not_working: true
+        }
+      }
+      updateResponse(updatedResponse, setResponse).then(() => navigate(`/app/results`))
+    }
+  }
+
   const rangeFormat = (tp) => {
     let start_date = new Date(tp.start_date)
     let end_date = new Date(tp.end_date)
@@ -101,7 +118,9 @@ function ListEmotions(props) {
             <div className='field_empty'></div>
           <div className="share sh-new-pos">Share it in your own words!</div>
           <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={()=>{}}/>
-          <NavLink className ="nav-link" to="">I was not working this week</NavLink>
+          <NavLink className="nav-link" onClick={() => onClickNotWorking(timePeriod.id, navigate, response)}>
+            I was not working this week
+          </NavLink>
           <QuestionButton style={{position: 'absolute', right: 47}}/>
           <ShoutoutButton style={{position: 'absolute', left: 45}}/>
           <Menu style={{position: 'absolute', right: 47, top: 62}}>X% complete</Menu>
