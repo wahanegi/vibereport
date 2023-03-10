@@ -17,8 +17,10 @@ export const createResponse = async (emotion_id, time_period_id, navigate, step)
 
 export const updateResponse = async (response, setResponse) => {
   createCsrfToken()
+  console.log("before resp=", response);
   await axios.patch(`/api/v1/responses/${response.id}`, response.attributes)
     .then(resp => {
+      console.log("after resp=", resp);
       setResponse({...resp.data.data})
     })
     .catch(resp => {console.log(resp)})

@@ -3,7 +3,7 @@ import ButtonEmotion from "../UI/ButtonEmotion"
 import axios from "axios"
 import {getElementFromSelector} from "bootstrap/js/src/util";
 import Input from '../UI/Input'
-import {NavLink} from 'react-router-dom'
+import {Navigate, NavLink} from 'react-router-dom'
 import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
 import ShoutoutButton from "../UI/ShoutoutButton";
@@ -12,24 +12,27 @@ import {useNavigate} from "react-router-dom";
 import {isEmpty} from "../helpers/helper";
 import {Button} from "react-bootstrap";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
+import MemeSelection from "./MemeSelection";
 
 
-// import styles from './ListEmotions.module.css'
 
-function ListEmotions(props) {
-  const [emotions, setEmotions] = useState([])
-  const [timePeriod, setTimePeriod] = useState({})
+function ListEmotions({ data,  setData }) {
+  const [emotions, setEmotions] = useState(data.data)
+  const [timePeriod, setTimePeriod] = useState(data.time_period)
   const [curUserId, setCurUserId] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const navigate = useNavigate();
-  const [response, setResponse] = useState({})
+  const [response, setResponse] = useState(data.response)
 
+  // READING DATA FROM MODEL RESPONSE
   useEffect(()=>{
+    if (response.length === 0) {
     setIsLoading(true)
     axios.get('/api/v1/emotions.json')
       .then( response => {
-        const received = response.data
+        setData(response)
+        let received = response.data
         setEmotions(received.data)
         setTimePeriod(received.time_period)
         setCurUserId(received.current_user_id)
@@ -40,9 +43,12 @@ function ListEmotions(props) {
         setError(error.message)
         setIsLoading(false)
       })
+    }
   },[])
 
-  const clickHandling = (emotion_id, timePeriod_id, navigate, response) => {
+
+
+  const clickHandling = (emotion_word, emotion_id, timePeriod_id, navigate, response , category) => {
     if (isEmpty(response)) {
       createResponse(emotion_id, timePeriod_id, navigate, 'MemeSelection')
     } else {
@@ -51,33 +57,40 @@ function ListEmotions(props) {
         attributes: {
           ...response.attributes,
           emotion_id,
-          step: 'MemeSelection'
+          word: emotion_word,
+          category: category,
+          step: JSON.stringify(['ListEmotions','MemeSelection'])
         }
       }
+      console.log(" response.attributes:", response.attributes)
+      console.log("updateResponse.attributes:", updatedResponse.attributes)
+      console.log({...data, response: {...data.response, attributes: {...updatedResponse.attributes}}})
+      setData({...data, response: {...data.response, attributes: {...updatedResponse.attributes}}})
       updateResponse(updatedResponse, setResponse)
-        .then(() => navigate(`/responses/${response.id}`))
+        .then(() => {navigate(`/MemeSelection?word=${emotion_word}&id=${emotion_id}`)})
+        // .then(()=>{<MemeSelection />})
     }
   }
 
   const range_format = tp => {
     let start_date = new Date(tp.start_date)
-    let end_date = new Date(tp.end_date)
-    let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
+    let   end_date = new Date(tp.end_date)
+    let      month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
     return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
   }
 
-  const categoryToWords = attr =>  attr === 1 ? "positive" : attr === 3 ? "negative" : "neutral"
+  // const categoryToWords = attr =>  attr === 1 ? "positive" : attr === 3 ? "negative" : "neutral"
 
   const mix_up = index => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
 
-  console.log( 'response:', response)
-  console.log( 'emotions:', emotions)
-  console.log( 'timePeriod:', timePeriod)
-  console.log( 'curUserId:', curUserId)
+  // console.log( 'response:', response)
+  // console.log( 'emotions:', emotions)
+  // console.log( 'timePeriod:', timePeriod)
+  // console.log( 'curUserId:', curUserId)
 
   return (
     <Fragment>
-      { !isLoading && !error &&
+      { !isLoading && !error && !!emotions.length &&
         <div>
           <div className="convert increased-convert in_left">
             <p>Logo/Brand</p>
@@ -104,7 +117,14 @@ function ListEmotions(props) {
                 {emotions.map((emotion, index) =>
                    <ButtonEmotion key={emotion.id}
                                   category={emotions[mix_up(index+1)].attributes.category}
-                                  onClick={() => clickHandling(emotions[mix_up(index+1)].id, timePeriod.id, navigate, response)}>{emotions[mix_up(index+1)].attributes.word}
+                                  onClick={() =>
+                                    clickHandling(
+                                      emotions[mix_up(index+1)].attributes.word,
+                                      emotions[mix_up(index+1)].id,
+                                      timePeriod.id,
+                                      navigate, response,
+                                      emotions[mix_up(index+1)].attributes.category
+                                  )}>{emotions[mix_up(index+1)].attributes.word}
                      
                    </ButtonEmotion>
                 )}

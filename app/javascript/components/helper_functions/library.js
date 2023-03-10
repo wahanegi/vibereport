@@ -1,3 +1,5 @@
+
+
 export function special_prop(word, attr) {
   const minWidth = 130
   const maxWidth = 175
@@ -19,3 +21,5 @@ switch (attr) {
     return 0
   }
 }
+
+export const categoryToWords = attr =>  attr === 1 ? "positive" : attr === 3 ? "negative" : "neutral"
