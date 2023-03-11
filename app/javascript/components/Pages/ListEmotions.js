@@ -14,7 +14,11 @@ import {Button} from "react-bootstrap";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 import MemeSelection from "./MemeSelection";
 
-
+// Below what we have in the data. See variable emotionDataRespUserIdTimePeriod in the App.js
+//               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
+//               response:{attributes: {step: "[\"ListEmotions\"]", word:""}},
+//               current_user_id: ...,
+//               time_period:{...}
 
 function ListEmotions({ data,  setData }) {
   const [emotions, setEmotions] = useState(data.data)
@@ -28,6 +32,7 @@ function ListEmotions({ data,  setData }) {
   // READING DATA FROM MODEL RESPONSE
   useEffect(()=>{
     if (response.length === 0) {
+      console.log("<ListEmotions>", "start UseEffect","</ListEmotions>")
     setIsLoading(true)
     axios.get('/api/v1/emotions.json')
       .then( response => {
@@ -53,33 +58,70 @@ function ListEmotions({ data,  setData }) {
 
       // createResponse(emotion_id, timePeriod_id, navigate, ['ListEmotions','MemeSelection'])
     // } else {
-    console.log('CLICK_HANDLING')
-      const updatedResponse = {
-        ...response,
-        attributes: {
-          ...response.attributes,
-          emotion_id,
-          word: emotion_word,
-          category: category,
-          step: JSON.stringify(['ListEmotions','MemeSelection'])
-        }
-      }
-      console.log(" response.attributes:", response.attributes)
-      console.log("updateResponse.attributes:", updatedResponse.attributes)
-      let temp_data = {...data, response: {...data.response, attributes: {...updatedResponse.attributes}}}
-      console.log("temp_data = ", temp_data)
+
+    console.log("<ListEmotions>", "CLICK_HANDLING")
+      // const updatedResponse = {
+      //   ...response,
+      //   attributes: {
+      //     ...response.attributes,
+      //     emotion_id,
+      //     word: emotion_word,
+      //     category: category,
+      //     id: data.current_user_id,
+      //     timePeriod_id: data.time_period.id,
+      //     step: JSON.stringify(['ListEmotions','MemeSelection'])
+      //   }
+      // }
+      // console.log(" response.attributes:", data.response.attributes)
+      // console.log("updateResponse.attributes:", updatedResponse.attributes)
+      // let merge_data = {...data, response: {...data.response, attributes: {...updatedResponse.attributes}}}
+      // console.log("merge_data = ", merge_data)
+    let dataRequest = {response:{
+        emotion_id: emotion_id,
+        word: emotion_word,
+        category: category,
+        id: data.current_user_id,
+        time_period_id: data.time_period.id,
+        step: JSON.stringify(['ListEmotions','MemeSelection'])
+      }}
+    console.log("dataRequest=",dataRequest)
       // setData({...data, response: {...data.response, attributes: {...updatedResponse.attributes}}})
+    //request to the Response controller
     if (data.response.attributes.word ==="") {
-        apiRequest("POST", temp_data.response.attributes, setData, redirect)
+      //create new record in the Response table
+        apiRequest("POST", dataRequest, mergeData, navigate('/MemeSelection'))
       }else{
-        apiRequest("PATCH", temp_data, setData, redirect)
+      //update record in the Response table
+        apiRequest("PATCH", dataRequest, mergeData, navigate('/MemeSelection'))
       }
-      updateResponse(updatedResponse, setResponse)
+      // updateResponse(updatedResponse, setResponse)
+    console.log( "CLICK_HANDLING","</ListEmotions>")
     //     .then(() => {navigate(`/MemeSelection?word=${emotion_word}&id=${emotion_id}`)})
     //     // .then(()=>{<MemeSelection />})
     // }
   }
-  const redirect = (navigate) => {navigate('/MemeSelection')}
+  // const redirect = () => {
+  //   console.log("navigate",JSON.parse(data.response.attributes.step))
+  //   navigate(JSON.parse(data.response.attributes.step).pop())
+  // }
+
+  //include received data in the apiRequest to the variable data (emotionDataRespUserIdTimePeriod in App)
+  const mergeData = (receivedData) =>{
+    setData({
+    ...data,
+      response: {
+      ...data.response,
+        attributes: {
+        ...receivedData.attributes}}
+    })
+    console.log("<ListEmotions>", "mergeData",{
+      ...data,
+      response: {
+        ...data.response,
+        attributes: {
+          ...receivedData.attributes}}
+    },"</ListEmotions>")
+  }
 
   const range_format = tp => {
     let start_date = new Date(tp.start_date)
