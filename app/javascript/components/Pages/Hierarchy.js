@@ -37,11 +37,9 @@ const Hierarchy = ({step, data, setData}) => {
   const saveDataToAttributes =( receivedData ) =>{
     setIsLoading(false)
     mergeData( receivedData, data, setData )
-    console.log("navigate", receivedData.attributes.step)
     navigate(`/${JSON.parse(receivedData.attributes.step).pop()}`)
   }
 
-  console.log("<Hierarchy >", data, "</Hierarchy>")
   switch (step) {
     case  "ListEmotions" :
       return <ListEmotions data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />

@@ -21,13 +21,12 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   const clickHandling = (emotion_word, emotion_id, timePeriod_id, category) => {
     steps.push('MemeSelection')
     const dataRequest = {
-      response:{
         emotion_id: emotion_id,
         word: emotion_word,
         category: category,
         id: data.current_user_id,
         time_period_id: data.time_period.id
-      }}
+      }
     saveDataToDb( steps, dataRequest )
   }
 
