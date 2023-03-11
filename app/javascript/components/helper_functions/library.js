@@ -23,7 +23,7 @@ switch (attr) {
 }
 
 
-export  const mergeData = (receivedData, data,  setData) =>{
+export  const mergeData = (receivedData, data, setData) =>{
   setData({
     ...data,
     response: {
