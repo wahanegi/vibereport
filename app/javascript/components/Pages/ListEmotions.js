@@ -60,6 +60,8 @@ function ListEmotions({ data,  setData }) {
     return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
   }
 
+  //*** **transformation of table** to the view:
+  //*** 6+6(positive columns) 6+6(neutral columns) and 6+6(negative columns)
   const mix_up = index => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
 
   return (
