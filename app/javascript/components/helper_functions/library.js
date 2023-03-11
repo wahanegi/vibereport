@@ -22,4 +22,13 @@ switch (attr) {
   }
 }
 
-export const categoryToWords = attr =>  attr === 1 ? "positive" : attr === 3 ? "negative" : "neutral"
+
+export  const mergeData = (receivedData, data,  setData) =>{
+  setData({
+    ...data,
+    response: {
+      ...data.response,
+      attributes: {
+        ...receivedData.attributes}}
+  })
+}

@@ -6,40 +6,23 @@ import {updateResponse} from "../requests/axios_requests";
 import {isEmpty} from "../helpers/helper";
 import BackButton from "../UI/BackButton";
 
-// Below what we have in the data after ListEmotion(example). See variable emotionDataRespUserIdTimePeriod in the App.js
-//               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
-//               response:{attributes: {step: "[\"ListEmotions\", "\MemeSelection"]",
-//                                      word:"awesome"},
-//                                      category: "positive",
-//                                      emotion_id:1,
-//                                      time_period_id: 1,
-//                                      id: 1},
-//               current_user_id: 1,
-//               time_period:{...}
-
+//*** Below what we have in the data after ListEmotion(example). See variable **emotionDataRespUserIdTimePeriod** in the App.js
+//***               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
+//***               response:{attributes: {step: "[\"ListEmotions\", "\MemeSelection"]",
+//***                                      word:"awesome"},
+//***                                      category: "positive",
+//***                                      emotion_id:1,
+//***                                      time_period_id: 1,
+//***                                      id: 1},
+//***               current_user_id: 1,
+//***               time_period:{...}
 const MemeSelection = ({data, setData}) => {
-  const emotion_id = data.response.attributes.emotion_id
-  const useSearchParams  = ReactRouterDOM.useSearchParams
   const [response, setResponse] = useState({})
 
   const navigate = useNavigate();
   const steps = JSON.parse(data.response.attributes.step)
-  const find = data.data.find(element => element.id === emotion_id)
-
-  console.log("find=", find)
-  if (find === undefined) {
-    steps.pop()
-    console.log("find === undefined - ", steps)
-    const updatedResponse = {
-      ...data.response,
-      attributes: {
-        ...data.response.attributes,
-        step: JSON.stringify(steps)
-      }
-    }
-    setData({...data, response: {...data.response, attributes: {...updatedResponse.attributes}}})
-    updateResponse(updatedResponse, setResponse)
-  }
+  const emotionId = data.response.attributes.emotion_id
+  const emotionWord = data.response.attributes.word
 
   const skipHandling =()=>{
     steps.push('FollowUpPosWordOnly')
@@ -93,7 +76,7 @@ const MemeSelection = ({data, setData}) => {
   return(
     <Fragment>
       <h1>You choose such emotion word
-        {" " + data.data.find(element => element.id === emotion_id).attributes.word} with id = {emotion_id}
+        {" " + emotionWord} with id = {emotionId}
       </h1>
       <div><BackButton data={data} setData={setData}>Back</BackButton></div>
       <div><Button onClick={skipHandling}>Skip</Button></div>

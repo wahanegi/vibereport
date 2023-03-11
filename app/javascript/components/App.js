@@ -35,6 +35,27 @@ const App = () => {
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
 
 
+  //*** This is block apply for setup a browser history state.
+  //*** If user went from email-box  and **click on the button "Back" in the browser**, so
+  //*** user will be redirecting on other pages in relative with history in the DB (field :step in the response table)
+  //*** This block in DEVELOPING! NO WORKING**
+  const initialization = (data) => {
+    let arrWithSteps = JSON.parse(data.data.response.attributes.step)
+
+    window.onpopstate = (event) => {
+    let index = arrWithSteps.indexOf(step)
+    let state = JSON.stringify(event.state)
+    for (let i = index; i >= 0; i--) {
+      window.history.pushState(null, document.title, `/${arrWithSteps[i]}`)
+      console.log(i)
+    }
+  }
+
+    console.log(`location: ${document.location}, state: ${JSON.stringify(event.state)}`);
+    console.log("arrWithSteps", arrWithSteps)
+  }
+
+
   useEffect(()=>{
     if (isNotLoadedData) {
       setIsLoading(true)
@@ -50,6 +71,7 @@ const App = () => {
         //        }
         .then(data => {
           setIsNotLoadedData(false)
+          initialization(data)
           let arrWithSteps = JSON.parse(data.data.response.attributes.step)
           //save data:{Emotions}, response:{attributes}, current_user_id, time_period
           setEmotionDataRespUserIdTimePeriod(data.data)
