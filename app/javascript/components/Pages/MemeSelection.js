@@ -6,6 +6,17 @@ import {updateResponse} from "../requests/axios_requests";
 import {isEmpty} from "../helpers/helper";
 import BackButton from "../UI/BackButton";
 
+// Below what we have in the data after ListEmotion(example). See variable emotionDataRespUserIdTimePeriod in the App.js
+//               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
+//               response:{attributes: {step: "[\"ListEmotions\", "\MemeSelection"]",
+//                                      word:"awesome"},
+//                                      category: "positive",
+//                                      emotion_id:1,
+//                                      time_period_id: 1,
+//                                      id: 1},
+//               current_user_id: 1,
+//               time_period:{...}
+
 const MemeSelection = ({data, setData}) => {
   const emotion_id = data.response.attributes.emotion_id
   const useSearchParams  = ReactRouterDOM.useSearchParams

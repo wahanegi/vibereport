@@ -89,10 +89,10 @@ function ListEmotions({ data,  setData }) {
     //request to the Response controller
     if (data.response.attributes.word ==="") {
       //create new record in the Response table
-        apiRequest("POST", dataRequest, mergeData, navigate('/MemeSelection'))
+        apiRequest("POST", dataRequest, mergeData )
       }else{
       //update record in the Response table
-        apiRequest("PATCH", dataRequest, mergeData, navigate('/MemeSelection'))
+        apiRequest("PATCH", dataRequest, mergeData )
       }
       // updateResponse(updatedResponse, setResponse)
     console.log( "CLICK_HANDLING","</ListEmotions>")
@@ -100,10 +100,13 @@ function ListEmotions({ data,  setData }) {
     //     // .then(()=>{<MemeSelection />})
     // }
   }
-  // const redirect = () => {
-  //   console.log("navigate",JSON.parse(data.response.attributes.step))
-  //   navigate(JSON.parse(data.response.attributes.step).pop())
-  // }
+
+  // useEffect(()=>{
+  //   const redirect = () => {
+  //     console.log("navigate",JSON.parse(data.response.attributes.step))
+  //     navigate(JSON.parse(data.response.attributes.step).pop())
+  //   }  },[data])
+
 
   //include received data in the apiRequest to the variable data (emotionDataRespUserIdTimePeriod in App)
   const mergeData = (receivedData) =>{
@@ -121,6 +124,7 @@ function ListEmotions({ data,  setData }) {
         attributes: {
           ...receivedData.attributes}}
     },"</ListEmotions>")
+    navigate('/MemeSelection')
   }
 
   const range_format = tp => {

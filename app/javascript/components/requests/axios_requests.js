@@ -36,15 +36,20 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
   switch (method) {
     case "POST":
       await axios.post(url, data)
-        .then(response => {setData(response.data.data)})
+        .then(response => {
+          setData(response.data.data)
+          redirect()
+        })
         .catch(resp => {console.log(resp)})
         break
     case "PATCH":
       await axios.patch(url+"/1", data)
-        .then(response => {setData(response.data.data)})
+        .then(response => {
+          setData(response.data.data)
+          redirect()
+        })
         .catch(resp => {console.log(resp)})
       break
     default: 0
   }
-  redirect()
 }
