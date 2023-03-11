@@ -10,8 +10,6 @@ const FollowUpPosWordOnly = ({data, setData, saveDataToDb, steps, service}) => {
       saveDataToDb( steps, {})
     }
 
-
-
   return (
     <Fragment>
       { !!error && <p>{error.message}</p>}

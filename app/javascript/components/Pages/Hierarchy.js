@@ -20,8 +20,8 @@ const Hierarchy = ({step, data, setData}) => {
   const service = { isLoading,  error }
 
   //*** **setError** - Hook for handling error messages
-  //*** **steps** - array with steps of user for update in DB
-  //*** **addedData** - necessary data (and future data) for update in DB by using Response controller
+  //*** **steps** - array with steps of user for update or save in DB
+  //*** **addedData** - necessary data (and future data) for update or save in DB by using Response controller
   //*** Format addedData = **{key: value, ...., key(n): value(n)}**
   const saveDataToDb = ( steps, addedData = {}) =>{
     const dataRequest = {response:{step: JSON.stringify(steps),...addedData}}
