@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import BackButton from "../UI/BackButton";
 import {Button} from "react-bootstrap";
 
-const SelectedGiphyFollow = ({data, setData}) => {
-  const nextHandling = () => {
+const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, system}) => {
+  const {isLoading, error} = system
 
+  const handlingOnClickNext = () => {
+    steps.push('FollowUpPosMeme')
+    saveDataToDb( steps, {})
   }
+
   return (
+    <Fragment>
+      { !!error && <p>{error.message}</p>}
+      { !isLoading && !error  &&
     <div>
       <h1>2.25 SelectedGIPHYFollow</h1>
         <div>
@@ -22,9 +29,10 @@ const SelectedGiphyFollow = ({data, setData}) => {
           <BackButton data={data} setData={setData}>Back</BackButton>
         </div>
         <div>
-          |<Button onClick={nextHandling}>Next</Button>
+          |<Button onClick={handlingOnClickNext}>Next</Button>
         </div>
-    </div>
+    </div>}
+    </Fragment>
   );
 };
 

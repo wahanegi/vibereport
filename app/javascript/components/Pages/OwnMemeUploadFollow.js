@@ -1,12 +1,20 @@
-import React from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import BackButton from "../UI/BackButton";
 import {Button} from "react-bootstrap";
 
-const OwnMemeUploadFollow = ({data, setData}) => {
-  const nextHandling = () => {
+const OwnMemeUploadFollow = ({data, setData, saveDataToDb, steps, system}) => {
+  const {isLoading, error} = system
 
+  const handlingOnClickNext = () => {
+    steps.push('FollowUpPosMeme')
+    console.log(steps)
+    saveDataToDb( steps, {})
   }
+
   return (
+    <Fragment>
+      { !!error && <p>{error.message}</p>}
+      { !isLoading && !error  &&
     <div>
       <div>
         <h1>2.26 OwnMemeUploadFollow</h1>
@@ -24,9 +32,10 @@ const OwnMemeUploadFollow = ({data, setData}) => {
         <BackButton data={data} setData={setData}>Back</BackButton>
       </div>
       <div>
-        |<Button onClick={nextHandling}>Next</Button>
+        |<Button onClick={handlingOnClickNext}>Next</Button>
       </div>
-    </div>
+    </div>}
+    </Fragment>
   );
 };
 

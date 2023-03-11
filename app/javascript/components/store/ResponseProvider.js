@@ -5,6 +5,7 @@ const defaultResponseState = {
   items: {}
 };
 
+// FOR FUTURE. NOT READY
 const responseReducer  = (state, action) => {
   if (action.type === "UPDATE"){
 

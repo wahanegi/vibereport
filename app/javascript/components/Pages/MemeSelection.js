@@ -12,38 +12,31 @@ import BackButton from "../UI/BackButton";
 //***                                      id: 1},
 //***               current_user_id: 1,
 //***               time_period:{...}
-const MemeSelection = ({data, setData, saveDataToDb}) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(false)
-
-  const steps = JSON.parse(data.response.attributes.step)
+const MemeSelection = ({data, setData, saveDataToDb, steps, system}) => {
+  const {isLoading, error} = system
   const emotionId = data.response.attributes.emotion_id
   const emotionWord = data.response.attributes.word
 
   const handlingOnClickSkip = () =>{
-    setIsLoading(true)
     steps.push('FollowUpPosWordOnly')
-    saveDataToDb( setError, steps ,{})
+    saveDataToDb( steps ,{})
     }
 
   const chooseGIPHYHandling=()=>{
     steps.push('SelectedGIPHYFollow')
-    saveDataToDb( setError, steps ,{})
+    saveDataToDb( steps ,{})
   }
   const uploadGIPHYHandling=()=>{
     steps.push('OwnMemeUploadFollow')
-    saveDataToDb( setError, steps ,{})
+    saveDataToDb( steps ,{})
   }
-
-  useEffect(()=>{
-    setIsLoading(false)
-  },[data])
 
   return(
     <Fragment>
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
       <div>
+        <h1>2.0 MemeSelection</h1>
         <h1>You choose such emotion word
           {" " + emotionWord} with id = {emotionId}
         </h1>
