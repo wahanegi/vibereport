@@ -17,7 +17,7 @@ const Hierarchy = ({step, data, setData}) => {
   const [error, setError] = useState(false)
   const steps = JSON.parse(data.response.attributes.step)
   const navigate = useNavigate()
-  const system = { isLoading,  error }
+  const service = { isLoading,  error }
 
   //*** **setError** - Hook for handling error messages
   //*** **steps** - array with steps of user for update in DB
@@ -44,43 +44,43 @@ const Hierarchy = ({step, data, setData}) => {
   console.log("<Hierarchy >", data, "</Hierarchy>")
   switch (step) {
     case  "ListEmotions" :
-      return <ListEmotions data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <ListEmotions data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "MemeSelection" :
-      return <MemeSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <MemeSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "EmotionEntry" :
-      return <EmotionEntry data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <EmotionEntry data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "SelectedGIPHYFollow" :
-      return <SelectedGIPHYFollow data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <SelectedGIPHYFollow data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "OwnMemeUploadFollow" :
-      return <OwnMemeUploadFollow data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <OwnMemeUploadFollow data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "FollowUpPosWordOnly" :
-      return <FollowUpPosWordOnly data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <FollowUpPosWordOnly data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "FollowUpPosMeme" :
-      return <FollowUpPosMeme data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <FollowUpPosMeme data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "ProductivityCheckLow" :
-      return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+      return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "ProductivityBadFollowUp" :
-    //   return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "CausesToCelebrate" :
-    //   return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "ShoutoutPromptNone" :
-    //   return <ShoutoutPromptNone data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <ShoutoutPromptNone data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "ShoutoutModalExample" :
-    //   return <ShoutoutModalExample data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <ShoutoutModalExample data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "ShoutoutModal_FlexUse" :
-    //   return <ShoutoutModal_FlexUse data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <ShoutoutModal_FlexUse data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "Icebreaker" :
-    //   return <Icebreaker data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <Icebreaker data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "MemeWallThisWeekSoFar" :
-    //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "MemeWallPrevWeek" :
-    //   return <MemeWallPrevWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <MemeWallPrevWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "MemeWallThisWeek" :
-    //   return <MemeWallThisWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <MemeWallThisWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "MemeWallThisWeekSoFarDrop" :
-    //   return <MemeWallThisWeekSoFarDrop data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <MemeWallThisWeekSoFarDrop data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     // case  "PromptEmailResults" :
-    //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} system={system} />
+    //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     default:
       0
   }

@@ -12,8 +12,8 @@ import BackButton from "../UI/BackButton";
 //***                                      id: 1},
 //***               current_user_id: 1,
 //***               time_period:{...}
-const MemeSelection = ({data, setData, saveDataToDb, steps, system}) => {
-  const {isLoading, error} = system
+const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
+  const {isLoading, error} = service
   const emotionId = data.response.attributes.emotion_id
   const emotionWord = data.response.attributes.word
 

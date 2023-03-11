@@ -2,8 +2,8 @@ import React, {Fragment, useEffect, useState} from 'react';
 import BackButton from "../UI/BackButton";
 import {Button} from "react-bootstrap";
 
-const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, system}) => {
-  const {isLoading, error} = system
+const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service}) => {
+  const {isLoading, error} = service
 
   const handlingOnClickNext = () => {
     steps.push('FollowUpPosMeme')

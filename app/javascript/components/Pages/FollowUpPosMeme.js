@@ -2,8 +2,8 @@ import React, {Fragment} from 'react';
 import BackButton from "../UI/BackButton";
 import {Button} from "react-bootstrap";
 
-const FollowUpPosMeme = ({data, setData, saveDataToDb, steps, system}) => {
-  const {isLoading, error} = system
+const FollowUpPosMeme = ({data, setData, saveDataToDb, steps, service}) => {
+  const {isLoading, error} = service
   const handlingOnClickNext = () => {
     steps.push('ProductivityCheckLow')
     saveDataToDb( steps, {})

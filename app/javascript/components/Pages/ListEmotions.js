@@ -13,8 +13,8 @@ import MemeSelection from "./MemeSelection";
 //***               response:{attributes: {step: "[\"ListEmotions\"]", word:""}},
 //***               current_user_id: ...,
 //***               time_period:{...}
-function ListEmotions({ data,  setData , saveDataToDb, steps, system}) {
-  const {isLoading, error} = system
+function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
+  const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
 
