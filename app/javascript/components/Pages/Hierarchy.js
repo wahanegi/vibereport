@@ -9,7 +9,7 @@ import FollowUpPosWordOnly from "./FollowUpPosWordOnly";
 
 const Hierarchy = ({step, data, setData}) => {
 
-  console.log("Results", data)
+  console.log("<Results >", data, "</Results>")
   switch (step) {
     case  "ListEmotions" :
       return <ListEmotions data={data}  setData={setData}/>

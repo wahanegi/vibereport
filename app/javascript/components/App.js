@@ -1,11 +1,9 @@
 import React, {Fragment, useEffect, useState} from "react"
-import {BrowserRouter, Navigate, redirect, Route, Routes, useNavigate} from 'react-router-dom'
+import {BrowserRouter, Navigate,  Route, Routes} from 'react-router-dom'
 import ListEmotions from "./Pages/ListEmotions";
-import ResponseFlow from "./ResponseFlow";
 import EmotionEntry from "./Pages/EmotionEntry";
 import Hierarchy from "./Pages/Hierarchy";
 import axios from "axios";
-import {isEmpty} from "./helpers/helper";
 // import ResponseProvider from "./store/ResponseProvider";
 
 const ALL_STEPS = [
@@ -30,48 +28,35 @@ const ALL_STEPS = [
   {id:"8", step:"PromptEmailResults"},
 ]
 const App = () => {
-  const [curUserId, setCurUserId] = useState({})
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState('')
   const [step, setStep] = useState(null)
-  const [respAttr, setRespAttr] = useState(null)
   const [emotionDataRespUserIdTimePeriod, setEmotionDataRespUserIdTimePeriod] = useState(null)
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
-  // const [data, setData] = useState({front:{word:""},end:{}})
 
 
-console.log("APP beforeUseEffect")
   useEffect(()=>{
     if (isNotLoadedData) {
-      console.log("APP insideUseEffect")
       setIsLoading(true)
       axios.get('/api/v1/emotions.json')
         // LOAD Emotions (3*12) and Response data of authorized user from DB
-        //data = {data:{
-        //               data: {Emotions:{id:..., category:..., word:...},
+        // Below data for the start entry of user
+        // data = {data:{
+        //               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
         //               response:{attributes: {step: "[\"ListEmotions\"]", word:""}},
         //               current_user_id: ...,
         //               time_period:{...}
-        //              }
-        //            }
+        //               }
+        //        }
         .then(data => {
           setIsNotLoadedData(false)
-          console.log("fullData", data)
-          let dataEmotRespUserIdTimePeriod = data.data //let data:{Emotions}, response:{attributes}, current_user_id, time_period
-          let respAttr = dataEmotRespUserIdTimePeriod.response
-          console.log("received", dataEmotRespUserIdTimePeriod)
-          let steps = JSON.parse(respAttr.attributes.step) //transform "[\"ListEmotions\"]" to the object
-          console.log("App steps=", steps)
-          setEmotionDataRespUserIdTimePeriod(dataEmotRespUserIdTimePeriod) // save
-          // setCurUserId(dataRespUserIdTimePeriod.current_user_id)
-          // setRespAttr(respAttr.attributes)
-          console.log("setRespAttr(respAttr.attributes)", respAttr)
-          if (steps.length === 0) {
-            console.log("insideUseEffect setStep('ListEmotions')")
+          let arrWithSteps = JSON.parse(data.data.response.attributes.step)
+          //save data:{Emotions}, response:{attributes}, current_user_id, time_period
+          setEmotionDataRespUserIdTimePeriod(data.data)
+          if (arrWithSteps.length === 0) {
             setStep('ListEmotions')
           } else {
-            setStep(steps.pop())
-            console.log("setStep(steps.pop())", steps)
+            setStep(arrWithSteps.pop())
           }
           setIsLoading(false)
         })
@@ -81,10 +66,9 @@ console.log("APP beforeUseEffect")
         })
     }
   },[])
-  console.log("afterUseEffect")
 
-
-  const LIST_OF_ROUTES = ALL_STEPS.map((item, index) => {
+// building routes which defined in constant ALL_STEPS
+  const listOfRoutes = ALL_STEPS.map((item, index) => {
     return <Route key={item.id}
                   path={`/${ALL_STEPS[index].step}`}
                   element={<Hierarchy  step={item.step}
@@ -95,13 +79,13 @@ console.log("APP beforeUseEffect")
   return(
     <Fragment>
     {/* <ResponseProvider>*/}
-      {isNotLoadedData && <p>Loading...</p>}
+      {isLoading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
       <BrowserRouter>
         {!!step && !isNotLoadedData && <Routes>
           <Route path="*" element={<Navigate to={`/${step}`} data={emotionDataRespUserIdTimePeriod}
                                              setData={setEmotionDataRespUserIdTimePeriod} />}/>
-          {/*{!step && <Route path="*" element={<Navigate to={`/${ALL_STEPS[0].step}`}/>}/>}*/}
-          {LIST_OF_ROUTES}
+          {listOfRoutes}
         </Routes>}
       </BrowserRouter>
      {/*</ResponseProvider>*/}
