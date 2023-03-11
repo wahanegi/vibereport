@@ -7,7 +7,7 @@ import {Navigate, NavLink} from 'react-router-dom'
 import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
 import ShoutoutButton from "../UI/ShoutoutButton";
-import {createResponse, updateResponse} from "../requests/axios_requests";
+import {apiRequest, createResponse, updateResponse} from "../requests/axios_requests";
 import {useNavigate} from "react-router-dom";
 import {isEmpty} from "../helpers/helper";
 import {Button} from "react-bootstrap";
@@ -48,10 +48,12 @@ function ListEmotions({ data,  setData }) {
 
 
 
-  const clickHandling = (emotion_word, emotion_id, timePeriod_id, navigate, response , category) => {
-    if (isEmpty(response)) {
-      createResponse(emotion_id, timePeriod_id, navigate, 'MemeSelection')
-    } else {
+  const clickHandling = (emotion_word, emotion_id, timePeriod_id,
+                         navigate, response , category) => {
+
+      // createResponse(emotion_id, timePeriod_id, navigate, ['ListEmotions','MemeSelection'])
+    // } else {
+    console.log('CLICK_HANDLING')
       const updatedResponse = {
         ...response,
         attributes: {
@@ -64,13 +66,20 @@ function ListEmotions({ data,  setData }) {
       }
       console.log(" response.attributes:", response.attributes)
       console.log("updateResponse.attributes:", updatedResponse.attributes)
-      console.log({...data, response: {...data.response, attributes: {...updatedResponse.attributes}}})
-      setData({...data, response: {...data.response, attributes: {...updatedResponse.attributes}}})
+      let temp_data = {...data, response: {...data.response, attributes: {...updatedResponse.attributes}}}
+      console.log("temp_data = ", temp_data)
+      // setData({...data, response: {...data.response, attributes: {...updatedResponse.attributes}}})
+    if (data.response.attributes.word ==="") {
+        apiRequest("POST", temp_data.response.attributes, setData, redirect)
+      }else{
+        apiRequest("PATCH", temp_data, setData, redirect)
+      }
       updateResponse(updatedResponse, setResponse)
-        .then(() => {navigate(`/MemeSelection?word=${emotion_word}&id=${emotion_id}`)})
-        // .then(()=>{<MemeSelection />})
-    }
+    //     .then(() => {navigate(`/MemeSelection?word=${emotion_word}&id=${emotion_id}`)})
+    //     // .then(()=>{<MemeSelection />})
+    // }
   }
+  const redirect = (navigate) => {navigate('/MemeSelection')}
 
   const range_format = tp => {
     let start_date = new Date(tp.start_date)

@@ -10,7 +10,7 @@ export const createResponse = async (emotion_id, time_period_id, navigate, step)
   createCsrfToken()
   await axios.post('/api/v1/responses', {emotion_id, time_period_id, step})
     .then(resp => {
-      navigate(`/responses/${resp.data.data.id}`)
+      // navigate(`/responses/${resp.data.data.id}`)
     })
     .catch(resp => {console.log(resp)})
 }
@@ -24,4 +24,27 @@ export const updateResponse = async (response, setResponse) => {
       setResponse({...resp.data.data})
     })
     .catch(resp => {console.log(resp)})
+}
+
+//method (POST/PATCH)**
+//data = {...} for sending to the controller**
+// setData - this is Hook for saving answer data from the controller**
+//   redirect - the name of the function for navigation in browser. By default is empty**
+// url - route. By default '/api/v1/responses'
+export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url = '/api/v1/responses')  =>{
+  createCsrfToken()
+  switch (method) {
+    case "POST":
+      await axios.post(url, {data})
+        .then(response => {setData(response)})
+        .catch(resp => {console.log(resp)})
+        break
+    case "PATCH":
+      await axios.patch(url+"/1", {data})
+        .then(response => {setData(response)})
+        .catch(resp => {console.log(resp)})
+      break
+    default: 0
+  }
+  redirect()
 }

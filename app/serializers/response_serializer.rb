@@ -26,5 +26,6 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :step
+  attributes :id, :time_period_id, :emotion_id, :step, :word, :category
+
 end

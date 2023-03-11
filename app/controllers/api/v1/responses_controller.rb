@@ -56,7 +56,7 @@ class Api::V1::ResponsesController < ApplicationController
   end
 
   def response_params
-    params.require(:response).permit(:id, :emotion_id, :time_period_id, :step)
+    params.require(:response).permit(:id, :emotion_id, :time_period_id, :step, :word, :category)
   end
 
   def additional_params
