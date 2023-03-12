@@ -19,9 +19,10 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
 
 
   useEffect(()=> {
+    // Prevent redirect to the email-page from MemeSelection when user push button 'Back' in browser
     window.addEventListener('popstate', function(event) {
       window.location.replace(
-        `http://localhost:3000/ListEmotions`
+        window.location.origin+`/ListEmotions`
       );
     });
   })

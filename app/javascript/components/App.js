@@ -35,8 +35,6 @@ const App = () => {
   const [emotionDataRespUserIdTimePeriod, setEmotionDataRespUserIdTimePeriod] = useState(null)
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
 
-
-
   useEffect(()=>{
     if (isNotLoadedData) {
       setIsLoading(true)
