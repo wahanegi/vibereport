@@ -17,6 +17,14 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
   const emotionId = data.response.attributes.emotion_id
   const emotionWord = data.response.attributes.word
 
+
+  useEffect(()=> {
+    window.addEventListener('popstate', function(event) {
+      window.location.replace(
+        `http://localhost:3000/ListEmotions`
+      );
+    });
+  })
   const handlingOnClickSkip = () =>{
     steps.push('FollowUpPosWordOnly')
     saveDataToDb( steps ,{})

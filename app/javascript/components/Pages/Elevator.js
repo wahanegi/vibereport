@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import ListEmotions from "./ListEmotions";
 import MemeSelection from "./MemeSelection";
 import EmotionEntry from "./EmotionEntry";
-// import Figma from "../helper_functions/all_steps";
 import SelectedGIPHYFollow from "./SelectedGIPHYFollow";
 import OwnMemeUploadFollow from "./OwnMemeUploadFollow";
 import FollowUpPosWordOnly from "./FollowUpPosWordOnly";
@@ -11,8 +10,9 @@ import {mergeData} from "../helper_functions/library";
 import {useNavigate} from "react-router-dom";
 import FollowUpPosMeme from "./FollowUpPosMeme";
 import ProductivityCheckLow from "./ProductivityCheckLow";
+import ScaleSelection from "./ScaleSelection";
 
-const Hierarchy = ({step, data, setData}) => {
+const Elevator = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const steps = JSON.parse(data.response.attributes.step)
@@ -43,6 +43,8 @@ const Hierarchy = ({step, data, setData}) => {
   switch (step) {
     case  "ListEmotions" :
       return <ListEmotions data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
+    case  "ScaleSelection" :
+      return <ScaleSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "MemeSelection" :
       return <MemeSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "EmotionEntry" :
@@ -83,4 +85,4 @@ const Hierarchy = ({step, data, setData}) => {
       0
   }
 }
-export default Hierarchy;
+export default Elevator;

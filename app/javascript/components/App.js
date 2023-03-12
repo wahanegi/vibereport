@@ -2,12 +2,13 @@ import React, {Fragment, useEffect, useState} from "react"
 import {BrowserRouter, Navigate,  Route, Routes} from 'react-router-dom'
 import ListEmotions from "./Pages/ListEmotions";
 import EmotionEntry from "./Pages/EmotionEntry";
-import Hierarchy from "./Pages/Hierarchy";
+import Elevator from "./Pages/Elevator";
 import axios from "axios";
 // import ResponseProvider from "./store/ResponseProvider";
 
 const ALL_STEPS = [
   {id:"1", step:"ListEmotions"},
+  {id:"1.1.", step:"ScaleSelection"},
   {id:"2.0", step: "MemeSelection"},
   {id:"1.1", step:"EmotionEntry"},
   {id:"2.25", step:"SelectedGIPHYFollow"},
@@ -35,26 +36,6 @@ const App = () => {
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
 
 
-  //*** This is block apply for setup a browser history state.
-  //*** If user went from email-box  and **click on the button "Back" in the browser**, so
-  //*** user will be redirecting on other pages in relative with history in the DB (field :step in the response table)
-  //*** This block in DEVELOPING! NO WORKING**
-  const initialization = (data) => {
-    let arrWithSteps = JSON.parse(data.data.response.attributes.step)
-
-    window.onpopstate = (event) => {
-    let index = arrWithSteps.indexOf(step)
-    let state = JSON.stringify(event.state)
-    for (let i = index; i >= 0; i--) {
-      window.history.pushState(null, document.title, `/${arrWithSteps[i]}`)
-      console.log(i)
-    }
-  }
-
-    console.log(`location: ${document.location}, state: ${JSON.stringify(event.state)}`);
-    console.log("arrWithSteps", arrWithSteps)
-  }
-
 
   useEffect(()=>{
     if (isNotLoadedData) {
@@ -71,7 +52,6 @@ const App = () => {
         //        }
         .then(data => {
           setIsNotLoadedData(false)
-          initialization(data)
           let arrWithSteps = JSON.parse(data.data.response.attributes.step)
           //save data:{Emotions}, response:{attributes}, current_user_id, time_period
           setEmotionDataRespUserIdTimePeriod(data.data)
@@ -93,9 +73,9 @@ const App = () => {
   const listOfRoutes = ALL_STEPS.map((item, index) => {
     return <Route key={item.id}
                   path={`/${ALL_STEPS[index].step}`}
-                  element={<Hierarchy  step={item.step}
-                                       data={emotionDataRespUserIdTimePeriod}
-                                       setData={setEmotionDataRespUserIdTimePeriod}/>} />
+                  element={<Elevator step={item.step}
+                                     data={emotionDataRespUserIdTimePeriod}
+                                     setData={setEmotionDataRespUserIdTimePeriod}/>} />
   })
 
   return(

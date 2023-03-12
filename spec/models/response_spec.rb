@@ -3,7 +3,9 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  category       :string
 #  step           :string
+#  word           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint           not null

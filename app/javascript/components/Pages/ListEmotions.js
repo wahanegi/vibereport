@@ -30,6 +30,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     saveDataToDb( steps, dataRequest )
   }
 
+  const ownWordHandling = () =>{
+    steps.push('ScaleSelection')
+    saveDataToDb( steps )
+  }
+
   const range_format = tp => {
     let start_date = new Date(tp.start_date)
     let   end_date = new Date(tp.end_date)
@@ -86,7 +91,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <div className="share sh-new-pos">Share it in your own words!</div>
 
 
-          <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={()=>{}}/>
+          <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={ownWordHandling}/>
           <NavLink className ="nav-link" to="">I was not working this week</NavLink>
 
 
