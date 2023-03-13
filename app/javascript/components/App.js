@@ -11,7 +11,7 @@ const App = () => {
       <Routes>        
         <Route path="/app" element={<ListEmotions />} />
         <Route path="/responses/:id" element={<ResponseFlow />} />
-        <Route path="app/emotion_entry" element={<EmotionEntry />} />
+        <Route path="/app/emotion_entry" element={<EmotionEntry />} />
         <Route path="/app/results" element={<Results />} />
       </Routes>
     </BrowserRouter>
