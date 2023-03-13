@@ -3,7 +3,7 @@ ActiveAdmin.register Emotion do
 
   index do
     selectable_column
-    id_column    
+    id_column
     column :word
     column :category
     column :created_at

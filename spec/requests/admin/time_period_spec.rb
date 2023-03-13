@@ -1,19 +1,19 @@
 require 'rails_helper'
-RSpec.describe "Admin::TimePeriod", type: :request do
+RSpec.describe 'Admin::TimePeriod', type: :request do
   let!(:admin_user) { create :admin_user }
   before { sign_in admin_user }
 
-  describe "GET - index" do
-    it "renders the index page" do
-      get "/admin/time_periods"
+  describe 'GET - index' do
+    it 'renders the index page' do
+      get '/admin/time_periods'
       expect(response).to have_http_status(200)
     end
   end
 
-  describe "GET - Show" do
+  describe 'GET - Show' do
     let(:time_period) { create :time_period }
 
-    it "renders the show page" do
+    it 'renders the show page' do
       get "/admin/time_periods/#{time_period.id}"
       expect(response).to have_http_status(200)
     end

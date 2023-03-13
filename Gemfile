@@ -24,6 +24,8 @@ gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'                    # Hotwire's modest
 gem 'turbo-rails', '~> 1.3', '>= 1.3.3'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "passwordless", "~> 0.11.0"                               #A passwordless a.k.a. "magic link" login strategy
+gem "premailer-rails"                                         # gem is a drop in solution for styling HTML emails with CSS without having to do the hard work yourself.
+gem 'nokogiri'                                                # premailer-rails requires either nokogiri or hpricot.
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]                 # Debugging functionality for Ruby.

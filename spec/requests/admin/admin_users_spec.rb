@@ -1,17 +1,17 @@
 require 'rails_helper'
-RSpec.describe "Admin::AdminUser", type: :request do
+RSpec.describe 'Admin::AdminUser', type: :request do
   let!(:admin_user) { create :admin_user }
   before { sign_in admin_user }
 
-  describe "GET - idex" do
-    it "renders the index page" do
-      get "/admin/admin_users"
+  describe 'GET - idex' do
+    it 'renders the index page' do
+      get '/admin/admin_users'
       expect(response).to have_http_status(200)
     end
   end
 
-  describe "GET - Show" do
-    it "renders the show page" do
+  describe 'GET - Show' do
+    it 'renders the show page' do
       get "/admin/admin_users/#{admin_user.id}"
       expect(response).to have_http_status(200)
     end

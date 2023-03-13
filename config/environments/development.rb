@@ -1,6 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -71,6 +72,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+  config.assets.debug = true
 end
 
 # For seeding
@@ -80,3 +82,4 @@ ENV['ADMIN_PASSWORD'] = 'password'
 # General use
 ENV['DAY_TO_SEND_INVITES'] = 'monday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
+

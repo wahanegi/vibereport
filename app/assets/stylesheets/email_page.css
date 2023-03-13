@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+    font-style: normal;
+}
+.convert {
+    width: 127px;
+    height: 58px;
+    text-align: center;
+    margin: 0 auto;
+    background: #D9D9D9;
+    border: 1px solid #000000;
+}
+.convert p {
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 600;
+    padding-top: 1px;
+    padding-left: 5px;
+}
+
+.line1 {
+    width: 137px;
+    margin-top: 15px;
+    margin-left: -7px;
+    border-bottom: 1px solid #000000;
+    transform: rotate(-155.83deg);
+}
+.line2 {
+    width: 137px;
+    margin-top: 0;
+    margin-left: -6px;
+    border-bottom: 1px solid #000000;
+    transform: rotate(-23.42deg);
+}
+.left-div {
+    width: 10px;
+    top: -9px;
+    left: -25px;
+    position: relative;
+    height: 26px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    z-index: 1
+}
+.right-div {
+    width: 10px;
+    height: 26px;
+    top: -35px;
+    left: 25px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    position: relative;
+    z-index: 1
+}
+.under-convert {
+    width: 453px;
+    height: 39px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0 auto;
+    padding: 8px;
+}
+/*<ListEmotions>*/
+.increased-convert {
+    width: 190px;
+    height: 87px;
+}
+.field_empty {
+    margin: 0 auto;
+}
+.field_emotions{
+    width: 1115px;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+.flex{
+    display: flex;
+}
+.in_left{
+    margin: 35px 0 0 41px;
+}
+.other-position{
+    margin: 66px 0 0 154px;
+}
+.offset-line2{
+    width: 207.14px;
+    margin-top: -1.5px;
+    margin-left: -9.5px;
+    transform: rotate(-24.4deg);
+}
+.offset-line1{
+    width: 207.14px;
+    margin-top: 29.3px;
+    margin-left: -9.4px;
+    transform: rotate(-155.6deg);
+}
+.offset-ld{
+    left: 11px;
+}
+.offset-rd{
+    left: 61px;
+}
+.uc-new-position{
+    position: relative;
+    top: 47px;
+}
+
+/*</ListEmotions>*/
+
+.calendar {
+    width: 82px;
+    height: 68px;
+    top: -57px;
+    left: 60px;
+    position: relative;
+    text-align: center;
+    background: #C8C9C0;
+    border-radius: 9px;
+}
+
+
+.part {
+    width: 10px;
+    height: 11px;
+    background: #9E9E9E;
+    border-radius: 3px;
+    /* margin-top: 15px; */
+    position: relative;
+    top: 15px;
+}
+
+.top-div {
+    width: 82px;
+    height: 25px;
+    left: 0;
+    top: -53px;
+    background: #E36554;
+    position: relative;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+}
+.time {
+    text-transform: capitalize;
+    position: relative;
+    top: -46px;
+    width: 82px;
+    height: 14px;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 17px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+}
+.question {
+    margin:0 auto;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 48px;
+    text-align: center;
+    color: #000000;
+    white-space: pre-line;
+    width: 677px;
+    height: 59px;
+    position: relative;
+    top: -43px;
+}
+
+/*<ListEmotions>*/
+.q-new-pos{
+    top: -63px;
+    width: 714px;
+}
+/*</ListEmotions>*/
+
+
+.nav-link {
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    position: relative;
+    color: #0007A3;
+    top: 54px;
+}
+.positive,.neutral,.negative{
+    /*width and margin have depends from words. See code*/
+    /*width: 127px;*/
+    height: 31px;
+    font-size: 19px;
+    line-height: 19px;
+    text-align: center;
+    /*margin: 0 25px;*/
+    cursor: pointer;
+    padding-top: 5.6px;
+}
+.positive-a,.neutral-a,.negative-a{
+    font-weight: bold;
+    text-decoration: none;
+    height: 31px;
+    font-size: 19px;
+}
+.positive-a:hover,.neutral-a:hover,.negative-a:hover{
+    text-decoration: #0a53be;
+    font-weight: bold;
+    height: 31px;
+}
+.positive {
+    color: #4F9B64;
+    background: #CCEDD5;
+    border: 1px solid #000000;
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+}
+.positive-a {
+    color: #4F9B64;
+}
+.negative{
+    background: #FCDDCE;
+    border: 1px solid #000000;
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    color: #D1794E;
+}
+.negative-a {
+     color: #D1794E;
+ }
+.neutral{
+    background: rgba(86, 137, 235, 0.3);
+    border: 1px solid #000000;
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    color: #4C77CB;
+}
+.neutral-a {
+    color: #4C77CB;
+ }
+.share{
+    width: 378px;
+    height: 31px;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0 auto;
+    margin-top: 41px;
+}
+/*<ListEmotion*/
+.sh-new-pos{
+    margin-top: 46px;
+}
+/*</ListEmotion*/
+.own_word{
+    box-sizing: border-box;
+    width: 385px;
+    height: 70px;
+    background: #FFFFFF;
+    margin: 0 auto;
+}
+.link_first{
+    padding: 13px 19px 13px 27px;
+    /*padding-top: 11px;*/
+    width: 385px;
+    height: 70px;
+    font-size: 36px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.6);
+    /*margin: 13px 23px;*/
+    border: 3px solid #5689EB;
+    border-radius: 19px;
+    /*padding-left: 23px;*/
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+}
+
+.link_text{
+    display: block;
+    width: 385px;
+    height: 70px;
+    font-size: 36px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration-line: none;
+    font-weight: 700;
+    padding: 13px;
+    margin: -15px -29px;
+}
+
+.i_was_not{
+    width: 360px;
+    height: 28px;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #0007A3;
+    margin: 0 auto;
+    position: relative;
+    top: 54px;
+}
+.unsubscribe a{
+    width: 274px;
+    height: 19px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19px;
+    text-decoration-line: underline;
+    color: #4D4D4D;
+    position: relative;
+    top: 39px;
+}
+/*FOR SVG FIX*/
+.module{
+    stroke-width: 0.111111;
+    stroke-linecap: round;
+}
+feFlood{
+    flood-opacity: 0;
+}
+filter{
+    color-interpolation-filters: sRGB;
+}
+
