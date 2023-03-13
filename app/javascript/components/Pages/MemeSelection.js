@@ -17,10 +17,15 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
   const emotionId = data.response.attributes.emotion_id
   const emotionWord = data.response.attributes.word
 
+  const beforeUnloadListener = () => {
+    console.log("event")
+  }
+
   useEffect(()=> {
     let s = JSON.parse(data.response.attributes.step)
-    let url = s.length < 2 ? 'list-emotions' :  s[s.length-2]
+    let url = s.length < 2 ? 'emotion-selection-web' :  s[s.length-2]
     // Prevent redirect to the email-page from MemeSelection when user push button 'Back' in browser
+    window.onbeforeunload = beforeUnloadListener
     window.addEventListener('popstate', function(event) {
       window.location.replace(
         window.location.origin+`/${url}`

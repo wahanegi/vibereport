@@ -50,7 +50,7 @@ module Api
       end
 
       def response_params
-        params.require(:response).permit(:id, :emotion_id, :time_period_id, :step, :not_working)
+        params.require(:response).permit(:id, :emotion_id, :time_period_id, :step, :word, :category ,:not_working)
       end
 
       def additional_params

@@ -28,7 +28,7 @@ const BackButton = ({data, setData}) => {
   useEffect(()=>{
     if(!isEmpty(response)){
       console.log("/app", response.attributes)
-
+// window.location.back();
       navigate(`/${JSON.parse(response.attributes.step).pop()}`);//, { replace: true }
       // window.location.replace(`/${JSON.parse(response.attributes.step).pop()}`);
     }

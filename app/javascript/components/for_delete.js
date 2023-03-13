@@ -3,7 +3,7 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import MemeSelection from "./Pages/MemeSelection";
 
-const ResponseFlow = () => {
+const For_delete = () => {
   const [response, setResponse] = useState({})
   const [emotion, setEmotion] = useState({})
   const [loaded, setLoaded] = useState(false)
@@ -28,4 +28,4 @@ const ResponseFlow = () => {
   }
 }
 
-export default ResponseFlow
+export default For_delete

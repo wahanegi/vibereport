@@ -12,7 +12,7 @@ import FollowUpPosMeme from "./FollowUpPosMeme";
 import ProductivityCheckLow from "./ProductivityCheckLow";
 import ScaleSelection from "./ScaleSelection";
 
-const Elevator = ({step, data, setData}) => {
+const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const steps = JSON.parse(data.response.attributes.step)
@@ -43,7 +43,7 @@ const Elevator = ({step, data, setData}) => {
   }
 
   switch (step) {
-    case  "list-emotions" :
+    case  "emotion-selection-web" :
       return <ListEmotions data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "ScaleSelection" :
       return <ScaleSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
@@ -87,4 +87,4 @@ const Elevator = ({step, data, setData}) => {
       0
   }
 }
-export default Elevator;
+export default ResponseFlow;

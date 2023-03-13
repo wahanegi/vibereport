@@ -107,14 +107,14 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
             <div className='field_empty'></div>
           <div className="share sh-new-pos">Share it in your own words!</div>
           <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={ownWordHandling}/>
-          <NavLink className="nav-link" onClick={() => onClickNotWorking(timePeriod.id, navigate, response)} to={}>
+          <NavLink className="nav-link" onClick={() => onClickNotWorking(timePeriod.id, navigate, response)} to={''}>
             I was not working this week
           </NavLink>
           <QuestionButton style={{position: 'absolute', right: 47}}/>
           <ShoutoutButton style={{position: 'absolute', left: 45}}/>
           <Menu style={{position: 'absolute', right: 47, top: 62}}>X% complete</Menu>
-        </div>}
-        )}
+        </div>
+      }
     </Fragment>
   );
 }

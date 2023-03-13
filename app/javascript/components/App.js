@@ -2,12 +2,12 @@ import React, {Fragment, useEffect, useState} from "react"
 import {BrowserRouter, Navigate,  Route, Routes} from 'react-router-dom'
 import ListEmotions from "./Pages/ListEmotions";
 import EmotionEntry from "./Pages/EmotionEntry";
-import Elevator from "./Pages/Elevator";
+import ResponseFlow from "./Pages/ResponseFlow";
 import axios from "axios";
 // import ResponseProvider from "./store/ResponseProvider";
 
 const ALL_STEPS = [
-  {id:"1", step:"list-emotions"},
+  {id:"1", step:"emotion-selection-web"},
   {id:"1.1.", step:"ScaleSelection"},
   {id:"2.0", step: "MemeSelection"},
   {id:"1.1", step:"EmotionEntry"},
@@ -35,6 +35,8 @@ const App = () => {
   const [emotionDataRespUserIdTimePeriod, setEmotionDataRespUserIdTimePeriod] = useState(null)
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
 
+  const mainPage = 'emotion-selection-web'
+
   useEffect(()=>{
     if (isNotLoadedData) {
       setIsLoading(true)
@@ -43,7 +45,7 @@ const App = () => {
         // Below data for the start entry of user
         // data = {data:{
         //               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
-        //               response:{attributes: {step: "[\"ListEmotions\"]", word:""}},
+        //               response:{attributes: {step: "[\"emotion-selection-web\"]", word:""}},
         //               current_user_id: ...,
         //               time_period:{...}
         //               }
@@ -53,8 +55,8 @@ const App = () => {
           let arrWithSteps = JSON.parse(data.data.response.attributes.step)
           //save data:{Emotions}, response:{attributes}, current_user_id, time_period
           setEmotionDataRespUserIdTimePeriod(data.data)
-          if (arrWithSteps.length === 0) {
-            setStep('ListEmotions')
+          if (arrWithSteps === undefined || arrWithSteps.length === 0) {
+            setStep(mainPage)
           } else {
             setStep(arrWithSteps.pop())
           }
@@ -71,9 +73,9 @@ const App = () => {
   const listOfRoutes = ALL_STEPS.map((item, index) => {
     return <Route key={item.id}
                   path={`/${ALL_STEPS[index].step}`}
-                  element={<Elevator step={item.step}
-                                     data={emotionDataRespUserIdTimePeriod}
-                                     setData={setEmotionDataRespUserIdTimePeriod}/>} />
+                  element={<ResponseFlow step={item.step}
+                                         data={emotionDataRespUserIdTimePeriod}
+                                         setData={setEmotionDataRespUserIdTimePeriod}/>} />
   })
 
   return(
