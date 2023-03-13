@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react"
 import {BrowserRouter, Navigate,  Route, Routes} from 'react-router-dom'
 import ListEmotions from "./Pages/ListEmotions";
 import EmotionEntry from "./Pages/EmotionEntry";
-import ResponseFlow from "./Pages/ResponseFlow";
+import ResponseFlow from "./ResponseFlow";
 import axios from "axios";
 // import ResponseProvider from "./store/ResponseProvider";
 

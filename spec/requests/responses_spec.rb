@@ -7,8 +7,8 @@ RSpec.describe Api::V1::ResponsesController do
   let!(:emotion) { create :emotion }
   let!(:new_emotion) { create :emotion }
   let!(:time_period) { create :time_period }
-  let!(:user_response) {create :response, emotion: emotion, time_period: time_period, user: user, step: 'MemeSelection' }
-  let!(:response_attr) { attributes_for :response, emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, step: 'MemeSelection' }
+  let!(:user_response) {create :response, emotion: emotion, word: emotion.word, category: emotion.category, time_period: time_period, user: user, step: 'MemeSelection' }
+  let!(:response_attr) { attributes_for :response, emotion_id: emotion.id, word: emotion.word, category: emotion.category, time_period_id: time_period.id, user_id: user.id, step: 'MemeSelection' }
 
   before(:each) do |test|
     passwordless_sign_in(user) unless test.metadata[:logged_out]
@@ -54,6 +54,8 @@ RSpec.describe Api::V1::ResponsesController do
                                                            "id" => user_response.id,
                                                            "time_period_id" => user_response.time_period_id,
                                                            "emotion_id" => user_response.emotion_id,
+                                                           "word" => user_response.word,
+                                                           "category" => user_response.category,
                                                            "step" => user_response.step
                                                          }
                                                      },
@@ -91,6 +93,8 @@ RSpec.describe Api::V1::ResponsesController do
                                                            "id" => response_saved.id,
                                                            "time_period_id" => response_saved.time_period_id,
                                                            "emotion_id" => response_saved.emotion_id,
+                                                           "word" => user_response.word,
+                                                           "category" => user_response.category,
                                                            "step" => response_saved.step
                                                          }
                                                      }
@@ -113,6 +117,8 @@ RSpec.describe Api::V1::ResponsesController do
                                                            "id" => user_response.id,
                                                            "time_period_id" => user_response.time_period_id,
                                                            "emotion_id" => new_emotion.id,
+                                                           "word" => user_response.word,
+                                                           "category" => user_response.category,
                                                            "step" => ''
                                                          }
                                                      }

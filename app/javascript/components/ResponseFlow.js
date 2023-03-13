@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import ListEmotions from "./ListEmotions";
-import MemeSelection from "./MemeSelection";
-import EmotionEntry from "./EmotionEntry";
-import SelectedGIPHYFollow from "./SelectedGIPHYFollow";
-import OwnMemeUploadFollow from "./OwnMemeUploadFollow";
-import FollowUpPosWordOnly from "./FollowUpPosWordOnly";
-import {apiRequest} from "../requests/axios_requests";
-import {mergeData} from "../helper_functions/library";
+import ListEmotions from "./Pages/ListEmotions";
+import MemeSelection from "./Pages/MemeSelection";
+import EmotionEntry from "./Pages/EmotionEntry";
+import SelectedGIPHYFollow from "./Pages/SelectedGIPHYFollow";
+import OwnMemeUploadFollow from "./Pages/OwnMemeUploadFollow";
+import FollowUpPosWordOnly from "./Pages/FollowUpPosWordOnly";
+import {apiRequest} from "./requests/axios_requests";
+import {mergeData} from "./helper_functions/library";
 import {useNavigate} from "react-router-dom";
-import FollowUpPosMeme from "./FollowUpPosMeme";
-import ProductivityCheckLow from "./ProductivityCheckLow";
-import ScaleSelection from "./ScaleSelection";
+import FollowUpPosMeme from "./Pages/FollowUpPosMeme";
+import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
+import ScaleSelection from "./Pages/ScaleSelection";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
