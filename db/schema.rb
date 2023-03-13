@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_153637) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.string "category"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
     t.boolean "not_working", default: false
@@ -69,6 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_153637) do
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.string "word"
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
     t.index ["user_id", "time_period_id"], name: "index_responses_on_user_id_and_time_period_id", unique: true

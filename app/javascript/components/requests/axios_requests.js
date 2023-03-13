@@ -23,3 +23,29 @@ export const updateResponse = async (response, setResponse) => {
     })
     .catch(resp => {console.log(resp)})
 }
+
+//*** method (POST/PATCH)
+//*** data = {...} data which send to the controller
+//*** setData - this is Hook for saving data of answer of the controller
+//***   redirect - the name of the function for navigation in browser. By default is empty
+//*** url - route. By default '/api/v1/responses'
+export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url = '/api/v1/responses')  =>{
+  createCsrfToken()
+  switch (method) {
+    case "POST":
+      await axios.post(url, data)
+        .then(response => {
+          setData(response.data.data)
+          redirect()
+        })
+        break
+    case "PATCH":
+      await axios.patch(url+"/1", data) //"1"-??? need to make a little rectify in controller
+        .then(response => {
+          setData(response.data.data)
+          redirect()
+        })
+      break
+    default:
+  }
+}

@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Josefin Sans',  sans-serif;
+    font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
     font-style: normal;
 }
 .convert {
@@ -289,6 +289,7 @@
     padding: 13px;
     margin: -15px -29px;
 }
+
 .i_was_not{
     width: 360px;
     height: 28px;
