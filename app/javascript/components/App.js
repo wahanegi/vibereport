@@ -7,7 +7,7 @@ import axios from "axios";
 // import ResponseProvider from "./store/ResponseProvider";
 
 const ALL_STEPS = [
-  {id:"1", step:"ListEmotions"},
+  {id:"1", step:"list-emotions"},
   {id:"1.1.", step:"ScaleSelection"},
   {id:"2.0", step: "MemeSelection"},
   {id:"1.1", step:"EmotionEntry"},
@@ -65,7 +65,7 @@ const App = () => {
           setIsLoading(false)
         })
     }
-  },[])
+  },[emotionDataRespUserIdTimePeriod])
 
 // building routes which defined in constant ALL_STEPS
   const listOfRoutes = ALL_STEPS.map((item, index) => {
@@ -79,11 +79,12 @@ const App = () => {
   return(
     <Fragment>
     {/* <ResponseProvider>*/}
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <p >Loading...</p>}
       {error && <p>{error}</p>}
       <BrowserRouter>
         {!!step && !isNotLoadedData && <Routes>
-          <Route path="*" element={<Navigate to={`/${step}`} data={emotionDataRespUserIdTimePeriod}
+          <Route path="*" element={<Navigate to={`/${step}`}
+                                             data={emotionDataRespUserIdTimePeriod}
                                              setData={setEmotionDataRespUserIdTimePeriod} />}/>
           {listOfRoutes}
         </Routes>}

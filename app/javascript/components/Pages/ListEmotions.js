@@ -49,7 +49,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   return (
     <Fragment>
       { !!error && <p>{error.message}</p>}
-      { !isLoading && !error && !!emotions.length &&
+      { !isLoading && !error &&
         <div>
           <div className="convert increased-convert in_left">
             <p>Logo/Brand</p>

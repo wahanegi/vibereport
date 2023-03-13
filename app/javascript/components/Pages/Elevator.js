@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ListEmotions from "./ListEmotions";
 import MemeSelection from "./MemeSelection";
 import EmotionEntry from "./EmotionEntry";
@@ -18,6 +18,8 @@ const Elevator = ({step, data, setData}) => {
   const steps = JSON.parse(data.response.attributes.step)
   const navigate = useNavigate()
   const service = { isLoading,  error }
+
+
 
   //*** **setError** - Hook for handling error messages
   //*** **steps** - array with steps of user for update or save in DB
@@ -41,7 +43,7 @@ const Elevator = ({step, data, setData}) => {
   }
 
   switch (step) {
-    case  "ListEmotions" :
+    case  "list-emotions" :
       return <ListEmotions data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />
     case  "ScaleSelection" :
       return <ScaleSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={steps} service={service} />

@@ -17,15 +17,17 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
   const emotionId = data.response.attributes.emotion_id
   const emotionWord = data.response.attributes.word
 
-
   useEffect(()=> {
+    let s = JSON.parse(data.response.attributes.step)
+    let url = s.length < 2 ? 'list-emotions' :  s[s.length-2]
     // Prevent redirect to the email-page from MemeSelection when user push button 'Back' in browser
     window.addEventListener('popstate', function(event) {
       window.location.replace(
-        window.location.origin+`/ListEmotions`
+        window.location.origin+`/${url}`
       );
     });
   })
+
   const handlingOnClickSkip = () =>{
     steps.push('FollowUpPosWordOnly')
     saveDataToDb( steps ,{})
