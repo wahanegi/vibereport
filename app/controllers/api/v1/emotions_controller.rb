@@ -13,7 +13,15 @@ class Api::V1::EmotionsController < ApplicationController
     end
   end
 
+  def show
+    render json: Emotion.find(params[:id])
+  end
+
   private
+
+  def emotion_require_params
+    params.require(:emotion_require).permit(:emotion_id)
+  end
 
   def additional_params
     {
@@ -23,7 +31,7 @@ class Api::V1::EmotionsController < ApplicationController
         start_date: TimePeriod.current.start_date,
         end_date: TimePeriod.current.end_date
       },
-      response: @current_response ? response_hash : {attributes: {step: "[\"emotion-selection-web\"]", word:""}}
+      response: @current_response ? response_hash : { attributes: { step: '[\'emotion-selection-web\']', word: '' } }
     }
   end
 

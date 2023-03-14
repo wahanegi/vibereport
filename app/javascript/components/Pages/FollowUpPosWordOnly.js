@@ -27,7 +27,7 @@ const FollowUpPosWordOnly = ({data, setData, saveDataToDb, steps, service}) => {
         </div>
 
       <div>
-        <Button className={data.response.attributes.category}>{data.response.attributes.word}</Button>
+        <Button className={data.emotionAttr.category}>{data.emotionAttr.word}</Button>
       </div>
       <div>
         <BackButton data={data} setData={setData}>Back</BackButton>

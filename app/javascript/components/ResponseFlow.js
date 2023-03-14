@@ -17,13 +17,13 @@ const ResponseFlow = ({step, data, setData}) => {
   const [error, setError] = useState(false)
   const steps = JSON.parse(data.response.attributes.step)
   const navigate = useNavigate()
-  const service = { isLoading,  error }
+  const service = { isLoading,  error , setIsLoading}
+
 
   useEffect(()=> {
       window.addEventListener('popstate', function(event) {
         event.preventDefault()
         const handlingSteps =( answer ) =>{
-          console.log("EVENT", answer)
           const stepsFromDB = JSON.parse(answer.response.attributes.step)
           stepsFromDB.pop()
           if (stepsFromDB.length > 0) {saveDataToDb( stepsFromDB )}
@@ -36,7 +36,6 @@ const ResponseFlow = ({step, data, setData}) => {
         apiRequest("GET", "", handlingSteps, ()=>{}, '/api/v1/emotions.json').catch(e=>setError(e))
 
       });
-
   },[])
 
   //*** **setError** - Hook for handling error messages

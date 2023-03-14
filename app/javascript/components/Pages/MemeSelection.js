@@ -3,6 +3,7 @@ import {Button} from "react-bootstrap";
 import BackButton from "../UI/BackButton";
 import {isEmpty} from "../helpers/helper";
 import {useNavigate} from "react-router-dom";
+import {apiRequest} from "../requests/axios_requests";
 
 //*** Below what we have in the data after ListEmotion(example). See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -15,11 +16,26 @@ import {useNavigate} from "react-router-dom";
 //***               current_user_id: 1,
 //***               time_period:{...}
 const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
-  const [response, setResponse] = useState(data.response)
+  const [emotionAttr, setEmotionAttr] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const {isLoading, error} = service
+  const {isLoading1, error, setIsLoading1} = service
   const emotionId = data.response.attributes.emotion_id
-  const emotionWord = data.response.attributes.word
+
+  useEffect(()=>{
+    //find word and category by emotion_id
+    if (emotionAttr.length === undefined) {
+      const url = `api/v1/emotions/${data.response.attributes.emotion_id}`
+      apiRequest("GET", {}, setEmotionAttr, () => {}, url)
+    }
+    setIsLoading(true)
+  },[])
+
+  useEffect(()=>{
+    // include emotionAttr to the data-array
+    setData({...data, emotionAttr:emotionAttr})
+    setIsLoading(false)
+  },[emotionAttr])
 
   const handlingOnClickSkip = () =>{
     steps.push('FollowUpPosWordOnly')
@@ -46,7 +62,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
       <div>
         <h1>2.0 MemeSelection</h1>
         <h1>You choose such emotion word
-          {" " + emotionWord} with id = {emotionId}
+          {" " + emotionAttr.word} with id = {emotionId}
         </h1>
         <div><Button onClick={chooseGIPHYHandling}>Choose</Button></div>
         <div><Button onClick={handlingOnClickSkip}>Skip</Button></div>
