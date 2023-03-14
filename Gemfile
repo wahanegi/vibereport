@@ -52,3 +52,7 @@ group :test do
   gem 'simplecov_json_formatter', require: false # Suggested to be used here: https://blog.matievisthekat.dev/integrating-codeclimate-with-ruby-on-rails#heading-simplecov
   gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
 end
+
+group :production do
+  gem 'postmark-rails', '~> 0.22.1'   # Mail service for our production server: https://www.postmarkapp.com
+end
