@@ -58,7 +58,8 @@ const App = () => {
           if (arrWithSteps === undefined || arrWithSteps.length === 0) {
             setStep(mainPage)
           } else {
-            setStep(arrWithSteps.pop())
+            let stepFromDB = arrWithSteps.pop()
+            setStep(stepFromDB)
           }
           setIsLoading(false)
         })

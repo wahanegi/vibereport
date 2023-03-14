@@ -19,7 +19,25 @@ const ResponseFlow = ({step, data, setData}) => {
   const navigate = useNavigate()
   const service = { isLoading,  error }
 
+  useEffect(()=> {
+      window.addEventListener('popstate', function(event) {
+        event.preventDefault()
+        const handlingSteps =( answer ) =>{
+          console.log("EVENT", answer)
+          const stepsFromDB = JSON.parse(answer.response.attributes.step)
+          stepsFromDB.pop()
+          if (stepsFromDB.length > 0) {saveDataToDb( stepsFromDB )}
+          else{
+            window.location.replace(
+              window.location.origin+`/${stepsFromDB[0]}`
+            );
+          }
+        }
+        apiRequest("GET", "", handlingSteps, ()=>{}, '/api/v1/emotions.json').catch(e=>setError(e))
 
+      });
+
+  },[])
 
   //*** **setError** - Hook for handling error messages
   //*** **steps** - array with steps of user for update or save in DB
@@ -28,6 +46,10 @@ const ResponseFlow = ({step, data, setData}) => {
   const saveDataToDb = ( steps, addedData = {}) =>{
     const dataRequest = {response:{step: JSON.stringify(steps),...addedData}}
     setIsLoading(true)
+    createOrUpdate (data, dataRequest, saveDataToAttributes)
+  }
+
+  const createOrUpdate = (data, dataRequest, saveDataToAttributes) => {
     data.response.attributes.word ==="" ?
       //create new record in the Response table
       apiRequest("POST", dataRequest, saveDataToAttributes).catch(e=>setError(e))
@@ -39,6 +61,7 @@ const ResponseFlow = ({step, data, setData}) => {
   const saveDataToAttributes =( receivedData ) =>{
     setIsLoading(false)
     mergeData( receivedData, data, setData )
+    let step = JSON.parse(receivedData.attributes.step)
     navigate(`/${JSON.parse(receivedData.attributes.step).pop()}`)
   }
 

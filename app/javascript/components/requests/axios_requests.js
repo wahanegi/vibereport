@@ -46,6 +46,13 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
           redirect()
         })
       break
+    case "GET":
+      await axios.get(url)
+        .then(response => {
+          setData(response.data)
+          redirect()
+        })
+      break
     default:
   }
 }

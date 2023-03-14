@@ -1,6 +1,8 @@
 import React, {Fragment, useEffect, useState} from "react"
 import {Button} from "react-bootstrap";
 import BackButton from "../UI/BackButton";
+import {isEmpty} from "../helpers/helper";
+import {useNavigate} from "react-router-dom";
 
 //*** Below what we have in the data after ListEmotion(example). See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -13,25 +15,11 @@ import BackButton from "../UI/BackButton";
 //***               current_user_id: 1,
 //***               time_period:{...}
 const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
+  const [response, setResponse] = useState(data.response)
+  const navigate = useNavigate()
   const {isLoading, error} = service
   const emotionId = data.response.attributes.emotion_id
   const emotionWord = data.response.attributes.word
-
-  const beforeUnloadListener = () => {
-    console.log("event")
-  }
-
-  useEffect(()=> {
-    let s = JSON.parse(data.response.attributes.step)
-    let url = s.length < 2 ? 'emotion-selection-web' :  s[s.length-2]
-    // Prevent redirect to the email-page from MemeSelection when user push button 'Back' in browser
-    window.onbeforeunload = beforeUnloadListener
-    window.addEventListener('popstate', function(event) {
-      window.location.replace(
-        window.location.origin+`/${url}`
-      );
-    });
-  })
 
   const handlingOnClickSkip = () =>{
     steps.push('FollowUpPosWordOnly')
@@ -47,6 +35,10 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
     saveDataToDb( steps ,{})
   }
 
+  useEffect(()=>{
+      navigate(`/${JSON.parse(data.response.attributes.step).pop()}`);
+  },[])
+
   return(
     <Fragment>
       { !!error && <p>{error.message}</p>}
@@ -56,7 +48,6 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
         <h1>You choose such emotion word
           {" " + emotionWord} with id = {emotionId}
         </h1>
-        <div><BackButton data={data} setData={setData}>Back</BackButton></div>
         <div><Button onClick={chooseGIPHYHandling}>Choose</Button></div>
         <div><Button onClick={handlingOnClickSkip}>Skip</Button></div>
         <div><Button onClick={uploadGIPHYHandling}>Upload</Button></div>
