@@ -92,14 +92,14 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Settings for external email services such as Mailtrap or Postmark
+  config.action_mailer.asset_host = "http://#{ENV['DOMAIN_URL']}"
+  config.action_mailer.default_url_options = { host: ENV['DOMAIN_URL'] }
   if ENV['POSTMARK_API_TOKEN'].present?
     config.action_mailer.delivery_method = :postmark
     config.action_mailer.postmark_settings = {
       api_token: ENV['POSTMARK_API_TOKEN']
     }
   else
-    config.action_mailer.asset_host = "http://#{ENV['DOMAIN_URL']}"
-    config.action_mailer.default_url_options = { host: ENV['DOMAIN_URL'] }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address: ENV['SMTP_ADDRESS'],
