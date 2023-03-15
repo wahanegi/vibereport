@@ -67,11 +67,15 @@
           margin: 0 auto;
       }
       .field_emotions{
-          width: 1115px;
           margin: 0 auto;
           margin-top: 5px;
       }
-      .flex{
+      @media only screen and (min-width: 1080px){
+          .field_emotions{
+              width: 1115px;
+          }
+      }
+          .flex{
           display: flex;
       }
       .left-div {
@@ -250,7 +254,7 @@
   <div class="time"><%= "#{@view_calendar_days}" %></div>
 </div>
 <br/>
-<div class="question">Which word best describes work this week?</div>
+<div class="question">Which word best describes how you felt work this week?</div>
 <div>
   <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
     <% emotion = [] %>
