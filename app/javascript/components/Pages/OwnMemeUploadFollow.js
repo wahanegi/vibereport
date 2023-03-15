@@ -7,7 +7,6 @@ const OwnMemeUploadFollow = ({data, setData, saveDataToDb, steps, service}) => {
 
   const handlingOnClickNext = () => {
     steps.push('FollowUpPosMeme')
-    console.log(steps)
     saveDataToDb( steps, {})
   }
 

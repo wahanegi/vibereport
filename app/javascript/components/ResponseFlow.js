@@ -18,7 +18,6 @@ const ResponseFlow = ({step, data, setData}) => {
   const stepsArr = JSON.parse(data.response.attributes.steps)
   const navigate = useNavigate()
   const service = { isLoading,  error , setIsLoading}
-console.log(step)
 
   useEffect(()=> {
       window.addEventListener('popstate', function(event) {
@@ -26,7 +25,15 @@ console.log(step)
         const handlingSteps =( answer ) =>{
           const stepsFromDBofServer = JSON.parse(answer.response.attributes.steps)
           stepsFromDBofServer.pop()
-          if (stepsFromDBofServer.length > 0) {saveDataToDb( stepsFromDBofServer )}
+          if (stepsFromDBofServer.length > 0) {
+            createOrUpdate( answer ,
+              { response:{ attributes:{
+                 emotion_id: answer.response.attributes.emotion_id,
+                id: answer.response.attributes.id,
+                steps: JSON.stringify(stepsFromDBofServer),
+                time_period_id: answer.time_period.id,
+                user_id: answer.current_user_id
+                }}}, saveDataToAttributes)}
           else{
             window.location.replace(
               window.location.origin+`/${stepsFromDBofServer[0]}`
@@ -43,14 +50,12 @@ console.log(step)
   //*** **addedData** - necessary data (and future data) for update or save in DB by using Response controller
   //*** Format addedData = **{key: value, ...., key(n): value(n)}**
   const saveDataToDb = ( stepsArr, addedData = {}) =>{
-    const dataRequest = {response:{steps: JSON.stringify(stepsArr),...addedData}}
+    const dataRequest = {response:{ attributes: { steps: JSON.stringify(stepsArr),...addedData } } }
     setIsLoading(true)
     createOrUpdate (data, dataRequest, saveDataToAttributes)
   }
 
   const createOrUpdate = (data, dataRequest, saveDataToAttributes) => {
-    console.log(data.response.attributes.id)
-    console.log(data.response)
     data.response.attributes.emotion_id === undefined ?
       //create new record in the Response table
       apiRequest("POST", dataRequest, saveDataToAttributes ).catch(e=>setError(e))

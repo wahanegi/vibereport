@@ -49,7 +49,7 @@ module Api
       end
 
       def response_params
-        params.require(:response).permit(:id, :emotion_id, :time_period_id, :steps, :not_working)
+        params.require(:response).permit(attributes: [:user_id, :emotion_id, :time_period_id, :steps, :not_working])
       end
 
       def add_chosen_emotion

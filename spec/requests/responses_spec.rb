@@ -7,7 +7,7 @@ RSpec.describe Api::V1::ResponsesController do
   let!(:emotion) { create :emotion }
   let!(:new_emotion) { create :emotion }
   let!(:time_period) { create :time_period }
-  let!(:user_response) { create :response, emotion: emotion,time_period: time_period, user: user, steps: "[\"emotion-selection-web\",\"meme-selection\"]" }
+  let!(:user_response) { create :response, emotion: emotion, time_period: time_period, user: user, steps: "[\"emotion-selection-web\",\"meme-selection\"]" }
   let!(:response_attr) { attributes_for :response, emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: "[\"emotion-selection-web\",\"meme-selection\"]" }
 
   before(:each) do |test|
@@ -69,8 +69,7 @@ RSpec.describe Api::V1::ResponsesController do
   end
 
   describe '#create' do
-    subject { post "/api/v1/responses", params: { response: response_attr, format: :json } }
-
+    subject { post "/api/v1/responses", params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id } }, format: :json } }
     it "responds to json formats when provided in the params" do
       subject
       expect(response.media_type).to eq "application/json"
@@ -79,7 +78,7 @@ RSpec.describe Api::V1::ResponsesController do
     it 'create response' do
       Response.destroy_all
       subject
-      response_saved = Response.find_by(emotion_id: emotion.id, time_period_id: time_period.id)
+      response_saved = Response.find_by(emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id)
       expect([JSON.parse(response.body)]).to eq [{
                                                    "chosen_emotion" =>
                                                      {
@@ -105,7 +104,7 @@ RSpec.describe Api::V1::ResponsesController do
   end
 
   describe '#update' do
-    subject { put "/api/v1/responses/#{user_response.id}", params: { response: { emotion_id: new_emotion.id, steps: '' }, format: :json } }
+    subject { put "/api/v1/responses/#{user_response.id}", params: { response: { attributes: { emotion_id: new_emotion.id, steps: "[\"emotion-selection-web\",\"meme-selection\"]" } }, format: :json } }
 
     it 'update response' do
       subject
@@ -128,7 +127,7 @@ RSpec.describe Api::V1::ResponsesController do
                                                            "id" => user_response.id,
                                                            "time_period_id" => user_response.time_period_id,
                                                            "emotion_id" => new_emotion.id,
-                                                           "steps" => ''
+                                                           "steps" => "[\"emotion-selection-web\",\"meme-selection\"]"
                                                          }
                                                      }
                                                  }]

@@ -7,8 +7,7 @@ const ScaleSelection =  ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
 
   const handlingOnClickNext = () => {
-    steps.push('MemeSelection')
-    console.log(steps)
+    steps.push('meme-selection')
     saveDataToDb( steps, {})
   }
   return (

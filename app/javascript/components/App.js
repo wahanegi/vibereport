@@ -71,7 +71,6 @@ const App = () => {
     }
   },[frontDatabase])
 
-console.log(step)
 // building routes which defined in constant ALL_STEPS
   const listOfRoutes = ALL_STEPS.map((item, index) => {
     return <Route key={item.id}
