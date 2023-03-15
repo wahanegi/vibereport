@@ -28,6 +28,8 @@ export  const mergeData = (receivedData, data, setData) =>{
     response: {
       ...data.response,
       attributes: {
-        ...receivedData.attributes}}
+        ...receivedData.data.attributes}},
+    chosenEmotion:{
+      ...receivedData.chosen_emotion}
   })
 }

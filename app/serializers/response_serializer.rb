@@ -4,9 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  not_working    :boolean          default(FALSE)
-#  category       :string
-#  step           :string
-#  word           :string
+#  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint
@@ -29,6 +27,6 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :step, :word, :category
+  attributes :id, :time_period_id, :emotion_id, :steps
 
 end

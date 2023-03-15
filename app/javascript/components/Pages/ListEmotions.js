@@ -9,7 +9,7 @@ import MemeSelection from "./MemeSelection";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
-//***               response:{attributes: {step: "[\"ListEmotions\"]", word:""}},
+//***               response:{attributes: {steps: "[\"ListEmotions\"]", word:""}},
 //***               current_user_id: ...,
 //***               time_period:{...}
 function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
@@ -18,11 +18,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   const timePeriod = data.time_period
 
   const clickHandling = (emotion_word, emotion_id, timePeriod_id, category) => {
-    steps.push('MemeSelection')
+    steps.push('meme-selection')
     const dataRequest = {
         emotion_id: emotion_id,
-        word: emotion_word,
-        category: category,
         id: data.current_user_id,
         time_period_id: data.time_period.id
       }
@@ -44,7 +42,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
         attributes: {
           ...response.attributes,
           emotion_id: '',
-          step: '',
+          steps: '',
           not_working: true
         }
       }
@@ -97,8 +95,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                                     clickHandling(
                                       emotions[mix_up(index+1)].attributes.word,
                                       emotions[mix_up(index+1)].id,
-                                      timePeriod.id,
-                                      emotions[mix_up(index+1)].attributes.category
+                                      timePeriod.id
                                   )}>{emotions[mix_up(index+1)].attributes.word}
                      
                    </ButtonEmotion>

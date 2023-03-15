@@ -24,11 +24,11 @@ class Api::V1::ResponseFlowFromEmail
   private
 
   def create_response
-    @new_response = user.responses.create!(time_period_id: time_period_id, emotion_id: emotion_id, step: 'MemeSelection')
+    @new_response = user.responses.create!(time_period_id: time_period_id, emotion_id: emotion_id, steps: "[\"emotion-selection-web\",\"meme-selection\"]")
   end
 
   def update_response
-    @existed_response.update!(emotion_id: emotion_id, not_working: false, step: 'MemeSelection')
+    @existed_response.update!(emotion_id: emotion_id, not_working: false, steps: "[\"emotion-selection-web\",\"meme-selection\"]")
   end
 
   def set_existed_response

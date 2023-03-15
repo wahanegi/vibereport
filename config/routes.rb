@@ -9,10 +9,9 @@ Rails.application.routes.draw do
   get '/app', to: 'home#app'
   namespace :api do
     namespace :v1 do
-      resources :emotions, only: [:index, :show]
+      resources :emotions, only: [:index]
       resources :responses, param: :id
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
-      # post 'emotions', to: 'api/v1/emotions#show'
     end
     end
   get '/results', to: redirect('/app/results')

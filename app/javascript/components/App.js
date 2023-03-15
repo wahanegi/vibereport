@@ -9,7 +9,7 @@ import axios from "axios";
 const ALL_STEPS = [
   {id:"1", step:"emotion-selection-web"},
   {id:"1.1.", step:"ScaleSelection"},
-  {id:"2.0", step: "MemeSelection"},
+  {id:"2.0", step: "meme-selection"},
   {id:"1.1", step:"EmotionEntry"},
   {id:"2.25", step:"SelectedGIPHYFollow"},
   {id:"2.26", step:"OwnMemeUploadFollow"},
@@ -32,7 +32,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState(null)
-  const [emotionDataRespUserIdTimePeriod, setEmotionDataRespUserIdTimePeriod] = useState(null)
+  const [frontDatabase, setFrontDatabase] = useState(null)
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
 
   const mainPage = 'emotion-selection-web'
@@ -41,25 +41,26 @@ const App = () => {
     if (isNotLoadedData) {
       setIsLoading(true)
       axios.get('/api/v1/emotions.json')
-        // LOAD Emotions (3*12) and Response data of authorized user from DB
-        // Below data for the start entry of user
+        // LOAD Emotions (3*12), emotion_attr and Response data of authorized user from DB
+        // Below format of data for the start entry of user
         // data = {data:{
-        //               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
-        //               response:{attributes: {step: "[\"emotion-selection-web\"]", word:""}},
+        //               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... } }, //36 rows
+        //               emotion_attr: {word: "", category: ""}                                      //first entry
+        //               response:{attributes: { steps: "[\"emotion-selection-web\"]" } },            //strong format
         //               current_user_id: ...,
         //               time_period:{...}
         //               }
         //        }
         .then(data => {
           setIsNotLoadedData(false)
-          let arrWithSteps = JSON.parse(data.data.response.attributes.step)
+          let arrWithSteps = JSON.parse(data.data.response.attributes.steps)
           //save data:{Emotions}, response:{attributes}, current_user_id, time_period
-          setEmotionDataRespUserIdTimePeriod(data.data)
+          setFrontDatabase(data.data)
           if (arrWithSteps === undefined || arrWithSteps.length === 0) {
             setStep(mainPage)
           } else {
-            let stepFromDB = arrWithSteps.pop()
-            setStep(stepFromDB)
+            let lastStepFromDBofServer = arrWithSteps.pop()
+            setStep(lastStepFromDBofServer)
           }
           setIsLoading(false)
         })
@@ -68,15 +69,16 @@ const App = () => {
           setIsLoading(false)
         })
     }
-  },[emotionDataRespUserIdTimePeriod])
+  },[frontDatabase])
 
+console.log(step)
 // building routes which defined in constant ALL_STEPS
   const listOfRoutes = ALL_STEPS.map((item, index) => {
     return <Route key={item.id}
                   path={`/${ALL_STEPS[index].step}`}
                   element={<ResponseFlow step={item.step}
-                                         data={emotionDataRespUserIdTimePeriod}
-                                         setData={setEmotionDataRespUserIdTimePeriod}/>} />
+                                         data={frontDatabase}
+                                         setData={setFrontDatabase}/>} />
   })
 
   return(
@@ -87,8 +89,8 @@ const App = () => {
       <BrowserRouter>
         {!!step && !isNotLoadedData && <Routes>
           <Route path="*" element={<Navigate to={`/${step}`}
-                                             data={emotionDataRespUserIdTimePeriod}
-                                             setData={setEmotionDataRespUserIdTimePeriod} />}/>
+                                             data={frontDatabase}
+                                             setData={setFrontDatabase} />}/>
           {listOfRoutes}
         </Routes>}
       </BrowserRouter>

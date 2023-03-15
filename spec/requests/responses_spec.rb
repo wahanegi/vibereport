@@ -7,8 +7,8 @@ RSpec.describe Api::V1::ResponsesController do
   let!(:emotion) { create :emotion }
   let!(:new_emotion) { create :emotion }
   let!(:time_period) { create :time_period }
-  let!(:user_response) {create :response, emotion: emotion, word: emotion.word, category: emotion.category, time_period: time_period, user: user, step: 'MemeSelection' }
-  let!(:response_attr) { attributes_for :response, emotion_id: emotion.id, word: emotion.word, category: emotion.category, time_period_id: time_period.id, user_id: user.id, step: 'MemeSelection' }
+  let!(:user_response) { create :response, emotion: emotion,time_period: time_period, user: user, steps: "[\"emotion-selection-web\",\"meme-selection\"]" }
+  let!(:response_attr) { attributes_for :response, emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: "[\"emotion-selection-web\",\"meme-selection\"]" }
 
   before(:each) do |test|
     passwordless_sign_in(user) unless test.metadata[:logged_out]
@@ -45,8 +45,15 @@ RSpec.describe Api::V1::ResponsesController do
     it 'should will be correct response' do
       get "/api/v1/responses/#{user_response.id}"
       expect([JSON.parse(response.body)]).to eq [{
-                                                   "data"=>
+                                                   "chosen_emotion" =>
                                                      {
+                                                       "id" => user_response.emotion.id,
+                                                       "category" => user_response.emotion.category,
+                                                       "created_at" => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
+                                                       "updated_at" => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
+                                                       "word" => user_response.emotion.word
+                                                     },
+                                                   "data"=>{
                                                        "id" => user_response.id.to_s,
                                                        "type" => "response",
                                                        "attributes" =>
@@ -54,19 +61,9 @@ RSpec.describe Api::V1::ResponsesController do
                                                            "id" => user_response.id,
                                                            "time_period_id" => user_response.time_period_id,
                                                            "emotion_id" => user_response.emotion_id,
-                                                           "word" => user_response.word,
-                                                           "category" => user_response.category,
-                                                           "step" => user_response.step
+                                                           "steps" => user_response.steps
                                                          }
-                                                     },
-                                                     "emotion" =>
-                                                       {
-                                                         "id" => user_response.emotion.id,
-                                                         "category" => user_response.emotion.category,
-                                                         "created_at" => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
-                                                         "updated_at" => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
-                                                         "word" => user_response.emotion.word
-                                                       }
+                                                     }
                                                  }]
     end
   end
@@ -84,8 +81,15 @@ RSpec.describe Api::V1::ResponsesController do
       subject
       response_saved = Response.find_by(emotion_id: emotion.id, time_period_id: time_period.id)
       expect([JSON.parse(response.body)]).to eq [{
-                                                   "data"=>
+                                                   "chosen_emotion" =>
                                                      {
+                                                       "id" => user_response.emotion.id,
+                                                       "category" => user_response.emotion.category,
+                                                       "created_at" => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
+                                                       "updated_at" => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
+                                                       "word" => user_response.emotion.word
+                                                     },
+                                                   "data" => {
                                                        "id" => response_saved.id.to_s,
                                                        "type" => "response",
                                                        "attributes" =>
@@ -93,9 +97,7 @@ RSpec.describe Api::V1::ResponsesController do
                                                            "id" => response_saved.id,
                                                            "time_period_id" => response_saved.time_period_id,
                                                            "emotion_id" => response_saved.emotion_id,
-                                                           "word" => user_response.word,
-                                                           "category" => user_response.category,
-                                                           "step" => response_saved.step
+                                                           "steps" => response_saved.steps
                                                          }
                                                      }
                                                  }]
@@ -103,11 +105,20 @@ RSpec.describe Api::V1::ResponsesController do
   end
 
   describe '#update' do
-    subject { put "/api/v1/responses/#{user_response.id}", params: { response: { emotion_id: new_emotion.id, step: '' }, format: :json } }
+    subject { put "/api/v1/responses/#{user_response.id}", params: { response: { emotion_id: new_emotion.id, steps: '' }, format: :json } }
 
     it 'update response' do
       subject
+      emotion = Emotion.find(new_emotion.id)
       expect([JSON.parse(response.body)]).to eq [{
+                                                   "chosen_emotion" =>
+                                                     {
+                                                       "id" => emotion.id,
+                                                       "category" => emotion.category,
+                                                       "created_at" => emotion.created_at.strftime('%FT%T.%LZ'),
+                                                       "updated_at" => emotion.updated_at.strftime('%FT%T.%LZ'),
+                                                       "word" => emotion.word
+                                                     },
                                                    "data"=>
                                                      {
                                                        "id" => user_response.id.to_s,
@@ -117,9 +128,7 @@ RSpec.describe Api::V1::ResponsesController do
                                                            "id" => user_response.id,
                                                            "time_period_id" => user_response.time_period_id,
                                                            "emotion_id" => new_emotion.id,
-                                                           "word" => user_response.word,
-                                                           "category" => user_response.category,
-                                                           "step" => ''
+                                                           "steps" => ''
                                                          }
                                                      }
                                                  }]
