@@ -63,6 +63,17 @@
           margin: 0 auto;
           padding: 8px;
       }
+      .field_empty {
+          margin: 0 auto;
+      }
+      .field_emotions{
+          width: 1115px;
+          margin: 0 auto;
+          margin-top: 5px;
+      }
+      .flex{
+          display: flex;
+      }
       .left-div {
           width: 10px;
           top: -10px;
@@ -179,6 +190,7 @@
           text-align: center;
           color: rgba(0, 0, 0, 0.7);
           margin: 0 auto;
+          margin-top: 41px;
       }
       .own_word{
           box-sizing: border-box;
@@ -239,7 +251,7 @@
 </div>
 <br/>
 <div class="question">Which word best describes work this week?</div>
-<table>
+<div>
   <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
     <% emotion = [] %>
     <% emotion.push(@positive_emotions[index].word) %>
@@ -248,8 +260,8 @@
     <% emotion.push(@neutral_emotions[index+1].word) %>
     <% emotion.push(@negative_emotions[index].word) %>
     <% emotion.push(@negative_emotions[index+1].word) %>
-    <tr>
-      <td>
+    <div class="field_empty"></div>
+      <div class="field_emotions flex">
         <% 6.times do |i|%>
           <button class="<%= if i < 2
                               "positive"
@@ -261,10 +273,10 @@
             <%= "#{emotion[i]}" %>
           </button>
         <% end %>
-      </td>
-    </tr>
+      </div>
+    </div>
 <% end %>
-</table>
+</div>
 <div class="share">Share it in your own words!</div>
 <div class="own_word">
   <label>
