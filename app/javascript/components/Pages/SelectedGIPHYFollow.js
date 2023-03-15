@@ -4,6 +4,7 @@ import {Button} from "react-bootstrap";
 
 const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
+  const {category, word, gif_url} = data.response.attributes
 
   const handlingOnClickNext = () => {
     steps.push('FollowUpPosMeme')
@@ -21,9 +22,10 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service}) => {
         </div>
         <div>
           <h3>You uploaded</h3>
+          <img src={gif_url} />
         </div>
         <div>
-          <Button className={data.response.attributes.category}>{data.response.attributes.word}</Button>
+          <Button className={category}>{word}</Button>
         </div>
         <div>
           <BackButton data={data} setData={setData}>Back</BackButton>

@@ -4,10 +4,13 @@ $color-black: #000000;
 $color-blue: #5689EB;
 $color-white: #FFFFFF;
 $color-rose: #E02AA4;
+$light-grey: #D9D9D9;
+$green: #4F9B64;
 
 body {
   font-family: $font-family;
   font-style: normal;
+  width: calc(100% - 12px);
 }
 .header {
   font-weight: 700;
@@ -105,5 +108,9 @@ body {
   margin: -70px 49px;
   color: #E02AA4;
   font-weight: 800;
+}
+.container {
+  height: 100vh;
+  width: 100vw;
 }
 //</ListEmotion

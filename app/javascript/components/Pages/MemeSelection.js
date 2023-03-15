@@ -1,8 +1,11 @@
 import React, {Fragment, useEffect, useState} from "react"
 import {Button} from "react-bootstrap";
-import BackButton from "../UI/BackButton";
-import {isEmpty} from "../helpers/helper";
 import {useNavigate} from "react-router-dom";
+import Gif from "./Gifs";
+import QuestionButton from "../UI/QuestionButton";
+import ShoutoutButton from "../UI/ShoutoutButton";
+import Menu from "../UI/Menu";
+import {LeftPanel, RightPanel} from "./Share/ShareContent";
 
 //*** Below what we have in the data after ListEmotion(example). See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -15,20 +18,20 @@ import {useNavigate} from "react-router-dom";
 //***               current_user_id: 1,
 //***               time_period:{...}
 const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
-  const [response, setResponse] = useState(data.response)
+  const {emotion, api_giphy_key} = data
   const navigate = useNavigate()
   const {isLoading, error} = service
-  const emotionId = data.response.attributes.emotion_id
-  const emotionWord = data.response.attributes.word
+  const [gifUrl, setGifUrl] = useState(data.response.attributes.gif_url || '')
+  const [selectedGifIndex, setSelectedGifIndex] = useState(null);
 
   const handlingOnClickSkip = () =>{
     steps.push('FollowUpPosWordOnly')
-    saveDataToDb( steps ,{})
-    }
+    saveDataToDb( steps , { gif_url: null })
+  }
 
-  const chooseGIPHYHandling=()=>{
+  const chooseGIPHYHandling = () => {
     steps.push('SelectedGIPHYFollow')
-    saveDataToDb( steps ,{})
+    saveDataToDb(steps, { gif_url: gifUrl })
   }
   const uploadGIPHYHandling=()=>{
     steps.push('OwnMemeUploadFollow')
@@ -39,21 +42,24 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
       navigate(`/${JSON.parse(data.response.attributes.step).pop()}`);
   },[])
 
-  return(
-    <Fragment>
-      { !!error && <p>{error.message}</p>}
-      { !isLoading && !error &&
-      <div>
-        <h1>2.0 MemeSelection</h1>
-        <h1>You choose such emotion word
-          {" " + emotionWord} with id = {emotionId}
-        </h1>
-        <div><Button onClick={chooseGIPHYHandling}>Choose</Button></div>
-        <div><Button onClick={handlingOnClickSkip}>Skip</Button></div>
-        <div><Button onClick={uploadGIPHYHandling}>Upload</Button></div>
-      </div>}
-    </Fragment>
-  )
+  const Footer = () => <div className='d-flex justify-content-between footer'>
+    <Button className='m-1' onClick={uploadGIPHYHandling}>Upload your own meme!</Button>
+    <div>
+      <Button className='m-1' onClick={chooseGIPHYHandling} hidden={selectedGifIndex === null}>Next</Button>
+      <Button className='m-1' onClick={handlingOnClickSkip} hidden={selectedGifIndex !== null}>Skip</Button>
+    </div>
+  </div>
+
+  if (!!error) return <p>{error.message}</p>
+
+  return !isLoading && <div className="row text-center">
+    <LeftPanel />
+    <div className='col-8'>
+      <Gif {...{emotion, api_giphy_key, setGifUrl, selectedGifIndex, setSelectedGifIndex}} />
+      <Footer />
+    </div>
+    <RightPanel />
+  </div>
 }
 
 export default MemeSelection;

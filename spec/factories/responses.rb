@@ -3,8 +3,9 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
-#  not_working    :boolean          default(FALSE)
 #  category       :string
+#  gif_url        :string
+#  not_working    :boolean          default(FALSE)
 #  step           :string
 #  word           :string
 #  created_at     :datetime         not null

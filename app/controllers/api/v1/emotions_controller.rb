@@ -23,7 +23,9 @@ class Api::V1::EmotionsController < ApplicationController
         start_date: TimePeriod.current.start_date,
         end_date: TimePeriod.current.end_date
       },
-      response: @current_response ? response_hash : {attributes: {step: "[\"emotion-selection-web\"]", word:""}}
+      response: @current_response ? response_hash : {attributes: {step: "[\"emotion-selection-web\"]", word:""}},
+      emotion: @current_response ? @current_response.emotion : {},
+      api_giphy_key: ENV.fetch('REACT_APP_API_GIPHY_KEY')
     }
   end
 
