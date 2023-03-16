@@ -55,11 +55,12 @@ const ResponseFlow = ({step, data, setData}) => {
   }
 
   const createOrUpdate = (data, dataRequest, saveDataToAttributes) => {
+    const url = '/api/v1/responses/' + data.response.attributes.id
     data.response.attributes.emotion_id === undefined ?
       //create new record in the Response table
       apiRequest("POST", dataRequest, saveDataToAttributes ).catch(e=>setError(e))
       :
-      apiRequest("PATCH", dataRequest, saveDataToAttributes, ()=>{},'/api/v1/responses/' + data.response.id).catch(e=>setError(e))
+      apiRequest("PATCH", dataRequest, saveDataToAttributes, ()=>{}, url ).catch(e=>setError(e))
   }
 
   //***  include received data from the apiRequest to the variable **:data** (**:emotionDataRespUserIdTimePeriod** in App)
