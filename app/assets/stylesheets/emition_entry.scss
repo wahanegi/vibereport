@@ -1,0 +1,102 @@
+.q-emotion-entry{
+  position: static;
+  margin-top: 29px;
+}
+
+.over-input-entry{
+  margin-top: 12px;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  color: $color-muted;
+}
+
+.under-input-entry{
+  margin-top: 79px;
+  height: 44px;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.input_new-word{
+  padding-top: 19px;
+  width: 660px;
+}
+
+.input-positive{
+  background-color: $color-input-positive;
+  color: $color-input-positive-text;
+}
+
+.input-negative{
+  background-color: $color-input-negative;
+  color: $color-input-negative-text;
+}
+
+.input-neutral{
+  background-color: $color-input-neutral;
+  color: $color-input-neutral-text;
+}
+
+.input_new-word::placeholder{
+  font-size: 36px;
+  font-weight: 700;
+  color: $color-muted;
+}
+
+.wrap-emoji{
+  margin-top: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 38px;
+}
+
+.wrap-icon{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  cursor: pointer;
+}
+
+.wrap-icon img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+  border: 2px solid transparent;
+}
+
+.wrap-icon span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.wrap-icon.positive-icon:hover img{
+  border-color: #02A32F;
+}
+
+.wrap-icon.positive-icon:hover span {
+  color: #02A32F;
+}
+
+.wrap-icon.negative-icon:hover img {
+  border-color: #F45C12;
+}
+
+.wrap-icon.negative-icon:hover span {
+  color: #F45C12;
+}
+
+.wrap-icon.neutral-icon:hover img {
+  border-color: #105DF1;
+}
+
+.wrap-icon.neutral-icon:hover span {
+  color: #105DF1;
+}
