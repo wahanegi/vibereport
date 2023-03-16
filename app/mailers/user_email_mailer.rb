@@ -5,7 +5,6 @@ class UserEmailMailer < ApplicationMailer
   default from: "do_not_reply@#{ENV.fetch('EMAIL_DOMAIN')}"
   NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 
-
   def response_invite(user, time_period)
     @user = user
     @view_calendar_days = range_format(time_period)

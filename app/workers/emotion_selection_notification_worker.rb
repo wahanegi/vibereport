@@ -7,8 +7,7 @@ class EmotionSelectionNotificationWorker
   end
 
   def run_notification
-    return if Date.current.strftime("%A").downcase != ENV["DAY_TO_SEND_INVITES"].downcase
-
+    return if Date.current.strftime('%A').downcase != ENV['DAY_TO_SEND_INVITES'].downcase
     run_notification!
   end
 

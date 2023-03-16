@@ -10,10 +10,10 @@ class Api::V1::ResponseNotWorkingFromEmail < Api::V1::ResponseFlowFromEmail
   private
 
   def create_response
-    user.responses.create!(time_period_id: time_period_id, not_working: true, step: '', emotion_id: nil)
+    user.responses.create!(time_period_id: time_period_id, not_working: true, steps: '', emotion_id: nil)
   end
 
   def update_response
-    @existed_response.update!(not_working: true, emotion_id: nil, step: '')
+    @existed_response.update!(not_working: true, emotion_id: nil, steps: '')
   end
 end

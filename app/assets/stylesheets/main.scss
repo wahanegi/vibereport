@@ -33,15 +33,15 @@ body {
 }
 .email_field{
   box-sizing: border-box;
-  width: 385px;
+  width: 660px;
   background: $color-white;
   margin: 0 auto;
 }
 .email_field input{
-  width: 385px;
+  width: 660px;
   height: 70px;
   font-size: 40px;
-  line-height: 40px;
+  line-height: 70px;
   color: $color-muted;
   margin: 13px 0;
   border: 3px solid $color-blue;

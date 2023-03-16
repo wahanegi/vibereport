@@ -4,7 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  not_working    :boolean          default(FALSE)
-#  step           :string
+#  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint

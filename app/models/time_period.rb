@@ -21,6 +21,7 @@ class TimePeriod < ApplicationRecord
     end_date = start_date + 6.days
     TimePeriod.create(start_date: start_date, end_date: end_date)
   end
+
   def self.current_time_period
     TimePeriod.find_by(start_date: Date.current.., end_date: ..Date.current + 6.days)
   end

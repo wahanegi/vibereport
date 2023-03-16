@@ -12,8 +12,8 @@ class Emotion < ApplicationRecord
   has_many :responses, dependent: :destroy
 
   SHOW_NUMBER_PER_CATEGORY = 12
-    enum category: [:negative, :neutral, :positive]
-    validates :word, presence: true, length: { in: 2..15 }, uniqueness: {case_sensitive: false}
-    validates :category, inclusion: { in: Emotion::categories }
-    before_save { self.word&.downcase! }
+  enum category: [:negative, :neutral, :positive]
+  validates :word, presence: true, length: { in: 2..15 }, uniqueness: { case_sensitive: false }
+  validates :category, inclusion: { in: Emotion::categories }
+  before_save { self.word&.downcase! }
 end

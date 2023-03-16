@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {special_prop} from "../helper_functions/library";
+import {specialProp} from "../helpers/library";
 
 const ButtonEmotion = (props) => {
   const word = props.children
-  const expandableCss = { width: special_prop(word, 'width' ), margin: special_prop(word, 'margin') }
+  const expandableCss = { width: specialProp(word, 'width' ), margin: specialProp(word, 'margin') }
 
   const clickHandling = () =>{
     props.onClick()

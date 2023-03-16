@@ -1,31 +1,117 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {useParams} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
+import EmotionEntry from "./Pages/EmotionEntry";
+import SelectedGIPHYFollow from "./Pages/SelectedGIPHYFollow";
+import OwnMemeUploadFollow from "./Pages/OwnMemeUploadFollow";
+import FollowUpPosWordOnly from "./Pages/FollowUpPosWordOnly";
+import {apiRequest} from "./requests/axios_requests";
+import {mergeData} from "./helpers/library";
+import {useNavigate} from "react-router-dom";
+import FollowUpPosMeme from "./Pages/FollowUpPosMeme";
+import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
 
-const ResponseFlow = () => {
-  const [response, setResponse] = useState({})
-  const [emotion, setEmotion] = useState({})
-  const [loaded, setLoaded] = useState(false)
-  const params = useParams();
+const ResponseFlow = ({step, data, setData}) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const stepsArr = JSON.parse(data.response.attributes.steps)
+  const navigate = useNavigate()
+  const service = { isLoading,  error , setIsLoading}
 
   useEffect(()=> {
-    const url = `/api/v1/responses/${params.id}`
-    axios.get(url)
-      .then(resp => {
-        setResponse(resp.data.data)
-        setEmotion(resp.data.emotion)
-        setLoaded(true)
-      })
-      .catch(resp => console.log(resp))
-  }, [response.length])
+      window.addEventListener('popstate', function(event) {
+        event.preventDefault()
+        const handlingSteps =( answer ) =>{
+          const stepsFromDBofServer = JSON.parse(answer.response.attributes.steps)
+          stepsFromDBofServer.pop()
+          if (stepsFromDBofServer.length > 0) {
+            createOrUpdate( answer ,
+              { response:{ attributes:{
+                 emotion_id: answer.response.attributes.emotion_id,
+                id: answer.response.attributes.id,
+                steps: JSON.stringify(stepsFromDBofServer),
+                time_period_id: answer.time_period.id,
+                user_id: answer.current_user_id
+                }}}, saveDataToAttributes)}
+          else{
+            window.location.replace(
+              window.location.origin+`/${stepsFromDBofServer[0]}`
+            );
+          }
+        }
+        apiRequest("GET", "", handlingSteps, ()=>{}, '/api/v1/emotions.json').catch(e=>setError(e))
 
-  if (!loaded) return <p>Loading...</p>
+      });
+  },[])
 
-  switch (response.attributes.step) {
-    case 'MemeSelection':
-      return <MemeSelection emotion={emotion} />
+  //*** **setError** - Hook for handling error messages
+  //*** **steps** - array with steps of user for update or save in DB
+  //*** **addedData** - necessary data (and future data) for update or save in DB by using Response controller
+  //*** Format addedData = **{key: value, ...., key(n): value(n)}**
+  const saveDataToDb = ( stepsArr, addedData = {}) =>{
+    const dataRequest = {response:{ attributes: { steps: JSON.stringify(stepsArr),...addedData } } }
+    setIsLoading(true)
+    createOrUpdate (data, dataRequest, saveDataToAttributes)
+  }
+
+  const createOrUpdate = (data, dataRequest, saveDataToAttributes) => {
+    const url = '/api/v1/responses/' + data.response.attributes.id
+    data.response.attributes.emotion_id === undefined ?
+      //create new record in the Response table
+      apiRequest("POST", dataRequest, saveDataToAttributes ).catch(e=>setError(e))
+      :
+      apiRequest("PATCH", dataRequest, saveDataToAttributes, ()=>{}, url ).catch(e=>setError(e))
+  }
+
+  //***  include received data from the apiRequest to the variable **:data** (**:emotionDataRespUserIdTimePeriod** in App)
+  // shortly: including data from server to the front database
+  const saveDataToAttributes =( receivedData ) =>{
+    setIsLoading(false)
+    mergeData( receivedData, data, setData )
+    navigate(`/${JSON.parse(receivedData.data.attributes.steps).pop()}`)
+  }
+
+  switch (step) {
+    case  "emotion-selection-web" :
+      return <ListEmotions data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "emotion-entry" :
+      return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "meme-selection" :
+      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "SelectedGIPHYFollow" :
+      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "OwnMemeUploadFollow" :
+      return <OwnMemeUploadFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "FollowUpPosWordOnly" :
+      return <FollowUpPosWordOnly data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "FollowUpPosMeme" :
+      return <FollowUpPosMeme data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "ProductivityCheckLow" :
+      return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "ProductivityBadFollowUp" :
+    //   return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "CausesToCelebrate" :
+    //   return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "ShoutoutPromptNone" :
+    //   return <ShoutoutPromptNone data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "ShoutoutModalExample" :
+    //   return <ShoutoutModalExample data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "ShoutoutModal_FlexUse" :
+    //   return <ShoutoutModal_FlexUse data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "Icebreaker" :
+    //   return <Icebreaker data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "MemeWallThisWeekSoFar" :
+    //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "MemeWallPrevWeek" :
+    //   return <MemeWallPrevWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "MemeWallThisWeek" :
+    //   return <MemeWallThisWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "MemeWallThisWeekSoFarDrop" :
+    //   return <MemeWallThisWeekSoFarDrop data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    // case  "PromptEmailResults" :
+    //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    default:
+      0
   }
 }
-
-export default ResponseFlow
+export default ResponseFlow;

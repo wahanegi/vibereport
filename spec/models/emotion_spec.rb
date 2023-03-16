@@ -12,9 +12,9 @@ require 'rails_helper'
 
 RSpec.describe Emotion, type: :model do
   let!(:emotion) { create :emotion }
-  let!(:emotion_positive) { create(:emotion, :category => "positive") }
-  let!(:emotion_neutral) { create(:emotion,  :category => "neutral") }
-  let!(:emotion_negative) { create(:emotion, :category => "negative") }
+  let!(:emotion_positive) { create(:emotion, category: 'positive') }
+  let!(:emotion_neutral) { create(:emotion, category: 'neutral') }
+  let!(:emotion_negative) { create(:emotion, category: 'negative') }
   before do
     Faker::UniqueGenerator.clear
   end
@@ -29,13 +29,13 @@ RSpec.describe Emotion, type: :model do
   end
 
   describe 'Scopes' do
-    it "positive scope" do
+    it 'positive scope' do
       expect(Emotion.positive).to include(emotion_positive)
     end
-    it "neutral scope" do
+    it 'neutral scope' do
       expect(Emotion.neutral).to include(emotion_neutral)
     end
-    it "negative scope" do
+    it 'negative scope' do
       expect(Emotion.negative).to include(emotion_negative)
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe Emotion, type: :model do
       expect(new_word).to_not be_valid
     end
 
-    it "the capitalized emotion word should not be used" do
+    it 'the capitalized emotion word should not be used' do
       new_word = FactoryBot.build(:emotion, word: emotion.word.upcase!)
       expect(new_word).to_not be_valid
     end

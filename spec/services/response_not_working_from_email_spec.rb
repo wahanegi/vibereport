@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe Api::V1::ResponseNotWorkingFromEmail do
-  let!(:user) { create :user}
+  let!(:user) { create :user }
   let!(:time_period) { create :time_period }
-  let!(:params) { {time_period_id: time_period.id, user_id: user.id, not_working: true} }
+  let!(:params) { { time_period_id: time_period.id, user_id: user.id, not_working: true } }
 
   subject { Api::V1::ResponseNotWorkingFromEmail.new(params, user).call }
 
