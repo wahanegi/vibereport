@@ -9,5 +9,14 @@
   <% if params.dig("passwordless", "email").present? %>
     <h2 class="my-3 muted"><%= params.dig("passwordless", "email") %></h2>
   <% end %>
-  <h4 class="muted my-4">If you have any issues, use the help button at the bottom right of this window to contact an administrator.</h4>
+  <h4 class="muted my-4">
+    <p class='m-0'>If you have any issues, use the help</p>
+    <p class='m-0'>button at the bottom right of this window</p>
+    <p class='m-0'>to contact an administrator.</p>
+  </h4>
+  <div class="d-flex align-items-center justify-content-end" style="margin-top: 100px">
+    <%= link_to "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: 'icon-circle' do %>
+      <%= content_tag(:i, "", class: "fa-solid fa-3x fa-question") %>
+    <% end %>
+  </div>
 </div>
