@@ -10,6 +10,7 @@ import {mergeData} from "./helpers/library";
 import {useNavigate} from "react-router-dom";
 import FollowUpPosMeme from "./Pages/FollowUpPosMeme";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
+import Results from "./Pages/Results";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -78,6 +79,8 @@ const ResponseFlow = ({step, data, setData}) => {
       return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "meme-selection" :
       return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "results" :
+      return <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "SelectedGIPHYFollow" :
       return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "OwnMemeUploadFollow" :

@@ -31,22 +31,15 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     saveDataToDb( steps )
   }
 
-  const onClickNotWorking = (timePeriod_id, navigate, response) => {
-    // it need to change in correspondence with our structure
-    if (isEmpty(response)) {
-      createResponse('', timePeriod_id, navigate, '', false)
-    } else {
-      const updatedResponse = {
-        ...response,
-        attributes: {
-          ...response.attributes,
-          emotion_id: '',
-          steps: '',
-          not_working: true
-        }
-      }
-      updateResponse(updatedResponse, setResponse).then(() => navigate(`/app/results`))
+  const onClickNotWorking = () => {
+    steps.push('results')
+    const dataRequest = {
+      emotion_id: '',
+      not_working: true,
+      time_period_id: data.time_period.id,
+      user_id: data.current_user_id,
     }
+    saveDataToDb( steps, dataRequest )
   }
 
   const rangeFormat = (tp) => {
@@ -103,7 +96,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
             <div className='field_empty'></div>
           <div className="share sh-new-pos">Share it in your own words!</div>
           <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={ownWordHandling}/>
-          <NavLink className="nav-link" onClick={() => onClickNotWorking(timePeriod.id, navigate, response)} to={''}>
+          <NavLink className="nav-link" onClick={onClickNotWorking} to={''}>
             I was not working this week
           </NavLink>
           <QuestionButton style={{position: 'absolute', right: 47}}/>
