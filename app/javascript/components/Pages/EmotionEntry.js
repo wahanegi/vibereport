@@ -1,9 +1,26 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import NavigationButtons from '../UI/NavigationButtons';
 
-const EmotionEntry = () => {
-  return <div>
-    <h2>Emotion Entry Page</h2>
-    <p>No emotion was clicked</p>
-  </div>
-}
+const EmotionEntry =  ({data, setData, saveDataToDb, steps, service}) => {
+  const {isLoading, error} = service
+
+  const handlingOnClickNext = () => {
+    steps.push('meme-selection')
+    saveDataToDb( steps, {})
+  }
+  //id:"1.1.", step:"emotion-entry"
+  return (
+    <Fragment>
+      { !!error && <p>{error.message}</p>}
+      { !isLoading && !error  &&
+        <div>
+          <div>
+            <h2>No emotion was clicked</h2>
+          </div> 
+          <NavigationButtons data={data} setData={setData} handlingOnClickNext={handlingOnClickNext} />
+        </div>}
+    </Fragment>
+  );
+};
+
 export default EmotionEntry;

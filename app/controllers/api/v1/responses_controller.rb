@@ -4,29 +4,28 @@ module Api
       include ApplicationHelper
 
       before_action :set_response, only: %i[show update]
-      before_action :require_user!, only: [:index, :show, :create, :update]
+      before_action :require_user!, only: %i[index show create update]
 
       def index
         render json: ResponseSerializer.new(Response.all).serializable_hash
       end
 
       def show
-        render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_params)
+        render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
       end
 
       def create
         @response = current_user.responses.build(response_params)
-
         if @response.save
-          render json: ResponseSerializer.new(@response).serializable_hash
+          render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
         end
       end
 
       def update
-        if @response.update(response_params)
-          render json: ResponseSerializer.new(@response).serializable_hash
+         if @response.update(response_params)
+          render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
         end
@@ -50,11 +49,11 @@ module Api
       end
 
       def response_params
-        params.require(:response).permit(:id, :emotion_id, :time_period_id, :step, :word, :category, :not_working, :gif_url)
+        params.require(:response).permit(attributes: [:user_id, :emotion_id, :time_period_id, :steps, :not_working, :gif_url])
       end
 
-      def additional_params
-        { emotion: @response.emotion }
+      def add_chosen_emotion
+        { chosen_emotion: @response.emotion }
       end
 
       def set_user

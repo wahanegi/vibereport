@@ -16,6 +16,7 @@ class Api::V1::EmotionsController < ApplicationController
   private
 
   def additional_params
+    #  below in the response steps must be wrote with only such format in other case will be mistakes
     {
       current_user_id: current_user.id,
       time_period: {
@@ -23,7 +24,7 @@ class Api::V1::EmotionsController < ApplicationController
         start_date: TimePeriod.current.start_date,
         end_date: TimePeriod.current.end_date
       },
-      response: @current_response ? response_hash : {attributes: {step: "[\"emotion-selection-web\"]", word:""}},
+      response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV.fetch('REACT_APP_API_GIPHY_KEY')
     }

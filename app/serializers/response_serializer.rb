@@ -3,11 +3,9 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
-#  category       :string
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
-#  step           :string
-#  word           :string
+#  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint
@@ -30,6 +28,5 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :step, :word, :category, :gif_url
-
+  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url
 end

@@ -7,7 +7,6 @@ const OwnMemeUploadFollow = ({data, setData, saveDataToDb, steps, service}) => {
 
   const handlingOnClickNext = () => {
     steps.push('FollowUpPosMeme')
-    console.log(steps)
     saveDataToDb( steps, {})
   }
 
@@ -26,7 +25,7 @@ const OwnMemeUploadFollow = ({data, setData, saveDataToDb, steps, service}) => {
       <h3>You uploaded</h3>
       </div>
       <div>
-        <Button className={data.response.attributes.category}>{data.response.attributes.word}</Button>
+        <Button className={data.emotion.category}>{data.emotion.word}</Button>
       </div>
       <div>
         <BackButton data={data} setData={setData}>Back</BackButton>

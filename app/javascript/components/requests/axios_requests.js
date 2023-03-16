@@ -6,9 +6,9 @@ export const createCsrfToken = () => {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 }
 
-export const createResponse = async (emotion_id, time_period_id, navigate, step, not_working = false) => {
+export const createResponse = async (emotion_id, time_period_id, navigate, steps, not_working = false) => {
   createCsrfToken()
-  await axios.post('/api/v1/responses', {emotion_id, time_period_id, step, not_working})
+  await axios.post('/api/v1/responses', {emotion_id, time_period_id, steps, not_working})
     .then(resp => {
       not_working ? navigate(`/app/results`) : navigate(`/responses/${resp.data.data.id}`)
     })
@@ -35,14 +35,14 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
     case "POST":
       await axios.post(url, data)
         .then(response => {
-          setData(response.data.data)
+          setData(response.data)
           redirect()
         })
         break
     case "PATCH":
-      await axios.patch(url+"/1", data) //"1"-??? need to make a little rectify in controller
+      await axios.patch(url, data) //"1"-??? need to make a little rectify in controller
         .then(response => {
-          setData(response.data.data)
+          setData(response.data)
           redirect()
         })
       break
