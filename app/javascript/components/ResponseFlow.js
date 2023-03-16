@@ -6,11 +6,10 @@ import SelectedGIPHYFollow from "./Pages/SelectedGIPHYFollow";
 import OwnMemeUploadFollow from "./Pages/OwnMemeUploadFollow";
 import FollowUpPosWordOnly from "./Pages/FollowUpPosWordOnly";
 import {apiRequest} from "./requests/axios_requests";
-import {mergeData} from "./helper_functions/library";
+import {mergeData} from "./helpers/library";
 import {useNavigate} from "react-router-dom";
 import FollowUpPosMeme from "./Pages/FollowUpPosMeme";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
-import ScaleSelection from "./Pages/ScaleSelection";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -73,19 +72,17 @@ const ResponseFlow = ({step, data, setData}) => {
 
   switch (step) {
     case  "emotion-selection-web" :
-      return <ListEmotions data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    case  "ScaleSelection" :
-      return <ScaleSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <ListEmotions data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "emotion-entry" :
+      return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "meme-selection" :
-      return <MemeSelection data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    case  "EmotionEntry" :
-      return <EmotionEntry data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "SelectedGIPHYFollow" :
-      return <SelectedGIPHYFollow data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "OwnMemeUploadFollow" :
-      return <OwnMemeUploadFollow data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <OwnMemeUploadFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "FollowUpPosWordOnly" :
-      return <FollowUpPosWordOnly data={data}  setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <FollowUpPosWordOnly data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "FollowUpPosMeme" :
       return <FollowUpPosMeme data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "ProductivityCheckLow" :

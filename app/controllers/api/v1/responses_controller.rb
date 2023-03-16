@@ -4,7 +4,7 @@ module Api
       include ApplicationHelper
 
       before_action :set_response, only: %i[show update]
-      before_action :require_user!, only: [:index, :show, :create, :update]
+      before_action :require_user!, only: %i[index show create update]
 
       def index
         render json: ResponseSerializer.new(Response.all).serializable_hash

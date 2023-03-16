@@ -5,13 +5,14 @@ import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom'
 
 
-describe('App component', () => {
-  it('should render ListEmotions component when the path is "/app"', () => {
+describe('ListEmotions component', () => {
+  it('should render ListEmotions component when the path is "/emotion-selection-web"', () => {
+    const mockService = { isLoading: false, error: null };
     render(
       <MemoryRouter>
-        <ListEmotions />
+        <ListEmotions service={mockService} data={{}} setData={() => {}} saveDataToDb={() => {}} steps={{}}/>
       </MemoryRouter>
     );
-    expect(screen.getByText("...Loading")).toBeInTheDocument();
+    expect(screen.getByText("Which word best describes ho you felt work this week?")).toBeInTheDocument();
   });
 });

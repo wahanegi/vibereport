@@ -5,7 +5,6 @@ import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
 import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-import MemeSelection from "./MemeSelection";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -28,7 +27,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   }
 
   const ownWordHandling = () =>{
-    steps.push('ScaleSelection')
+    steps.push('emotion-entry')
     saveDataToDb( steps )
   }
 
@@ -52,14 +51,14 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
 
   const rangeFormat = (tp) => {
     let start_date = new Date(tp.start_date)
-    let   end_date = new Date(tp.end_date)
-    let      month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
+    let end_date = new Date(tp.end_date)
+    let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
     return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
   }
 
   //*** **transformation of table** to the view:
   //*** 6+6(positive columns) 6+6(neutral columns) and 6+6(negative columns)
-  const mix_up = index => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
+  const mixUp = (index) => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
 
   return (
     <Fragment>
@@ -90,13 +89,13 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
               <div className='field_emotions'>
                 {emotions.map((emotion, index) =>
                    <ButtonEmotion key={emotion.id}
-                                  category={emotions[mix_up(index+1)].attributes.category}
+                                  category={emotions[mixUp(index+1)].attributes.category}
                                   onClick={() =>
                                     clickHandling(
-                                      emotions[mix_up(index+1)].attributes.word,
-                                      emotions[mix_up(index+1)].id,
+                                      emotions[mixUp(index+1)].attributes.word,
+                                      emotions[mixUp(index+1)].id,
                                       timePeriod.id
-                                  )}>{emotions[mix_up(index+1)].attributes.word}
+                                  )}>{emotions[mixUp(index+1)].attributes.word}
                      
                    </ButtonEmotion>
                 )}

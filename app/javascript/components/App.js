@@ -1,35 +1,12 @@
 import React, {Fragment, useEffect, useState} from "react"
 import {BrowserRouter, Navigate,  Route, Routes} from 'react-router-dom'
-import ListEmotions from "./Pages/ListEmotions";
-import EmotionEntry from "./Pages/EmotionEntry";
 import ResponseFlow from "./ResponseFlow";
 import axios from "axios";
-// import ResponseProvider from "./store/ResponseProvider";
+import { ALL_STEPS } from "./helpers/routes";
 
-const ALL_STEPS = [
-  {id:"1", step:"emotion-selection-web"},
-  {id:"1.1.", step:"ScaleSelection"},
-  {id:"2.0", step: "meme-selection"},
-  {id:"1.1", step:"EmotionEntry"},
-  {id:"2.25", step:"SelectedGIPHYFollow"},
-  {id:"2.26", step:"OwnMemeUploadFollow"},
-  {id:"3.1.", step:"FollowUpPosWordOnly"},
-  {id:"3.2.", step:"FollowUpPosMeme"},
-  {id:"4.1.", step:"ProductivityCheckLow"},
-  {id:"4.25.", step:"ProductivityBadFollowUp"},
-  {id:"5", step:"CausesToCelebrate"},
-  {id:"6", step:"ShoutoutPromptNone"},
-  {id:"6.X.", step:"ShoutoutModalExample"},
-  {id:"6.XX", step:"ShoutoutModal_FlexUse"},
-  {id:"7v2", step:"Icebreaker"},
-  {id:"7", step:"MemeWallThisWeekSoFar"},
-  {id:"7.1.", step:"MemeWallPrevWeek"},
-  {id:"7.3.", step:"MemeWallThisWeek"},
-  {id:"7.X.1.", step:"MemeWallThisWeekSoFarDrop"},
-  {id:"8", step:"PromptEmailResults"},
-]
 const App = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingSteps, setIsLoadingSteps] = useState(true);
   const [error, setError] = useState('')
   const [step, setStep] = useState(null)
   const [frontDatabase, setFrontDatabase] = useState(null)
@@ -41,6 +18,7 @@ const App = () => {
     if (isNotLoadedData) {
       setIsLoading(true)
       axios.get('/api/v1/emotions.json')
+        // frontDatabase
         // LOAD Emotions (3*12), emotion_attr and Response data of authorized user from DB
         // Below format of data for the start entry of user
         // data = {data:{
@@ -63,6 +41,7 @@ const App = () => {
             setStep(lastStepFromDBofServer)
           }
           setIsLoading(false)
+          setIsLoadingSteps(false);
         })
         .catch((error) => {
           setError(error.message)
@@ -71,18 +50,8 @@ const App = () => {
     }
   },[frontDatabase])
 
-// building routes which defined in constant ALL_STEPS
-  const listOfRoutes = ALL_STEPS.map((item, index) => {
-    return <Route key={item.id}
-                  path={`/${ALL_STEPS[index].step}`}
-                  element={<ResponseFlow step={item.step}
-                                         data={frontDatabase}
-                                         setData={setFrontDatabase}/>} />
-  })
-
   return(
     <Fragment>
-    {/* <ResponseProvider>*/}
       {isLoading && <p >Loading...</p>}
       {error && <p>{error}</p>}
       <BrowserRouter>
@@ -90,10 +59,21 @@ const App = () => {
           <Route path="*" element={<Navigate to={`/${step}`}
                                              data={frontDatabase}
                                              setData={setFrontDatabase} />}/>
-          {listOfRoutes}
+          {ALL_STEPS.map((item, index) => (
+            <Route
+              key={item.id}
+              path={`/${ALL_STEPS[index].step}`}
+              element={
+                <ResponseFlow
+                  step={item.step}
+                  data={frontDatabase}
+                  setData={setFrontDatabase}
+                />
+              }
+            />
+          ))}
         </Routes>}
       </BrowserRouter>
-     {/*</ResponseProvider>*/}
     </Fragment>
   )
 }

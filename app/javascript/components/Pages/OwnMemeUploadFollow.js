@@ -25,7 +25,7 @@ const OwnMemeUploadFollow = ({data, setData, saveDataToDb, steps, service}) => {
       <h3>You uploaded</h3>
       </div>
       <div>
-        <Button className={data.chosenEmotion.category}>{data.chosenEmotion.word}</Button>
+        <Button className={data.emotion.category}>{data.emotion.word}</Button>
       </div>
       <div>
         <BackButton data={data} setData={setData}>Back</BackButton>

@@ -25,7 +25,7 @@ class Api::V1::EmotionsController < ApplicationController
         end_date: TimePeriod.current.end_date
       },
       response: @current_response ? response_hash : { attributes: { steps: "[\"emotion-selection-web\"]"} },
-      chosenEmotion: @current_response ? Emotion.find(@current_response.emotion_id) : '{}'
+      emotion: @current_response ? Emotion.find(@current_response.emotion_id) : '{}'
     }
   end
 

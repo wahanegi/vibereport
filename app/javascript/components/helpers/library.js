@@ -1,5 +1,5 @@
 // For correctly displays elements with the word which more than 12 chars
-export function special_prop(word, attr) {
+export function specialProp(word, attr) {
   const minWidth = 130
   const maxWidth = 175
   const maxChars = 15
@@ -29,7 +29,7 @@ export  const mergeData = (receivedData, data, setData) =>{
       ...data.response,
       attributes: {
         ...receivedData.data.attributes}},
-    chosenEmotion:{
+    emotion:{
       ...receivedData.chosen_emotion}
   })
 }

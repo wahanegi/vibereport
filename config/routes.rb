@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       resources :responses, param: :id
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
     end
-    end
+  end
   get '/results', to: redirect('/app/results')
   get '/emotion_entry', to: redirect('/app/emotion_entry')
   get '*path', to: 'home#app'
