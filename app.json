@@ -23,8 +23,7 @@
       },
       "scripts": {
         "test-setup": "rails assets:precompile",
-        "test": "rspec",
-        "test-jest": "yarn test"
+        "test": "rspec"
       }
     },
     "review": {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ListEmotions from "../Pages/ListEmotions";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom'
 
 
@@ -56,9 +56,9 @@ describe('ListEmotions component', () => {
    }
     
     render(
-      <Router>
+      <MemoryRouter>
         <ListEmotions service={mockService} data={data} setData={() => {}} saveDataToDb={() => {}} steps={{}}/>
-      </Router>
+      </MemoryRouter>
     );
     expect(screen.getByText("Which word best describes how you felt work this week?")).toBeInTheDocument();
   });
