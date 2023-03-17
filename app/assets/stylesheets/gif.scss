@@ -45,7 +45,15 @@
   font-size: 40px;
   line-height: 45px;
   background-color: $light-grey !important;
-  color: #4F9B64 !important;
+  &.positive-input {
+    color: $green !important;
+  }
+  &.neutral-input {
+    color: $blue !important;
+  }
+  &.negative-input {
+    color: $red;
+  }
 }
 
 .card {

@@ -1,10 +1,7 @@
-import React, {Fragment, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import Gif from "./Gifs";
-import QuestionButton from "../UI/QuestionButton";
-import ShoutoutButton from "../UI/ShoutoutButton";
-import Menu from "../UI/Menu";
 import {LeftPanel, RightPanel} from "./Share/ShareContent";
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
@@ -44,7 +41,9 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
 
   return !isLoading && <div className="row text-center">
     <LeftPanel />
-    <div className='col-8'>
+    <div className='col-6' style={{marginTop: 150}}>
+      <h4 className='text-muted mb-2'>You picked:</h4>
+      <button className={`btn-emotion ${emotion.category} mb-2`}><span className="edit-icon"></span>{emotion.word}</button>
       <Gif {...{emotion, api_giphy_key, setGifUrl, selectedGifIndex, setSelectedGifIndex}} />
       <Footer />
     </div>
