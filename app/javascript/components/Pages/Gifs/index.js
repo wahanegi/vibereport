@@ -22,7 +22,7 @@ const Gif = ({ emotion, api_giphy_key, setGifUrl, selectedGifIndex, setSelectedG
 
  return  loaded && <Fragment>
    <h3 className='text-center mt-1'>Meme it with GIPHY!</h3>
-   <div className='card'>
+   <div className='card' style={{maxHeight: 417}}>
      <SearchBar term={term} setTerm={setTerm} category={category} />
      <GifList {...{gifs, setGifUrl, selectedGifIndex, setSelectedGifIndex}} />
    </div>

@@ -3,7 +3,7 @@ import QuestionButton from "../../UI/QuestionButton";
 import ShoutoutButton from "../../UI/ShoutoutButton";
 import React from "react";
 
-export const RightPanel = () => <div className='col-3 mb-3 text-center'>
+export const RightPanel = () => <div className='col-2 mb-3 text-center'>
   <div className="d-flex align-items-end flex-column mb-3" style={{height: '95vh'}}>
     <div className="p-2">
       <Menu>X% complete</Menu>
@@ -22,7 +22,7 @@ export const Logo = () => <div className="p-2">
   </div>
 </div>
 
-export const LeftPanel = () => <div className='col-3 mb-3 text-center'>
+export const LeftPanel = () => <div className='col-2 mb-3 text-center'>
   <div className="d-flex align-items-start flex-column mb-3" style={{height: '95vh'}}>
     <div className="p-2">
       <Logo />
@@ -32,3 +32,18 @@ export const LeftPanel = () => <div className='col-3 mb-3 text-center'>
     </div>
   </div>
 </div>
+
+export const BigBtnEmotion = ({ emotion, onClick }) =>
+  <button className={`emotion-btn ${emotion.category} mb-2`}>
+    <span onClick={onClick} className="edit-icon"></span>{emotion.word}
+  </button>
+
+export const BtnOutline = ({ text, addClass = '', onClick }) =>
+  <button onClick={onClick} className={`outline-btn ${addClass}`}>
+    {text}
+  </button>
+
+export const BtnPrimary = ({ text, addClass, hidden, onClick }) =>
+  <button onClick={onClick} className={`primary-btn ${addClass}`} hidden={hidden}>
+    {text}
+  </button>

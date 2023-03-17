@@ -1,4 +1,4 @@
-.btn-emotion {
+.emotion-btn {
   position: relative;
   padding: 10px 40px;
   height: 70px;
@@ -10,6 +10,7 @@
   font-size: 43.81px;
   line-height: 44px;
   text-align: center;
+  cursor: default !important;
 
   &.positive {
     background: $light-green;
@@ -18,7 +19,7 @@
 
   &.neutral {
     background: $light-blue;
-    color: $blue;;
+    color: $blue;
   }
 
   &.negative {
@@ -36,4 +37,36 @@
   background-image: url("edit-pencil.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  cursor: pointer;
+}
+
+.outline-btn {
+  padding: 10px 20px;
+  min-height: 60px;
+  border: 2.48225px solid $dark-blue;
+  filter: drop-shadow(0px 3.30966px 3.30966px rgba(0, 0, 0, 0.25))
+          drop-shadow(3.30966px 4.96449px 3.30966px rgba(0, 0, 0, 0.25));
+  border-radius: 15.8924px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 32px;
+  text-align: center;
+  background: $color-white;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.primary-btn {
+  padding: 10px 20px;
+  min-height: 60px;
+  width: 235px;
+  background: $dark-blue;
+  border: 1px solid $color-black;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: $color-white;
 }
