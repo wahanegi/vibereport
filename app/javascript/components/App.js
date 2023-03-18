@@ -22,7 +22,7 @@ const App = () => {
         // LOAD Emotions (3*12), emotion_attr and Response data of authorized user from DB
         // Below format of data for the start entry of user
         // data = {data:{
-        //               data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... } }, //36 rows
+        //               data: {{id:..., type:..., attributes:{ word:..., category:... } }, //36 rows
         //               emotion_attr: {word: "", category: ""}                                      //first entry
         //               response:{attributes: { steps: "[\"emotion-selection-web\"]" } },            //strong format
         //               current_user_id: ...,
