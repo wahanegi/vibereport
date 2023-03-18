@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom";
 import Gif from "./Gifs";
-import {BigBtnEmotion, BtnOutline, BtnPrimary, LeftPanel, RightPanel} from "./Share/ShareContent";
-import BackButton from "../UI/BackButton";
-import {backHandling} from "../helpers/helper";
+import {BigBtnEmotion, BtnOutline, BtnPrimary, LeftPanel, RightPanel} from "../UI/ShareContent";
+import {backHandling} from "../helpers/helpers";
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
-  const {emotion, api_giphy_key} = data
+  const {emotion, api_giphy_key, response} = data
   const navigate = useNavigate()
   const {isLoading, error} = service
-  const [gifUrl, setGifUrl] = useState(data.response.attributes.gif_url || '')
+  const [gifUrl, setGifUrl] = useState(response.attributes.gif_url || '')
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
 
   const handlingOnClickSkip = () =>{
@@ -27,7 +26,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   useEffect(()=>{
-      navigate(`/${JSON.parse(data.response.attributes.steps).pop()}`);
+    navigate(`/${JSON.parse(response.attributes.steps).pop()}`);
   },[])
 
   const Footer = () =>

@@ -54,6 +54,9 @@
   text-align: center;
   background: $color-white;
   color: rgba(0, 0, 0, 0.6);
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .primary-btn {
@@ -69,4 +72,7 @@
   font-size: 32px;
   line-height: 39px;
   color: $color-white;
+  &:disabled {
+    opacity: 0.5;
+  }
 }

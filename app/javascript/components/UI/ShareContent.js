@@ -1,7 +1,8 @@
-import Menu from "../../UI/Menu";
-import QuestionButton from "../../UI/QuestionButton";
-import ShoutoutButton from "../../UI/ShoutoutButton";
+import Menu from "./Menu";
+import QuestionButton from "./QuestionButton";
+import ShoutoutButton from "./ShoutoutButton";
 import React from "react";
+import {rangeFormat} from "../helpers/helpers";
 
 export const RightPanel = () => <div className='col-2 mb-3 text-center'>
   <div className="d-flex align-items-end flex-column mb-3" style={{height: '95vh'}}>
@@ -38,12 +39,26 @@ export const BigBtnEmotion = ({ emotion, onClick }) =>
     <span onClick={onClick} className="edit-icon"></span>{emotion.word}
   </button>
 
-export const BtnOutline = ({ text, addClass = '', onClick }) =>
-  <button onClick={onClick} className={`outline-btn ${addClass}`}>
+export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
+  <button onClick={onClick} className={`outline-btn ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
-export const BtnPrimary = ({ text, addClass, hidden, onClick }) =>
-  <button onClick={onClick} className={`primary-btn ${addClass}`} hidden={hidden}>
+export const BtnPrimary = ({ text, addClass, hidden, onClick, disabled }) =>
+  <button onClick={onClick} className={`primary-btn ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
+
+export const Calendar = ({ timePeriod }) =>
+  <div className="calendar other-position">
+    <div className="left-div offset-ld">
+      <div className="part"></div>
+    </div>
+    <div className="right-div offset-rd">
+      <div className="part"></div>
+    </div>
+    <div className="top-div"></div>
+    <div className="time">
+      {rangeFormat(timePeriod)}
+    </div>
+  </div>

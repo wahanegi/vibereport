@@ -24,7 +24,7 @@ module Api
       end
 
       def update
-         if @response.update(response_params)
+        if @response.update(response_params)
           render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity

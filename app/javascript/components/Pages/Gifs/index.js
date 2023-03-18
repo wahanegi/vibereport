@@ -11,18 +11,18 @@ const Gif = ({ emotion, api_giphy_key, setGifUrl, selectedGifIndex, setSelectedG
   const apiGiphyKey = api_giphy_key
 
   useEffect(()=> {
-    const url = `http://api.giphy.com/v1/gifs/search?q=${term.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
-    axios.get(url)
-      .then(resp => {
-        setGifs( resp.data.data)
+    const url = `//api.giphy.com/v1/gifs/search?q=${term.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
+    fetch(url)
+      .then(response => response.json())
+      .then((data) => {
+        setGifs(data.data)
         setLoaded(true)
       })
-      .catch(resp => console.log(resp))
   }, [term])
 
  return  loaded && <Fragment>
    <h3 className='text-center mt-1'>Meme it with GIPHY!</h3>
-   <div className='card' style={{maxHeight: 417}}>
+   <div className='card'>
      <SearchBar term={term} setTerm={setTerm} category={category} />
      <GifList {...{gifs, setGifUrl, selectedGifIndex, setSelectedGifIndex}} />
    </div>

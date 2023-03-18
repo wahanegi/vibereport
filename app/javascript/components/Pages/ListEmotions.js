@@ -5,6 +5,7 @@ import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
 import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
+import {Calendar, Logo} from "../UI/ShareContent";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -16,17 +17,17 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   const emotions = data.data
   const timePeriod = data.time_period
 
-  const clickHandling = (emotion_word, emotion_id, timePeriod_id, category) => {
+  const clickHandling = (emotion_word, emotion_id) => {
     steps.push('meme-selection')
     const dataRequest = {
-        emotion_id: emotion_id,
-        time_period_id: data.time_period.id,
-        user_id: data.current_user_id,
-      }
+      emotion_id: emotion_id,
+      time_period_id: timePeriod.id,
+      user_id: data.current_user_id,
+    }
     saveDataToDb( steps, dataRequest )
   }
 
-  const ownWordHandling = () =>{
+  const ownWordHandling = () => {
     steps.push('emotion-entry')
     saveDataToDb( steps )
   }
@@ -36,17 +37,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     const dataRequest = {
       emotion_id: '',
       not_working: true,
-      time_period_id: data.time_period.id,
+      time_period_id: timePeriod.id,
       user_id: data.current_user_id,
     }
     saveDataToDb( steps, dataRequest )
-  }
-
-  const rangeFormat = (tp) => {
-    let start_date = new Date(tp.start_date)
-    let end_date = new Date(tp.end_date)
-    let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
-    return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
   }
 
   //*** **transformation of table** to the view:
@@ -58,24 +52,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
         <div>
-          <div className="convert increased-convert in_left">
-            <p>Logo/Brand</p>
-            <div className="line1 offset-line1"></div>
-            <div className="line2 offset-line2"></div>
-          </div>
+          <Logo />
           <h3 className="under-convert uc-new-position">Time for this week's check-in!</h3>
-          <div className="calendar other-position">
-            <div className="left-div offset-ld">
-              <div className="part"></div>
-            </div>
-            <div className="right-div offset-rd">
-              <div className="part"></div>
-            </div>
-            <div className="top-div"></div>
-            <div className="time">
-              {rangeFormat(timePeriod)}
-            </div>
-          </div>
+          <Calendar timePeriod={timePeriod} />
           <br/>
           <div className="question q-new-pos">Which word best describes how you felt work this week?</div>
             <div className='field_empty'></div>
