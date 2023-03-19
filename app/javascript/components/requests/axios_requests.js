@@ -56,3 +56,32 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
     default:
   }
 }
+export async function requests_answers(method, data = {}, setData = {}, redirect = ()=>{}, url = '/api/v1/emotions') {
+  createCsrfToken()
+  console.time("FETCH")
+  console.log("start time of  FETCH",(new Date()).getMilliseconds())
+  try {
+    let init = {
+      'method': method,
+      'mode': 'cors',
+      'cache': 'no-cache',
+      'credentials': 'same-origin',
+      'headers': {'Content-type': 'application/json'}
+    }
+    if (method !=='GET') {init = {...init,  'body': JSON.stringify(data)}}
+
+    const responce = await fetch(`${"http://localhost:3000"}${url}`, init  )
+    const answer = await responce.json()
+    console.timeEnd("FETCH")
+    console.log("     end time of FETCH",(new Date()).getMilliseconds())
+    console.log("     answer FETCH - STEPS = ",answer.response.attributes.steps)
+    await setData( answer )
+  }
+  catch (e) {
+    console.log(e.message)
+    return true
+  }
+  // finally {
+  //     console.log ("Error bind with API exception")
+  // }
+}
