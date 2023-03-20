@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { render, screen } from '@testing-library/react';
 import ListEmotions from "../Pages/ListEmotions";
-import { MemoryRouter } from 'react-router-dom';
+import {MemoryRouter, useNavigate} from 'react-router-dom';
 import '@testing-library/jest-dom'
+import {apiRequest} from "../requests/axios_requests";
 
 
 describe('ListEmotions component', () => {
+  it('data from server should be in this format when user doing first entry on ',()=>{
+    // const [data, setData] = useState({})
+    // apiRequest("GET", data, ()=>{},()=>{}, '/emotionc.json')
+    // expect(await screen.findAllByRole('',{},{})).toBeInTheDocument();
+  })
   it('should render ListEmotions component when the path is "/emotion-selection-web"', () => {
     const mockService = { isLoading: false, error: null };
     const data = {
@@ -60,6 +66,6 @@ describe('ListEmotions component', () => {
         <ListEmotions service={mockService} data={data} setData={() => {}} saveDataToDb={() => {}} steps={{}}/>
       </MemoryRouter>
     );
-    expect(screen.getByText("Which word best describes how you felt work this week?")).toBeInTheDocument();
+    expect(screen.getByText("Which word best describes how you felt at work this week?")).toBeInTheDocument();
   });
 });

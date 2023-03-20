@@ -28,8 +28,8 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   useEffect(()=>{
-    navigate(`/${JSON.parse(response.attributes.steps).pop()}`);
-  },[])
+    navigate(`/${data.response.attributes.steps.slice(-1).toString()}`);
+    },[])
 
   const Footer = () =>
     <div className='mt-1'>
