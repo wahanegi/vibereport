@@ -63,15 +63,15 @@
           margin: 0 auto;
           padding: 8px;
       }
-      .field_empty {
+      .field-empty {
           margin: 0 auto;
       }
-      .field_emotions{
+      .field-emotions{
           margin: 0 auto;
           margin-top: 5px;
       }
       @media only screen and (min-width: 1080px){
-          .field_emotions{
+          .field-emotions{
               width: 1060px;
           }
       }
@@ -93,7 +93,6 @@
           height: 11px;
           background: #9E9E9E;
           border-radius: 3px;
-          /* margin-top: 15px; */
           position: relative;
           top: 15px;
       }
@@ -136,7 +135,7 @@
           text-align: center;
           color: #000000;
           white-space: pre-line;
-          width: 677px;
+          width: 714px;
           height: 59px;
           position: relative;
           top: -43px;
@@ -156,13 +155,10 @@
           position: relative;
       }
       .positive,.neutral,.negative{
-          /*width and margin have depends from words. See code*/
-          /*width: 127px;*/
           height: 31px;
           font-size: 19px;
           line-height: 19px;
           text-align: center;
-          /*margin: 0 25px;*/
           cursor: pointer;
       }
       .positive{
@@ -204,25 +200,21 @@
           color: #0007A3;
           top: 54px;
       }
-      .own_word{
+      .own-word{
           box-sizing: border-box;
           width: 385px;
           height: 70px;
           background: #FFFFFF;
           margin: 0 auto;
       }
-      .link_first{
+      .link-first{
           padding: 13px 19px 13px 27px;
-          /*padding-top: 11px;*/
           width: 385px;
           height: 70px;
           font-size: 36px;
           line-height: 36px;
           color: rgba(0, 0, 0, 0.6);
-          /*margin: 13px 23px;*/
           border: 3px solid #5689EB;
-          border-radius: 19px;
-          /*padding-left: 23px;*/
           box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
       }
       .link_text{
@@ -290,7 +282,7 @@
   <div class="time"><%= "#{@view_calendar_days}" %></div>
 </div>
 <br/>
-<div class="question">Which word best describes how you felt work this week?</div>
+<div class="question">Which word best describes how you felt work at this week?</div>
 <div>
   <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
     <% emotion = [] %>
@@ -300,8 +292,8 @@
     <% emotion.push(@neutral_emotions[index+1].word) %>
     <% emotion.push(@negative_emotions[index].word) %>
     <% emotion.push(@negative_emotions[index+1].word) %>
-    <div class="field_empty"></div>
-      <div class="field_emotions flex">
+    <div class="field-empty"></div>
+      <div class="field-emotions flex">
         <% 6.times do |i|%>
           <button class="<%= if i < 2
                               "positive"
@@ -318,8 +310,8 @@
 <% end %>
 </div>
 <div class="share">Share it in your own words!</div>
-<div class="own_word">
-  <div class="link_first">
+<div class="own-word">
+  <div class="link-first">
     <%= link_to "Add your own word", "#", method: :get, class:"link_text"%>
   </div>
 </div>
