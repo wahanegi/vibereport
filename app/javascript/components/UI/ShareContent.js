@@ -35,18 +35,18 @@ export const LeftPanel = () => <div className='col-2 mb-3 text-center'>
 </div>
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
-  <button className={`${addClass} emotion-btn ${emotion.category}`}>
+  <button className={`${addClass} btn emotion ${emotion.category}`}>
     <span hidden={!showPencil} onClick={onClick} className="edit-icon"></span>
     {emotion.word}
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
-  <button onClick={onClick} className={`outline-btn ${addClass}`} disabled={disabled}>
+  <button onClick={onClick} className={`btn outline ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`primary-btn ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn primary ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -65,11 +65,11 @@ export const Calendar = ({ timePeriod }) =>
   </div>
 
 export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn-navigation next ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn navigation next ${addClass}`} hidden={hidden} disabled={disabled}>
     Next
   </button>
 
 export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn-navigation back ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn navigation back ${addClass}`} hidden={hidden} disabled={disabled}>
     Back
   </button>
