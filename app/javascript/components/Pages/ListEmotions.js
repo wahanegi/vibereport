@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
-import { NavLink } from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
 import ShoutoutButton from "../UI/ShoutoutButton";
@@ -15,7 +15,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
-
+  const navigate = useNavigate()
   const clickHandling = (emotion_word, emotion_id, timePeriod_id, category) => {
     steps.push('meme-selection')
     const dataRequest = {
@@ -28,25 +28,22 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
 
   const ownWordHandling = () =>{
     steps.push('emotion-entry')
-    saveDataToDb( steps )
+    const dataRequest = {
+      time_period_id: data.time_period.id,
+      user_id: data.current_user_id,
+    }
+    saveDataToDb( steps, dataRequest )
   }
 
-  const onClickNotWorking = (timePeriod_id, navigate, response) => {
-    // it need to change in correspondence with our structure
-    if (isEmpty(response)) {
-      createResponse('', timePeriod_id, navigate, '', false)
-    } else {
-      const updatedResponse = {
-        ...response,
-        attributes: {
-          ...response.attributes,
-          emotion_id: '',
-          steps: '',
-          not_working: true
-        }
-      }
-      updateResponse(updatedResponse, setResponse).then(() => navigate(`/app/results`))
+  const onClickNotWorking = () => {
+    steps.push('results')
+    const dataRequest = {
+      emotion_id: '',
+      not_working: true,
+      time_period_id: data.time_period.id,
+      user_id: data.current_user_id,
     }
+    saveDataToDb( steps, dataRequest )
   }
 
   const rangeFormat = (tp) => {
@@ -84,7 +81,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
             </div>
           </div>
           <br/>
-          <div className="question q-new-pos">Which word best describes how you felt work this week?</div>
+          <div className="question q-new-pos">Which word best describes how you felt at work this week?</div>
             <div className='field_empty'></div>
               <div className='field_emotions'>
                 {emotions.map((emotion, index) =>
@@ -103,7 +100,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
             <div className='field_empty'></div>
           <div className="share sh-new-pos">Share it in your own words!</div>
           <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={ownWordHandling}/>
-          <NavLink className="nav-link" onClick={() => onClickNotWorking(timePeriod.id, navigate, response)} to={''}>
+          <NavLink className="nav-link" onClick={onClickNotWorking} to={''}>
             I was not working this week
           </NavLink>
           <QuestionButton style={{position: 'absolute', right: 47}}/>

@@ -35,8 +35,8 @@ class Api::V1::EmotionsController < ApplicationController
         start_date: TimePeriod.current.start_date,
         end_date: TimePeriod.current.end_date
       },
-      response: @current_response ? response_hash : { attributes: { steps: "[\"emotion-selection-web\"]"} },
-      emotion: @current_response ? Emotion.find(@current_response.emotion_id) : '{}'
+      response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web] } },
+      emotion: @current_response ? Emotion.find_by(id: @current_response.emotion_id) : '{}'
     }
   end
 
@@ -63,3 +63,4 @@ class Api::V1::EmotionsController < ApplicationController
     params.require(:emotion).permit(:word, :category)
   end
 end
+
