@@ -3,7 +3,6 @@ $color-muted: rgba(0, 0, 0, 0.6);
 $color-black: #000000;
 $color-white: #FFFFFF;
 $color-rose: #E02AA4;
-$light-grey: #D9D9D9;
 $green: #4F9B64;
 $light-green: #CCEDD5;
 $light-blue: rgba(86, 137, 235, 0.3);
@@ -11,6 +10,9 @@ $blue: #4C77CB;
 $dark-blue: #5689EB;
 $light-red: #FCDDCE;
 $red: #D1794E;
+$light-grey: #D9D9D9;
+$grey: #9E9E9E;
+$dark-grey: #4D4D4D;
 
 body {
   font-family: $font-family;
@@ -66,8 +68,8 @@ body {
 //<ListEmotion>
 .ic-position{
   position: relative;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
 }
 .menu{
   display:revert;

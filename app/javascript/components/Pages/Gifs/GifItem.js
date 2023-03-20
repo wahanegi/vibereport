@@ -1,6 +1,6 @@
 import React, {Fragment} from "react"
 
-const GifItem = ({ gif, index, selectedGifIndex, setSelectedGifIndex, setGifUrl }) => {
+const GifItem = ({ gif, index, selectedGifIndex, setSelectedGifIndex, setGifUrl, category }) => {
 
   const onGifSelect = () => {
     setGifUrl(gif.images.original.url)
@@ -8,8 +8,10 @@ const GifItem = ({ gif, index, selectedGifIndex, setSelectedGifIndex, setGifUrl 
   }
 
   return <Fragment>
-    <div className={selectedGifIndex === index ? 'gif-clicked' : 'gif-item'}>
-      <img src={gif.images.downsized.url} onClick={() => onGifSelect(gif)} />
+    <div className={selectedGifIndex === index ? `gif-clicked-${category}` : 'gif-item'}>
+      <img src={gif.images.downsized.url}
+           onClick={() => onGifSelect(gif)}
+           alt={`gif ${category}`} />
     </div>
   </Fragment>
 };

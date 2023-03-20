@@ -34,9 +34,10 @@ export const LeftPanel = () => <div className='col-2 mb-3 text-center'>
   </div>
 </div>
 
-export const BigBtnEmotion = ({ emotion, onClick }) =>
-  <button className={`emotion-btn ${emotion.category} mb-2`}>
-    <span onClick={onClick} className="edit-icon"></span>{emotion.word}
+export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
+  <button className={`${addClass} emotion-btn ${emotion.category}`}>
+    <span hidden={!showPencil} onClick={onClick} className="edit-icon"></span>
+    {emotion.word}
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
@@ -44,7 +45,7 @@ export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
     {text}
   </button>
 
-export const BtnPrimary = ({ text, addClass, hidden, onClick, disabled }) =>
+export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
   <button onClick={onClick} className={`primary-btn ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
@@ -62,3 +63,13 @@ export const Calendar = ({ timePeriod }) =>
       {rangeFormat(timePeriod)}
     </div>
   </div>
+
+export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
+  <button onClick={onClick} className={`btn-navigation next ${addClass}`} hidden={hidden} disabled={disabled}>
+    Next
+  </button>
+
+export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
+  <button onClick={onClick} className={`btn-navigation back ${addClass}`} hidden={hidden} disabled={disabled}>
+    Back
+  </button>

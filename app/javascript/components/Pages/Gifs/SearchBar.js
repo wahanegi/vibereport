@@ -1,16 +1,25 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import Form from 'react-bootstrap/Form';
 
-const SearchBar = ({ setTerm, term, category }) => {
+const SearchBar = ({ setTerm, term, category, word }) => {
+  const [classInput, setClassInput] = useState(category)
   const onInputChange = (input) => {
     setTerm(input);
   }
 
+  useEffect(() => {
+    if (term !== word) {
+      setClassInput('other')
+    } else {
+      setClassInput(category)
+    }
+  },[term])
+
   return <div className="card-header">
     <Form.Control type="text"
-                  className={`${category}-input`}
+                  className={`${classInput}-input`}
                   placeholder="Search GIPHY"
-                  onChange={event => onInputChange(event.target.value)}
+                  onChange={e => onInputChange(e.target.value)}
                   value={term} />
   </div>
 }

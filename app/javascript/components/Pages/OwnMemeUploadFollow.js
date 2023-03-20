@@ -1,12 +1,13 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import BackButton from "../UI/BackButton";
 import {Button} from "react-bootstrap";
+import {backHandling} from "../helpers/helpers";
+import {BtnBack, BtnNext} from "../UI/ShareContent";
 
 const OwnMemeUploadFollow = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
 
   const handlingOnClickNext = () => {
-    steps.push('FollowUpPosMeme')
+    steps.push('emotion-intensity')
     saveDataToDb( steps, {})
   }
 
@@ -14,26 +15,24 @@ const OwnMemeUploadFollow = ({data, setData, saveDataToDb, steps, service}) => {
     <Fragment>
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error  &&
-    <div>
       <div>
-        <h1>2.26 OwnMemeUploadFollow</h1>
-      </div>
-      <div>
-        <h2>A new one ...Nice!</h2>
-      </div>
-      <div>
-      <h3>You uploaded</h3>
-      </div>
-      <div>
-        <Button className={data.emotion.category}>{data.emotion.word}</Button>
-      </div>
-      <div>
-        <BackButton data={data} setData={setData}>Back</BackButton>
-      </div>
-      <div>
-        |<Button onClick={handlingOnClickNext}>Next</Button>
-      </div>
-    </div>}
+        <div>
+          <h1>2.26 OwnMemeUploadFollow</h1>
+        </div>
+        <div>
+          <h2>A new one ...Nice!</h2>
+        </div>
+        <div>
+        <h3>You uploaded</h3>
+        </div>
+        <div>
+          <Button className={data.emotion.category}>{data.emotion.word}</Button>
+        </div>
+        <div className='mt-5'>
+          <BtnBack onClick={backHandling} />
+          <BtnNext onClick={handlingOnClickNext} />
+        </div>
+      </div>}
     </Fragment>
   );
 };

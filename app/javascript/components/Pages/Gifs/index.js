@@ -1,17 +1,17 @@
 import React, {useEffect, useState, Fragment} from "react"
-import axios from "axios";
 import SearchBar from "./SearchBar";
 import GifList from "./GifList";
+import {GIPHY_SEARCH_URL} from "../../helpers/consts";
 
 const Gif = ({ emotion, api_giphy_key, setGifUrl, selectedGifIndex, setSelectedGifIndex }) => {
   const [term, setTerm] = useState(emotion.word)
-  const category = emotion.category
+  const {category, word} = emotion
   const [gifs, setGifs] = useState([])
   const [loaded, setLoaded] = useState(false)
   const apiGiphyKey = api_giphy_key
 
   useEffect(()=> {
-    const url = `//api.giphy.com/v1/gifs/search?q=${term.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
+    const url = `${GIPHY_SEARCH_URL}=${term?.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
     fetch(url)
       .then(response => response.json())
       .then((data) => {
@@ -23,8 +23,8 @@ const Gif = ({ emotion, api_giphy_key, setGifUrl, selectedGifIndex, setSelectedG
  return  loaded && <Fragment>
    <h3 className='text-center mt-1'>Meme it with GIPHY!</h3>
    <div className='card'>
-     <SearchBar term={term} setTerm={setTerm} category={category} />
-     <GifList {...{gifs, setGifUrl, selectedGifIndex, setSelectedGifIndex}} />
+     <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
+     <GifList {...{gifs, setGifUrl, selectedGifIndex, setSelectedGifIndex, category}} />
    </div>
   </Fragment>
 }
