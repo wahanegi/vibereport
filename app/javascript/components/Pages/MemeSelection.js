@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom";
 import Gif from "./Gifs";
 import {BigBtnEmotion, BtnOutline, BtnPrimary, LeftPanel, RightPanel} from "../UI/ShareContent";
-import {backHandling} from "../helpers/helpers";
+import {backHandling, isBlank, isPresent} from "../helpers/helpers";
 import {GIPHY_UPLOAD_URL} from "../helpers/consts";
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
@@ -39,8 +39,8 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
           <BtnOutline text='Upload your own meme!' onClick={uploadGIPHYHandling} />
         </div>
         <div style={{marginTop: 52}}>
-          <BtnPrimary text='Next' onClick={chooseGIPHYHandling} hidden={selectedGifIndex === null} />
-          <BtnPrimary text='Skip' onClick={handlingOnClickSkip} hidden={selectedGifIndex !== null} />
+          <BtnPrimary text='Next' onClick={chooseGIPHYHandling} hidden={isBlank(gifUrl)} />
+          <BtnPrimary text='Skip' onClick={handlingOnClickSkip} hidden={isPresent(gifUrl)} />
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
     <div className='col-8 mt-5'>
       <h4 className='text-muted mb-2'>You picked:</h4>
       <BigBtnEmotion emotion={emotion} onClick={backHandling} addClass='mb-2' />
-      <Gif {...{emotion, api_giphy_key, setGifUrl, selectedGifIndex, setSelectedGifIndex}} />
+      <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex}} />
       <Footer />
     </div>
     <RightPanel />
