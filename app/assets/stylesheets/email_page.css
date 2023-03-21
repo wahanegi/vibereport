@@ -5,6 +5,8 @@
     box-sizing: border-box;
     font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
     font-style: normal;
+    font-weight: normal;
+    color: #454547;
 }
 .convert {
     width: 127px;
@@ -325,3 +327,7 @@ filter{
     color-interpolation-filters: sRGB;
 }
 
+.word{
+    display: flex;
+    justify-content: center
+}

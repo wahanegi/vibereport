@@ -99,7 +99,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
               </div>
             <div className='field_empty'></div>
           <div className="share sh-new-pos">Share it in your own words!</div>
+          <div className="word">
           <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={ownWordHandling}/>
+          </div>
           <NavLink className="nav-link" onClick={onClickNotWorking} to={''}>
             I was not working this week
           </NavLink>
