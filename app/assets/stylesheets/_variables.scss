@@ -1,0 +1,55 @@
+
+// Variables
+
+// Components
+
+$border-width:        1px !default;
+$border-widths: (
+        1: 1px,
+        2: 2.5px,
+) !default;
+$border-color:        $black !default;
+
+//border-radius-variables
+$border-radius-c1:      .375rem !default;
+$border-radius-c2:      .5rem !default;
+$border-radius-c3:      .5rem !default;
+
+// Typography
+$font-family: 'Josefin Sans', sans-serif;
+$font-size-base:              1rem !default;
+
+$h1-font-size:                $font-size-base * 3 !default;
+$h2-font-size:                $font-size-base * 2.25 !default;
+$font-sizes: (
+        1: $h1-font-size,
+        2: $h2-font-size
+) !default;
+
+//input-btn-variables
+$input-btn-padding-y:         1.375rem !default;
+$input-btn-padding-x:         1.375rem !default;
+$input-btn-font-family:       null !default;
+$input-btn-font-size:         $font-size-base !default;
+$input-btn-line-height:       4.375rem !default;
+$input-btn-border-width:      .1875rem !default;
+$input-btn-border-radius:     .9375rem !default;
+$input-btn-border-color:      $royal-blue !default;
+
+
+// Buttons
+$btn-padding-y:               .75rem !default;
+$btn-padding-x:               .75rem !default;
+$btn-font-size:               2rem !default;
+$btn-disabled-opacity:        .5 !default;
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+$dropdown-min-width:          16.25rem !default;
+$dropdown-padding-x:          .6875rem !default;
+$dropdown-padding-y:          .875rem !default;
+$dropdown-spacer:             .625rem !default;
+
+
+$spacer: 32px;

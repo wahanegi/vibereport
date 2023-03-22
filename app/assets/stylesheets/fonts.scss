@@ -1,2 +1,26 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../app/assets/fonts/Inter-Bold.ttf') format('ttf'),
+  url('../app/assets/fonts/Inter-Bold.ttf') format('ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JosefinSans';
+  src: url('../app/assets/fonts/JosefinSans-Bold.ttf') format('ttf'),
+  url('../app/assets/fonts/JosefinSans-Bold.ttf') format('ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JosefinSans';
+  src: url('../app/assets/fonts/JosefinSans-SemiBoldItalic.ttf') format('ttf'),
+  url('../app/assets/fonts/JosefinSans-SemiBoldItalic.ttf') format('ttf');
+  font-weight: 600;
+  font-style: normal;
+}

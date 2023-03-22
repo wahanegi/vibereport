@@ -2,8 +2,10 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import "@fortawesome/fontawesome-free/js/all";
-import * as bootstrap from "bootstrap"
+// import  "bootstrap";
+// import  "bootstrap/scss/bootstrap.scss";
 
-import jquery from 'jquery';
-window.jQuery = jquery;
-window.$ = jquery;
+// import jquery from 'jquery';
+// window.jQuery = jquery;
+// window.$ = jquery;
+// import "../../app/assets/stylesheets/application.bootstrap.scss";

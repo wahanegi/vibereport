@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react"
-import {Button} from "react-bootstrap";
+import Button from "../UI/Button"
 import {useNavigate} from "react-router-dom";
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
@@ -32,7 +32,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
       <div>
         <h1>{data.emotion.word}</h1>
         <div><Button onClick={chooseGIPHYHandling}>Choose</Button></div>
-        <div><Button onClick={handlingOnClickSkip}>Skip</Button></div>
+        <div><Button className='btn primary' onClick={handlingOnClickSkip}>Skip</Button></div>
         <div><Button onClick={uploadGIPHYHandling}>Upload</Button></div>
       </div>}
     </Fragment>

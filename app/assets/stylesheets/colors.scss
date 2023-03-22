@@ -1,10 +1,106 @@
-@import "~bootstrap/scss/_functions";
-
 $color-muted: rgba(0, 0, 0, 0.6);
 $color-black: #000000;
 $color-blue: #5689EB;
 $color-white: #FFFFFF;
 $color-rose: #E02AA4;
 
-$primary: #4C77CB;
+$primary: #FCDDCE;
 $secondary: #CCDCF9;
+
+
+//DEFINED VS
+
+//color-variables
+$white:    #fff;
+$gray-100: #D2D2D2;
+$gray-200: #9E9E9E;
+$gray-300: #666666;
+$gray-400: #4D4D4D;
+$gray-500: #454547;
+$black:    #000;
+
+$grays: (
+        "100": $gray-100,
+        "200": $gray-200,
+        "300": $gray-300,
+        "400": $gray-400,
+        "500": $gray-500,
+);
+
+$primary:       #D7007B !default;
+$secondary:     #F9D9EB !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-900 !default;
+
+$theme-colors: (
+        "primary":    $primary,
+        "secondary":  $secondary,
+        "success":    $success,
+        "info":       $info,
+        "warning":    $warning,
+        "danger":     $danger,
+        "light":      $light,
+        "dark":       $dark
+) !default;
+
+$apricot:         #FCDDCE !default;
+$cinnamon:        #D1794E !default;
+$gray-tea-green:  #CCEDD5 !default;
+$emerald:         #7FCD95 !default;
+$navy-blue:       #0007A3 !default;
+$red-violet:      #D7007B !default;
+$pale-cornflower: #CCDCF9 !default;
+$pink:            #F9D9EB !default;
+$royal-blue:      #5689EB !default;
+$sea-green:       #4F9B64 !default;
+$steel-blue:      #4C77CB !default;
+$tea-green:       #DEF1E3 !default;
+
+.apricot{color:$apricot}
+
+$colors: (
+        "apricot":        $apricot,
+        "cinnamon":       $cinnamon,
+        "gray-tea-green": $gray-tea-green,
+        "emerald":        $emerald,
+        "navy-blue":      $navy-blue,
+        "red-violet":     $red-violet,
+        "pale-cornflower":$pale-cornflower,
+        "pink":           $pink,
+        "royal-blue":     $royal-blue,
+        "sea-green":      $sea-green,
+        "steel-blue":     $steel-blue,
+        "tea-green":      $tea-green
+) !default;
+
+$orange-1: #FADFD1 !default;
+$orange-2: #F7CDB8 !default;
+$orange-3: #F5C1A6 !default;
+$orange-4: #F09D74 !default;
+$orange-5: #F18C59 !default;
+
+$green-1: #D9F1E0 !default;
+$green-2: #CCEDD5 !default;
+$green-3: #B9E6C6 !default;
+$green-4: #A6DFB6 !default;
+$green-5: #80D197 !default;
+
+$oranges: (
+        "orange-1": $orange-1,
+        "orange-2": $orange-2,
+        "orange-3": $orange-3,
+        "orange-4": $orange-4,
+        "orange-5": $orange-5,
+) !default;
+
+$greens: (
+        "green-1": $green-1,
+        "green-2": $green-2,
+        "green-3": $green-3,
+        "green-4": $green-4,
+        "green-5": $green-5,
+) !default;
