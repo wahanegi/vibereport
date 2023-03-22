@@ -60,3 +60,5 @@ yarn-debug.log*
 *.keep
 /coverage
 /config/credentials/development.key
+
+yarn.lock
