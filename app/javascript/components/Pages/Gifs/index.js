@@ -3,12 +3,11 @@ import SearchBar from "./SearchBar";
 import GifList from "./GifList";
 import {GIPHY_SEARCH_URL} from "../../helpers/consts";
 
-const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex }) => {
+const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif }) => {
   const [term, setTerm] = useState(emotion.word)
   const {category, word} = emotion
   const [gifs, setGifs] = useState([])
   const [loaded, setLoaded] = useState(false)
-  const [isCustomGif, setIsCustomGif] = useState(false)
   const [keyDown, setKeyDown] = useState(false)
   const apiGiphyKey = api_giphy_key
 
@@ -39,8 +38,13 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
     }
   }, [term])
 
+  const GiphyLogo = () => <div className='d-flex justify-content-center align-items-center'>
+    <div className='fw-lighter mx-2 light-grey-text'>POWERED BY</div>
+    <div className='fw-bold h2 muted mt-2'>GIPHY</div>
+  </div>
+
  return  loaded && <Fragment>
-   <h3 className='text-center mt-1'>Meme it with GIPHY!</h3>
+   <GiphyLogo />
    <div className='card' onKeyDown={handleKeyDown}>
      <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
      <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />

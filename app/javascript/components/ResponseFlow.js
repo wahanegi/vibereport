@@ -3,7 +3,6 @@ import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
 import EmotionEntry from "./Pages/EmotionEntry";
 import SelectedGIPHYFollow from "./Pages/SelectedGIPHYFollow";
-import OwnMemeUploadFollow from "./Pages/OwnMemeUploadFollow";
 import EmotionIntensity from "./Pages/EmotionIntensity";
 import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
@@ -20,6 +19,7 @@ const ResponseFlow = ({step, data, setData}) => {
 
   const mainPage = 'emotion-selection-web'
   const [go, setGo] = useState(null)
+  const [isCustomGif, setIsCustomGif] = useState(false)
 
   useEffect(()=>{
     //a block to give permission to transition on a page which was point the browser address bar
@@ -100,13 +100,11 @@ const ResponseFlow = ({step, data, setData}) => {
     case  "emotion-entry" :
       return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "meme-selection" :
-      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />
     case  "results" :
       return <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "selected-giphy-follow" :
-      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    case  "OwnMemeUploadFollow" :
-      return <OwnMemeUploadFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} />
     case  "emotion-intensity" :
       return <EmotionIntensity data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "ProductivityCheckLow" :

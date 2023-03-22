@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
-import {NavLink, useNavigate} from 'react-router-dom'
-import QuestionButton from "../UI/QuestionButton";
+import {NavLink} from 'react-router-dom'
 import Menu from "../UI/Menu";
-import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-import {Calendar, Logo} from "../UI/ShareContent";
+import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -55,7 +53,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
         <div>
-          <Logo />
+          <div className='d-flex justify-content-between m-3 '>
+            <Logo />
+            <Menu>X% complete</Menu>
+          </div>
           <h3 className="under-convert uc-new-position">Time for this week's check-in!</h3>
           <Calendar timePeriod={timePeriod} />
           <br/>
@@ -80,9 +81,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <NavLink className="nav-link" onClick={onClickNotWorking} to={''}>
             I was not working this week
           </NavLink>
-          <QuestionButton style={{position: 'absolute', right: 47}}/>
-          <ShoutoutButton style={{position: 'absolute', left: 45}}/>
-          <Menu style={{position: 'absolute', right: 47, top: 62}}>X% complete</Menu>
+          <div className='d-flex justify-content-between m-3 '>
+            <ShoutOutIcon />
+            <HelpIcon />
+          </div>
         </div>
       }
     </Fragment>
