@@ -45,6 +45,8 @@
                         action: "response_flow_from_email",
                         emotion_id: emotion[i].id,
                         time_period_id: TimePeriod.current,
+                        not_working: true,
+                        last_step: 'meme-selection',
                         user_id: @user.id
                       },
                       class: if i < 2
@@ -61,12 +63,21 @@
 <div class="share">Share it in your own words!</div>
 <div class="own_word">
   <div class="link_first">
-    <%= link_to "Add your own word", emotion_entry_url, method: :get, class:"link_text"%>
+    <%= link_to "Add your own word", { controller: "api/v1/responses",
+                                       action: "response_flow_from_email",
+                                       time_period_id: TimePeriod.current,
+                                       not_working: false,
+                                       last_step: 'emotion-entry',
+                                       user_id: @user.id }, class: "link_text"
+    %>
   </div>
 </div>
 <div class="i_was_not">
-  <%= link_to "I was not working this week", { controller: "api/v1/responses", action: "response_flow_from_email",
-                                               not_working: true, time_period_id: TimePeriod.current,
+  <%= link_to "I was not working this week", { controller: "api/v1/responses",
+                                               action: "response_flow_from_email",
+                                               not_working: true,
+                                               time_period_id: TimePeriod.current,
+                                               last_step: 'results',
                                                user_id: @user.id }
   %>
 </div>
