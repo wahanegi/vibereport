@@ -12,6 +12,9 @@
           font-family: 'Josefin Sans',  sans-serif;
           font-style: normal;
       }
+      .width-screen{
+          min-width:1060px;
+      }
       .convert {
           width: 127px;
           height: 58px;
@@ -63,19 +66,19 @@
           margin: 0 auto;
           padding: 8px;
       }
-      .field_empty {
+      .field-empty {
           margin: 0 auto;
       }
-      .field_emotions{
+      .field-emotions{
           margin: 0 auto;
           margin-top: 5px;
       }
       @media only screen and (min-width: 1080px){
-          .field_emotions{
-              width: 1115px;
+          .field-emotions{
+              width: 1060px;
           }
       }
-      .flex{
+          .flex{
           display: flex;
       }
       .left-div {
@@ -93,7 +96,6 @@
           height: 11px;
           background: #9E9E9E;
           border-radius: 3px;
-          /* margin-top: 15px; */
           position: relative;
           top: 15px;
       }
@@ -136,7 +138,7 @@
           text-align: center;
           color: #000000;
           white-space: pre-line;
-          width: 677px;
+          width: 714px;
           height: 59px;
           position: relative;
           top: -43px;
@@ -156,13 +158,10 @@
           position: relative;
       }
       .positive,.neutral,.negative{
-          /*width and margin have depends from words. See code*/
-          /*width: 127px;*/
           height: 31px;
           font-size: 19px;
           line-height: 19px;
           text-align: center;
-          /*margin: 0 25px;*/
           cursor: pointer;
       }
       .positive{
@@ -196,25 +195,45 @@
           margin: 0 auto;
           margin-top: 41px;
       }
-      .own_word{
+      .link {
+          display: flex;
+          justify-content: center;
+          font-size: 23px;
+          position: relative;
+          color: #0007A3;
+          top: 54px;
+      }
+      .own-word{
           box-sizing: border-box;
           width: 385px;
           height: 70px;
           background: #FFFFFF;
           margin: 0 auto;
       }
-      .own_word input{
+      .link-first{
+          padding: 13px 19px 13px 27px;
           width: 385px;
           height: 70px;
           font-size: 36px;
           line-height: 36px;
           color: rgba(0, 0, 0, 0.6);
-          margin: 13px 23px;
           border: 3px solid #5689EB;
           border-radius: 19px;
-          padding-left: 23px;
+          box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
       }
-      .link{
+      .link-text{
+          display: block;
+          width: 385px;
+          height: 70px;
+          font-size: 36px;
+          line-height: 36px;
+          color: rgba(0, 0, 0, 0.6);
+          text-decoration-line: none;
+          font-weight: 700;
+          padding: 13px;
+          margin: -13px -14px;
+      }
+      .i-was-not{
           width: 360px;
           height: 28px;
           font-size: 24px;
@@ -241,57 +260,58 @@
 
 </head>
 <body>
-<div class="convert">
-  <p>Logo/Brand</p>
-  <div class="line1"></div>
-  <div class="line2"></div>
-</div>
-<h3 class="under-convert">Time for this week's check-in!</h3>
-<div class="calendar">
-  <div class="left-div"><div class="part"></div></div>
-  <div class="right-div"><div class="part"></div></div>
-  <div class="top-div"></div>
-  <div class="time"><%= "#{@view_calendar_days}" %></div>
-</div>
-<br/>
-<div class="question">Which word best describes work this week?</div>
-<div>
-  <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
-    <% emotion = [] %>
-    <% emotion.push(@positive_emotions[index].word) %>
-    <% emotion.push(@positive_emotions[index+1].word) %>
-    <% emotion.push(@neutral_emotions[index].word) %>
-    <% emotion.push(@neutral_emotions[index+1].word) %>
-    <% emotion.push(@negative_emotions[index].word) %>
-    <% emotion.push(@negative_emotions[index+1].word) %>
-    <div class="field_empty"></div>
-      <div class="field_emotions flex">
-        <% 6.times do |i|%>
-          <button class="<%= if i < 2
+  <div class="width-screen">
+    <div class="convert">
+      <p>Logo/Brand</p>
+      <div class="line1"></div>
+      <div class="line2"></div>
+    </div>
+      <div class="under-convert">Time for this week's check-in!</div>
+    <div class="calendar">
+      <div class="left-div"><div class="part"></div></div>
+      <div class="right-div"><div class="part"></div></div>
+      <div class="top-div"></div>
+      <div class="time"><%= "#{@view_calendar_days}" %></div>
+    </div>
+      <br/>
+    <div class="question">Which word best describes how you felt at work this week?</div>
+    <div>
+      <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
+        <% emotion = [] %>
+        <% emotion.push(@positive_emotions[index].word) %>
+        <% emotion.push(@positive_emotions[index+1].word) %>
+        <% emotion.push(@neutral_emotions[index].word) %>
+        <% emotion.push(@neutral_emotions[index+1].word) %>
+        <% emotion.push(@negative_emotions[index].word) %>
+        <% emotion.push(@negative_emotions[index+1].word) %>
+        <div class="field-empty"></div>
+        <div class="field-emotions flex">
+          <% 6.times do |i|%>
+            <button class="<%= if i < 2
                               "positive"
                             else
                               i > 3 ? "negative" : "neutral"
                             end %>"
-                  style="width: <%= btn_special(emotion[i], :width)%>px;
+                  style="min-width: <%= btn_special(emotion[i], :width)%>px;
                          margin: 0 <%= btn_special(emotion[i], :margin)%>px;">
-            <%= "#{emotion[i]}" %>
-          </button>
-        <% end %>
-      </div>
+              <%= "#{emotion[i]}" %>
+            </button>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-<% end %>
-</div>
-<div class="share">Share it in your own words!</div>
-<div class="own_word">
-  <label>
-    <input type="text" placeholder="Add your own word"/>
-  </label>
-</div>
-<div class="link">
-  <%= link_to "I was not working this week","#"  %>
-</div>
-<div class="unsubscribe">
-  <%= link_to "Unsubscribe from future check-ins","#"  %>
-</div>
+      <div class="share">Share it in your own words!</div>
+      <div class="own-word">
+        <div class="link-first">
+          <%= link_to "Add your own word", "#", method: :get, class:"link-text"%>
+        </div>
+      </div>
+      <div class="link">
+        <%= link_to "I was not working this week","#"  %>
+      </div>
+      <div class="unsubscribe">
+        <%= link_to "Unsubscribe from future check-ins","#"  %>
+      </div>
+  </div>
 </body>
 </html>

@@ -25,5 +25,6 @@ FactoryBot.define do
     password { Faker::Internet.password(min_length: 6, max_length: 128) }
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
+    opt_out { false }
   end
 end
