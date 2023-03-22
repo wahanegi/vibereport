@@ -5,6 +5,7 @@
 #  id             :bigint           not null, primary key
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
+#  rating         :integer
 #  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

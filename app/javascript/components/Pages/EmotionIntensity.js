@@ -7,10 +7,14 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const { word, category } = data.emotion
   const { gif_url } = data.response.attributes
+  const { rating } = data.response.attributes
 
   const handlingOnClickNext = () => {
     steps.push('ProductivityCheckLow')
-    saveDataToDb( steps, {})
+    saveDataToDb( steps, {rating: data.response.attributes.rating})
+  }
+  const handleRatingClick = (value) => {
+    saveDataToDb( steps, {rating: value})
   }
 
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
@@ -34,12 +38,33 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
     <BtnNext onClick={handlingOnClickNext} addClass='m-1' />
   </div>
 
-  const IntenseLine = () => <div>
-    <span className="under-convert">1</span>
-    <span className="under-convert">2</span>
-    <span className="under-convert">3</span>
-    <span className="under-convert">4</span>
-    <span className="under-convert">5</span>
+  const generateStyles = (value) => {
+    return {
+      backgroundColor: 
+        value === 5 ? '#80D197' : value === 4 ? '#A6DFB6' :
+        value === 3 ? '#B9E6C6' : value === 2 ? '#CCEDD5' :
+        value === 1 ? '#D9F1E0' : 'transparent',
+      borderRadius: value === 5 ? '0 29px 29px 0' : value === 1 ? '29px 0 0 29px' : 'none'
+    }
+  }
+
+  const IntenseLine = () => 
+  <div className="rating-container">
+    <form >
+      {[1, 2, 3, 4, 5].map((value) => (
+        <label key={value} className="rating-label" 
+        style={generateStyles(value)}>
+          <input
+            type="radio"
+            name="rating"
+            value={value}
+            checked={rating === value}
+            onChange={() => handleRatingClick(value)}
+          />
+          {value}{value !== 1}
+        </label>
+      ))}
+    </form>
   </div>
 
   if (!!error) return <p>{error.message}</p>

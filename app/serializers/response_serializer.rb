@@ -5,6 +5,7 @@
 #  id             :bigint           not null, primary key
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
+#  rating         :integer
 #  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -28,5 +29,5 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url
+  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating
 end

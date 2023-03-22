@@ -106,3 +106,26 @@ body {
   width: 100vw;
 }
 //</ListEmotion
+//IntenseLine
+.rating-label {
+  box-sizing: border-box;
+  width: 113.65px;
+  height: 53.83px;
+  left: 581px;
+  top: 617.27px;
+  border: 1.15px solid #000000;
+  display: inline-block;
+  cursor: pointer;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 47.8507px;
+  line-height: 58px;
+  text-align: center;
+  color: #000000;
+}
+
+.rating-label input {
+  display: none;
+}
+//IntenseLine
