@@ -3,7 +3,6 @@ import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
 import EmotionEntry from "./Pages/EmotionEntry";
 import SelectedGIPHYFollow from "./Pages/SelectedGIPHYFollow";
-import OwnMemeUploadFollow from "./Pages/OwnMemeUploadFollow";
 import EmotionIntensity from "./Pages/EmotionIntensity";
 import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
@@ -13,30 +12,52 @@ import Results from "./Pages/Results";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const stepsArr = JSON.parse(data.response.attributes.steps)
-  const navigate = useNavigate()
-  const service = { isLoading,  error , setIsLoading}
+          const [error, setError] = useState(false)
+                   const stepsArr = data.response.attributes.steps
+                   const navigate = useNavigate()
+                    const service = { isLoading,  error , setIsLoading}
+
+  const mainPage = 'emotion-selection-web'
+  const [go, setGo] = useState(null)
+  const [isCustomGif, setIsCustomGif] = useState(false)
+
+  useEffect(()=>{
+    //a block to give permission to transition on a page which was point the browser address bar
+    let lastStep = stepsArr.slice(-1).toString()
+    let index = stepsArr.indexOf(step)
+
+      if ( stepsArr[0] !== mainPage ) {
+        saveDataToDb([mainPage])
+      }
+      if (index === -1) {
+        navigate(`/${lastStep}`)
+        setGo(lastStep)
+      } else if (index !== stepsArr.length-1) {
+        saveDataToDb(stepsArr.slice(0, stepsArr.indexOf(step) + 1))
+      } else {
+        setGo(lastStep)
+      }
+  },[])
 
   useEffect(()=> {
       window.addEventListener('popstate', function(event) {
         event.preventDefault()
         const handlingSteps =( answer ) =>{
-          const stepsFromDBofServer = JSON.parse(answer.response.attributes.steps)
-          stepsFromDBofServer.pop()
-          if (stepsFromDBofServer.length > 0) {
+          const stepsFromDBofServer = answer.response.attributes.steps
+          if (stepsFromDBofServer.length > 1) {
+            stepsFromDBofServer.pop()
+            setGo(stepsFromDBofServer.slice(-1).toString())
             createOrUpdate( answer ,
               { response:{ attributes:{
-                 emotion_id: answer.response.attributes.emotion_id,
-                id: answer.response.attributes.id,
-                steps: JSON.stringify(stepsFromDBofServer),
+                    emotion_id: answer.response.attributes.emotion_id,
+                            id: answer.response.attributes.id,
+                         steps: stepsFromDBofServer,
                 time_period_id: answer.time_period.id,
-                user_id: answer.current_user_id
+                       user_id: answer.current_user_id
                 }}}, saveDataToAttributes)}
           else{
-            window.location.replace(
-              window.location.origin+`/${stepsFromDBofServer[0]}`
-            );
+            window.location.replace(window.location.origin+`/${stepsFromDBofServer[0]}` );
+            setGo(stepsFromDBofServer[0])
           }
         }
         apiRequest("GET", "", handlingSteps, ()=>{}, '/api/v1/emotions.json').catch(e=>setError(e))
@@ -49,7 +70,7 @@ const ResponseFlow = ({step, data, setData}) => {
   //*** **addedData** - necessary data (and future data) for update or save in DB by using Response controller
   //*** Format addedData = **{key: value, ...., key(n): value(n)}**
   const saveDataToDb = ( stepsArr, addedData = {}) =>{
-    const dataRequest = {response:{ attributes: { steps: JSON.stringify(stepsArr),...addedData } } }
+    const dataRequest = {response:{ attributes: { steps: stepsArr,...addedData } } }
     setIsLoading(true)
     createOrUpdate (data, dataRequest, saveDataToAttributes)
   }
@@ -63,27 +84,27 @@ const ResponseFlow = ({step, data, setData}) => {
       apiRequest("PATCH", dataRequest, saveDataToAttributes, ()=>{}, url ).catch(e=>setError(e))
   }
 
-  //***  include received data from the apiRequest to the variable **:data** (**:emotionDataRespUserIdTimePeriod** in App)
-  // shortly: including data from server to the front database
+  //***  include received data from the apiRequest to the variable **:data (see :frontDATABASE in App)**
+  // briefly: including data from server to the client-side database
   const saveDataToAttributes =( receivedData ) =>{
     setIsLoading(false)
     mergeData( receivedData, data, setData )
-    navigate(`/${JSON.parse(receivedData.data.attributes.steps).pop()}`)
+    let lastStep = receivedData.data.attributes.steps.slice(-1).toString()
+    setGo( lastStep )
+    navigate(`/${ lastStep }`)
   }
 
-  switch (step) {
+  switch (go) {
     case  "emotion-selection-web" :
       return <ListEmotions data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "emotion-entry" :
       return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "meme-selection" :
-      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />
     case  "results" :
       return <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "selected-giphy-follow" :
-      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    case  "OwnMemeUploadFollow" :
-      return <OwnMemeUploadFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} />
     case  "emotion-intensity" :
       return <EmotionIntensity data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "ProductivityCheckLow" :
@@ -111,7 +132,8 @@ const ResponseFlow = ({step, data, setData}) => {
     // case  "PromptEmailResults" :
     //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     default:
-      0
+      // navigate ( `/emotion-selection-web`)
+
   }
 }
 export default ResponseFlow;

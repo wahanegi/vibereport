@@ -1,52 +1,46 @@
 import React, {Fragment, useEffect, useState} from "react"
-import {BrowserRouter, Navigate,  Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import ResponseFlow from "./ResponseFlow";
-import axios from "axios";
 import { ALL_STEPS } from "./helpers/routes";
+import {apiRequest} from "./requests/axios_requests";
+
+const initDB = {
+  data:{id:null, type:null, attributes:{word:null, category: null}},
+  current_user_id: null,
+  emotion:{id: null, word:null, category: null},
+  response: { id: null, type: null, attributes:{
+      steps:[ 'emotion-selection-web']}},
+  time_period: {}
+}
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLoadingSteps, setIsLoadingSteps] = useState(true);
-  const [error, setError] = useState('')
-  const [step, setStep] = useState(null)
-  const [frontDatabase, setFrontDatabase] = useState(null)
-  const [isNotLoadedData, setIsNotLoadedData] = useState(true)
-
   const mainPage = 'emotion-selection-web'
+  const [error, setError] = useState('')
+  const [frontDatabase, setFrontDatabase] = useState(initDB)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isNotLoadedData, setIsNotLoadedData] = useState(true)
+  const [step, setStep] = useState(mainPage)
 
-  useEffect(()=>{
+    useEffect(()=>{
+    const setData = ( dataFromServer ) => {
+      let steps = dataFromServer.response.attributes.steps
+      if (!Array.isArray(steps)) {
+        dataFromServer = {...dataFromServer, response:{...dataFromServer.response,
+            attributes:{...dataFromServer.response.attributes, steps: [mainPage] }}}
+        steps = [mainPage]
+      }
+        setFrontDatabase(dataFromServer)
+      let lastStep = steps.slice(-1).toString()
+      setStep(lastStep)
+      setIsLoading(false)
+      setIsNotLoadedData(false)
+    }
     if (isNotLoadedData) {
       setIsLoading(true)
-      axios.get('/api/v1/emotions.json')
-        // frontDatabase
-        // LOAD Emotions (3*12), emotion_attr and Response data of authorized user from DB
-        // Below format of data for the start entry of user
-        // data = {data:{
-        //               data: {{id:..., type:..., attributes:{ word:..., category:... } }, //36 rows
-        //               emotion_attr: {word: "", category: ""}                                      //first entry
-        //               response:{attributes: { steps: "[\"emotion-selection-web\"]" } },            //strong format
-        //               current_user_id: ...,
-        //               time_period:{...}
-        //               }
-        //        }
-        .then(data => {
-          setIsNotLoadedData(false)
-          let arrWithSteps = JSON.parse(data.data.response.attributes.steps)
-          //save data:{Emotions}, response:{attributes}, current_user_id, time_period
-          setFrontDatabase(data.data)
-          if (arrWithSteps === undefined || arrWithSteps.length === 0) {
-            setStep(mainPage)
-          } else {
-            let lastStepFromDBofServer = arrWithSteps.pop()
-            setStep(lastStepFromDBofServer)
-          }
-          setIsLoading(false)
-          setIsLoadingSteps(false);
-        })
-        .catch((error) => {
-          setError(error.message)
-          setIsLoading(false)
-        })
+      apiRequest('GET',{}, setData, ()=>{}, '/api/v1/emotions').catch((e)=>{
+        setError(error.message)
+        setIsLoading(false)
+      })
     }
   },[frontDatabase])
 
@@ -55,10 +49,8 @@ const App = () => {
       {isLoading && <p >Loading...</p>}
       {error && <p>{error}</p>}
       <BrowserRouter>
-        {!!step && !isNotLoadedData && <Routes>
-          <Route path="*" element={<Navigate to={`/${step}`}
-                                             data={frontDatabase}
-                                             setData={setFrontDatabase} />}/>
+        {!isNotLoadedData && <Routes>
+          <Route path="*" element={<Navigate to={`/${step}`}/>}/>
           {ALL_STEPS.map((item, index) => (
             <Route
               key={item.id}

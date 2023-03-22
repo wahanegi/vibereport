@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import GifItem from "./GifItem";
 
-const GifList = ({ gifs, setGifUrl, selectedGifIndex, setSelectedGifIndex, category }) => {
+const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif }) => {
 
   const gifItems = gifs.map(image => {
     return <GifItem key={image.id}
@@ -10,11 +10,16 @@ const GifList = ({ gifs, setGifUrl, selectedGifIndex, setSelectedGifIndex, categ
                     setSelectedGifIndex={setSelectedGifIndex}
                     setGifUrl={setGifUrl}
                     category={category}
+                    isCustomGif={isCustomGif}
                     index={image.id} />
   });
 
   return <div className='card-body card-scroll'>
-    <div className="gif-list">{gifItems}</div>
+    {
+      isCustomGif ?
+        <img src={gifUrl} alt='Giphy image' className='gif-image' /> :
+        <div className="gif-list">{gifItems}</div>
+    }
   </div>
 };
 

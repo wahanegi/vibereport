@@ -32,5 +32,6 @@ class Response < ApplicationRecord
   belongs_to :user
 
   validates :user_id, uniqueness: { scope: :time_period_id }
-  validates :emotion_id, presence: true, unless: :not_working
+  validates :steps, presence: true
+  serialize :steps, JSON
 end

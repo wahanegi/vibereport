@@ -1,52 +1,26 @@
 import Menu from "./Menu";
-import QuestionButton from "./QuestionButton";
-import ShoutoutButton from "./ShoutoutButton";
 import React from "react";
-import {rangeFormat} from "../helpers/helpers";
+import {backHandling, rangeFormat} from "../helpers/helpers";
+import shout_out_large from "../../../assets/images/shoutout-large.svg"
+import help_icon from "../../../assets/images/help.svg"
+import logo from "../../../assets/images/logo.svg"
+import {NavLink} from "react-router-dom";
 
-export const RightPanel = () => <div className='col-2 mb-3 text-center'>
-  <div className="d-flex align-items-end flex-column mb-3" style={{height: '95vh'}}>
-    <div className="p-2">
-      <Menu>X% complete</Menu>
-    </div>
-    <div className="mt-auto p-2">
-      <QuestionButton />
-    </div>
-  </div>
-</div>
-
-export const Logo = () => <div className="p-2">
-  <div className="convert increased-convert in_left">
-    <p>Logo/Brand</p>
-    <div className="line1 offset-line1"></div>
-    <div className="line2 offset-line2"></div>
-  </div>
-</div>
-
-export const LeftPanel = () => <div className='col-2 mb-3 text-center'>
-  <div className="d-flex align-items-start flex-column mb-3" style={{height: '95vh'}}>
-    <div className="p-2">
-      <Logo />
-    </div>
-    <div className="mt-auto p-2">
-      <ShoutoutButton style={{marginLeft: 15}} />
-    </div>
-  </div>
-</div>
+export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
-  <button className={`${addClass} emotion-btn ${emotion.category}`}>
+  <button className={`${addClass} btn emotion ${emotion.category}`}>
     <span hidden={!showPencil} onClick={onClick} className="edit-icon"></span>
     {emotion.word}
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
-  <button onClick={onClick} className={`outline-btn ${addClass}`} disabled={disabled}>
+  <button onClick={onClick} className={`btn outline ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`primary-btn ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn primary ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -65,11 +39,37 @@ export const Calendar = ({ timePeriod }) =>
   </div>
 
 export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn-navigation next ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn navigation next ${addClass}`} hidden={hidden} disabled={disabled}>
     Next
   </button>
 
 export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn-navigation back ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn navigation back ${addClass}`} hidden={hidden} disabled={disabled}>
     Back
   </button>
+
+export const ShoutOutIcon = () =>
+  <img src={shout_out_large} alt="shout out" style={{width: 100, height: 100}} />
+
+export const HelpIcon = () =>
+  <NavLink to="mailto: support@vibereport.app">
+    <img src={help_icon} alt="shout out" className='help-icon' style={{width: 100, height: 100}} />
+  </NavLink>
+
+export const Footer = ({nextClick, disabled = false}) => <div className='d-flex justify-content-between m-3'>
+  <ShoutOutIcon />
+  <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
+  <BtnNext onClick={nextClick} disabled={disabled} addClass='m-1 align-self-center' />
+  <HelpIcon />
+</div>
+
+export const Header = () => <div className='d-flex justify-content-between m-3'>
+  <Logo />
+  <Menu>X% complete</Menu>
+</div>
+
+export const Wrapper = ({children}) => <div className="wrapper">
+  <div className="d-flex flex-column">
+    {children}
+  </div>
+</div>

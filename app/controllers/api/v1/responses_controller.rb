@@ -49,11 +49,11 @@ module Api
       end
 
       def response_params
-        params.require(:response).permit(attributes: [:user_id, :emotion_id, :time_period_id, :steps, :not_working, :gif_url, :rating])
+        params.require(:response).permit( attributes: [ :user_id, :emotion_id, :time_period_id, [:steps => [ ]], :not_working, :gif_url, :rating ])
       end
 
       def add_chosen_emotion
-        { chosen_emotion: @response.emotion }
+        { emotion: @response.emotion }
       end
 
       def set_user

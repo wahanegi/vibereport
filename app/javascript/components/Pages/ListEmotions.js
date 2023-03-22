@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
-import { NavLink } from 'react-router-dom'
-import QuestionButton from "../UI/QuestionButton";
+import {NavLink} from 'react-router-dom'
 import Menu from "../UI/Menu";
-import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-import {Calendar, Logo} from "../UI/ShareContent";
+import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -16,7 +14,6 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
-
   const clickHandling = (emotion_word, emotion_id) => {
     steps.push('meme-selection')
     const dataRequest = {
@@ -29,7 +26,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
 
   const ownWordHandling = () => {
     steps.push('emotion-entry')
-    saveDataToDb( steps )
+    const dataRequest = {
+      time_period_id: data.time_period.id,
+      user_id: data.current_user_id,
+    }
+    saveDataToDb( steps, dataRequest )
   }
 
   const onClickNotWorking = () => {
@@ -52,11 +53,14 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
         <div>
-          <Logo />
+          <div className='d-flex justify-content-between m-3 '>
+            <Logo />
+            <Menu>X% complete</Menu>
+          </div>
           <h3 className="under-convert uc-new-position">Time for this week's check-in!</h3>
           <Calendar timePeriod={timePeriod} />
           <br/>
-          <div className="question q-new-pos">Which word best describes how you felt work this week?</div>
+          <div className="question q-new-pos">Which word best describes how you felt at work this week?</div>
             <div className='field_empty'></div>
               <div className='field_emotions'>
                 {emotions.map((emotion, index) =>
@@ -65,8 +69,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                                   onClick={() =>
                                     clickHandling(
                                       emotions[mixUp(index+1)].attributes.word,
-                                      emotions[mixUp(index+1)].id,
-                                      timePeriod.id
+                                      emotions[mixUp(index+1)].id
                                   )}>{emotions[mixUp(index+1)].attributes.word}
                      
                    </ButtonEmotion>
@@ -78,9 +81,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <NavLink className="nav-link" onClick={onClickNotWorking} to={''}>
             I was not working this week
           </NavLink>
-          <QuestionButton style={{position: 'absolute', right: 47}}/>
-          <ShoutoutButton style={{position: 'absolute', left: 45}}/>
-          <Menu style={{position: 'absolute', right: 47, top: 62}}>X% complete</Menu>
+          <div className='d-flex justify-content-between m-3 '>
+            <ShoutOutIcon />
+            <HelpIcon />
+          </div>
         </div>
       }
     </Fragment>

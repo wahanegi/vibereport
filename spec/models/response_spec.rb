@@ -32,7 +32,7 @@ RSpec.describe Response, type: :model do
   let!(:user) { create :user}
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
-  let(:response) { FactoryBot.build(:response, user: user, time_period: time_period, emotion: emotion) }
+  let(:response) { FactoryBot.build(:response, user: user, time_period: time_period, emotion: emotion, steps: %w[emotion-selection-web]) }
 
   context 'associations' do
     it 'belongs to user' do
@@ -63,9 +63,9 @@ RSpec.describe Response, type: :model do
       expect(response).to_not be_valid
     end
 
-    it 'fails when emotion is absent' do
+    it 'when emotion is absent' do
       response.emotion = nil
-      expect(response).to_not be_valid
+      expect(response).to be_valid
     end
 
     it 'fails when user and time period not valid' do

@@ -17,7 +17,6 @@ $dark-grey: #4D4D4D;
 body {
   font-family: $font-family;
   font-style: normal;
-  width: calc(100% - 12px);
 }
 .header {
   font-weight: 700;
@@ -35,14 +34,22 @@ body {
 .muted {
   color: $color-muted;
 }
+.light-grey-text {
+  color: $light-grey;
+}
 .email_field{
+  @media (min-width: 767px) {
+    min-width: 660px;
+  }
   box-sizing: border-box;
-  width: 660px;
   background: $color-white;
   margin: 0 auto;
+  text-align: center;
 }
 .email_field input{
-  width: 660px;
+  @media (min-width: 767px) {
+    min-width: 660px;
+  }
   height: 70px;
   font-size: 40px;
   line-height: 70px;
@@ -104,6 +111,16 @@ body {
 .container {
   height: 100vh;
   width: 100vw;
+}
+.wrapper {
+  min-height: 100vh;
+  text-align: center;
+}
+.central-element {
+  min-height: 60vh;
+}
+.help-icon {
+  filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 //</ListEmotion
 //IntenseLine

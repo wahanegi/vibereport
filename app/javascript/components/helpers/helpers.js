@@ -4,6 +4,10 @@ export function isBlank(obj) {
   return typeof obj === 'undefined' || obj === null;
 }
 
+export function isPresent(obj) {
+  return typeof obj !== 'undefined' && obj !== null;
+}
+
 export const backHandling = () => {
   window.history.back()
 }

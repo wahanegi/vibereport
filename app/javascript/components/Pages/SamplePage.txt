@@ -1,0 +1,1 @@
+SamplePage.js see item#10 in the https://cloverpop-internship.atlassian.net/browse/CI-39
