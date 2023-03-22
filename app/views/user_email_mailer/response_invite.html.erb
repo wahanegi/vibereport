@@ -12,6 +12,9 @@
           font-family: 'Josefin Sans',  sans-serif;
           font-style: normal;
       }
+      .width-screen{
+          min-width:1060px;
+      }
       .convert {
           width: 127px;
           height: 58px;
@@ -215,6 +218,7 @@
           line-height: 36px;
           color: rgba(0, 0, 0, 0.6);
           border: 3px solid #5689EB;
+          border-radius: 19px;
           box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
       }
       .link-text{
@@ -229,7 +233,6 @@
           padding: 13px;
           margin: -13px -14px;
       }
-
       .i-was-not{
           width: 360px;
           height: 28px;
@@ -253,73 +256,62 @@
           position: relative;
           top: 39px;
       }
-      .link-text{
-          display: block;
-          width: 385px;
-          height: 70px;
-          font-size: 36px;
-          line-height: 36px;
-          color: rgba(0, 0, 0, 0.6);
-          text-decoration-line: none;
-          font-weight: 700;
-          padding: 13px;
-          margin: -15px -29px;
-      }
   </style>
 
 </head>
 <body>
-<div class="convert">
-  <p>Logo/Brand</p>
-  <div class="line1"></div>
-  <div class="line2"></div>
-</div>
-<h3 class="under-convert">Time for this week's check-in!</h3>
-<div class="calendar">
-  <div class="left-div"><div class="part"></div></div>
-  <div class="right-div"><div class="part"></div></div>
-  <div class="top-div"></div>
-  <div class="time"><%= "#{@view_calendar_days}" %></div>
-</div>
-<br/>
-<div class="question">Which word best describes how you felt work at this week?</div>
-<div>
-  <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
-    <% emotion = [] %>
-    <% emotion.push(@positive_emotions[index].word) %>
-    <% emotion.push(@positive_emotions[index+1].word) %>
-    <% emotion.push(@neutral_emotions[index].word) %>
-    <% emotion.push(@neutral_emotions[index+1].word) %>
-    <% emotion.push(@negative_emotions[index].word) %>
-    <% emotion.push(@negative_emotions[index+1].word) %>
-    <div class="field-empty"></div>
-      <div class="field-emotions flex">
-        <% 6.times do |i|%>
-          <button class="<%= if i < 2
+  <div class="width-screen">
+    <div class="convert">
+      <p>Logo/Brand</p>
+      <div class="line1"></div>
+      <div class="line2"></div>
+    </div>
+      <div class="under-convert">Time for this week's check-in!</div>
+    <div class="calendar">
+      <div class="left-div"><div class="part"></div></div>
+      <div class="right-div"><div class="part"></div></div>
+      <div class="top-div"></div>
+      <div class="time"><%= "#{@view_calendar_days}" %></div>
+    </div>
+      <br/>
+    <div class="question">Which word best describes how you felt at work this week?</div>
+    <div>
+      <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
+        <% emotion = [] %>
+        <% emotion.push(@positive_emotions[index].word) %>
+        <% emotion.push(@positive_emotions[index+1].word) %>
+        <% emotion.push(@neutral_emotions[index].word) %>
+        <% emotion.push(@neutral_emotions[index+1].word) %>
+        <% emotion.push(@negative_emotions[index].word) %>
+        <% emotion.push(@negative_emotions[index+1].word) %>
+        <div class="field-empty"></div>
+        <div class="field-emotions flex">
+          <% 6.times do |i|%>
+            <button class="<%= if i < 2
                               "positive"
                             else
                               i > 3 ? "negative" : "neutral"
                             end %>"
-                  style="width: <%= btn_special(emotion[i], :width)%>px;
+                  style="min-width: <%= btn_special(emotion[i], :width)%>px;
                          margin: 0 <%= btn_special(emotion[i], :margin)%>px;">
-            <%= "#{emotion[i]}" %>
-          </button>
-        <% end %>
-      </div>
+              <%= "#{emotion[i]}" %>
+            </button>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-<% end %>
-</div>
-<div class="share">Share it in your own words!</div>
-<div class="own-word">
-  <div class="link-first">
-    <%= link_to "Add your own word", "#", method: :get, class:"link-text"%>
+      <div class="share">Share it in your own words!</div>
+      <div class="own-word">
+        <div class="link-first">
+          <%= link_to "Add your own word", "#", method: :get, class:"link-text"%>
+        </div>
+      </div>
+      <div class="link">
+        <%= link_to "I was not working this week","#"  %>
+      </div>
+      <div class="unsubscribe">
+        <%= link_to "Unsubscribe from future check-ins","#"  %>
+      </div>
   </div>
-</div>
-<div class="link">
-  <%= link_to "I was not working this week","#"  %>
-</div>
-<div class="unsubscribe">
-  <%= link_to "Unsubscribe from future check-ins","#"  %>
-</div>
 </body>
 </html>
