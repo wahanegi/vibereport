@@ -2,7 +2,7 @@
 
 # Generate email letter CI-32
 class UserEmailMailer < ApplicationMailer
-  default from: "do_not_reply@#{ENV.fetch('EMAIL_DOMAIN')}"
+  default from: "hello@#{ENV.fetch('EMAIL_DOMAIN')}"
   NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 
 
