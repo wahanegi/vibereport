@@ -49,7 +49,6 @@ group :test do
   gem 'shoulda-callback-matchers'     # Matchers to test before, after and around hooks
   gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'simplecov', require: false     # Code coverage for Ruby. See https://github.com/simplecov-ruby/simplecov for setting options
-  gem 'simplecov_json_formatter', require: false # Suggested to be used here: https://blog.matievisthekat.dev/integrating-codeclimate-with-ruby-on-rails#heading-simplecov
   gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
 end
 
