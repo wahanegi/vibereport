@@ -71,6 +71,9 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  config.asset_host = "http://localhost:3000"
 end
 
 # For seeding

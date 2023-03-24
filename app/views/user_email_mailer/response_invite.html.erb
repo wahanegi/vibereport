@@ -3,31 +3,38 @@
 <head>
   <title>Email letter</title>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  <style>
-      @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
-      * {
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>* {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-          font-family: 'Josefin Sans',  sans-serif;
+         font-family: 'Josefin Sans',  sans-serif;
           font-style: normal;
+          font-weight:700;
       }
       .width-screen{
           min-width:1060px;
       }
       .convert {
-          width: 127px;
-          height: 58px;
+          width: 130px;
+          height: 61px;
           text-align: center;
           margin: 0 auto;
-          background: #D9D9D9;
-          border: 1px solid #000000;
+          background-image: url(
+          <%= asset_path 'envelope.png'%>
+          );
+          background-repeat: no-repeat;
+          background-size: contain;
+      }
+      .logo{
+          color: rgba(0, 0, 0, 0.7);
+          margin: 0 auto;
       }
       .convert p {
           font-size: 12px;
           line-height: 12px;
           font-weight: 600;
-          padding-top: 1px;
+          padding-top: 4px;
           padding-left: 5px;
       }
 
@@ -46,19 +53,20 @@
           transform: rotate(-23.42deg);
       }
       .calendar {
-          width: 82px;
-          height: 68px;
-          top: -57px;
-          left: 60px;
-          position: relative;
+          width: 85px;
+          height: 79px;
           text-align: center;
-          background: #C8C9C0;
           border-radius: 9px;
+          margin-left: 60px;
+          background-image: url(
+          <%= asset_path "calendar.png"%>
+          );
+          background-repeat: no-repeat;
+          background-size: contain;
       }
       .under-convert {
           width: 453px;
-          height: 39px;
-          font-weight: 700;
+          height: 55px;
           font-size: 24px;
           line-height: 24px;
           text-align: center;
@@ -71,7 +79,7 @@
       }
       .field-emotions{
           margin: 0 auto;
-          margin-top: 5px;
+          margin-top: 10px;
       }
       @media only screen and (min-width: 1080px){
           .field-emotions{
@@ -112,50 +120,46 @@
       .top-div {
           width: 82px;
           height: 25px;
-          left: 0;
-          top: -53px;
+          /*left: 0;*/
+          /*top: -53px;*/
           background: #E36554;
-          position: relative;
+          /*position: relative;*/
           border-top-left-radius: 9px;
           border-top-right-radius: 9px;
+          margin-bottom: -24px;
       }
       .time {
-          position: relative;
-          top: -46px;
-          width: 82px;
+          padding-top: 43px;
+          width: 85px;
           height: 14px;
-          font-weight: 700;
-          font-size: 17px;
+          font-size: 16px;
           line-height: 17px;
           text-align: center;
           color: rgba(0, 0, 0, 0.7);
+          white-space: nowrap;
+      ;
       }
       .question {
           margin:0 auto;
-          font-weight: 700;
           font-size: 48px;
           line-height: 48px;
           text-align: center;
           color: #000000;
           white-space: pre-line;
-          width: 714px;
-          height: 59px;
-          position: relative;
-          top: -43px;
+          width: 735px;
+          min-height: 114px;
       }
-      table {
-          margin: 2% auto;
-          position: relative;
-          top: -10px;
-      }
-      table td {
-          padding: 5px;
+      .link a{
+          font-size: 23px;
+          white-space: nowrap;
+          text-decoration-line: underline;
+          color: #0007A3;
       }
       .link {
-          display: flex;
-          justify-content: center;
+          width: max-content;
+          margin: 0 auto;
+          /*margin-bottom: -16px;*/
           font-size: 23px;
-          position: relative;
       }
       .positive,.neutral,.negative{
           height: 31px;
@@ -194,14 +198,7 @@
           color: rgba(0, 0, 0, 0.7);
           margin: 0 auto;
           margin-top: 41px;
-      }
-      .link {
-          display: flex;
-          justify-content: center;
-          font-size: 23px;
-          position: relative;
-          color: #0007A3;
-          top: 54px;
+          margin-bottom: 14px;
       }
       .own-word{
           box-sizing: border-box;
@@ -209,9 +206,11 @@
           height: 70px;
           background: #FFFFFF;
           margin: 0 auto;
+          margin-bottom: 54px;
       }
-      .link-first{
-          padding: 13px 19px 13px 27px;
+      .link-first a{
+          padding: 13px 23px 13px 23px;
+          text-align: center;
           width: 385px;
           height: 70px;
           font-size: 36px;
@@ -220,17 +219,8 @@
           border: 3px solid #5689EB;
           border-radius: 19px;
           box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
-      }
-      .link-text{
-          display: block;
-          width: 385px;
-          height: 70px;
-          font-size: 36px;
-          line-height: 36px;
-          color: rgba(0, 0, 0, 0.6);
           text-decoration-line: none;
-          font-weight: 700;
-          padding: 13px;
+          white-space: nowrap;
           margin: -13px -14px;
       }
       .i-was-not{
@@ -246,34 +236,26 @@
           top: 54px;
       }
       .unsubscribe a{
-          width: 274px;
-          height: 19px;
           font-size: 16px;
-          font-weight: 700;
           line-height: 19px;
-          text-decoration-line: underline;
           color: #4D4D4D;
-          position: relative;
-          top: 39px;
       }
   </style>
 
 </head>
 <body>
   <div class="width-screen">
-    <div class="convert">
-      <p>Logo/Brand</p>
-      <div class="line1"></div>
-      <div class="line2"></div>
+    <div style="height:30px">
+      <div class="convert">
+         <p class="logo">Logo/Brand</p>
+      </div>
     </div>
-      <div class="under-convert">Time for this week's check-in!</div>
-    <div class="calendar">
-      <div class="left-div"><div class="part"></div></div>
-      <div class="right-div"><div class="part"></div></div>
-      <div class="top-div"></div>
-      <div class="time"><%= "#{@view_calendar_days}" %></div>
+    <div style="height: 31px">
+      <div class="calendar">
+          <div class="time">19-25 Mar</div>
+      </div>
     </div>
-      <br/>
+    <div class="under-convert">Time for this week's check-in!</div>
     <div class="question">Which word best describes how you felt at work this week?</div>
     <div>
       <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
@@ -303,12 +285,14 @@
       <div class="share">Share it in your own words!</div>
       <div class="own-word">
         <div class="link-first">
-          <%= link_to "Add your own word", "#", method: :get, class:"link-text"%>
+          <%= link_to "Add your own word", "#", method: :get %>
         </div>
       </div>
+    <div style="height: 7px">
       <div class="link">
-        <%= link_to "I was not working this week","#"  %>
+        <%= link_to "I was not working this week","#" , class:"link-was-not" %>
       </div>
+    </div>
       <div class="unsubscribe">
         <%= link_to "Unsubscribe from future check-ins","#"  %>
       </div>
