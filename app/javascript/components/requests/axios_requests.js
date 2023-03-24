@@ -24,6 +24,15 @@ export const updateResponse = async (response, setResponse) => {
     .catch(resp => {console.log(resp)})
 }
 
+export const removeResponse = async (data, setData) => {
+  createCsrfToken()
+  await axios.delete(`/api/v1/responses/${data.response.id}`)
+    .then(() => {
+      setData(Object.assign({}, data, { response: { attributes: { steps: ['emotion-selection-web'] }} }))
+    })
+    .catch(resp => {console.log(resp)})
+}
+
 //*** method (POST/PATCH)
 //*** data = {...} data which send to the controller
 //*** setData - this is Hook for saving data of answer of the controller

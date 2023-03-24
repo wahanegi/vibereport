@@ -11,7 +11,7 @@ class Api::V1::ResponseFlowFromEmail
   end
 
   def call
-    set_existed_response
+    existed_response
     if @existed_response.present?
       update_response
       { success: true, response: @existed_response }
@@ -30,10 +30,13 @@ class Api::V1::ResponseFlowFromEmail
   end
 
   def update_response
+    return @existed_response if response_with_emotion?
+    return notifier_user if response_not_working?
+
     @existed_response.update!(emotion_id:, not_working:, steps:)
   end
 
-  def set_existed_response
+  def existed_response
     @existed_response ||= Response.find_by(time_period_id:, user_id: user.id)
   end
 
@@ -49,5 +52,17 @@ class Api::V1::ResponseFlowFromEmail
     else
       steps
     end
+  end
+
+  def response_with_emotion?
+    @existed_response.emotion.present?
+  end
+
+  def response_not_working?
+    @existed_response.not_working
+  end
+
+  def notifier_user
+    @existed_response.update!(notices: { alert: 'Did you work during this check-in period?' })
   end
 end

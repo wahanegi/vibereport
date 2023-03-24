@@ -38,7 +38,7 @@ const ResponseFlow = ({step, data, setData}) => {
       } else {
         setGo(lastStep)
       }
-  },[])
+  },[data])
 
   useEffect(()=> {
       window.addEventListener('popstate', function(event) {
