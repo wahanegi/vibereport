@@ -13,10 +13,10 @@ class Api::V1::ResponseFlowFromEmail
   def call
     existed_response
     if @existed_response.present?
-      update_response
+      update_response!
       { success: true, response: @existed_response }
     else
-      create_response
+      create_response!
       { success: true, response: @new_response }
     end
   rescue StandardError => e
@@ -25,15 +25,14 @@ class Api::V1::ResponseFlowFromEmail
 
   private
 
-  def create_response
+  def create_response!
     @new_response = user.responses.create!(time_period_id:, emotion_id:, not_working:, steps:)
   end
 
-  def update_response
+  def update_response!
     return @existed_response if response_with_emotion?
-    return notifier_user if response_not_working?
 
-    @existed_response.update!(emotion_id:, not_working:, steps:)
+    notify_user if response_not_working?
   end
 
   def existed_response
@@ -59,10 +58,10 @@ class Api::V1::ResponseFlowFromEmail
   end
 
   def response_not_working?
-    @existed_response.not_working
+    @existed_response.not_working && last_step != 'results'
   end
 
-  def notifier_user
-    @existed_response.update!(notices: { alert: 'Did you work during this check-in period?' })
+  def notify_user
+    @existed_response.update!(notices: { alert: 'Did you work during this </br>check-in period?', last_step:, emotion_id: })
   end
 end

@@ -4,8 +4,8 @@ module Api
       include ApplicationHelper
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices].freeze
 
-      before_action :set_response, only: %i[show update destroy]
-      before_action :require_user!, only: %i[index show create update destroy]
+      before_action :set_response, only: %i[show update]
+      before_action :require_user!, only: %i[index show create update]
 
       def index
         render json: ResponseSerializer.new(Response.all).serializable_hash
@@ -27,14 +27,6 @@ module Api
       def update
         if @response.update(response_params)
           render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
-        else
-          render json: { error: @response.errors }, status: :unprocessable_entity
-        end
-      end
-
-      def destroy
-        if @response.destroy
-          head :no_content, notice: 'Response was successfully destroyed.'
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
         end
