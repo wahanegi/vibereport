@@ -35,9 +35,9 @@ describe Api::V1::ResponseFlowFromEmail do
       expect(subject[:error].class).to eq ActiveRecord::RecordNotSaved
     end
 
-    it 'update response' do
-      response = FactoryBot.create(:response, user_id: user.id, emotion_id: nil, time_period_id: time_period.id, steps: %w[emotion-selection-web emotion-entry])
-      expect { subject }.to change { response.reload.steps }.and change { response.reload.emotion }
+    it 'update response notices' do
+      response = FactoryBot.create(:response, user_id: user.id, emotion_id: nil, not_working: true, time_period_id: time_period.id, steps: %w[emotion-selection-web results])
+      expect { subject }.to change { response.reload.notices }
       expect(subject[:success]).to be_truthy
     end
   end
@@ -50,9 +50,9 @@ describe Api::V1::ResponseFlowFromEmail do
       expect(subject[:success]).to be_truthy
     end
 
-    it 'update response' do
-      response = FactoryBot.create(:response, user_id: user.id, emotion_id: emotion.id, time_period_id: time_period.id, steps: %w[emotion-selection-web emotion-entry])
-      expect { subject }.to change { response.reload.steps }.and change { response.reload.not_working }
+    it 'return previous response' do
+      response = FactoryBot.create(:response, user_id: user.id, emotion_id: emotion.id, time_period_id: time_period.id, steps: %w[emotion-selection-web results])
+      expect { subject }.to_not change { response.reload }
       expect(subject[:success]).to be_truthy
     end
   end
@@ -63,9 +63,9 @@ describe Api::V1::ResponseFlowFromEmail do
       expect { subject }.to change { Response.count }.by(1)
       expect(subject[:success]).to be_truthy
     end
-    it 'update response' do
-      response = FactoryBot.create(:response, user_id: user.id, emotion_id: emotion.id, time_period_id: time_period.id, steps: %w[emotion-selection-web results])
-      expect { subject }.to change { response.reload.steps }
+    it 'update response notices' do
+      response = FactoryBot.create(:response, user_id: user.id, emotion_id: nil, not_working: true, time_period_id: time_period.id, steps: %w[emotion-selection-web results])
+      expect { subject }.to change { response.reload.notices }
       expect(subject[:success]).to be_truthy
     end
   end

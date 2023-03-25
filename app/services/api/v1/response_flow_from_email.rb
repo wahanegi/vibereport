@@ -11,12 +11,12 @@ class Api::V1::ResponseFlowFromEmail
   end
 
   def call
-    set_existed_response
+    existed_response
     if @existed_response.present?
-      update_response
+      update_response!
       { success: true, response: @existed_response }
     else
-      create_response
+      create_response!
       { success: true, response: @new_response }
     end
   rescue StandardError => e
@@ -25,15 +25,17 @@ class Api::V1::ResponseFlowFromEmail
 
   private
 
-  def create_response
+  def create_response!
     @new_response = user.responses.create!(time_period_id:, emotion_id:, not_working:, steps:)
   end
 
-  def update_response
-    @existed_response.update!(emotion_id:, not_working:, steps:)
+  def update_response!
+    return @existed_response if response_with_emotion?
+
+    notify_user if response_not_working?
   end
 
-  def set_existed_response
+  def existed_response
     @existed_response ||= Response.find_by(time_period_id:, user_id: user.id)
   end
 
@@ -49,5 +51,17 @@ class Api::V1::ResponseFlowFromEmail
     else
       steps
     end
+  end
+
+  def response_with_emotion?
+    @existed_response.emotion.present?
+  end
+
+  def response_not_working?
+    @existed_response.not_working && last_step != 'results'
+  end
+
+  def notify_user
+    @existed_response.update!(notices: { alert: 'Did you work during this </br>check-in period?', last_step:, emotion_id: })
   end
 end

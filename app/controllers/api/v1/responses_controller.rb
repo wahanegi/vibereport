@@ -2,6 +2,7 @@ module Api
   module V1
     class ResponsesController < ApplicationController
       include ApplicationHelper
+      PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :gif_url, :notices].freeze
 
       before_action :set_response, only: %i[show update]
       before_action :require_user!, only: %i[index show create update]
@@ -35,7 +36,7 @@ module Api
         set_user
         sign_in_user
         result = ResponseFlowFromEmail.new(params, @user).call
-        return redirect_to "/responses/#{result[:response].id}" if result[:success]
+        return redirect_to root_path if result[:success]
 
         render json: { error: result[:error] }, status: :unprocessable_entity
       end
@@ -47,7 +48,7 @@ module Api
       end
 
       def response_params
-        params.require(:response).permit( attributes: [ :user_id, :emotion_id, :time_period_id, [:steps => [ ]], :not_working, :gif_url ])
+        params.require(:response).permit(attributes: PARAMS_ATTRS)
       end
 
       def add_chosen_emotion
