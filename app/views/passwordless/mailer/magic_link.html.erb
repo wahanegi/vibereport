@@ -5,8 +5,6 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <style>
-      @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap');
       * {
           margin: 0;
           padding: 0;
@@ -16,6 +14,11 @@
           font-weight:700;
           text-align: center;
       }
+      @media only screen and (max-width: 600px){
+          *{
+              font-size: 2rem;
+          }
+      }
       .board{
           min-width:390px;
           margin-top:56px;
@@ -23,13 +26,13 @@
       .centre {
           margin: 0 auto;
       }
-      .first-row{
-          height:58px;
-          margin-bottom: 34px;
+      .first-row {
+          height: 3.7rem;
+          margin-bottom: 2.125rem;
       }
       .envelope {
-          width: 128px;
-          height: 61px;
+          width: 8rem;
+          height: 3.8rem;
           background-image: url( <%= asset_path 'envelope.png'%> );
           background-repeat: no-repeat;
           background-size: contain;
@@ -38,66 +41,65 @@
           color: #000;
       }
       .envelope p {
-          font-size: 12px;
-          line-height: 12px;
+          font-size: 0.75rem;
+          line-height: 0.75rem;
           font-weight: 625;
-          padding-top: 4px;
-          padding-left: 5px;
+          padding-top: 0.25rem;
+          padding-left: 0.3125rem;
       }
-      .second-row{
-          height:59px;
-          margin-bottom: 78px;
+      .second-row {
+          height: 3.7rem;
+          margin-bottom: 4.9rem;
       }
       .greeting {
-          height: 59px;
-          width: 746px;
+          height: 3.7rem;
           font-weight: 700;
-          font-size: 48px;
-          line-height: 48px;
+          font-size: 3rem;
+          line-height: 3rem;
           color: #000000;
       }
       .welcome {
-          font-size: 32px;
-          line-height: 56px;
+          font-size: 2rem;
+          line-height: 3.5rem;
       }
-      .third-row{
-          height: 54px;
-          margin-bottom: 14px;
+      .third-row {
+          height: 3.44rem;
+          margin-bottom: 0.875rem;
       }
-      .submit-annotation{
-          height: 54px;
-          font-size: 24px;
+      .submit-annotation {
+          height: 3.4rem;
+          font-size: 1.5rem;
           font-weight: 700;
-          line-height: 24px;
+          line-height: 1.5rem;
           color: #000000;
       }
-      .fourth-row{
-          height: 60px;
+      .fourth-row {
+          height: 3.75rem;
       }
-      .btn{
-          width: 235px;
-          height: 60px;
+      .btn {
+          width: 14.6875rem;
+          height: 3.75rem;
           background: #E02AA4;
-          border: 1px solid #000000;
-          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-          border-radius: 12px;
+          border: 0.0625rem solid #000000;
+          box-shadow: 0 .25rem .25rem rgba(0, 0, 0, 0.25);
+          border-radius: 0.75rem;
           font-weight: 700;
-          font-size: 32px;
+          font-size: 2rem;
           font-family: 'Inter',  sans-serif;
-          line-height: 39px;
+          line-height: 2.4rem;
           align-items: center;
           color: #FFFFFF;
       }
-      .btn-text{
-          padding: 10px 25px 5px 25px;
-          width: 185px;
-          height: 45px;
+      .btn-text {
+          padding: .625rem 1.5625rem .3125rem 1.5625rem;
+          width: 11.5625rem;
+          height: 2.8125rem;
       }
-      .btn-text a{
+      .btn-text a {
           color: white;
           font-family: 'Inter', sans-serif;
-          line-height: 39px;
-          font-size: 32px;
+          line-height: 2.4375rem;
+          font-size: 2rem;
           white-space: nowrap;
           text-decoration: none;
       }
