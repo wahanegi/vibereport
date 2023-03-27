@@ -4,7 +4,7 @@ module Api
       include ApplicationHelper
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices].freeze
 
-      before_action :set_response, only: %i[show update]
+      before_action :retrieve_response, only: %i[show update]
       before_action :require_user!, only: %i[index show create update]
 
       def index
@@ -33,7 +33,7 @@ module Api
       end
 
       def response_flow_from_email
-        set_user
+        retrieve_user
         sign_in_user
         result = ResponseFlowFromEmail.new(params, @user).call
         return redirect_to root_path if result[:success]
@@ -43,8 +43,8 @@ module Api
 
       private
 
-      def set_response
-        @response = Response.find(params[:id])
+      def retrieve_response
+        @response = Response.find_by(id: params[:id])
       end
 
       def response_params
@@ -55,7 +55,7 @@ module Api
         { emotion: @response.emotion }
       end
 
-      def set_user
+      def retrieve_user
         @user = User.find_by(id: params[:user_id])
       end
 
