@@ -3,6 +3,7 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  comment        :text
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  rating         :integer

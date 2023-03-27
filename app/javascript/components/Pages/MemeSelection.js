@@ -25,9 +25,14 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   }
 
   const chooseGIPHYHandling = () => {
-    steps.push('selected-giphy-follow')
-    saveDataToDb(steps, { gif_url: gifUrl })
+    if (emotion.category === "neutral") {
+      steps.push('ProductivityCheckLow');
+    } else {
+      steps.push('selected-giphy-follow');
+    }
+    saveDataToDb(steps, { gif_url: gifUrl });
   }
+  
   const uploadGIPHYHandling = () => {
     window.open(GIPHY_UPLOAD_URL, '_blank');
   }

@@ -127,7 +127,6 @@ body {
 .rating-label {
   box-sizing: border-box;
   width: 113.65px;
-  height: 53.83px;
   left: 581px;
   top: 617.27px;
   border: 1.15px solid #000000;
@@ -144,5 +143,28 @@ body {
 
 .rating-label input {
   display: none;
+}
+.comment-container {
+  textarea {
+    box-sizing: border-box;
+    /* position: absolute; */
+    width: 564.76px;
+    height: 301px;
+    /* left: 41px; */
+    /* top: 145px; */
+    border: 2px solid #5689EB;
+    border-radius: 28.7214px;
+    padding-top: 20px;
+    font-family: 'Josefin Sans';
+    font-size: 24px;
+  }
+
+  textarea::placeholder {
+    color: #0009;
+    font-family: 'Josefin Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+  }
 }
 //IntenseLine

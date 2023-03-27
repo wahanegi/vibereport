@@ -3,6 +3,7 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  comment        :text
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  rating         :integer
@@ -33,5 +34,6 @@ class Response < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :time_period_id }
   validates :steps, presence: true
+  validates :rating, presence: true
   serialize :steps, JSON
 end
