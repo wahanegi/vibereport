@@ -32,9 +32,9 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     window.open(GIPHY_UPLOAD_URL, '_blank');
   }
 
-  useEffect(()=>{
+  useEffect(()=> {
     navigate(`/${data.response.attributes.steps.slice(-1).toString()}`);
-    },[])
+  },[])
 
   const FooterIcons = () => <div className='d-flex justify-content-between gap-3 m-3'>
     <ShoutOutIcon />

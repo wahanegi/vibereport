@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import ListEmotions from "../Pages/ListEmotions";
 import {MemoryRouter, useNavigate} from 'react-router-dom';
 import '@testing-library/jest-dom'
-import {apiRequest} from "../requests/axios_requests";
 
 
 describe('ListEmotions component', () => {

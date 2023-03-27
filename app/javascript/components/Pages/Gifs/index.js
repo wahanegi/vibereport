@@ -2,6 +2,7 @@ import React, {useEffect, useState, Fragment} from "react"
 import SearchBar from "./SearchBar";
 import GifList from "./GifList";
 import {GIPHY_SEARCH_URL} from "../../helpers/consts";
+import {Link} from "react-router-dom";
 
 const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif }) => {
   const [term, setTerm] = useState(emotion.word)
@@ -21,6 +22,8 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
   };
 
   useEffect(()=> {
+    // if (apiGiphyKey === null) return undefined
+
     const url = `${GIPHY_SEARCH_URL}=${term?.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
     const isGiphyLink = /https:\/\/media\.giphy\.com\/media\/\w+\/giphy\.gif/.test(String(term));
     if (isGiphyLink) {
@@ -43,11 +46,22 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
     <div className='fw-bold h2 muted mt-2'>GIPHY</div>
   </div>
 
+  const Notice = () =>
+    <h1 className='text-white m-3'>We noticed that you didn't add the GIPHY api token for displaying gifs here. Please follow this&nbsp;
+    <Link to="https://docs.google.com/document/d/19VOqimOtENKUB0HqaPQ5-6iBx6YdJv90MBDwVQ8ZC_0/edit" target="_blank" rel="noopener noreferrer">
+      instruction
+    </Link>
+      &nbsp;and add the received token to Heroku Config Vars.
+  </h1>
+
  return  loaded && <Fragment>
    <GiphyLogo />
    <div className='card' onKeyDown={handleKeyDown}>
      <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-     <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
+     {apiGiphyKey === null ?
+       <Notice />:
+       <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
+     }
    </div>
   </Fragment>
 }
