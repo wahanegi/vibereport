@@ -20,7 +20,11 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
 
   const handlingOnClickSkip = () =>{
-    steps.push('emotion-intensity')
+    if (emotion.category === "neutral") {
+      steps.push('ProductivityCheckLow');
+    } else {
+      steps.push('emotion-intensity')
+    }
     saveDataToDb( steps , { gif_url: null })
   }
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_20_153827) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_23_121836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_20_153827) do
     t.bigint "emotion_id"
     t.string "gif_url"
     t.boolean "not_working", default: false
+    t.jsonb "notices"
     t.integer "rating"
     t.string "steps"
     t.bigint "time_period_id", null: false

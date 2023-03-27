@@ -6,6 +6,7 @@
 #  comment        :text
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
+#  notices        :jsonb
 #  rating         :integer
 #  steps          :string
 #  created_at     :datetime         not null

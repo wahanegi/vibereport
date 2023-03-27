@@ -26,7 +26,7 @@ class Api::V1::EmotionsController < ApplicationController
       },
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
-      api_giphy_key: ENV.fetch('GIPHY_API_KEY')
+      api_giphy_key: ENV['GIPHY_API_KEY'].presence
     }
   end
 
