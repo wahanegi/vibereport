@@ -3,6 +3,7 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  steps          :string           not null
 #  created_at     :datetime         not null

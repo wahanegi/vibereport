@@ -32,7 +32,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
       <div>
         <h1>{data.emotion.word}</h1>
         <div><Button onClick={chooseGIPHYHandling}>Choose</Button></div>
-        <div><Button className='btn primary' onClick={handlingOnClickSkip}>Skip</Button></div>
+        <div><Button className='btn btn-primary' onClick={handlingOnClickSkip}>Skip</Button></div>
         <div><Button onClick={uploadGIPHYHandling}>Upload</Button></div>
       </div>}
     </Fragment>

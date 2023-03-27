@@ -1,11 +1,29 @@
+@import "bootstrap/scss/_functions";
+
+//Bootstrap Replacement
+$primary: #2487BF;
+$secondary: #D0EEFF;
+$success: #39D4A6;
+$danger: #F0584D;
+$warning: #FFD940;
+$light: #F0F6FC;
+$dark: #1F2F3F;
+$dark-gray: #677888;
+$muted: #8A949F;
+$text-muted: #8A949F;
+$orange: #FBB03F;
+$blue: #27a7dc;
+$white: #FFFFFF;
+$purple: #AA24BF;
+
 $color-muted: rgba(0, 0, 0, 0.6);
 $color-black: #000000;
 $color-blue: #5689EB;
 $color-white: #FFFFFF;
 $color-rose: #E02AA4;
 
-$primary: #FCDDCE;
-$secondary: #CCDCF9;
+//$primary: #FCDDCE;
+//$secondary: #CCDCF9;
 
 
 //DEFINED VS
@@ -27,7 +45,7 @@ $grays: (
         "500": $gray-500,
 );
 
-$primary:       #D7007B !default;
+$primary1:       #D7007B ;
 $secondary:     #F9D9EB !default;
 $success:       $green !default;
 $info:          $cyan !default;
@@ -36,8 +54,10 @@ $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-900 !default;
 
+
+
 $theme-colors: (
-        "primary":    $primary,
+        "primary":    $primary1,
         "secondary":  $secondary,
         "success":    $success,
         "info":       $info,
@@ -45,7 +65,9 @@ $theme-colors: (
         "danger":     $danger,
         "light":      $light,
         "dark":       $dark
-) !default;
+);
+
+
 
 $apricot:         #FCDDCE !default;
 $cinnamon:        #D1794E !default;
@@ -75,8 +97,7 @@ $colors: (
         "sea-green":      $sea-green,
         "steel-blue":     $steel-blue,
         "tea-green":      $tea-green
-) !default;
-
+);
 $orange-1: #FADFD1 !default;
 $orange-2: #F7CDB8 !default;
 $orange-3: #F5C1A6 !default;

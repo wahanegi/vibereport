@@ -1,6 +1,5 @@
-
+@import 'colors';
 // Variables
-
 // Components
 
 $border-width:        1px !default;
@@ -17,6 +16,9 @@ $border-radius-c3:      .5rem !default;
 
 // Typography
 $font-family: 'Josefin Sans', sans-serif;
+$font-family-second: 'Inter', sans-serif;
+$font-weight-bolder: 700;
+$font-weight-semibold: 625;
 $font-size-base:              1rem !default;
 
 $h1-font-size:                $font-size-base * 3 !default;
@@ -38,11 +40,21 @@ $input-btn-border-color:      $royal-blue !default;
 
 
 // Buttons
-$btn-padding-y:               .75rem !default;
+$btn-padding-y:               0.75rem !default;
 $btn-padding-x:               .75rem !default;
 $btn-font-size:               2rem !default;
 $btn-disabled-opacity:        .5 !default;
 
+.btn-primary {
+  background-color: $gray-500;
+  color:black;
+  opacity: 1;
+  padding: $btn-padding-y $btn-padding-x ;
+  margin: $btn-padding-y $btn-padding-x ;
+}
+.btn-primary:hover{
+  background-color: #730E15;
+}
 // Dropdowns
 //
 // Dropdown menu container and contents.
