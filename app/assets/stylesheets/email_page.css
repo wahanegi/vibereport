@@ -91,7 +91,7 @@
     cursor: pointer;
     padding-top: 5.6px;
 }
-.positive,.neutral-a,.negative-a{
+.positive-a,.neutral-a,.negative-a{
     font-weight: bold;
     text-decoration: none;
     height: 31px;
@@ -158,9 +158,9 @@ filter{
 
 
 /*       BELLOW STYLES FOR EMAIL. PLEASE DON'T CHANGE IT!!!        */
-a{
-    text-decoration: none;
-}
+/*a{*/
+/*    text-decoration: none;*/
+/*}*/
 * {
 margin: 0;
 padding: 0;
