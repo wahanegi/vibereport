@@ -110,4 +110,6 @@ Rails.application.configure do
       authentication: (ENV['SMTP_AUTHENTICATION'].present? ? ENV['SMTP_AUTHENTICATION'].to_sym : 'plain')
     }
   end
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  config.asset_host = "https://#{ENV['DOMAIN_URL']}"
 end
