@@ -1,12 +1,12 @@
 import React from 'react';
-import Button from "./Button";
+import {Link} from "react-router-dom";
 
 const BtnAddYourOwnWord = (props) => {
     return (
-      <div className='own_word'>
-        <Button className={props.className} onClick={props.onClick}>
+      <div className='big-btn-text'>
+        <Link className={props.className} onClick={props.onClick}>
           {props.content}
-        </Button>
+        </Link>
       </div>
     );
 };

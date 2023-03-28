@@ -3,7 +3,7 @@ import {specialProp} from "../helpers/library";
 
 const ButtonEmotion = (props) => {
   const word = props.children
-  const expandableCss = { width: specialProp(word, 'width' ), margin: specialProp(word, 'margin') }
+  const expandableCss = { minWidth: specialProp(word, 'width' ), margin: specialProp(word, 'margin') }
 
   const clickHandling = () =>{
     props.onClick()

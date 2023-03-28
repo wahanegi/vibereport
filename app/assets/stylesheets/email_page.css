@@ -1,13 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
     font-style: normal;
-}
-.width-screen{
-    min-width:1060px;
 }
 .convert {
     width: 127px;
@@ -39,104 +36,6 @@
     border-bottom: 1px solid #000000;
     transform: rotate(-23.42deg);
 }
-.calendar {
-    width: 82px;
-    height: 68px;
-    top: -57px;
-    left: 60px;
-    position: relative;
-    text-align: center;
-    background: #C8C9C0;
-    border-radius: 9px;
-}
-.under-convert {
-    width: 453px;
-    height: 39px;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 24px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.7);
-    margin: 0 auto;
-    padding: 8px;
-}
-.field_empty {
-    margin: 0 auto;
-}
-.field_emotions{
-    width: 1115px;
-    margin: 0 auto;
-    margin-top: 5px;
-}
-@media only screen and (min-width: 1080px){
-    .field-emotions{
-        width: 1060px;
-    }
-}
-.flex{
-    display: flex;
-}
-.left-div {
-    width: 10px;
-    top: -9px;
-    left: -25px;
-    position: relative;
-    height: 26px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    z-index: 1
-}
-.left-div-main {
-    width: 10px;
-    top: -10px;
-    left: 11px;
-    position: relative;
-    height: 26px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    z-index: 1
-}
-.part {
-    width: 10px;
-    height: 11px;
-    background: #9E9E9E;
-    border-radius: 3px;
-    /* margin-top: 15px; */
-    position: relative;
-    top: 15px;
-}
-.right-div {
-    width: 10px;
-    height: 26px;
-    top: -35px;
-    left: 25px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    position: relative;
-    z-index: 1
-}
-.right-div-main {
-    width: 10px;
-    height: 26px;
-    top: -36px;
-    left: 60px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    position: relative;
-    z-index: 1
-}
-/*<ListEmotions>*/
-.increased-convert {
-    width: 190px;
-    height: 87px;
-}
-
-.in_left{
-    margin: 35px 0 0 41px;
-}
-.other-position{
-    margin: 66px 0 0 154px;
-}
 .offset-line2{
     width: 207.14px;
     margin-top: -1.5px;
@@ -149,82 +48,41 @@
     margin-left: -9.4px;
     transform: rotate(-155.6deg);
 }
-.offset-ld{
-    left: 11px;
+.emotions{
+    width: 1060px;
+    flex-wrap: wrap;
 }
-.offset-rd{
-    left: 61px;
-}
-.uc-new-position{
-    position: relative;
-    top: 47px;
-}
-
-/*</ListEmotions>*/
-
-
-
-
-
-
-.top-div {
-    width: 82px;
-    height: 25px;
-    left: 0;
-    top: -53px;
-    background: #E36554;
-    position: relative;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-}
-.time {
-    text-transform: capitalize;
-    position: relative;
-    top: -46px;
-    width: 82px;
-    height: 14px;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 17px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.7);
-}
-.question {
-    margin:0 auto;
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 48px;
-    text-align: center;
-    color: #000000;
-    white-space: pre-line;
-    width: 677px;
-    height: 59px;
-    position: relative;
-    top: -43px;
-}
-
-/*<ListEmotions>*/
-.q-new-pos{
-    top: -63px;
-    width: 714px;
-}
-/*</ListEmotions>*/
-
-
-.nav-link {
+.flex{
     display: flex;
-    justify-content: center;
-    font-size: 23px;
-    position: relative;
-    color: #0007A3;
-    top: 54px;
 }
-.link {
-    display: flex;
-    justify-content: center;
-    font-size: 23px;
-    position: relative;
+.bigger {
+    width: 190px;
+    height: 87px;
 }
+.ml-240{
+    margin-left: 240px;
+}
+.mt-37{
+    margin-top:37px;
+}
+.ml-41{
+    margin-left: 41px;
+}
+.p-0{
+    padding:0;
+}
+.h-40{
+    height: 40px;
+}
+@media only screen and (max-width: 1380px){
+    .h-40{
+        height: 57px;
+    }
+    .mt-37{
+        margin-top:20px;
+    }
+}
+
 .positive,.neutral,.negative{
     height: 31px;
     font-size: 19px;
@@ -233,20 +91,18 @@
     cursor: pointer;
     padding-top: 5.6px;
 }
-.positive-a,.neutral-a,.negative-a{
+.positive,.neutral-a,.negative-a{
     font-weight: bold;
     text-decoration: none;
     height: 31px;
     font-size: 19px;
 }
-.positive-a:hover,.neutral-a:hover,.negative-a:hover{
+.positive:hover,.neutral-a:hover,.negative-a:hover{
     text-decoration: #0a53be;
     font-weight: bold;
     height: 31px;
 }
 .positive {
-    color: #4F9B64;
-    background: #CCEDD5;
     border: 1px solid #000000;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
@@ -255,71 +111,22 @@
     color: #4F9B64;
 }
 .negative{
-    background: #FCDDCE;
     border: 1px solid #000000;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
-    color: #D1794E;
 }
 .negative-a {
      color: #D1794E;
  }
 .neutral{
-    background: rgba(86, 137, 235, 0.3);
     border: 1px solid #000000;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
-    color: #4C77CB;
 }
 .neutral-a {
     color: #4C77CB;
  }
-.share{
-    width: 378px;
-    height: 31px;
-    font-size: 24px;
-    line-height: 24px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.7);
-    margin: 0 auto;
-    margin-top: 41px;
-}
-.link {
-    display: flex;
-    justify-content: center;
-    font-size: 23px;
-    position: relative;
-    color: #0007A3;
-    top: 54px;
-}
-/*<ListEmotion*/
-.sh-new-pos{
-    margin-top: 46px;
-}
-/*</ListEmotion*/
-.own_word{
-    box-sizing: border-box;
-    width: 385px;
-    height: 70px;
-    background: #FFFFFF;
-    margin: 0 auto;
-}
-.link_first{
-    padding: 13px 19px 13px 27px;
-    /*padding-top: 11px;*/
-    width: 385px;
-    height: 70px;
-    font-size: 36px;
-    line-height: 36px;
-    color: rgba(0, 0, 0, 0.6);
-    /*margin: 13px 23px;*/
-    border: 3px solid #5689EB;
-    border-radius: 19px;
-    /*padding-left: 23px;*/
-    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
-}
-
-.link_text{
+.link-text{
     display: block;
     width: 385px;
     height: 70px;
@@ -332,29 +139,6 @@
     margin: -15px -29px;
 }
 
-.i_was_not{
-    width: 360px;
-    height: 28px;
-    font-size: 24px;
-    line-height: 29px;
-    text-align: center;
-    text-decoration-line: underline;
-    color: #0007A3;
-    margin: 0 auto;
-    position: relative;
-    top: 54px;
-}
-.unsubscribe a{
-    width: 274px;
-    height: 19px;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 19px;
-    text-decoration-line: underline;
-    color: #4D4D4D;
-    position: relative;
-    top: 39px;
-}
 /*FOR SVG FIX*/
 .module{
     stroke-width: 0.111111;
@@ -374,8 +158,6 @@ filter{
 
 
 /*       BELLOW STYLES FOR EMAIL. PLEASE DON'T CHANGE IT!!!        */
-
-
 * {
 margin: 0;
 padding: 0;
@@ -386,7 +168,10 @@ font-weight:700;
 text-align: center;
 }
 .board{
-    min-width:1060px;
+    min-width:1080px;
+}
+.mt-35{
+    margin-top: 35px;
 }
 .mx-auto {
     margin-left: auto;
@@ -396,25 +181,23 @@ text-align: center;
     margin-top: 0;
     margin-bottom: 0
 }
-@media only screen and (min-width: 1080px){
-    .emotions{
-        width: 1060px;
-    }
+.emotions{
+    min-width: 1080px;
 }
 .d-flex{
     display: flex;
 }
 .first-row{
-    height:30px;
+    height:8px;
 }
 .second-row{
-    height:31px
+    height:50px;
+    text-align: left;
 }
 .envelope {
-    margin-top: 4px;
     width: 130px;
     height: 61px;
-    background-image: url( 'envelope.png' );
+    background-image: url("envelope.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -422,18 +205,21 @@ text-align: center;
     color: rgba(0, 0, 0, 0.7);
 }
 .envelope p {
+    margin-top: 4px;
     font-size: 12px;
     line-height: 12px;
     font-weight: 600;
-    padding-top: 4px;
+    padding-top: 3px;
     padding-left: 5px;
 }
+.ml-55{
+    margin-left: 55px;
+}
 .calendar {
-    width: 85px;
-    height: 79px;
-    border-radius: 9px;
-    margin-left: 60px;
-    background-image: url("calendar.png");
+    text-align: left;
+    width: 102px;
+    height: 115px;
+    background-image: url("complete-by.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -449,8 +235,8 @@ text-align: center;
     margin: 10px auto 0 auto;
 }
 .data {
-    padding-top: 43px;
-    width: 85px;
+    padding-top: 55px;
+    width: 102px;
     height: 14px;
     font-size: 16px;
     line-height: 17px;
@@ -523,6 +309,7 @@ text-align: center;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     text-decoration-line: none;
     white-space: nowrap;
+    margin-inline-start: 0;
 }
 .lnk-unsubscribe a {
     font-size: 16px;

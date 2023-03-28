@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ShoutoutButton = (props) => {
+const ShoutoutButton = () => {
   return (
-    <div style={props.style} >
+    <div style={{position: 'fixed', left: 45, top:756 }} >
         <svg width="102" height="103" viewBox="0 0 102 103" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
           <g filter="url(#filter0_d_212_9960)">
             <ellipse cx="50.1109" cy="50" rx="49.8891" ry="50" fill="#D2D2D2"/>
