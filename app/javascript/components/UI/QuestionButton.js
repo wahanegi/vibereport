@@ -1,9 +1,9 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-const QuestionButton = (props) => {
+const QuestionButton = () => {
   return (
-    <NavLink className="icon-circle" style={props.style} to="mailto: support@vibereport.app">
+    <NavLink className="icon-circle" style={{position: 'fixed', right: 47, top: 756 }} to="mailto: support@vibereport.app">
       <svg className="svg-inline--fa fa-question fa-3x" aria-hidden="true" focusable="false" data-prefix="fas"
            data-icon="question" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
         <path fill="currentColor"

@@ -5,6 +5,7 @@
 #  id             :bigint           not null, primary key
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
+#  notices        :jsonb
 #  steps          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_090046) do
     t.bigint "emotion_id"
     t.string "gif_url"
     t.boolean "not_working", default: false
+    t.jsonb "notices"
     t.string "steps", null: false
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false

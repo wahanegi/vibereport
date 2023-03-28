@@ -5,6 +5,7 @@
 #  id             :bigint           not null, primary key
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
+#  notices        :jsonb
 #  steps          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -29,5 +30,9 @@ FactoryBot.define do
     association :user, factory: :user
     association :time_period, factory: :time_period
     association :emotion, factory: :emotion
+  end
+
+  trait :not_working_response do
+    not_working { true }
   end
 end
