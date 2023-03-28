@@ -158,6 +158,9 @@ filter{
 
 
 /*       BELLOW STYLES FOR EMAIL. PLEASE DON'T CHANGE IT!!!        */
+a{
+    text-decoration: none;
+}
 * {
 margin: 0;
 padding: 0;
@@ -315,4 +318,5 @@ text-align: center;
     font-size: 16px;
     line-height: 19px;
     color: #4D4D4D;
+    text-decoration: underline;
 }
