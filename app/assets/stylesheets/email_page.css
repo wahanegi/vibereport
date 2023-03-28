@@ -371,3 +371,161 @@ filter{
     display: flex;
     justify-content: center
 }
+
+
+/*       BELLOW STYLES FOR EMAIL. PLEASE DON'T CHANGE IT!!!        */
+
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+font-style: normal;
+font-weight:700;
+text-align: center;
+}
+.board{
+    min-width:1060px;
+}
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto
+}
+.my-0 {
+    margin-top: 0;
+    margin-bottom: 0
+}
+@media only screen and (min-width: 1080px){
+    .emotions{
+        width: 1060px;
+    }
+}
+.d-flex{
+    display: flex;
+}
+.first-row{
+    height:30px;
+}
+.second-row{
+    height:31px
+}
+.envelope {
+    margin-top: 4px;
+    width: 130px;
+    height: 61px;
+    background-image: url( 'envelope.png' );
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.logo{
+    color: rgba(0, 0, 0, 0.7);
+}
+.envelope p {
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 600;
+    padding-top: 4px;
+    padding-left: 5px;
+}
+.calendar {
+    width: 85px;
+    height: 79px;
+    border-radius: 9px;
+    margin-left: 60px;
+    background-image: url("calendar.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.invitation {
+    width: 453px;
+    height: 55px;
+    font-size: 24px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.7);
+    padding: 8px;
+}
+.emotions{
+    margin: 10px auto 0 auto;
+}
+.data {
+    padding-top: 43px;
+    width: 85px;
+    height: 14px;
+    font-size: 16px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+}
+.question {
+    font-size: 48px;
+    line-height: 48px;
+    color: #000000;
+    white-space: pre-line;
+    width: 735px;
+    min-height: 114px;
+}
+.lnk-was-not a{
+    font-size: 23px;
+    white-space: nowrap;
+    text-decoration-line: underline;
+    line-height: normal;
+    color: #0007A3;
+}
+.row-over-links{
+    height: 7px;
+}
+.btn-emotion{
+    height: 31px;
+    font-size: 19px;
+    line-height: 19px;
+    cursor: pointer;
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid #000000;
+    border-radius: 15px;
+}
+.positive{
+    color: #4F9B64;
+    background: #CCEDD5;
+}
+.negative{
+    background: #FCDDCE;
+    color: #D1794E;
+}
+.neutral{
+    background: rgba(86, 137, 235, 0.3);
+    color: #4C77CB;
+}
+.big-btn-tooltip{
+    width: 378px;
+    height: 31px;
+    font-size: 24px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 41px auto 14px auto;
+}
+.big-btn{
+    box-sizing: border-box;
+    width: 385px;
+    height: 70px;
+    background: #FFFFFF;
+    margin: 0 auto 54px auto;
+}
+.big-btn-text a{
+    padding: 13px 23px 13px 23px;
+    width: 385px;
+    height: 70px;
+    font-size: 36px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.6);
+    border: 3px solid #5689EB;
+    border-radius: 19px;
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+    text-decoration-line: none;
+    white-space: nowrap;
+}
+.lnk-unsubscribe a {
+    font-size: 16px;
+    line-height: 19px;
+    color: #4D4D4D;
+}
