@@ -5,8 +5,9 @@
     box-sizing: border-box;
     font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
     font-style: normal;
-    font-weight: normal;
-    color: #454547;
+}
+.width-screen{
+    min-width:1060px;
 }
 .convert {
     width: 127px;
@@ -38,25 +39,15 @@
     border-bottom: 1px solid #000000;
     transform: rotate(-23.42deg);
 }
-.left-div {
-    width: 10px;
-    top: -9px;
-    left: -25px;
+.calendar {
+    width: 82px;
+    height: 68px;
+    top: -57px;
+    left: 60px;
     position: relative;
-    height: 26px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    z-index: 1
-}
-.right-div {
-    width: 10px;
-    height: 26px;
-    top: -35px;
-    left: 25px;
-    background: #BCB6B6;
-    border-radius: 3px;
-    position: relative;
-    z-index: 1
+    text-align: center;
+    background: #C8C9C0;
+    border-radius: 9px;
 }
 .under-convert {
     width: 453px;
@@ -69,11 +60,6 @@
     margin: 0 auto;
     padding: 8px;
 }
-/*<ListEmotions>*/
-.increased-convert {
-    width: 190px;
-    height: 87px;
-}
 .field_empty {
     margin: 0 auto;
 }
@@ -82,9 +68,69 @@
     margin: 0 auto;
     margin-top: 5px;
 }
+@media only screen and (min-width: 1080px){
+    .field-emotions{
+        width: 1060px;
+    }
+}
 .flex{
     display: flex;
 }
+.left-div {
+    width: 10px;
+    top: -9px;
+    left: -25px;
+    position: relative;
+    height: 26px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    z-index: 1
+}
+.left-div-main {
+    width: 10px;
+    top: -10px;
+    left: 11px;
+    position: relative;
+    height: 26px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    z-index: 1
+}
+.part {
+    width: 10px;
+    height: 11px;
+    background: #9E9E9E;
+    border-radius: 3px;
+    /* margin-top: 15px; */
+    position: relative;
+    top: 15px;
+}
+.right-div {
+    width: 10px;
+    height: 26px;
+    top: -35px;
+    left: 25px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    position: relative;
+    z-index: 1
+}
+.right-div-main {
+    width: 10px;
+    height: 26px;
+    top: -36px;
+    left: 60px;
+    background: #BCB6B6;
+    border-radius: 3px;
+    position: relative;
+    z-index: 1
+}
+/*<ListEmotions>*/
+.increased-convert {
+    width: 190px;
+    height: 87px;
+}
+
 .in_left{
     margin: 35px 0 0 41px;
 }
@@ -116,27 +162,10 @@
 
 /*</ListEmotions>*/
 
-.calendar {
-    width: 82px;
-    height: 68px;
-    top: -57px;
-    left: 60px;
-    position: relative;
-    text-align: center;
-    background: #C8C9C0;
-    border-radius: 9px;
-}
 
 
-.part {
-    width: 10px;
-    height: 11px;
-    background: #9E9E9E;
-    border-radius: 3px;
-    /* margin-top: 15px; */
-    position: relative;
-    top: 15px;
-}
+
+
 
 .top-div {
     width: 82px;
@@ -190,14 +219,17 @@
     color: #0007A3;
     top: 54px;
 }
+.link {
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    position: relative;
+}
 .positive,.neutral,.negative{
-    /*width and margin have depends from words. See code*/
-    /*width: 127px;*/
     height: 31px;
     font-size: 19px;
     line-height: 19px;
     text-align: center;
-    /*margin: 0 25px;*/
     cursor: pointer;
     padding-top: 5.6px;
 }
@@ -251,6 +283,14 @@
     color: rgba(0, 0, 0, 0.7);
     margin: 0 auto;
     margin-top: 41px;
+}
+.link {
+    display: flex;
+    justify-content: center;
+    font-size: 23px;
+    position: relative;
+    color: #0007A3;
+    top: 54px;
 }
 /*<ListEmotion*/
 .sh-new-pos{

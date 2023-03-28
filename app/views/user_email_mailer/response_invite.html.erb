@@ -7,6 +7,7 @@
 
 </head>
 <body>
+<div class="width-screen">
 <div class="convert">
   <p>Logo/Brand</p>
   <div class="line1"></div>
@@ -30,8 +31,8 @@
     <% emotion.push(@neutral_emotions[index+1]) %>
     <% emotion.push(@negative_emotions[index]) %>
     <% emotion.push(@negative_emotions[index+1]) %>
-    <div class="field_empty"></div>
-    <div class="field_emotions flex">
+    <div class="field-empty"></div>
+    <div class="field-emotions flex">
       <% 6.times do |i|%>
         <div class="<%= if i < 2
                           "positive"
@@ -61,18 +62,18 @@
 <% end %>
 </div>
 <div class="share">Share it in your own words!</div>
-<div class="own_word">
-  <div class="link_first">
+<div class="own-word">
+  <div class="link-first">
     <%= link_to "Add your own word", { controller: "api/v1/responses",
                                        action: "response_flow_from_email",
                                        time_period_id: TimePeriod.current,
                                        not_working: false,
                                        last_step: 'emotion-entry',
-                                       user_id: @user.id }, class: "link_text"
+                                       user_id: @user.id }, class: "link-text"
     %>
   </div>
 </div>
-<div class="i_was_not">
+<div class="i-was-not">
   <%= link_to "I was not working this week", { controller: "api/v1/responses",
                                                action: "response_flow_from_email",
                                                not_working: true,
@@ -83,6 +84,7 @@
 </div>
 <div class="unsubscribe">
   <%= link_to "Unsubscribe from future check-ins", "#"  %>
+</div>
 </div>
 </body>
 </html>
