@@ -97,7 +97,7 @@
     height: 31px;
     font-size: 19px;
 }
-.positive:hover,.neutral-a:hover,.negative-a:hover{
+.positive-a:hover,.neutral-a:hover,.negative-a:hover{
     text-decoration: #0a53be;
     font-weight: bold;
     height: 31px;
