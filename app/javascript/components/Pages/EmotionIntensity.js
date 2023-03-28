@@ -78,7 +78,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   const IntenseLine = () => 
-  <div className="rating-container">
+  <div className="rating-comment-container">
     <form>
       <div className="form-group">
         {[1, 2, 3, 4, 5].map((value) => (
@@ -96,7 +96,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
       </div>
       <div className="form-group">
         {rating && (
-          <label className="comment-container">
+          <label className="comment-label">
             <textarea
               className="form-control"
               placeholder="Help us better understand why you chose this meme and intensity level!"
