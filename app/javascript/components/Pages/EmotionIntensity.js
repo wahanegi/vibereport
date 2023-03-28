@@ -102,6 +102,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
               placeholder="Help us better understand why you chose this meme and intensity level!"
               defaultValue={comment}
               onBlur={handleCommentClick}
+              maxLength={700}
             />
           </label>
         )}
