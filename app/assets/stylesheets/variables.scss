@@ -45,16 +45,8 @@ $btn-padding-x:               .75rem !default;
 $btn-font-size:               2rem !default;
 $btn-disabled-opacity:        .5 !default;
 
-.btn-primary {
-  background-color: $gray-500;
-  color:black;
-  opacity: 1;
-  padding: $btn-padding-y $btn-padding-x ;
-  margin: $btn-padding-y $btn-padding-x ;
-}
-.btn-primary:hover{
-  background-color: #730E15;
-}
+//Links
+
 // Dropdowns
 //
 // Dropdown menu container and contents.

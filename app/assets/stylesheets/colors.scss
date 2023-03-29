@@ -1,35 +1,15 @@
 @import "bootstrap/scss/_functions";
 
-//Bootstrap Replacement
-$primary1:       #D7007B ;
-$secondary:      #F9D9EB ;
-
-//$success:       $green ;
-//$info:          $cyan ;
-//$warning:       $yellow ;
-//$danger:        $red ;
-//$light:         $gray-100 ;
-//$dark:          $gray-900 ;
-
-// part of the colors from project
-
-
-$color-muted: rgba(0, 0, 0, 0.6);
-$color-black: #000000;
-$color-blue:  #5689EB;
-$color-white: #FFFFFF;
-$color-rose:  #E02AA4;
-
 //DEFINED FROM Vibe Report design system
 
 //color-variables
-$white:    #fff;
+$white:    #FFFFFF;
 $gray-100: #D2D2D2;
 $gray-200: #9E9E9E;
 $gray-300: #666666;
 $gray-400: #4D4D4D;
 $gray-500: #454547;
-$black:    #000;
+$black:    #000000;
 
 $apricot:         #FCDDCE ;
 $cinnamon:        #D1794E ;
@@ -56,3 +36,30 @@ $green-300: #B9E6C6 ;
 $green-400: #A6DFB6 ;
 $green-500: #80D197 ;
 
+//other colors
+$yolk:       #FFA800;
+$yellow-cub: #FFC93D;
+$red:        #EB4848;
+$coral:      #E36554;
+
+
+
+//BOOTSTRAP REPLACEMENT
+$primary:       $red-violet ;
+$secondary:     $pink ;
+$success:       $sea-green ;
+$info:          cyan ;
+$warning:       $yellow-cub ;
+$danger:        $red ;
+$light:         $gray-100 ;
+$dark:          $gray-500 ;
+
+
+
+// TEMPORARY OUR COLORS for project
+
+$color-muted: rgba(0, 0, 0, 0.6);
+$color-black: #000000;
+$color-blue:  #5689EB;
+$color-white: #FFFFFF;
+$color-rose:  #E02AA4;

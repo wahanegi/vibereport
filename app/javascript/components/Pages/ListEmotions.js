@@ -94,7 +94,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <div className="big-btn">
           <BtnAddYourOwnWord className="link-text" content="Add your own word" onClick={ownWordHandling}/>
           </div>
-          <NavLink className="lnk-was-not  mx-auto my-0 " onClick={onClickNotWorking} to={''}>
+          <NavLink className="lnk-was-not  mx-auto my-0 link-primary" onClick={onClickNotWorking} to={''}>
             I was not working this week
           </NavLink>
           <QuestionButton />
