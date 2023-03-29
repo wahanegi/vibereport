@@ -43,9 +43,8 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def build_three_set
-    three_set = []
-    three_set.concat(Emotion.positive.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.neutral.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.negative.sample(NUMBER_OF_ELEMENTS))
+    Emotion.positive.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.neutral.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.negative.sample(NUMBER_OF_ELEMENTS)
   end
 end

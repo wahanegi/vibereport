@@ -25,16 +25,11 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
   </button>
 
 export const Calendar = ({ timePeriod }) =>
-  <div className="calendar other-position">
-    <div className="left-div offset-ld">
-      <div className="part"></div>
-    </div>
-    <div className="right-div offset-rd">
-      <div className="part"></div>
-    </div>
-    <div className="top-div"></div>
-    <div className="time">
-      {rangeFormat(timePeriod)}
+  <div className="h-40">
+    <div className="calendar ml-240 mt-37">
+      <div className="data mx-auto my-0 ">
+        21 Jan
+      </div>
     </div>
   </div>
 
