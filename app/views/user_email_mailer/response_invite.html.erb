@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <title>Email letter</title>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <style>
       * {
@@ -17,15 +17,20 @@
       .board{
           min-width:1060px;
       }
-      .centre {
-          margin: 0 auto;
+      .mx-auto {
+          margin-left: auto;
+          margin-right: auto
+      }
+      .my-0 {
+          margin-top: 0;
+          margin-bottom: 0
       }
       @media only screen and (min-width: 1080px){
           .emotions{
             width: 1060px;
           }
       }
-      .flex{
+      .d-flex{
           display: flex;
       }
       .first-row{
@@ -35,6 +40,7 @@
           height:31px
       }
       .envelope {
+          margin-top: 4px;
           width: 130px;
           height: 61px;
           background-image: url( <%= asset_path 'envelope.png'%> );
@@ -157,8 +163,8 @@
 <body>
   <div class="board">
     <div class="first-row">
-      <div class="centre envelope">
-         <p class="centre logo">Logo/Brand</p>
+      <div class="mx-auto my-0 envelope">
+         <p class="mx-auto my-0 logo">Logo/Brand</p>
       </div>
     </div>
     <div class="second-row">
@@ -166,8 +172,8 @@
           <div class="data">21 Jan</div>
       </div>
     </div>
-    <div class="centre invitation">Time for this week's check-in!</div>
-    <div class="centre question">Which word best describes how you felt at work this week?</div>
+    <div class="mx-auto my-0 invitation">Time for this week's check-in!</div>
+    <div class="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
     <div>
       <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
         <% emotion = [] %>
@@ -177,7 +183,7 @@
         <% emotion.push(@neutral_emotions[index+1].word) %>
         <% emotion.push(@negative_emotions[index].word) %>
         <% emotion.push(@negative_emotions[index+1].word) %>
-        <div class="emotions flex">
+        <div class="emotions d-flex">
           <% 6.times do |i|%>
             <button class="<%= if i < 2
                               "btn-emotion positive"
@@ -199,7 +205,7 @@
         </div>
       </div>
     <div class="row-over-links">
-      <div class="centre lnk-was-not" style="width: max-content">
+      <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
         <%= link_to "I was not working this week","#" %>
       </div>
     </div>
