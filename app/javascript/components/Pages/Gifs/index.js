@@ -22,8 +22,6 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
   };
 
   useEffect(()=> {
-    // if (apiGiphyKey === null) return undefined
-
     const url = `${GIPHY_SEARCH_URL}=${term?.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
     const isGiphyLink = /https:\/\/media\.giphy\.com\/media\/\w+\/giphy\.gif/.test(String(term));
     if (isGiphyLink) {
