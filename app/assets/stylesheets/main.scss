@@ -1,7 +1,6 @@
 @import "colors";
-@import "fonts";
 @import "variables";
-$font-family: 'Josefin Sans', sans-serif;
+//$font-family: 'Josefin Sans', sans-serif;
 
 a{
   font-size: 23px;
@@ -10,7 +9,7 @@ a{
   color: $navy-blue !important;
 }
 body {
-  font-family: "Josefin Sans";
+  font-family:  'Josefin Sans', sans-serif;
   font-style: normal;
 }
 

@@ -1,25 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
-
 @font-face {
   font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
-  src: font-url( '../app/assets/fonts/Inter-Bold.ttf' ) format('ttf');
+  src: url( 'Inter-Bold.ttf' ) format('ttf');
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'JosefinSans';
+  font-family: 'Josefin Sans';
   font-style: normal;
-  src : font_url(asset_path( "JosefinSans-Bold.ttf" )) format('ttf');
+  src : url( "JosefinSans-Bold.ttf" ) format('truetype');
   font-weight: 700;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: 'JosefinSans';
-  src: url('../app/assets/fonts/Qw3aZQNVED7rKGKxtqIqX5EUDXx4.woff2') format('woff2'),
-  url('../app/assets/fonts/Qw3aZQNVED7rKGKxtqIqX5EUDXx4.woff2') format('woff2');
-  font-weight: 600;
+  font-family: 'Josefin Sans Semi Bold Italic';
   font-style: normal;
+  src : url( "JosefinSans-SemiBoldItalic.ttf" ) format('truetype');
+  font-weight: 600;
   font-display: swap;
 }
+//
+//@font-face {
+//  font-family: 'Josefin Sans';
+//  font-style: normal;
+//  src : url( "Qw3aZQNVED7rKGKxtqIqX5EUDXx4.woff2" ) format('woff2');
+//  font-weight: 700;
+//  font-display: swap;
+//}
