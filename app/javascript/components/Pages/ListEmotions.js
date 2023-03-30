@@ -90,7 +90,6 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                    </ButtonEmotion>
                 )}
               </div>
-            {/*<div className='mx-auto'></div>*/}
           <div className="big-btn-tooltip">Share it in your own words!</div>
           <div className="big-btn">
           <BtnAddYourOwnWord className="link-text" content="Add your own word" onClick={ownWordHandling}/>
