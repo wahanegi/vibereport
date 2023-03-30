@@ -104,23 +104,25 @@
   border-radius: 8px;
 }
 
-.gif-image {
-  max-width: 60vw;
-  max-height: 40vh;
-}
-
 .gif img {
-  max-width: 312px;
-  max-height: 170px;
+  &.small {
+    max-width: 312px;
+    max-height: 170px;
+  }
+  &.big {
+    max-width: 60vw;
+    max-height: 40vh;
+  }
+
   padding: 0;
   border-radius: 6px;
-  &.image-small-positive {
+  &.image-positive {
     border: 6px solid $green !important;
   }
-  &.image-small-neutral {
+  &.image-neutral {
     border: 6px solid $blue !important;
   }
-  &.image-small-negative {
+  &.image-negative {
     border: 6px solid $red !important;
   }
 }

@@ -21,7 +21,9 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
           <h1>Excellent choice!</h1>
       }
       <h3 className='muted'>You uploaded:</h3>
-      <img src={gif_url} alt='Giphy image' className='gif-image text-center' />
+      <div className='gif'>
+        <img src={gif_url} alt='Giphy image' className={`big image-${data.emotion.category}`} />
+      </div>
       <div className='mt-2 text-center'>
         <BigBtnEmotion showPencil={false} emotion={data.emotion} />
       </div>

@@ -17,7 +17,9 @@ const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifInde
   return <div className='card-body card-scroll'>
     {
       isCustomGif ?
-        <img src={gifUrl} alt='Giphy image' className='gif-image' /> :
+        <div className='gif'>
+          <img src={gifUrl} alt='Giphy image' className={`big`} />
+        </div>:
         <div className="gif-list">{gifItems}</div>
     }
   </div>
