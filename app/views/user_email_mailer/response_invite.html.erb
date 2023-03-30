@@ -21,48 +21,26 @@
   <div class="mx-auto my-0 invitation">Time for this week's check-in!</div>
   <div class="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
   <div>
-    <% (0..5).each  do |row|%>
     <div class="emotions d-flex">
-      <% (0..5).each do |col|%>
-        <% cell = @table[(row*6+col)] %>
-        <% link_for_emotion =               { controller: "api/v1/responses",
-                                              action: "response_flow_from_email",
-                                              emotion_id: cell[:id],
-                                              time_period_id: TimePeriod.current,
-                                              not_working: false,
-                                              last_step: 'meme-selection',
-                                              user_id: @user.id
-        } %>
+      <% (0..@table.length-1).each do |col|%>
+        <% cell = @table[(col)] %>
         <div class="<%= "btn-emotion #{cell.category}" %>"
-             style="width: <%= btn_special(cell.word, :width)%>px; margin: 0 <%= btn_special(cell.word, :margin)%>px;">
-      <%= link_to cell.word, link_for_emotion , class: "#{cell.category}-a" %>
-        </div>
-        <% end %>
+             style="width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px;">
+          <% @link_for_emotion[:emotion_id] = cell.id %>
+          <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
         </div>
       <% end %>
-
+    </div>
   </div>
   <div class="big-btn-tooltip">Share it in your own words!</div>
   <div class="big-btn">
     <div class="big-btn-text">
-      <%= link_to "Add your own word", { controller: "api/v1/responses",
-                                         action: "response_flow_from_email",
-                                         time_period_id: TimePeriod.current,
-                                         not_working: false,
-                                         last_step: 'emotion-entry',
-                                         user_id: @user.id }, class: "link-text"
-      %>
+      <%= link_to "Add your own word", @link_for_own_word, class: "link-text" %>
     </div>
   </div>
   <div class="row-over-links">
     <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
-    <%= link_to "I was not working this week", { controller: "api/v1/responses",
-                                                 action: "response_flow_from_email",
-                                                 not_working: true,
-                                                 time_period_id: TimePeriod.current,
-                                                 last_step: 'results',
-                                                 user_id: @user.id }
-    %>
+    <%= link_to "I was not working this week", @link_for_was_not %>
     </div>
   </div>
   <div class="lnk-unsubscribe" style="text-align: left">
