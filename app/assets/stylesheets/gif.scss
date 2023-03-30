@@ -52,56 +52,55 @@
 .gif-list {
   column-gap: 0.5em;
   font-size: .85em;
-  margin: 1.5em 0;
   padding: 0;
 }
 
-.card-scroll {
-  max-height: 417px;
-  overflow-y: auto;
-}
-
-.card-header {
-  height: 74.69px;
-}
-
-.card-header input {
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 45px;
-  background-color: $light-grey !important;
-  text-align: start;
-  &.positive-input {
-    color: $green !important;
-  }
-  &.neutral-input {
-    color: $blue !important;
-  }
-  &.negative-input {
-    color: $red;
-  }
-  &.other-input {
-    color: $dark-grey !important;
-  }
-}
-
-.card {
+.gif-card {
   height: 417px;
-  background: rgba(28, 28, 30, 0.82);
+  background: $dark-grey;
   border-radius: 14.5358px;
   padding: 0 0 10px 0;
-}
 
-.card-scroll::-webkit-scrollbar {
-  background-color: $light-grey;
-  border-radius: 8px;
-}
+  .card-header {
+    height: 74.69px;
+  }
 
-.card-scroll::-webkit-scrollbar-thumb {
-  width: 24.08px;
-  height: 63.79px;
-  background: #77CCFC;
-  border-radius: 8px;
+  .card-header input {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 45px;
+    background-color: $light-grey !important;
+    text-align: start;
+    &.positive-input {
+      color: $green !important;
+    }
+    &.neutral-input {
+      color: $blue !important;
+    }
+    &.negative-input {
+      color: $red;
+    }
+    &.other-input {
+      color: $dark-grey !important;
+    }
+  }
+
+  .card-scroll::-webkit-scrollbar {
+    background-color: $light-grey;
+    border-radius: 8px;
+  }
+
+  .card-scroll {
+    max-height: 417px;
+    overflow-y: auto;
+  }
+
+  .card-scroll::-webkit-scrollbar-thumb {
+    width: 24.08px;
+    height: 63.79px;
+    background: #77CCFC;
+    border-radius: 8px;
+  }
 }
 
 .gif img {

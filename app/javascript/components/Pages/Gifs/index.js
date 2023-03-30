@@ -40,8 +40,8 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
   }, [term])
 
   const GiphyLogo = () => <div className='d-flex justify-content-center align-items-center'>
-    <div className='fw-lighter mx-2 light-grey-text'>POWERED BY</div>
-    <div className='fw-bold h2 muted mt-2'>GIPHY</div>
+    <div className='fw-lighter mx-2 light-grey-text mt-1'>POWERED BY</div>
+    <div className='fw-bold h2 muted mt-2 mb-0'>GIPHY</div>
   </div>
 
   const Notice = () =>
@@ -54,12 +54,14 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
 
  return  loaded && <Fragment>
    <GiphyLogo />
-   <div className='card' onKeyDown={handleKeyDown}>
-     <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-     {apiGiphyKey === null ?
-       <Notice />:
-       <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
-     }
+   <div className='gif-card' >
+     <div className='gif-card card' onKeyDown={handleKeyDown}>
+       <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
+       {apiGiphyKey === null ?
+         <Notice />:
+         <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
+       }
+     </div>
    </div>
   </Fragment>
 }
