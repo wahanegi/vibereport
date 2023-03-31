@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import BackButton from "../UI/BackButton";
-import Button from "../UI/Button";
+import {Button} from "react-bootstrap";
 
 const FollowUpPosWordOnly = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -26,9 +26,7 @@ const FollowUpPosWordOnly = ({data, setData, saveDataToDb, steps, service}) => {
           <span className="under-convert">5</span>
         </div>
 
-      <div>
-        <Button className='success'>{data.emotion.word}</Button>
-      </div>
+        <Button className={data.emotion.category}>{data.emotion.word}</Button>
       <div>
         <BackButton data={data} setData={setData}>Back</BackButton>
       </div>

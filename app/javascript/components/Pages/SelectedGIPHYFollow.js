@@ -22,9 +22,7 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service}) => {
         <div>
           <h3>You uploaded</h3>
         </div>
-        <div>
           <Button className={data.emotion.category}>{data.emotion.word}</Button>
-        </div>
         <div>
           <BackButton data={data} setData={setData}>Back</BackButton>
         </div>
