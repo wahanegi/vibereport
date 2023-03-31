@@ -12,7 +12,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const [commentTouched, setCommentTouched] = useState(false);
   
   const handlingOnClickNext = () => {
-    steps.push('ProductivityCheckLow')
+    steps.push('productivity-check')
     saveDataToDb( steps, {rating: rating, comment: comment})
   }
 

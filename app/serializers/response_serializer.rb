@@ -7,6 +7,7 @@
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  notices        :jsonb
+#  productivity   :integer
 #  rating         :integer
 #  steps          :string
 #  created_at     :datetime         not null
@@ -31,5 +32,5 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating, :comment
+  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating, :comment, :productivity
 end

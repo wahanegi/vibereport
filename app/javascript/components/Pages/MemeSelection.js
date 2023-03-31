@@ -21,7 +21,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   const handlingOnClickSkip = () =>{
     if (emotion.category === "neutral") {
-      steps.push('ProductivityCheckLow');
+      steps.push('productivity-check');
     } else {
       steps.push('emotion-intensity')
     }
@@ -30,7 +30,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   const chooseGIPHYHandling = () => {
     if (emotion.category === "neutral") {
-      steps.push('ProductivityCheckLow');
+      steps.push('productivity-check');
     } else {
       steps.push('selected-giphy-follow');
     }

@@ -2,7 +2,7 @@ module Api
   module V1
     class ResponsesController < ApplicationController
       include ApplicationHelper
-      PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :gif_url, :notices, :rating, :comment ].freeze
+      PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :gif_url, :notices, :rating, :comment, :productivity ].freeze
 
       before_action :set_response, only: %i[show update]
       before_action :require_user!, only: %i[index show create update]

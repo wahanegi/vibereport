@@ -7,6 +7,7 @@
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  notices        :jsonb
+#  productivity   :integer
 #  rating         :integer
 #  steps          :string
 #  created_at     :datetime         not null
