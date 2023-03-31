@@ -33,7 +33,12 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
       fetch(url)
         .then(response => response.json())
         .then((data) => {
-          setGifs(data.data)
+          const gifs = data.data.map(gif => ({
+            id: gif.id,
+            src: gif.images.original.url,
+            height: parseInt(gif.images.fixed_width.height),
+          }));
+          setGifs(gifs)
           setLoaded(true)
         })
     }

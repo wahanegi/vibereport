@@ -22,3 +22,24 @@ export const rangeFormat = (tp) => {
 export function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function groupImagesByHeight(images) {
+  const groups = {};
+
+  images.forEach((image) => {
+    const height = image.height;
+    if (!groups[height]) {
+      groups[height] = [image];
+    } else {
+      groups[height].push(image);
+    }
+  });
+  const gifs = [];
+  Object.keys(groups).forEach((key) => {
+    groups[key].forEach((image) => {
+      gifs.push(image);
+    });
+  });
+
+  return gifs;
+}
