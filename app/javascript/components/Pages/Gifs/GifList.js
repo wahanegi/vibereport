@@ -1,10 +1,10 @@
 import React from "react"
 import GifItem from "./GifItem";
-import {groupImagesByHeight} from "../../helpers/helpers";
+import {sortImagesByHeight} from "../../helpers/helpers";
 
 const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif }) => {
 
-  const gifItems = groupImagesByHeight(gifs).map(image => {
+  const gifItems = sortImagesByHeight(gifs).map(image => {
     return <GifItem key={image.id}
                     gif={image}
                     selectedGifIndex={selectedGifIndex}
