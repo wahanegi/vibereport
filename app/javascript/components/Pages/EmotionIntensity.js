@@ -3,6 +3,44 @@ import {Footer, Header, Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
 
+const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, category}) => {
+  const handleRatingClick = (value) => setRating(value);
+  const handleCommentClick = (event) => setComment(event.target.value);
+  return (
+  <div className="rating-comment-container">
+    <form>
+      <div className="form-group">
+        {[1, 2, 3, 4, 5].map((value) => (
+          <label key={value} className="rating-label" style={generateStyles(value, rating === value, category)}>
+            <input
+              type="radio"
+              name="rating"
+              value={value}
+              checked={rating === value}
+              onChange={() => handleRatingClick(value)}
+            />
+            {value}{value !== 1}
+          </label>
+        ))}
+      </div>
+      <div className="form-group">
+        {rating && (
+          <label className="comment-label">
+            <textarea
+              className="form-control"
+              placeholder="Help us better understand why you chose this meme and intensity level!"
+              defaultValue={comment}
+              onChange={handleCommentClick}
+              maxLength={700}
+            />
+          </label>
+        )}
+      </div>
+    </form>
+  </div>
+  );
+  };
+  
 const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const { word, category } = data.emotion
@@ -16,15 +54,6 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
     saveDataToDb( steps, {rating: rating, comment: comment})
   }
 
-  const handleRatingClick = (value) => {
-    setRating(value);
-  }
-
-  const handleCommentClick = (event) => {
-    setComment(event.target.value);
-    setCommentTouched(true);
-  }
-  
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
     <div className='gif'>
       <img src={gif_url} alt='Giphy image' className={`image-small-${category}`} />
@@ -77,47 +106,20 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
     }
   }
 
-  const IntenseLine = () => 
-  <div className="rating-comment-container">
-    <form>
-      <div className="form-group">
-        {[1, 2, 3, 4, 5].map((value) => (
-          <label key={value} className="rating-label" style={generateStyles(value, rating === value, category)}>
-            <input
-              type="radio"
-              name="rating"
-              value={value}
-              checked={rating === value}
-              onChange={() => handleRatingClick(value)}
-            />
-            {value}{value !== 1}
-          </label>
-        ))}
-      </div>
-      <div className="form-group">
-        {rating && (
-          <label className="comment-label">
-            <textarea
-              className="form-control"
-              placeholder="Help us better understand why you chose this meme and intensity level!"
-              defaultValue={comment}
-              onBlur={handleCommentClick}
-              maxLength={700}
-            />
-          </label>
-        )}
-      </div>
-    </form>
-    
-  </div>
-
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
     <Header />
     <div className='central-element'>
       <EmotionSection />
-      <IntenseLine />
+      <IntenseLine
+              rating={rating} 
+              setRating={setRating} 
+              comment={comment} 
+              setComment={setComment} 
+              generateStyles={generateStyles}
+              category={category}
+       />
     </div>
     <Footer nextClick={handlingOnClickNext} disabled={rating === null}/>
   </Wrapper>
