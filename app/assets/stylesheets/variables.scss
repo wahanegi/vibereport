@@ -18,8 +18,8 @@ $font-weight-semi-bold:    600;
 $font-family-italic:      'Josefin Sans Italic', sans-serif;
 $font-family-second:      'Inter', sans-serif;
 
-$h1-font-size:            calc($font-size-base * 2.04 + 1.5vw) ;//48px
-$h2-font-size:            calc($font-size-base * 1.674 + 0.9vw) ;//36px
+$h1-font-size:            3rem !important;    //48px
+$h2-font-size:            2.25rem !important; //36px
 $h3-font-size:            calc($font-size-base * 1.924 + 0.9vw) ;//40px
 $h4-font-size:            calc($font-size-base * 1.424 + 0.9vw) ;//32px
 $h5-font-size:            calc($font-size-base * 0.924 + 0.9vw) ;//24px
@@ -30,8 +30,8 @@ $font-sizes: (
 2: $h2-font-size,
 3: $h3-font-size,
 4: $h4-font-size,
-5: $h5-font-size,
-6: 16px
+5: 1.5rem,
+6: 1rem
 ) ;
 
 

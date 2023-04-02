@@ -34,29 +34,29 @@ h2, .h2 {
 }
 
 .b1 {
-  font-size:   calc(1.825rem + 0.9vw) !important;//40px
+  font-size:   2.5rem !important; //40px
 }
 .b2 {
-  font-size:   calc(1.325rem + 0.9vw) !important;//32px
+  font-size:   2rem !important; //32px
 }
 .b3 {
-  font-size:   calc(.825rem + 0.9vw) !important;//24px
+  font-size:   1.5rem !important; //24px
 }
 .b4 {
-  font-size:   calc(.325rem + 0.9vw) !important;//16px
+  font-size:   1rem !important; //16px
 }
 .u1 {
   font: {
     family:    $font-family-italic, sans-serif ;
     weight:    $font-weight-semi-bold !important;
-    size:      calc(.325rem + 0.9vw) !important; //16px
+    size:      1rem !important;  //16px
   }
 }
 .wb1 {
-  font-size:   calc(.674rem + 0.9vw) !important;//20px
+  font-size:   1.25rem !important;//20px
 }
 .wb2 {
-  font-size:   calc(2.049rem + 0.9vw) !important;//42px
+  font-size:   2.625rem !important; //42px
 }
 
 // Use regular buttons
@@ -64,21 +64,21 @@ h2, .h2 {
   font: {
     family:    $font-family-second !important;
     weight:    $font-weight-bold !important;
-    size:      calc(1.325rem + 0.9vw) !important; //32px
+    size:      32px !important; //32px
   }
 }
 .c2 {
   font: {
     family:     $font-family-base !important;
     weight:     $font-weight-bold !important;
-    size:       calc(1.325rem + 0.9vw) !important; //32px
+    size:       2rem !important;  //32px
   }
 }
 .c3 {
   font: {
     family:     $font-family-base !important;
     weight:     $font-weight-bold !important;
-    size:       calc(1.575rem + 0.9vw) !important; //36px
+    size:       2.25rem !important; //36px
   }
 }
 
@@ -140,13 +140,13 @@ input, textarea{
 }
 textarea {
   &.b1{
-    height:             calc((1.825rem + 0.9vw) * ($line-height-base * 6 - 1)) ;
+    height:             calc(2.5rem * ($line-height-base * 6 - 1)) ;
   }
   &.b2{
-    height:             calc((1.325rem + 0.9vw)  * ($line-height-base * 6 - 0.95)) ;
+    height:             calc(2rem * ($line-height-base * 6 - 0.95)) ;
   }
   &.b3{
-    height:             calc((.825rem + 0.9vw) * ($line-height-base * 6 - 0.8)) ;
+    height:             calc(1.5rem * ($line-height-base * 6 - 0.8)) ;
   }
   &:focus{
     border-color:       $royal-blue !important;
