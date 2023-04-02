@@ -1,5 +1,5 @@
 import React from 'react';
-import ShoutoutIcon from '../../../assets/svg/shoutout.svg'
+import ShoutoutIcon from '../../../assets/./sys_svg/shoutout.svg'
 import {NavLink} from "react-router-dom";
 
 const ShoutoutButton = () => {

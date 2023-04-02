@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
-import QuestionMark from '../../../assets/svg/question.svg'
+import QuestionMark from '../../../assets/./sys_svg/question.svg'
 
 const QuestionButton = () => {
   return (

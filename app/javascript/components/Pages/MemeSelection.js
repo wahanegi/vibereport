@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react"
 import Button from "../UI/Button"
 import {useNavigate} from "react-router-dom";
-import ShoutoutIcon from "../../../assets/svg/shoutout.svg";
+import ShoutoutIcon from "../../../assets/./sys_svg/shoutout.svg";
 import {Dropdown} from "react-bootstrap";
 import DropdownMenu from "react-bootstrap/DropdownMenu";
 
@@ -57,49 +57,49 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
         </div>
 
         <div className='col-6 offset-3 d-flex justify-content-center'>
-          <Button className='bubbles positive wb1' onClick={chooseGIPHYHandling}>excellent</Button>
-          <Button className='bubbles positive wb1' onClick={chooseGIPHYHandling}>excellent</Button>
-          <Button className='bubbles neutral wb1' onClick={chooseGIPHYHandling}>so so</Button>
-          <Button className='bubbles neutral wb1' onClick={chooseGIPHYHandling}>so so</Button>
-          <Button className='bubbles negative wb1' onClick={chooseGIPHYHandling}>discombobulated</Button>
-          <Button className='bubbles negative wb1' onClick={chooseGIPHYHandling}>discombobulated</Button>
+          <Button className='btn-bubbles positive wb1' onClick={chooseGIPHYHandling}>excellent</Button>
+          <Button className='btn-bubbles positive wb1' onClick={chooseGIPHYHandling}>excellent</Button>
+          <Button className='btn-bubbles neutral wb1' onClick={chooseGIPHYHandling}>so so</Button>
+          <Button className='btn-bubbles neutral wb1' onClick={chooseGIPHYHandling}>so so</Button>
+          <Button className='btn-bubbles negative wb1' onClick={chooseGIPHYHandling}>discombobulated</Button>
+          <Button className='btn-bubbles negative wb1' onClick={chooseGIPHYHandling}>discombobulated</Button>
           </div>
         <br/>
         <div className='col-6 offset-3 d-flex justify-content-center'>
-          <Button className='bubbles positive wb2 mx-6' onClick={chooseGIPHYHandling}>excellent</Button>
-          <Button className='bubbles negative wb2' onClick={handlingOnClickSkip}>discombobulated</Button>
+          <Button className='btn-bubbles positive wb2 mx-6' onClick={chooseGIPHYHandling}>excellent</Button>
+          <Button className='btn-bubbles negative wb2' onClick={handlingOnClickSkip}>discombobulated</Button>
         </div>
 <br/>
-        <div><Button className='regular c1 back ' onClick={handlingOnClickSkip}>Back</Button></div>
+        <div><Button className='btn-regular c1 back ' onClick={handlingOnClickSkip}>Back</Button></div>
         <br/>
         <div>
-          <Button className='more-shot-outs b3' onClick={handlingOnClickSkip}>Send more Shotouts
+          <Button className='btn-more-shot-outs b3' onClick={handlingOnClickSkip}>Send more Shotouts
           <img className='position-relative ms-1' style={{height:48}} src={ShoutoutIcon} alt='ShoutoutIcon'/></Button>
         </div>
         <br/>
         <div className='col-6 offset-3 d-flex justify-content-center'>
-          <Button className='intensity-positive-semicircle b3 n1 active'>1</Button>
-          <Button className='intensity-positive-semicircle n2 b3 '>2</Button>
-          <Button className='intensity-positive-semicircle n3 b3'>3</Button>
-          <Button className='intensity-positive-semicircle n4 b3'>4</Button>
-          <Button className='intensity-positive-semicircle n5 b3'>5</Button>
+          <Button className='btn-intensity-positive-semicircle b3 n1 active'>1</Button>
+          <Button className='btn-intensity-positive-semicircle n2 b3 '>2</Button>
+          <Button className='btn-intensity-positive-semicircle n3 b3'>3</Button>
+          <Button className='btn-intensity-positive-semicircle n4 b3'>4</Button>
+          <Button className='btn-intensity-positive-semicircle n5 b3'>5</Button>
         </div>
         <br/>
         <div className='col-6 offset-3 d-flex justify-content-center '>
-          <Button className='intensity-negative-semicircle b3 n1 '>1</Button>
-          <Button className='intensity-negative-semicircle n2 b3'>2</Button>
-          <Button className='intensity-negative-semicircle n3 b3 active'>3</Button>
-          <Button className='intensity-negative-semicircle n4 b3'>4</Button>
-          <Button className='intensity-negative-semicircle n5 b3'>5</Button>
+          <Button className='btn-intensity-negative-semicircle b3 n1 '>1</Button>
+          <Button className='btn-intensity-negative-semicircle n2 b3'>2</Button>
+          <Button className='btn-intensity-negative-semicircle n3 b3 active'>3</Button>
+          <Button className='btn-intensity-negative-semicircle n4 b3'>4</Button>
+          <Button className='btn-intensity-negative-semicircle n5 b3'>5</Button>
         </div>
         <br/>
         <div className='col-6 offset-3 d-flex justify-content-center '>
           <div className='d-flex flex-nowrap position-absolute'>
-            <Button className='intensity-negative-quarter-circle b3 n1 '>1</Button>
-            <Button className='intensity-negative-quarter-circle n2 b3 '>2</Button>
-            <Button className='intensity-negative-quarter-circle n3 b3 '>3</Button>
-            <Button className='intensity-negative-quarter-circle n4 b3 '>4</Button>
-            <Button className='intensity-negative-quarter-circle n5 b3 active'>5</Button>
+            <Button className='btn-intensity-negative-quarter-circle b3 n1 '>1</Button>
+            <Button className='btn-intensity-negative-quarter-circle n2 b3 '>2</Button>
+            <Button className='btn-intensity-negative-quarter-circle n3 b3 '>3</Button>
+            <Button className='btn-intensity-negative-quarter-circle n4 b3 '>4</Button>
+            <Button className='btn-intensity-negative-quarter-circle n5 b3 active'>5</Button>
           </div>
           <div className='follow-up-field'>
             <textarea className='form-control col-6 offset-3 b3 pt-6 mx-0' placeholder='Placeholder text'/>
