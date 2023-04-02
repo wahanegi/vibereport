@@ -53,18 +53,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
           <span className='col'>9</span>
           <span className='col'>10</span>
           <span className='col'>11</span>
-          <span className='col'>
-                    <Dropdown>
-          <Dropdown.Toggle variant='primary' id='dropdown-basic'>
-
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item href="#" ><Button className='item-menu wb1 mx-auto my-auto' onClick={()=>{}}>Manage Profile</Button></Dropdown.Item>
-            <Dropdown.Item href="#" ><Button className='item-menu wb1  mx-auto my-auto' onClick={()=>{}}>Save Draft</Button></Dropdown.Item>
-            <Dropdown.Item href="#" ><Button className='item-menu wb1  mx-auto my-auto' onClick={()=>{}}>Log Out</Button></Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-          </span>
+          <span className='col'>12</span>
         </div>
 
         <div className='col-6 offset-3 d-flex justify-content-center'>
@@ -85,7 +74,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service}) => {
         <br/>
         <div>
           <Button className='more-shot-outs b3' onClick={handlingOnClickSkip}>Send more Shotouts
-          <img className='position-absolute my-0 px-1' style={{height:35}} src={ShoutoutIcon} alt='ShoutoutIcon'/></Button>
+          <img className='position-relative ms-1' style={{height:48}} src={ShoutoutIcon} alt='ShoutoutIcon'/></Button>
         </div>
         <br/>
         <div className='col-6 offset-3 d-flex justify-content-center'>

@@ -4,15 +4,9 @@
 
 // Variables
 // For Components
-$bg-color:              $white;
-
-$border-width:          1px ;
-$border-widths: (
-1: 1px,
-2: 2.5px,
-) ;
-$border-color:          $black !global;
-$border-element:        .1875rem solid $royal-blue;//for intensity elements
+$bg-color:               $white;
+$border-color:           $black !global;
+$border-element:         .1875rem solid $royal-blue;//for intensity elements
 
 // For Typography
 $font-family-base:       'Josefin Sans', sans-serif;
@@ -37,57 +31,47 @@ $font-sizes: (
 3: $h3-font-size,
 4: $h4-font-size,
 5: $h5-font-size,
-6: $h6-font-size
+6: 16px
 ) ;
 
 
 //For input-btn-variables
-$input-btn-padding-y:         1.375rem !default;//22px
-$input-btn-padding-x:         1.375rem !default;//22px
-$input-btn-font-family:       null !default;
-$input-btn-font-size:         $font-size-base !default;
-$input-btn-line-height:       4.375rem !default;
-$input-btn-border-width:      .1875rem !default;
-$input-btn-border-radius:     .9375rem !default;
-$input-btn-border-color:      $royal-blue !default;
+$input-btn-padding-y:         1.375rem          !default;//22px
+$input-btn-padding-x:         1.375rem          !default;//22px
+$input-btn-font-family:       null              !default;
+$input-btn-font-size:         $font-size-base   !default;
+$input-btn-line-height:       4.375rem          !default;
+$input-btn-border-width:      .1875rem          !default;
+$input-btn-border-radius:     .9375rem          !default;
+$input-btn-border-color:      $royal-blue       !default;
 .form-control{
   border:                     .1875rem solid $gray-100 !important;
   &:focus {
     border:                   .1875rem solid $input-btn-border-color !important; //3px
-    box-shadow:               none !important;
+    box-shadow:               none             !important;
   }
 }
 
 //For Buttons
 
-$btn-padding-y:               0 !global;
-$btn-padding-x:               .5rem !global;
+$btn-padding-y:               0                !global;
+$btn-padding-x:               .5rem            !global;
 $btn-font-family:             $font-family-base;
-$btn-font-size:               2rem !default;
-$btn-disabled-opacity:        .5 !default;
+$btn-font-size:               2rem             !default;
+$btn-disabled-opacity:        .5               !default;
 $btn-box-shadow:              4px 6px 6px $gray-100;
 $btn-box-shadow-other:        0 4px 4px $gray-100;
 $btn-width-intensity:         7.25rem;//116px
 $btn-height-intensity:        3.4375rem;//55px
-$btn-border-width:            1px !global;
+$btn-border-width:            1px              !global;
 
 // For Links
-$link-color:                  $navy-blue;
-$link-primary:                $link-color;
+$link-color:                  $navy-blue       !important;
+$link-primary:                $navy-blue       !important;
 
 // For Dropdowns
 //
 // Dropdown menu container and contents.
-//position: absolute;
-//left: 0%;
-//       right: 2.26%;
-//                  top: 41.87%;
-//                            bottom: 0%;
-//
-//background: #D9D9D9;
-//border: 1px solid #000000;
-//box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
-//border-radius: 8px;
 $dropdown-min-width:          260px            !global;
 $dropdown-padding-x:          11px             !global;
 $dropdown-padding-y:          9px              !global;
