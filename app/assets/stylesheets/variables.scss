@@ -3,67 +3,113 @@
 
 
 // Variables
-// Components
+// For Components
+$bg-color:              $white;
 
-$border-width:        1px !default;
+$border-width:          1px ;
 $border-widths: (
 1: 1px,
 2: 2.5px,
-) !default;
-$border-color:        $black !default;
+) ;
+$border-color:          $black !global;
+$border-element:        .1875rem solid $royal-blue;//for intensity elements
 
-//border-radius-variables
-$border-radius-c1:      .375rem !default;
-$border-radius-c2:      .5rem !default;
-$border-radius-c3:      .5rem !default;
+// For Typography
+$font-family-base:       'Josefin Sans', sans-serif;
+$font-size-base:          1rem ;
+$line-height-base:        1.2;
+$font-weight-bold:      700;
+$font-weight-semi-bold:    600;
 
-// Typography
-$font-family-base:  'Josefin Sans', sans-serif;
-$font-family-italic: 'Josefin Sans Italic', sans-serif;
-$font-family-second: 'Inter', sans-serif;
-$font-weight-bolder: 700;
-$font-weight-semibold: 600;
-$font-size-base:              1rem !default;
+$font-family-italic:      'Josefin Sans Italic', sans-serif;
+$font-family-second:      'Inter', sans-serif;
 
-$h1-font-size:                $font-size-base * 3 !default;
-$h2-font-size:                $font-size-base * 2.25 !default;
+$h1-font-size:            calc($font-size-base * 2.04 + 1.5vw) ;//48px
+$h2-font-size:            calc($font-size-base * 1.674 + 0.9vw) ;//36px
+$h3-font-size:            calc($font-size-base * 1.924 + 0.9vw) ;//40px
+$h4-font-size:            calc($font-size-base * 1.424 + 0.9vw) ;//32px
+$h5-font-size:            calc($font-size-base * 0.924 + 0.9vw) ;//24px
+$h6-font-size:            calc($font-size-base * 0.424 + 0.9vw) ;//16px
+
 $font-sizes: (
 1: $h1-font-size,
-2: $h2-font-size
-) !default;
+2: $h2-font-size,
+3: $h3-font-size,
+4: $h4-font-size,
+5: $h5-font-size,
+6: $h6-font-size
+) ;
 
-//input-btn-variables
-$input-btn-padding-y:         1.375rem !default;
-$input-btn-padding-x:         1.375rem !default;
+
+//For input-btn-variables
+$input-btn-padding-y:         1.375rem !default;//22px
+$input-btn-padding-x:         1.375rem !default;//22px
 $input-btn-font-family:       null !default;
 $input-btn-font-size:         $font-size-base !default;
 $input-btn-line-height:       4.375rem !default;
 $input-btn-border-width:      .1875rem !default;
 $input-btn-border-radius:     .9375rem !default;
 $input-btn-border-color:      $royal-blue !default;
+.form-control{
+  border:                     .1875rem solid $gray-100 !important;
+  &:focus {
+    border:                   .1875rem solid $input-btn-border-color !important; //3px
+    box-shadow:               none !important;
+  }
+}
 
+//For Buttons
 
-// Buttons
-$btn-padding-y:               0.75rem !default;
-$btn-padding-x:               .75rem !default;
-$btn-font-family:             $font-family;
+$btn-padding-y:               0 !global;
+$btn-padding-x:               .5rem !global;
+$btn-font-family:             $font-family-base;
 $btn-font-size:               2rem !default;
 $btn-disabled-opacity:        .5 !default;
+$btn-box-shadow:              4px 6px 6px $gray-100;
+$btn-box-shadow-other:        0 4px 4px $gray-100;
+$btn-width-intensity:         7.25rem;//116px
+$btn-height-intensity:        3.4375rem;//55px
+$btn-border-width:            1px !global;
 
-$btn-success: (
-  $btn-padding-y: .75rem,
-  $btn-padding-x: .75rem,
-  $btn-font-size: 3rem,
-);
+// For Links
+$link-color:                  $navy-blue;
+$link-primary:                $link-color;
 
-//Links
-
-// Dropdowns
+// For Dropdowns
 //
 // Dropdown menu container and contents.
-//$dropdown-min-width:          16.25rem !default;
-//$dropdown-padding-x:          .6875rem !default;
-//$dropdown-padding-y:          .875rem !default;
-//$dropdown-spacer:             .625rem !default;
+//position: absolute;
+//left: 0%;
+//       right: 2.26%;
+//                  top: 41.87%;
+//                            bottom: 0%;
+//
+//background: #D9D9D9;
+//border: 1px solid #000000;
+//box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+//border-radius: 8px;
+$dropdown-min-width:          260px            !global;
+$dropdown-padding-x:          11px             !global;
+$dropdown-padding-y:          9px              !global;
+$dropdown-spacer:             .625rem          !global;
+$dropdown-bg:                 $gray-100        !global;
+$dropdown-border-color:       1px solid $black !global;
+$dropdown-border-width:       1px              !global;
+$dropdown-border-radius:      8px              !global;
+$dropdown-item-padding-y:     5px              !global;
+$dropdown-item-padding-x:     0                !global;
+$dropdown-link-hover-bg:      $gray-100        !global;
 
-$spacer: 2rem;
+
+
+// For margin and padding
+$spacer: 2rem ;
+$spacers: (
+        0: 0,
+        1: $spacer * .5,
+        2: $spacer * .75,
+        3: $spacer,
+        4: $spacer * 1.125,
+        5: $spacer * 1.5,
+        6: $spacer * 1.75,
+) ;

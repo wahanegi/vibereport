@@ -3,25 +3,25 @@
 //DEFINED FROM Vibe Report design system
 
 //color-variables
-$white:    #FFFFFF;
-$gray-100: #D2D2D2;
-$gray-200: #9E9E9E;
-$gray-300: #666666;
-$gray-400: #4D4D4D;
-$gray-500: #454547;
+$white:    #FFFFFF; // Background color or corresponding tones
+$gray-100: #D2D2D2; // For Muted text and input placeholders depending on context
+$gray-200: #9E9E9E; // For Muted text and input placeholders depending on context
+$gray-300: #666666; // For Muted text and input placeholders depending on context
+$gray-400: #4D4D4D; // For Muted text and input placeholders depending on context,
+$gray-500: #454547; // For Text and headers
 $black:    #000000;
 
-$apricot:         #FCDDCE ;
-$cinnamon:        #D1794E ;
-$gray-tea-green:  #CCEDD5 ;
+$apricot:         #FCDDCE ; // For negative background color
+$cinnamon:        #D1794E ; // For negative color
+$gray-tea-green:  #CCEDD5 ; // For positive background color
 $emerald:         #7FCD95 ;
 $navy-blue:       #0007A3 ;
 $red-violet:      #D7007B ;
-$pale-cornflower: #CCDCF9 ;
+$pale-cornflower: #CCDCF9 ; // For neutral background color
 $pink:            #F9D9EB ;
 $royal-blue:      #5689EB ;
-$sea-green:       #4F9B64 ;
-$steel-blue:      #4C77CB ;
+$sea-green:       #4F9B64 ; // For positive color
+$steel-blue:      #4C77CB ; // For neutral color
 $tea-green:       #DEF1E3 ;
 
 $orange-100: #FADFD1 ;
@@ -45,7 +45,7 @@ $coral:      #E36554;
 
 
 //BOOTSTRAP REPLACEMENT
-$primary:       $red-violet ;
+$primary:       $red-violet;
 $secondary:     $pink ;
 $success:       $sea-green ;
 $info:          cyan ;

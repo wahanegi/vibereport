@@ -1,0 +1,78 @@
+@import 'variables';
+@mixin emotion{
+  &.positive{
+    background-color: $gray-tea-green !important;
+    color:            $sea-green      !important;
+  }
+  &.neutral{
+    background-color: $pale-cornflower !important;
+    color:            $steel-blue      !important;
+  }
+  &.negative{
+    background-color: $apricot         !important;
+    color:            $cinnamon        !important;
+  }
+}
+
+@mixin intensive-edge{
+  position:             relative;
+  z-index:              1 !important;
+  margin:               0 -6px !important;
+  border:               6px solid $royal-blue !important;
+  height:               $btn-height-intensity + .5rem !important;
+  min-width:            $btn-width-intensity + .5rem !important;
+}
+
+@mixin element($name){
+    background-color:       #{$name} !important;
+    &.active {
+      background-color:     #{$name} !important;
+      @include intensive-edge;
+    }
+}
+
+@mixin row-quarter-circle($color1,$color2,$color3,$color4,$color5) {
+  min-width:                 $btn-width-intensity !important;
+  height:                    $btn-height-intensity !important;
+  border-radius: 0 !important;
+  border: 2px solid $black !important;
+  padding: 0;
+  margin: 4px -2px !important;
+  &.n1 {
+    border-top-left-radius:  1.8125rem !important;
+    @include element($color1);
+    &.fcs{
+      border-top:            $border-element !important;
+      border-left:           $border-element !important;
+    }
+  }
+  &.n2 {
+    @include element($color2);
+    &.fcs { border-top:      $border-element !important; }
+  }
+  &.n3 {
+    @include element($color3);
+    &.fcs { border-top:      $border-element !important; }
+  }
+  &.n4 {
+    @include element($color4);
+    &.fcs { border-top:      $border-element !important; }
+  }
+  &.n5 {
+    border-top-right-radius: 1.8125rem !important;
+    @include element($color5);
+    &.fcs{
+      border-top:            $border-element !important;
+      right:                 $border-element !important;
+    }
+  }
+}
+@mixin row-semicircle($color1,$color2,$color3,$color4,$color5) {
+  &.n1 {
+    border-bottom-left-radius: 1.8125rem !important;
+  }
+  &.n5 {
+    border-bottom-right-radius: 1.8125rem !important;
+  }
+  @include row-quarter-circle($color1,$color2,$color3,$color4,$color5)
+}
