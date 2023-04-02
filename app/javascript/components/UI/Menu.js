@@ -4,14 +4,14 @@ import Button from "./Button";
 
 const Menu = ({ percent_completion }) => {
   return (
-    <div class='placement-menu'>
+    <div className='placement-menu'>
       <Dropdown>
         <Dropdown.Toggle  id='dropdown-stick'>
-        <div  className="icon-circle menu">
+        <div  className="menu">
           <div  className="m-cover"></div>
           <div className='one-line-menu'></div>
-          <div className='one-line-menu' style={{top:32}}></div>
-          <div className='one-line-menu' style= {{top:45}}></div>
+          <div className='one-line-menu'></div>
+          <div className='one-line-menu'></div>
         </div>
         </Dropdown.Toggle>
         <Dropdown.Menu>
