@@ -4,7 +4,7 @@ import Button from "./Button";
 
 const Menu = ({ percent_completion }) => {
   return (
-    <div style={{position: 'fixed', right: 30, top: 62}}>
+    <div class='placement-menu'>
       <Dropdown>
         <Dropdown.Toggle  id='dropdown-stick'>
         <div  className="icon-circle menu">

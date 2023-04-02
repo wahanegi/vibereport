@@ -254,6 +254,11 @@ textarea {
     opacity:        60%;
   }
 }
+.placement-menu{
+  position:         fixed;
+  right:            30px;
+  top:              62px;
+}
 .menu{
   background: linear-gradient(to right top, $gray-100 72%, $red-violet 100%);
 }
