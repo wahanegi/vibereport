@@ -81,4 +81,7 @@
   color: $red-violet;
   font-weight: 800;
 }
+.big-btn-text a {
+  --bs-link-hover-color: rgba(0, 0, 0, 0.6);
+}
 //</ListEmotion
