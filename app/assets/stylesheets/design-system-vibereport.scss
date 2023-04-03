@@ -126,6 +126,13 @@ h2, .h2 {
 
 
 // use B1, B2, or B3 text
+.form-control{
+  border:                     .1875rem solid $gray-100 !important;
+  &:focus {
+    border:                   .1875rem solid $input-btn-border-color !important; //3px
+    box-shadow:               none             !important;
+  }
+}
 input, textarea{
   height:               4.375rem;//70px
   text-align:           left;

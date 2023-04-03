@@ -12,14 +12,15 @@ $border-element:         .1875rem solid $royal-blue;//for intensity elements
 $font-family-base:       'Josefin Sans', sans-serif;
 $font-size-base:          1rem ;
 $line-height-base:        1.2;
-$font-weight-bold:      700;
-$font-weight-semi-bold:    600;
+$font-weight-bold:        700;
+$font-weight-semi-bold:   600;
 
 $font-family-italic:      'Josefin Sans Italic', sans-serif;
 $font-family-second:      'Inter', sans-serif;
 
 $h1-font-size:            3rem !important;    //48px
 $h2-font-size:            2.25rem !important; //36px
+//dynamic fonts
 $h3-font-size:            calc($font-size-base * 1.924 + 0.9vw) ;//40px
 $h4-font-size:            calc($font-size-base * 1.424 + 0.9vw) ;//32px
 $h5-font-size:            calc($font-size-base * 0.924 + 0.9vw) ;//24px
@@ -34,7 +35,6 @@ $font-sizes: (
 6: 1rem
 ) ;
 
-
 //For input-btn-variables
 $input-btn-padding-y:         1.375rem          !default;//22px
 $input-btn-padding-x:         1.375rem          !default;//22px
@@ -44,13 +44,6 @@ $input-btn-line-height:       4.375rem          !default;
 $input-btn-border-width:      .1875rem          !default;
 $input-btn-border-radius:     .9375rem          !default;
 $input-btn-border-color:      $royal-blue       !default;
-.form-control{
-  border:                     .1875rem solid $gray-100 !important;
-  &:focus {
-    border:                   .1875rem solid $input-btn-border-color !important; //3px
-    box-shadow:               none             !important;
-  }
-}
 
 //For Buttons
 
@@ -69,8 +62,6 @@ $btn-border-width:            1px              !global;
 $link-color:                  $navy-blue       !important;
 $link-primary:                $navy-blue       !important;
 
-// For Dropdowns
-//
 // Dropdown menu container and contents.
 $dropdown-min-width:          260px            !global;
 $dropdown-padding-x:          11px             !global;
@@ -83,8 +74,6 @@ $dropdown-border-radius:      8px              !global;
 $dropdown-item-padding-y:     5px              !global;
 $dropdown-item-padding-x:     0                !global;
 $dropdown-link-hover-bg:      $gray-100        !global;
-
-
 
 // For margin and padding
 $spacer: 2rem ;

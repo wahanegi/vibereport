@@ -8,9 +8,13 @@
       <div class="line2"></div>
     </div>
     <% if flash.to_h["error"] == 'Expired!' %>
-      <h3 class="row-3 mx-auto b3 muted my-4">Your login link may have expired. Click here to get a new one</h3>
+      <h3 class="text-field-new-html mx-auto b3 muted my-4">
+        Your login link may have expired. Click here to get a new one
+      </h3>
     <% else %>
-      <div class="row-3 mx-auto b3 muted my-4">Enter your email address and we’ll send you a link to access your check-in and profile</div>
+      <div class="text-field-new-html mx-auto b3 muted my-4">
+        Enter your email address and we’ll send you a link to access your check-in and profile
+      </div>
     <% end %>
     <div class="email_field my-4">
       <% email_field_name = :"passwordless[#{@email_field}]" %>

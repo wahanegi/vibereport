@@ -16,12 +16,13 @@
   line-height: 36px;
   color: $color-black;
 }
-.muted {
-  color: $color-muted;
-}
-.row-3{
+
+.text-field-new-html{
   width: 588px !important;
   height:59px;
+  &.muted {
+    color: $color-muted;
+  }
 }
 .email_field{
   box-sizing: border-box;
@@ -40,24 +41,6 @@
   border-radius: 15px;
   padding-left: 23px;
 }
-//.btn-next, .btn-next:disabled {
-//  width: 235px;
-//  height: 52px;
-//  background: $royal-blue;
-//  border: 1px solid $black;
-//  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-//  border-radius: 12px;
-//  font-family: 'Inter', sans-serif;
-//  font-style: normal;
-//  font-weight: 700;
-//  font-size: 26.6341px;
-//  line-height: 32px;
-//  color: $white;
-//  margin-left: 70px;
-//}
-//.fa-question {
-//  color:  $red-violet;
-//}
 .icon-circle {
   position: absolute;
   right: 47px;
@@ -68,19 +51,6 @@
   background-image: url("question.svg");
 }
 //<ListEmotion>
-.ic-position{
-  position: relative;
-  top: 0px;
-  left: 0px;
-}
-
-.at_symbol{
-  position: relative;
-  font-size: 24px;
-  margin: -70px 49px;
-  color: $red-violet;
-  font-weight: 800;
-}
 .big-btn-text a {
   --bs-link-hover-color: rgba(0, 0, 0, 0.6);
 }

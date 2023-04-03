@@ -6,9 +6,14 @@
 $white:           #FFFFFF; // Background color or corresponding tones
 $gray-100:        #D2D2D2; // For Muted text and input placeholders depending on context
 $gray-200:        #9E9E9E; // For Muted text and input placeholders depending on context
+$gray-250:        rgba(0, 0, 0, 0.25); //for shadow
 $gray-300:        #666666; // For Muted text and input placeholders depending on context
 $gray-400:        #4D4D4D; // For Muted text and input placeholders depending on context,
 $gray-500:        #454547; // For Text and headers
+$gray-600:        rgba(0, 0, 0, 0.6);
+$gray-700:        rgba(0, 0, 0, 0.7);
+$gray-800:        rgba(0, 0, 0, 0.8);
+$gray-900:        rgba(0, 0, 0, 0.9);
 $black:           #000000;
 
 $apricot:         #FCDDCE ; // For negative background color

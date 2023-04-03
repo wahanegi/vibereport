@@ -14,7 +14,7 @@ body.swal2-shown > [aria-hidden="true"] {
   border-radius: 50% !important;
   background: $red !important;
   border: 1px solid $black !important;
-  color: #000000 !important;
+  color: $black !important;
 }
 
 .swal2-container.swal2-center>.swal2-popup {
