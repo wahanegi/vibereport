@@ -5,6 +5,10 @@ $color-blue: #5689EB;
 $color-white: #FFFFFF;
 $color-rose: #E02AA4;
 
+a{
+  font-size: 23px;
+  color: #0007A3;
+}
 body {
   font-family: $font-family;
   font-style: normal;
@@ -70,3 +74,40 @@ body {
   background-color:  #D9D9D9;
   filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
+//<ListEmotion>
+.ic-position{
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.menu{
+  display:revert;
+  background: linear-gradient(to right top, #D9D9D9 72%, #D7007B 100%);
+}
+.m-cover{
+  z-index:1;
+  position: absolute;
+  width: 72.43px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 3px 3px;
+  background-color: #D9D9D9;
+}
+.one-line-menu{
+  z-index:1;
+  position: relative;
+  top: 22.19px;
+  width:42px;
+  height:7.64px;
+  background-color: #524F50;
+  margin: 5.35px 18.21px;
+  border-radius: 3.05px;
+}
+.at_symbol{
+  position: relative;
+  font-size: 24px;
+  margin: -70px 49px;
+  color: #E02AA4;
+  font-weight: 800;
+}
+//</ListEmotion
