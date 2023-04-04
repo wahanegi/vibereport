@@ -2,8 +2,8 @@ ActiveAdmin.register Passwordless::Session do
   belongs_to :user
   actions :all, except: :new
 
-  permit_params :expires_at, :timeout_at, :authenticatable_id, :authenticatable_type, :claimed_at,
-                :user_agent, :remote_addr
+  permit_params :expires_at, :timeout_at, :authenticatable_id, :authenticatable_type,
+                :claimed_at, :user_agent, :remote_addr
 
   index do
     selectable_column

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <title>Email letter</title>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <style>
       * {
@@ -13,205 +13,59 @@
           font-style: normal;
           font-weight:700;
           text-align: center;
+          line-height: 0;
       }
       .board{
-          min-width:1060px;
+          min-width:1080px;
       }
-      .mx-auto {
-          margin-left: auto;
-          margin-right: auto
-      }
-      .my-0 {
-          margin-top: 0;
-          margin-bottom: 0
-      }
-      @media only screen and (min-width: 1080px){
-          .emotions{
-            width: 1060px;
-          }
-      }
-      .d-flex{
-          display: flex;
-      }
-      .first-row{
-          height:30px;
-      }
-      .second-row{
-          height:31px
-      }
-      .envelope {
-          margin-top: 4px;
-          width: 130px;
-          height: 61px;
-          background-image: url( <%= asset_path 'envelope.png'%> );
-          background-repeat: no-repeat;
-          background-size: contain;
-      }
-      .logo{
-          color: rgba(0, 0, 0, 0.7);
-      }
-      .envelope p {
-          font-size: 12px;
-          line-height: 12px;
-          font-weight: 600;
-          padding-top: 4px;
-          padding-left: 5px;
-      }
-      .calendar {
-          width: 85px;
-          height: 79px;
-          border-radius: 9px;
-          margin-left: 60px;
-          background-image: url( <%= asset_path "calendar.png"%> );
-          background-repeat: no-repeat;
-          background-size: contain;
-      }
-      .invitation {
-          width: 453px;
-          height: 55px;
-          font-size: 24px;
-          line-height: 24px;
-          color: rgba(0, 0, 0, 0.7);
-          padding: 8px;
-      }
-      .emotions{
-          margin: 10px auto 0 auto;
-      }
-      .data {
-          padding-top: 43px;
-          width: 85px;
-          height: 14px;
-          font-size: 16px;
-          line-height: 17px;
-          color: rgba(0, 0, 0, 0.7);
-          white-space: nowrap;
-      }
-      .question {
-          font-size: 48px;
-          line-height: 48px;
-          color: #000000;
-          white-space: pre-line;
-          width: 735px;
-          min-height: 114px;
-      }
-      .lnk-was-not a{
-          font-size: 23px;
-          white-space: nowrap;
-          text-decoration-line: underline;
-          line-height: normal;
-          color: #0007A3;
-      }
-      .row-over-links{
-          height: 7px;
-      }
-      .btn-emotion{
-          height: 31px;
-          font-size: 19px;
-          line-height: 19px;
-          cursor: pointer;
-          box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
-          border: 1px solid #000000;
-          border-radius: 15px;
-      }
-      .positive{
-          color: #4F9B64;
-          background: #CCEDD5;
-      }
-      .negative{
-          background: #FCDDCE;
-          color: #D1794E;
-      }
-      .neutral{
-          background: rgba(86, 137, 235, 0.3);
-          color: #4C77CB;
-      }
-      .big-btn-tooltip{
-          width: 378px;
-          height: 31px;
-          font-size: 24px;
-          line-height: 24px;
-          color: rgba(0, 0, 0, 0.7);
-          margin: 41px auto 14px auto;
-      }
-      .big-btn{
-          box-sizing: border-box;
-          width: 385px;
-          height: 70px;
-          background: #FFFFFF;
-          margin: 0 auto 54px auto;
-      }
-      .big-btn-text a{
-          padding: 13px 23px 13px 23px;
-          width: 385px;
-          height: 70px;
-          font-size: 36px;
-          line-height: 36px;
-          color: rgba(0, 0, 0, 0.6);
-          border: 3px solid #5689EB;
-          border-radius: 19px;
-          box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
-          text-decoration-line: none;
-          white-space: nowrap;
-      }
-      .lnk-unsubscribe a{
-          font-size: 16px;
-          line-height: 19px;
-          color: #4D4D4D;
+      .lnk-unsubscribe{
+          text-align: left;
       }
   </style>
+  <%= stylesheet_link_tag 'email_page' , media: 'all' %>
 </head>
 <body>
-  <div class="board">
-    <div class="first-row">
-      <div class="mx-auto my-0 envelope">
-         <p class="mx-auto my-0 logo">Logo/Brand</p>
-      </div>
+<div class="board mx-auto">
+  <div class="first-row">
+    <div class="mx-auto my-0 envelope">
+      <p class="mx-auto my-0 logo">Logo/Brand</p>
     </div>
-    <div class="second-row">
-      <div class="calendar">
-          <div class="data">21 Jan</div>
-      </div>
+  </div>
+  <div class="second-row">
+    <div class="calendar ml-55">
+      <div class="data"><%= @view_complete_by %></div>
     </div>
-    <div class="mx-auto my-0 invitation">Time for this week's check-in!</div>
-    <div class="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
-    <div>
-      <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
-        <% emotion = [] %>
-        <% emotion.push(@positive_emotions[index].word) %>
-        <% emotion.push(@positive_emotions[index+1].word) %>
-        <% emotion.push(@neutral_emotions[index].word) %>
-        <% emotion.push(@neutral_emotions[index+1].word) %>
-        <% emotion.push(@negative_emotions[index].word) %>
-        <% emotion.push(@negative_emotions[index+1].word) %>
+  </div>
+  <div class="mx-auto my-0 invitation">Time for this week's check-in!</div>
+  <div class="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
+  <div>
+      <% (0..@table.length/6-1).each do |row|%>
         <div class="emotions d-flex">
-          <% 6.times do |i|%>
-            <button class="<%= if i < 2
-                              "btn-emotion positive"
-                            else
-                              i > 3 ? "btn-emotion negative" : "btn-emotion neutral"
-                            end %>"
-                  style="min-width: <%= btn_special(emotion[i], :width)%>px;
-                         margin: 0 <%= btn_special(emotion[i], :margin)%>px;">
-              <%= "#{emotion[i]}" %>
-            </button>
-          <% end %>
+        <% (0..@table.length/6-1).each do |col|%>
+        <% cell = @table[(row*6 + col)] %>
+          <div class="<%= "btn-emotion #{cell.category}" %>"
+             style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
+            <% @link_for_emotion[:emotion_id] = cell.id %>
+            <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
+          </div>
+      <% end %>
         </div>
       <% end %>
     </div>
-      <div class="big-btn-tooltip">Share it in your own words!</div>
-      <div class="big-btn">
-        <div class="big-btn-text">
-          <%= link_to "Add your own word", "#", method: :get %>
-        </div>
-      </div>
-    <div class="row-over-links">
-      <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
-        <%= link_to "I was not working this week","#" %>
-      </div>
+  <div class="big-btn-tooltip mx-auto">Share it in your own words!</div>
+  <div class="big-btn mx-auto">
+    <div class="big-btn-text">
+      <%= link_to "Add your own word", @link_for_own_word, class: "link-text" %>
     </div>
-      <div class="lnk-unsubscribe" style="text-align: left">
-        <%= link_to "Unsubscribe from future check-ins","#"  %>
-      </div>
   </div>
+  <div class="row-over-links">
+    <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
+      <%= link_to "I was not working this week", @link_for_was_not %>
+    </div>
+  </div>
+  <div class="lnk-unsubscribe" style="text-align: left">
+    <%= link_to "Unsubscribe from future check-ins", "#"  %>
+  </div>
+</div>
 </body>
 </html>
