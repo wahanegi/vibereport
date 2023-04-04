@@ -41,6 +41,11 @@ export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
     Next
   </button>
 
+export const BtnSkip = ({ addClass = '', hidden = true, onClick, disabled }) =>
+  <button onClick={onClick} className={`btn navigation next ${addClass}`} hidden={hidden} disabled={disabled}>
+    Skip
+  </button>
+
 export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
   <button onClick={onClick} className={`btn navigation back ${addClass}`} hidden={hidden} disabled={disabled}>
     Back
@@ -54,10 +59,11 @@ export const HelpIcon = () =>
     <img src={help_icon} alt="shout out" className='help-icon' style={{width: 100, height: 100}} />
   </NavLink>
 
-export const Footer = ({nextClick}) => <div className='d-flex justify-content-between m-3'>
+export const Footer = ({nextClick, skipClick, hideNext = false, hideSkip = true}) => <div className='d-flex justify-content-between m-3'>
   <ShoutOutIcon />
   <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
-  <BtnNext onClick={nextClick} addClass='m-1 align-self-center' />
+  <BtnNext onClick={nextClick} hidden={hideNext} addClass='m-1 align-self-center' />
+  <BtnSkip onClick={skipClick} hideen={hideSkip} addClass='m-1 align-self-center' />
   <HelpIcon />
 </div>
 

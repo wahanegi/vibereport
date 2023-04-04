@@ -6,7 +6,8 @@ import {BtnBack, BtnNext} from "../UI/ShareContent";
 const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const handlingOnClickNext = () => {
-
+    steps.push('causes-to-celebrate')
+    saveDataToDb( steps , {})
   }
   return (
     <Fragment>
