@@ -10,6 +10,7 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
     saveDataToDb( steps, {})
   }
 
+
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>

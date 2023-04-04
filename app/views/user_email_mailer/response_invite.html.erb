@@ -4,10 +4,28 @@
   <title>Email letter</title>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+          font-style: normal;
+          font-weight:700;
+          text-align: center;
+          line-height: 0;
+      }
+      .board{
+          min-width:1080px;
+      }
+      .lnk-unsubscribe{
+          text-align: left;
+      }
+  </style>
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
 </head>
 <body>
-<div class="board">
+<div class="board mx-auto">
   <div class="first-row">
     <div class="mx-auto my-0 envelope">
       <p class="mx-auto my-0 logo">Logo/Brand</p>
@@ -15,70 +33,34 @@
   </div>
   <div class="second-row">
     <div class="calendar ml-55">
-      <div class="data">21 Jan</div>
+      <div class="data"><%= @view_complete_by %></div>
     </div>
   </div>
   <div class="mx-auto my-0 invitation">Time for this week's check-in!</div>
   <div class="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
   <div>
-    <% (0..@positive_emotions.length-1).step(2).each do |index|  %>
-      <% emotion = [] %>
-      <% emotion.push(@positive_emotions[index]) %>
-      <% emotion.push(@positive_emotions[index+1]) %>
-      <% emotion.push(@neutral_emotions[index]) %>
-      <% emotion.push(@neutral_emotions[index+1]) %>
-      <% emotion.push(@negative_emotions[index]) %>
-      <% emotion.push(@negative_emotions[index+1]) %>
-      <div class="emotions d-flex">
-        <% 6.times do |i|%>
-          <div class="<%= if i < 2
-                            "btn-emotion positive"
-                          else
-                            i > 3 ? "btn-emotion negative" : "btn-emotion neutral"
-                          end %>"
-               style="width: <%= btn_special(emotion[i].word, :width)%>px;
-                 margin: 0 <%= btn_special(emotion[i].word, :margin)%>px;">
-            <%= link_to emotion[i].word,
-                        { controller: "api/v1/responses",
-                          action: "response_flow_from_email",
-                          emotion_id: emotion[i].id,
-                          time_period_id: TimePeriod.current,
-                          not_working: false,
-                          last_step: 'meme-selection',
-                          user_id: @user.id
-                        },
-                        class: if i < 2
-                                 "positive-a"
-                               else
-                                 i > 3 ? "negative-a" : "neutral-a"
-                               end
-            %>
+      <% (0..@table.length/6-1).each do |row|%>
+        <div class="emotions d-flex">
+        <% (0..@table.length/6-1).each do |col|%>
+        <% cell = @table[(row*6 + col)] %>
+          <div class="<%= "btn-emotion #{cell.category}" %>"
+             style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
+            <% @link_for_emotion[:emotion_id] = cell.id %>
+            <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
           </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="big-btn-tooltip">Share it in your own words!</div>
-  <div class="big-btn">
+      <% end %>
+        </div>
+      <% end %>
+    </div>
+  <div class="big-btn-tooltip mx-auto">Share it in your own words!</div>
+  <div class="big-btn mx-auto">
     <div class="big-btn-text">
-      <%= link_to "Add your own word", { controller: "api/v1/responses",
-                                         action: "response_flow_from_email",
-                                         time_period_id: TimePeriod.current,
-                                         not_working: false,
-                                         last_step: 'emotion-entry',
-                                         user_id: @user.id }, class: "link-text"
-      %>
+      <%= link_to "Add your own word", @link_for_own_word, class: "link-text" %>
     </div>
   </div>
   <div class="row-over-links">
     <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
-    <%= link_to "I was not working this week", { controller: "api/v1/responses",
-                                                 action: "response_flow_from_email",
-                                                 not_working: true,
-                                                 time_period_id: TimePeriod.current,
-                                                 last_step: 'results',
-                                                 user_id: @user.id }
-    %>
+      <%= link_to "I was not working this week", @link_for_was_not %>
     </div>
   </div>
   <div class="lnk-unsubscribe" style="text-align: left">
