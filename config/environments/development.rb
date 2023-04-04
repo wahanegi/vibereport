@@ -69,7 +69,7 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
   config.assets.debug = true
 
@@ -84,3 +84,4 @@ ENV['ADMIN_PASSWORD'] = 'password'
 # General use
 ENV['DAY_TO_SEND_INVITES'] = 'monday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
+ENV['DEFAULT_FROM_ADDRESS'] = 'do_not_reply'

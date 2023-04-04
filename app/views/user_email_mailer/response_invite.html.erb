@@ -4,10 +4,28 @@
   <title>Email letter</title>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+          font-style: normal;
+          font-weight:700;
+          text-align: center;
+          line-height: 0;
+      }
+      .board{
+          min-width:1080px;
+      }
+      .lnk-unsubscribe{
+          text-align: left;
+      }
+  </style>
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
 </head>
 <body>
-<div class="board">
+<div class="board mx-auto">
   <div class="first-row">
     <div class="mx-auto my-0 envelope">
       <p class="mx-auto my-0 logo">Logo/Brand</p>
@@ -15,32 +33,34 @@
   </div>
   <div class="second-row">
     <div class="calendar ml-55">
-      <div class="data"><%= @view_calendar_day %></div>
+      <div class="data"><%= @view_complete_by %></div>
     </div>
   </div>
   <div class="mx-auto my-0 invitation">Time for this week's check-in!</div>
   <div class="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
   <div>
-    <div class="emotions d-flex">
-      <% (0..@table.length-1).each do |col|%>
-        <% cell = @table[(col)] %>
-        <div class="<%= "btn-emotion #{cell.category}" %>"
-             style="width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px;">
-          <% @link_for_emotion[:emotion_id] = cell.id %>
-          <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
+      <% (0..@table.length/6-1).each do |row|%>
+        <div class="emotions d-flex">
+        <% (0..@table.length/6-1).each do |col|%>
+        <% cell = @table[(row*6 + col)] %>
+          <div class="<%= "btn-emotion #{cell.category}" %>"
+             style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
+            <% @link_for_emotion[:emotion_id] = cell.id %>
+            <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
+          </div>
+      <% end %>
         </div>
       <% end %>
     </div>
-  </div>
-  <div class="big-btn-tooltip">Share it in your own words!</div>
-  <div class="big-btn">
+  <div class="big-btn-tooltip mx-auto">Share it in your own words!</div>
+  <div class="big-btn mx-auto">
     <div class="big-btn-text">
       <%= link_to "Add your own word", @link_for_own_word, class: "link-text" %>
     </div>
   </div>
   <div class="row-over-links">
     <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
-    <%= link_to "I was not working this week", @link_for_was_not %>
+      <%= link_to "I was not working this week", @link_for_was_not %>
     </div>
   </div>
   <div class="lnk-unsubscribe" style="text-align: left">

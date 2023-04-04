@@ -2,98 +2,106 @@
 <html lang="en">
 <head>
   <title>Your Vibe Report Login Request</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <style>
       * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-          font-family: 'Josefin Sans',  sans-serif;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
           font-style: normal;
+          font-weight:700;
+          text-align: center;
       }
-      body{
+      @media only screen and (max-width: 600px){
+          *{
+              font-size: 2rem;
+          }
+      }
+      .board{
+          min-width:390px;
           margin-top:56px;
       }
-      .sm{
-          min-width:390px;
-      }
-      .convert {
-          width: 127px;
-          height: 58px;
-          text-align: center;
+      .centre {
           margin: 0 auto;
-          background: #D9D9D9;
-          border: 1px solid #000000;
       }
-      .convert p {
-          font-size: 12px;
-          line-height: 12px;
-          font-weight: 600;
-          padding-left: 5px;
+      .first-row {
+          height: 3.7rem;
+          margin-bottom: 2.125rem;
       }
-      .line1 {
-          width: 138px;
-          margin-top: 15.5px;
-          margin-left: -7px;
-          border-bottom: 1px solid #000000;
-          transform: rotate(-155.83deg);
+      .envelope {
+          width: 8rem;
+          height: 3.8rem;
+          background-image: url( <%= asset_path 'envelope.png'%> );
+          background-repeat: no-repeat;
+          background-size: contain;
       }
-      .line2 {
-          width: 137px;
-          margin-top: -1px;
-          margin-left: -6px;
-          border-bottom: 1px solid #000000;
-          transform: rotate(-24.22deg);
+      .logo{
+          color: #000;
       }
-
-      .under-convert {
-          height: 59px;
+      .envelope p {
+          font-size: 0.75rem;
+          line-height: 0.75rem;
+          font-weight: 625;
+          padding-top: 0.25rem;
+          padding-left: 0.3125rem;
+      }
+      .second-row {
+          height: 3.7rem;
+          margin-bottom: 4.9rem;
+      }
+      .greeting {
+          height: 3.7rem;
           font-weight: 700;
-          font-size: 48px;
-          line-height: 48px;
-          text-align: center;
+          font-size: 3rem;
+          line-height: 3rem;
           color: #000000;
-          margin: 0 auto;
-          top: 34px;
-          position: relative;
       }
-      .under-convert p {
-          margin-top:24px;
-          font-size: 32px;
-          line-height: 48px;
+      .welcome {
+          font-size: 2rem;
+          line-height: 3.5rem;
       }
-
-      .submit-annotation{
-          height: 54px;
-          font-size: 24px;
+      .third-row {
+          height: 3.44rem;
+          margin-bottom: 0.875rem;
+      }
+      .submit-annotation {
+          height: 3.4rem;
+          font-size: 1.5rem;
           font-weight: 700;
-          line-height: 24px;
-          text-align: center;
+          line-height: 1.5rem;
           color: #000000;
-          margin: 0 auto;
-          top: 113px;
-          position: relative;
       }
-      .btn{
-          display: flex;
-          position: relative;
-          top: 116px;
-          margin: 0 auto;
-          justify-content: center;
-          width: 235px;
-          height: 60px;
+      .fourth-row {
+          height: 3.75rem;
+      }
+      .btn {
+          width: 14.6875rem;
+          height: 3.75rem;
           background: #E02AA4;
-          border: 1px solid #000000;
-          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-          border-radius: 12px;
+          border: 0.0625rem solid #000000;
+          box-shadow: 0 .25rem .25rem rgba(0, 0, 0, 0.25);
+          border-radius: 0.75rem;
           font-weight: 700;
-          font-size: 32px;
+          font-size: 2rem;
           font-family: 'Inter',  sans-serif;
-          line-height: 39px;
+          line-height: 2.4rem;
           align-items: center;
-          text-decoration: none;
           color: #FFFFFF;
+      }
+      .btn-text {
+          padding: .625rem 1.5625rem .3125rem 1.5625rem;
+          width: 11.5625rem;
+          height: 2.8125rem;
+      }
+      .btn-text a {
+          color: white;
+          font-family: 'Inter', sans-serif;
+          line-height: 2.4375rem;
+          font-size: 2rem;
+          white-space: nowrap;
+          text-decoration: none;
       }
       .btn:hover{
         cursor: pointer;
@@ -106,15 +114,26 @@
 
 </head>
 <body>
-<div class="sm">
-<div class="convert">
-  <p>Logo/Brand</p>
-  <div class="line1"></div>
-  <div class="line2"></div>
-</div>
-<div class="under-convert">Oh, hi there!<p>Welcome back</p></div>
-<div class="submit-annotation">An access request associated with your email was submitted</div>
-  <a class="btn" target="_blank" href="<%= @magic_link %>">Access Site</a>
+<div class="board">
+  <div class="first-row">
+    <div class="centre envelope">
+      <p class="logo">Logo/Brand</p>
+    </div>
+  </div>
+  <div class="centre second-row">
+    <div class="centre greeting">Oh, hi there!</div>
+    <div class="welcome">Welcome back</div>
+  </div>
+  <div class="centre third-row">
+    <div class="submit-annotation">An access request associated with your email was submitted</div>
+  </div>
+  <div class="fourth-row">
+    <div class="centre btn">
+      <div class="btn-text">
+        <a target="_blank" href="<%= @magic_link %>">Access Site</a>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
