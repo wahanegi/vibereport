@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import GifList from "./GifList";
 import {GIPHY_SEARCH_URL} from "../../helpers/consts";
 import {Link} from "react-router-dom";
+import isEmpty from "ramda/es/isEmpty";
 
 const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif }) => {
   const [term, setTerm] = useState(emotion.word)
@@ -57,15 +58,27 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
       &nbsp;and add the received token to Heroku Config Vars.
   </h1>
 
+  const SearchResults = () => {
+    if (isEmpty(gifs)) return <div className='card-body d-flex align-items-center justify-content-center'>
+      <div className='text-white h1'>No results</div>
+    </div>
+
+
+    return <Fragment>
+      {apiGiphyKey === null ?
+        <Notice />:
+        <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
+      }
+    </Fragment>
+  }
+
+
  return  loaded && <Fragment>
    <GiphyLogo />
    <div className='gif-card' >
      <div className='gif-card card' onKeyDown={handleKeyDown}>
        <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-       {apiGiphyKey === null ?
-         <Notice />:
-         <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
-       }
+       <SearchResults />
      </div>
    </div>
   </Fragment>
