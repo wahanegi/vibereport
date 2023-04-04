@@ -76,7 +76,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           </div>
           <div className="invitation mx-auto p-0">Time for this week's check-in!</div>
           <div className="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
-            <div class='d-flex mx-auto emotions'>
+            <div className='d-flex mx-auto emotions'>
                 {emotions.map((emotion, index) =>
                    <ButtonEmotion key={emotion.id}
                                   category={emotions[mixUp(index+1)].attributes.category}
