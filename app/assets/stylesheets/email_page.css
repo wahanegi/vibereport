@@ -1,4 +1,4 @@
-
+/*       BELLOW STYLES FOR WEB-EMOTION-SELECTION. PLEASE DON'T CHANGE IT!!!        */
 * {
     margin: 0;
     padding: 0;
@@ -47,13 +47,6 @@
     margin-top: 29.3px;
     margin-left: -9.4px;
     transform: rotate(-155.6deg);
-}
-.emotions{
-    width: 1060px;
-    flex-wrap: wrap;
-}
-.flex{
-    display: flex;
 }
 .bigger {
     width: 190px;
@@ -139,28 +132,9 @@
     margin: -15px -29px;
 }
 
-/*FOR SVG FIX*/
-.module{
-    stroke-width: 0.111111;
-    stroke-linecap: round;
-}
-feFlood{
-    flood-opacity: 0;
-}
-filter{
-    color-interpolation-filters: sRGB;
-}
-
-.word{
-    display: flex;
-    justify-content: center
-}
-
 
 /*       BELLOW STYLES FOR EMAIL. PLEASE DON'T CHANGE IT!!!        */
-/*a{*/
-/*    text-decoration: none;*/
-/*}*/
+
 * {
 margin: 0;
 padding: 0;
@@ -184,11 +158,15 @@ text-align: center;
     margin-top: 0;
     margin-bottom: 0
 }
-.emotions{
-    min-width: 1080px;
+@media only screen and (min-width: 1080px) {
+    .emotions {
+        width: 1080px;
+    }
 }
 .d-flex{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .first-row{
     height:8px;
@@ -235,7 +213,9 @@ text-align: center;
     padding: 8px;
 }
 .emotions{
-    margin: 10px auto 0 auto;
+    margin:  0 auto;
+    width: 1080px;
+    min-width: 1080px;
 }
 .data {
     padding-top: 55px;
@@ -267,7 +247,7 @@ text-align: center;
 .btn-emotion{
     height: 31px;
     font-size: 19px;
-    line-height: 19px;
+    line-height: 1.2;
     cursor: pointer;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border: 1px solid #000000;

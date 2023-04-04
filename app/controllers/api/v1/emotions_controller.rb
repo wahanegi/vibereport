@@ -24,20 +24,20 @@ class Api::V1::EmotionsController < ApplicationController
         start_date: TimePeriod.current.start_date,
         end_date: TimePeriod.current.end_date
       },
-      response: @set_current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
-      emotion: @set_current_response ? Emotion.find_by(id: @set_current_response.emotion_id) : '{}'
+      response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
+      emotion: @current_response ? Emotion.find_by(id: @current_response.emotion_id) : '{}'
     }
   end
 
   def set_current_response
-    @set_current_response ||= Response.find_by(time_period_id: TimePeriod.current.id, user_id: current_user.id)
+    @current_response ||= Response.find_by(time_period_id: TimePeriod.current.id, user_id: current_user.id)
   end
 
   def response_hash
     {
-      id: @set_current_response.id,
+      id: @current_response.id,
       type: 'response',
-      attributes: @set_current_response
+      attributes: @current_response
     }
   end
 
