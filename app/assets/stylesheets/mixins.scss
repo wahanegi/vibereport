@@ -1,16 +1,32 @@
 @import 'variables';
 @mixin emotion{
   &.positive{
-    background-color: $gray-tea-green !important;
-    color:            $sea-green      !important;
+    background-color: $gray-tea-green ;
+    color:            $sea-green;
+    &:active{
+      color: shift-color($sea-green,50%);
+      background-color: shift-color($gray-tea-green,15%);
+    }
   }
   &.neutral{
-    background-color: $pale-cornflower !important;
-    color:            $steel-blue      !important;
+    background-color: $pale-cornflower;
+    color:            $steel-blue;
+    &:active{
+      color: shift-color($steel-blue,50%);
+      background-color: shift-color($pale-cornflower,15%);
+    }
   }
   &.negative{
-    background-color: $apricot         !important;
-    color:            $cinnamon        !important;
+    background-color: $apricot;
+    color:            $cinnamon;
+    &:active{
+      color: shift-color($cinnamon,50%);
+      background-color: shift-color($apricot,15%);
+    }
+  }
+  &:active {
+    margin: 3px 0 -3px 0;
+    border-color: transparent;
   }
 }
 
@@ -24,11 +40,15 @@
 }
 
 @mixin element($name){
-    background-color:       #{$name} !important;
+    background-color:       #{$name} ;
     &.active {
       background-color:     #{$name} !important;
       @include intensive-edge;
     }
+  &:hover{
+    background-color: shift-color($name,3%)  !important;
+    border: 3px solid shift-color($name,20%)  !important;
+  }
 }
 
 @mixin row-quarter-circle($color1,$color2,$color3,$color4,$color5) {
@@ -41,27 +61,27 @@
   &.n1 {
     border-top-left-radius:  1.8125rem !important;
     @include element($color1);
-    &.fcs{
+    &.edged{
       border-top:            $border-element !important;
       border-left:           $border-element !important;
     }
   }
   &.n2 {
     @include element($color2);
-    &.fcs { border-top:      $border-element !important; }
+    &.edged { border-top:      $border-element !important; }
   }
   &.n3 {
     @include element($color3);
-    &.fcs { border-top:      $border-element !important; }
+    &.edged { border-top:      $border-element !important; }
   }
   &.n4 {
     @include element($color4);
-    &.fcs { border-top:      $border-element !important; }
+    &.edged { border-top:      $border-element !important; }
   }
   &.n5 {
     border-top-right-radius: 1.8125rem !important;
     @include element($color5);
-    &.fcs{
+    &.edged{
       border-top:            $border-element !important;
       right:                 $border-element !important;
     }
@@ -69,10 +89,10 @@
 }
 @mixin row-semicircle($color1,$color2,$color3,$color4,$color5) {
   &.n1 {
-    border-bottom-left-radius: 1.8125rem !important;
+    border-bottom-left-radius: 1.813rem !important;
   }
   &.n5 {
-    border-bottom-right-radius: 1.8125rem !important;
+    border-bottom-right-radius: 1.813rem !important;
   }
   @include row-quarter-circle($color1,$color2,$color3,$color4,$color5)
 }
