@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
-import {NavLink} from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 import Menu from "../UI/Menu";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
@@ -52,17 +52,15 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     <Fragment>
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
-        <div>
+        <div className="board">
           <div className='d-flex justify-content-between m-3 '>
             <Logo />
             <Menu>X% complete</Menu>
           </div>
-          <h3 className="under-convert uc-new-position">Time for this week's check-in!</h3>
           <Calendar timePeriod={timePeriod} />
-          <br/>
-          <div className="question q-new-pos">Which word best describes how you felt at work this week?</div>
-            <div className='field_empty'></div>
-              <div className='field_emotions'>
+          <div className="invitation mx-auto p-0">Time for this week's check-in!</div>
+          <div className="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
+            <div className='d-flex mx-auto emotions'>
                 {emotions.map((emotion, index) =>
                    <ButtonEmotion key={emotion.id}
                                   category={emotions[mixUp(index+1)].attributes.category}
@@ -74,15 +72,16 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                      
                    </ButtonEmotion>
                 )}
-              </div>
-            <div className='field_empty'></div>
-          <div className="share sh-new-pos">Share it in your own words!</div>
-          <BtnAddYourOwnWord className="link_first" content="Add your own word" onClick={ownWordHandling}/>
-          <NavLink className="nav-link" onClick={onClickNotWorking} to={''}>
-            I was not working this week
-          </NavLink>
+            </div>
+          <div className="big-btn-tooltip">Share it in your own words!</div>
+          <div className="big-btn">
+          <BtnAddYourOwnWord className="link-text" content="Add your own word" onClick={ownWordHandling}/>
+          </div>
           <div className='d-flex justify-content-between m-3 '>
             <ShoutOutIcon />
+            <NavLink className="lnk-was-not  mx-auto my-0 " onClick={onClickNotWorking} to={''}>
+              I was not working this week
+            </NavLink>
             <HelpIcon />
           </div>
         </div>

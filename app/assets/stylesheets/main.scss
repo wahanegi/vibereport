@@ -1,19 +1,9 @@
 $font-family: 'Josefin Sans', sans-serif;
-$color-muted: rgba(0, 0, 0, 0.6);
-$color-black: #000000;
-$color-white: #FFFFFF;
-$color-rose: #E02AA4;
-$green: #4F9B64;
-$light-green: #CCEDD5;
-$light-blue: rgba(86, 137, 235, 0.3);
-$blue: #4C77CB;
-$dark-blue: #5689EB;
-$light-red: #FCDDCE;
-$red: #D1794E;
-$light-grey: #D9D9D9;
-$grey: #9E9E9E;
-$dark-grey: #4D4D4D;
 
+a{
+  font-size: 23px;
+  color: #0007A3;
+}
 body {
   font-family: $font-family;
   font-style: normal;

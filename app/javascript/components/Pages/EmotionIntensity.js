@@ -56,7 +56,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
 
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
     <div className='gif'>
-      <img src={gif_url} alt='Giphy image' className={`image-small-${category}`} />
+      <img src={gif_url} alt='Giphy image' className={`small image-${category}`} />
     </div>
     <ButtonEmotion category={category}>{word}</ButtonEmotion>
   </div>

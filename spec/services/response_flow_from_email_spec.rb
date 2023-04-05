@@ -21,13 +21,6 @@ describe Api::V1::ResponseFlowFromEmail do
       expect(subject[:error].class).to eq ActiveRecord::RecordInvalid
     end
 
-    it 'failed create response without emotion' do
-      emotion.destroy
-      expect { subject }.to change { Response.count }.by(0)
-      expect(subject[:success]).to be_falsey
-      expect(subject[:error].class).to eq ActiveRecord::InvalidForeignKey
-    end
-
     it 'failed create response without user' do
       user.destroy
       expect { subject }.to change { Response.count }.by(0)

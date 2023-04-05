@@ -4,13 +4,16 @@ import {backHandling, rangeFormat} from "../helpers/helpers";
 import shout_out_large from "../../../assets/images/shoutout-large.svg"
 import help_icon from "../../../assets/images/help.svg"
 import logo from "../../../assets/images/logo.svg"
+import edit_pencil from "../../../assets/images/edit-pencil.svg"
 import {NavLink} from "react-router-dom";
 
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
   <button className={`${addClass} btn emotion ${emotion.category}`}>
-    <span hidden={!showPencil} onClick={onClick} className="edit-icon"></span>
+    <span hidden={!showPencil} onClick={onClick} className="edit-icon">
+      <img src={edit_pencil} alt="pencil"/>
+    </span>
     {emotion.word}
   </button>
 
@@ -25,16 +28,11 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
   </button>
 
 export const Calendar = ({ timePeriod }) =>
-  <div className="calendar other-position">
-    <div className="left-div offset-ld">
-      <div className="part"></div>
-    </div>
-    <div className="right-div offset-rd">
-      <div className="part"></div>
-    </div>
-    <div className="top-div"></div>
-    <div className="time">
-      {rangeFormat(timePeriod)}
+  <div className="h-40">
+    <div className="calendar ml-240 mt-37">
+      <div className="data mx-auto my-0 ">
+        21 Jan
+      </div>
     </div>
   </div>
 

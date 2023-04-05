@@ -34,7 +34,8 @@ RSpec.describe Response, type: :model do
   let!(:user) { create :user}
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
-  let(:response) { FactoryBot.build(:response, user: user, time_period: time_period, emotion: emotion, steps: %w[emotion-selection-web]) }
+  let(:response) { FactoryBot.build(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
+  let(:not_working_response) { FactoryBot.build(:response, :not_working_response, user:, time_period:, emotion: nil, steps: %w[emotion-selection-web]) }
 
   context 'associations' do
     it 'belongs to user' do
@@ -76,8 +77,7 @@ RSpec.describe Response, type: :model do
     end
 
     it 'valid when emotion is absent for not worked user' do
-      response.not_working = true
-      expect(response).to be_valid
+      expect(not_working_response).to be_valid
     end
   end
 end
