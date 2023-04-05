@@ -46,7 +46,7 @@ class Api::V1::EmotionsController < ApplicationController
         start_date: TimePeriod.current.start_date,
         end_date: TimePeriod.current.end_date
       },
-      response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web] } },
+      response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? Emotion.find_by(id: @current_response.emotion_id) : '{}'
     }
   end
@@ -64,10 +64,9 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def build_three_set
-    three_set = []
-    three_set.concat(Emotion.positive.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.neutral.sample(NUMBER_OF_ELEMENTS))
-    three_set.concat(Emotion.negative.sample(NUMBER_OF_ELEMENTS))
+    Emotion.positive.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.neutral.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.negative.sample(NUMBER_OF_ELEMENTS)
   end
 
   def emotion_params

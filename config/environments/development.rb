@@ -1,7 +1,6 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -72,9 +71,12 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
   config.assets.debug = true
+
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  config.asset_host = "http://localhost:3000"
 end
 
 # For seeding
@@ -84,4 +86,4 @@ ENV['ADMIN_PASSWORD'] = 'password'
 # General use
 ENV['DAY_TO_SEND_INVITES'] = 'monday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
-
+ENV['DEFAULT_FROM_ADDRESS'] = 'do_not_reply'

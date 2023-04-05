@@ -3,8 +3,10 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  gif_url        :string
 #  not_working    :boolean          default(FALSE)
-#  steps          :string
+#  notices        :jsonb
+#  steps          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint

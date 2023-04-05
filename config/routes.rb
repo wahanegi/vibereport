@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users
   passwordless_for :users, at: '/', as: :auth
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   get '/app', to: 'home#app'
   namespace :api do
@@ -15,10 +15,8 @@ Rails.application.routes.draw do
       get '/all_emotions', to: 'emotions#all_emotions'
     end
   end
-  get '/results', to: redirect('/app/results')
-  get '/emotion_entry', to: redirect('/app/emotion_entry')
   get '*path', to: 'home#app'
   get '/*undefined', to: redirect('/')
 
-  root to:"home#index"
+  root to: 'home#index'
 end
