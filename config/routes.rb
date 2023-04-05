@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :emotions, only: %i[index create]
       resources :responses, param: :id
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
+      get '/all_emotions', to: 'emotions#all_emotions'
     end
   end
   get '/results', to: redirect('/app/results')

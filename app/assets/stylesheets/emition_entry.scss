@@ -48,7 +48,11 @@
   color: $color-muted;
 }
 
-.wrap-emoji{
+.wrap-emoji {
+  //&.disabled{
+  //  opacity: 0.5;
+  //  pointer-events: none;
+  //}
   margin-top: 21px;
   display: flex;
   justify-content: center;
