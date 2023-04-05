@@ -91,7 +91,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                 )}
               </div>
             {/*<div className='mx-auto'></div>*/}
-          <div className="big-btn-tooltip">Share it in your own words!</div>
+          <div className="big-btn-tooltip correct">Share it in your own words!</div>
           <div className="big-btn">
           <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
           </div>
