@@ -184,11 +184,113 @@ body {
 }
 //IntenseLine
 
-//productivity
+//ProductivitySlider
 .productivity-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
   input {
     width: 700px;
-  }  
+  }
+  
+  .form-range::-webkit-slider-thumb {
+    height: 35px;
+    width: 35px;
+    margin: -17.5px 0 0 0;
+  }
+
+  .form-range.level-0::-webkit-slider-thumb  {
+    background: #D0D0D0;
+  }
+  .form-range.level-1::-webkit-slider-thumb  {
+    background: #D7C2B8;
+  }
+
+  .form-range.level-2::-webkit-slider-thumb  {
+    background: #E7AF92;
+  }
+
+  .form-range.level-3::-webkit-slider-thumb  {
+    background: #E49770;
+  }
+
+  .form-range.level-4::-webkit-slider-thumb  {
+    background: #E8956C;
+  }
+
+  .form-range.level-5::-webkit-slider-thumb  {
+    background: #ED7B45;
+  }
+
+  .form-range.level-6::-webkit-slider-thumb  {
+    background: #FF5300;
+  }
+
+  .form-range.level-7::-webkit-slider-thumb  {
+    background: #E26D6D;
+  }
+
+  .form-range.level-8::-webkit-slider-thumb  {
+    background: #EB4848;
+  }
+
+  .form-range.level-9::-webkit-slider-thumb  {
+    background: #FF0000;
+  }
+  .form-range::-webkit-slider-runnable-track {
+    height: 3px;    
+  }
+
+  .form-range.level-0::-webkit-slider-runnable-track {
+    background-color: #000000;
+    ;
+  }
+  .form-range.level-1::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #D7C2B8 0%, #8D8C8C 106.1%);
+  }
+
+  .form-range.level-2::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #E49770 0%, #D7C2B8 100%);
+  }
+
+  .form-range.level-3::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #E49770 0%, #E7AF92 100%);
+    width: 0;
+  }
+
+  .form-range.level-4::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #E8956C 0%, #E49770 100%);
+  }
+
+  .form-range.level-5::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #ED7B45 0%, #E8956C 100%);
+  }
+
+  .form-range.level-6::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #FF5300 0%, #ED7B45 100%);
+  }
+
+  .form-range.level-7::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #E26D6D 0%, #FF5300 100%);
+  }
+
+  .form-range.level-8::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #EB4848 0%, #E26D6D 100%);
+  }
+
+  .form-range.level-9::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #FF0000 0%, #EB4848 97.76%);  
+  }
+
+  .form-range:focus::-webkit-slider-thumb {
+    box-shadow: none;
+  }
+  .form-range:focus::-moz-range-thumb {
+    box-shadow: none;
+  }
 }
+
 
 //

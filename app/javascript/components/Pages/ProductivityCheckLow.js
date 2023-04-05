@@ -11,6 +11,7 @@ import flame9 from '../../../assets/images/flame9.svg';
 import flame10 from '../../../assets/images/flame10.svg';
 
 const ProductivitySlider = ({productivity, handleSliderChange, flameImages, generateStyles, imageSizes}) => 
+<section>
     <div className="productivity-container">
       <form>
         <label htmlFor="productivity-slider" className="form-label">What is your productivity level for this time period?</label>
@@ -20,6 +21,7 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
             src={flameImages[productivity-1]}
             alt={`Productivity flame level ${productivity}`}
             style={generateStyles(imageSizes[productivity - 1])}
+            className="image-container"
           />
         )}
         <br />
@@ -30,11 +32,11 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
           defaultValue={productivity}
           onChange={handleSliderChange}
           id="productivity-slider"
-          className="form-range"
+          className={`form-range level-${productivity}`}
         /> 
       </form>
     </div>
-
+  </section>
 const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [productivity, setProductivity] = useState(0); 
