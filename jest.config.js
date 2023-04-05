@@ -7,6 +7,8 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*.)+(spec|test).js?(x)'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/app/javascript/$1',
+    "^ramda$": "ramda/src/index.js",
+    "^ramda/es/(.*)$": "ramda/src/$1"
   },
   testEnvironment: 'jsdom',
 };

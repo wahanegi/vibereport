@@ -16,6 +16,7 @@ describe('MemeSelection component',  () => {
 
   it('should render ListEmotions component when the path is "/meme-selection"', async () => {
     const mockService = { isLoading: false, error: null };
+    const GIF_URL = 'https://media.giphy.com/media/Ec8IY1BRRH3vrZfbcf/giphy.gif';
     const data = {
       emotion: {
         category: "negative",
@@ -24,7 +25,7 @@ describe('MemeSelection component',  () => {
       api_giphy_key: 'api_key',
       response: {
         attributes: {
-          gif_url: 'https://media.giphy.com/media/Ec8IY1BRRH3vrZfbcf/giphy.gif',
+          gif_url: GIF_URL,
           steps: ["emotion-selection-web","meme-selection"]
         }
       }
