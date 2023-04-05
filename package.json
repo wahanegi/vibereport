@@ -11,6 +11,7 @@
     "bootstrap-icons": "^1.10.3",
     "esbuild": "^0.17.7",
     "jquery": "^3.6.3",
+    "ramda": "^0.29.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
@@ -19,7 +20,7 @@
     "sweetalert2": "^11.7.3"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets --asset-names=[name]-[hash].digested --loader:.js=jsx --loader:.svg=file",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets --asset-names=[name]-[hash].digested --loader:.js=jsx --loader:.svg=file --loader:.png=file",
     "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "test": "jest --config=./jest.config.js"
   },

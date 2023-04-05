@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Menu = ({style, percent_completion}) => {
+const Menu = ({ percent_completion }) => {
   return (
-    <div style={style}>
+    <div>
       <div  className="icon-circle menu">
         <div  className="m-cover"></div>
         <div className='one-line-menu'></div>

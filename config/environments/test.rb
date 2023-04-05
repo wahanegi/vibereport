@@ -61,3 +61,4 @@ Rails.application.configure do
 end
 
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
+ENV['DEFAULT_FROM_ADDRESS'] = 'do_not_reply'

@@ -45,7 +45,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     navigate(`/${data.response.attributes.steps.slice(-1).toString()}`);
   },[])
 
-  const FooterIcons = () => <div className='d-flex justify-content-between gap-3 m-3'>
+  const FooterIcons = () => <div className='d-flex justify-content-between gap-3 mx-3 mb-2'>
     <ShoutOutIcon />
     <HelpIcon />
   </div>
@@ -64,9 +64,9 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
     <Logo />
-    <div className='mt-3' style={{marginLeft: '-101px'}}>
+    <div className='mt-5' style={{marginLeft: '-101px'}}>
       <h4 className='text-muted mb-1'>You picked:</h4>
-      <BigBtnEmotion emotion={emotion} onClick={backHandling} addClass='mb-2' />
+      <BigBtnEmotion emotion={emotion} onClick={backHandling} />
     </div>
     <Menu>X% complete</Menu>
   </div>

@@ -22,3 +22,7 @@ export const rangeFormat = (tp) => {
 export function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function sortImagesByHeight(images) {
+  return images.sort((a, b) => a.height - b.height);
+}

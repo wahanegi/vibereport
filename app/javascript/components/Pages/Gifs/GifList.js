@@ -1,9 +1,10 @@
-import React, {useState} from "react"
+import React from "react"
 import GifItem from "./GifItem";
+import {sortImagesByHeight} from "../../helpers/helpers";
 
 const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif }) => {
 
-  const gifItems = gifs.map(image => {
+  const gifItems = sortImagesByHeight(gifs).map(image => {
     return <GifItem key={image.id}
                     gif={image}
                     selectedGifIndex={selectedGifIndex}
@@ -17,7 +18,9 @@ const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifInde
   return <div className='card-body card-scroll'>
     {
       isCustomGif ?
-        <img src={gifUrl} alt='Giphy image' className='gif-image' /> :
+        <div className='gif'>
+          <img src={gifUrl} alt='Giphy image' className={`big`} />
+        </div>:
         <div className="gif-list">{gifItems}</div>
     }
   </div>
