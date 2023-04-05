@@ -10,7 +10,8 @@
     border-color: transparent;
   }
   @include button-variant( $royal-blue, $black, $white, shift-color($royal-blue, 30%), shift-color($royal-blue,30%),
-                           $white, shade-color($royal-blue, 20%), shade-color($royal-blue,20%), $black);
+                           $white, shade-color($royal-blue, 20%), shade-color($royal-blue,20%), $black, $royal-blue,
+                           $royal-blue,$white);
 
   // use with C1 text
   &.btn-regular{
@@ -21,9 +22,6 @@
     color:            $white ;
     background-color: $royal-blue;
     box-shadow:       $btn-box-shadow-other;
-    :disabled{
-      opacity: 50%;
-    }
     &.back{
       background-color: $gray-200;
     }

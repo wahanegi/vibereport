@@ -51,12 +51,13 @@ $btn-padding-y:               0                !global;
 $btn-padding-x:               .5rem            !global;
 $btn-font-family:             $font-family-base;
 $btn-font-size:               2rem             !default;
-$btn-disabled-opacity:        .5               !default;
 $btn-box-shadow:              4px 6px 6px $gray-100;
 $btn-box-shadow-other:        0 4px 4px $gray-100;
 $btn-width-intensity:         7.25rem;//116px
 $btn-height-intensity:        3.4375rem;//55px
 $btn-border-width:            1px              !global;
+$btn-disabled-opacity:        50%              !global;
+$btn-disabled-color:          $white           !global;
 
 // For Links
 $link-color:                  $navy-blue       !important;
