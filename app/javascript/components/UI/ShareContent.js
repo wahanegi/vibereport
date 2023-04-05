@@ -59,13 +59,14 @@ export const HelpIcon = () =>
     <img src={help_icon} alt="shout out" className='help-icon' style={{width: 100, height: 100}} />
   </NavLink>
 
-export const Footer = ({nextClick, skipClick, hideNext = false, hideSkip = true}) => <div className='d-flex justify-content-between m-3'>
-  <ShoutOutIcon />
-  <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
-  <BtnNext onClick={nextClick} hidden={hideNext} addClass='m-1 align-self-center' />
-  <BtnSkip onClick={skipClick} hideen={hideSkip} addClass='m-1 align-self-center' />
-  <HelpIcon />
-</div>
+export const Footer = ({nextClick, skipClick, hideNext = false, hideSkip = true}) =>
+  <div className='d-flex justify-content-between m-3'>
+    <ShoutOutIcon />
+    <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
+    <BtnNext onClick={nextClick} hidden={hideNext} addClass='m-1 align-self-center' />
+    <BtnSkip onClick={skipClick} hidden={hideSkip} addClass='m-1 align-self-center' />
+    <HelpIcon />
+  </div>
 
 export const Header = () => <div className='d-flex justify-content-between m-3'>
   <Logo />

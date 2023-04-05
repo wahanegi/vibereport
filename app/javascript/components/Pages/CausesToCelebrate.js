@@ -5,7 +5,8 @@ import {
 } from "../UI/ShareContent";
 import Menu from "../UI/Menu";
 import { MentionsInput, Mention } from 'react-mentions'
-import {isBlank, isPresent} from "../helpers/helpers";
+import mentionStyles from "../UI/mention/mentionStyles";
+import mentionsInputStyles from "../UI/mention/mentionsInputStyles";
 
 const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const {response, users} = data
@@ -13,8 +14,6 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [celebrateComment, setCelebrateComment] = useState(response.attributes.celebrate_comment || '')
 
-console.log('users', users)
-  console.log('celebrateComment', celebrateComment)
   const handlingOnClickSkip = () =>{
     steps.push('ProductivityCheckLow')
     saveDataToDb( steps , { })
@@ -22,7 +21,7 @@ console.log('users', users)
 
   const handlingOnClickNext = () => {
     steps.push('ProductivityCheckLow')
-    saveDataToDb( steps, {})
+    saveDataToDb( steps, {celebrate_comment: celebrateComment})
   }
 
 
@@ -43,30 +42,26 @@ console.log('users', users)
 
   return !isLoading && <Wrapper>
     <Header />
-    <div className="rating-comment-container">
-      <h1>Are any causes to celebrate this week?</h1>
-      {/*<form>*/}
-      {/*  <div className="form-group">*/}
-      {/*    <label className="comment-label">*/}
-      {/*      <textarea*/}
-      {/*        className="form-control text-left"*/}
-      {/*        placeholder="Are you greatefull for anathyng that happend during this week?"*/}
-      {/*        defaultValue={celebrateComment}*/}
-      {/*        onChange={handleCommentClick}*/}
-      {/*        maxLength={700}*/}
-      {/*      />*/}
-      {/*    </label>*/}
-      {/*  </div>*/}
-      {/*</form>*/}
-      <MentionsInput value={celebrateComment} onChange={handleCommentClick}>
+    <h1>Are any causes to celebrate this week?</h1>
+    <div className='d-flex justify-content-center'>
+      <MentionsInput value={celebrateComment}
+                     onChange={handleCommentClick}
+                     placeholder='Are you gratful for anything that happend during the week?'
+                     style={mentionsInputStyles}
+      >
         <Mention
           trigger="@"
+          displayTransform={(id, display) => `@${display}`}
           data={users}
-          // renderSuggestion={this.renderUserSuggestion}
+          style={mentionStyles}
         />
       </MentionsInput>
     </div>
-    <Footer nextClick={handlingOnClickNext} skipClick={handlingOnClickSkip} hideNext={isBlank(celebrateComment)} hideSkip={isPresent(celebrateComment)}/>
+
+    <Footer nextClick={handlingOnClickNext}
+            skipClick={handlingOnClickSkip}
+            hideNext={celebrateComment.length === 0}
+            hideSkip={celebrateComment.length !== 0}/>
   </Wrapper>
 }
 
