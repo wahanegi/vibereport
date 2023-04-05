@@ -267,11 +267,14 @@ text-align: center;
 }
 .big-btn-tooltip{
     width: 378px;
-    height: 31px;
+    height: 19px;
     font-size: 24px;
     line-height: 24px;
     color: rgba(0, 0, 0, 0.7);
     margin: 41px auto 14px auto;
+}
+.correct{
+    height: 31px;
 }
 .big-btn{
     box-sizing: border-box;
