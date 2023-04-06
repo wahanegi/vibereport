@@ -35,5 +35,6 @@
     "jest-dom": "^4.0.0",
     "jest-environment-jsdom": "^29.5.0",
     "react-test-renderer": "^18.2.0"
-  }
+  },
+  "version": "0.0.0"
 }
