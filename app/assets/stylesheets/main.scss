@@ -16,13 +16,13 @@
   line-height: 36px;
   color: $color-black;
 }
+.muted {
+  color: $color-muted;
+}
 
 .text-field-new-html{
   width: 588px !important;
   height:59px;
-  &.muted {
-    color: $color-muted;
-  }
 }
 .email_field{
   box-sizing: border-box;

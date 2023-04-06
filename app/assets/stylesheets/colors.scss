@@ -48,7 +48,6 @@ $red:             #EB4848;
 $coral:           #E36554;
 
 
-
 //BOOTSTRAP REPLACEMENT
 $primary:         $red-violet;
 $secondary:       $pink ;
@@ -64,7 +63,7 @@ $dark:            $gray-500 ;
 
 // TEMPORARY OUR COLORS for project
 
-$color-muted:     rgba(0, 0, 0, 0.6);
+$color-muted:     $gray-600;
 $color-black:     #000000;
 $color-blue:      #5689EB;
 $color-white:     #FFFFFF;
