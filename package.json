@@ -20,6 +20,7 @@
     "sweetalert2": "^11.7.3"
   },
   "scripts": {
+    "heroku-prebuild": "npm install -g yarn",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets --asset-names=[name]-[hash].digested --loader:.js=jsx --loader:.svg=file",
     "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "test": "jest --config=./jest.config.js"
