@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
-import { NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
+import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
+// import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -44,6 +46,13 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     saveDataToDb( steps, dataRequest )
   }
 
+  const rangeFormat = (tp) => {
+    let start_date = new Date(tp.start_date)
+    let end_date = new Date(tp.end_date)
+    let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
+    return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
+  }
+
   //*** **transformation of table** to the view:
   //*** 6+6(positive columns) 6+6(neutral columns) and 6+6(negative columns)
   const mixUp = (index) => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
@@ -52,12 +61,20 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     <Fragment>
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
-        <div className="board">
-          <div className='d-flex justify-content-between m-3 '>
-            <Logo />
-            <Menu>X% complete</Menu>
+        <div className="board  mt-35">
+          <div className="convert bigger ml-41">
+            <p>Logo/Brand</p>
+            <div className="line1 offset-line1"></div>
+            <div className="line2 offset-line2"></div>
           </div>
-          <Calendar timePeriod={timePeriod} />
+          <div className="h-40">
+             <div className="calendar ml-240 mt-37">
+               <div className="data mx-auto my-0 ">
+                 21 Jan
+                 {/*<Calendar timePeriod={timePeriod} />*/}
+               </div>
+             </div>
+          </div>
           <div className="invitation mx-auto p-0">Time for this week's check-in!</div>
           <div className="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
             <div className='d-flex mx-auto emotions'>
@@ -72,18 +89,17 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                      
                    </ButtonEmotion>
                 )}
-            </div>
-          <div className="big-btn-tooltip">Share it in your own words!</div>
+              </div>
+          <div className="big-btn-tooltip correct">Share it in your own words!</div>
           <div className="big-btn">
-          <BtnAddYourOwnWord className="link-text" content="Add your own word" onClick={ownWordHandling}/>
+          <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
           </div>
-          <div className='d-flex justify-content-between m-3 '>
-            <ShoutOutIcon />
-            <NavLink className="lnk-was-not  mx-auto my-0 " onClick={onClickNotWorking} to={''}>
-              I was not working this week
-            </NavLink>
-            <HelpIcon />
-          </div>
+          <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
+            I was not working this week
+          </NavLink>
+          <QuestionButton />
+          <ShoutoutButton />
+          <Menu percent_completion='100' />
         </div>
       }
     </Fragment>
