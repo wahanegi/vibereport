@@ -4,6 +4,6 @@ import "./controllers"
 import "@fortawesome/fontawesome-free/js/all";
 import * as bootstrap from "bootstrap"
 
-import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
+import jquery from 'jquery';
+window.jQuery = jquery;
+window.$ = jquery;
