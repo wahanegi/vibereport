@@ -51,7 +51,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
       >
         <Mention
           trigger="@"
-          displayTransform={(id, display) => `@${display}`}
+          displayTransform={(id, display) => ` @${display}`}
           data={users}
           style={mentionStyles}
         />
