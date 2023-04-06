@@ -1,7 +1,10 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap');
+@import "fonts";
+@import "colors";
+@import 'variables';
 @import "main";
 @import "logo";
 @import "email_page";
+@import "gif";
 @import "swal";
+@import 'bootstrap/scss/bootstrap';
+
