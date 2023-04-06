@@ -396,6 +396,7 @@ GEM
 PLATFORMS
   arm64-darwin-20
   arm64-darwin-22
+  x86_64-darwin-21
   x86_64-darwin-22
   x86_64-linux
 
@@ -420,8 +421,8 @@ DEPENDENCIES
   nokogiri
   passwordless (~> 0.11.0)
   pg (~> 1.1)
-  premailer-rails
   postmark-rails (~> 0.22.1)
+  premailer-rails
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
   rails-controller-testing
