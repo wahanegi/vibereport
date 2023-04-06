@@ -1,6 +1,16 @@
-import React, {Fragment, useEffect, useState} from "react"
-import {Button} from "react-bootstrap";
+import React, {useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom";
+import Gif from "./Gifs";
+import {
+  BigBtnEmotion,
+  BtnOutline,
+  BtnPrimary,
+  Header, HelpIcon, Logo, ShoutOutIcon,
+  Wrapper
+} from "../UI/ShareContent";
+import {backHandling, isBlank, isPresent} from "../helpers/helpers";
+import {GIPHY_UPLOAD_URL} from "../helpers/consts";
+import Menu from "../UI/Menu";
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif}) => {
   const {emotion, api_giphy_key, response} = data
