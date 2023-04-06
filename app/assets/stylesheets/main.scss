@@ -3,6 +3,15 @@
 /////////////////////|
 // DEVELOPERS AREA //|
 /////////////////////|
+
+a{
+  font-size: 23px;
+  color: #0007A3;
+}
+body {
+  font-family: $font-family-base;
+  font-style: normal;
+}
 .header {
   font-weight: 700;
   font-size: 48px;
@@ -24,14 +33,22 @@
   width: 588px !important;
   height:59px;
 }
+.light-grey-text {
+  color: $light-grey;
+}
 .email_field{
+  //@media (min-width: 767px) {
+  //  min-width: 660px;
+  //}
   box-sizing: border-box;
-  width: 660px;
   background: $color-white;
   margin: 0 auto;
+  //text-align: center;
 }
 .email_field input{
-  width: 660px;
+  @media (min-width: 767px) {
+    min-width: 660px;
+  }
   height: 70px;
   font-size: 40px;
   line-height: 70px;
@@ -40,6 +57,9 @@
   border: 3px solid $color-blue;
   border-radius: 15px;
   padding-left: 23px;
+}
+.fa-question {
+  color:  $color-rose;
 }
 .icon-circle {
   position: absolute;
@@ -53,5 +73,19 @@
 //<ListEmotion>
 .big-btn-text a {
   --bs-link-hover-color: rgba(0, 0, 0, 0.6);
+}
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+.wrapper {
+  min-height: 100vh;
+  text-align: center;
+}
+.central-element {
+  min-height: 60vh;
+}
+.help-icon {
+  filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 //</ListEmotion

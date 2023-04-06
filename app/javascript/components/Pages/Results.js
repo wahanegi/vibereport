@@ -1,6 +1,7 @@
 import React, {Fragment, useState} from 'react';
-import BackButton from "../UI/BackButton";
 import SweetAlert from "../UI/SweetAlert";
+import {backHandling} from "../helpers/helpers";
+import {BtnBack} from "../UI/ShareContent";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -41,11 +42,10 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
         }
         <p>User was not working for this time period</p>
         <div>
-          <BackButton data={data} setData={setData}>Back</BackButton>
+          <BtnBack onClick={backHandling} />
         </div>
       </div>
     }
   </Fragment>
-
 }
 export default Results;
