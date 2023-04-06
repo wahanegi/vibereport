@@ -18,12 +18,12 @@ export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = 
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
-  <button onClick={onClick} className={`btn outline ${addClass}`} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-feature c2 ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn primary ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -37,12 +37,12 @@ export const Calendar = ({ timePeriod }) =>
   </div>
 
 export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn navigation next ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     Next
   </button>
 
 export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn navigation back ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn  btn-regular c1 back ${addClass}`} hidden={hidden} disabled={disabled}>
     Back
   </button>
 
