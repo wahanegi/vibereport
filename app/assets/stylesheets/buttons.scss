@@ -91,6 +91,7 @@
     box-shadow:       $btn-box-shadow;
   }
 
+  // For Dropdown
   &.btn-item-menu {
     @include button-variant($white, $primary, $primary, shift-color($white, 7%), shift-color($primary,10%),
                             $primary, $primary, $primary, $white);
