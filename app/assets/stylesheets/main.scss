@@ -3,7 +3,6 @@
 /////////////////////|
 // DEVELOPERS AREA //|
 /////////////////////|
-
 a{
   font-size: 23px;
   color: #0007A3;
@@ -41,20 +40,22 @@ body {
   //  min-width: 660px;
   //}
   box-sizing: border-box;
+  //width: 660px;
   background: $color-white;
   margin: 0 auto;
   //text-align: center;
 }
 .email_field input{
-  @media (min-width: 767px) {
-    min-width: 660px;
-  }
+  //@media (min-width: 767px) {
+  //  min-width: 660px;
+  //}
   height: 70px;
   font-size: 40px;
   line-height: 70px;
   color: $color-muted;
   margin: 13px 0;
-  border: 3px solid $color-blue;
+  //border: 3px solid $color-blue;
+  border: 3px solid $light-blue;
   border-radius: 15px;
   padding-left: 23px;
 }
