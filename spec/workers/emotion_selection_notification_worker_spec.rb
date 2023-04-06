@@ -18,14 +18,14 @@ describe EmotionSelectionNotificationWorker do
 
   describe '.run_notifications' do
     it 'sends email notifications' do
-      allow(ENV).to receive(:[]).with('DAY_TO_SEND_INVITES').and_return(Date.current.strftime("%A"))
+      stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_INVITES' => Date.current.strftime('%A')))
       run_worker
       mail_recipients = ActionMailer::Base.deliveries.collect { |mail| mail.to[0] }
       expect(mail_recipients.count).to eql 2
       expect(mail_recipients).to match_array([user1.email, user2.email])
     end
     it 'does`t sends email notifications unless the ENV variable is set on the current day' do
-      allow(ENV).to receive(:[]).with('DAY_TO_SEND_INVITES').and_return((Date.current + 1).strftime("%A"))
+      stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_INVITES' => (Date.current + 2).strftime('%A')))
       run_worker
       mail_recipients = ActionMailer::Base.deliveries.collect { |mail| mail.to[0] }
       expect(mail_recipients.count).to eql 0

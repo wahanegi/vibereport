@@ -23,13 +23,15 @@ gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integra
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'stimulus-rails', '~> 1.2', '>= 1.2.1'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'turbo-rails', '~> 1.3', '>= 1.3.3'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem #A passwordless a.k.a. "magic link" login strategy
+gem "premailer-rails"                                         # gem is a drop in solution for styling HTML emails with CSS without having to do the hard work yourself.
+gem 'nokogiri'                                                # premailer-rails requires either nokogiri or hpricot.
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]                 # Debugging functionality for Ruby.
   gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'                        # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
   gem 'factory_bot_rails'                                         # Test data generator -- see spec/support/factory_helper.rb
-  gem 'faker', git: 'https://github.com/faker-ruby/faker.git'     # Easy way to add fake data: names, email addresses, etc.
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git'  # Easy way to add fake data: names, email addresses, etc.
   gem 'rspec-rails'                                               # rspec-rails is a testing framework for Rails 5+.
 end
 

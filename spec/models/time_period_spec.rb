@@ -21,6 +21,12 @@ RSpec.describe TimePeriod, type: :model do
     end
   end
 
+  context 'associations' do
+    it 'has many responses' do
+      expect(time_period1).to have_many(:responses).dependent(:destroy)
+    end
+  end
+
   context 'Validations' do
     subject { FactoryBot.create(:time_period) }
     it { is_expected.to validate_presence_of(:start_date) }
@@ -44,8 +50,15 @@ RSpec.describe TimePeriod, type: :model do
 
   context '#current' do
     it 'return current time period' do
+      TimePeriod.destroy_all
       current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
       expect(TimePeriod.current).to eq(current_time_period)
+    end
+  end
+
+  context '#date_range' do
+    it 'returns the correct date range string' do
+      expect(time_period1.date_range).to eq("#{time_period1.start_date.strftime('%Y-%m-%d')} - #{time_period1.end_date.strftime('%Y-%m-%d')}")
     end
   end
 end
