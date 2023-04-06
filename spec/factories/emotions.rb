@@ -9,8 +9,8 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory (:emotion) do
-    word              { Faker::Emotion.unique.adjective }
-    category          { [:negative, :neutral, :positive].sample }
+  factory(:emotion) do
+    word { Faker::Emotion.unique.adjective }
+    category { [:negative, :neutral, :positive].sample }
   end
 end

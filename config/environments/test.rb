@@ -57,6 +57,8 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 end
 
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
+ENV['DEFAULT_FROM_ADDRESS'] = 'do_not_reply'
