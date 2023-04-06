@@ -57,7 +57,7 @@ $btn-width-intensity:         7.25rem;//116px
 $btn-height-intensity:        3.4375rem;//55px
 $btn-border-width:            1px              !global;
 $btn-disabled-opacity:        50%              !global;
-$btn-disabled-color:          $white           !global;
+$btn-disabled-color:          $white           !important;
 
 // For Links
 $link-color:                  $navy-blue       !important;
