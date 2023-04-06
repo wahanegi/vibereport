@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
-import { NavLink, useNavigate} from 'react-router-dom'
-import QuestionButton from "../UI/QuestionButton";
+import { NavLink} from 'react-router-dom'
 import Menu from "../UI/Menu";
-import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
+import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -15,18 +14,17 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
-  const navigate = useNavigate()
-  const clickHandling = (emotion_word, emotion_id, timePeriod_id, category) => {
+  const clickHandling = (emotion_word, emotion_id) => {
     steps.push('meme-selection')
     const dataRequest = {
-        emotion_id: emotion_id,
-        time_period_id: data.time_period.id,
-        user_id: data.current_user_id,
-      }
+      emotion_id: emotion_id,
+      time_period_id: timePeriod.id,
+      user_id: data.current_user_id,
+    }
     saveDataToDb( steps, dataRequest )
   }
 
-  const ownWordHandling = () =>{
+  const ownWordHandling = () => {
     steps.push('emotion-entry')
     const dataRequest = {
       time_period_id: data.time_period.id,
@@ -40,17 +38,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     const dataRequest = {
       emotion_id: '',
       not_working: true,
-      time_period_id: data.time_period.id,
+      time_period_id: timePeriod.id,
       user_id: data.current_user_id,
     }
     saveDataToDb( steps, dataRequest )
-  }
-
-  const rangeFormat = (tp) => {
-    let start_date = new Date(tp.start_date)
-    let end_date = new Date(tp.end_date)
-    let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
-    return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
   }
 
   //*** **transformation of table** to the view:
@@ -61,19 +52,12 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     <Fragment>
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
-        <div className="board  mt-35">
-          <div className="convert bigger ml-41">
-            <p>Logo/Brand</p>
-            <div className="line1 offset-line1"></div>
-            <div className="line2 offset-line2"></div>
+        <div className="board">
+          <div className='d-flex justify-content-between m-3 '>
+            <Logo />
+            <Menu>X% complete</Menu>
           </div>
-          <div className="h-40">
-             <div className="calendar ml-240 mt-37">
-               <div className="data mx-auto my-0 ">
-                 21 Jan
-               </div>
-             </div>
-          </div>
+          <Calendar timePeriod={timePeriod} />
           <div className="invitation mx-auto p-0">Time for this week's check-in!</div>
           <div className="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
             <div className='d-flex mx-auto emotions'>
@@ -83,8 +67,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                                   onClick={() =>
                                     clickHandling(
                                       emotions[mixUp(index+1)].attributes.word,
-                                      emotions[mixUp(index+1)].id,
-                                      timePeriod.id
+                                      emotions[mixUp(index+1)].id
                                   )}>{emotions[mixUp(index+1)].attributes.word}
                      
                    </ButtonEmotion>
@@ -94,12 +77,13 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <div className="big-btn">
           <BtnAddYourOwnWord className="link-text" content="Add your own word" onClick={ownWordHandling}/>
           </div>
-          <NavLink className="lnk-was-not  mx-auto my-0 " onClick={onClickNotWorking} to={''}>
-            I was not working this week
-          </NavLink>
-          <QuestionButton />
-          <ShoutoutButton />
-          <Menu >X% complete</Menu>
+          <div className='d-flex justify-content-between m-3 '>
+            <ShoutOutIcon />
+            <NavLink className="lnk-was-not  mx-auto my-0 " onClick={onClickNotWorking} to={''}>
+              I was not working this week
+            </NavLink>
+            <HelpIcon />
+          </div>
         </div>
       }
     </Fragment>
