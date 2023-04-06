@@ -1,10 +1,73 @@
 @import "bootstrap/scss/_functions";
 
-$color-muted: rgba(0, 0, 0, 0.6);
-$color-black: #000000;
-$color-blue: #5689EB;
-$color-white: #FFFFFF;
-$color-rose: #E02AA4;
+//DEFINED FROM Vibe Report design system
+
+//color-variables
+$white:           #FFFFFF; // Background color or corresponding tones
+$gray-100:        #D2D2D2; // For Muted text and input placeholders depending on context
+$gray-200:        #9E9E9E; // For Muted text and input placeholders depending on context
+$gray-250:        rgba(0, 0, 0, 0.25); //for shadow
+$gray-300:        #666666; // For Muted text and input placeholders depending on context
+$gray-400:        #4D4D4D; // For Muted text and input placeholders depending on context,
+$gray-500:        #454547; // For Text and headers
+$gray-600:        rgba(0, 0, 0, 0.6);
+$gray-700:        rgba(0, 0, 0, 0.7);
+$gray-800:        rgba(0, 0, 0, 0.8);
+$gray-900:        rgba(0, 0, 0, 0.9);
+$black:           #000000;
+
+$apricot:         #FCDDCE ; // For negative background color
+$cinnamon:        #D1794E ; // For negative color
+$gray-tea-green:  #CCEDD5 ; // For positive background color
+$emerald:         #7FCD95 ;
+$navy-blue:       #0007A3 ;
+$red-violet:      #D7007B ;
+$pale-cornflower: #CCDCF9 ; // For neutral background color
+$pink:            #F9D9EB ;
+$royal-blue:      #5689EB ;
+$sea-green:       #4F9B64 ; // For positive color
+$steel-blue:      #4C77CB ; // For neutral color
+$tea-green:       #DEF1E3 ;
+
+$orange-100:      #FADFD1 ;
+$orange-200:      #F7CDB8 ;
+$orange-300:      #F5C1A6 ;
+$orange-400:      #F09D74 ;
+$orange-500:      #F18C59 ;
+
+$green-100:       #D9F1E0 ;
+$green-200:       #CCEDD5 ;
+$green-300:       #B9E6C6 ;
+$green-400:       #A6DFB6 ;
+$green-500:       #80D197 ;
+
+//other colors
+$yolk:            #FFA800;
+$yellow-cub:      #FFC93D;
+$red:             #EB4848;
+$coral:           #E36554;
+
+
+//BOOTSTRAP REPLACEMENT
+$primary:         $red-violet;
+$secondary:       $pink ;
+$success:         $sea-green ;
+$info:            $navy-blue ;
+$warning:         $yellow-cub ;
+$danger:          $red ;
+$light:           $gray-100 ;
+$dark:            $gray-500 ;
+
+
+
+
+// TEMPORARY OUR COLORS for project
+
+$color-muted:     $gray-600;
+$color-black:     #000000;
+$color-blue:      #5689EB;
+$color-white:     #FFFFFF;
+$color-rose:      #E02AA4;
 $green: #4F9B64;
 $light-green: #CCEDD5;
 $light-blue: rgba(86, 137, 235, 0.3);

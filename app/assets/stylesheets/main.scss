@@ -1,11 +1,15 @@
-$font-family: 'Josefin Sans', sans-serif;
+@import 'design_system_vibereport';
+
+/////////////////////|
+// DEVELOPERS AREA //|
+/////////////////////|
 
 a{
   font-size: 23px;
   color: #0007A3;
 }
 body {
-  font-family: $font-family;
+  font-family: $font-family-base;
   font-style: normal;
 }
 .header {
@@ -24,17 +28,22 @@ body {
 .muted {
   color: $color-muted;
 }
+
+.text-field-new-html{
+  width: 588px !important;
+  height:59px;
+}
 .light-grey-text {
   color: $light-grey;
 }
 .email_field{
-  @media (min-width: 767px) {
-    min-width: 660px;
-  }
+  //@media (min-width: 767px) {
+  //  min-width: 660px;
+  //}
   box-sizing: border-box;
   background: $color-white;
   margin: 0 auto;
-  text-align: center;
+  //text-align: center;
 }
 .email_field input{
   @media (min-width: 767px) {
@@ -45,7 +54,7 @@ body {
   line-height: 70px;
   color: $color-muted;
   margin: 13px 0;
-  border: 3px solid $light-blue;
+  border: 3px solid $color-blue;
   border-radius: 15px;
   padding-left: 23px;
 }
@@ -53,50 +62,17 @@ body {
   color:  $color-rose;
 }
 .icon-circle {
+  position: absolute;
+  right: 47px;
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 78.43px;
-  height: 78px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background-color:  #D9D9D9;
-  filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
+  background-image: url("question.svg");
 }
 //<ListEmotion>
-.ic-position{
-  position: relative;
-  top: 0;
-  left: 0;
-}
-.menu{
-  display:revert;
-  background: linear-gradient(to right top, #D9D9D9 72%, #D7007B 100%);
-}
-.m-cover{
-  z-index:1;
-  position: absolute;
-  width: 72.43px;
-  height: 72px;
-  border-radius: 50%;
-  margin: 3px 3px;
-  background-color: #D9D9D9;
-}
-.one-line-menu{
-  z-index:1;
-  position: relative;
-  top: 22.19px;
-  width:42px;
-  height:7.64px;
-  background-color: #524F50;
-  margin: 5.35px 18.21px;
-  border-radius: 3.05px;
-}
-.at_symbol{
-  position: relative;
-  font-size: 24px;
-  margin: -70px 49px;
-  color: #E02AA4;
-  font-weight: 800;
+.big-btn-text a {
+  --bs-link-hover-color: rgba(0, 0, 0, 0.6);
 }
 .container {
   height: 100vh;
