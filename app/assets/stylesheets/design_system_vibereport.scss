@@ -194,9 +194,12 @@ textarea {
   border-radius: 3.05px;
   border: 2px solid $gray-500;
 }
-#dropdown-stick.show{
-  .one-line-menu{
-    border-color: $primary ;
+#dropdown-stick {
+  color: transparent !important;
+  &.show {
+    .one-line-menu {
+      border-color: $primary;
+    }
   }
 }
 // END of DROPDOWN MENU
