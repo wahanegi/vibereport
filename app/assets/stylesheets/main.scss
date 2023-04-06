@@ -117,10 +117,7 @@ body {
 .rating-comment-container {
   .rating-label {
     box-sizing: border-box;
-    width: 113.65px;
-    left: 581px;
-    top: 617.27px;
-    border: 1.15px solid #000000;
+    width: 110px;
     display: inline-block;
     cursor: pointer;
     font-family: 'Inter';
@@ -145,22 +142,24 @@ body {
 .comment-label {
   textarea {
     box-sizing: border-box;
-    width: 564.76px;
-    height: 301px;
+    width: 550px;
+    height: 200px;
     border: 2px solid #000000;
     border-radius: 28.7214px;
     padding-top: 20px;
     font-family: 'Josefin Sans';
     font-size: 24px;
     margin-top: 5px;
+    text-align: initial;
   }
 
   textarea::placeholder {
     color: #0009;
     font-family: 'Josefin Sans';
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 24px;
+    text-align: initial;
   }
 
   .form-control:focus {
@@ -171,5 +170,15 @@ body {
     box-shadow: none;
     border: 2px solid #5689EB;
   } 
+}
+h3.mt-3 {
+  font-size: 36px;
+  font-weight: 700;
+}
+.gif-productivity {
+  margin-top: -40px;
+}
+.emotion-small {
+  margin: 5px 25px 30px;
 }
 //IntenseLine

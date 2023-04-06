@@ -3,7 +3,7 @@ import {Footer, Header, Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
 
-const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, category}) => {
+const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, category, isBlankGif}) => {
   const handleRatingClick = (value) => setRating(value);
   const handleCommentClick = (event) => setComment(event.target.value);
   return (
@@ -28,7 +28,7 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
           <label className="comment-label">
             <textarea
               className="form-control"
-              placeholder="Help us better understand why you chose this meme and intensity level!"
+              placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
               defaultValue={comment}
               onChange={handleCommentClick}
               maxLength={700}
@@ -48,6 +48,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState('');
   const [commentTouched, setCommentTouched] = useState(false);
+  const isBlankGif = isBlank(gif_url)
   
   const handlingOnClickNext = () => {
     steps.push('ProductivityCheckLow')
@@ -55,19 +56,28 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
-    <div className='gif'>
+    <div className='gif gif-productivity'>
       <img src={gif_url} alt='Giphy image' className={`small image-${category}`} />
     </div>
-    <ButtonEmotion category={category}>{word}</ButtonEmotion>
+    <div className='emotion-small'>
+     <ButtonEmotion category={category}>{word}</ButtonEmotion> 
+    </div>    
   </div>
 
-  const EmotionSection = () => <Fragment>
-    {
-      isBlank(gif_url) ?
-        <h1>"{capitalizeFirstLetter(word)}" week? Most excellent!</h1> :
+  const EmotionSection = () => 
+  <Fragment>
+    {isBlank(gif_url) ? (
+      <Fragment>
+        <h1>"{capitalizeFirstLetter(word)}" week? Most excellent!</h1>
+        <h3>Select how intense the feeling was</h3>
+        <br/>
+      </Fragment>
+    ) : (
+      <Fragment>
         <EmotionGif />
-    }
-    <h3 className='mt-3'>Select how intense the feeling was</h3>
+        <h3 className='mt-3'>Select how intense the feeling was</h3>
+      </Fragment>
+    )}
   </Fragment>
 
   const generateStyles = (value, selected, category) => {
@@ -119,6 +129,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
               setComment={setComment} 
               generateStyles={generateStyles}
               category={category}
+              isBlankGif={isBlankGif}
        />
     </div>
     <Footer nextClick={handlingOnClickNext} disabled={rating === null}/>
