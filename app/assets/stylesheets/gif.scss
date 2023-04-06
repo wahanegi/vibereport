@@ -1,0 +1,127 @@
+.gif-item {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0.5%;
+  position: relative;
+  width: 19%;
+}
+
+.gif-clicked-positive {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0.5%;
+  position: relative;
+  width: 19%;
+  border: 8px solid $green;
+  border-radius: 6px;
+  img {
+    width: 100%;
+  }
+}
+
+.gif-clicked-neutral {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0.5%;
+  position: relative;
+  width: 19%;
+  border: 8px solid $blue;
+  border-radius: 6px;
+  img {
+    width: 100%;
+  }
+}
+
+.gif-clicked-negative {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0.5%;
+  position: relative;
+  width: 19%;
+  border: 8px solid $red;
+  border-radius: 6px;
+  img {
+    width: 100%;
+  }
+}
+
+.gif-item img {
+  width: 100%;
+}
+
+.gif-list {
+  column-gap: 0.5em;
+  font-size: .85em;
+  padding: 0;
+}
+
+.gif-card {
+  height: 42vh;
+  background: $dark-grey;
+  border-radius: 14.5358px;
+  padding: 0 0 10px 0;
+
+  .card-header {
+    height: 74.69px;
+  }
+
+  .card-header input {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 45px;
+    background-color: $light-grey !important;
+    text-align: start;
+    &.positive-input {
+      color: $green !important;
+    }
+    &.neutral-input {
+      color: $blue !important;
+    }
+    &.negative-input {
+      color: $red;
+    }
+    &.other-input {
+      color: $dark-grey !important;
+    }
+  }
+
+  .card-scroll::-webkit-scrollbar {
+    background-color: $light-grey;
+    border-radius: 8px;
+  }
+
+  .card-scroll {
+    max-height: 417px;
+    overflow-y: auto;
+  }
+
+  .card-scroll::-webkit-scrollbar-thumb {
+    width: 24.08px;
+    height: 63.79px;
+    background: #77CCFC;
+    border-radius: 8px;
+  }
+}
+
+.gif img {
+  &.small {
+    max-width: 312px;
+    max-height: 170px;
+  }
+  &.big {
+    max-width: 60vw;
+    max-height: 40vh;
+  }
+
+  padding: 0;
+  border-radius: 6px;
+  &.image-positive {
+    border: 6px solid $green !important;
+  }
+  &.image-neutral {
+    border: 6px solid $blue !important;
+  }
+  &.image-negative {
+    border: 6px solid $red !important;
+  }
+}

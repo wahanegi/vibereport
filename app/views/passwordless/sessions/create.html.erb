@@ -1,9 +1,5 @@
-<div class="container text-center" style="margin-top: 250px">
-  <div class="convert my-4">
-    <p>Logo/Brand</p>
-    <div class="line1"></div>
-    <div class="line2"></div>
-  </div>
+<div class="text-center mx-5" style="margin-top: 250px">
+  <%= image_tag("logo.svg", width: 190, height: 87) %>
   <div class="sub-header my-4">Check your inbox!</div>
   <h4 class="my-2">Look for an unique access link in your inbox at:</h4>
   <% if params.dig("passwordless", "email").present? %>
@@ -15,8 +11,8 @@
     <p class='m-0'>to contact an administrator.</p>
   </h4>
   <div class="d-flex align-items-center justify-content-end" style="margin-top: 100px">
-    <%= link_to "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: 'icon-circle' do %>
-      <%= content_tag(:i, "", class: "fa-solid fa-3x fa-question") %>
-    <% end %>
+    <%= link_to image_tag("help.svg"),
+                "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}",
+                class: 'help-icon' %>
   </div>
 </div>
