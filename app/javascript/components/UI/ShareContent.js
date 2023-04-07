@@ -10,7 +10,7 @@ import {NavLink} from "react-router-dom";
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
-  <button className={`${addClass} btn emotion ${emotion.category}`}>
+  <button className={`${addClass} btn-custom emotion ${emotion.category}`}>
     <span hidden={!showPencil} onClick={onClick} className="edit-icon">
       <img src={edit_pencil} alt="pencil"/>
     </span>

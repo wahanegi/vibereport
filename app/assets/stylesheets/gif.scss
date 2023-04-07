@@ -12,7 +12,7 @@
   margin: 0.5%;
   position: relative;
   width: 19%;
-  border: 8px solid $green;
+  border: 8px solid $sea-green;
   border-radius: 6px;
   img {
     width: 100%;
@@ -25,7 +25,7 @@
   margin: 0.5%;
   position: relative;
   width: 19%;
-  border: 8px solid $blue;
+  border: 8px solid $steel-blue;
   border-radius: 6px;
   img {
     width: 100%;
@@ -38,7 +38,7 @@
   margin: 0.5%;
   position: relative;
   width: 19%;
-  border: 8px solid $red;
+  border: 8px solid $cinnamon;
   border-radius: 6px;
   img {
     width: 100%;
@@ -56,37 +56,37 @@
 }
 
 .gif-card {
-  height: 42vh;
-  background: $dark-grey;
-  border-radius: 14.5358px;
-  padding: 0 0 10px 0;
+  height: 42vh !important;
+  background-color: $gray-500 !important;
+  border-radius: 14.5358px !important;
+  padding: 0 0 10px 0 !important;
 
   .card-header {
-    height: 74.69px;
+    height: 100px;
+    z-index: 1;
   }
 
   .card-header input {
     font-weight: 700;
-    font-size: 40px;
-    line-height: 45px;
-    background-color: $light-grey !important;
+    font-size: $h1-font-size;
+    background-color: $gray-200 !important;
     text-align: start;
     &.positive-input {
-      color: $green !important;
+      color: $sea-green !important;
     }
     &.neutral-input {
-      color: $blue !important;
+      color: $steel-blue !important;
     }
     &.negative-input {
-      color: $red;
+      color: $cinnamon;
     }
     &.other-input {
-      color: $dark-grey !important;
+      color: $gray-500 !important;
     }
   }
 
   .card-scroll::-webkit-scrollbar {
-    background-color: $light-grey;
+    background-color: $gray-200;
     border-radius: 8px;
   }
 
@@ -116,12 +116,12 @@
   padding: 0;
   border-radius: 6px;
   &.image-positive {
-    border: 6px solid $green !important;
+    border: 6px solid $sea-green !important;
   }
   &.image-neutral {
-    border: 6px solid $blue !important;
+    border: 6px solid $steel-blue !important;
   }
   &.image-negative {
-    border: 6px solid $red !important;
+    border: 6px solid $cinnamon !important;
   }
 }
