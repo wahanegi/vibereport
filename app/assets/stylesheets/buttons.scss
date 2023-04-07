@@ -126,9 +126,6 @@
 // because they don't apply to the overall hierarchy
 
 .btn-custom {
-  font-style: normal;
-  font-weight: 700;
-
   &:disabled {
     opacity: 0.5;
   }
