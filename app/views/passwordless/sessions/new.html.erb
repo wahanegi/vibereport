@@ -1,12 +1,8 @@
 <%= form_with model: @session, url: send(Passwordless.mounted_as).sign_in_path, data: { turbo: 'false'} do |f| %>
-  <div class="container text-center" style="margin-top: 150px">
+  <div class="text-center mx-5" style="margin-top: 150px">
     <div class="header mt-5">Oh, hi there!</div>
     <div class="sub-header muted my-4">Welcome to</div>
-    <div class="convert my-4">
-      <p>Logo/Brand</p>
-      <div class="line1"></div>
-      <div class="line2"></div>
-    </div>
+    <%= image_tag("logo.svg", width: 190, height: 87) %>
     <% if flash.to_h["error"] == 'Expired!' %>
       <h3 class="muted my-4">Your login link may have expired. Click here to get a new one</h3>
     <% else %>
@@ -19,13 +15,13 @@
     <div class="d-flex align-items-center" style="margin-top: 100px">
       <div class="w-100">
         <div class="justify-content-center">
-          <%= f.submit 'Next', class: "btn btn-next", id: "next-button", disabled: true %>
+          <%= f.submit 'Next', class: "btn btn-regular c1", id: "next-button", disabled: true %>
         </div>
       </div>
-      <div class="flex-shrink-1">
-        <%= link_to "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: 'icon-circle' do %>
-          <%= content_tag(:i, "", class: "fa-solid fa-3x fa-question") %>
-        <% end %>
+      <div class="flex-shrink-1 mr-3">
+        <%= link_to image_tag("help.svg"),
+                    "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}",
+                    class: 'help-icon' %>
       </div>
     </div>
   </div>

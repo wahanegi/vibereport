@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_084242) do
     t.string "gif_url"
     t.boolean "not_working", default: false
     t.jsonb "notices"
-    t.string "steps", null: false
+    t.string "steps"
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

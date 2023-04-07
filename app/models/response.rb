@@ -6,7 +6,7 @@
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  notices        :jsonb
-#  steps          :string           not null
+#  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint

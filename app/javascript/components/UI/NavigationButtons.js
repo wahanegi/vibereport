@@ -1,16 +1,13 @@
 import React from 'react';
-import {Button} from "react-bootstrap";
-import BackButton from "../UI/BackButton";
+// import {Button} from "react-bootstrap";
+import {backHandling} from "../helpers/helpers";
+import {BtnBack, BtnNext} from "./ShareContent";
 
 function NavigationButtons({ data, setData, handlingOnClickNext }) {
   return (
-    <div>
-      <div>
-        <BackButton data={data} setData={setData}>Back</BackButton>
-      </div>
-      <div>
-        |<Button onClick={handlingOnClickNext}>Next</Button>
-      </div>
+    <div className='mt-5'>
+      <BtnBack onClick={backHandling} />
+      <BtnNext onClick={handlingOnClickNext} />
     </div>
   );
 }

@@ -1,22 +1,14 @@
-$font-family: 'Josefin Sans', sans-serif;
-$color-muted: rgba(0, 0, 0, 0.6);
-$color-black: #000000;
-$color-blue: #5689EB;
-$color-white: #FFFFFF;
-$color-rose: #E02AA4;
-$color-input-positive: #CCEDD5;
-$color-input-positive-text: #5DAA73;
-$color-input-neutral: rgba(194, 211, 242, 0.6);
-$color-input-neutral-text: #5689EB;
-$color-input-negative: #FCDDCE;
-$color-input-negative-text: #F68E5B;
+@import 'design_system_vibereport';
 
+/////////////////////|
+// DEVELOPERS AREA //|
+/////////////////////|
 a{
   font-size: 23px;
   color: #0007A3;
 }
 body {
-  font-family: $font-family;
+  font-family: $font-family-base;
   font-style: normal;
 }
 .header {
@@ -35,85 +27,66 @@ body {
 .muted {
   color: $color-muted;
 }
+
+.text-field-new-html{
+  width: 588px !important;
+  height:59px;
+}
+.light-grey-text {
+  color: $light-grey;
+}
 .email_field{
+  //@media (min-width: 767px) {
+  //  min-width: 660px;
+  //}
   box-sizing: border-box;
-  width: 660px;
+  //width: 660px;
   background: $color-white;
   margin: 0 auto;
+  //text-align: center;
 }
 .email_field input{
-  width: 660px;
+  //@media (min-width: 767px) {
+  //  min-width: 660px;
+  //}
   height: 70px;
   font-size: 40px;
   line-height: 70px;
   color: $color-muted;
   margin: 13px 0;
-  border: 3px solid $color-blue;
+  //border: 3px solid $color-blue;
+  border: 3px solid $light-blue;
   border-radius: 15px;
   padding-left: 23px;
-}
-.btn-next, .btn-next:disabled {
-  width: 235px;
-  height: 52px;
-  background: $color-blue;
-  border: 1px solid #000000;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 26.6341px;
-  line-height: 32px;
-  color: $color-white;
-  margin-left: 70px;
 }
 .fa-question {
   color:  $color-rose;
 }
 .icon-circle {
+  position: absolute;
+  right: 47px;
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 78.43px;
-  height: 78px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background-color:  #D9D9D9;
-  filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
+  background-image: url("question.svg");
 }
 //<ListEmotion>
-.ic-position{
-  position: relative;
-  top: 0px;
-  left: 0px;
+.big-btn-text a {
+  --bs-link-hover-color: rgba(0, 0, 0, 0.6);
 }
-.menu{
-  display:revert;
-  background: linear-gradient(to right top, #D9D9D9 72%, #D7007B 100%);
+.container {
+  height: 100vh;
+  width: 100vw;
 }
-.m-cover{
-  z-index:1;
-  position: absolute;
-  width: 72.43px;
-  height: 72px;
-  border-radius: 50%;
-  margin: 3px 3px;
-  background-color: #D9D9D9;
+.wrapper {
+  min-height: 100vh;
+  text-align: center;
 }
-.one-line-menu{
-  z-index:1;
-  position: relative;
-  top: 22.19px;
-  width:42px;
-  height:7.64px;
-  background-color: #524F50;
-  margin: 5.35px 18.21px;
-  border-radius: 3.05px;
+.central-element {
+  min-height: 60vh;
 }
-.at_symbol{
-  position: relative;
-  font-size: 24px;
-  margin: -70px 49px;
-  color: #E02AA4;
-  font-weight: 800;
+.help-icon {
+  filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 //</ListEmotion
