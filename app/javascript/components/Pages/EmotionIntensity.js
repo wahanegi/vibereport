@@ -1,7 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Footer, Header, Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
+import PoweredBy from '../../../assets/images/PoweredBy.svg';
 
 const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, category, isBlankGif}) => {
   const handleRatingClick = (value) => setRating(value);
@@ -47,8 +48,16 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const { gif_url } = data.response.attributes
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState('');
-  const [commentTouched, setCommentTouched] = useState(false);
   const isBlankGif = isBlank(gif_url)
+  
+  useEffect(() => {
+    if (data.response.attributes.rating) {
+      setRating(data.response.attributes.rating);
+    }
+    if (data.response.attributes.comment) {
+      setComment(data.response.attributes.comment);
+    }
+  }, [data]);
   
   const handlingOnClickNext = () => {
     steps.push('ProductivityCheckLow')
@@ -58,6 +67,8 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
     <div className='gif gif-productivity'>
       <img src={gif_url} alt='Giphy image' className={`small image-${category}`} />
+      <br />
+        <img src={PoweredBy} alt='PoweredBy' className={`small-image-powered-by`}/>
     </div>
     <div className='emotion-small'>
      <ButtonEmotion category={category}>{word}</ButtonEmotion> 
@@ -75,7 +86,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
     ) : (
       <Fragment>
         <EmotionGif />
-        <h3 className='mt-3'>Select how intense the feeling was</h3>
+        <h3 className='mt-2'>Select how intense the feeling was</h3>
       </Fragment>
     )}
   </Fragment>

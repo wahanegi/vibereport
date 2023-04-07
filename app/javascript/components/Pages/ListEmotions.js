@@ -20,6 +20,8 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       emotion_id: emotion_id,
       time_period_id: timePeriod.id,
       user_id: data.current_user_id,
+      comment: '',
+      rating: '',
     }
     saveDataToDb( steps, dataRequest )
   }

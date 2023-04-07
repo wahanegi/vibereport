@@ -124,4 +124,26 @@
   &.image-negative {
     border: 6px solid $red !important;
   }
+  &.image-powered-by {
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 22px;
+  }
+}
+.small-image-powered-by {
+  position: initial;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 10px;
+}
+
+.gif {
+  display: inline-block;
+  text-align: right;
+}
+
+img, svg {
+  vertical-align: text-top;
 }
