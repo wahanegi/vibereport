@@ -43,19 +43,22 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   
   
   const handlingOnClickNext = () => {
-    steps.push('ProductivityBadFollowUp');
-    saveDataToDb(steps, { productivity: productivity });
+    if (productivity < 3) {
+      steps.push('productivity-bad-follow-up');
+    } else {
+      steps.push('CausesToCelebrate');
+    }
+    saveDataToDb(steps, { productivity });
   };
 
   const handleSliderChange = (event) => {
     event.preventDefault()
     const newProductivity = event.target.value;
-    console.log(event.target.value);
     if (newProductivity <= 9) {
     setProductivity(newProductivity);
-    } 
-    console.log('productivity', productivity);
+    }
   };
+  console.log('productivity', productivity);
 
   const flameImages = [flame2, flame3, flame4, flame5, flame6, flame7, flame8, flame9, flame10];
 
