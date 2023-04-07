@@ -47,10 +47,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   }
 
   const rangeFormat = (tp) => {
-    let start_date = new Date(tp.start_date)
-    let end_date = new Date(tp.end_date)
-    let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
-    return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
+    let dueDate = new Date(tp.due_date)
+    let month = dueDate.toLocaleString('default', {month: 'long'}).slice(0,3)
+    return month + ' ' + `${dueDate.getDate()}`.padStart(2, '0')
   }
 
   //*** **transformation of table** to the view:
@@ -70,8 +69,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <div className="h-40">
              <div className="calendar ml-240 mt-37">
                <div className="data mx-auto my-0 ">
-                 21 Jan
-                 {/*<Calendar timePeriod={timePeriod} />*/}
+                 {rangeFormat(timePeriod)}
                </div>
              </div>
           </div>

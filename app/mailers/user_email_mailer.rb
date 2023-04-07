@@ -8,7 +8,7 @@ class UserEmailMailer < ApplicationMailer
   def response_invite(user, time_period)
     @user = user
     @general_link = { controller: 'api/v1/responses', action: 'response_flow_from_email',
-                      time_period_id: TimePeriod.current, not_working: false, user_id: @user.id }
+                      time_period_id: time_period, not_working: false, user_id: @user.id }
     @link_for_own_word = [@general_link, { last_step: 'emotion-entry' }].reduce(:merge!)
     @link_for_was_not  = [@general_link, { last_step: 'results' }].reduce(:merge!)
     @link_for_emotion  = [@general_link, { emotion_id: nil, last_step: 'meme-selection' }].reduce(:merge!)
@@ -28,6 +28,6 @@ class UserEmailMailer < ApplicationMailer
   end
 
   def range_format(date)
-    "#{date.end_date.strftime('%d')} #{date.end_date.strftime('%b')}"
+    "#{date.due_date.strftime('%b')} #{date.due_date.strftime('%d')}"
   end
 end
