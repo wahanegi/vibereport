@@ -1,19 +1,20 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :password
+  permit_params :first_name, :last_name, :email, :password, :opt_out
 
   index do
     selectable_column
-    id_column    
+    id_column
     column :first_name
     column :last_name
     column :email
     column :created_at
+    column :opt_out
     column 'Passwordless Sessions' do |user|
       user.passwordless_sessions.size
     end
     actions
   end
-  show do |user|
+  show do
     columns do
       column do
         attributes_table do
@@ -29,15 +30,16 @@ ActiveAdmin.register User do
   end
 
   sidebar :passwordless_sessions, only: :show do
-    link_to "Go to sessions", admin_user_passwordless_sessions_path(user)
+    link_to 'Go to sessions', admin_user_passwordless_sessions_path(user)
   end
 
   
   form do |f|
-    f.inputs do      
+    f.inputs do
       f.input :first_name
       f.input :last_name
       f.input :email
+      f.input :opt_out
     end
     f.actions
   end
@@ -59,9 +61,8 @@ ActiveAdmin.register User do
         error_message = e.message
       end
 
-      redirect_to admin_users_path, notice: (unless error_message
-                                               'Successfully updated!'
-                                             end), alert: error_message
+      notice_message = error_message ? nil : 'Successfully updated!'
+      redirect_to admin_users_path, notice: notice_message, alert: error_message
     end
   end
 end

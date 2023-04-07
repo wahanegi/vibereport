@@ -51,7 +51,8 @@
         "SMTP_DOMAIN": "sandbox.smtp.mailtrap.io",
         "SMTP_PASSWORD": "xxx",
         "SMTP_PORT": "2525",
-        "SMTP_USERNAME": "xxx"
+        "SMTP_USERNAME": "xxx",
+        "DEFAULT_FROM_ADDRESS": "hello"
       },
       "scripts": {
         "postdeploy": "rails db:schema:load db:seed"

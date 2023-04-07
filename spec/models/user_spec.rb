@@ -30,6 +30,12 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
+  context 'associations' do
+    it 'has many responses' do
+      expect(user).to have_many(:responses).dependent(:destroy)
+    end
+  end
+
   context 'Validations' do
     subject { FactoryBot.create(:user) }
 
@@ -57,15 +63,15 @@ RSpec.describe User, type: :model do
       expect(user).to_not be_valid
     end
     it 'last_name fails with more then 15 characters' do
-      user.last_name =  Faker::Internet.name[16..40]
+      user.last_name = Faker::Internet.name[16..40]
       expect(user).to_not be_valid
     end
     it 'first_name passes for characters from 1 to 15' do
-      user.first_name =  Faker::Internet.name[1..15]
+      user.first_name = Faker::Internet.name[1..15]
       expect(user).to be_valid
     end
     it 'last_name passes for characters from 1 to 15' do
-      user.last_name =  Faker::Internet.name[1..15]
+      user.last_name = Faker::Internet.name[1..15]
       expect(user).to be_valid
     end
   end

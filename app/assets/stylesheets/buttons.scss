@@ -1,0 +1,222 @@
+@import "colors";
+@import "variables";
+@import "mixins";
+@import "bootstrap/scss/_mixins";
+
+.btn {
+
+  &:active {
+    margin: 3px 0 -3px 0;
+    border-color: transparent;
+  }
+  @include button-variant( $royal-blue, $black, $white, shift-color($royal-blue, 30%), shift-color($royal-blue,30%),
+                           $white, shade-color($royal-blue, 20%), shade-color($royal-blue,20%), $black, $royal-blue,
+                           $royal-blue,$white);
+
+  // use with C1 text
+  &.btn-regular{
+    width:            14.688rem;
+    height:           3.75rem;
+    border:           1px solid $black ;
+    border-radius:    .75rem  ;
+    color:            $white ;
+    background-color: $royal-blue;
+    box-shadow:       $btn-box-shadow-other;
+    &.back{
+      background-color: $gray-200;
+    }
+  }
+
+  // use with C2 or C3 text
+  &.btn-feature{
+    width:            26.25rem;
+    height:           3.75rem;
+    border:           2.5px solid $royal-blue;
+    border-radius:    1rem;
+    color:            $gray-300;
+    background-color: $white;
+    box-shadow:       $btn-box-shadow-other;
+  }
+
+  // use with C1 or C2 text
+  // Note: system interactions will pair with C1 text, whereas user actions will pair with C2.
+  &.btn-modal{
+    width:            15rem;
+    height:           4rem;
+    border-radius:    6px;
+    color:            $white      ;
+    background-color: $royal-blue;
+    box-shadow:       $btn-box-shadow;
+    &.system{
+      background-color: $primary;
+      &:hover{
+        background-color: shift-color($primary,30%);
+      }
+    }
+  }
+
+  // For the Special Components/Inputs
+  &.btn-bubbles{
+    border:           1px solid $black;
+    &.wb1{
+      padding: 0 5px;
+      height:         2rem;
+      border-radius:  15px;
+      box-shadow:     $btn-box-shadow;
+      min-width:      8rem;
+      @include emotion
+    }
+    &.wb2{
+      padding: 0 18px;
+      height:         4.375rem;
+      border-radius:  2.125rem;
+      box-shadow:     9px 13.5px 13.5px $gray-100;
+      min-width:      17.875rem;
+      @include emotion
+    }
+  }
+
+
+  // For the Special buttons
+  // ’More Shout-outs’ button (use with B3)
+  &.btn-more-shot-outs{
+    @include button-variant($primary, $primary, $white, shift-color($primary, 10%), shift-color($primary,10%),
+                            $white, shade-color($primary, 20%), shade-color($primary,20%), $white);
+    height:           3.75rem;
+    text-align:       left;
+    background-color: $white;
+    border:           0.25rem solid $primary;
+    color:            $primary;
+    border-radius:    1.25rem;
+    box-shadow:       $btn-box-shadow;
+  }
+
+  // For Dropdown
+  &.btn-item-menu {
+    @include button-variant($white, $primary, $primary, shift-color($white, 7%), shift-color($primary,10%),
+                            $primary, $primary, $primary, $white);
+    width:            238px;
+    height:           40px;
+    box-shadow:       0px 4px 4px $gray-300;
+    border-radius:    .5rem;
+    margin:           5px !important;
+    font-size:        20px !important;
+
+  }
+}
+
+// For the Special inputs
+// Intensity selection & follow-up field (use B3)
+.btn-intensity-positive-semicircle{
+  @include row-semicircle($green-100, $green-200, $green-300, $green-400, $green-500)
+}
+.btn-intensity-negative-semicircle{
+  @include row-semicircle($orange-100, $orange-200, $orange-300, $orange-400, $orange-500)
+}
+.btn-intensity-positive-quarter-circle{
+  @include row-quarter-circle($green-100, $green-200, $green-300, $green-400, $green-500)
+}
+.btn-intensity-negative-quarter-circle{
+  @include row-quarter-circle($orange-100, $orange-200, $orange-300, $orange-400, $orange-500)
+}
+
+// We recommend using the general styles above
+// these style buttons are from CI-83
+// they should be redone (recommended) relative to common styles (see epos CI-122)
+// because they don't apply to the overall hierarchy
+
+.btn {
+  font-style: normal;
+  font-weight: 700;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &.emotion {
+    position: relative;
+    padding: 10px 40px;
+    height: 70px;
+    border: 2.25806px solid #000000;
+    box-shadow: 9.03226px 13.5484px 9.03226px rgba(0, 0, 0, 0.25);
+    border-radius: 33.871px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 43.81px;
+    line-height: 44px;
+    text-align: center;
+    cursor: default !important;
+
+    &.positive {
+      background: $light-green;
+      color: $green;
+    }
+
+    &.neutral {
+      background: $light-blue;
+      color: $blue;
+    }
+
+    &.negative {
+      background: $light-red;
+      color: $red;
+    }
+  }
+
+  .edit-icon {
+    position: absolute;
+    bottom: 41px;
+    right: -11px;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  &.outline {
+    padding: 10px 20px;
+    min-height: 60px;
+    border: 2.48225px solid $dark-blue;
+    filter: drop-shadow(0px 3.30966px 3.30966px rgba(0, 0, 0, 0.25))
+    drop-shadow(3.30966px 4.96449px 3.30966px rgba(0, 0, 0, 0.25));
+    border-radius: 15.8924px;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    background: $color-white;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  &.primary {
+    padding: 10px 20px;
+    min-height: 60px;
+    width: 235px;
+    background: $dark-blue;
+    border: 1px solid $color-black;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    font-size: 32px;
+    line-height: 39px;
+    color: $color-white;
+  }
+
+  &.navigation {
+    width: 235px;
+    height: 52px;
+    border: 1px solid $color-black;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    font-size: 26.6341px;
+    line-height: 32px;
+    color: $color-white;
+    margin-left: 70px;
+    &.next {
+      background: $dark-blue;
+    }
+    &.back {
+      background: $grey;
+    }
+  }
+}
+

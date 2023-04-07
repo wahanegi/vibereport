@@ -109,6 +109,8 @@ GEM
     colorize (0.8.1)
     concurrent-ruby (1.2.0)
     crass (1.0.6)
+    css_parser (1.14.0)
+      addressable
     cssbundling-rails (1.1.2)
       railties (>= 6.0.0)
     date (3.3.3)
@@ -146,6 +148,7 @@ GEM
     has_scope (0.8.1)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
+    htmlentities (4.3.4)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     inherited_resources (1.13.1)
@@ -227,6 +230,19 @@ GEM
       bcrypt (~> 3.1.11)
       rails (>= 5.1.4)
     pg (1.4.5)
+    postmark (1.23.0)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
+    premailer (1.19.0)
+      addressable
+      css_parser (>= 1.12.0)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.12.0)
+      actionmailer (>= 3)
+      net-smtp
+      premailer (~> 1.7, >= 1.7.9)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -380,6 +396,7 @@ GEM
 PLATFORMS
   arm64-darwin-20
   arm64-darwin-22
+  x86_64-darwin-21
   x86_64-darwin-22
   x86_64-linux
 
@@ -401,8 +418,11 @@ DEPENDENCIES
   jsbundling-rails (~> 1.1, >= 1.1.1)
   jsonapi-serializer (~> 2.2)
   letter_opener_web
+  nokogiri
   passwordless (~> 0.11.0)
   pg (~> 1.1)
+  postmark-rails (~> 0.22.1)
+  premailer-rails
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
   rails-controller-testing
