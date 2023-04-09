@@ -90,3 +90,63 @@ body {
   filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 //</ListEmotion
+
+.color-black{
+  color: $black;
+}
+.gray-600{
+  color: $gray-600
+}
+
+//new.html.erb
+.mt125 {
+  margin-top: 125px;
+}
+.mt-17 {
+  margin-bottom:-17px;
+}
+.w588-h59 {
+  width:588px;
+  height:59px;
+}
+.w660 {
+  width:660px;
+}
+.mt162{
+  margin-top: 162px;
+}
+.r47-t767 {
+  right: 47px;
+  top: 767px
+}
+.min-w675{
+  min-width:675px
+}
+
+//create.html.erb
+.mt261-min-w750{
+  margin-top: 261px;
+  min-width:750px;
+}
+.mb-17 {
+  margin-bottom:-17px;
+}
+.mt64-w746-h49 {
+  margin-top:63px;
+  width:746px;
+  height:49px;
+}
+.mt77 {
+  margin-top:77px;
+}
+.w500-h59{
+  width:500px;
+  height:59px;
+}
+.t767-min-w650{
+  top: 767px;
+  min-width:650px;
+}
+.h0{
+  height: 0;
+}

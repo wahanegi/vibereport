@@ -1,16 +1,19 @@
-<div class="text-center mx-5" style="margin-top: 250px">
-  <%= image_tag("logo.svg", width: 190, height: 87) %>
-  <div class="sub-header my-4">Check your inbox!</div>
-  <h4 class="my-2">Look for an unique access link in your inbox at:</h4>
+<div class="mx-auto mt261-min-w750">
+  <div class="mb-17 position-relative fs-7">Logo/Brand</div>
+  <%= image_tag("envelope.png", width: 190, height: 87) %>
+  <div class="mt64-w746-h49  mx-auto">
+    <h2 class="color-black">Check your inbox!</h2>
+    <p class="b3 color-black">Look for an unique access link in your inbox at:</p>
+  </div>
   <% if params.dig("passwordless", "email").present? %>
-    <h2 class="my-3 muted"><%= params.dig("passwordless", "email") %></h2>
+    <div class="b1 gray-600 mt77"><%= params.dig("passwordless", "email") %></div>
   <% end %>
-  <h4 class="muted my-4">
-    <p class='m-0'>If you have any issues, use the help</p>
-    <p class='m-0'>button at the bottom right of this window</p>
-    <p class='m-0'>to contact an administrator.</p>
-  </h4>
-  <div class="d-flex align-items-center justify-content-end" style="margin-top: 100px">
+  <div class="w500-h59 gray-600 my-7 mx-auto b3">
+    <div>If you have any issues, use the help</div>
+    <div>button at the bottom right of this window</div>
+    <div>to contact an administrator.</div>
+  </div>
+  <div class="t767-min-w650 position-absolute w-100 d-flex justify-content-end px-5">
     <%= link_to image_tag("help.svg"),
                 "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}",
                 class: 'help-icon' %>
