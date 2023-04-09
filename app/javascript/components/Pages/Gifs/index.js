@@ -37,6 +37,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
           const gifs = data.data?.map(gif => ({
             id: gif.id,
             src: gif.images.original.url,
+            src_preview: gif.images.preview_gif.url,
             height: parseInt(gif.images.fixed_width.height),
           }));
           setGifs(gifs)
