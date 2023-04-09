@@ -99,11 +99,18 @@ body {
 }
 
 //new.html.erb
+.w746-h59 {
+  width: 746px;
+  height: 59px;
+}
 .mt125 {
   margin-top: 125px;
 }
 .mt-17 {
-  margin-bottom:-17px;
+  margin-top:-17px !important;
+}
+.mb115{
+  margin-bottom: 115px;
 }
 .w588-h59 {
   width:588px;
@@ -131,13 +138,16 @@ body {
 .mb-17 {
   margin-bottom:-17px;
 }
+.mb28 {
+  margin-bottom: 28px !important;
+}
 .mt64-w746-h49 {
   margin-top:63px;
   width:746px;
   height:49px;
 }
-.mt77 {
-  margin-top:77px;
+.mt85 {
+  margin-top:85px;
 }
 .w500-h59{
   width:500px;
@@ -149,4 +159,7 @@ body {
 }
 .h0{
   height: 0;
+}
+.h52{
+  height: 52px !important;
 }

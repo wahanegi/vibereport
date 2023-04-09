@@ -2,16 +2,16 @@
   <div class="mb-17 position-relative fs-7">Logo/Brand</div>
   <%= image_tag("envelope.png", width: 190, height: 87) %>
   <div class="mt64-w746-h49  mx-auto">
-    <h2 class="color-black">Check your inbox!</h2>
+    <h2 class="color-black mb28">Check your inbox!</h2>
     <p class="b3 color-black">Look for an unique access link in your inbox at:</p>
   </div>
   <% if params.dig("passwordless", "email").present? %>
-    <div class="b1 gray-600 mt77"><%= params.dig("passwordless", "email") %></div>
+    <div class="b1 gray-600 mt85"><%= params.dig("passwordless", "email") %></div>
   <% end %>
-  <div class="w500-h59 gray-600 my-7 mx-auto b3">
-    <div>If you have any issues, use the help</div>
-    <div>button at the bottom right of this window</div>
-    <div>to contact an administrator.</div>
+  <div class="w500-h59 gray-600 my-6 mx-auto b3">
+    <p>If you have any issues, use the help<br>
+    button at the bottom right of this window<br>
+    to contact an administrator.</p>
   </div>
   <div class="t767-min-w650 position-absolute w-100 d-flex justify-content-end px-5">
     <%= link_to image_tag("help.svg"),
