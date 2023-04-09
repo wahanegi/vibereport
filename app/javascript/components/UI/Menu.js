@@ -7,8 +7,8 @@ const Menu = ({ percent_completion }) => {
     <div className='placement-menu'>
       <Dropdown>
         <Dropdown.Toggle  id='dropdown-stick'>
-        <div  className="menu">
-          <div  className="m-cover"></div>
+        <div  className="menu ">
+          <div  className="m-cover  justify-content-end"></div>
           <div className='one-line-menu'></div>
           <div className='one-line-menu'></div>
           <div className='one-line-menu'></div>

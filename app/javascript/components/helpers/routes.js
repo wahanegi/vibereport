@@ -7,7 +7,7 @@ export const ALL_STEPS = [
     {id:"4.1.", step:"ProductivityCheckLow"},
     {id:"4.25.", step:"ProductivityBadFollowUp"},
     {id:"5", step:"CausesToCelebrate"},
-    {id:"6", step:"ShoutoutPromptNone"},
+    {id:"6", step:"recognition"},
     {id:"6.X.", step:"ShoutoutModalExample"},
     {id:"6.XX", step:"ShoutoutModal_FlexUse"},
     {id:"7v2", step:"Icebreaker"},

@@ -19,19 +19,21 @@ body {
 }
 
 p{
-  line-height: 200%;
+  line-height: 100%;
 }
 
 h1, h2 {
   font-weight: 700 !important;
   line-height: 100% !important;
-  color:       $gray-500
+  color:       $gray-500;
 }
 h1, .h1 {
   font-size:   $h1-font-size ;
+  margin-bottom: 48px !important;
 }
 h2, .h2 {
   font-size:   $h2-font-size ;
+  margin-bottom: 36px !important;
 }
 
 .b1 {

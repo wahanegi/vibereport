@@ -36,7 +36,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   }
 
   const onClickNotWorking = () => {
-    steps.push('results')
+    steps.push('recognition')
     const dataRequest = {
       emotion_id: '',
       not_working: true,

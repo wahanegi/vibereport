@@ -83,7 +83,7 @@
     @include element($color5);
     &.edged{
       border-top:            $border-element !important;
-      right:                 $border-element !important;
+      border-right:                 $border-element !important;
     }
   }
 }
