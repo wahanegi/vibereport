@@ -1,7 +1,7 @@
 import Menu from "./Menu";
 import React from "react";
 import {backHandling, rangeFormat} from "../helpers/helpers";
-import shout_out_large from "../../../assets/images/shoutout-large.svg"
+import shout_out_large from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
 import logo from "../../../assets/images/logo.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
@@ -23,7 +23,7 @@ export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular big c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -50,8 +50,8 @@ export const ShoutOutIcon = () =>
   <img src={shout_out_large} alt="shout out" style={{width: 100, height: 100}} />
 
 export const HelpIcon = () =>
-  <NavLink to="mailto: support@vibereport.app">
-    <img src={help_icon} alt="shout out" className='help-icon' style={{width: 100, height: 100}} />
+  <NavLink to="mailto: support@vibereport.app" className='d-flex align-self-center'>
+    <img src={help_icon} alt="shout out" className='help-icon' />
   </NavLink>
 
 export const Footer = ({nextClick}) => <div className='d-flex justify-content-between m-3'>
