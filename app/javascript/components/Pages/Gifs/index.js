@@ -1,9 +1,7 @@
 import React, {useEffect, useState, Fragment} from "react"
 import SearchBar from "./SearchBar";
-import GifList from "./GifList";
-import {GIPHY_INSTRUCTION_URL, GIPHY_SEARCH_URL} from "../../helpers/consts";
-import {Link} from "react-router-dom";
-import isEmpty from "ramda/es/isEmpty";
+import {GIPHY_SEARCH_URL} from "../../helpers/consts";
+import SearchResults from "./SearchResults";
 
 const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif }) => {
   const [term, setTerm] = useState(emotion.word)
@@ -50,35 +48,12 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
     <div className='fw-bold h2 muted mt-2 mb-0'>GIPHY</div>
   </div>
 
-  const Notice = () =>
-    <h1 className='text-white m-3'>We noticed that you didn't add the GIPHY api token for displaying gifs here. Please follow this&nbsp;
-    <Link to={GIPHY_INSTRUCTION_URL} target="_blank" rel="noopener noreferrer">
-      instruction
-    </Link>
-      &nbsp;and add the received token to Heroku Config Vars.
-  </h1>
-
-  const SearchResults = () => {
-    if (isEmpty(gifs)) return <div className='card-body d-flex align-items-center justify-content-center'>
-      <div className='text-white h1'>No results</div>
-    </div>
-
-
-    return <Fragment>
-      {apiGiphyKey === null ?
-        <Notice />:
-        <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
-      }
-    </Fragment>
-  }
-
-
  return  loaded && <Fragment>
    <GiphyLogo />
    <div className='gif-card' >
      <div className='gif-card card' onKeyDown={handleKeyDown}>
        <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-       <SearchResults />
+       <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif, apiGiphyKey}} />
      </div>
    </div>
   </Fragment>
