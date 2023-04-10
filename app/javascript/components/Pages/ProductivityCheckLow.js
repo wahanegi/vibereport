@@ -14,26 +14,32 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
 <section>
     <div className="productivity-container">
       <form>
-        <label htmlFor="productivity-slider" className="form-label">What is your productivity level for this time period?</label>
-        <br />     
-        {productivity > 0 && (
-          <img
-            src={flameImages[productivity-1]}
-            alt={`Productivity flame level ${productivity}`}
-            style={generateStyles(imageSizes[productivity - 1])}
-            className="image-container"
-          />
-        )}
-        <br />
-        <input
-          type="range"
-          min="0"
-          max="9"
-          defaultValue={productivity}
-          onChange={handleSliderChange}
-          id="productivity-slider"
-          className={`form-range level-${productivity}`}
-        /> 
+        <div>
+          <label htmlFor="productivity-slider" className="form-label">What is your productivity level for this time period?</label>
+          <br />     
+          {productivity > 0 && (
+            <div className='image-size'>
+              <img
+                src={flameImages[productivity-1]}
+                alt={`Productivity flame level ${productivity}`}
+                style={generateStyles(imageSizes[productivity - 1])}
+                className="image-container"
+              />
+            </div>          
+          )}
+          </div>
+          <div className='range-size'>
+            <input
+              type="range"
+              min="0"
+              max="9"
+              defaultValue={productivity}
+              onChange={handleSliderChange}
+              id="productivity-slider"
+              className={`form-range level-${productivity}`}
+            />
+          </div>      
+
       </form>
     </div>
   </section>
@@ -48,11 +54,10 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   };
 
   const handleSliderChange = (event) => {
-    event.preventDefault()
-    const newProductivity = event.target.value;
-    console.log(event.target.value);
-    if (newProductivity <= 9) {
-    setProductivity(newProductivity);
+    event.preventDefault();
+    const newProductivity = parseInt(event.target.value, 10);
+    if (newProductivity >= 0 && newProductivity <= 9) {
+      setProductivity(newProductivity);
     } 
     console.log('productivity', productivity);
   };
@@ -60,20 +65,21 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   const flameImages = [flame2, flame3, flame4, flame5, flame6, flame7, flame8, flame9, flame10];
 
   const imageSizes = [
-    {width: '55px', height: '70px'},
-    {width: '84px', height: '98px'},
-    {width: '145px', height: '134px'},
-    {width: '169px', height: '159px'},
-    {width: '185px', height: '196px'},
-    {width: '208px', height: '253px'},
-    {width: '211px', height: '239px'},
-    {width: '221px', height: '271px'},
-    {width: '382px', height: '297px'},
+    {width: '55px', height: '70px', marginTop: '241px'},
+    {width: '84px', height: '98px', marginTop: '213px'},
+    {width: '145px', height: '134px', marginTop: '177px'},
+    {width: '169px', height: '159px', marginTop: '152px'},
+    {width: '185px', height: '196px', marginTop: '115px'},
+    {width: '208px', height: '253px', marginTop: '58px'},
+    {width: '211px', height: '239px', marginTop: '72px'},
+    {width: '221px', height: '271px', marginTop: '40px'},
+    {width: '382px', height: '297px', marginTop: '14px'},
     ];
   
   const generateStyles = (size) => ({
     width: size.width,
     height: size.height,
+    marginTop: size.marginTop,
   });
 
   

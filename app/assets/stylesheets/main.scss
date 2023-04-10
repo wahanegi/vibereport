@@ -280,7 +280,15 @@ body {
   .form-range:focus::-moz-range-thumb {
     box-shadow: none;
   }
-}
 
+}
+.form-range.level-0 {
+  margin-top: 311px;
+}
+  .range-size {
+   //position: fixed;
+   //top: 521px;
+   //left: 480px;
+  }
 
 //
