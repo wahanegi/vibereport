@@ -47,8 +47,8 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   }
 
   const rangeFormat = (tp) => {
-    let dueDate = new Date(tp.due_date)
-    let month = dueDate.toLocaleString('default', {month: 'long'}).slice(0,3)
+    const dueDate = new Date(tp.due_date)
+    const month = dueDate.toLocaleString('default', {month: 'long'}).slice(0,3)
     return month + ' ' + `${dueDate.getDate()}`.padStart(2, '0')
   }
 
