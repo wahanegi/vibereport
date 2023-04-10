@@ -17,7 +17,8 @@ class UserEmailMailer < ApplicationMailer
                 Emotion.neutral.sample(NUMBER_OF_ELEMENTS) +
                 Emotion.negative.sample(NUMBER_OF_ELEMENTS)
     @table = []
-    (0..@emotions.length - 1).each { |i| @table.push(@emotions[(i - (6 * (i / 6).ceil - 1)) * 6 - ((i / 6).ceil - 1) - 2]) }
+    @emotions.each_slice(6) { |sliced_emotions| @table << sliced_emotions }
+    @table = @table.transpose.flatten
     mail(to: user.email, subject: "Hey #{@user.first_name}, how was your week?")
   end
 
