@@ -69,7 +69,7 @@
   .card-header input {
     font-weight: 700;
     font-size: $h1-font-size;
-    background-color: $gray-200 !important;
+    background-color: $light-grey !important;
     text-align: start;
     &.positive-input {
       color: $sea-green !important;
@@ -123,5 +123,11 @@
   }
   &.image-negative {
     border: 6px solid $cinnamon !important;
+  }
+  &.image-powered-by {
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 22px;
   }
 }
