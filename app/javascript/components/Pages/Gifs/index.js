@@ -12,6 +12,8 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
   const [loaded, setLoaded] = useState(false)
   const [keyDown, setKeyDown] = useState(false)
   const apiGiphyKey = api_giphy_key
+  const limit = 30;
+  const rating = 'g';
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 8) {
@@ -23,7 +25,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
   };
 
   useEffect(()=> {
-    const url = `${GIPHY_SEARCH_URL}=${term?.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
+    const url = `${GIPHY_SEARCH_URL}=${term?.replace(/\s/g, '+')}&limit=${limit}&rating=${rating}&api_key=${apiGiphyKey}`;
     const isGiphyLink = /https:\/\/media\.giphy\.com\/media\/\w+\/giphy\.gif/.test(String(term));
     if (isGiphyLink) {
       setIsCustomGif(true)
@@ -36,7 +38,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
         .then((data) => {
           const gifs = data.data?.map(gif => ({
             id: gif.id,
-            src: gif.images.original.url,
+            src: gif.images.downsized.url,
             height: parseInt(gif.images.fixed_width.height),
           }));
           setGifs(gifs)

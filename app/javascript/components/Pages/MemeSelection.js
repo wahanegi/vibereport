@@ -11,6 +11,7 @@ import {
 import {backHandling, isBlank, isPresent} from "../helpers/helpers";
 import {GIPHY_UPLOAD_URL} from "../helpers/consts";
 import Menu from "../UI/Menu";
+import LazyLoad from 'react-lazyload';
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif}) => {
   const {emotion, api_giphy_key, response} = data
@@ -76,7 +77,9 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   return !isLoading && <Wrapper>
     <Header />
     <div className='w-75 align-self-center'>
-      <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif}} />
+      <LazyLoad height={200}>
+        <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif, LazyLoad}} />
+      </LazyLoad>
       <Navigation />
     </div>
     <FooterIcons />
