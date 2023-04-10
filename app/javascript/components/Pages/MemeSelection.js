@@ -56,7 +56,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
     <Logo />
     <div className='mt-5' style={{marginLeft: '-101px'}}>
-      <h5 className='text-muted'>You picked:</h5>
+      <h5 style={{opacity: 0.6}}>You picked:</h5>
       <BigBtnEmotion emotion={emotion} onClick={backHandling} />
     </div>
     <Menu>X% complete</Menu>
