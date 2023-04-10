@@ -2,7 +2,7 @@ import React from 'react';
 import {Dropdown} from "react-bootstrap";
 import Button from "./Button";
 
-const Menu = ({ percent_completion }) => {
+const Menu = ({ percentCompletion }) => {
   return (
     <div className='placement-menu'>
       <Dropdown>
@@ -20,7 +20,7 @@ const Menu = ({ percent_completion }) => {
           <Dropdown.Item href="#" ><Button className='btn-item-menu wb1  mx-auto my-auto' onClick={()=>{}}>Log Out</Button></Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <div className='fs-6 text-primary' style={{margin: 19+"px 0 0 0"}}>{percent_completion}% complete</div>
+      <div className='fs-6 text-primary' style={{margin: 19+"px 0 0 0"}}>{percentCompletion}% complete</div>
     </div>
   );
 };
