@@ -52,7 +52,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   
   const handlingOnClickNext = () => {
     steps.push('ProductivityBadFollowUp');
-    saveDataToDb(steps, { productivity: productivity });
+    saveDataToDb(steps, { productivity });
   };
 
   const handleSliderChange = (event) => {
