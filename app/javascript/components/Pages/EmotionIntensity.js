@@ -5,8 +5,18 @@ import ButtonEmotion from "../UI/ButtonEmotion";
 import PoweredBy from '../../../assets/images/PoweredBy.svg';
 
 const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, category, isBlankGif}) => {
+  const [isTextareaActive, setIsTextareaActive] = useState(false);
   const handleRatingClick = (value) => setRating(value);
-  const handleCommentClick = (event) => setComment(event.target.value);
+  const handleCommentClick = (event) => {
+    setComment(event.target.value);
+    setIsTextareaActive(true);
+  };
+  const handleCommentFocus = (event) => {
+    if (!isTextareaActive) {
+      event.target.placeholder = '';
+      setIsTextareaActive(true);
+    }
+  };
   return (
   <div className="rating-comment-container">
     <form>
@@ -33,6 +43,7 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
               defaultValue={comment}
               onChange={handleCommentClick}
               maxLength={700}
+              onFocus={handleCommentFocus}
             />
           </label>
         )}
@@ -50,14 +61,16 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const [comment, setComment] = useState('');
   const isBlankGif = isBlank(gif_url)
   
-  useEffect(() => {
-    if (data.response.attributes.rating) {
-      setRating(data.response.attributes.rating);
-    }
-    if (data.response.attributes.comment) {
-      setComment(data.response.attributes.comment);
-    }
-  }, [data]);
+useEffect(() => {
+  if (data.response.attributes.rating) {
+    setRating(data.response.attributes.rating);
+  }
+  if (data.response.attributes.comment !== null) {
+    setComment(data.response.attributes.comment);
+  } else {
+    setComment('');
+  }
+}, [data]);
   
   const handlingOnClickNext = () => {
     steps.push('ProductivityCheckLow')
@@ -79,14 +92,14 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   <Fragment>
     {isBlank(gif_url) ? (
       <Fragment>
-        <h1>"{capitalizeFirstLetter(word)}" week? Most excellent!</h1>
-        <h3>Select how intense the feeling was</h3>
+        <h1 className="mb-2">"{capitalizeFirstLetter(word)}" week? Most excellent!</h1>
+        <h2>Select how intense the feeling was</h2>
         <br/>
       </Fragment>
     ) : (
       <Fragment>
         <EmotionGif />
-        <h3 className='mt-2'>Select how intense the feeling was</h3>
+        <h2>Select how intense the feeling was</h2>
       </Fragment>
     )}
   </Fragment>

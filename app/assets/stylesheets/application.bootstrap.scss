@@ -1,10 +1,10 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
+@import 'colors';
+@import 'variables';
 @import "fonts";
-@import "colors";
 @import "main";
 @import "logo";
 @import "email_page";
 @import "gif";
-@import "buttons";
 @import "swal";
+@import 'bootstrap/scss/bootstrap';
+
