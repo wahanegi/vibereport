@@ -48,13 +48,6 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     saveDataToDb( steps, dataRequest )
   }
 
-  const rangeFormat = (tp) => {
-    let start_date = new Date(tp.start_date)
-    let end_date = new Date(tp.end_date)
-    let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
-    return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
-  }
-
   //*** **transformation of table** to the view:
   //*** 6+6(positive columns) 6+6(neutral columns) and 6+6(negative columns)
   const mixUp = (index) => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
