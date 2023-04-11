@@ -129,6 +129,7 @@
     right: 0;
     width: 200px;
     height: 22px;
+    margin-top: 6px;
   }
 }
 .small-image-powered-by {
@@ -137,13 +138,5 @@
   right: 0;
   width: 90px;
   height: 10px;
-}
-
-.gif {
-  display: inline-block;
-  text-align: right;
-}
-
-img, svg {
-  vertical-align: text-top;
+  margin-top: 6px;
 }
