@@ -23,7 +23,7 @@ export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-regular big c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular height-60 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
