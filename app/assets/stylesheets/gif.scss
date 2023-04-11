@@ -49,6 +49,13 @@
   width: 100%;
 }
 
+.gif-wrap {
+  width: 75%;
+  @media (max-width: 1920px) {
+    max-width: 1169px;
+  }
+}
+
 .gif-list {
   column-gap: 0.5em;
   font-size: .85em;
@@ -56,7 +63,12 @@
 }
 
 .gif-card {
-  height: 40vh !important;
+  @media (max-width: 1920px) {
+    height: 417px !important;
+  }
+  @media (min-width: 1921px) {
+    height: 48vh !important;
+  }
   background-color: $gray-500 !important;
   border-radius: 14.5358px !important;
   padding: 0 0 10px 0 !important;

@@ -66,7 +66,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   return !isLoading && <Wrapper>
     <Header />
-    <div className='w-75 align-self-center'>
+    <div className='align-self-center gif-wrap'>
       <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif}} />
       <Navigation />
     </div>
