@@ -84,4 +84,4 @@ ENV['ADMIN_PASSWORD'] = 'password'
 # General use
 # ENV['DAY_TO_SEND_INVITES'] = 'monday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
-ENV['DEFAULT_FROM_ADDRESS'] = 'do_not_reply'
+ENV['DEFAULT_FROM_ADDRESS'] = 'hello'

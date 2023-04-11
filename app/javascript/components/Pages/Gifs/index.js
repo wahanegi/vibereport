@@ -1,7 +1,7 @@
 import React, {useEffect, useState, Fragment} from "react"
 import SearchBar from "./SearchBar";
 import GifList from "./GifList";
-import {GIPHY_SEARCH_URL} from "../../helpers/consts";
+import {GIPHY_INSTRUCTION_URL, GIPHY_SEARCH_URL} from "../../helpers/consts";
 import {Link} from "react-router-dom";
 import isEmpty from "ramda/es/isEmpty";
 
@@ -34,7 +34,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
       fetch(url)
         .then(response => response.json())
         .then((data) => {
-          const gifs = data.data.map(gif => ({
+          const gifs = data.data?.map(gif => ({
             id: gif.id,
             src: gif.images.original.url,
             height: parseInt(gif.images.fixed_width.height),
@@ -52,7 +52,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
 
   const Notice = () =>
     <h1 className='text-white m-3'>We noticed that you didn't add the GIPHY api token for displaying gifs here. Please follow this&nbsp;
-    <Link to="https://docs.google.com/document/d/19VOqimOtENKUB0HqaPQ5-6iBx6YdJv90MBDwVQ8ZC_0/edit" target="_blank" rel="noopener noreferrer">
+    <Link to={GIPHY_INSTRUCTION_URL} target="_blank" rel="noopener noreferrer">
       instruction
     </Link>
       &nbsp;and add the received token to Heroku Config Vars.

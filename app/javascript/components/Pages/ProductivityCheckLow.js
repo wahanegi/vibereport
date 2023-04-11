@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, Fragment} from 'react';
 import {Footer, Header, Wrapper} from "../UI/ShareContent";
 import flame2 from '../../../assets/images/flame2.svg';
 import flame3 from '../../../assets/images/flame3.svg';
@@ -9,14 +9,16 @@ import flame7 from '../../../assets/images/flame7.svg';
 import flame8 from '../../../assets/images/flame8.svg';
 import flame9 from '../../../assets/images/flame9.svg';
 import flame10 from '../../../assets/images/flame10.svg';
+import { FLAME_IMAGE_SIZES } from '../helpers/consts';
+import {isBlank} from "../helpers/helpers";
 
 const ProductivitySlider = ({productivity, handleSliderChange, flameImages, generateStyles, imageSizes}) => 
-<section>
+<Fragment>
     <div className="productivity-container">
-      <form>
-        <div>
-          <label htmlFor="productivity-slider" className="form-label">What is your productivity level for this time period?</label>
-          <br />     
+      <form>        
+        <h1 className="mb-2 mx-auto my-0 question">How productive has this week felt to you?</h1>
+        <br />
+        <div className='productivity-card'>     
           {productivity > 0 && (
             <div className='image-size'>
               <img
@@ -26,8 +28,7 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
                 className="image-container"
               />
             </div>          
-          )}
-          </div>
+          )}          
           <div className='range-size'>
             <input
               type="range"
@@ -38,11 +39,12 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
               id="productivity-slider"
               className={`form-range level-${productivity}`}
             />
+            <p>Use the slider</p>
           </div>      
-
+        </div>
       </form>
     </div>
-  </section>
+  </Fragment>
 const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [productivity, setProductivity] = useState(0); 
@@ -64,17 +66,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
 
   const flameImages = [flame2, flame3, flame4, flame5, flame6, flame7, flame8, flame9, flame10];
 
-  const imageSizes = [
-    {width: '55px', height: '70px', marginTop: '241px'},
-    {width: '84px', height: '98px', marginTop: '213px'},
-    {width: '145px', height: '134px', marginTop: '177px'},
-    {width: '169px', height: '159px', marginTop: '152px'},
-    {width: '185px', height: '196px', marginTop: '115px'},
-    {width: '208px', height: '253px', marginTop: '58px'},
-    {width: '211px', height: '239px', marginTop: '72px'},
-    {width: '221px', height: '271px', marginTop: '40px'},
-    {width: '382px', height: '297px', marginTop: '14px'},
-    ];
+  const imageSizes = FLAME_IMAGE_SIZES;
   
   const generateStyles = (size) => ({
     width: size.width,
@@ -90,7 +82,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
     <div className='central-element'>
       <ProductivitySlider productivity={productivity} handleSliderChange={handleSliderChange} flameImages={flameImages} generateStyles={generateStyles} imageSizes={imageSizes}/>
     </div>
-    <Footer nextClick={handlingOnClickNext} disabled={productivity == 0}/>
+    <Footer nextClick={handlingOnClickNext} disabled={isBlank(productivity)}/>
   </Wrapper>
 };
 

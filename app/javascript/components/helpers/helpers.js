@@ -1,7 +1,7 @@
 export const isEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
 
 export function isBlank(obj) {
-  return typeof obj === 'undefined' || obj === null;
+  return typeof obj === 'undefined' || obj === null || obj === 0;
 }
 
 export function isPresent(obj) {
@@ -13,9 +13,9 @@ export const backHandling = () => {
 }
 
 export const rangeFormat = (tp) => {
-  let start_date = new Date(tp.start_date)
-  let end_date = new Date(tp.end_date)
-  let month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
+  const start_date = new Date(tp.start_date)
+  const end_date = new Date(tp.end_date)
+  const month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
   return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
 }
 
