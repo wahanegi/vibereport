@@ -2,17 +2,19 @@ import React, {useEffect, useState} from 'react';
 import ShoutoutIcon from '../../../assets/./sys_svg/shoutout.svg'
 import {NavLink} from "react-router-dom";
 
-const ShoutoutButton = ({shoutoutsIntoCenterX2_5}) => {
-    const [blink, setBlink] = useState(false)
+const ShoutoutButton = ({numShoutouts, moveShoutout = false}) => {
+    const [blink, setBlink] = useState('')
     useEffect(()=>{
-        if (shoutoutsIntoCenterX2_5){
+        if (!numShoutouts && moveShoutout){
             setTimeout(()=>{
-                setBlink(true)
+                setBlink('blink')
             },2000)
         }
     },[])
+
+    const style = `left-bottom-corner ${ moveShoutout && ('into-centerX' + (!numShoutouts ? '2_5' : '')) } ${blink}`
     return (
-        <NavLink className={`left-bottom-corner ${shoutoutsIntoCenterX2_5 && 'into-centerX2_5'} ${blink && 'blink'}`} to={'#'}>
+        <NavLink className ={style}  to={'#'}>
             <img src={ShoutoutIcon} alt='Shoutout'/>
         </NavLink>
     );

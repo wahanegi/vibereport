@@ -11,7 +11,8 @@ const numShoutouts = 0
         <h1 className='color-black'>Recognition is important!</h1>
         <h2 className='color-black'>Consider giving members of your team a <br/>Shoutout to show your appreciation.</h2>
       </div>
-      <CornerElements shoutoutsIntoCenterX2_5={!numShoutouts}/>
+
+      <CornerElements numShoutouts={numShoutouts} moveShoutout={true}/>
     </Wrapper>
   );
 };

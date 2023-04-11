@@ -3,7 +3,7 @@ import QuestionButton from "./QuestionButton";
 import ShoutoutButton from "./ShoutoutButton";
 import Menu from "./Menu";
 
-const CornerElements = ({ percentCompletion, shoutoutsIntoCenterX2_5 }) => {
+const CornerElements = ({ percentCompletion, numShoutouts , moveShoutout= true}) => {
   return (
     <Fragment>
       <div className="board position-absolute t35">
@@ -14,7 +14,7 @@ const CornerElements = ({ percentCompletion, shoutoutsIntoCenterX2_5 }) => {
         </div>
       </div>
       <QuestionButton />
-      <ShoutoutButton shoutoutsIntoCenterX2_5={shoutoutsIntoCenterX2_5}/>
+      <ShoutoutButton numShoutouts={numShoutouts} moveShoutout={moveShoutout}/>
       <Menu percentCompletion={percentCompletion} />
     </Fragment>
   );
