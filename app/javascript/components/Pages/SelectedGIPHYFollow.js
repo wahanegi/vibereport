@@ -23,7 +23,7 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
           <h1>Excellent choice!</h1>
       }
       <h2 className='muted mt-2 mb-2'>You uploaded:</h2>
-      <div className='gif d-inline-block' style={{ textAlign: 'right' }}>
+      <div className='gif d-inline-block text-end'>
         <img src={gif_url} alt='Giphy image' className={`big image-${data.emotion.category} align-top`} />
         <br />
         <img src={PoweredBy} alt='PoweredBy' className={`big image-powered-by align-top`}/>

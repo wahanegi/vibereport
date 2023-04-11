@@ -69,7 +69,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
-    <div className='gif gif-productivity d-inline-block' style={{ textAlign: 'right' }}>
+    <div className='gif gif-productivity d-inline-block text-end' >
       <img src={gif_url} alt='Giphy image' className={`small image-${category} align-top`} />
       <br />
         <img src={PoweredBy} alt='PoweredBy' className={`small-image-powered-by align-top`}/>
