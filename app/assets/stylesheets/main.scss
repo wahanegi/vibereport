@@ -120,6 +120,9 @@ body {
   position: absolute;
   top: 837px;
   opacity: 0;
+  a {
+    font-family: $font-family-second;
+  }
 }
 
 //create.html.erb
