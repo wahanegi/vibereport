@@ -62,12 +62,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_23_121836) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
     t.string "gif_url"
     t.boolean "not_working", default: false
     t.jsonb "notices"
-    t.string "steps"
+    t.integer "rating"
+    t.string "steps", null: false
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -99,7 +101,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_23_121836) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
 end
