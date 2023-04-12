@@ -11,7 +11,7 @@ const ButtonEmotion = (props) => {
 
   return (
       <button type='button'
-            className={`wb1 ${props.category}`}
+            className={`btn btn-bubbles wb1 ${props.category}`}
             style={expandableCss}
             onClick={clickHandling}>
         {props.children}
