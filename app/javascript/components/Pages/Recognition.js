@@ -9,7 +9,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
                               '@roger thanks for the help with Project1',
                                 '@roger thanks for the help with Project2',
                                   '@roger thanks for the help with Vibe Report Project. ' +
-                                   'Significant pleasure to @MarinaHarashko, @LyubaPidoshva, @SerhiiBorozenets']
+                                   'Significant pleasure to @Marina Harashko, @Lyuba Pidoshva, @Serhii Borozenets']
 const numShoutOuts = shoutOuts.length
 
 
@@ -24,10 +24,15 @@ const numShoutOuts = shoutOuts.length
   }
 
   const output = (shoutOuts) =>{
+    const redLighting = (text) => {
+      const start = text.indexOf('@')
+      let end   = text.indexOf(' ', start)
+      if (text[end+1].match(/[A-Z]/)) { end = text.indexOf(' ', end + 1) }
+    }
     return (
       <ul>
-      {shoutOuts.map((shoutOut)=>(
-      <li className='c3'><p className='fw-semibold mb-0' >{shoutOut}</p></li>
+      {shoutOuts.map( shoutOut => (
+      <li className='c3'><p className='fw-semibold mb-0'>{shoutOut}</p></li>
       ))}
       </ul>
     )
