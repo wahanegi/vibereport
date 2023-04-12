@@ -1,4 +1,9 @@
-/*       BELLOW STYLES FOR WEB-EMOTION-SELECTION. PLEASE DON'T CHANGE IT!!!        */
+/*
+Here styles for:
+- emotion-selection-web page
+- response_invite.html.erb
+- magic_link.html.erb
+*/
 * {
     margin: 0;
     padding: 0;
@@ -133,7 +138,7 @@
 }
 
 
-/*       BELLOW STYLES FOR EMAIL. PLEASE DON'T CHANGE IT!!!        */
+/*       BELLOW STYLES FOR EMAIL response_invite.html.erb. PLEASE DON'T CHANGE IT!!!        */
 
 * {
 margin: 0;
@@ -267,11 +272,14 @@ text-align: center;
 }
 .big-btn-tooltip{
     width: 378px;
-    height: 31px;
+    height: 19px;
     font-size: 24px;
     line-height: 24px;
     color: rgba(0, 0, 0, 0.7);
     margin: 41px auto 14px auto;
+}
+.correct{
+    height: 31px;
 }
 .big-btn{
     box-sizing: border-box;
@@ -299,4 +307,73 @@ text-align: center;
     line-height: 19px;
     color: #4D4D4D;
     text-decoration: underline;
+}
+
+/* Styles for the magic_link.html.erb*/
+
+.first-row-magic {
+    height: 3.7rem;
+    margin-bottom: 2.125rem;
+}
+.logo-magic{
+    color: #000;
+}
+.second-row-magic {
+    height: 3.7rem;
+    margin-bottom: 4.9rem;
+}
+.greeting {
+    height: 3.7rem;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 3rem;
+    color: #000000;
+}
+.welcome {
+    font-size: 2rem;
+    line-height: 3.5rem;
+}
+.third-row-magic {
+    height: 3.44rem;
+    margin-bottom: 0.875rem;
+}
+.submit-annotation {
+    height: 3.4rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+    color: #000000;
+}
+.fourth-row-magic {
+    height: 3.75rem;
+}
+.btn-magic {
+    width: 14.688rem;
+    height: 3.75rem;
+    background: #D7007B;
+    border: 0.0625rem solid #000000;
+    box-shadow: 0 .25rem .25rem rgba(0, 0, 0, 0.25);
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 2rem;
+    font-family: 'Inter',  sans-serif;
+    line-height: 2.4rem;
+    align-items: center;
+    color: #FFFFFF;
+}
+.btn-text-magic {
+    padding: .625rem 1.563rem .3125rem 1.563rem;
+    width: 11.563rem;
+    height: 2.813rem;
+}
+.btn-text-magic a {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    line-height: 2.438rem;
+    font-size: 2rem;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.btn-magic:hover{
+    cursor: pointer;
 }
