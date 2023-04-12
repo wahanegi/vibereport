@@ -8,7 +8,7 @@ const CornerElements = ({ percentCompletion, numShoutouts , moveShoutout= true})
     <Fragment>
       <div className="board position-absolute t35">
         <div className="convert bigger ml-41 " >
-          <p className="position-relative lh15-mb-6 color-black" >Logo/Brand</p>
+          <p className="position-relative color-black" >Logo/Brand</p>
           <div className="line1 offset-line1" ></div>
           <div className="line2 offset-line2"></div>
         </div>
