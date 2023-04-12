@@ -1,5 +1,6 @@
 import React from 'react';
 import {BigBtnEmotion, Footer, Header, Wrapper} from "../UI/ShareContent";
+import PoweredBy from '../../../assets/images/PoweredBy.svg';
 
 const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCustomGif}) => {
   const {isLoading, error} = service
@@ -21,9 +22,11 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
           <h1>A new one... Nice!</h1> :
           <h1>Excellent choice!</h1>
       }
-      <h3 className='muted'>You uploaded:</h3>
-      <div className='gif'>
-        <img src={gif_url} alt='Giphy image' className={`big image-${data.emotion.category}`} />
+      <h2 className='muted mt-2 mb-2'>You uploaded:</h2>
+      <div className='gif d-inline-block text-end'>
+        <img src={gif_url} alt='Giphy image' className={`big image-${data.emotion.category} align-top`} />
+        <br />
+        <img src={PoweredBy} alt='PoweredBy' className={`big image-powered-by align-top`}/>
       </div>
       <div className='mt-2 text-center'>
         <BigBtnEmotion showPencil={false} emotion={data.emotion} />
