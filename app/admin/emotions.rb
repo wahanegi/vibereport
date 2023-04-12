@@ -10,4 +10,5 @@ ActiveAdmin.register Emotion do
     column :public
     actions
   end
+  filter :public, as: :select, collection: [['Public', true], ['Private', false]]
 end

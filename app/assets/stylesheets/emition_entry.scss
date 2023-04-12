@@ -1,45 +1,41 @@
-.q-emotion-entry{
-  position: static;
-  margin-top: 29px;
+@import "colors";
+@import "design_system_vibereport";
+
+.Wrapper {
+  position: relative;
 }
 
-.over-input-entry{
-  margin-top: 12px;
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1;
-  text-align: center;
-  color: $color-muted;
+.h1__emotion-entry{
+  color: $black;
 }
 
-.under-input-entry{
-  margin-top: 79px;
-  height: 44px;
-  font-size: 32px;
-  line-height: 1;
-  font-weight: 700;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.8);
+.h4__emotion-entry{
+  font-weight: 400;
+  color: $gray-600;
 }
 
 .input_new-word{
-  padding-top: 19px;
   width: 660px;
+  border-radius: 15px;
+  font-size: 40px;
 }
 
 .input-positive{
-  background-color: $color-input-positive;
-  color: $color-input-positive-text;
+  background-color: $gray-tea-green;
+  color: $green-700;
+  border-color: $dark-blue !important;
 }
 
 .input-negative{
-  background-color: $color-input-negative;
-  color: $color-input-negative-text;
+  background-color: $light-red;
+  color: $orange-700;
+  border-color: $dark-blue !important;
 }
 
 .input-neutral{
-  background-color: $color-input-neutral;
-  color: $color-input-neutral-text;
+  background-color: $light-blue-input;
+  color: $dark-blue;
+  border-color: $dark-blue !important;
 }
 
 .input_new-word::placeholder{
@@ -48,32 +44,26 @@
   color: $color-muted;
 }
 
-//.wrap-emoji {
-//  &.disabled{
-//    opacity: 0.5;
-//    pointer-events: none;
-//  }
-//  margin-top: 21px;
-//  display: flex;
-//  justify-content: center;
-//  align-items: center;
-//  column-gap: 38px;
-//}
+.feel__emotion-entry{
+  margin-top: 77px;
+  color: $gray-800;
+}
 
 .wrap-emoji {
   margin-top: 21px;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100px;
   column-gap: 38px;
   overflow: hidden;
 }
 
 .fade-enter {
-  opacity: 0;
+  opacity: 0.01;
 }
 
-.fade-enter-active {
+.fade-enter.fade-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
@@ -82,9 +72,28 @@
   opacity: 1;
 }
 
-.fade-exit-active {
-  opacity: 0;
-  transition: opacity 500ms ease-in;
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-out;
+}
+
+.icon-active-enter {
+  transform: translateY(-500%);
+}
+
+.icon-active-enter-active {
+  transform: translateY(0%);
+  transition: transform 500ms ease-in;
+}
+
+.icon-active-exit {
+  transform: translateY(0%);
+}
+
+.icon-active-exit-active {
+  transform: translateY(500%);
+  transition: transform 500ms ease-out;
+  bottom: 0;
 }
 
 .wrap-icon{

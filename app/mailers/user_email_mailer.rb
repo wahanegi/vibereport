@@ -7,11 +7,11 @@ class UserEmailMailer < ApplicationMailer
 
   def response_invite(user, time_period)
     @user = user
-    @general_link = { controller: 'api/v1/responses', action: 'response_flow_from_email',
+    general_link = { controller: 'api/v1/responses', action: 'response_flow_from_email',
                       time_period_id: TimePeriod.current, not_working: false, user_id: @user.id }
-    @link_for_own_word = [@general_link, { last_step: 'emotion-entry' }].reduce(:merge!)
-    @link_for_was_not  = [@general_link, { last_step: 'results' }].reduce(:merge!)
-    @link_for_emotion  = [@general_link, { emotion_id: nil, last_step: 'meme-selection' }].reduce(:merge!)
+    @link_for_own_word = [general_link, { last_step: 'emotion-entry' }].reduce(:merge)
+    @link_for_was_not  = [general_link, { last_step: 'results' }].reduce(:merge)
+    @link_for_emotion  = [general_link, { emotion_id: nil, last_step: 'meme-selection' }].reduce(:merge)
     @view_complete_by = range_format(time_period)
     @emotions = Emotion.positive.sample(NUMBER_OF_ELEMENTS) +
                 Emotion.neutral.sample(NUMBER_OF_ELEMENTS) +

@@ -14,7 +14,6 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def create
-    # debugger
     @emotion = Emotion.new(emotion_params)
     @emotion_existed = Emotion.all.find_by(word: params.dig('emotion', 'word'))
 
@@ -65,9 +64,9 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def build_three_set
-    Emotion.positive.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.neutral.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.negative.sample(NUMBER_OF_ELEMENTS)
+    Emotion.where(public: true).positive.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.where(public: true).neutral.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.where(public: true).negative.sample(NUMBER_OF_ELEMENTS)
   end
 
   def emotion_params
