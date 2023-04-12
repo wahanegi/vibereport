@@ -24,6 +24,9 @@
     <div class="d-flex align-items-center mt-162">
       <%= f.submit 'Next', class: "btn btn-regular c1 fs-5 h52", id: "next-button", disabled: true %>
     </div>
+    <div class="position-fixed placement-dashboard-link mx-3">
+      <%= link_to "Dashboard Log-in", "#" %>
+    </div>
     <div class="placement-size-link position-absolute w-100 d-flex justify-content-end px-5 h-0">
       <%= link_to image_tag("help.svg"), "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: 'help-icon' %>
     </div>
@@ -40,8 +43,10 @@
         // Check if the email is valid using a regular expression
         if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.val())) {
           button.attr('disabled', false);
+          $('.placement-dashboard-link').css("opacity",1);
         } else {
           button.attr('disabled', true);
+          $('.placement-dashboard-link').css("opacity",0);
         }
       });
     });
