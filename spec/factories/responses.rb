@@ -3,9 +3,11 @@
 # Table name: responses
 #
 #  id             :bigint           not null, primary key
+#  comment        :text
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  notices        :jsonb
+#  rating         :integer
 #  steps          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

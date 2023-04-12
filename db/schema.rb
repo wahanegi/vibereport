@@ -62,11 +62,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
     t.string "gif_url"
     t.boolean "not_working", default: false
     t.jsonb "notices"
+    t.integer "rating"
     t.string "steps", null: false
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
