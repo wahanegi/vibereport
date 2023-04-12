@@ -163,3 +163,63 @@ body {
 .h52{
   height: 52px !important;
 }
+
+//IntenseLine
+.rating-comment-container {
+  .rating-label {
+    box-sizing: border-box;
+    width: 110px;
+    display: inline-block;
+    cursor: pointer;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 47.8507px;
+    line-height: 58px;
+    text-align: center;
+    color: $black;
+  }
+
+  .rating-label:hover {
+    transform: scale(1.1);
+  }
+}
+
+.comment-label {
+  textarea {
+    box-sizing: border-box !important;
+    width: 550px;
+    height: 190px;
+    border: 2px solid $black !important;
+    border-radius: 28.7214px;
+    padding-top: 20px;
+    font-size: 23px;
+    margin-top: 5px;
+    text-align: justify;
+  }
+
+  textarea::placeholder {
+    color: #0009 !important;
+    font-style: normal;
+    font-size: 23px;
+    text-align: initial;
+  }
+
+  .form-control:focus {
+    color: none;
+    background-color: white;
+    border-color: none;
+    outline: 0;
+    box-shadow: none;
+    border: 2px solid $royal-blue;
+  }
+}
+
+.gif-productivity {
+  margin-top: -41px;
+}
+.emotion-small {
+  margin: 0px 0px 30px;
+  margin-top: -6px;
+}
+//IntenseLine

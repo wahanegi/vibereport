@@ -1385,9 +1385,9 @@
   integrity sha512-tz4oM+Zn9CYsvtyicsa/AwzKZKL+ITHWkhiu7x+xF77clh2b4Rm+s6xnOgY/sGDWoFWZmtKsE95hxBPkgQQNnQ==
 
 "@react-aria/ssr@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.5.0.tgz#40c1270a75868185f72a88cafe37bd1392f690cb"
-  integrity sha512-h0MJdSWOd1qObLnJ8mprU31wI8tmKFJMuwT22MpWq6psisOOZaga6Ml4u6Ee6M6duWWISjXvqO4Sb/J0PBA+nQ==
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.6.0.tgz#e5d52bd1686ff229f68f806cf94ee29dd9f54fb7"
+  integrity sha512-OFiYQdv+Yk7AO7IsQu/fAEPijbeTwrrEYvdNoJ3sblBBedD5j5fBTNWrUPNVlwC4XWWnWTCMaRIVsJujsFiWXg==
   dependencies:
     "@swc/helpers" "^0.4.14"
 
@@ -2192,9 +2192,9 @@ domexception@^4.0.0:
     webidl-conversions "^7.0.0"
 
 electron-to-chromium@^1.4.284:
-  version "1.4.352"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.352.tgz#be96bd7c2f4b980deebc9338a49a67430a33ed73"
-  integrity sha512-ikFUEyu5/q+wJpMOxWxTaEVk2M1qKqTGKKyfJmod1CPZxKfYnxVS41/GCBQg21ItBpZybyN8sNpRqCUGm+Zc4Q==
+  version "1.4.354"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.354.tgz#3433d360936c3b117fc2c8f71fd531f891b957ae"
+  integrity sha512-s0nWEXmXjr8NUTxrdoG2oNzU67Sb8JSW411Pf6Ka+jtXsGx6CCTN1bzWwqY2UB3I4ZeytKgWUM7WkrtWzb4dig==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -2924,11 +2924,6 @@ jest-docblock@^29.4.3:
   integrity sha512-fzdTftThczeSD9nZ3fzA/4KkHtnmllawWrXO69vtI+L9WjEIuXWs4AmyME7lN5hU7dB0sHhuPfcKofRsUb/2Fg==
   dependencies:
     detect-newline "^3.0.0"
-
-jest-dom@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/jest-dom/-/jest-dom-4.0.0.tgz#94eba3cbc6576e7bd6821867c92d176de28920eb"
-  integrity sha512-gBxYZlZB1Jgvf2gP2pRfjjUWF8woGBHj/g5rAQgFPB/0K2atGuhVcPO+BItyjWeKg9zM+dokgcMOH01vrWVMFA==
 
 jest-each@^29.5.0:
   version "29.5.0"
