@@ -6,7 +6,7 @@ import Menu from "./Menu";
 const CornerElements = ({ percentCompletion, numShoutouts , moveShoutout= true}) => {
   return (
     <Fragment>
-      <div className="board position-absolute t35">
+      <div className="board position-absolute t-35">
         <div className="convert bigger ml-41 " >
           <p className="position-relative color-black" >Logo/Brand</p>
           <div className="line1 offset-line1" ></div>
