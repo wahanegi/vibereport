@@ -3,7 +3,7 @@
 /////////////////////|
 // DEVELOPERS AREA //|
 /////////////////////|
-a{
+a {
   font-size: 23px;
   color: #0007A3;
 }
@@ -28,33 +28,24 @@ body {
   color: $color-muted;
 }
 
-.text-field-new-html{
+.text-field-new-html {
   width: 588px !important;
   height:59px;
 }
 .light-grey-text {
   color: $light-grey;
 }
-.email_field{
-  //@media (min-width: 767px) {
-  //  min-width: 660px;
-  //}
+.email_field {
   box-sizing: border-box;
-  //width: 660px;
   background: $color-white;
   margin: 0 auto;
-  //text-align: center;
 }
-.email_field input{
-  //@media (min-width: 767px) {
-  //  min-width: 660px;
-  //}
+.email_field input {
   height: 70px;
   font-size: 40px;
   line-height: 70px;
   color: $color-muted;
   margin: 13px 0;
-  //border: 3px solid $color-blue;
   border: 3px solid $light-blue;
   border-radius: 15px;
   padding-left: 23px;
@@ -91,10 +82,10 @@ body {
 }
 //</ListEmotion
 
-.color-black{
+.color-black {
   color: $black;
 }
-.gray-600{
+.gray-600 {
   color: $gray-600
 }
 
@@ -109,7 +100,7 @@ body {
 .mt-negative-17 {
   margin-top:-17px !important;
 }
-.mb-115{
+.mb-115 {
   margin-bottom: 115px;
 }
 .input-label {
@@ -119,15 +110,15 @@ body {
 .w-660 {
   width:660px;
 }
-.mt-162{
+.mt-162 {
   margin-top: 162px;
 }
-.minW-675{
+.minW-675 {
   min-width:675px
 }
 
 //create.html.erb
-.placement-area{
+.placement-area {
   margin-top: 261px;
   min-width:750px;
 }
@@ -147,18 +138,18 @@ height:49px;
 .mt-85 {
   margin-top:85px;
 }
-.size-resolve-issue{
+.size-resolve-issue {
   width:500px;
   height:59px;
 }
-.placement-size-link{
+.placement-size-link {
   top: 767px;
   min-width:650px;
 }
-.h-0{
+.h-0 {
   height: 0;
 }
-.h-52{
+.h-52 {
   height: 52px !important;
 }
 
