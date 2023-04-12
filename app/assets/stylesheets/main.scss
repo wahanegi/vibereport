@@ -99,68 +99,66 @@ body {
 }
 
 //new.html.erb
-.w746-h59 {
+.welcome-field {
   width: 746px;
   height: 59px;
 }
-.mt125 {
+.mt-125 {
   margin-top: 125px;
 }
-.mt--17 {
+.mt-negative-17 {
   margin-top:-17px !important;
 }
-.mb115{
+.mb-115{
   margin-bottom: 115px;
 }
-.w588-h59 {
+.input-label {
   width:588px;
   height:59px;
 }
-.w660 {
+.w-660 {
   width:660px;
 }
-.mt162{
+.mt-162{
   margin-top: 162px;
 }
-.r47-t767 {
-  right: 47px;
-  top: 767px
-}
-.min-w675{
+.minW-675{
   min-width:675px
 }
 
 //create.html.erb
-.mt261-min-w750{
+.placement-area{
   margin-top: 261px;
   min-width:750px;
 }
-.mb--17 {
+.mb-negative-17 {
   margin-bottom:-17px;
 }
-.mb28 {
+.mb-28 {
   margin-bottom: 28px !important;
 }
-.mt64-w746-h49 {
+.mt-64 {
   margin-top:63px;
-  width:746px;
-  height:49px;
 }
-.mt85 {
+.size-message {
+width:746px;
+height:49px;
+}
+.mt-85 {
   margin-top:85px;
 }
-.w500-h59{
+.size-resolve-issue{
   width:500px;
   height:59px;
 }
-.t767-min-w650{
+.placement-size-link{
   top: 767px;
   min-width:650px;
 }
-.h0{
+.h-0{
   height: 0;
 }
-.h52{
+.h-52{
   height: 52px !important;
 }
 
