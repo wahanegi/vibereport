@@ -6,11 +6,11 @@
 ////////////////////////////////////////////
 // START OF DESIGN SYSTEM VIBEREPORT AREA //
 
-a{
+a {
   font-size:   1.438rem ; //23px
 }
 body {
-  font:{
+  font: {
     family:    $font-family-base;
     style:     normal;
   }
@@ -18,7 +18,7 @@ body {
   line-height: 1.2;
 }
 
-p{
+p {
   line-height: 200%;
 }
 
@@ -86,14 +86,14 @@ h2, .h2 {
 
 
 // use with B1, B2, or B3 text
-.form-control{
+.form-control {
   border:                     3px solid $gray-100 !important;
   &:focus {
     border:                   3px solid $input-btn-border-color !important; //3px
     box-shadow:               none             !important;
   }
 }
-input, textarea{
+input, textarea {
   height:               4.375rem;//70px
   text-align:           left;
   border:               3px solid $royal-blue ;
@@ -124,7 +124,7 @@ textarea {
 // Using with the Special inputs
 // Intensity selection & follow-up field (use B3)
 
-.follow-up-field{
+.follow-up-field {
   textarea {
     margin-top:              4px;
     width:                   calc($btn-width-intensity * 5 - 1rem) ;
@@ -133,7 +133,7 @@ textarea {
     border-top-right-radius: 29px !important;
   }
 }
-.question-field{
+.question-field {
   width:                     46.625rem          !important; //746px
   min-height:                17.5rem            ; //280px
   &.form-control{
@@ -146,7 +146,7 @@ textarea {
 
 // FOR DROPDOWN MENU
 
-.dropdown-toggle{
+.dropdown-toggle {
   height: 80px;
   width:80px;
   background-color: $white                  !important;
@@ -154,7 +154,7 @@ textarea {
   border-color:     $white                  !important;
   padding:          0                       !important;
 }
-.dropdown-menu{
+.dropdown-menu {
   position:         absolute;
   margin-right:     -19px                  !important;
   &.show {
@@ -162,7 +162,7 @@ textarea {
     border:         1px solid black;
   }
 }
-.placement-menu{
+.placement-menu {
   position:         fixed;
   right:            30px;
   top:              62px;
@@ -174,7 +174,7 @@ textarea {
   height: 78px;
   border-radius: 50%;
 }
-.m-cover{
+.m-cover {
   z-index:1;
   position: absolute;
   width: 72.43px;
@@ -183,7 +183,7 @@ textarea {
   margin: 3px 3px;
   background-color: $gray-100;
 }
-.one-line-menu{
+.one-line-menu {
   z-index:1;
   position: relative;
   top: 24px;

@@ -36,25 +36,16 @@ body {
   color: $light-grey;
 }
 .email_field{
-  //@media (min-width: 767px) {
-  //  min-width: 660px;
-  //}
   box-sizing: border-box;
-  //width: 660px;
   background: $color-white;
   margin: 0 auto;
-  //text-align: center;
 }
 .email_field input{
-  //@media (min-width: 767px) {
-  //  min-width: 660px;
-  //}
   height: 70px;
   font-size: 40px;
   line-height: 70px;
   color: $color-muted;
   margin: 13px 0;
-  //border: 3px solid $color-blue;
   border: 3px solid $light-blue;
   border-radius: 15px;
   padding-left: 23px;
@@ -98,8 +89,6 @@ body {
     display: inline-block;
     cursor: pointer;
     font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
     font-size: 47.8507px;
     line-height: 58px;
     text-align: center;
@@ -132,11 +121,8 @@ body {
   }
 
   .form-control:focus {
-    color: none;
     background-color: white;
-    border-color: none;
     outline: 0;
-    box-shadow: none;
     border: 2px solid $royal-blue;
   }
 }
@@ -144,6 +130,7 @@ body {
 .gif-productivity {
   margin-top: -41px;
 }
+
 .emotion-small {
   margin: 0px 0px 30px;
   margin-top: -6px;
@@ -206,49 +193,50 @@ body {
   .form-range.level-9::-webkit-slider-thumb  {
     background: #FF0000;
   }
+
   .form-range::-webkit-slider-runnable-track {
     height: 3px;    
   }
 
   .form-range.level-0::-webkit-slider-runnable-track {
     background-color: #000000;
-    ;
   }
+
   .form-range.level-1::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #D7C2B8 0%, #8D8C8C 106.1%);
+    background: linear-gradient(247deg, #FFFFFF 85%, #D7C2B8 85%);
   }
 
   .form-range.level-2::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #E49770 0%, #D7C2B8 100%);
+    background: linear-gradient(247deg, #FFFFFF 75%, #D7C2B8 75%);
   }
 
   .form-range.level-3::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #E49770 0%, #E7AF92 100%);
-    width: 0;
+    background: linear-gradient(247deg, #FFFFFF 65%, #E7AF92 65%);
   }
 
   .form-range.level-4::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #E8956C 0%, #E49770 100%);
+    background: linear-gradient(247deg, #FFFFFF 55%, #E49770 55%);
   }
 
   .form-range.level-5::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #ED7B45 0%, #E8956C 100%);
+    background: linear-gradient(247deg, #FFFFFF 45%, #E8956C 45%);
   }
 
   .form-range.level-6::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #FF5300 0%, #ED7B45 100%);
+    background: linear-gradient(247deg, #FFFFFF 35%, #ED7B45 35%);
   }
 
   .form-range.level-7::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #E26D6D 0%, #FF5300 100%);
+    background: linear-gradient(247deg, #FFFFFF 25%, #FF5300 25%);
   }
 
   .form-range.level-8::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #EB4848 0%, #E26D6D 100%);
+    background: linear-gradient(247deg, #FFFFFF 15%, #E26D6D 15%);
   }
 
   .form-range.level-9::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #FF0000 0%, #EB4848 97.76%);  
+
+    background: linear-gradient(247deg, #FFFFFF 0%, #EB4848 0%);
   }
 
   .form-range:focus::-webkit-slider-thumb {
@@ -264,8 +252,9 @@ body {
   }
 
   .productivity-card {
-    margin: -88px;
+    margin: -70px;
   }
+
   p {
     font-family: $font-family-italic
   }
