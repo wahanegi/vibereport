@@ -3,13 +3,14 @@ import {BtnBack, BtnNext, Wrapper} from "../UI/ShareContent";
 import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
+import parse from 'html-react-parser'
 
 const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
   const shoutOuts = ['@Team2 you\'re all doing so awesome! thanks!',
                               '@roger thanks for the help with Project1',
                                 '@roger thanks for the help with Project2',
                                   '@roger thanks for the help with Vibe Report Project. ' +
-                                   'Significant pleasure to @Marina Harashko, @Lyuba Pidoshva, @Serhii Borozenets']
+                                   'Significant pleasure to @Marina Harashko @Lyuba Pidoshva @Serhii Borozenets @Alona @Marta']
 const numShoutOuts = shoutOuts.length
 
 
@@ -23,16 +24,33 @@ const numShoutOuts = shoutOuts.length
     saveDataToDb( steps )
   }
 
+
   const output = (shoutOuts) =>{
-    const redLighting = (text) => {
-      const start = text.indexOf('@')
-      let end   = text.indexOf(' ', start)
-      if (text[end+1].match(/[A-Z]/)) { end = text.indexOf(' ', end + 1) }
+    const findUniteNames  = (words) => {
+      const arr = []
+      for( let i=0; i < words.length; i++){
+        let word = words[i]
+        if (word[0] === '@' && i < words.length - 1){
+          if (null !== words[i + 1].match(/[A-Z]/)) {
+            word +=  ' ' + words[++i]
+          }
+        }
+        arr.push(word)
+      }
+      return arr
     }
+    shoutOuts.forEach((shoutOut, index) => {
+      let words = findUniteNames(shoutOut.split(" "))
+      for (let i=0; i<words.length; i++){
+        words[i] = words[i][0] ==='@' ? '<span className="color-primary">' + words[i] + '</span>' : words[i]
+      }
+      shoutOuts[index] = words.join(' ')
+    })
+
     return (
       <ul>
       {shoutOuts.map( shoutOut => (
-      <li className='c3'><p className='fw-semibold mb-0'>{shoutOut}</p></li>
+      <li className='c3'><p className='fw-semibold mb-0'>{parse(shoutOut)}</p></li>
       ))}
       </ul>
     )
