@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_31_084242) do
+
+ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,11 +64,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_084242) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
     t.string "gif_url"
     t.boolean "not_working", default: false
     t.jsonb "notices"
+    t.integer "rating"
     t.string "steps", null: false
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
@@ -80,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_084242) do
 
   create_table "time_periods", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.date "due_date"
     t.date "end_date"
     t.date "start_date"
     t.datetime "updated_at", null: false

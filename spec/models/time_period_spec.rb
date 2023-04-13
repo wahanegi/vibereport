@@ -3,6 +3,7 @@
 # Table name: time_periods
 #
 #  id         :bigint           not null, primary key
+#  due_date   :date
 #  end_date   :date
 #  start_date :date
 #  created_at :datetime         not null

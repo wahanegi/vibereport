@@ -230,6 +230,7 @@ text-align: center;
     line-height: 17px;
     color: rgba(0, 0, 0, 0.7);
     white-space: nowrap;
+    text-transform: capitalize;
 }
 .question {
     font-size: 48px;

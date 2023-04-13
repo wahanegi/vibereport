@@ -20,14 +20,23 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
 
   const handlingOnClickSkip = () =>{
-    steps.push('emotion-intensity')
+    if (emotion.category === "neutral") {
+      steps.push('ProductivityCheckLow');
+    } else {
+      steps.push('emotion-intensity')
+    }
     saveDataToDb( steps , { gif_url: null })
   }
 
   const chooseGIPHYHandling = () => {
-    steps.push('selected-giphy-follow')
-    saveDataToDb(steps, { gif_url: gifUrl })
+    if (emotion.category === "neutral") {
+      steps.push('ProductivityCheckLow');
+    } else {
+      steps.push('selected-giphy-follow');
+    }
+    saveDataToDb(steps, { gif_url: gifUrl });
   }
+  
   const uploadGIPHYHandling = () => {
     window.open(GIPHY_UPLOAD_URL, '_blank');
   }
@@ -44,7 +53,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const Navigation = () =>
     <div className='d-flex justify-content-between gap-3'>
       <div>
-        <h4 className='mt-4 mb-0'>Share it in your way!</h4>
+        <h5 className='mt-2 mb-0 text-muted'>Share it in your way!</h5>
         <BtnOutline text='Upload your own meme!' onClick={uploadGIPHYHandling} />
       </div>
       <div style={{marginTop: 52}}>
@@ -56,7 +65,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
     <Logo />
     <div className='mt-5' style={{marginLeft: '-101px'}}>
-      <h4 className='text-muted mb-1'>You picked:</h4>
+      <h5 style={{opacity: 0.6}}>You picked:</h5>
       <BigBtnEmotion emotion={emotion} onClick={backHandling} />
     </div>
     <Menu>X% complete</Menu>
@@ -66,7 +75,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   return !isLoading && <Wrapper>
     <Header />
-    <div className='w-75 align-self-center'>
+    <div className='align-self-center gif-wrap'>
       <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif}} />
       <Navigation />
     </div>

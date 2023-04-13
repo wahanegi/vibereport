@@ -12,7 +12,7 @@
   margin: 0.5%;
   position: relative;
   width: 19%;
-  border: 8px solid $green;
+  border: 8px solid $sea-green;
   border-radius: 6px;
   img {
     width: 100%;
@@ -25,7 +25,7 @@
   margin: 0.5%;
   position: relative;
   width: 19%;
-  border: 8px solid $blue;
+  border: 8px solid $steel-blue;
   border-radius: 6px;
   img {
     width: 100%;
@@ -38,7 +38,7 @@
   margin: 0.5%;
   position: relative;
   width: 19%;
-  border: 8px solid $red;
+  border: 8px solid $cinnamon;
   border-radius: 6px;
   img {
     width: 100%;
@@ -49,6 +49,13 @@
   width: 100%;
 }
 
+.gif-wrap {
+  width: 75%;
+  @media (max-width: 1920px) {
+    max-width: 1169px;
+  }
+}
+
 .gif-list {
   column-gap: 0.5em;
   font-size: .85em;
@@ -56,37 +63,41 @@
 }
 
 .gif-card {
-  height: 42vh;
-  background: $dark-grey;
-  border-radius: 14.5358px;
-  padding: 0 0 10px 0;
+  @media (max-width: 1920px) {
+    height: 417px !important;
+  }
+  @media (min-width: 1921px) {
+    height: 48vh !important;
+  }
+  background-color: $gray-500 !important;
+  border-radius: 14.5358px !important;
+  padding: 0 0 10px 0 !important;
 
   .card-header {
-    height: 74.69px;
+    height: 100px;
+    z-index: 1;
   }
 
   .card-header input {
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 45px;
+    font-size: $h1-font-size;
     background-color: $light-grey !important;
     text-align: start;
     &.positive-input {
-      color: $green !important;
+      color: $sea-green !important;
     }
     &.neutral-input {
-      color: $blue !important;
+      color: $steel-blue !important;
     }
     &.negative-input {
-      color: $red;
+      color: $cinnamon;
     }
     &.other-input {
-      color: $dark-grey !important;
+      color: $gray-500 !important;
     }
   }
 
   .card-scroll::-webkit-scrollbar {
-    background-color: $light-grey;
+    background-color: $gray-200;
     border-radius: 8px;
   }
 
@@ -116,12 +127,33 @@
   padding: 0;
   border-radius: 6px;
   &.image-positive {
-    border: 6px solid $green !important;
+    border: 6px solid $sea-green !important;
   }
   &.image-neutral {
-    border: 6px solid $blue !important;
+    border: 6px solid $steel-blue !important;
   }
   &.image-negative {
-    border: 6px solid $red !important;
+    border: 6px solid $cinnamon !important;
   }
+  &.image-powered-by {
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 22px;
+  }
+  &.image-powered-by {
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 22px;
+    margin-top: 6px;
+  }
+}
+.small-image-powered-by {
+  position: initial;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 10px;
+  margin-top: 6px;
 }

@@ -10,7 +10,7 @@ import {NavLink} from "react-router-dom";
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
-  <button className={`${addClass} btn emotion ${emotion.category}`}>
+  <button className={`${addClass} btn-custom emotion ${emotion.category}`}>
     <span hidden={!showPencil} onClick={onClick} className="edit-icon">
       <img src={edit_pencil} alt="pencil"/>
     </span>
@@ -54,10 +54,10 @@ export const HelpIcon = () =>
     <img src={help_icon} alt="shout out" className='help-icon' style={{width: 100, height: 100}} />
   </NavLink>
 
-export const Footer = ({nextClick}) => <div className='d-flex justify-content-between m-3'>
+export const Footer = ({nextClick, disabled = false}) => <div className='d-flex justify-content-between m-3'>
   <ShoutOutIcon />
   <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
-  <BtnNext onClick={nextClick} addClass='m-1 align-self-center' />
+  <BtnNext onClick={nextClick} disabled={disabled} addClass='m-1 align-self-center' />
   <HelpIcon />
 </div>
 
