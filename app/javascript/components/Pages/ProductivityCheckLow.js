@@ -47,7 +47,7 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
   </Fragment>
 const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
-  const [productivity, setProductivity] = useState(0); 
+  const [productivity, setProductivity] = useState(data.response.attributes.productivity || 0); 
   
   
   const handlingOnClickNext = () => {
@@ -60,8 +60,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
     const newProductivity = parseInt(event.target.value, 10);
     if (newProductivity >= 0 && newProductivity <= 9) {
       setProductivity(newProductivity);
-    } 
-    console.log('productivity', productivity);
+    }
   };
 
   const flameImages = [flame2, flame3, flame4, flame5, flame6, flame7, flame8, flame9, flame10];

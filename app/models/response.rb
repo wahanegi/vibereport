@@ -36,5 +36,6 @@ class Response < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :time_period_id }
   validates :steps, presence: true
-  serialize :steps, JSON
+  validates :productivity, presence: true, if: -> { steps.include?('ProductivityBadFollowUp') }
+  serialize :steps, JSON  
 end
