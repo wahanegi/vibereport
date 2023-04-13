@@ -35,6 +35,7 @@
       // Get the input and button elements
       const input = $("#email-input");
       const button = $('#next-button');
+      input.val("")
       // Attach an event listener to the input field
       input.on('input', function() {
         // Check if the email is valid using a regular expression
@@ -44,9 +45,6 @@
           button.attr('disabled', true);
         }
       });
-      button.on('click', function(){
-        input.val("")
-      })
     });
   }
 </script>
