@@ -125,10 +125,7 @@
 // they should be redone (recommended) relative to common styles (see epos CI-122)
 // because they don't apply to the overall hierarchy
 
-.btn {
-  font-style: normal;
-  font-weight: 700;
-
+.btn-custom {
   &:disabled {
     opacity: 0.5;
   }
@@ -148,18 +145,18 @@
     cursor: default !important;
 
     &.positive {
-      background: $light-green;
-      color: $green;
+      background: $gray-tea-green;
+      color: $sea-green;
     }
 
     &.neutral {
-      background: $light-blue;
-      color: $blue;
+      background: $pale-cornflower;
+      color: $steel-blue;
     }
 
     &.negative {
-      background: $light-red;
-      color: $red;
+      background: $apricot;
+      color: $cinnamon;
     }
   }
 
