@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
     t.string "gif_url"
     t.boolean "not_working", default: false
     t.jsonb "notices"
+    t.integer "productivity"
     t.integer "rating"
     t.string "steps"
     t.bigint "time_period_id", null: false

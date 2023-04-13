@@ -7,6 +7,7 @@
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  notices        :jsonb
+#  productivity   :integer
 #  rating         :integer
 #  steps          :string
 #  created_at     :datetime         not null
@@ -78,6 +79,18 @@ RSpec.describe Response, type: :model do
 
     it 'valid when emotion is absent for not worked user' do
       expect(not_working_response).to be_valid
+    end
+
+    it 'valid value of productivity when step "productivity-bad-follow-up"' do
+      response.steps << 'productivity-bad-follow-up'
+      response.productivity = 5
+      expect(response).to be_valid
+    
+      response.productivity = 'invalid'
+      expect(response).to_not be_valid
+    
+      response.productivity = 10
+      expect(response).to_not be_valid
     end
   end
 end

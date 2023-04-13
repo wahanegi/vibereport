@@ -27,3 +27,15 @@ export const EMOTION_COLORS = {
       1: '#D9F1E0',
     },
   };
+
+  export const FLAME_IMAGE_SIZES = [
+    {width: '55px', height: '70px', marginTop: '241px'},
+    {width: '84px', height: '98px', marginTop: '213px'},
+    {width: '145px', height: '133.5px', marginTop: '177.5px'},
+    {width: '169px', height: '159px', marginTop: '152px'},
+    {width: '185px', height: '196px', marginTop: '115px'},
+    {width: '208px', height: '253px', marginTop: '58px'},
+    {width: '211px', height: '239px', marginTop: '72px'},
+    {width: '221px', height: '271px', marginTop: '40px'},
+    {width: '382px', height: '311px', marginTop: '0'},
+  ];

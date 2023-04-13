@@ -65,7 +65,8 @@ RSpec.describe Api::V1::ResponsesController do
               'steps' => user_response.steps,
               'gif_url' => nil,
               'rating' => user_response.rating,
-              'comment' => user_response.comment
+              'comment' => user_response.comment,
+              'productivity' => user_response.productivity
             }
         }
       }]
@@ -104,7 +105,8 @@ RSpec.describe Api::V1::ResponsesController do
               'steps' => response_saved.steps,
               'gif_url' => nil,              
               'rating' => user_response.rating,
-              'comment' => user_response.comment
+              'comment' => user_response.comment,
+              'productivity' => user_response.productivity
             }
         }
       }]
@@ -139,7 +141,8 @@ RSpec.describe Api::V1::ResponsesController do
                 'steps' => %w[emotion-selection-web meme-selection],
                 'gif_url' => nil,
                 'rating' => user_response.rating,
-                'comment' => user_response.comment
+                'comment' => user_response.comment,
+                'productivity' => user_response.productivity
               }
           }
       }]

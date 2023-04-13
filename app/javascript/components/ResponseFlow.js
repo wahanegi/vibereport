@@ -9,6 +9,7 @@ import {mergeData} from "./helpers/library";
 import {useNavigate} from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
 import Results from "./Pages/Results";
+import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -107,10 +108,10 @@ const ResponseFlow = ({step, data, setData}) => {
       return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} />
     case  "emotion-intensity" :
       return <EmotionIntensity data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    case  "ProductivityCheckLow" :
+    case  "productivity-check" :
       return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "ProductivityBadFollowUp" :
-    //   return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "productivity-bad-follow-up" :
+      return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "CausesToCelebrate" :
     //   return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "ShoutoutPromptNone" :
