@@ -226,7 +226,7 @@ height:49px;
   }
 
   .form-range.level-0::-webkit-slider-thumb  {
-    background: #D0D0D0;
+    background: $gray-100;
   }
   .form-range.level-1::-webkit-slider-thumb  {
     background: #D7C2B8;
@@ -269,44 +269,44 @@ height:49px;
   }
 
   .form-range.level-0::-webkit-slider-runnable-track {
-    background-color: #000000;
+    background-color: $black;
   }
 
   .form-range.level-1::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 85%, #D7C2B8 85%);
+    background: linear-gradient(247deg, $color-white 85%, #D7C2B8 85%);
   }
 
   .form-range.level-2::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 75%, #D7C2B8 75%);
+    background: linear-gradient(247deg, $color-white 75%, #D7C2B8 75%);
   }
 
   .form-range.level-3::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 65%, #E7AF92 65%);
+    background: linear-gradient(247deg, $color-white 65%, #E7AF92 65%);
   }
 
   .form-range.level-4::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 55%, #E49770 55%);
+    background: linear-gradient(247deg, $color-white 55%, #E49770 55%);
   }
 
   .form-range.level-5::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 45%, #E8956C 45%);
+    background: linear-gradient(247deg, $color-white 45%, #E8956C 45%);
   }
 
   .form-range.level-6::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 35%, #ED7B45 35%);
+    background: linear-gradient(247deg, $color-white 35%, #ED7B45 35%);
   }
 
   .form-range.level-7::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 25%, #FF5300 25%);
+    background: linear-gradient(247deg, $color-white 25%, #FF5300 25%);
   }
 
   .form-range.level-8::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, #FFFFFF 15%, #E26D6D 15%);
+    background: linear-gradient(247deg, $color-white 15%, #E26D6D 15%);
   }
 
   .form-range.level-9::-webkit-slider-runnable-track {
 
-    background: linear-gradient(247deg, #FFFFFF 0%, #EB4848 0%);
+    background: linear-gradient(247deg, $color-white 0%, #EB4848 0%);
   }
 
   .form-range:focus::-webkit-slider-thumb {
