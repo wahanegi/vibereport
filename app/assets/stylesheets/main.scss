@@ -146,7 +146,8 @@ body {
 
   input {
     width: 700px;
-    border: none;
+    border: unset;
+    box-shadow: unset;
   }
   
   .form-range::-webkit-slider-thumb {
