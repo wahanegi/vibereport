@@ -69,4 +69,3 @@ class Api::V1::EmotionsController < ApplicationController
     params.require(:emotion).permit(:word, :category)
   end
 end
-
