@@ -51,7 +51,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   
   
   const handlingOnClickNext = () => {
-    steps.push('ProductivityBadFollowUp');
+    steps.push('productivity-bad-follow-up');
     saveDataToDb(steps, { productivity });
   };
 
@@ -81,7 +81,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
     <div className='central-element'>
       <ProductivitySlider productivity={productivity} handleSliderChange={handleSliderChange} flameImages={flameImages} generateStyles={generateStyles} imageSizes={imageSizes}/>
     </div>
-    <Footer nextClick={handlingOnClickNext} disabled={isBlank(productivity)}/>
+    <Footer nextClick={handlingOnClickNext} disabled={isBlank(productivity) || productivity === 0}/>
   </Wrapper>
 };
 

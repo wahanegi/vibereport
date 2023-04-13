@@ -9,7 +9,7 @@
 #  notices        :jsonb
 #  productivity   :integer
 #  rating         :integer
-#  steps          :string
+#  steps          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint

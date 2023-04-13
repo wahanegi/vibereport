@@ -110,7 +110,7 @@ const ResponseFlow = ({step, data, setData}) => {
       return <EmotionIntensity data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "productivity-check" :
       return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    case  "ProductivityBadFollowUp" :
+    case  "productivity-bad-follow-up" :
       return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "CausesToCelebrate" :
     //   return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />

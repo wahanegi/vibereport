@@ -5,7 +5,7 @@ export const ALL_STEPS = [
     {id:"2.25", step:"selected-giphy-follow"},
     {id:"3.1.", step:"emotion-intensity"},
     {id:"4.1.", step:"productivity-check"},
-    {id:"4.25.", step:"ProductivityBadFollowUp"},
+    {id:"4.25.", step:"productivity-bad-follow-up"},
     {id:"5", step:"CausesToCelebrate"},
     {id:"6", step:"ShoutoutPromptNone"},
     {id:"6.X.", step:"ShoutoutModalExample"},

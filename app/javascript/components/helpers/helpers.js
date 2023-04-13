@@ -1,7 +1,7 @@
 export const isEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
 
 export function isBlank(obj) {
-  return typeof obj === 'undefined' || obj === null || obj === 0;
+  return typeof obj === 'undefined' || obj === null;
 }
 
 export function isPresent(obj) {
