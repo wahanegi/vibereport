@@ -16,7 +16,7 @@
   // use with C1 text
   &.btn-regular{
     width:            14.688rem;
-    height:           3.25rem;
+    height:           3.75rem;
     border:           1px solid $black;
     border-radius:    .75rem ;
     color:            $white;
@@ -29,9 +29,6 @@
         border:           1px solid $black;
         color:            $white;
       }
-    }
-    &.height-60{
-      height: 60px;
     }
   }
 
