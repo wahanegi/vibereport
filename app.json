@@ -42,7 +42,7 @@
           "description": "A randomly generated string",
           "generator": "secret"
         },
-        "DAY_TO_SEND_INVITES": "monday",
+        "DAY_TO_SEND_INVITES": "friday",
         "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1",
         "DOMAIN_URL": "vibereport.app",
         "EMAIL_DOMAIN": "vibereport.app",

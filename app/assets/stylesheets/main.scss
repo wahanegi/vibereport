@@ -85,11 +85,72 @@ body {
 .color-primary {
   color: $primary;
 }
-.color-black{
+.color-black {
   color: $black;
 }
-.gray-600{
+.gray-600 {
   color: $gray-600
+}
+
+//new.html.erb
+.welcome-field {
+  width: 746px;
+  height: 59px;
+}
+.mt-125 {
+  margin-top: 125px;
+}
+.mt-negative-17 {
+  margin-top:-17px !important;
+}
+.mb-115 {
+  margin-bottom: 115px;
+}
+.input-label {
+  width:588px;
+  height:59px;
+}
+.w-660 {
+  width:660px;
+}
+.mt-162 {
+  margin-top: 162px;
+}
+.minW-675 {
+  min-width:675px
+}
+
+//create.html.erb
+.placement-area {
+  margin-top: 261px;
+  min-width:750px;
+}
+.mb-negative-17 {
+  margin-bottom:-17px;
+}
+.mb-28 {
+  margin-bottom: 28px !important;
+}
+.mt-64 {
+  margin-top:63px;
+}
+.size-message {
+width:746px;
+height:49px;
+}
+.mt-85 {
+  margin-top:85px;
+}
+.size-resolve-issue {
+  width:500px;
+  height:59px;
+}
+.placement-size-link {
+  top: 767px;
+  min-width:650px;
+}
+.h-0 {
+  height: 0;
 }
 
 // for drawing envelope -------

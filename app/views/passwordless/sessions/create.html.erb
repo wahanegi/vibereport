@@ -1,16 +1,19 @@
-<div class="text-center mx-5" style="margin-top: 250px">
-  <%= image_tag("logo.svg", width: 190, height: 87) %>
-  <div class="sub-header my-4">Check your inbox!</div>
-  <h4 class="my-2">Look for an unique access link in your inbox at:</h4>
+<div class="mx-auto placement-area">
+  <div class="mb-negative-17 position-relative fs-7">Logo/Brand</div>
+  <%= image_tag("envelope.png", width: 190, height: 87) %>
+  <div class="mt-64 size-message mx-auto">
+    <h2 class="color-black mb-28">Check your inbox!</h2>
+    <p class="b3 color-black">Look for an unique access link in your inbox at:</p>
+  </div>
   <% if params.dig("passwordless", "email").present? %>
-    <h2 class="my-3 muted"><%= params.dig("passwordless", "email") %></h2>
+    <div class="b1 gray-600 mt-85"><%= params.dig("passwordless", "email") %></div>
   <% end %>
-  <h4 class="muted my-4">
-    <p class='m-0'>If you have any issues, use the help</p>
-    <p class='m-0'>button at the bottom right of this window</p>
-    <p class='m-0'>to contact an administrator.</p>
-  </h4>
-  <div class="d-flex align-items-center justify-content-end" style="margin-top: 100px">
+  <div class="size-resolve-issue gray-600 my-6 mx-auto b3">
+    <p>If you have any issues, use the help<br>
+    button at the bottom right of this window<br>
+    to contact an administrator.</p>
+  </div>
+  <div class="placement-size-link position-absolute w-100 d-flex justify-content-end px-5">
     <%= link_to image_tag("help.svg"),
                 "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}",
                 class: 'help-icon' %>
