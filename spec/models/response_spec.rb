@@ -8,7 +8,7 @@
 #  not_working    :boolean          default(FALSE)
 #  notices        :jsonb
 #  rating         :integer
-#  steps          :string           not null
+#  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint
@@ -24,6 +24,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  (emotion_id => emotions.id)
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
