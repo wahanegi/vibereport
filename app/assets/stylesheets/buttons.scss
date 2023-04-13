@@ -17,13 +17,18 @@
   &.btn-regular{
     width:            14.688rem;
     height:           3.75rem;
-    border:           1px solid $black ;
-    border-radius:    .75rem  ;
-    color:            $white ;
+    border:           1px solid $black;
+    border-radius:    .75rem ;
+    color:            $white;
     background-color: $royal-blue;
     box-shadow:       $btn-box-shadow-other !important;
     &.back{
       background-color: $gray-200;
+      &:active {
+        background-color: shift-color($gray-200, 30%);
+        border:           1px solid $black;
+        color:            $white;
+      }
     }
   }
 

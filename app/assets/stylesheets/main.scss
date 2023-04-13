@@ -50,18 +50,6 @@ body {
   border-radius: 15px;
   padding-left: 23px;
 }
-.fa-question {
-  color:  $color-rose;
-}
-.icon-circle {
-  position: absolute;
-  right: 47px;
-  display: inline-flex;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background-image: url("question.svg");
-}
 //<ListEmotion>
 .big-btn-text a {
   --bs-link-hover-color: rgba(0, 0, 0, 0.6);
