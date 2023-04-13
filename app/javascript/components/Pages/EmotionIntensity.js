@@ -64,7 +64,7 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const isBlankGif = isBlank(gif_url)
   
   const handlingOnClickNext = () => {
-    steps.push('ProductivityCheckLow')
+    steps.push('productivity-check')
     saveDataToDb( steps, {rating, comment})
   }
 
