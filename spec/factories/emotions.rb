@@ -13,5 +13,6 @@ FactoryBot.define do
   factory(:emotion) do
     word { Faker::Emotion.unique.adjective }
     category { [:negative, :neutral, :positive].sample }
+    public { Faker::Boolean.boolean }
   end
 end

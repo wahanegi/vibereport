@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
 import {apiRequest} from "../requests/axios_requests";
 import {ShoutOutIcon, BtnBack, BtnNext, HelpIcon, Header, Wrapper} from "../UI/ShareContent";
@@ -6,7 +6,7 @@ import iconNegative from "../../../assets/images/icon_negative.svg";
 import iconNeutral from "../../../assets/images/icon_neutral.svg";
 import iconPositive from "../../../assets/images/icon_positive.svg";
 import axios from "axios";
-import {  CSSTransition } from 'react-transition-group';
+import {CSSTransition} from 'react-transition-group';
 import {backHandling} from "../helpers/helpers";
 
 const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
@@ -83,18 +83,16 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
   const Emojis = () => {
     return (
       <Fragment>
-          <div>
-            <div className={`wrap-emoji`}>
-              {emojis.map((emoji) => (
-                <div
-                  className={`wrap-icon ${emoji.name}-icon`}
-                  key={emoji.name}
-                  onClick={() => handleEmojiClick(emoji.name)}>
-                  {emoji.icon} <span>{emoji.name}</span>
-                </div>
-              ))}
+        <div className={`wrap-emoji d-flex justify-content-center align-items-center`}>
+          {emojis.map((emoji) => (
+            <div
+              className={`wrap-icon ${emoji.name}-icon d-flex flex-column align-items-center`}
+              key={emoji.name}
+              onClick={() => handleEmojiClick(emoji.name)}>
+              {emoji.icon} <span>{emoji.name}</span>
             </div>
-          </div>
+          ))}
+        </div>
       </Fragment>
     );
   };
@@ -103,7 +101,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     return (
       <Fragment>
         <div>
-          <h4 className="feel__emotion-entry">How do you feel about this word?</h4>
+          <h4 className="emotion-entry__h4-feel">How do you feel about this word?</h4>
         </div>
       </Fragment>
     );
@@ -112,16 +110,16 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
   return <Fragment>
     { !!error && <p>{error.message}</p>}
     {!isLoading && !error &&
-      <Wrapper>
+      <Wrapper className='position-relative'>
         <Header />
         <div className='central-element'>
-          <h1 className= 'h1__emotion-entry'>A new one! What’s up?</h1>
-          <h4 className="h4__emotion-entry mt-3">What word best describes your week?</h4>
-          <Form.Control className ={`${getEmojiClass(selectedEmoji)} input-${emotion.category} email_field input_new-word`}  type="text" placeholder="Add a new word" name="word" value={emotion.word || ''} onChange={onChangeEmotion} />
-          <CSSTransition in={show} timeout={500} classNames="fade" unmountOnExit>
+          <h1 className= 'emotion-entry__h1'>A new one! What’s up?</h1>
+          <h4 className="emotion-entry__h4 mt-3">What word best describes your week?</h4>
+          <Form.Control className ={`${getEmojiClass(selectedEmoji)} input-${emotion.category} email_field input__new-word`}  type="text" placeholder="Add a new word" name="word" value={emotion.word || ''} onChange={onChangeEmotion} />
+          <CSSTransition in={show} timeout={500} classNames="fade-text" unmountOnExit>
             <TextSelectCategory show={show}/>
           </CSSTransition>
-          <CSSTransition in={show} timeout={500} classNames="icon-active" unmountOnExit>
+          <CSSTransition in={show} timeout={500} classNames="fade-icon" unmountOnExit>
             <Emojis show={show}/>
           </CSSTransition>
         </div>

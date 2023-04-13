@@ -13,9 +13,9 @@ require 'rails_helper'
 
 RSpec.describe Emotion, type: :model do
   let!(:emotion) { create :emotion }
-  let!(:emotion_positive) { create(:emotion, category: 'positive') }
-  let!(:emotion_neutral) { create(:emotion, category: 'neutral') }
-  let!(:emotion_negative) { create(:emotion, category: 'negative') }
+  let!(:emotion_positive) { create(:emotion, category: 'positive', public: true) }
+  let!(:emotion_neutral) { create(:emotion, category: 'neutral', public: true) }
+  let!(:emotion_negative) { create(:emotion, category: 'negative', public: true) }
   before do
     Faker::UniqueGenerator.clear
   end
@@ -31,13 +31,13 @@ RSpec.describe Emotion, type: :model do
 
   describe 'Scopes' do
     it 'positive scope' do
-      expect(Emotion.positive).to include(emotion_positive)
+      expect(Emotion.where(public: true).positive).to include(emotion_positive)
     end
     it 'neutral scope' do
-      expect(Emotion.neutral).to include(emotion_neutral)
+      expect(Emotion.where(public: true).neutral).to include(emotion_neutral)
     end
     it 'negative scope' do
-      expect(Emotion.negative).to include(emotion_negative)
+      expect(Emotion.where(public: true).negative).to include(emotion_negative)
     end
   end
 
@@ -68,4 +68,26 @@ RSpec.describe Emotion, type: :model do
       expect(emotion.reload.word).to eq('enthusiastic')
     end
   end
+
+  describe '#create' do
+    it 'creates a new Emotion' do
+      expect { Emotion.create(word: 'well', category: "positive", public: false) }.to change(Emotion, :count).by(1)
+    end
+
+    context 'with existing emotion word' do
+      let!(:existing_emotion) { create(:emotion, word: 'happy', category: 'positive', public: false) }
+      let(:emotion_params) { { emotion: { word: 'happy', category: 'positive', public: false } } }
+
+      it 'does not create a new Emotion' do
+        expect { Emotion.create(word: 'happy', category: 'positive', public: false) }.not_to change(Emotion, :count)
+      end
+    end
+
+    context 'with invalid parameters' do
+      it 'does not create a new Emotion' do
+        expect { Emotion.create(word: '', category: 'positive', public: false) }.not_to change(Emotion, :count)
+      end
+    end
+  end
 end
+

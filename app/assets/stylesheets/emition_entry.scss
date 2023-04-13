@@ -1,23 +1,25 @@
 @import "colors";
 @import "design_system_vibereport";
 
-.Wrapper {
-  position: relative;
-}
-
-.h1__emotion-entry{
+.emotion-entry__h1{
   color: $black;
 }
 
-.h4__emotion-entry{
+.emotion-entry__h4{
   font-weight: 400;
   color: $gray-600;
 }
 
-.input_new-word{
+.input__new-word{
   width: 660px;
   border-radius: 15px;
   font-size: 40px;
+
+  &::placeholder{
+    font-size: 36px;
+    font-weight: 700;
+    color: $color-muted;
+  }
 }
 
 .input-positive{
@@ -38,68 +40,56 @@
   border-color: $dark-blue !important;
 }
 
-.input_new-word::placeholder{
-  font-size: 36px;
-  font-weight: 700;
-  color: $color-muted;
-}
-
-.feel__emotion-entry{
+.emotion-entry__h4-feel{
   margin-top: 77px;
   color: $gray-800;
 }
 
 .wrap-emoji {
   margin-top: 21px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100px;
   column-gap: 38px;
   overflow: hidden;
 }
 
-.fade-enter {
+.fade-text-enter {
   opacity: 0.01;
 }
 
-.fade-enter.fade-enter-active {
+.fade-text-enter.fade-text-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
 
-.fade-exit {
+.fade-text-exit {
   opacity: 1;
 }
 
-.fade-exit.fade-exit-active {
+.fade-text-exit-active {
   opacity: 0.01;
   transition: opacity 500ms ease-out;
 }
 
-.icon-active-enter {
+.fade-icon-enter {
   transform: translateY(-500%);
 }
 
-.icon-active-enter-active {
+.fade-icon-enter-active {
   transform: translateY(0%);
   transition: transform 500ms ease-in;
 }
 
-.icon-active-exit {
+.fade-icon-exit {
   transform: translateY(0%);
 }
 
-.icon-active-exit-active {
+.fade-icon-exit-active {
   transform: translateY(500%);
   transition: transform 500ms ease-out;
   bottom: 0;
 }
 
 .wrap-icon{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 11px;
   cursor: pointer;
 }
