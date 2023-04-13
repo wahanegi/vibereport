@@ -1,28 +1,31 @@
 <%= form_with model: @session, url: send(Passwordless.mounted_as).sign_in_path, data: { turbo: 'false'} do |f| %>
-  <div class="text-center mx-5" style="margin-top: 150px">
-    <div class="header mt-5">Oh, hi there!</div>
-    <div class="sub-header muted my-4">Welcome to</div>
-    <%= image_tag("logo.svg", width: 190, height: 87) %>
-    <% if flash.to_h["error"] == 'Expired!' %>
-      <h3 class="muted my-4">Your login link may have expired. Click here to get a new one</h3>
-    <% else %>
-      <h3 class="muted my-4">Enter your email address and we’ll send you a link to access your check-in and profile</h3>
-    <% end %>
-    <div class="email_field my-4">
-      <% email_field_name = :"passwordless[#{@email_field}]" %>
-      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input" %>
+  <div class="mx-auto mt-125 minW-675">
+    <div class="welcome-field mx-auto mb-115">
+      <h1 class="color-black">
+        Oh, hi there!
+      </h1>
+      <p class="b2 gray-600 mt-negative-17">Welcome to</p>
     </div>
-    <div class="d-flex align-items-center" style="margin-top: 100px">
-      <div class="w-100">
-        <div class="justify-content-center">
-          <%= f.submit 'Next', class: "btn btn-regular c1", id: "next-button", disabled: true %>
-        </div>
-      </div>
-      <div class="flex-shrink-1 mr-3">
-        <%= link_to image_tag("help.svg"),
-                    "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}",
-                    class: 'help-icon' %>
-      </div>
+    <div class="mb-negative-17 position-relative fs-7">Logo/Brand</div>
+    <%= image_tag("envelope.png", width: 190, height: 87) %>
+    <% if flash.to_h["error"] == 'Expired!' %>
+      <h3 class="gray-600 my-4">Your login link may have expired. Click here to get a new one</h3>
+    <% else %>
+    <div class="input-label mt-3 mb-6 mx-auto pt-3">
+      <p class="gray-600 b3">Enter your email address and we’ll send you a link
+      <br>
+      to access your check-in and profile</p>
+    </div>
+    <% end %>
+    <div class="b1">
+      <% email_field_name = :"passwordless[#{@email_field}]" %>
+      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input", class:"mt-2 w-660"%>
+    </div>
+    <div class="d-flex align-items-center mt-162">
+      <%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
+    </div>
+    <div class="placement-size-link position-absolute w-100 d-flex justify-content-end px-5 h-0">
+      <%= link_to image_tag("help.svg"), "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: 'help-icon' %>
     </div>
   </div>
 <% end %>

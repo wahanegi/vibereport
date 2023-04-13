@@ -2,6 +2,7 @@ import React, {useEffect, useState, Fragment} from "react"
 import SearchBar from "./SearchBar";
 import {GIPHY_SEARCH_URL} from "../../helpers/consts";
 import SearchResults from "./SearchResults";
+import PoweredBy from '../../../../assets/images/PoweredBy.svg';
 
 const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif }) => {
   const [term, setTerm] = useState(emotion.word)
@@ -35,6 +36,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
           const gifs = data.data?.map(gif => ({
             id: gif.id,
             src: gif.images.original.url,
+            src_preview: gif.images.preview_gif.url,
             height: parseInt(gif.images.fixed_width.height),
           }));
           setGifs(gifs)
@@ -43,10 +45,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
     }
   }, [term])
 
-  const GiphyLogo = () => <div className='d-flex justify-content-center align-items-center'>
-    <div className='fw-lighter mx-2 light-grey-text mt-1'>POWERED BY</div>
-    <div className='fw-bold h2 muted mt-2 mb-0'>GIPHY</div>
-  </div>
+  const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className={`mt-1 big image-powered-by`}/>
 
  return  loaded && <Fragment>
    <GiphyLogo />

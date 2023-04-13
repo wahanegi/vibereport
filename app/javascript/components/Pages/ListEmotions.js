@@ -48,6 +48,12 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     saveDataToDb( steps, dataRequest )
   }
 
+  const rangeFormat = (tp) => {
+    const dueDate = new Date(tp.due_date)
+    const month = dueDate.toLocaleString('default', {month: 'long'}).slice(0,3)
+    return month + ' ' + `${dueDate.getDate()}`.padStart(2, '0')
+  }
+
   //*** **transformation of table** to the view:
   //*** 6+6(positive columns) 6+6(neutral columns) and 6+6(negative columns)
   const mixUp = (index) => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
@@ -65,8 +71,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <div className="h-40">
              <div className="calendar ml-240 mt-37">
                <div className="data mx-auto my-0 ">
-                 21 Jan
-                 {/*<Calendar timePeriod={timePeriod} />*/}
+                 {rangeFormat(timePeriod)}
                </div>
              </div>
           </div>
@@ -94,7 +99,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           </NavLink>
           <QuestionButton />
           <ShoutoutButton />
-          <Menu percent_completion='100' />
+          <Menu addClass='placement-menu' percent_completion='100' />
         </div>
       }
     </Fragment>

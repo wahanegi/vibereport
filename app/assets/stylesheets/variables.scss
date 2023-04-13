@@ -32,7 +32,8 @@ $font-sizes: (
 3: $h3-font-size,
 4: $h4-font-size,
 5: 1.5rem,
-6: 1rem
+6: 1rem,
+7: 0.75rem
 ) ;
 
 //For input-btn-variables
@@ -87,4 +88,5 @@ $spacers: (
         4: $spacer * 1.125,
         5: $spacer * 1.5,
         6: $spacer * 1.75,
+        7: $spacer * 2
 ) ;

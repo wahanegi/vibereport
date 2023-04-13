@@ -2,9 +2,9 @@ import React from 'react';
 import {Dropdown} from "react-bootstrap";
 import Button from "./Button";
 
-const Menu = ({ percent_completion }) => {
+const Menu = ({ percent_completion, addClass = '' }) => {
   return (
-    <div className='placement-menu'>
+    <div className={`${addClass}`}>
       <Dropdown>
         <Dropdown.Toggle  id='dropdown-stick'>
         <div  className="menu">
