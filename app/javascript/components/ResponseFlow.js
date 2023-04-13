@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
 import Results from "./Pages/Results";
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
+import CausesToCelebrate from "./Pages/CausesToCelebrate";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -112,8 +113,8 @@ const ResponseFlow = ({step, data, setData}) => {
       return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "productivity-bad-follow-up" :
       return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "CausesToCelebrate" :
-    //   return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "causes-to-celebrate" :
+       return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "ShoutoutPromptNone" :
     //   return <ShoutoutPromptNone data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "ShoutoutModalExample" :
