@@ -60,9 +60,9 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def build_three_set
-    Emotion.where(public: true).positive.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.where(public: true).neutral.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.where(public: true).negative.sample(NUMBER_OF_ELEMENTS)
+    Emotion.emotion_public.positive.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.emotion_public.neutral.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.emotion_public.negative.sample(NUMBER_OF_ELEMENTS)
   end
 
   def emotion_params

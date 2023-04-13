@@ -13,9 +13,9 @@ require 'rails_helper'
 
 RSpec.describe Emotion, type: :model do
   let!(:emotion) { create :emotion }
-  let!(:emotion_positive) { create(:emotion, category: 'positive', public: true) }
-  let!(:emotion_neutral) { create(:emotion, category: 'neutral', public: true) }
-  let!(:emotion_negative) { create(:emotion, category: 'negative', public: true) }
+  let!(:emotion_positive) { create(:emotion, category: 'positive') }
+  let!(:emotion_neutral) { create(:emotion, category: 'neutral') }
+  let!(:emotion_negative) { create(:emotion, category: 'negative') }
   before do
     Faker::UniqueGenerator.clear
   end
@@ -31,13 +31,13 @@ RSpec.describe Emotion, type: :model do
 
   describe 'Scopes' do
     it 'positive scope' do
-      expect(Emotion.where(public: true).positive).to include(emotion_positive)
+      expect(Emotion.emotion_public.positive).to include(emotion_positive)
     end
     it 'neutral scope' do
-      expect(Emotion.where(public: true).neutral).to include(emotion_neutral)
+      expect(Emotion.emotion_public.neutral).to include(emotion_neutral)
     end
     it 'negative scope' do
-      expect(Emotion.where(public: true).negative).to include(emotion_negative)
+      expect(Emotion.emotion_public.negative).to include(emotion_negative)
     end
   end
 
