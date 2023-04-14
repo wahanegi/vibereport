@@ -53,14 +53,15 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
 
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const getEmojiClass = (category, name) => {
-    if (category === "positive") {
-      return "input-positive";
-    } else if (category === "negative") {
-      return "input-negative";
-    } else if (category === "neutral") {
-      return "input-neutral";
-    } else {
-      return "";
+    switch (category) {
+      case 'positive':
+        return "input-positive";
+      case 'negative':
+        return "input-negative";
+      case 'neutral':
+        return "input-neutral";
+      default:
+        return "";
     }
   };
 

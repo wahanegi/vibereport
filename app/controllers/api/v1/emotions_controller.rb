@@ -14,15 +14,15 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def create
-    @emotion = Emotion.new(emotion_params)
-    @emotion_existed = Emotion.all.find_by(word: params.dig('emotion', 'word'))
+    emotion = Emotion.new(emotion_params)
+    emotion_existed = Emotion.all.find_by(word: params.dig('emotion', 'word'))
 
-    if @emotion_existed.present?
-      render json: EmotionSerializer.new(@emotion_existed).serializable_hash
-    elsif @emotion.save
-      render json: EmotionSerializer.new(@emotion).serializable_hash
+    if emotion_existed.present?
+      render json: EmotionSerializer.new(emotion_existed).serializable_hash
+    elsif emotion.save
+      render json: EmotionSerializer.new(emotion).serializable_hash
     else
-      render json: { error: @emotion.errors }, status: :unprocessable_entity
+      render json: { error: emotion.errors }, status: :unprocessable_entity
     end
   end
 
