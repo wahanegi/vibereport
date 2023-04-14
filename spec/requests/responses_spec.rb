@@ -65,7 +65,8 @@ RSpec.describe Api::V1::ResponsesController do
               'gif_url' => nil,
               'rating' => user_response.rating,
               'comment' => user_response.comment,
-              'productivity' => user_response.productivity
+              'productivity' => user_response.productivity,
+              'bad_follow_comment' => user_response.bad_follow_comment
             }
         }
       }]
@@ -101,10 +102,11 @@ RSpec.describe Api::V1::ResponsesController do
               'time_period_id' => response_saved.time_period_id,
               'emotion_id' => response_saved.emotion_id,
               'steps' => response_saved.steps,
-              'gif_url' => nil,              
+              'gif_url' => nil,
               'rating' => user_response.rating,
               'comment' => user_response.comment,
-              'productivity' => user_response.productivity
+              'productivity' => user_response.productivity,
+              'bad_follow_comment' => user_response.bad_follow_comment
             }
         }
       }]
@@ -139,7 +141,8 @@ RSpec.describe Api::V1::ResponsesController do
                 'gif_url' => nil,
                 'rating' => user_response.rating,
                 'comment' => user_response.comment,
-                'productivity' => user_response.productivity
+                'productivity' => user_response.productivity,
+                'bad_follow_comment' => user_response.bad_follow_comment
               }
           }
       }]
