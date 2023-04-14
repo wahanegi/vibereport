@@ -3,7 +3,7 @@ import {Button} from "react-bootstrap";
 import {backHandling} from "../helpers/helpers";
 import {BtnBack, BtnNext} from "../UI/ShareContent";
 
-const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) => {
+const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const handlingOnClickNext = () => {
 
@@ -11,7 +11,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
   if (!!error) return <p>{error.message}</p>
   return (
     <Fragment>
-      <h1>ProductivityBadFollowUp</h1>
+      <h1>CausesToCelebrate</h1>
       <div className='mt-5'>
         <BtnBack onClick={backHandling} />
         <BtnNext onClick={handlingOnClickNext} />
@@ -20,4 +20,4 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
   );
 };
 
-export default ProductivityBadFollowUp;
+export default CausesToCelebrate;
