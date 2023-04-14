@@ -102,7 +102,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     return (
       <Fragment>
         <div>
-          <h4 className="emotion-entry__h4-feel">How do you feel about this word?</h4>
+          <h4 className="emotion-entry-feel">How do you feel about this word?</h4>
         </div>
       </Fragment>
     );
@@ -114,9 +114,9 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
       <Wrapper className='position-relative'>
         <Header />
         <div className='central-element'>
-          <h1 className= 'emotion-entry__h1'>A new one! What’s up?</h1>
-          <h4 className="emotion-entry__h4 mt-3">What word best describes your week?</h4>
-          <Form.Control className ={`${getEmojiClass(selectedEmoji)} input-${emotion.category} email_field input__new-word`}  type="text" placeholder="Add a new word" name="word" value={emotion.word || ''} onChange={onChangeEmotion} />
+          <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
+          <h4 className="emotion-entry mt-3">What word best describes your week?</h4>
+          <Form.Control className ={`${getEmojiClass(selectedEmoji)} input-${emotion.category} email_field input-new-word`}  type="text" placeholder="Add a new word" name="word" value={emotion.word || ''} onChange={onChangeEmotion} />
           <CSSTransition in={show} timeout={500} classNames="fade-text" unmountOnExit>
             <TextSelectCategory show={show}/>
           </CSSTransition>

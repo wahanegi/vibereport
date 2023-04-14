@@ -1,17 +1,17 @@
 @import "colors";
 @import "design_system_vibereport";
 
-.emotion-entry__h1{
-  margin-bottom: 32px !important;
-  color: $black;
+h1.emotion-entry{
+    margin-bottom: 32px !important;
+    color: $black;
 }
 
-.emotion-entry__h4{
+h4.emotion-entry {
   font-weight: 400;
   color: $gray-600;
 }
 
-.input__new-word{
+.input-new-word{
   width: 660px;
   border-radius: 15px;
   font-size: 40px;
@@ -41,7 +41,7 @@
   border-color: $dark-blue !important;
 }
 
-.emotion-entry__h4-feel{
+h4.emotion-entry-feel{
   margin-top: 77px;
   color: $gray-800;
 }
