@@ -11,7 +11,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
                                 '@roger thanks for the help with Project2',
                                   '@roger thanks for the help with Vibe Report Project. ' +
                                    'Significant pleasure to @Marina Harashko @Lyuba Pidoshva @Serhii Borozenets @Alona @Marta']
-const numShoutOuts = shoutOuts.length
+const numShoutOuts = shoutOuts.length * 0
 
 
   const skipHandling = () =>{

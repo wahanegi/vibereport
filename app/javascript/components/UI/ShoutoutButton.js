@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ShoutoutIcon from '../../../assets/./sys_svg/shoutout.svg'
+import ShoutoutIcon from '../../../assets/./sys_svg/shoutoutNew.svg'
 import {NavLink} from "react-router-dom";
 
 const ShoutoutButton = ({numShoutouts, moveShoutout = false}) => {
