@@ -326,6 +326,10 @@ body {
   p {
     font-family: $font-family-italic
   }
+
+  input:focus, textarea:focus {
+    border: unset;
+  }
 }
 //
 
