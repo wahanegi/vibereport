@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
-import { NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
+import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
+// import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -20,6 +22,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       emotion_id: emotion_id,
       time_period_id: timePeriod.id,
       user_id: data.current_user_id,
+      comment: '',
+      rating: '',
+      productivity: '0',
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -44,6 +49,12 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     saveDataToDb( steps, dataRequest )
   }
 
+  const rangeFormat = (tp) => {
+    const dueDate = new Date(tp.due_date)
+    const month = dueDate.toLocaleString('default', {month: 'long'}).slice(0,3)
+    return month + ' ' + `${dueDate.getDate()}`.padStart(2, '0')
+  }
+
   //*** **transformation of table** to the view:
   //*** 6+6(positive columns) 6+6(neutral columns) and 6+6(negative columns)
   const mixUp = (index) => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
@@ -52,12 +63,19 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     <Fragment>
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
-        <div className="board">
-          <div className='d-flex justify-content-between m-3 '>
-            <Logo />
-            <Menu>X% complete</Menu>
+        <div className="board  mt-35">
+          <div className="convert bigger ml-41">
+            <p>Logo/Brand</p>
+            <div className="line1 offset-line1"></div>
+            <div className="line2 offset-line2"></div>
           </div>
-          <Calendar timePeriod={timePeriod} />
+          <div className="h-40">
+             <div className="calendar ml-240 mt-37">
+               <div className="data mx-auto my-0 ">
+                 {rangeFormat(timePeriod)}
+               </div>
+             </div>
+          </div>
           <div className="invitation mx-auto p-0">Time for this week's check-in!</div>
           <div className="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
             <div className='d-flex mx-auto emotions'>
@@ -72,18 +90,17 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                      
                    </ButtonEmotion>
                 )}
-            </div>
-          <div className="big-btn-tooltip">Share it in your own words!</div>
+              </div>
+          <div className="big-btn-tooltip correct">Share it in your own words!</div>
           <div className="big-btn">
-          <BtnAddYourOwnWord className="link-text" content="Add your own word" onClick={ownWordHandling}/>
+          <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
           </div>
-          <div className='d-flex justify-content-between m-3 '>
-            <ShoutOutIcon />
-            <NavLink className="lnk-was-not  mx-auto my-0 " onClick={onClickNotWorking} to={''}>
-              I was not working this week
-            </NavLink>
-            <HelpIcon />
-          </div>
+          <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
+            I was not working this week
+          </NavLink>
+          <QuestionButton />
+          <ShoutoutButton />
+          <Menu addClass='placement-menu' percent_completion='100' />
         </div>
       }
     </Fragment>

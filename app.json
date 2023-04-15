@@ -42,7 +42,7 @@
           "description": "A randomly generated string",
           "generator": "secret"
         },
-        "DAY_TO_SEND_INVITES": "monday",
+        "DAY_TO_SEND_INVITES": "friday",
         "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1",
         "DOMAIN_URL": "vibereport.app",
         "EMAIL_DOMAIN": "vibereport.app",
@@ -52,7 +52,7 @@
         "SMTP_PASSWORD": "xxx",
         "SMTP_PORT": "2525",
         "SMTP_USERNAME": "xxx",
-        "DEFAULT_FROM_ADDRESS": "do_not_reply"
+        "DEFAULT_FROM_ADDRESS": "hello"
       },
       "scripts": {
         "postdeploy": "rails db:schema:load db:seed"

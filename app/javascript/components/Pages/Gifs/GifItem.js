@@ -9,7 +9,7 @@ const GifItem = ({ gif, index, selectedGifIndex, setSelectedGifIndex, setGifUrl,
 
   return <Fragment>
     <div className={selectedGifIndex === index ? `gif-clicked-${category}` : 'gif-item'}>
-      <img src={gif.src}
+      <img src={gif.src_preview}
            onClick={() => onGifSelect(gif)}
            alt={`gif ${category}`} />
     </div>

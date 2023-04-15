@@ -3,31 +3,19 @@
 # Generate email letter CI-32
 class UserEmailMailer < ApplicationMailer
   default from: "#{ENV.fetch('DEFAULT_FROM_ADDRESS')}@#{ENV.fetch('EMAIL_DOMAIN')}"
-  NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
+  NUMBER = Emotion::SHOW_NUMBER_PER_CATEGORY
+  URL = { controller: 'api/v1/responses', action: 'response_flow_from_email' }.freeze
 
   def response_invite(user, time_period)
-    @user = user
-    @general_link = { controller: 'api/v1/responses', action: 'response_flow_from_email',
-                      time_period_id: TimePeriod.current, not_working: false, user_id: @user.id }
-    @link_for_own_word = [@general_link, { last_step: 'emotion-entry' }].reduce(:merge!)
-    @link_for_was_not  = [@general_link, { last_step: 'results' }].reduce(:merge!)
-    @link_for_emotion  = [@general_link, { emotion_id: nil, last_step: 'meme-selection' }].reduce(:merge!)
-    @view_complete_by = range_format(time_period)
-    @emotions = Emotion.positive.sample(NUMBER_OF_ELEMENTS) +
-                Emotion.neutral.sample(NUMBER_OF_ELEMENTS) +
-                Emotion.negative.sample(NUMBER_OF_ELEMENTS)
+    general_link = URL.merge({ time_period_id: TimePeriod.current, not_working: false, user_id: user.id })
+    @link_for_own_word = general_link.merge({ last_step: 'emotion-entry' })
+    @link_for_was_not  = general_link.merge({ last_step: 'results' })
+    @link_for_emotion  = general_link.merge({ emotion_id: nil, last_step: 'meme-selection' })
+    @view_complete_by  = time_period.due_date.strftime('%b %d').to_s
     @table = []
-    (0..@emotions.length - 1).each { |index| @table.push(@emotions[calculation(index)]) }
-    mail(to: user.email, subject: "Hey #{@user.first_name}, how was your week?")
-  end
-
-  private
-
-  def calculation(index)
-    (index - (6 * (index / 6).ceil - 1)) * 6 - ((index / 6).ceil - 1) - 2
-  end
-
-  def range_format(date)
-    "#{date.end_date.strftime('%d')} #{date.end_date.strftime('%b')}"
+    emotions = Emotion.positive.sample(NUMBER) + Emotion.neutral.sample(NUMBER) + Emotion.negative.sample(NUMBER)
+    emotions.each_slice(6) { |sliced_emotions| @table << sliced_emotions }
+    @table = @table.transpose.flatten
+    mail(to: user.email, subject: "Hey #{user.first_name}, how was your week?")
   end
 end
