@@ -4,7 +4,7 @@ import help_icon from "../../../assets/images/help.svg"
 
 const QuestionButton = () => {
   return (
-    <NavLink style={{position: 'absolute', right: 47, top: 756 }} to="mailto: support@vibereport.app">
+    <NavLink className='placement-question-btn help-icon' to="mailto: support@vibereport.app">
       <img  src={help_icon} alt="Question" />
     </NavLink>
   );

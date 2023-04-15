@@ -99,7 +99,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           </NavLink>
           <QuestionButton />
           <ShoutoutButton />
-          <Menu addClass='placement-menu' percent_completion='100' />
+          <Menu className='placement-menu' percent_completion='100' />
         </div>
       }
     </Fragment>

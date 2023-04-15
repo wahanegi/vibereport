@@ -15,7 +15,7 @@ const CornerElements = ({ percentCompletion, numShoutouts , moveShoutout= true})
       </div>
       <QuestionButton />
       <ShoutoutButton numShoutouts={numShoutouts} moveShoutout={moveShoutout}/>
-      <Menu percentCompletion={percentCompletion} />
+      <Menu percentCompletion={percentCompletion} className='placement-menu'/>
     </Fragment>
   );
 };

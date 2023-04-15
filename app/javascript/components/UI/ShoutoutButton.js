@@ -12,11 +12,17 @@ const ShoutoutButton = ({numShoutouts, moveShoutout = false}) => {
         }
     },[])
 
+    const clickHandling = () => {
+
+    }
+
     const style = `left-bottom-corner ${ moveShoutout && ('into-centerX' + (!numShoutouts ? '2_5' : '')) } ${blink}`
     return (
+      <div>
         <NavLink className ={style}  to={'#'}>
-            <img src={ShoutoutIcon} alt='Shoutout'/>
+            <img src={ShoutoutIcon} alt='Shoutout' onClick={clickHandling}/>
         </NavLink>
+      </div>
     );
 }
 

@@ -4,14 +4,16 @@ import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
+import edit_pencil from "../../../assets/images/edit-pencil.svg";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
-  const shoutOuts = ['@Team2 you\'re all doing so awesome! thanks!',
-                              '@roger thanks for the help with Project1',
-                                '@roger thanks for the help with Project2',
-                                  '@roger thanks for the help with Vibe Report Project. ' +
-                                   'Significant pleasure to @Marina Harashko @Lyuba Pidoshva @Serhii Borozenets @Alona @Marta']
-const numShoutOuts = shoutOuts.length * 0
+  const limit = 40
+  const shoutOuts = [{id:0, msg:'@Team2 you\'re all doing so awesome! thanks!'},
+    {id:1, msg:'@roger thanks for the help with Project1'},
+    {id:2, msg:'@roger thanks for the help with Project2'},
+    {id:3, msg:'@roger thanks for the help with Vibe Report Project. ' +
+        'Significant pleasure to @Marina Harashko @Lyuba Pidoshva @Serhii Borozenets @Alona @Marta'}]
+const numShoutOuts = shoutOuts.length
 
 
   const skipHandling = () =>{
@@ -22,6 +24,10 @@ const numShoutOuts = shoutOuts.length * 0
   const nextHandling = () =>{
     steps.push('emotion-selection-web')
     saveDataToDb( steps )
+  }
+  const editHandling = (e) =>{
+    e.preventDefault()
+    alert(e.target.attributes.id.value)
   }
 
 
@@ -40,20 +46,27 @@ const numShoutOuts = shoutOuts.length * 0
       return arr
     }
     shoutOuts.forEach((shoutOut, index) => {
-      let words = findUniteNames(shoutOut.split(" "))
+      let words = findUniteNames(shoutOut.msg.split(" "))
       for (let i=0; i<words.length; i++){
         words[i] = words[i][0] ==='@' ? '<span className="color-primary">' + words[i] + '</span>' : words[i]
       }
-      shoutOuts[index] = words.join(' ')
+      shoutOuts[index].msg = words.join(' ')
     })
 
     return (
       <ul>
       {shoutOuts.map( shoutOut => (
-      <li className='c3'><p className='fw-semibold mb-0'>{parse(shoutOut)}</p></li>
+      <li className='c3' key={ shoutOut.id }>
+        <span>
+          <p className='fw-semibold mb-0  cut-text'>{parse(shoutOut.msg)}</p>
+        </span>
+        <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" onClick={editHandling}/>
+      </li>
       ))}
       </ul>
     )
+
+
   }
 
   return (
