@@ -7,6 +7,7 @@
 #  gif_url        :string
 #  not_working    :boolean          default(FALSE)
 #  notices        :jsonb
+#  productivity   :integer
 #  rating         :integer
 #  steps          :string           not null
 #  created_at     :datetime         not null
@@ -24,6 +25,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  (emotion_id => emotions.id)
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #

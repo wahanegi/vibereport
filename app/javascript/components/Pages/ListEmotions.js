@@ -24,6 +24,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       user_id: data.current_user_id,
       comment: '',
       rating: '',
+      productivity: '0',
     }
     saveDataToDb( steps, dataRequest )
   }

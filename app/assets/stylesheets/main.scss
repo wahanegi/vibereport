@@ -299,8 +299,6 @@ height:49px;
     display: inline-block;
     cursor: pointer;
     font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
     font-size: 47.8507px;
     line-height: 58px;
     text-align: center;
@@ -323,6 +321,7 @@ height:49px;
     font-size: 23px;
     margin-top: 5px;
     text-align: justify;
+    box-shadow: unset;
   }
 
   textarea::placeholder {
@@ -333,11 +332,8 @@ height:49px;
   }
 
   .form-control:focus {
-    color: none;
     background-color: white;
-    border-color: none;
     outline: 0;
-    box-shadow: none;
     border: 2px solid $royal-blue;
   }
 }
@@ -345,11 +341,13 @@ height:49px;
 .gif-productivity {
   margin-top: -41px;
 }
+
 .emotion-small {
   margin: 0px 0px 30px;
   margin-top: -6px;
 }
 //IntenseLine
+
 
 //QuestionButton
 .placement-question-btn {
@@ -358,3 +356,129 @@ height:49px;
   top: 756px;
   border-radius: 50%;
 }
+
+//ProductivitySlider
+.productivity-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  input {
+    width: 700px;
+    border: unset;
+    box-shadow: unset;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    height: 35px;
+    width: 35px;
+    margin: -17.5px 0 0 0;
+  }
+
+  .form-range.level-0::-webkit-slider-thumb  {
+    background: $gray-100;
+  }
+  .form-range.level-1::-webkit-slider-thumb  {
+    background: #D7C2B8;
+  }
+
+  .form-range.level-2::-webkit-slider-thumb  {
+    background: #E7AF92;
+  }
+
+  .form-range.level-3::-webkit-slider-thumb  {
+    background: #E49770;
+  }
+
+  .form-range.level-4::-webkit-slider-thumb  {
+    background: #E8956C;
+  }
+
+  .form-range.level-5::-webkit-slider-thumb  {
+    background: #ED7B45;
+  }
+
+  .form-range.level-6::-webkit-slider-thumb  {
+    background: #FF5300;
+  }
+
+  .form-range.level-7::-webkit-slider-thumb  {
+    background: #E26D6D;
+  }
+
+  .form-range.level-8::-webkit-slider-thumb  {
+    background: #EB4848;
+  }
+
+  .form-range.level-9::-webkit-slider-thumb  {
+    background: #FF0000;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 3px;
+  }
+
+  .form-range.level-0::-webkit-slider-runnable-track {
+    background-color: $black;
+  }
+
+  .form-range.level-1::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 85%, #D7C2B8 85%);
+  }
+
+  .form-range.level-2::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 75%, #D7C2B8 75%);
+  }
+
+  .form-range.level-3::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 65%, #E7AF92 65%);
+  }
+
+  .form-range.level-4::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 55%, #E49770 55%);
+  }
+
+  .form-range.level-5::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 45%, #E8956C 45%);
+  }
+
+  .form-range.level-6::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 35%, #ED7B45 35%);
+  }
+
+  .form-range.level-7::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 25%, #FF5300 25%);
+  }
+
+  .form-range.level-8::-webkit-slider-runnable-track {
+    background: linear-gradient(247deg, $color-white 15%, #E26D6D 15%);
+  }
+
+  .form-range.level-9::-webkit-slider-runnable-track {
+
+    background: linear-gradient(247deg, $color-white 0%, #EB4848 0%);
+  }
+
+  .form-range:focus::-webkit-slider-thumb {
+    box-shadow: none;
+  }
+
+  .form-range:focus::-moz-range-thumb {
+    box-shadow: none;
+  }
+
+  .form-range.level-0 {
+    margin-top: 311px;
+  }
+
+  .productivity-card {
+    margin: -84px;
+  }
+
+  p {
+    font-family: $font-family-italic
+  }
+}
+//
+
