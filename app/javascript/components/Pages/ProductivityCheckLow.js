@@ -51,7 +51,11 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   
   
   const handlingOnClickNext = () => {
-    steps.push('productivity-bad-follow-up');
+    if (productivity <= 2) {
+      steps.push('productivity-bad-follow-up');
+    } else {
+      steps.push('causes-to-celebrate')
+    }
     saveDataToDb(steps, { productivity });
   };
 
