@@ -9,7 +9,7 @@
 #  notices        :jsonb
 #  productivity   :integer
 #  rating         :integer
-#  steps          :string           not null
+#  steps          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  emotion_id     :bigint
@@ -33,6 +33,8 @@ class Response < ApplicationRecord
   belongs_to :time_period
   belongs_to :emotion, optional: true
   belongs_to :user
+  has_many :fun_questions, dependent: :destroy
+  has_many :answer_fun_questions, dependent: :destroy
 
   validates :user_id, uniqueness: { scope: :time_period_id }
   validates :steps, presence: true

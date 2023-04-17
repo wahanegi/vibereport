@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_15_183210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,11 +40,35 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "answer_fun_questions", force: :cascade do |t|
+    t.text "answer_body"
+    t.datetime "created_at", null: false
+    t.bigint "fun_question_id", null: false
+    t.bigint "response_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["fun_question_id"], name: "index_answer_fun_questions_on_fun_question_id"
+    t.index ["response_id"], name: "index_answer_fun_questions_on_response_id"
+    t.index ["user_id"], name: "index_answer_fun_questions_on_user_id"
+  end
+
   create_table "emotions", force: :cascade do |t|
     t.integer "category", default: 1
     t.datetime "created_at", null: false
+    t.boolean "public", default: false
     t.datetime "updated_at", null: false
     t.string "word"
+  end
+
+  create_table "fun_questions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "question_body"
+    t.bigint "response_id"
+    t.datetime "updated_at", null: false
+    t.boolean "used", default: false, null: false
+    t.bigint "user_id"
+    t.index ["response_id"], name: "index_fun_questions_on_response_id"
+    t.index ["user_id"], name: "index_fun_questions_on_user_id"
   end
 
   create_table "passwordless_sessions", force: :cascade do |t|
@@ -70,7 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
     t.jsonb "notices"
     t.integer "productivity"
     t.integer "rating"
-    t.string "steps", null: false
+    t.string "steps"
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -103,6 +127,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answer_fun_questions", "fun_questions"
+  add_foreign_key "answer_fun_questions", "responses"
+  add_foreign_key "answer_fun_questions", "users"
+  add_foreign_key "fun_questions", "responses"
+  add_foreign_key "fun_questions", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
