@@ -6,7 +6,8 @@ import {BtnBack, BtnNext} from "../UI/ShareContent";
 const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const handlingOnClickNext = () => {
-
+    steps.push('icebreaker')
+    saveDataToDb( steps, {})
   }
   if (!!error) return <p>{error.message}</p>
   return (

@@ -13,7 +13,10 @@ const Icebreaker = ({data, setData, saveDataToDb, steps, service}) => {
     <Fragment>
       <Wrapper>
         <Header />
-        <h1>Icebreaker</h1>
+        <div className='d-flex justify-content-center'>
+          <h1>Kick back, relax.</h1>
+          <h1>Time for question of the week!</h1>
+        </div>
         <div className='d-flex justify-content-between m-3'>
           <ShoutOutIcon />
             <BtnBack onClick={backHandling} />

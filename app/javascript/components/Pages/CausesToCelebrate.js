@@ -6,6 +6,7 @@ import {BtnBack, BtnNext} from "../UI/ShareContent";
 const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const handlingOnClickNext = () => {
+
   }
   if (!!error) return <p>{error.message}</p>
   return (
