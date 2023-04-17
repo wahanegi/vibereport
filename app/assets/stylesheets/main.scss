@@ -482,3 +482,35 @@ height:49px;
 }
 //
 
+//ShoutoutModal
+.place-size-shout-out {
+  width: 884px !important;
+  min-width: 884px !important;
+  height: 514px;
+  margin-top: 327px;
+  border-radius: 20px !important;
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+  overflow: auto;
+  &.form-control{
+    border: 4px solid $primary !important;
+    &:focus {
+      border: 4px solid $primary !important;
+    }
+  }
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background: #A6A1A1;
+  filter: blur(50px);
+}
+.x-close {
+  z-index: 31;
+  margin-top: 302px;
+  margin-left: 413px;
+}
