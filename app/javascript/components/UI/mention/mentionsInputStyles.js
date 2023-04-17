@@ -1,25 +1,26 @@
 export default {
   control: {
     backgroundColor: '#fff',
-    fontSize: 14,
-    fontWeight: 'normal',
+    fontSize: 23,
+    fontWeight: 'normal'
   },
 
   '&multiLine': {
     control: {
-      minHeight: '45vh',
-      width: '50vw'
+      height: 350,
+      width: 660
     },
     highlighter: {
       padding: 9,
       border: '3px solid transparent',
-      borderRadius: 15,
+      borderRadius: 15
     },
     input: {
       padding: 9,
-      border: '1px solid silver',
+      border: '3px solid silver',
       borderRadius: 15,
       textAlign: 'left',
+      boxShadow: 'none',
     },
   },
 
@@ -29,20 +30,20 @@ export default {
 
     highlighter: {
       padding: 1,
-      border: '2px inset transparent',
+      border: '2px inset transparent'
     },
     input: {
       padding: 1,
-      border: '2px inset',
+      border: '3px inset'
     },
   },
 
   suggestions: {
     list: {
       backgroundColor: 'white',
-      border: '3px solid #D7007B',
-      fontSize: 14,
-      borderRadius: 10,
+      border: '6px solid #D7007B',
+      fontSize: 23,
+      borderRadius: 10
     },
     item: {
       padding: '5px 15px',

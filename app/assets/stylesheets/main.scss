@@ -169,6 +169,8 @@ body {
     margin-top: 5px;
     text-align: justify;
     box-shadow: unset;
+    padding-inline-start: 1.375rem;
+    padding-inline-end:   1.375rem;
     &.w660-h350 {
       width: 660px;
       height: 350px;
@@ -331,4 +333,12 @@ body {
     font-family: $font-family-italic
   }
 }
-//
+
+.mentions__mention {
+  position: relative;
+}
+.mentions__mention::before {
+  position: absolute;
+  color: #D7007B;
+  content: '@';
+}
