@@ -10,7 +10,7 @@ a{
   font-size:   1.438rem ; //23px
 }
 body {
-  font:{
+  font: {
     family:    $font-family-base;
     style:     normal;
   }
@@ -31,9 +31,14 @@ h1, .h1 {
   font-size:   $h1-font-size ;
   margin-bottom: 48px !important;
 }
+
 h2, .h2 {
   font-size:   $h2-font-size ;
   margin-bottom: 36px !important;
+}
+
+h1 {
+  color:       $black
 }
 
 .b1 {
