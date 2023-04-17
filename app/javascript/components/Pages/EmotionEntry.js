@@ -28,9 +28,9 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
   };
 
   const emojis = [
-    { name: 'Negative', icon: <img className="icon-negative" src={iconNegative} alt={"Negative"}/> },
-    { name: 'Neutral', icon: <img className="icon-neutral" src={iconNeutral} alt={"Neutral"}/> },
-    { name: 'Positive', icon: <img className="icon-positive" src={iconPositive} alt={"Positive"}/> },
+    { name: 'negative', icon: <img className="icon-negative" src={iconNegative} alt={"negative"}/> },
+    { name: 'neutral', icon: <img className="icon-neutral" src={iconNeutral} alt={"neutral"}/> },
+    { name: 'positive', icon: <img className="icon-positive" src={iconPositive} alt={"positive"}/> },
   ];
   const [hoveredEmoji, setHoveredEmoji] = useState("");
   const handleEmojiClick = (name) => {
@@ -90,7 +90,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
               className={`wrap-icon ${emoji.name}-icon d-flex flex-column align-items-center`}
               key={emoji.name}
               onClick={() => handleEmojiClick(emoji.name)}>
-              {emoji.icon} <span>{emoji.name}</span>
+              {emoji.icon} <span>{emoji.name.charAt(0).toUpperCase() + emoji.name.slice(1)}</span>
             </div>
           ))}
         </div>
