@@ -84,13 +84,13 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
     {isBlank(gif_url) ? (
       <Fragment>
         <h1 className="mb-2">"{capitalizeFirstLetter(word)}" week? Most excellent!</h1>
-        <h2>Select how intense the feeling was</h2>
+        <h2 className="color-black">Select how intense the feeling was</h2>
         <br/>
       </Fragment>
     ) : (
       <Fragment>
         <EmotionGif />
-        <h2>Select how intense the feeling was</h2>
+        <h2 className="color-black">Select how intense the feeling was</h2>
       </Fragment>
     )}
   </Fragment>
