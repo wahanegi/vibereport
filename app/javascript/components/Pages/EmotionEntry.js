@@ -24,6 +24,8 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     const existingEmotion = emotions.find(emotion => emotion.attributes.word === trimmedValue);
     if (existingEmotion) {
       setEmotion(prevState => ({ ...prevState, category: existingEmotion.attributes.category }));
+    } else {
+      setEmotion(prevState => ({ ...prevState, category: null }));
     }
   };
 
@@ -78,7 +80,6 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     }else {
       setShow(true);
     }
-
   }, [emotion]);
 
   const Emojis = () => {
