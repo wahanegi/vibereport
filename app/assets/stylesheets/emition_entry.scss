@@ -2,7 +2,7 @@
 @import "design_system_vibereport";
 
 h1.emotion-entry{
-    margin-bottom: 32px !important;
+  margin-bottom: 32px !important;
 }
 
 h4.emotion-entry {
@@ -107,26 +107,32 @@ h4.emotion-entry-feel{
   font-weight: bold;
 }
 
-.wrap-icon.positive-icon:hover img{
+.wrap-icon.positive-icon:hover img,
+.wrap-icon.positive-icon.active img {
   border-color: #02A32F;
 }
 
-.wrap-icon.positive-icon:hover span {
+.wrap-icon.positive-icon:hover span,
+.wrap-icon.positive-icon.active span {
   color: #02A32F;
 }
 
-.wrap-icon.negative-icon:hover img {
+.wrap-icon.negative-icon:hover img,
+.wrap-icon.negative-icon.active img {
   border-color: #F45C12;
 }
 
-.wrap-icon.negative-icon:hover span {
+.wrap-icon.negative-icon:hover span,
+.wrap-icon.negative-icon.active span {
   color: #F45C12;
 }
 
-.wrap-icon.neutral-icon:hover img {
+.wrap-icon.neutral-icon:hover img,
+.wrap-icon.neutral-icon.active img {
   border-color: #105DF1;
 }
 
-.wrap-icon.neutral-icon:hover span {
+.wrap-icon.neutral-icon:hover span,
+.wrap-icon.neutral-icon.active span {
   color: #105DF1;
 }

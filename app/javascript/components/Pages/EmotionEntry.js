@@ -88,7 +88,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
         <div className={`wrap-emoji d-flex justify-content-center align-items-center`}>
           {emojis.map((emoji) => (
             <div
-              className={`wrap-icon ${emoji.name}-icon d-flex flex-column align-items-center`}
+              className={`wrap-icon ${emoji.name}-icon d-flex flex-column align-items-center ${emotion.category === emoji.name ? 'active' : ''}`}
               key={emoji.name}
               onClick={() => handleEmojiClick(emoji.name)}>
               {emoji.icon} <span>{emoji.name.charAt(0).toUpperCase() + emoji.name.slice(1)}</span>
