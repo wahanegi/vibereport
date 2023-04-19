@@ -16,7 +16,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
     <Header />
     <div className='central-element'>
       <h1>It's like that sometimes...</h1>
-      <h2 className="color-black">Reflect on what limited your productivity <br /> this week...</h2>
+      <h2 className="color-black">Reflect on what you think limited <br /> your productivity...</h2>
       <div className="rating-comment-container">
         <form>
           <div className="form-group">
