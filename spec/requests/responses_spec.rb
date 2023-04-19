@@ -51,7 +51,8 @@ RSpec.describe Api::V1::ResponsesController do
             'category' => user_response.emotion.category,
             'created_at' => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
             'updated_at' => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
-            'word' => user_response.emotion.word
+            'word' => user_response.emotion.word,
+            'public' => user_response.emotion.public
           },
         'data' => {
           'id' => user_response.id.to_s,
@@ -90,7 +91,8 @@ RSpec.describe Api::V1::ResponsesController do
             'category' => user_response.emotion.category,
             'created_at' => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
             'updated_at' => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
-            'word' => user_response.emotion.word
+            'word' => user_response.emotion.word,
+            'public' => user_response.emotion.public
           },
         'data' => {
           'id' => response_saved.id.to_s,
@@ -124,7 +126,8 @@ RSpec.describe Api::V1::ResponsesController do
             'category' => emotion.category,
             'created_at' => emotion.created_at.strftime('%FT%T.%LZ'),
             'updated_at' => emotion.updated_at.strftime('%FT%T.%LZ'),
-            'word' => emotion.word
+            'word' => emotion.word,
+            'public' => user_response.emotion.public
           },
         'data' =>
           {
