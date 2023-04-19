@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
   create_table "emotions", force: :cascade do |t|
     t.integer "category", default: 1
     t.datetime "created_at", null: false
+    t.boolean "public", default: false
     t.datetime "updated_at", null: false
     t.string "word"
   end
