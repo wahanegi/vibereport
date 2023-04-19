@@ -169,6 +169,10 @@ body {
     margin-top: 5px;
     text-align: justify;
     box-shadow: unset;
+    &.w660-h350 {
+      width: 660px;
+      height: 350px;
+    }
   }
 
   textarea::placeholder {
