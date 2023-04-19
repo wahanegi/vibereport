@@ -13,6 +13,27 @@ class Api::V1::EmotionsController < ApplicationController
     end
   end
 
+  def create
+    emotion = Emotion.new(emotion_params)
+    emotion_existed = Emotion.all.find_by(word: params.dig('emotion', 'word'))
+
+    if emotion_existed.present?
+      render json: EmotionSerializer.new(emotion_existed).serializable_hash
+    elsif emotion.save
+      render json: EmotionSerializer.new(emotion).serializable_hash
+    else
+      render json: { error: emotion.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def all_emotions
+    if current_user.present?
+      render json: EmotionSerializer.new(Emotion.all).serializable_hash, status: :ok
+    else
+      render json: {}, status: :unauthorized
+    end
+  end
+
   private
 
   def additional_params
@@ -41,8 +62,12 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def build_three_set
-    Emotion.positive.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.neutral.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.negative.sample(NUMBER_OF_ELEMENTS)
+    Emotion.emotion_public.positive.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.emotion_public.neutral.sample(NUMBER_OF_ELEMENTS) +
+      Emotion.emotion_public.negative.sample(NUMBER_OF_ELEMENTS)
+  end
+
+  def emotion_params
+    params.require(:emotion).permit(:word, :category)
   end
 end
