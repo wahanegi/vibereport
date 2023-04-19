@@ -18,7 +18,7 @@ if Emotion.count.zero?
     category = category_and_words.first
     words_list = category_and_words.second
 
-    words_list.each { |word| Emotion.create(word: word, category: category) }
+    words_list.each { |word| Emotion.create(word: word, category: category, public: true) }
   end
 end
 

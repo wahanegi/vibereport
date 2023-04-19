@@ -120,8 +120,8 @@ body {
   margin-top:63px;
 }
 .size-message {
-width:746px;
-height:49px;
+  width:746px;
+  height:49px;
 }
 .mt-85 {
   margin-top:85px;
@@ -169,6 +169,10 @@ height:49px;
     margin-top: 5px;
     text-align: justify;
     box-shadow: unset;
+    &.w660-h350 {
+      width: 660px;
+      height: 350px;
+    }
   }
 
   textarea::placeholder {
@@ -325,6 +329,10 @@ height:49px;
 
   p {
     font-family: $font-family-italic
+  }
+
+  input:focus, textarea:focus {
+    border: unset;
   }
 }
 //
