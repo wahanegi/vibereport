@@ -21,3 +21,11 @@ if Emotion.count.zero?
     words_list.each { |word| Emotion.create(word: word, category: category) }
   end
 end
+
+if FunQuestion.count.zero?
+  questions = YAML::load_file(Rails.root.join('db', 'seeds', 'default_questions.yml'))
+
+  questions['questions'].each do |question|
+    FunQuestion.create(question_body: question['question_body'])
+  end
+end

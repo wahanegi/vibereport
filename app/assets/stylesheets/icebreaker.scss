@@ -1,6 +1,58 @@
-@import 'colors';
-@import 'design_system_vibereport';
+@import "colors";
+@import "design_system_vibereport";
 
-.icebreaker{
-  background-color: #0c4128;
+h2.icebreaker {
+  color: $black;
+}
+
+.wrap-question {
+  //position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: start;
+  margin: auto;
+  padding: 32px 27px 28px 27px;
+  width: 800px;
+  min-height: 445px;
+  overflow: auto;
+  border: 3px solid $emerald;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.tag-name {
+  color: $gray-600;
+}
+
+.text-question {
+  text-align: start;
+  font-size: 26px;
+}
+
+.input-answer {
+  //position: absolute;
+  bottom: 28px;
+  width: 746px;
+  min-height: 280px;
+  resize: none;
+  border: 3px solid $emerald;
+  border-radius: 15px;
+  padding: 14px 22px;
+  font-size: 26px;
+  box-shadow: none;
+  cursor: pointer;
+
+  &::placeholder {
+    color: $gray-600;
+    font-style: normal;
+    font-size: 26px;
+    text-align: initial;
+  }
+}
+
+textarea:focus,
+input:focus {
+  border: 3px solid $emerald !important;
+  outline: none;
+  box-shadow: none !important;
 }

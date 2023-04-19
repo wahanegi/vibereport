@@ -7,6 +7,7 @@ ActiveAdmin.register FunQuestion do
     column :question_body
     column :used
     column :created_at
+    column :user.name
     actions
   end
 
