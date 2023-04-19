@@ -34,9 +34,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
 
   return !isLoading && <Wrapper>
     <Header />
-    <div className="d-flex">
-      <h1 className="w-660">Are any causes to celebrate this week?</h1>
-    </div>
+    <h1>Are there are any causes to <br/> celebrate this week?</h1>
     <div className='d-flex justify-content-center'>
       <MentionsInput value={celebrateComment}
                      onChange={onCommentChange}

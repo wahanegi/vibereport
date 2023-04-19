@@ -341,8 +341,8 @@ body {
 .mentions__mention {
   position: relative;
 }
-.mentions__mention::before {
+strong.mentions__mention::before {
   position: absolute;
-  color: #D7007B;
+  color: $red-violet;
   content: '@';
 }
