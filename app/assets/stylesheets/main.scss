@@ -338,10 +338,10 @@ body {
   }
 }
 
-.mentions__mention {
+.mentions-mention {
   position: relative;
 }
-strong.mentions__mention::before {
+.mentions-mention::before {
   position: absolute;
   color: $red-violet;
   content: '@';
