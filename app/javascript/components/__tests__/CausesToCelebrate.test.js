@@ -33,7 +33,7 @@ const mockService = {
             <CausesToCelebrate data={data} setData={setData} service={mockService} />
         </MemoryRouter>
         );
-      expect(screen.getByText('Are there are any causes to celebrate this week?')).toBeInTheDocument();
+      expect(screen.getByText('Are there any recent causes to celebrate?')).toBeInTheDocument();
     });
 
     it('should update the celebrateComment state when the comment input is changed', () => {

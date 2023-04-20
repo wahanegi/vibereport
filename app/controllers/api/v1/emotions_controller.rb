@@ -1,7 +1,7 @@
 class Api::V1::EmotionsController < ApplicationController
   include ApplicationHelper
   before_action :require_user!
-  before_action :set_current_response, only: [:index]
+  before_action :current_response, only: [:index]
 
   NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
   def index
@@ -40,7 +40,7 @@ class Api::V1::EmotionsController < ApplicationController
     #  below in the response steps must be wrote with only such format in other case will be mistakes
     {
       current_user_id: current_user.id,
-      time_period: TimePeriod.find_or_create_time_period,
+      time_period: @time_period,
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
@@ -48,9 +48,9 @@ class Api::V1::EmotionsController < ApplicationController
     }
   end
 
-  def set_current_response
-    @current_response ||= Response.find_by(time_period_id: TimePeriod.find_or_create_time_period.id,
-                                           user_id: current_user.id)
+  def current_response
+    time_period
+    @current_response ||= Response.find_by(time_period_id: @time_period.id, user_id: current_user.id)
   end
 
   def response_hash
@@ -69,5 +69,9 @@ class Api::V1::EmotionsController < ApplicationController
 
   def emotion_params
     params.require(:emotion).permit(:word, :category)
+  end
+
+  def time_period
+    @time_period ||= TimePeriod.find_or_create_time_period
   end
 end
