@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_183210) do
 
   create_table "fun_questions", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.boolean "public", default: false, null: false
     t.text "question_body"
     t.bigint "response_id"
     t.datetime "updated_at", null: false

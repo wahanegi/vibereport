@@ -1,39 +1,77 @@
 questions:
   - question_body: What's the funniest prank you've ever pulled on someone?
+    public: true
   - question_body: If you could have any superpower, what would it be?
+    public: true
   - question_body: What's the most unusual food you've ever tried?
+    public: true
   - question_body:  What's your favorite hobby or pastime outside of work?
+    public: true
   - question_body:  What's the best vacation you've ever taken?
+    public: true
   - question_body:  Do you prefer dogs or cats?
+    public: true
   - question_body: If you could have dinner with any historical figure, who would it be and why?
+    public: true
   - question_body:  What's your favorite type of cuisine?
+    public: true
   - question_body:  What's your favorite TV show or movie?
+    public: true
   - question_body:  What's the best book you've ever read?
+    public: true
   - question_body:  If you could live in any country for a year, where would you go?
+    public: true
   - question_body:  What's the most embarrassing thing that's ever happened to you?
+    public: true
   - question_body:  Do you have any hidden talents or hobbies that most people don't know about?
+    public: true
   - question_body:  If you could switch lives with any fictional character for a day, who would it be?
+    public: true
   - question_body:  What's the best advice you've ever received?
+    public: true
   - question_body:  If you had to eat only one type of food for the rest of your life, what would it be?
+    public: true
   - question_body:  What's your favorite thing to do on a lazy weekend?
+    public: true
   - question_body:  If you could only listen to one album for the rest of your life, what would it be?
+    public: true
   - question_body:  What's the weirdest thing you've ever eaten for breakfast?
+    public: true
   - question_body:  What's the most adventurous thing you've ever done?
+    public: true
   - question_body:  If you could live in any decade, which one would you choose?
+    public: true
   - question_body:  What's your favorite type of music?
+    public: true
   - question_body:  What's your go-to karaoke song?
+    public: true
   - question_body:  What's the best piece of advice you've ever received?
+    public: true
   - question_body:  Do you prefer coffee or tea?
+    public: true
   - question_body:  What's your favorite board game or card game?
+    public: true
   - question_body:  If you could have any job in the world, what would it be?
+    public: true
   - question_body:  What's your favorite childhood memory?
+    public: true
   - question_body:  If you could have any animal as a pet, what would it be?
+    public: true
   - question_body:  What's the most beautiful place you've ever been?
+    public: true
   - question_body:  If you could time travel, where and when would you go?
+    public: true
   - question_body:  What's your favorite holiday and why?
+    public: true
   - question_body:  Do you prefer the beach or the mountains?
+    public: true
   - question_body:  What's your favorite sports team?
+    public: true
   - question_body:  If you could have a dinner party with any three people, who would they be?
+    public: true
   - question_body:  What's the best concert you've ever attended?
+    public: true
   - question_body:  If you could be any fictional character, who would you choose?
+    public: true
   - question_body:  What's the most interesting thing you've learned recently?
+    public: true

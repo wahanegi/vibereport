@@ -3,6 +3,7 @@
 # Table name: fun_questions
 #
 #  id            :bigint           not null, primary key
+#  public        :boolean          default(FALSE), not null
 #  question_body :text
 #  used          :boolean          default(FALSE), not null
 #  created_at    :datetime         not null

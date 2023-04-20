@@ -26,6 +26,6 @@ if FunQuestion.count.zero?
   questions = YAML::load_file(Rails.root.join('db', 'seeds', 'default_questions.yml'))
 
   questions['questions'].each do |question|
-    FunQuestion.create(question_body: question['question_body'])
+    FunQuestion.create(question_body: question['question_body'], public: question['public'] || true)
   end
 end

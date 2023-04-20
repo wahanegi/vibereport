@@ -6,8 +6,9 @@ ActiveAdmin.register FunQuestion do
     id_column
     column :question_body
     column :used
-    column :created_at
+    column :public
     column :user.name
+    column :created_at
     actions
   end
 

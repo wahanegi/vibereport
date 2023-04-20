@@ -50,9 +50,17 @@ h2.icebreaker {
   }
 }
 
-textarea:focus,
-input:focus {
+textarea.input-answer:focus,
+input.input-answer:focus {
   border: 3px solid $emerald !important;
   outline: none;
   box-shadow: none !important;
+  border: unset;
+}
+
+.btn-question{
+  width: 235px;
+  font-family: 'inter';
+  font-size: 26px !important;
+  line-height: 1.23;
 }

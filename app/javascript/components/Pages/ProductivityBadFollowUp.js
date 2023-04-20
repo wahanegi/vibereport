@@ -7,8 +7,6 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
   const [comment, setComment] = useState(bad_follow_comment || '');
   const handlingOnClickNext = () => {
     steps.push('icebreaker')
-    saveDataToDb( steps, {})
-    // steps.push('productivity-check')
     saveDataToDb( steps, {bad_follow_comment: comment})
   }
 
