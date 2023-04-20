@@ -38,7 +38,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
     <div className='d-flex justify-content-center'>
       <MentionsInput value={celebrateComment}
                      onChange={onCommentChange}
-                     placeholder='Are you grateful for anything that happened during the week?'
+                     placeholder='Are you grateful for anything that happened at work recently?'
                      style={mentionsInputStyles}
       >
         <Mention

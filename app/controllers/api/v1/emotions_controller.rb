@@ -40,17 +40,16 @@ class Api::V1::EmotionsController < ApplicationController
     #  below in the response steps must be wrote with only such format in other case will be mistakes
     {
       current_user_id: current_user.id,
-      time_period: @time_period,
+      time_period:,
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
-      users: User.all.map { |user| { id: user.id, display: user.first_name } }
+      users: User.all.ordered.map { |user| { id: user.id, display: user.first_name } }
     }
   end
 
   def current_response
-    time_period
-    @current_response ||= Response.find_by(time_period_id: @time_period.id, user_id: current_user.id)
+    @current_response ||= Response.find_by(time_period_id: time_period.id, user_id: current_user.id)
   end
 
   def response_hash

@@ -42,7 +42,7 @@ const mockService = {
           <CausesToCelebrate data={data} setData={setData} service={mockService} />
         </MemoryRouter>
       );
-      const commentInput = getByPlaceholderText('Are you grateful for anything that happened during the week?');
+      const commentInput = getByPlaceholderText('Are you grateful for anything that happened at work recently?');
       fireEvent.change(commentInput, { target: { value: 'Test comment' } });
       expect(commentInput.value).toBe('Test comment');
     });
