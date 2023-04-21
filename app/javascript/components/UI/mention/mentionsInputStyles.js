@@ -43,7 +43,9 @@ export default {
       backgroundColor: 'white',
       border: '6px solid #D7007B',
       fontSize: 23,
-      borderRadius: 10
+      borderRadius: 10,
+      maxHeight: 205,
+      overflow: 'auto'
     },
     item: {
       padding: '5px 15px',
