@@ -51,7 +51,6 @@ export default {
     },
     item: {
       padding: '5px 15px',
-      borderBottom: '1px solid rgba(0,0,0,0.15)',
       color: '#666666',
       '&focused': {
         color: '#000000',
