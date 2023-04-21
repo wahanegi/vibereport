@@ -13,14 +13,16 @@ export default {
     highlighter: {
       padding: 9,
       border: '3px solid transparent',
-      borderRadius: 15
+      borderRadius: 15,
+      maxHeight: 350,
     },
     input: {
       padding: 9,
-      border: '3px solid silver',
+      border: '3px solid #4C77CB',
       borderRadius: 15,
       textAlign: 'left',
       boxShadow: 'none',
+      overflow: 'auto',
     },
   },
 
@@ -50,8 +52,10 @@ export default {
     item: {
       padding: '5px 15px',
       borderBottom: '1px solid rgba(0,0,0,0.15)',
+      color: '#666666',
       '&focused': {
-        backgroundColor: '#cee4e5'
+        color: '#000000',
+        backgroundColor: '#D2D2D2'
       },
     },
   },
