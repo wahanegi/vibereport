@@ -2,7 +2,7 @@ ActiveAdmin.register AnswerFunQuestion do
   belongs_to :fun_question
   actions :all
 
-  permit_params :answer_body, :response_id, :user_id, :fun_question_id, :public
+  permit_params :answer_body, :response_id, :user_id, :fun_question_id
 
   index do
     selectable_column

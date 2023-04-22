@@ -10,7 +10,7 @@ export const ALL_STEPS = [
     {id:"6", step:"ShoutoutPromptNone"},
     {id:"6.X.", step:"ShoutoutModalExample"},
     {id:"6.XX", step:"ShoutoutModal_FlexUse"},
-    {id:"7v2", step:"icebreaker"},
+    {id:"7v2", step:"icebreaker-answer"},
     {id:"7", step:"results"},
     {id:"7.1.", step:"MemeWallPrevWeek"},
     {id:"7.3.", step:"MemeWallThisWeek"},

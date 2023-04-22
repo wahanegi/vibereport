@@ -64,11 +64,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_183210) do
     t.datetime "created_at", null: false
     t.boolean "public", default: false, null: false
     t.text "question_body"
-    t.bigint "response_id"
+    t.bigint "time_period_id"
     t.datetime "updated_at", null: false
     t.boolean "used", default: false, null: false
     t.bigint "user_id"
-    t.index ["response_id"], name: "index_fun_questions_on_response_id"
+    t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
   end
 
@@ -132,7 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_183210) do
   add_foreign_key "answer_fun_questions", "fun_questions"
   add_foreign_key "answer_fun_questions", "responses"
   add_foreign_key "answer_fun_questions", "users"
-  add_foreign_key "fun_questions", "responses"
+  add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "time_periods"

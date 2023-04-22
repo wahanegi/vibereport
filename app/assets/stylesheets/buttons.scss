@@ -15,13 +15,14 @@
 
   // use with C1 text
   &.btn-regular{
-    width:            14.688rem;
+    min-width:        14.688rem;
     height:           3.75rem;
     border:           1px solid $black;
     border-radius:    .75rem ;
     color:            $white;
     background-color: $royal-blue;
     box-shadow:       $btn-box-shadow-other !important;
+    padding:          0 20px;
     &.back{
       background-color: $gray-200;
       &:active {
@@ -64,7 +65,7 @@
   &.btn-bubbles{
     border:           1px solid $black;
     &.wb1{
-      padding: 0 5px;
+      padding:        0 5px;
       height:         2rem;
       border-radius:  15px;
       box-shadow:     $btn-box-shadow;
@@ -72,7 +73,7 @@
       @include emotion
     }
     &.wb2{
-      padding: 0 18px;
+      padding:        0 18px;
       height:         4.375rem;
       border-radius:  2.125rem;
       box-shadow:     9px 13.5px 13.5px $gray-100;

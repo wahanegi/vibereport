@@ -15,6 +15,15 @@ export const createResponse = async (emotion_id, time_period_id, navigate, steps
     .catch(resp => {console.log(resp)})
 }
 
+export const createAnswer = async (fun_question_id, response_id, current_user_id, answer_body, setAnswerBody) => {
+  createCsrfToken()
+  await axios.post('/api/v1/answer_fun_questions', {fun_question_id, response_id, user_id: current_user_id, answer_body})
+    .then(resp => {
+      setAnswerBody({...resp.data.data})
+    })
+    .catch(resp => {console.log(resp)})
+}
+
 export const updateResponse = async (response, setResponse) => {
   createCsrfToken()
   await axios.patch(`/api/v1/responses/${response.id}`, response.attributes)

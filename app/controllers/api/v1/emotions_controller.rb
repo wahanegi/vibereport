@@ -44,7 +44,9 @@ class Api::V1::EmotionsController < ApplicationController
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
-      fun_question: FunQuestion.find_by(response_id: @current_response)
+      fun_question:,
+      answer_fun_question: @fun_question.answer_fun_questions.find_by(user_id: current_user.id)
+
     }
   end
 
@@ -68,5 +70,21 @@ class Api::V1::EmotionsController < ApplicationController
 
   def emotion_params
     params.require(:emotion).permit(:word, :category)
+  end
+
+  def fun_question
+    custom_question.presence || FunQuestion.where(public: true).order('RANDOM()').first
+  end
+
+  def custom_question
+    @fun_question ||= FunQuestion.where(public: true).where.not(user_id: nil).first
+    return nil if @fun_question.blank?
+
+    {
+      user_id: @fun_question.user.id,
+      user_name: @fun_question.user.first_name,
+      question_body: @fun_question.question_body,
+      question_id: @fun_question.id
+    }
   end
 end
