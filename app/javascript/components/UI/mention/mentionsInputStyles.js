@@ -18,7 +18,7 @@ export default {
     },
     input: {
       padding: 9,
-      border: '3px solid #4C77CB',
+      border: '3px solid #5689EB',
       borderRadius: 15,
       textAlign: 'left',
       boxShadow: 'none',

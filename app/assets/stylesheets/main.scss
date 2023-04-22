@@ -171,7 +171,8 @@ body {
     box-shadow: unset;
     padding-inline-start: 1.375rem;
     padding-inline-end:   1.375rem;
-    &.w660-h350 {
+    &.w660-h350-br15 {
+      border-radius: 15px;
       width: 660px;
       height: 350px;
     }
