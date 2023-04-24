@@ -12,6 +12,7 @@ import Results from "./Pages/Results";
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
+import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -56,7 +57,7 @@ const ResponseFlow = ({step, data, setData}) => {
                             id: answer.response.attributes.id,
                          steps: stepsFromDBofServer,
                 time_period_id: answer.time_period.id,
-                       user_id: answer.current_user_id
+                       user_id: answer.current_user.id
                 }}}, saveDataToAttributes)}
           else{
             window.location.replace(window.location.origin+`/${stepsFromDBofServer[0]}` );
@@ -124,6 +125,8 @@ const ResponseFlow = ({step, data, setData}) => {
     //   return <ShoutoutModal_FlexUse data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "icebreaker-answer" :
       return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "icebreaker-question" :
+      return <IcebreakerQuestion data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "MemeWallThisWeekSoFar" :
     //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "MemeWallPrevWeek" :

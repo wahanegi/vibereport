@@ -21,7 +21,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     const dataRequest = {
       emotion_id: emotion_id,
       time_period_id: timePeriod.id,
-      user_id: data.current_user_id,
+      user_id: data.current_user.id,
       comment: '',
       rating: '',
       productivity: '0',
@@ -33,7 +33,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     steps.push('emotion-entry')
     const dataRequest = {
       time_period_id: data.time_period.id,
-      user_id: data.current_user_id,
+      user_id: data.current_user.id,
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -44,7 +44,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       emotion_id: '',
       not_working: true,
       time_period_id: timePeriod.id,
-      user_id: data.current_user_id,
+      user_id: data.current_user.id,
     }
     saveDataToDb( steps, dataRequest )
   }

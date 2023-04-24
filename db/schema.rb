@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_15_183210) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_23_180659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,9 +88,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_183210) do
 
   create_table "responses", force: :cascade do |t|
     t.text "bad_follow_comment"
+    t.text "celebrate_comment"
     t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
+    t.bigint "fun_question_id"
     t.string "gif_url"
     t.boolean "not_working", default: false
     t.jsonb "notices"
@@ -101,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_183210) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
+    t.index ["fun_question_id"], name: "index_responses_on_fun_question_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
     t.index ["user_id", "time_period_id"], name: "index_responses_on_user_id_and_time_period_id", unique: true
     t.index ["user_id"], name: "index_responses_on_user_id"

@@ -6,15 +6,6 @@ export const createCsrfToken = () => {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 }
 
-export const createResponse = async (emotion_id, time_period_id, navigate, steps, not_working = false) => {
-  createCsrfToken()
-  await axios.post('/api/v1/responses', {emotion_id, time_period_id, steps, not_working})
-    .then(resp => {
-      not_working ? navigate(`/app/results`) : navigate(`/responses/${resp.data.data.id}`)
-    })
-    .catch(resp => {console.log(resp)})
-}
-
 export const createAnswer = async (fun_question_id, response_id, current_user_id, answer_body, setAnswerBody) => {
   createCsrfToken()
   await axios.post('/api/v1/answer_fun_questions', {fun_question_id, response_id, user_id: current_user_id, answer_body})
@@ -24,11 +15,32 @@ export const createAnswer = async (fun_question_id, response_id, current_user_id
     .catch(resp => {console.log(resp)})
 }
 
-export const updateResponse = async (response, setResponse) => {
+export const createQuestion = async (current_user_id, response_id, question, setQuestion, data, setData) => {
   createCsrfToken()
-  await axios.patch(`/api/v1/responses/${response.id}`, response.attributes)
+  await axios.post('/api/v1/fun_questions', {current_user_id, response_id, question_body: question.question_body, setQuestion})
     .then(resp => {
-      setResponse({...resp.data.data})
+      setQuestion({...resp.data.data})
+      // setData(Object.assign({}, data, {users_fun_question: resp.data.data.attributes}))
+    })
+    .catch(resp => {console.log(resp)})
+}
+
+export const updateQuestion = async (question, data, setQuestion, setData, steps) => {
+  createCsrfToken()
+  await axios.patch(`/api/v1/fun_questions/${question.id}`, question)
+    .then(resp => {
+      setQuestion({...resp.data.data})
+      // setData(Object.assign({}, data, {users_fun_question: resp.data.data.attributes}))
+    })
+    .catch(resp => {console.log(resp)})
+}
+
+export const removeQuestion = async (id, data, setQuestion, setData) => {
+  createCsrfToken()
+  await axios.delete(`/api/v1/fun_questions/${id}`)
+    .then(() => {
+      setQuestion({})
+      // setData(Object.assign({}, data, {users_fun_question: {}}))
     })
     .catch(resp => {console.log(resp)})
 }

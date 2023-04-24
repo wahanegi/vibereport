@@ -5,15 +5,17 @@ import {createAnswer} from "../requests/axios_requests";
 
 const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
-  const [answerBody, setAnswerBody] = useState( data.answer_fun_question.answer_body || '')
-  const {user_name, question_body, question_id} = data.fun_question
+  const [answerBody, setAnswerBody] = useState( data.answer_fun_question?.answer_body || '')
+  const {user_name, question_body} = data.fun_question
+  const question_id = data.fun_question.id
   const response_id = data.response.id
   const user = user_name || 'Admin'
-  const current_user_id = data.current_user_id
+  const current_user_id = data.current_user.id
 
   const handlingOnClickNext = () => {
     if(answerBody){
-      steps.push('emotion-intensity')
+      steps.push('icebreaker-question')
+      saveDataToDb( steps, {})
       createAnswer(question_id, response_id, current_user_id, answerBody, setAnswerBody).then(saveDataToDb( steps, {}))
     }else{
       steps.push('emotion-entry')
@@ -22,9 +24,9 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   if (!!error) return <p>{error.message}</p>
+
   return (
     <Fragment>
-      { !!error && <p>{error.message}</p>}
       {!isLoading && !error &&
         <Wrapper>
           <Header/>

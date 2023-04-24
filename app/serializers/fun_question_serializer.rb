@@ -21,9 +21,8 @@
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class FunQuestion < ApplicationRecord
-  belongs_to :user, optional: true
-  belongs_to :time_period, optional: true
-  has_one :response, dependent: :destroy
-  has_many :answer_fun_questions, dependent: :destroy
+class FunQuestionSerializer
+  include JSONAPI::Serializer
+
+  attributes :id, :question_body
 end

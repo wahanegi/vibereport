@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
 import {Footer, Header, Wrapper} from "../UI/ShareContent";
+import {isPresent} from "../helpers/helpers";
 
 const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const { bad_follow_comment } = data.response.attributes
   const [comment, setComment] = useState(bad_follow_comment || '');
   const handlingOnClickNext = () => {
-    steps.push('icebreaker-answer')
+    if (isPresent(data.fun_question)) {
+      steps.push('icebreaker-answer')
+    } else {
+      steps.push('icebreaker-question')
+    }
     saveDataToDb( steps, {bad_follow_comment: comment})
   }
 
@@ -29,7 +34,6 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
                 maxLength={700}
               />
             </label>
-
           </div>
         </form>
       </div>

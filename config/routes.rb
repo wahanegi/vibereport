@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       resources :answer_fun_questions, only: %i[create]
+      resources :fun_questions, only: %i[show create update destroy]
     end
   end
   get '*path', to: 'home#app'
