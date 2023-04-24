@@ -42,6 +42,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
         fun_question_id: data.fun_question.id
       }
     }
+
     if(prevStateAnswer.answer_body !== answerFunQuestion.answer_body && answerFunQuestion.answer_body !== '' && isPresent(prevStateAnswer.answer_body)){
       const id = prevStateAnswer.id
       apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `/api/v1/answer_fun_questions/${id}`).then();
@@ -86,10 +87,10 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
               <form>
                 <div className="form-group">
                   <textarea className="input" name='answer_body'
-                            placeholder="Tell us what you think!"
-                            value={answerFunQuestion?.answer_body || ''}
-                            onChange={onChangAnswer}
-                            maxLength={700}
+                    placeholder="Tell us what you think!"
+                    value={answerFunQuestion?.answer_body || ''}
+                    onChange={onChangAnswer}
+                    maxLength={700}
                   />
                 </div>
               </form>
