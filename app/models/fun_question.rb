@@ -24,6 +24,6 @@
 class FunQuestion < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :time_period, optional: true
-  has_one :response, dependent: :destroy
+  has_one :response, dependent: nil
   has_many :answer_fun_questions, dependent: :destroy
 end

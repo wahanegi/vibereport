@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_23_180659) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_24_104828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,11 +44,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_180659) do
     t.text "answer_body"
     t.datetime "created_at", null: false
     t.bigint "fun_question_id", null: false
-    t.bigint "response_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["fun_question_id"], name: "index_answer_fun_questions_on_fun_question_id"
-    t.index ["response_id"], name: "index_answer_fun_questions_on_response_id"
     t.index ["user_id"], name: "index_answer_fun_questions_on_user_id"
   end
 
@@ -87,8 +85,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_180659) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.bigint "answer_fun_question_id"
     t.text "bad_follow_comment"
-    t.text "celebrate_comment"
     t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
@@ -102,6 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_180659) do
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["answer_fun_question_id"], name: "index_responses_on_answer_fun_question_id"
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
     t.index ["fun_question_id"], name: "index_responses_on_fun_question_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
@@ -133,11 +132,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_180659) do
   end
 
   add_foreign_key "answer_fun_questions", "fun_questions"
-  add_foreign_key "answer_fun_questions", "responses"
   add_foreign_key "answer_fun_questions", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
+  add_foreign_key "responses", "answer_fun_questions"
   add_foreign_key "responses", "emotions"
+  add_foreign_key "responses", "fun_questions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
 end
