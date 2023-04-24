@@ -45,7 +45,7 @@ class Api::V1::EmotionsController < ApplicationController
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
       fun_question:,
-      answer_fun_question: @fun_question.answer_fun_questions.find_by(user_id: current_user.id)
+      # answer_fun_question: @fun_question.answer_fun_questions.find_by(user_id: current_user.id)
 
     }
   end
