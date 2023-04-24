@@ -15,7 +15,7 @@ class Api::V1::EmotionsController < ApplicationController
 
   def create
     emotion = Emotion.new(emotion_params)
-    emotion_existed = Emotion.all.find_by(word: params.dig('emotion', 'word'))
+    emotion_existed = Emotion.find_by(word: params.dig('emotion', 'word'))
 
     if emotion_existed.present?
       render json: EmotionSerializer.new(emotion_existed).serializable_hash
@@ -37,16 +37,15 @@ class Api::V1::EmotionsController < ApplicationController
   private
 
   def additional_params
+    # debugger
     #  below in the response steps must be wrote with only such format in other case will be mistakes
     {
-      current_user_id: current_user.id,
+      current_user:,
       time_period: TimePeriod.current,
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
-      fun_question:,
-      # answer_fun_question: @fun_question.answer_fun_questions.find_by(user_id: current_user.id)
-
+      fun_question:
     }
   end
 
@@ -77,14 +76,15 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def custom_question
-    @fun_question ||= FunQuestion.where(public: true).where.not(user_id: nil).first
+    current_fun_question = FunQuestion.find_by(time_period_id: TimePeriod.current.id)
+    @fun_question ||= current_fun_question || FunQuestion.where(public: true).where.not(user_id: nil).first
     return nil if @fun_question.blank?
 
     {
-      user_id: @fun_question.user.id,
-      user_name: @fun_question.user.first_name,
-      question_body: @fun_question.question_body,
-      question_id: @fun_question.id
+      id: @fun_question.id,
+      user_id: @fun_question.user&.id,
+      user_name: @fun_question.user&.first_name,
+      question_body: @fun_question.question_body
     }
   end
 end

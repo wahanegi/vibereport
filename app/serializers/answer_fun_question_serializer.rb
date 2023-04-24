@@ -22,5 +22,5 @@
 class AnswerFunQuestionSerializer
   include JSONAPI::Serializer
 
-  attributes :answer_body
+  attributes :id, :answer_body
 end

@@ -41,7 +41,7 @@ class Response < ApplicationRecord
   belongs_to :emotion, optional: true
   belongs_to :user
   belongs_to :fun_question, optional: true
-  belongs_to :answer_fun_question, dependent: nil
+  belongs_to :answer_fun_question, optional: true
 
   validates :user_id, uniqueness: { scope: :time_period_id }
   validates :steps, presence: true

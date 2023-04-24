@@ -15,24 +15,6 @@ export const createResponse = async (emotion_id, time_period_id, navigate, steps
     .catch(resp => {console.log(resp)})
 }
 
-export const createAnswer = async (fun_question_id, response_id, current_user_id, answer_body, setAnswerBody) => {
-  createCsrfToken()
-  await axios.post('/api/v1/answer_fun_questions', {fun_question_id, response_id, user_id: current_user_id, answer_body})
-    .then(resp => {
-      setAnswerBody({...resp.data.data})
-    })
-    .catch(resp => {console.log(resp)})
-}
-
-export const updateAnswer = async (answerBody, setAnswerBody, answer_fun_questions) => {
-  createCsrfToken()
-  await axios.patch(`/api/v1/answer_fun_questions/${answer_fun_questions.id}`, answer_fun_question)
-    .then(resp => {
-      setAnswerBody({...resp.data.data})
-    })
-    .catch(resp => {console.log(resp)})
-}
-
 export const updateResponse = async (response, setResponse) => {
   createCsrfToken()
   await axios.patch(`/api/v1/responses/${response.id}`, response.attributes)
@@ -68,6 +50,12 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
       await axios.get(url)
         .then(response => {
           setData(response.data)
+          redirect()
+        })
+      break
+    case "DESTROY":
+      await axios.delete(url)
+        .then(response => {
           redirect()
         })
       break
