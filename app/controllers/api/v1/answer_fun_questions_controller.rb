@@ -1,10 +1,14 @@
 class Api::V1::AnswerFunQuestionsController < ApplicationController
+  before_action :retrieve_answer, only: %i[show update destroy]
+  def show
+    render json: AnswerFunQuestionSerializer.new(@answer).serializable_hash
+  end
 
   def create
     answer = AnswerFunQuestion.new(answer_params)
 
     if answer.save
-      update_question
+      update_question(answer)
       render json: AnswerFunQuestionSerializer.new(answer).serializable_hash
     else
       render json: { error: answer.errors }, status: :unprocessable_entity
@@ -13,9 +17,17 @@ class Api::V1::AnswerFunQuestionsController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      render json: AnswerFunQuestionSerializer.new(@answer).serializable_hash.merge(add_chosen_answer)
+      render json: AnswerFunQuestionSerializer.new(@answer).serializable_hash
     else
       render json: { error: @response.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @answer.destroy
+      head :no_content, notice: 'Answer fun question was successfully destroyed.'
+    else
+      render json: { error: @answer.errors }, status: :unprocessable_entity
     end
   end
 
@@ -25,16 +37,12 @@ class Api::V1::AnswerFunQuestionsController < ApplicationController
     @answer = AnswerFunQuestion.find_by(id: params[:id])
   end
 
-  def add_chosen_answer
-    { answer_fun_question: @answer.answer_body }
-  end
-
   def answer_params
     params.require(:answer_fun_question).permit(:answer_body, :response_id, :user_id, :fun_question_id)
   end
 
-  def update_question
-    question = FunQuestion.find_by(id: params[:fun_question_id])
-    question.update(used: true, time_period_id: TimePeriod.current.id)
+  def update_question(answer)
+    question = answer.fun_question
+    question.update(used: true, time_period_id: TimePeriod.current.id) if question.time_period_id.nil?
   end
 end

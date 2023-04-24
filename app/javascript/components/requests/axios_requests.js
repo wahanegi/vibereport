@@ -6,44 +6,6 @@ export const createCsrfToken = () => {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 }
 
-export const createAnswer = async (fun_question_id, response_id, current_user_id, answer_body, setAnswerBody) => {
-  createCsrfToken()
-  await axios.post('/api/v1/answer_fun_questions', {fun_question_id, response_id, user_id: current_user_id, answer_body})
-    .then(resp => {
-      setAnswerBody({...resp.data.data})
-    })
-    .catch(resp => {console.log(resp)})
-}
-
-export const updateAnswer = async (answerBody, setAnswerBody, answer_fun_questions) => {
-  createCsrfToken()
-  await axios.patch(`/api/v1/answer_fun_questions/${answer_fun_questions.id}`, answer_fun_question)
-    .then(resp => {
-      setAnswerBody({...resp.data.data})
-    })
-    .catch(resp => {console.log(resp)})
-}
-
-export const createQuestion = async (current_user_id, response_id, question, setQuestion, data, setData) => {
-  createCsrfToken()
-  await axios.post('/api/v1/fun_questions', {current_user_id, response_id, question_body: question.question_body, setQuestion})
-    .then(resp => {
-      setQuestion({...resp.data.data})
-      // setData(Object.assign({}, data, {users_fun_question: resp.data.data.attributes}))
-    })
-    .catch(resp => {console.log(resp)})
-}
-
-export const updateQuestion = async (question, data, setQuestion, setData, steps) => {
-  createCsrfToken()
-  await axios.patch(`/api/v1/fun_questions/${question.id}`, question)
-    .then(resp => {
-      setQuestion({...resp.data.data})
-      // setData(Object.assign({}, data, {users_fun_question: resp.data.data.attributes}))
-    })
-    .catch(resp => {console.log(resp)})
-}
-
 export const removeQuestion = async (id, data, setQuestion, setData) => {
   createCsrfToken()
   await axios.delete(`/api/v1/fun_questions/${id}`)
@@ -80,6 +42,12 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
       await axios.get(url)
         .then(response => {
           setData(response.data)
+          redirect()
+        })
+      break
+    case "DESTROY":
+      await axios.delete(url)
+        .then(response => {
           redirect()
         })
       break

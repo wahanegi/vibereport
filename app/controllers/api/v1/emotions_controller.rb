@@ -37,7 +37,6 @@ class Api::V1::EmotionsController < ApplicationController
   private
 
   def additional_params
-    # debugger
     #  below in the response steps must be wrote with only such format in other case will be mistakes
     {
       current_user:,
@@ -85,16 +84,6 @@ class Api::V1::EmotionsController < ApplicationController
       user_id: @fun_question.user&.id,
       user_name: @fun_question.user&.first_name,
       question_body: @fun_question.question_body
-    }
-  end
-
-  def users_fun_question
-    users_fun_question = FunQuestion.find_by(response_id: @current_response&.id).presence
-    return nil if users_fun_question.blank?
-
-    {
-      id: users_fun_question.id,
-      question_body: users_fun_question.question_body
     }
   end
 end

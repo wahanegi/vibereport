@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {backHandling, isPresent} from "../helpers/helpers";
 import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
-import {apiRequest, createQuestion, removeQuestion, updateQuestion} from "../requests/axios_requests";
+import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
