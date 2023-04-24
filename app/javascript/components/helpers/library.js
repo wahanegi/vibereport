@@ -48,6 +48,7 @@ export default class Cursor {
     let focusNode = null
     let  node = null
     let focusOffset = null
+    let realPos = 0
 
     if (selection.focusNode) {
       if (Cursor._isChildOf(selection.focusNode, parentElement)) {
@@ -55,6 +56,9 @@ export default class Cursor {
         node = focusNode;
         focusOffset = selection.focusOffset
         charCount = focusOffset;
+        realPos += focusNode.parentNode.tagName === 'SPAN' ?
+          focusNode.parentNode.outerHTML.length - '</span>'.length - focusNode.textContent.length : 0
+
 
         while (node) {
           if (node === parentElement) {
@@ -64,6 +68,7 @@ export default class Cursor {
           if (node.previousSibling) {
             node = node.previousSibling;
             charCount += node.textContent.length;
+            realPos += (node.outerHTML === undefined ? node.textContent : node.outerHTML).length
           } else {
             node = node.parentNode;
             if (node === null) {
@@ -74,7 +79,7 @@ export default class Cursor {
       }
     }
 
-    return {charCount: charCount , focusNode: focusNode, focusOffset: focusOffset};
+    return {charCount: charCount , focusNode: focusNode, focusOffset: focusOffset, realPos: realPos + focusOffset};
   }
 
   static setCurrentCursorPosition(chars, element) {
@@ -133,3 +138,5 @@ export default class Cursor {
     return false;
   }
 }
+
+export const firstLastName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`

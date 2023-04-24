@@ -4,7 +4,7 @@ const ListItem = (props) => {
   const ref = useRef(null);
   useEffect(() => {
     if (props.focus) {
-      console.log("focus", ref)
+      //console.log("focus on the DropdownList")//ref
       ref.current?.focus();
     }
   }, [props.focus]);
