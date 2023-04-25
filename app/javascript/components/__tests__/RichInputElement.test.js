@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
   import { render, fireEvent , screen } from '@testing-library/react';
 import RichInputElement from "../UI/RichInputElement";
-import Cursor from "../helpers/library";
+import Cursor, {decodeSpace, encodeSpace} from "../helpers/library";
 import {firstLastName} from "../helpers/library";
 
 
@@ -123,11 +123,11 @@ const highlightAT = '<span class="color-primary">@'
       Cursor.setCurrentCursorPosition(4,divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
       expect(pos.realPos).toBe(4);
-      const userName = 'guys'
+      const userName = 'guys '
       userName.split('').forEach( char => {
         fireEvent.keyDown(divElement, { key: char });
       })
-      expect(divElement.textContent).toBe('Hey guys @George Washington and @Jackie Chan, thanks for non-stop renew))');
+      expect(decodeSpace(divElement.textContent)).toBe('Hey guys @George Washington and @Jackie Chan, thanks for non-stop renew))');
     })
 
     it('should change "@George Washington" on the "@Mike Snider" in the textarea and in the chosenUsers',() => {
@@ -155,7 +155,7 @@ const highlightAT = '<span class="color-primary">@'
           ['i','k','e',' ','s','n','i','d','e','r'].forEach(char => {
         fireEvent.keyDown( divElement, { key: char });
       })
-      expect(divElement.textContent).toBe(
+      expect(decodeSpace(divElement.textContent)).toBe(
           'Hey @Mike Snider, @Jackie Chan and @Janice Wednesday , thanks for non-stop renew))');
       expect( setChosenUsers ).toHaveBeenCalledWith([{ id: 2, first_name: 'Jackie', last_name: 'Chan' },
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}, { id: 6, first_name: 'Mike', last_name: 'Snider'}])
@@ -208,7 +208,7 @@ const highlightAT = '<span class="color-primary">@'
       continueSentence.forEach((char) => {
         fireEvent.keyDown(divElement, { key: char });
       });
-      expect(divElement.textContent).toBe('Hey @George Washington, thanks for non-stop renew)).THANK YOU @roger !');
+      expect(decodeSpace(divElement.textContent)).toBe('Hey @George Washington, thanks for non-stop renew)).THANK YOU @roger !');
       expect( setChosenUsers ).toHaveBeenCalledWith([{ id: 1, first_name: 'George', last_name: 'Washington' },
         { id: 9, first_name: 'roger', last_name: ''}])
     })
@@ -238,8 +238,8 @@ const highlightAT = '<span class="color-primary">@'
       listItems.forEach((listItem, index) => {
         expect(listItem.textContent).toBe(firstLastName(listUsers[index]));
       });
-      fireEvent.keyDown(divElement, { keyCode: 32 });
-      expect(divElement.textContent).toBe('Hey @Janice Wednesday, @Jackie Chan and @George Washington');
+      fireEvent.keyDown(divElement, { key: 'Tab' });
+      expect(decodeSpace(divElement.textContent)).toBe('Hey @Janice Wednesday, @Jackie Chan and @George Washington');
       expect( setChosenUsers ).toHaveBeenCalledWith([ {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
         { id: 2, first_name: 'Jackie', last_name: 'Chan' }, { id: 1, first_name: 'George', last_name: 'Washington' }])
     })
@@ -267,11 +267,11 @@ const highlightAT = '<span class="color-primary">@'
       const pos = Cursor.getCurrentCursorPosition(divElement)
       expect(pos.realPos).toBe(29)
 
-      fireEvent.keyDown(divElement, { keyCode: 32 });
+      fireEvent.keyDown(divElement, { key: 'Enter' });
        const listItems1 = screen.queryAllByRole('listitem');
       expect(listItems1.textContent).toBe(undefined);
       fireEvent.keyDown(divElement, { key: ',' });
-      expect(divElement.textContent).toBe( "@George Washington,")
+      expect(decodeSpace(divElement.textContent)).toBe( "@George Washington,")
       fireEvent.keyDown(divElement, { keyCode: 32 });
       fireEvent.keyDown(divElement, { key: '@' });
       fireEvent.keyDown(divElement, { key: 'ArrowDown' });
@@ -324,7 +324,7 @@ const highlightAT = '<span class="color-primary">@'
         />
       );
       const divElement = getByTestId('editable-div');
-      Cursor.setCurrentCursorPosition(54,divElement)
+      Cursor.setCurrentCursorPosition(52,divElement)
       fireEvent.click(divElement);
       // fireEvent.keyDown(divElement, { key: 'k' });
       fireEvent.keyDown(divElement, { key: 'ArrowUp' });
@@ -358,7 +358,7 @@ const highlightAT = '<span class="color-primary">@'
         />
       );
       const divElement = getByTestId('editable-div');
-      Cursor.setCurrentCursorPosition(54,divElement)
+      Cursor.setCurrentCursorPosition(52,divElement)
       fireEvent.click(divElement);
       fireEvent.keyDown(divElement, { key: 'k' });
       const listItems = screen.queryAllByRole('listitem');
@@ -382,7 +382,7 @@ const highlightAT = '<span class="color-primary">@'
       const richText = '<span class="color-primary">@George Washington</span>, ' +
         '<span class="color-primary">@Jackie Chan</span> ' +
         '<span class="color-primary">@Janice Wednesday</span> ' +
-        '<span class="color-primary">@Kieran Roomie</span> <span class="color-primary">@roger '
+        '<span class="color-primary">@Kieran Roomie</span> <span class="color-primary">@roger</span>'
       const {getByTestId} = render(
         <RichInputElement
           richText={richText}
@@ -395,7 +395,7 @@ const highlightAT = '<span class="color-primary">@'
         />
       );
       const divElement = getByTestId('editable-div');
-      Cursor.setCurrentCursorPosition(54,divElement)
+      Cursor.setCurrentCursorPosition(52,divElement)
       fireEvent.click(divElement);
       fireEvent.keyDown(divElement, { key: 'j' });
       fireEvent.keyDown(divElement, { key: 'a' });
@@ -403,6 +403,45 @@ const highlightAT = '<span class="color-primary">@'
       const listItems = screen.queryAllByRole('listitem');
       expect(listItems).toHaveLength(1);
       fireEvent.keyDown(divElement, { key: 'Enter' });
+      expect(divElement.textContent).toBe('@George Washington, @Jackie Chan @Janice Wednesday @jan @roger');
+      expect( setChosenUsers ).toHaveBeenCalledWith(
+        [ { id: 1, first_name: 'George', last_name: 'Washington' },
+          { id: 2, first_name: 'Jackie', last_name: 'Chan' },
+          {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
+          { id: 9, first_name: 'roger', last_name: ''}
+        ])
+    })
+
+    it('should check correct work a special buttons of keyboard',() => {
+      const setChosenUsers = jest.fn();
+      // const richText = '<span class="color-primary">@George Washington</span>, '
+      const richText = "Hello world!"
+      const {getByTestId} = render(
+        <RichInputElement
+          richText={richText}
+          listUsers={listUsers}
+          setChosenUsers={setChosenUsers}
+          setRichText={() => {
+          }}
+          onSubmit={() => {
+          }}
+        />
+      );
+      const divElement = getByTestId('editable-div');
+      // mouse click
+      Cursor.setCurrentCursorPosition(7,divElement )
+      fireEvent.click( divElement );
+      const pos = Cursor.getCurrentCursorPosition(divElement)
+      expect(pos.charCount).toBe(7)
+      // Home
+      fireEvent.keyDown( divElement, { key: 'Home' });
+      expect(pos.charCount).toBe(1 )
+      const listItems = screen.queryAllByRole( 'listitem' );
+      expect(listItems).toHaveLength(9);
+      fireEvent.keyDown( divElement, { key: 'j' });
+      fireEvent.keyDown( divElement, { key: 'a' });
+      fireEvent.keyDown( divElement, { key: 'n' });
+      fireEvent.keyDown( divElement, { key: 'Enter' });
       expect(divElement.textContent).toBe('@George Washington, @Jackie Chan @Janice Wednesday @jan @roger ');
       expect( setChosenUsers ).toHaveBeenCalledWith(
         [ { id: 1, first_name: 'George', last_name: 'Washington' },
@@ -410,6 +449,52 @@ const highlightAT = '<span class="color-primary">@'
           {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
           { id: 9, first_name: 'roger', last_name: ''}
         ])
+    })
+
+    it ('check function encodeHtml', ()=>{
+      const html = '@John Washington</span>,    and    all. <span class="color-primary">@Jackie Chan</span> and '
+      const encodeHtml = encodeSpace(html)
+      expect(encodeHtml).toBe('@John Washington</span>,    and    all. ' +
+          '<span class=\"color-primary\">@Jackie Chan</span> and ')
+    })
+
+    it('check decodeHtml function',()=>{
+      const html = '@John Washington</span>,    and    all. ' +
+          '<span class=\"color-primary\">@Jackie Chan</span> and '
+      const decodeHtml = decodeSpace(html)
+      expect(decodeHtml).toBe('@John Washington</span>,    and    all. <span class="color-primary">@Jackie Chan</span> and ')
+
+    })
+
+    it('should delete SPAN tags and cancel hightlight text', ()=>{
+      const setChosenUsers = jest.fn();
+      const richText = "Hey <span class=\"color-primary\">@George Washington</span>   . How do you do? " +
+        '<span class="color-primary">@Jackie Chan</span> ' +
+        '<span class="color-primary">@Janice Wednesday</span> ' +
+        '<span class="color-primary">@Kieran Roomie</span> <span class="color-primary">@roger</span> !'
+      const {getByTestId} = render(
+        <RichInputElement
+          richText={richText}
+          listUsers={listUsers}
+          setChosenUsers={setChosenUsers}
+          setRichText={() => {
+          }}
+          onSubmit={() => {
+          }}
+        />
+      );
+      const divElement = getByTestId('editable-div');
+      // mouse click
+      Cursor.setCurrentCursorPosition(7,divElement )
+      fireEvent.click( divElement );
+      const listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(listUsers.length);
+      listItems.forEach((listItem, index) => {
+        expect(listItem.textContent).toBe(firstLastName(listUsers[index]));
+      });
+      fireEvent.keyDown(divElement, { key: '@' });
+      expect(divElement.textContent).toBe(encodeSpace('Hey @George Washington   . How do you do? ' +
+        '@Jackie Chan @Janice Wednesday @Kieran Roomie @roger !'))
     })
 
   })

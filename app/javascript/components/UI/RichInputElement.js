@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import parse from "html-react-parser";
-import Cursor from "../helpers/library";
+import Cursor, {decodeSpace, encodeSpace} from "../helpers/library";
 import DropDownList from "./DropDownList";
 import {firstLastName} from "../helpers/library";
 
@@ -15,23 +15,24 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
   const [index, setIndex] = useState (0)
   const [current, setCurrent] = useState(listUsers[index].id)
   const [caret, setCaret] = useState(textAreaRef.current.length)
-  const highlightAT = '<span class=\"'+ classAt+'\">@'
+  const highlightAT = '<span class=\"' + classAt + '\">@'
   const endHighlightAT = '</span>'
   const [users, setUsers] = useState([])
-  const nonAllowedChars =  /[ ,@`<>;:\/\\']/
+  const nonAllowedChars =  /[,@`<>;:\/\\']/
 
   useEffect(() => {
     const textArea = textAreaRef.current
-    // if (textArea) {
-      textArea.focus()
-      const range = document.createRange()
+    // const divElement = document.getElementById('textArea');
+    if (textArea) {
+    const range = document.createRange()
       range.selectNodeContents(textArea)
       range.collapse(false)
       const selection = window.getSelection()
       selection.removeAllRanges()
       selection.addRange(range)
       Cursor.setCurrentCursorPosition(caret, textArea)
-    // }
+      textArea.focus()
+    }
   }, [caret])
 
   useEffect(()=>{
@@ -49,34 +50,47 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
   },[])
 
   const handleKeyDown = event => {
-    event.preventDefault()
     const element = textAreaRef.current
     const text = element.textContent
     const cursorPos = Cursor.getCurrentCursorPosition(element)
     const caretCur = cursorPos.charCount
     const realPos  = cursorPos.realPos
     let key = event.key
+    let htmlText = ''
+    event.preventDefault()
+
+    // console.log(key, text.length, cursorPos)
+
 
     if (isDropdownList) {
+      event.preventDefault()
       if(event.key === 'Escape' || event.key === '@') {
+        // delete SPAN tags
         setIsDropdownList(false)
-        event.preventDefault()
+        htmlText = decodeSpace(enteredHTML)
+        let value = htmlText.slice( realPos - cursorPos.focusOffset, htmlText.indexOf(endHighlightAT, realPos))
+        setEnteredHTML( encodeSpace(htmlText.slice(0, realPos - cursorPos.focusOffset - highlightAT.length + 1) +
+          value + htmlText.slice(htmlText.indexOf(endHighlightAT, realPos) + endHighlightAT.length )))
+        setCaret(caret - cursorPos.focusOffset + value.length )
+        Cursor.setCurrentCursorPosition( caret - cursorPos.focusOffset + value.length , element)
         return
       }
 
       let i = index
-      if ( key === 'Enter' || event.keyCode === 32) {
+      if ( key === 'Enter' || key === 'Tab') {
         let tempUsers = users
-        const nameUserToDel = enteredHTML.slice(realPos-searchString.length, enteredHTML.indexOf(endHighlightAT, realPos))
+        htmlText = decodeSpace(enteredHTML)
+        const nameUserToDel = htmlText.slice(realPos-searchString.length, htmlText.indexOf(endHighlightAT, realPos))
         if ( undefined !== users.find(user => firstLastName(user) === nameUserToDel) ){
           tempUsers = users.filter(user => firstLastName(user) !== nameUserToDel)
-          tempUsers = tempUsers === [] ? users : tempUsers
+          tempUsers = tempUsers.length === 0 ? users : tempUsers
         }
         console.log("i=", i, tempUsers, users.find(user => firstLastName(user) === firstLastName(filteredUsers[i])))
         if ( undefined !== users.find(user => firstLastName(user) === firstLastName(filteredUsers[i]))) { return }
         console.log("CHECK = ", nameUserToDel, filteredUsers[i],i)
-        setEnteredHTML(enteredHTML.slice(0, realPos - searchString.length) + firstLastName(filteredUsers[i])  +
-          enteredHTML.slice(enteredHTML.indexOf(endHighlightAT, realPos)))
+        htmlText = decodeSpace(enteredHTML)
+        setEnteredHTML( (htmlText.slice(0, realPos - searchString.length) + firstLastName(filteredUsers[i])  +
+            htmlText.slice(htmlText.indexOf(endHighlightAT, realPos))))
         const getUsers = [...tempUsers,
           { id:filteredUsers[i].id,
             first_name: filteredUsers[i].first_name,
@@ -93,7 +107,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
         return
       }
 
-      if (!(String.fromCharCode(event.keyCode)).match(nonAllowedChars)  && event.keyCode !== 160 && key.length === 1) {
+      if (!(String.fromCharCode(event.keyCode)).match(nonAllowedChars)  && event.keyCode !== 160 && key.length === 1 ) {
         const newSearchString = (searchString + event.key).toLowerCase()
         const filteredList = listUsers.filter( user => firstLastName(user).toLowerCase().startsWith(newSearchString) )
         console.log('search = ', newSearchString, filteredList)
@@ -101,19 +115,24 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
           console.log(users.find(user => firstLastName(user) === newSearchString))
           if ( undefined !== users.find(user => firstLastName(user) === newSearchString)) { return }
           setEnteredHTML(enteredHTML.slice(0, realPos-newSearchString.length+1) + firstLastName(filteredList[0])
-              + enteredHTML.slice( realPos ))
+            + enteredHTML.slice( realPos ))
           setUsers([...users, filteredList[0]])
           setChosenUsers([...users, filteredList[0]])
           setIsDropdownList(false)
           setCaret(caretCur + 1)
           setSearchString('')
         } else if( !!filteredList.length ) {
-          const oldUser = enteredHTML.slice(realPos-cursorPos.focusOffset+1, enteredHTML.indexOf(endHighlightAT ,realPos))
-          console.log(oldUser, users.filter(user => firstLastName(user) !== oldUser))
-          setUsers(users.filter(user => firstLastName(user) !== oldUser))
-          setChosenUsers(users.filter(user => firstLastName(user) !== oldUser))
-          setEnteredHTML(enteredHTML.slice(0, realPos) + event.key +
-            enteredHTML.slice(enteredHTML.indexOf(endHighlightAT, realPos)))
+          //delete user from text, Users, ChosenUsers and put in it char
+          console.log("125 filteredList=", filteredList, "enteredHTML=",enteredHTML, "realPos=", realPos, "cursorPos=", cursorPos, "users=", users)
+          htmlText = (enteredHTML)
+          console.log("128 enteredHtml=", enteredHTML, "htmlText=", htmlText)
+          const oldUser = decodeSpace(
+            htmlText.slice(realPos - cursorPos.focusOffset + 1, htmlText.indexOf(endHighlightAT ,realPos)) )
+          console.log(oldUser, users.filter(user => firstLastName(user) !== oldUser)) //take user from text
+          setUsers(users.filter(user => firstLastName(user) !== oldUser)) // delete user from Users
+          setChosenUsers(users.filter(user => firstLastName(user) !== oldUser)) // delete user from ChosenUsers
+          setEnteredHTML((htmlText.slice(0, realPos) + ( key ) +
+            htmlText.slice(htmlText.indexOf(endHighlightAT, realPos)))) // input char from key
           setSearchString(newSearchString)
           setFilteredUsers( filteredList )
           setIndex(0)
@@ -123,7 +142,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
         setChosenUsers(listUsers.filter(item => !users.includes(item)))
       }
 
-      if ( (key === 'ArrowDown' || key === 'Tab') && index >= 0 ) {
+      if ( (key === 'ArrowDown' ) && index >= 0 ) {
         setIndex(i = index < filteredUsers.length - 1 ? ++i : 0)
         setCurrent(filteredUsers[i].id)
         return
@@ -138,6 +157,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
     } else {
       if ( cursorPos.focusNode.parentNode.tagName ==='DIV' && event.key.length === 1 ) {
+        event.preventDefault()
         switch (event.key) {
           case '@':
             if ( text.length === 0 || caretCur === text.length && text[caretCur - 1] === " "
@@ -152,20 +172,22 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
             }
           default:
-            setEnteredHTML(enteredHTML.slice(0, realPos) + event.key + enteredHTML.slice(realPos))
+            setEnteredHTML(enteredHTML.slice(0, realPos) + key + enteredHTML.slice(realPos))
             setCaret(caretCur + 1)
         }
       } else if ( cursorPos.focusNode.parentNode.tagName ==='SPAN' && event.key.length === 1 ) {
+        event.preventDefault()
         const startNameUser = realPos - cursorPos.focusOffset + 1
         const endNameUser = enteredHTML.indexOf(endHighlightAT, realPos)
         const nameUserToDel = enteredHTML.slice(startNameUser, endNameUser)
         if (listUsers.find(user => firstLastName(user) === nameUserToDel) !== undefined
-            && !event.key.match(/[@<>]/) && nameUserToDel.length === cursorPos.focusOffset - 1) {
+          && !event.key.match(/[@<>]/) && nameUserToDel.length === cursorPos.focusOffset - 1) {
           const pos = realPos + endHighlightAT.length
           const end = pos === enteredHTML.length ? '' : enteredHTML.slice(pos)
           setEnteredHTML(enteredHTML.slice(0,pos ) + event.key + end)
           setCaret(caret + 1)
         } else if (!event.key.match(/[,@`<>;:\\\/\s]/)){
+          event.preventDefault()
           const renewUsers = users.filter(user => firstLastName(user) !== nameUserToDel)
           setUsers(renewUsers === undefined ? [] : renewUsers)
           setChosenUsers(renewUsers === undefined ? [] : [...renewUsers])
@@ -175,12 +197,28 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
           setSearchString(event.key)
         }
       }
-      if ( event.key.length === 1 && enteredHTML.length > realPos
-          && enteredHTML.indexOf(highlightAT) === realPos && !event.key.match(/<>/)) {
-        key += " "
-        setEnteredHTML(enteredHTML.slice(0, realPos) + key + enteredHTML.slice(realPos))
+
+      if ( event.key.length === 1 && htmlText.length > realPos
+        && htmlText.indexOf(highlightAT) === realPos && !event.key.match(/<>/)) {
+        setEnteredHTML(encodeSpace(htmlText.slice(0, realPos) + key + htmlText.slice(realPos)))//
         setUsers(caret + 1)
       }
+
+    }
+
+    switch (key){
+      case 'Home':
+        setCaret ( 0 )
+        break;
+      case 'End':
+        setCaret ( text.length )
+        break;
+      case 'ArrowLeft':
+        setCaret ( cursorPos.charCount > 0 ? cursorPos.charCount - 1 : 0 )
+        break
+      case 'ArrowRight':
+        setCaret ( cursorPos.charCount < text.length ? cursorPos.charCount + 1 : text.length )
+        break
     }
   }
 
@@ -197,12 +235,15 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
         }
       })
       setIsDropdownList(true)
-      Cursor.setCurrentCursorPosition(cursor.charCount-cursor.focusOffset+1, element)
+      // Cursor.setCurrentCursorPosition(cursor.charCount-cursor.focusOffset+1, element)
+      setCaret(cursor.charCount )//-cursor.focusOffset+1
     }
   }
 
   const keyUpHandling = event => {
-
+// if(event.key === 'Home') {
+//   Cursor.setCurrentCursorPosition( 0 , textAreaRef.current )
+// }
   }
 
   const changeHandling = event => {
@@ -211,19 +252,20 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
   return (
     <Fragment>
-        <div className='col-8 offset-2 position-absolute mt-327 d-flex justify-content-center'>
-          <div contentEditable={true}
-            suppressContentEditableWarning = {true}
-            onKeyDown={handleKeyDown}
-            onKeyUp=  {keyUpHandling}
-            onInput=  {changeHandling}
-            onClick=  {clickHandling}
-            ref=      {textAreaRef}
-            data-testid="editable-div"
-            className='c3 place-size-shout-out form-control text-start d-inline-block'>
-              {parse(enteredHTML)}
-          </div>
+      <div className='col-8 offset-2 position-absolute mt-327 d-flex justify-content-center'>
+        <div contentEditable={true}
+             suppressContentEditableWarning = {true}
+             onKeyDown={handleKeyDown}
+             onKeyUp=  {keyUpHandling}
+             onInput=  {changeHandling}
+             onClick=  {clickHandling}
+             ref=      {textAreaRef}
+             data-testid="editable-div"
+             id = 'textArea'
+             className='c3 place-size-shout-out form-control text-start d-inline-block'>
+          {parse(enteredHTML)}
         </div>
+      </div>
       {isDropdownList && <DropDownList dataList={filteredUsers} current={current}/>}
 
     </Fragment>

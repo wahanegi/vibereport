@@ -85,7 +85,6 @@ export default class Cursor {
   static setCurrentCursorPosition(chars, element) {
     if (chars >= 0) {
       const selection = window.getSelection();
-
       let range = Cursor._createRange(element, { count: chars });
 
       if (range) {
@@ -140,3 +139,31 @@ export default class Cursor {
 }
 
 export const firstLastName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
+
+export const decodeSpace = html => {
+  return html.replace(/\u00A0/g, " ")
+}
+
+export const encodeSpace = html => {
+  let encodeHtml = ''
+  const tag = '<span class="color-primary">@'
+  const end = '</span>'
+  let posStart = html.indexOf(tag,0)
+  let posEnd = 0
+
+  while (posStart !== -1){
+    encodeHtml += html.slice(posEnd, posStart).replace(/ /g, "\u00A0") + tag
+    posStart += tag.length
+    if (posStart >= html.length) { break }
+    posEnd = html.indexOf(end, posStart)
+    if (posEnd === -1) { break }
+    encodeHtml += html.slice(posStart, posEnd).replace(/ /g, "\u00A0") + end
+    posEnd += end.length
+    posStart = html.indexOf(tag,posEnd)
+  }
+  encodeHtml += html.slice( posEnd ).replace(/ /g, "\u00A0")
+  return encodeHtml
+
+}
+//.replace(/ /g, "\u00A0")
+//.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\t/g, "\u00a0").replace(/\n/g, '<br/>')

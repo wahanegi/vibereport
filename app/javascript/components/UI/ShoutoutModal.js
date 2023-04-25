@@ -5,7 +5,7 @@ import parse from "html-react-parser";
 import {Dropdown} from "react-bootstrap";
 import Button from "./Button";
 import DropDownList from "./DropDownList";
-import Cursor, {setCaretPosition} from "../helpers/library";
+import Cursor from "../helpers/library";
 
 const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</span>Team2</span>"}) => {
   const [enteredValue, setEnteredValue] = useState('')
