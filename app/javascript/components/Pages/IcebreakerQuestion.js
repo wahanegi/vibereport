@@ -50,8 +50,8 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   useEffect(() => {
-    const id = data.response.attributes.fun_question_id
-    axios.get(`/api/v1/fun_questions/${id}`)
+    const fun_question_id = data.response.attributes.fun_question_id
+    fun_question_id && axios.get(`/api/v1/fun_questions/${fun_question_id}`)
       .then(res => {
         setPrevStateQuestion(res.data.data?.attributes)
         setFunQuestion(res.data.data?.attributes)
@@ -63,7 +63,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
 
   return (
     <Fragment>
-      {loaded && !isLoading && !error &&
+      {!isLoading && !error &&
         <Wrapper>
           <Header/>
           <div className='d-flex justify-content-center flex-column'>
@@ -73,14 +73,16 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
           <div className='icebreaker'>
             <div className='wrap'>
               <p className='b3 muted'><span className='color-rose'>@</span>{userName} asks:</p>
-              <form>
-                <div className="form-group">
-                  <textarea className='input' name='question_body'
-                    placeholder='What would you ask the team? You could be selected!'
-                    value={funQuestion?.question_body || ''}
-                    onChange={onChangQuestion} maxLength={700} />
-                </div>
-              </form>
+              {loaded &&
+                <form>
+                  <div className="form-group">
+                    <textarea className='input' name='question_body'
+                              placeholder='What would you ask the team? You could be selected!'
+                              value={funQuestion?.question_body || ''}
+                              onChange={onChangQuestion} maxLength={700} />
+                  </div>
+                </form>
+              }
             </div>
           </div>
           <div className='d-flex justify-content-between m-3'>

@@ -153,7 +153,7 @@ RSpec.describe Api::V1::FunQuestionsController do
     end
 
     context 'when the fun question does not exist' do
-      it 'returns a 404 Not Found status' do
+      it 'returns a Not Content status' do
         delete "/api/v1/fun_questions/#{fun_question.id}", params: { id: 'invalid-id' }
         expect(response).to have_http_status(:no_content)
       end
