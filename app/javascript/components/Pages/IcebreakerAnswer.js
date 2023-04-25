@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {backHandling, isPresent} from "../helpers/helpers";
+import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
@@ -9,26 +9,11 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const [loaded, setLoaded] = useState(false)
   const [prevStateAnswer, setPrevStateAnswer] = useState( {})
   const [answerFunQuestion, setAnswerFunQuestion] = useState( {})
-  const [answerBody, setAnswerBody] = useState( data.answer_fun_question?.answer_body || '')
+  const prevAnswerBody = prevStateAnswer?.answer_body
+  const answerBody = answerFunQuestion?.answer_body
   const {user_name, question_body} = data.fun_question
   const user = user_name || 'Admin'
   const current_user_id = data.current_user.id
-
-  console.log('data', data)
-  // const handlingOnClickNext = () => {
-  //   if(!answerFunQuestion.answer_body){
-  //     steps.push('emotion-entry')
-  //     saveDataToDb( steps, {})
-  //   } else if(answerFunQuestion.answer_body !== prevStateAnswer?.answer_body && isPresent(prevStateAnswer?.answer_body)){
-  //     steps.push('meme-selection')
-  //     updateAnswer(answerBody, setAnswerBody).then(saveDataToDb( steps, {}))
-  //   }else{
-  //     steps.push('emotion-intensity')
-  //     createAnswer(question_id, response_id, current_user_id, answerBody, setAnswerBody).then(saveDataToDb( steps,
-  //       {answer_fun_question_id: answerFunQuestion.data.id}
-  //     ))
-  //   }
-  // }
 
   const handlingOnClickNext = () => {
     const dataFromServer = (answer_fun_question) =>{
@@ -37,20 +22,32 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
     }
     const dataRequest = {
       answer_fun_question: {
-        answer_body: answerFunQuestion.answer_body,
+        answer_body: answerBody,
         user_id: current_user_id,
         fun_question_id: data.fun_question.id
       }
     }
+    const goToResultPage = () => {
+      steps.push('productivity-bad-follow-up')
+      saveDataToDb(steps)
+    }
+    const url = '/api/v1/answer_fun_questions/'
+    const id = prevStateAnswer?.id
 
-    if(prevStateAnswer.answer_body !== answerFunQuestion.answer_body && answerFunQuestion.answer_body !== '' && isPresent(prevStateAnswer.answer_body)){
-      const id = prevStateAnswer.id
-      apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `/api/v1/answer_fun_questions/${id}`).then();
-    }else if(isPresent(prevStateAnswer.answer_body) && answerFunQuestion.answer_body === ''){
-      const id = prevStateAnswer.id
-      apiRequest("DESTROY", dataRequest, dataFromServer, ()=>{}, `/api/v1/answer_fun_questions/${id}`).then();
-    }else{
-      apiRequest("POST", dataRequest, dataFromServer, ()=>{}, "/api/v1/answer_fun_questions").then();
+    if(isPresent(prevAnswerBody)) {
+      if(prevAnswerBody !== answerBody && isNotEmptyStr(answerBody)) {
+        apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
+      } else if(isEmptyStr(answerBody)) {
+        apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
+      } else {
+        steps.push('icebreaker-question')
+        saveDataToDb(steps)
+      }
+    } else if (isEmptyStr(answerBody)) {
+      steps.push('productivity-bad-follow-up')
+      saveDataToDb(steps)
+    } else {
+      apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }
   };
 
@@ -99,7 +96,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
           <div className='d-flex justify-content-between m-3'>
             <ShoutOutIcon/>
             <BtnBack addClass='btn-question' onClick={backHandling}/>
-            <BtnPrimary onClick={handlingOnClickNext} text={answerFunQuestion?.answer_body ? 'Submit' : 'Skip to Results'} />
+            <BtnPrimary onClick={handlingOnClickNext} text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
             <HelpIcon/>
           </div>
         </Wrapper>

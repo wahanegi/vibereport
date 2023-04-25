@@ -6,16 +6,6 @@ export const createCsrfToken = () => {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 }
 
-export const removeQuestion = async (id, data, setQuestion, setData) => {
-  createCsrfToken()
-  await axios.delete(`/api/v1/fun_questions/${id}`)
-    .then(() => {
-      setQuestion({})
-      // setData(Object.assign({}, data, {users_fun_question: {}}))
-    })
-    .catch(resp => {console.log(resp)})
-}
-
 //*** method (POST/PATCH)
 //*** data = {...} data which send to the controller
 //*** setData - this is Hook for saving data of answer of the controller
@@ -46,10 +36,7 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
         })
       break
     case "DESTROY":
-      await axios.delete(url)
-        .then(response => {
-          redirect()
-        })
+      await axios.delete(url).then(redirect())
       break
     default:
   }
