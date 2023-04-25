@@ -24,7 +24,6 @@ class Api::V1::AnswerFunQuestionsController < ApplicationController
   end
 
   def destroy
-    debugger
     if @answer.destroy
       head :no_content, notice: 'Answer fun question was successfully destroyed.'
     else

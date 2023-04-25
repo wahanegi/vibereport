@@ -20,7 +20,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class AnswerFunQuestion < ApplicationRecord
-  has_one :response, dependent: nil
+  has_one :response, dependent: :nullify
   belongs_to :user
   belongs_to :fun_question
 end

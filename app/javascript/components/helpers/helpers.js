@@ -26,3 +26,11 @@ export function capitalizeFirstLetter(str) {
 export function sortImagesByHeight(images) {
   return images.sort((a, b) => a.height - b.height);
 }
+
+export function isEmptyStr(str) {
+  return isBlank(str) || str.trim() === '';
+}
+
+export function isNotEmptyStr(str) {
+  return isPresent(str) && str.trim() !== '';
+}

@@ -15,15 +15,6 @@ export const createResponse = async (emotion_id, time_period_id, navigate, steps
     .catch(resp => {console.log(resp)})
 }
 
-export const updateResponse = async (response, setResponse) => {
-  createCsrfToken()
-  await axios.patch(`/api/v1/responses/${response.id}`, response.attributes)
-    .then(resp => {
-      setResponse({...resp.data.data})
-    })
-    .catch(resp => {console.log(resp)})
-}
-
 //*** method (POST/PATCH)
 //*** data = {...} data which send to the controller
 //*** setData - this is Hook for saving data of answer of the controller
@@ -54,10 +45,7 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
         })
       break
     case "DESTROY":
-      await axios.delete(url)
-        .then(response => {
-          redirect()
-        })
+      await axios.delete(url).then(redirect())
       break
     default:
   }
