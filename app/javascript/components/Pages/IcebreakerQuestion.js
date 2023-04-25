@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {backHandling, isPresent} from "../helpers/helpers";
+import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
@@ -9,38 +9,40 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const [loaded, setLoaded] = useState(false)
   const [prevStateQuestion, setPrevStateQuestion] = useState( {})
   const [funQuestion, setFunQuestion] = useState( {})
+  const prevQuestionBody = prevStateQuestion?.question_body
+  const funQuestionBody = funQuestion?.question_body
   const user_name = data.current_user.first_name
-  console.log('funQuestion', funQuestion)
-  console.log('prevStateQuestion', prevStateQuestion)
-  // const handlingOnClickNext = () => {
-  //   if(question.question_body) {
-  //     if (question.question_body !== prevStateQuestion?.question_body && isPresent(prevStateQuestion?.question_body)) {
-  //       steps.push('emotion-intensity')
-  //       updateQuestion(question, data, setQuestion, setData, steps).then(saveDataToDb(steps, {fun_question_id: question.id}))
-  //     } else if(question.question_body === prevStateQuestion?.question_body) {
-  //       steps.push('emotion-entry')
-  //       saveDataToDb(steps, {})
-  //     } else {
-  //       steps.push('causes-to-celebrate')
-  //       createQuestion(data.current_user.id, response_id, question, setQuestion, data, setData).then(saveDataToDb(steps, {fun_question_id: question.id}))
-  //     }
-  //   } else{
-  //     if (isPresent(prevStateQuestion)) {
-  //       steps.push('emotion-entry')
-  //       removeQuestion(question.id, data, setQuestion, setData).then(saveDataToDb(steps))
-  //     }
-  //   }
-  // }
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
       steps.push('meme-selection')
-      saveDataToDb( steps, {fun_question_id: fun_question.data.id} )
+      saveDataToDb( steps, {fun_question_id: fun_question.data.id})
     }
     const dataRequest = {
-      fun_question: funQuestion
+      fun_question: {
+        question_body: funQuestionBody,
+        user_id: data.current_user.id
+      }
     }
-    apiRequest("POST", dataRequest, dataFromServer, ()=>{}, "/api/v1/fun_questions").then();
+    const goToResultPage = () => {
+      steps.push('productivity-bad-follow-up')
+      saveDataToDb(steps)
+    }
+    const url = '/api/v1/fun_questions/'
+    const id = prevStateQuestion?.id
+    if(isPresent(prevQuestionBody)) {
+      if(prevQuestionBody !== funQuestionBody && isNotEmptyStr(funQuestionBody)) {
+        apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
+      } else if(isEmptyStr(funQuestionBody)) {
+        apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
+      } else {
+        goToResultPage()
+      }
+    } else if (isEmptyStr(funQuestionBody)) {
+      goToResultPage()
+    } else {
+      apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
+    }
   };
 
   const onChangQuestion = (e) => {
@@ -84,7 +86,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
           <div className='d-flex justify-content-between m-3'>
             <ShoutOutIcon/>
             <BtnBack addClass='btn-question' onClick={backHandling}/>
-            <BtnPrimary onClick={handlingOnClickNext} text={funQuestion?.question_body ? 'Submit' : 'Skip to Results'} />
+            <BtnPrimary onClick={handlingOnClickNext} text={isEmptyStr(funQuestionBody) ? 'Skip to Results' : 'Submit'} />
             <HelpIcon/>
           </div>
         </Wrapper>

@@ -17,7 +17,7 @@ class Api::V1::FunQuestionsController < ApplicationController
   end
 
   def update
-    if @fun_question.update(answer_params)
+    if @fun_question.update(fun_question_params)
       render json: FunQuestionSerializer.new(@fun_question).serializable_hash
     else
       render json: { error: @fun_question.errors }, status: :unprocessable_entity
