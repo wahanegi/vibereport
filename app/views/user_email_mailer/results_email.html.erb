@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Email letter</title>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+          font-style: normal;
+          font-weight:700;
+          text-align: center;
+          line-height: 0;
+      }
+      .board{
+          min-width:1080px;
+      }
+      .lnk-unsubscribe{
+          text-align: left;
+      }
+  </style>
+  <%= stylesheet_link_tag 'email_page' , media: 'all' %>
+</head>
+<body>
+<div class="board mx-auto">
+  <div class="first-row">
+    <div class="mx-auto my-0 envelope">
+      <p class="mx-auto my-0 logo">Logo/Brand</p>
+    </div>
+  </div>
+  <div class="second-row">
+    <div class="calendar-days ml-55">
+      <div class="data"><%= @view_calendar_days %></div>
+    </div>
+  </div>
+  <div class="mx-auto my-0 title">Submissions are in!</div>
+  <div>
+    <div class="mx-auto my-0 text-invitation">See what your team’s week looked like.</div>
+  <div class="container">
+    <div class="responses-words">
+      <% @words.each_slice(6) do |row| %>
+        <% row.each do |word| %>
+          <div class="random-word" style="<%= random_position_and_style(word[:category]) %>">
+            <%= word[:word] || "No word found" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="big-btn mx-auto">
+    <div class="big-btn-text">
+      <%= link_to "See the Results", @link_see_the_results, class: "link-text-results" %>
+    </div>
+  </div>
+  <div class="row-over-links">
+    <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
+    </div>
+  </div>
+</div>
+</body>
+</html>

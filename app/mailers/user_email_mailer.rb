@@ -18,4 +18,19 @@ class UserEmailMailer < ApplicationMailer
     @table = @table.transpose.flatten
     mail(to: user.email, subject: "Hey #{user.first_name}, how was your week?")
   end
+
+  def results_email(user, time_period, words)
+    general_link = URL.merge({ time_period_id: TimePeriod.current, not_working: false, user_id: user.id })
+    @link_see_the_results = general_link.merge({ last_step: 'results' })
+    #@view_complete_by = time_period.due_date.strftime('%b %d').to_s
+    @view_calendar_days = range_format(time_period)
+    @user = user
+    @time_period = time_period
+    @words = words
+    mail(to: @user.email, subject: "Hey #{user.first_name}, the results are in!")
+  end
+
+  def range_format(date)
+    "#{date.start_date.strftime('%d')}-#{date.end_date.strftime('%d')} #{date.end_date.strftime('%b')}"
+  end
 end

@@ -378,3 +378,78 @@ text-align: center;
 .btn-magic:hover{
     cursor: pointer;
 }
+
+/* send_results_email */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 325px; /* Set the height of the container to 100% of the viewport height */
+    padding: 0;
+    margin: 31px;
+  }
+  
+.random-word:hover {
+    transform: scale(1.2);
+}
+
+.text-invitation {
+    height: 55px;
+    font-size: 24px;
+    line-height: 24px;
+    color:       #454547;
+    padding: 8px;
+}
+
+html {
+    height: 90vh;
+}
+
+.title {
+    font-size: 48px;
+    line-height: 96px;
+    color: #000000;
+    white-space: pre-line;
+    width: 735px;
+}
+
+.calendar-days {
+    text-align: left;
+    width: 82px;
+    height: 77px;
+    background-image: url("calendar_days.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.responses-words {
+    position: relative;
+    width: 850px;
+    height: 325px;
+    overflow: inherit;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+  
+  .random-word {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 1rem;
+    transition: transform 0.2s ease-in-out;
+    min-width: 16.6666%; /* 100% / 6 columns */
+    min-height: 16.6666%; /* 100% / 6 rows */
+  }
+
+  .link-text-results{
+    display: block;
+    width: 385px;
+    height: 70px;
+    font-size: 36px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration-line: none;
+    font-weight: 700;
+    padding: 13px;
+    margin: 5px -29px;
+}
