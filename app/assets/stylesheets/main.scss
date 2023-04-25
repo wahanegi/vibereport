@@ -340,10 +340,7 @@ body {
 }
 
 .mentions-mention {
+  z-index: 1;
   position: relative;
-}
-.mentions-mention::before {
-  position: absolute;
   color: $red-violet;
-  content: '@';
 }
