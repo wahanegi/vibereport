@@ -23,6 +23,8 @@
 #
 FactoryBot.define do
   factory :fun_question do
-    
+    question_body { Faker::Lorem.questions(number: 1).first }
+    public { true }
+    used { false }
   end
 end

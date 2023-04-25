@@ -26,4 +26,5 @@ class FunQuestion < ApplicationRecord
   belongs_to :time_period, optional: true
   has_one :response, dependent: :nullify
   has_many :answer_fun_questions, dependent: :destroy
+  validates :question_body, presence: true
 end

@@ -69,7 +69,7 @@ RSpec.describe Api::V1::ResponsesController do
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
               'answer_fun_question_id' => user_response.answer_fun_question,
-              'fun_question_id' => user_response.fun_question
+              'fun_question_id' => user_response.fun_question.id
             }
         }
       }]
@@ -77,7 +77,7 @@ RSpec.describe Api::V1::ResponsesController do
   end
 
   describe '#create' do
-    subject { post '/api/v1/responses', params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection]  } }, format: :json } }
+    subject { post '/api/v1/responses', params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection] } }, format: :json } }
     it 'responds to json formats when provided in the params' do
       subject
       expect(response.media_type).to eq 'application/json'
@@ -112,7 +112,7 @@ RSpec.describe Api::V1::ResponsesController do
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
               'answer_fun_question_id' => user_response.answer_fun_question,
-              'fun_question_id' => user_response.fun_question
+              'fun_question_id' => nil
             }
         }
       }]
@@ -151,7 +151,7 @@ RSpec.describe Api::V1::ResponsesController do
                 'productivity' => user_response.productivity,
                 'bad_follow_comment' => user_response.bad_follow_comment,
                 'answer_fun_question_id' => user_response.answer_fun_question,
-                'fun_question_id' => user_response.fun_question
+                'fun_question_id' => user_response.fun_question.id
               }
           }
       }]

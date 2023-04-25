@@ -24,5 +24,21 @@
 require 'rails_helper'
 
 RSpec.describe FunQuestion, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { should belong_to(:user).optional }
+    it { should belong_to(:time_period).optional }
+    it { should have_one(:response).dependent(:nullify) }
+    it { should have_many(:answer_fun_questions).dependent(:destroy) }
+  end
+
+  describe 'factory' do
+    it 'should be valid' do
+      fun_question = FactoryBot.build(:fun_question)
+      expect(fun_question).to be_valid
+    end
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of(:question_body) }
+  end
 end

@@ -11,7 +11,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const [funQuestion, setFunQuestion] = useState( {})
   const prevQuestionBody = prevStateQuestion?.question_body
   const funQuestionBody = funQuestion?.question_body
-  const user_name = data.current_user.first_name
+  const userName = data.current_user.first_name
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
@@ -72,7 +72,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
           </div>
           <div className='icebreaker'>
             <div className='wrap'>
-              <p className='b3 muted'><span className='color-rose'>@</span>{user_name} asks:</p>
+              <p className='b3 muted'><span className='color-rose'>@</span>{userName} asks:</p>
               <form>
                 <div className="form-group">
                   <textarea className='input' name='question_body'

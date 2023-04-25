@@ -1,6 +1,7 @@
 class Api::V1::FunQuestionsController < ApplicationController
   include ApplicationHelper
   before_action :fun_question, only: %i[show update destroy]
+  before_action :require_user!
 
   def show
     render json: FunQuestionSerializer.new(@fun_question).serializable_hash
