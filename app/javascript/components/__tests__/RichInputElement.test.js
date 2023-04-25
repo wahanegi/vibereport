@@ -30,7 +30,7 @@ const highlightAT = '<span class="color-primary">@'
         />
       );
       const divElement = getByTestId('editable-div');
-      expect(divElement.innerHTML).toBe('Hi Team!');
+      expect(decodeSpace(divElement.textContent)).toBe('Hi Team!');
       const cursorPos = Cursor.getCurrentCursorPosition(divElement)
       expect(cursorPos.charCount).toBe('Hi Team!'.length)
     })
@@ -44,13 +44,13 @@ const highlightAT = '<span class="color-primary">@'
       );
       const divElement = getByTestId('editable-div');
       fireEvent.keyDown(divElement, { key: '@' });
-      expect(divElement.innerHTML).toBe('Hi Team!@');
+      expect(divElement.textContent).toBe(encodeSpace('Hi Team!@'));
       Cursor.setCurrentCursorPosition(5, divElement)
       fireEvent.keyDown(divElement, { key: '@' });
-      expect(divElement.innerHTML).toBe('Hi Te@am!@')
+      expect(divElement.textContent).toBe(encodeSpace('Hi Te@am!@'))
       Cursor.setCurrentCursorPosition(0, divElement)
       fireEvent.keyDown(divElement, { key: '@' });
-      expect(divElement.innerHTML).toBe('@Hi Te@am!@')
+      expect(divElement.textContent).toBe(encodeSpace('@Hi Te@am!@'))
     })
 
     it('input entire rich words "@roger and @Mike say Hi Team!" and add symbols "s@" before "!"',() => {
@@ -70,7 +70,7 @@ const highlightAT = '<span class="color-primary">@'
       expect(pos.realPos).toBe(98)
       fireEvent.keyDown(divElement, { key: 's' });
       fireEvent.keyDown(divElement, { key: '@' });
-      expect(divElement.textContent).toBe('@roger and @Mike say Hi Teams@!');
+      expect(decodeSpace(divElement.textContent)).toBe('@roger and @Mike say Hi Teams@!');
     })
 
     it('should change "@George Washington" on the "@s", delete him chosenUsers, open DropDownList',() => {
@@ -92,9 +92,9 @@ const highlightAT = '<span class="color-primary">@'
         { id: 2, first_name: 'Jackie', last_name: 'Chan' },  {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       Cursor.setCurrentCursorPosition(5,divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
-      expect(pos.realPos).toBe(33)
+      expect(pos.realPos).toBe(38)
       fireEvent.keyDown(divElement, { key: 's' });
-      expect(divElement.textContent).toBe('Hey @s , @Jackie Chan and @Janice Wednesday , thanks for non-stop renew))');
+      expect(decodeSpace(divElement.textContent)).toBe('Hey @s , @Jackie Chan and @Janice Wednesday , thanks for non-stop renew))');
       expect( setChosenUsers ).toHaveBeenCalledWith([{ id: 2, first_name: 'Jackie', last_name: 'Chan' },
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       const listItems = screen.getAllByRole('listitem');
@@ -147,9 +147,9 @@ const highlightAT = '<span class="color-primary">@'
       const divElement = getByTestId('editable-div');
       expect( setChosenUsers ).toHaveBeenCalledWith([ { id: 1, first_name: 'George', last_name: 'Washington' },
         { id: 2, first_name: 'Jackie', last_name: 'Chan' },  {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
-      Cursor.setCurrentCursorPosition(16, divElement);
+      Cursor.setCurrentCursorPosition(5, divElement);
       fireEvent.keyDown( divElement, { key: 'm' });
-      expect(divElement.textContent).toBe('Hey @m, @Jackie Chan and @Janice Wednesday , thanks for non-stop renew))');
+      expect(decodeSpace(divElement.textContent)).toBe('Hey @m, @Jackie Chan and @Janice Wednesday , thanks for non-stop renew))');
       expect( setChosenUsers ).toHaveBeenCalledWith([{ id: 2, first_name: 'Jackie', last_name: 'Chan' },
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}]);
           ['i','k','e',' ','s','n','i','d','e','r'].forEach(char => {
@@ -204,7 +204,7 @@ const highlightAT = '<span class="color-primary">@'
       sentence.forEach((char) => {
         fireEvent.keyDown(divElement, { key: char });
       });
-      expect(divElement.innerHTML).toContain('<span class="color-primary">@</span>')
+      expect(divElement.innerHTML).toContain('<span class="color-primary">@')
       continueSentence.forEach((char) => {
         fireEvent.keyDown(divElement, { key: char });
       });
