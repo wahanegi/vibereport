@@ -38,7 +38,7 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
           setData(response.data)
           redirect()
         })
-        break
+      break
     case "PATCH":
       await axios.patch(url, data) //"1"-??? need to make a little rectify in controller
         .then(response => {

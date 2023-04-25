@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
   create_table "emotions", force: :cascade do |t|
     t.integer "category", default: 1
     t.datetime "created_at", null: false
+    t.boolean "public", default: false
     t.datetime "updated_at", null: false
     t.string "word"
   end
@@ -62,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_183434) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.text "bad_follow_comment"
     t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
