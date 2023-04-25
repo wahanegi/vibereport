@@ -67,7 +67,9 @@ RSpec.describe Api::V1::ResponsesController do
               'rating' => user_response.rating,
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
-              'bad_follow_comment' => user_response.bad_follow_comment
+              'bad_follow_comment' => user_response.bad_follow_comment,
+              'answer_fun_question_id' => user_response.answer_fun_question,
+              'fun_question_id' => user_response.fun_question
             }
         }
       }]
@@ -108,7 +110,9 @@ RSpec.describe Api::V1::ResponsesController do
               'rating' => user_response.rating,
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
-              'bad_follow_comment' => user_response.bad_follow_comment
+              'bad_follow_comment' => user_response.bad_follow_comment,
+              'answer_fun_question_id' => user_response.answer_fun_question,
+              'fun_question_id' => user_response.fun_question
             }
         }
       }]
@@ -145,7 +149,9 @@ RSpec.describe Api::V1::ResponsesController do
                 'rating' => user_response.rating,
                 'comment' => user_response.comment,
                 'productivity' => user_response.productivity,
-                'bad_follow_comment' => user_response.bad_follow_comment
+                'bad_follow_comment' => user_response.bad_follow_comment,
+                'answer_fun_question_id' => user_response.answer_fun_question,
+                'fun_question_id' => user_response.fun_question
               }
           }
       }]
