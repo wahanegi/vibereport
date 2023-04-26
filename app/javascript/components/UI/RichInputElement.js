@@ -3,6 +3,7 @@ import parse from "html-react-parser";
 import Cursor, {decodeSpace, decodeSpace160, encodeSpace} from "../helpers/library";
 import DropDownList from "./DropDownList";
 import {firstLastName} from "../helpers/library";
+import {re} from "@babel/core/lib/vendor/import-meta-resolve";
 
 
 const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers, setRichText, onSubmit ,
@@ -22,7 +23,6 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
   useEffect(() => {
     const textArea = textAreaRef.current
-    // const divElement = document.getElementById('textArea');
     if (textArea) {
     const range = document.createRange()
       range.selectNodeContents(textArea)
@@ -33,7 +33,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
       Cursor.setCurrentCursorPosition(caret, textArea)
       textArea.focus()
     }
-  }, [caret])
+  }, [caret, enteredHTML])
 
   useEffect(()=>{
     if(richText.includes(highlightAT)){
@@ -61,20 +61,31 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
     console.log(key, text.length, caretCur, realPos, isDropdownList)
 
+    switch(key) {
+      case '&':
+        key='&amp;'
+        break
+      case '<':
+        key = '&lt;'
+        break
+      case '>':
+        key = '&rt;'
+        break
+    }
 
     if (isDropdownList) {
       event.preventDefault()
       if(event.key === 'Escape' || event.key === '@') {
         // delete SPAN tags
         setIsDropdownList(false)
-        return
+        return;
         htmlText = decodeSpace(enteredHTML)
         let value = enteredHTML.slice( realPos - cursorPos.realFocusOffset, enteredHTML.indexOf(endHighlightAT, realPos))
         setEnteredHTML( encodeSpace(enteredHTML.slice(0, realPos - cursorPos.realFocusOffset - highlightAT.length + 1) +
           value + htmlText.slice(htmlText.indexOf(endHighlightAT, realPos) + endHighlightAT.length )))
         setCaret(caret - cursorPos.focusOffset + value.length )
         // Cursor.setCurrentCursorPosition( caret - cursorPos.focusOffset + value.length , element)
-        return
+        // return;
       }
 
       let i = index
@@ -109,7 +120,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         setUsers(getUsers)
         setChosenUsers(getUsers)
         setIsDropdownList(false)
-        setCaret(caret + firstLastName(filteredUsers[i]).length )
+        setCaret(caret + firstLastName(filteredUsers[i]).length - decodeSpace(decodeSpace160( searchString)).length)
         setFilteredUsers(listUsers)
         setSearchString('')
         setIndex(0)
@@ -264,26 +275,55 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
     }
 
     if (key === 'Backspace' || key === 'Delete') {
-      // console.log(" Backspace selection =", selection, selection.baseOffset, selection.focusOffset)
+       console.log(" Backspace selection =", cursorPos.focusNode.textContent.startsWith('@'))
       if (cursorPos.focusNode.textContent.startsWith('@')) {
-        console.log(selection.focusNode.textContent, chosenUser)
-        let findUser = chosenUser.find((el) => ('@' + firstLastName( el )) === cursorPos.focusNode.textContent)
+        console.log(cursorPos.focusNode.textContent, users)
+        let findUser = users.find((el) => ('@' + firstLastName( el )) === decodeSpace160( cursorPos.focusNode.textContent ))
         if (!!findUser) {
           console.log("findUser:", findUser)
-          setChosenUser(chosenUser.filter(user => user.id !== findUser.id))
-          let val = e.target.innerHTML
-          let positionStart = e.target.innerHTML.indexOf(findUser.firstLastName)
-          let positionEnd = positionStart + findUser.firstLastName.length + '</span>'.length
-          e.target.innerHTML = val.slice(0, positionStart - "<span class='color-primary'>@".length) + val.slice(positionEnd)
+          const newListUser = users.filter(user => user.id !== findUser.id)
+          setChosenUsers(newListUser)
+          setUsers(newListUser)
+          console.log("newListUser:", newListUser)
+          let val = event.target.innerHTML
+          let positionStart = realPos - cursorPos.realFocusOffset  - highlightAT.length + 1
+          let posEnd = enteredHTML.indexOf(endHighlightAT, realPos ) + endHighlightAT.length
+          // let positionEnd = positionStart + encodeSpace( firstLastName( findUser ) ).length + '</span>'.length
+          // event.target.innerHTML = val.slice(0, positionStart - highlightAT.length) + val.slice(positionEnd)
           setFilteredUsers(users)
-          setInputValue('')
-          setCaret(0)
-          setEnteredValue(e.target.innerHTML)
-          console.log("positionStart", positionStart)
-          Cursor.setCurrentCursorPosition(2, textAreaRef.current)
+          // setInputValue('')
+          setCaret(caret - cursorPos.focusOffset + 2 )
+          setEnteredHTML(enteredHTML.slice(0, positionStart) + enteredHTML.slice(posEnd))
+          console.log(caret, cursorPos.focusOffset, "positionStart", positionStart, posEnd ,  enteredHTML.slice(0, positionStart) + enteredHTML.slice(posEnd))
+          // Cursor.setCurrentCursorPosition(2, textAreaRef.current)
           //positionStart-"<span class='color-primary'>@".length,
-          e.preventDefault()
+          event.preventDefault()
+          return
         }
+      } else {
+console.log("REST")
+        if ( !caret ) { return }
+        switch (key){
+          case 'Delete':
+            let n = 1
+            console.log(enteredHTML.slice(realPos, realPos + 7), realPos + highlightAT.length)
+            if(enteredHTML.slice(realPos, realPos + 7) === "&nbsp;") { n = 7 }
+            if(enteredHTML.slice(realPos, realPos + highlightAT.length) === highlightAT) {
+              n = enteredHTML.indexOf(endHighlightAT, realPos + highlightAT.length) -realPos}
+            setEnteredHTML(enteredHTML.slice(0, realPos) + enteredHTML.slice(realPos+n))
+            break
+
+          case 'Backspace':
+            n = 1
+            console.log("REST", enteredHTML.slice(realPos-6, realPos), realPos-6, realPos )
+            if(realPos>=6 && enteredHTML.slice(realPos-6, realPos ) === "&nbsp;") { n = 6 }
+            console.log(caret, n, enteredHTML.slice(realPos-n, realPos), "\\", enteredHTML.slice(realPos-n, realPos) + enteredHTML.slice(realPos))
+            setEnteredHTML(enteredHTML.slice(realPos-n, realPos) + enteredHTML.slice(realPos))
+            setCaret(  caret - 1  )
+            break
+
+        }
+
       }
     }
   }

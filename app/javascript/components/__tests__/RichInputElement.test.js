@@ -443,21 +443,57 @@ const highlightAT = '<span class="color-primary">@'
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(11)
       // Button delete
       fireEvent.keyDown( divElement, { key: 'ArrowLeft' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(10)
       fireEvent.keyDown( divElement, { key: 'Delete' });
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(10)
-      const listItems = screen.queryAllByRole( 'listitem' );
+      fireEvent.keyDown( divElement, { key: ' ' });
+      fireEvent.keyDown( divElement, { key: '@' });
+      let listItems = screen.queryAllByRole( 'listitem' );
       expect(listItems).toHaveLength(9);
       fireEvent.keyDown( divElement, { key: 'j' });
       fireEvent.keyDown( divElement, { key: 'a' });
       fireEvent.keyDown( divElement, { key: 'n' });
+      listItems = screen.queryAllByRole( 'listitem' );
+      expect(listItems).toHaveLength(1);
       fireEvent.keyDown( divElement, { key: 'Enter' });
-      expect(divElement.textContent).toBe('@George Washington, @Jackie Chan @Janice Wednesday @jan @roger ');
-      expect( setChosenUsers ).toHaveBeenCalledWith(
-        [ { id: 1, first_name: 'George', last_name: 'Washington' },
-          { id: 2, first_name: 'Jackie', last_name: 'Chan' },
-          {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
-          { id: 9, first_name: 'roger', last_name: ''}
-        ])
+      expect(decodeSpace160(divElement.textContent)).toBe('Hello worl @Janice Wednesday');
+      expect( setChosenUsers ).toHaveBeenCalledWith([{id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
+      fireEvent.keyDown( divElement, { key: 'ArrowLeft' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(27)
+    })
+
+    it('check correct work of button Backspace in different place of the text',()=> {
+      const setChosenUsers = jest.fn();
+      const richText = '<span class="color-primary">@George Washington</span>  say Hello world!'
+      const {getByTestId} = render(
+        <RichInputElement
+          richText={richText}
+          listUsers={listUsers}
+          setChosenUsers={setChosenUsers}
+          setRichText={() => {
+          }}
+          onSubmit={() => {
+          }}
+        />
+      );
+      const divElement = getByTestId('editable-div');
+      Cursor.setCurrentCursorPosition(7,divElement )
+      fireEvent.click( divElement );
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe('  say Hello world!')
+      //delete &nbsp;
+      Cursor.setCurrentCursorPosition(2,divElement )
+      fireEvent.click( divElement );
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(12)
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe(' say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(6)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(1)
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe('say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
+
     })
 
     it ('check function encodeHtml', ()=>{
@@ -474,7 +510,7 @@ const highlightAT = '<span class="color-primary">@'
 
     })
 
-    it('should delete SPAN tags and cancel hightlight teфйxt', ()=>{
+    it('should delete SPAN tags and cancel hightlight text', ()=>{
       const setChosenUsers = jest.fn();
       const richText = "Hey <span class=\"color-primary\">@George Washington</span>   . How do you do? " +
         '<span class="color-primary">@Jackie Chan</span> ' +
