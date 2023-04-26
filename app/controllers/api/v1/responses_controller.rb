@@ -6,16 +6,8 @@ module Api
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :gif_url, :notices, :rating,
                       :comment, :productivity, :bad_follow_comment, :fun_question_id, :answer_fun_question_id].freeze
 
-      before_action :retrieve_response, only: %i[show update]
-      before_action :require_user!, only: %i[index show create update]
-
-      def index
-        render json: ResponseSerializer.new(Response.all).serializable_hash
-      end
-
-      def show
-        render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
-      end
+      before_action :retrieve_response, only: %i[update]
+      before_action :require_user!, only: %i[create update]
 
       def create
         @response = current_user.responses.build(response_params)

@@ -16,6 +16,8 @@ class TimePeriod < ApplicationRecord
   validates :end_date, :start_date, presence: true
   validates :end_date, comparison: { greater_than: :start_date }
 
+  scope :ordered, -> { order(start_date: :desc) }
+
   def self.create_time_period
     return if current_time_period.present?
 
