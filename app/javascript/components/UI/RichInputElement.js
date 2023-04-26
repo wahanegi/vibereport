@@ -1,9 +1,17 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import parse from "html-react-parser";
-import Cursor, {decodeSpace, decodeSpace160, encodeSpace} from "../helpers/library";
+import Cursor, {
+  addSymbolsToHTMLobj,
+  decodeSpace,
+  decodeSpace160, decrementPositionCursor,
+  deleteNextChar,
+  deletePreviousChar,
+  encodeSpace,
+  incrementPositionCursor
+} from "../helpers/library";
 import DropDownList from "./DropDownList";
-import {firstLastName} from "../helpers/library";
-import {re} from "@babel/core/lib/vendor/import-meta-resolve";
+import {userFullName} from "../helpers/library";
+
 
 
 const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers, setRichText, onSubmit ,
@@ -22,17 +30,17 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
   const nonAllowedChars =  /[,@`<>;:\/\\']/
 
   useEffect(() => {
-    const textArea = textAreaRef.current
-    if (textArea) {
-    const range = document.createRange()
-      range.selectNodeContents(textArea)
-      range.collapse(false)
-      const selection = window.getSelection()
-      selection.removeAllRanges()
-      selection.addRange(range)
+    // const textArea = textAreaRef.current
+    // if (textArea) {
+    // const range = document.createRange()
+    //   range.selectNodeContents(textArea)
+    //   range.collapse(false)
+    //   const selection = window.getSelection()
+    //   selection.removeAllRanges()
+    //   selection.addRange(range)
       Cursor.setCurrentCursorPosition(caret, textArea)
-      textArea.focus()
-    }
+      // textArea.focus()
+    // }
   }, [caret, enteredHTML])
 
   useEffect(()=>{
@@ -41,7 +49,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
       let pos = 0
       while((pos = richText.indexOf(highlightAT,pos)) !== -1){
         pos +=  + highlightAT.length
-        users.push(listUsers.find(user => firstLastName(user) === richText.slice(pos, richText.indexOf(endHighlightAT, pos))))
+        users.push(listUsers.find(user => userFullName(user) === richText.slice(pos, richText.indexOf(endHighlightAT, pos))))
       }
       setChosenUsers(users)
       setUsers(users)
@@ -95,18 +103,18 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
         const nameUserToDel = decodeSpace(enteredHTML.slice(realPos-encodeSpace(searchString).length,
           enteredHTML.indexOf(endHighlightAT, realPos)))
 //undefined !==
-        if ( !!users.find(user => firstLastName(user) === nameUserToDel) ){
-        tempUsers = users.filter(user => firstLastName(user) !== nameUserToDel)
+        if ( !!users.find(user => userFullName(user) === nameUserToDel) ){
+        tempUsers = users.filter(user => userFullName(user) !== nameUserToDel)
           tempUsers = tempUsers.length === 0 ? users : tempUsers
         }
-        console.log("i=", i, tempUsers, users.find(user => firstLastName(user) === firstLastName(filteredUsers[i])))
+        console.log("i=", i, tempUsers, users.find(user => userFullName(user) === userFullName(filteredUsers[i])))
 //undefined !==
-        if ( !!users.find(user => firstLastName(user) === firstLastName(filteredUsers[i]))) { return }
+        if ( !!users.find(user => userFullName(user) === userFullName(filteredUsers[i]))) { return }
 
         console.log("CHECK = ", nameUserToDel, filteredUsers[i],i , "htmlText=", htmlText)
 
         setEnteredHTML( encodeSpace(enteredHTML.slice(0, realPos - encodeSpace(searchString).length) +
-          encodeSpace( firstLastName(filteredUsers[i]) ) + enteredHTML.slice(enteredHTML.indexOf(endHighlightAT, realPos))))
+          encodeSpace( userFullName(filteredUsers[i]) ) + enteredHTML.slice(enteredHTML.indexOf(endHighlightAT, realPos))))
 console.log("encodeSpace(searchString).length=", encodeSpace(searchString).length,
   enteredHTML.slice(0, realPos - encodeSpace(searchString).length),
   enteredHTML.slice(enteredHTML.indexOf(endHighlightAT, realPos))
@@ -120,7 +128,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         setUsers(getUsers)
         setChosenUsers(getUsers)
         setIsDropdownList(false)
-        setCaret(caret + firstLastName(filteredUsers[i]).length - decodeSpace(decodeSpace160( searchString)).length)
+        setCaret(caret + userFullName(filteredUsers[i]).length - decodeSpace(decodeSpace160( searchString)).length)
         setFilteredUsers(listUsers)
         setSearchString('')
         setIndex(0)
@@ -129,23 +137,23 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
 
       if (!(String.fromCharCode(event.keyCode)).match(nonAllowedChars) && key.length === 1 ) {
         const newSearchString = (searchString + event.key).toLowerCase()
-        const filteredList = listUsers.filter( user => firstLastName(user).toLowerCase().startsWith(newSearchString) )
+        const filteredList = listUsers.filter( user => userFullName(user).toLowerCase().startsWith(newSearchString) )
         console.log('search = ', newSearchString, filteredList)
 
-        if ( filteredList.length === 1  && firstLastName(filteredList[0]).toLowerCase() === newSearchString ) {
+        if ( filteredList.length === 1  && userFullName(filteredList[0]).toLowerCase() === newSearchString ) {
           //if stringSearch === firstLastName of user and 1 element in the array than update Users and chosenUsers
-          console.log("119",users.find(user => firstLastName(user) === newSearchString))
+          console.log("119",users.find(user => userFullName(user) === newSearchString))
 //undefined !==
-          if ( !!users.find(user => firstLastName(user) === newSearchString)) {
+          if ( !!users.find(user => userFullName(user) === newSearchString)) {
             return
           } //if user is in Users then return
           htmlText = decodeSpace(enteredHTML)
           setEnteredHTML(encodeSpace(enteredHTML.slice(0, realPos - encodeSpace(newSearchString).length + 1) +
-            encodeSpace(firstLastName(filteredList[0])) + enteredHTML.slice( realPos )))
+            encodeSpace(userFullName(filteredList[0])) + enteredHTML.slice( realPos )))
           console.log("htmlText", htmlText, "newSearchString", newSearchString,
             realPos - encodeSpace(newSearchString).length + 1,
             enteredHTML.slice(0, realPos - encodeSpace(newSearchString).length + 1),
-            encodeSpace(firstLastName(filteredList[0])) , enteredHTML.slice( realPos ), "realPos=", realPos)
+            encodeSpace(userFullName(filteredList[0])) , enteredHTML.slice( realPos ), "realPos=", realPos)
 
           setUsers([...users, filteredList[0]])
           setChosenUsers([...users, filteredList[0]])
@@ -162,8 +170,8 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
           )
           console.log(realPos, cursorPos.focusOffset + 1, enteredHTML.indexOf(endHighlightAT ,realPos))
           // console.log(oldUser, "key=", encodeSpace(key), users.filter(user => firstLastName(user) !== oldUser)) //take user from text
-          setUsers(users.filter(user => firstLastName(user) !== oldUser)) // delete user from Users
-          setChosenUsers(users.filter(user => firstLastName(user) !== oldUser)) // delete user from ChosenUsers
+          setUsers(users.filter(user => userFullName(user) !== oldUser)) // delete user from Users
+          setChosenUsers(users.filter(user => userFullName(user) !== oldUser)) // delete user from ChosenUsers
           setEnteredHTML(encodeSpace(enteredHTML.slice(0, realPos) + encodeSpace( key ) +
             enteredHTML.slice(enteredHTML.indexOf(endHighlightAT, realPos)))) // input char from key
           console.log("145key=", encodeSpace(key), "charPos/realPos", cursorPos.charCount, realPos,"enteredHtml=", enteredHTML,
@@ -196,7 +204,8 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
 
     } else {
       htmlText = encodeSpace(enteredHTML)
-      console.log(htmlText, cursorPos.focusNode.parentNode.tagName)
+      console.log(htmlText)
+      console.log(cursorPos.focusNode)//.parentNode.tagName
       if ( cursorPos.focusNode.parentNode.tagName ==='DIV' && event.key.length === 1 ) {
         event.preventDefault()
         switch (event.key) {
@@ -226,7 +235,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         const nameUserToDel = decodeSpace(encodeSpace( enteredHTML ).slice(startNameUser, endNameUser))
         console.log(startNameUser, endNameUser, nameUserToDel, cursorPos.focusOffset , realPos, encodeSpace( enteredHTML ))
 //undefined !==
-        if (!!listUsers.find(user => firstLastName(user) === nameUserToDel)
+        if (!!listUsers.find(user => userFullName(user) === nameUserToDel)
           && !event.key.match(/[@<>]/) && nameUserToDel.length === cursorPos.focusOffset - 1) {
           //if user have in the ListUsers and key have not chars @,<,> and cursor at the end of firstLastName of user
           //then dropdown turn off
@@ -236,7 +245,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
           setCaret(caret + 1)
         } else if (!event.key.match(/[,@`<>;:\\\/\s]/)){
           event.preventDefault()
-          const renewUsers = users.filter(user => firstLastName(user) !== nameUserToDel)
+          const renewUsers = users.filter(user => userFullName(user) !== nameUserToDel)
           //  === undefined
           setUsers( !renewUsers ? [] : renewUsers)
           setChosenUsers( !renewUsers ? [] : [...renewUsers])
@@ -252,11 +261,11 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
       }
 
       if ( event.key.length === 1 && htmlText.length > realPos
-        && htmlText.indexOf(highlightAT) === realPos && !event.key.match(/<>/)) {
-        setEnteredHTML(encodeSpace(htmlText.slice(0, realPos) + key + htmlText.slice(realPos)))//
-        setUsers(caret + 1)
+        && htmlText.indexOf(highlightAT) === realPos && !event.key.match(/<>&/)) {
+        addSymbolsToHTMLobj( key, htmlText, cursorPos, setEnteredHTML, setCaret )
+        // setEnteredHTML(encodeSpace(htmlText.slice(0, realPos) + key + htmlText.slice(realPos)))//
+        // setUsers(caret + 1)
       }
-
     }
 
     switch (key){
@@ -267,10 +276,10 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         setCaret ( text.length )
         break;
       case 'ArrowLeft':
-        setCaret ( cursorPos.charCount > 0 ? cursorPos.charCount - 1 : 0 )
+        decrementPositionCursor( cursorPos, setCaret )
         break
       case 'ArrowRight':
-        setCaret ( cursorPos.charCount < text.length ? cursorPos.charCount + 1 : text.length )
+        incrementPositionCursor( cursorPos, setCaret )
         break
     }
 
@@ -278,7 +287,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
        console.log(" Backspace selection =", cursorPos.focusNode.textContent.startsWith('@'))
       if (cursorPos.focusNode.textContent.startsWith('@')) {
         console.log(cursorPos.focusNode.textContent, users)
-        let findUser = users.find((el) => ('@' + firstLastName( el )) === decodeSpace160( cursorPos.focusNode.textContent ))
+        let findUser = users.find((el) => ('@' + userFullName( el )) === decodeSpace160( cursorPos.focusNode.textContent ))
         if (!!findUser) {
           console.log("findUser:", findUser)
           const newListUser = users.filter(user => user.id !== findUser.id)
@@ -292,38 +301,24 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
           // event.target.innerHTML = val.slice(0, positionStart - highlightAT.length) + val.slice(positionEnd)
           setFilteredUsers(users)
           // setInputValue('')
-          setCaret(caret - cursorPos.focusOffset + 2 )
+          setCaret(caret - cursorPos.focusOffset )
           setEnteredHTML(enteredHTML.slice(0, positionStart) + enteredHTML.slice(posEnd))
           console.log(caret, cursorPos.focusOffset, "positionStart", positionStart, posEnd ,  enteredHTML.slice(0, positionStart) + enteredHTML.slice(posEnd))
           // Cursor.setCurrentCursorPosition(2, textAreaRef.current)
           //positionStart-"<span class='color-primary'>@".length,
           event.preventDefault()
-          return
+          setIsDropdownList(false)
         }
       } else {
-console.log("REST")
-        if ( !caret ) { return }
         switch (key){
           case 'Delete':
-            let n = 1
-            console.log(enteredHTML.slice(realPos, realPos + 7), realPos + highlightAT.length)
-            if(enteredHTML.slice(realPos, realPos + 7) === "&nbsp;") { n = 7 }
-            if(enteredHTML.slice(realPos, realPos + highlightAT.length) === highlightAT) {
-              n = enteredHTML.indexOf(endHighlightAT, realPos + highlightAT.length) -realPos}
-            setEnteredHTML(enteredHTML.slice(0, realPos) + enteredHTML.slice(realPos+n))
+            deleteNextChar( enteredHTML, realPos, setEnteredHTML )
             break
-
           case 'Backspace':
-            n = 1
-            console.log("REST", enteredHTML.slice(realPos-6, realPos), realPos-6, realPos )
-            if(realPos>=6 && enteredHTML.slice(realPos-6, realPos ) === "&nbsp;") { n = 6 }
-            console.log(caret, n, enteredHTML.slice(realPos-n, realPos), "\\", enteredHTML.slice(realPos-n, realPos) + enteredHTML.slice(realPos))
-            setEnteredHTML(enteredHTML.slice(realPos-n, realPos) + enteredHTML.slice(realPos))
-            setCaret(  caret - 1  )
+            deletePreviousChar( enteredHTML, realPos, setEnteredHTML )
+            setCaret(caret > 0 ? caret - 1 : 0)
             break
-
         }
-
       }
     }
   }
@@ -335,7 +330,7 @@ console.log("REST")
     if (cursor.focusNode.parentNode.nodeName === 'SPAN' && cursor.focusOffset - 1 !== cursor.focusNode.textContent.length){
       console.log(cursor.focusNode.textContent.slice(1), users)
       filteredUsers.map((user, index) => {
-        if (firstLastName(user) === cursor.focusNode.textContent.slice(1)){
+        if (userFullName(user) === cursor.focusNode.textContent.slice(1)){
           setCurrent(user.id)
           setIndex(index)
           console.log(user, index, filteredUsers)

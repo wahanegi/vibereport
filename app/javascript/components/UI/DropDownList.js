@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ListItem from "./ListItem";
-import {firstLastName} from "../helpers/library";
+import {userFullName} from "../helpers/library";
 
 const DropDownList = ({ dataList, current, coordX = 400, coordY = 400}) => {
 
@@ -12,7 +12,7 @@ const DropDownList = ({ dataList, current, coordX = 400, coordY = 400}) => {
             key={item.id}
             className = {`item b3 ${current === item.id ? 'highlight' : ''}`}
             focus={current === item.id }>
-            {firstLastName(item)}
+            {userFullName(item)}
           </ListItem>
         ))}
       </ul>

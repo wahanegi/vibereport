@@ -44,9 +44,9 @@ export function bindHighlightUserInText(element, event, users, enteredValue, set
 export default class Cursor {
   static getCurrentCursorPosition(parentElement) {
     const selection = window.getSelection()
-    let  charCount = -1
+    let charCount = -1
     let focusNode = null
-    let  node = null
+    let node = null
     let focusOffset = null
     let realPos = 0
     let realFocusOffset
@@ -58,7 +58,7 @@ export default class Cursor {
         focusOffset = selection.focusOffset
         charCount = focusOffset;
         realPos += focusNode.parentNode.tagName === 'SPAN' ?
-          focusNode.parentNode.outerHTML.length - '</span>'.length - encodeSpace(decodeSpace160(focusNode.textContent)).length : 0
+        focusNode.parentNode.outerHTML.length - '</span>'.length - encodeSpace(decodeSpace160(focusNode.textContent)).length : 0
         console.log(realPos,focusNode.parentNode.outerHTML, encodeSpace(decodeSpace160(focusNode.textContent)) )
         realFocusOffset  = encodeSpace(decodeSpace160(focusNode.textContent.slice(0, focusOffset))).length
         console.log(realFocusOffset)
@@ -144,7 +144,7 @@ export default class Cursor {
   }
 }
 
-export const firstLastName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
+export const userFullName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
 
 export const decodeSpace = html => {
   return html.replace(/&nbsp;/g, " ")
@@ -175,5 +175,37 @@ export const encodeSpace = html => {
   return encodeHtml
 
 }
-//.replace(/ /g, "\u00A0")
+
+export function deleteNextChar(str, cursorPosition, obj) {
+  if (cursorPosition < str.length) {
+    if (str[cursorPosition] === "&" && str[cursorPosition + 1] === "n" && str[cursorPosition + 2] === "b"
+      && str[cursorPosition + 3] === "s" && str[cursorPosition + 4] === "p" && str[cursorPosition + 5] === ";") {
+      str = str.slice(0, cursorPosition) + str.slice(cursorPosition + 6);
+    } else {
+      str = str.slice(0, cursorPosition) + str.slice(cursorPosition + 1);
+    }
+  }
+  return obj( str );
+}
+
+export function deletePreviousChar (str, cursorPosition, obj) {
+  if ( cursorPosition <= 0 ) { return }
+  let n=1
+  if(cursorPosition>=6 && str.slice(cursorPosition-6, cursorPosition ) === "&nbsp;") { n = 6 }
+  return obj( str.slice(0, cursorPosition-n) + str.slice(cursorPosition) )
+
+}
+
+export function incrementPositionCursor (cursorPos, obj) {
+  obj(cursorPos.charCount < text.length ? cursorPos.charCount + 1 : text.length )
+}
+export function decrementPositionCursor (cursorPos, obj) {
+  obj( cursorPos.charCount > 0 ? cursorPos.charCount - 1 : 0 )
+}
+
+export function  addSymbolsToHTMLobj(symbols, htmlText, cursorPos, setObjHTML, setCaret) {
+  setObjHTML(encodeSpace(htmlText.slice(0, cursorPos.realPos) + encodeSpace(symbols) + htmlText.slice(cursorPos.realPos)))
+  setCaret(cursorPos.charCount  +symbols.length)
+}
+(/ /g, "\u00A0")
 //.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\t/g, "\u00a0").replace(/\n/g, '<br/>')
