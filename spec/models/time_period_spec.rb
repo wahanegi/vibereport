@@ -39,27 +39,43 @@ RSpec.describe TimePeriod, type: :model do
     end
   end
 
-  context '#create_time_period' do
-    it 'should create new time period record' do
+  describe 'model methods' do
+    before(:each) do
       TimePeriod.destroy_all
-      last_sunday = Date.current.beginning_of_week(:sunday)
-      new_time_period = TimePeriod.create_time_period
-      expect(new_time_period.start_date).to eq(last_sunday)
-      expect(new_time_period.end_date).to eq(last_sunday + 6.days)
     end
-  end
 
-  context '#current' do
-    it 'return current time period' do
-      TimePeriod.destroy_all
-      current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
-      expect(TimePeriod.current).to eq(current_time_period)
+    context '#create_time_period' do
+      it 'should create new time period record' do
+        last_sunday = Date.current.beginning_of_week(:sunday)
+        new_time_period = TimePeriod.create_time_period
+        expect(new_time_period.start_date).to eq(last_sunday)
+        expect(new_time_period.end_date).to eq(last_sunday + 6.days)
+      end
     end
-  end
 
-  context '#date_range' do
-    it 'returns the correct date range string' do
-      expect(time_period1.date_range).to eq("#{time_period1.start_date.strftime('%Y-%m-%d')} - #{time_period1.end_date.strftime('%Y-%m-%d')}")
+    context '#current' do
+      it 'return current time period' do
+        current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
+        expect(TimePeriod.current).to eq(current_time_period)
+      end
+    end
+
+    context '#date_range' do
+      it 'returns the correct date range string' do
+        expect(time_period1.date_range).to eq("#{time_period1.start_date.strftime('%Y-%m-%d')} - #{time_period1.end_date.strftime('%Y-%m-%d')}")
+      end
+    end
+
+    context '#find_or_create_time_period' do
+      subject { TimePeriod.find_or_create_time_period }
+
+      it 'should create new time period' do
+        expect { subject }.to change { TimePeriod.count }.by(1)
+      end
+      it 'should return current time period' do
+        current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
+        expect(subject).to eq(current_time_period)
+      end
     end
   end
 end

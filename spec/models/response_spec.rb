@@ -4,6 +4,7 @@
 #
 #  id                 :bigint           not null, primary key
 #  bad_follow_comment :text
+#  celebrate_comment  :text
 #  comment            :text
 #  gif_url            :string
 #  not_working        :boolean          default(FALSE)

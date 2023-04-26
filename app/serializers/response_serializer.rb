@@ -4,6 +4,7 @@
 #
 #  id                 :bigint           not null, primary key
 #  bad_follow_comment :text
+#  celebrate_comment  :text
 #  comment            :text
 #  gif_url            :string
 #  not_working        :boolean          default(FALSE)
@@ -33,5 +34,6 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating, :comment, :productivity, :bad_follow_comment
+  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating, :comment, :productivity,
+             :bad_follow_comment, :celebrate_comment
 end
