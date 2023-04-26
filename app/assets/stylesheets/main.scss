@@ -172,7 +172,10 @@ body {
     margin-top: 5px;
     text-align: justify;
     box-shadow: unset;
-    &.w660-h350 {
+    padding-inline-start: 1.375rem;
+    padding-inline-end:   1.375rem;
+    &.w660-h350-br15 {
+      border-radius: 15px;
       width: 660px;
       height: 350px;
     }
@@ -223,7 +226,7 @@ body {
     border: unset;
     box-shadow: unset;
   }
-  
+
   .form-range::-webkit-slider-thumb {
     height: 35px;
     width: 35px;
@@ -270,7 +273,7 @@ body {
   }
 
   .form-range::-webkit-slider-runnable-track {
-    height: 3px;    
+    height: 3px;
   }
 
   .form-range.level-0::-webkit-slider-runnable-track {
@@ -338,5 +341,9 @@ body {
     border: unset;
   }
 }
-//
 
+.mentions-mention {
+  z-index: 1;
+  position: relative;
+  color: $red-violet;
+}
