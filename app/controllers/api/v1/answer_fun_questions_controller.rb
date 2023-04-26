@@ -1,5 +1,8 @@
 class Api::V1::AnswerFunQuestionsController < ApplicationController
+  include ApplicationHelper
   before_action :retrieve_answer, only: %i[show update destroy]
+  before_action :require_user!
+
   def show
     render json: AnswerFunQuestionSerializer.new(@answer).serializable_hash
   end
@@ -19,7 +22,7 @@ class Api::V1::AnswerFunQuestionsController < ApplicationController
     if @answer.update(answer_params)
       render json: AnswerFunQuestionSerializer.new(@answer).serializable_hash
     else
-      render json: { error: @response.errors }, status: :unprocessable_entity
+      render json: { error: @answer.errors }, status: :unprocessable_entity
     end
   end
 

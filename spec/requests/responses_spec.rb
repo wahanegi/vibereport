@@ -68,8 +68,9 @@ RSpec.describe Api::V1::ResponsesController do
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
-              'answer_fun_question_id' => user_response.answer_fun_question,
-              'fun_question_id' => user_response.fun_question.id
+              'celebrate_comment' => user_response.celebrate_comment,
+              'fun_question_id' => user_response.fun_question.id,
+              'answer_fun_question_id' => user_response.answer_fun_question
             }
         }
       }]
@@ -111,8 +112,9 @@ RSpec.describe Api::V1::ResponsesController do
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
-              'answer_fun_question_id' => user_response.answer_fun_question,
-              'fun_question_id' => nil
+              'celebrate_comment' => user_response.celebrate_comment,
+              'fun_question_id' => nil,
+              'answer_fun_question_id' => nil
             }
         }
       }]
@@ -150,8 +152,9 @@ RSpec.describe Api::V1::ResponsesController do
                 'comment' => user_response.comment,
                 'productivity' => user_response.productivity,
                 'bad_follow_comment' => user_response.bad_follow_comment,
-                'answer_fun_question_id' => user_response.answer_fun_question,
-                'fun_question_id' => user_response.fun_question.id
+                'celebrate_comment' => user_response.celebrate_comment,
+                'fun_question_id' => user_response.fun_question.id,
+                'answer_fun_question_id' => nil
               }
           }
       }]

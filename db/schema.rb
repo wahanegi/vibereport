@@ -87,6 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_104828) do
   create_table "responses", force: :cascade do |t|
     t.bigint "answer_fun_question_id"
     t.text "bad_follow_comment"
+    t.text "celebrate_comment"
     t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"

@@ -27,7 +27,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
           <div className="form-group">
             <label className="comment-label">
               <textarea
-                className="form-control w660-h350"
+                className="form-control w660-h350-br15"
                 placeholder="Is there anything that we can do to help?"
                 defaultValue={bad_follow_comment}
                 onChange={(e) => {setComment(e.target.value)} }

@@ -2,6 +2,7 @@ module Api
   module V1
     class ResponsesController < ApplicationController
       include ApplicationHelper
+
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :gif_url, :notices, :rating,
                       :comment, :productivity, :bad_follow_comment, :fun_question_id, :answer_fun_question_id].freeze
 
