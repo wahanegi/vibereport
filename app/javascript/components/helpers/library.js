@@ -49,6 +49,7 @@ export default class Cursor {
     let  node = null
     let focusOffset = null
     let realPos = 0
+    let realFocusOffset
 
     if (selection.focusNode) {
       if (Cursor._isChildOf(selection.focusNode, parentElement)) {
@@ -57,8 +58,10 @@ export default class Cursor {
         focusOffset = selection.focusOffset
         charCount = focusOffset;
         realPos += focusNode.parentNode.tagName === 'SPAN' ?
-          focusNode.parentNode.outerHTML.length - '</span>'.length - focusNode.textContent.length : 0
-
+          focusNode.parentNode.outerHTML.length - '</span>'.length - encodeSpace(decodeSpace160(focusNode.textContent)).length : 0
+        console.log(realPos,focusNode.parentNode.outerHTML, encodeSpace(decodeSpace160(focusNode.textContent)) )
+        realFocusOffset  = encodeSpace(decodeSpace160(focusNode.textContent.slice(0, focusOffset))).length
+        console.log(realFocusOffset)
 
         while (node) {
           if (node === parentElement) {
@@ -68,7 +71,9 @@ export default class Cursor {
           if (node.previousSibling) {
             node = node.previousSibling;
             charCount += node.textContent.length;
-            realPos += (node.outerHTML === undefined ? node.textContent : node.outerHTML).length
+            realPos +=
+              (node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent) ) : node.outerHTML).length
+            console.log(realPos, node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent) ) : node.outerHTML)
           } else {
             node = node.parentNode;
             if (node === null) {
@@ -79,7 +84,8 @@ export default class Cursor {
       }
     }
 
-    return {charCount: charCount , focusNode: focusNode, focusOffset: focusOffset, realPos: realPos + focusOffset};
+    return {charCount: charCount , focusNode: focusNode, focusOffset: focusOffset,
+      realPos: realPos + realFocusOffset, realFocusOffset: realFocusOffset};
   }
 
   static setCurrentCursorPosition(chars, element) {
@@ -141,6 +147,10 @@ export default class Cursor {
 export const firstLastName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
 
 export const decodeSpace = html => {
+  return html.replace(/&nbsp;/g, " ")
+}
+
+export const decodeSpace160 = html => {
   return html.replace(/\u00A0/g, " ")
 }
 
@@ -151,17 +161,17 @@ export const encodeSpace = html => {
   let posStart = html.indexOf(tag,0)
   let posEnd = 0
 
-  while (posStart !== -1){
-    encodeHtml += html.slice(posEnd, posStart).replace(/ /g, "\u00A0") + tag
+  while (posStart >= 0){
+    encodeHtml += html.slice(posEnd, posStart).replace(/ /g, "&nbsp;") + tag
     posStart += tag.length
-    if (posStart >= html.length) { break }
+    // if (posStart >= html.length) { break }
     posEnd = html.indexOf(end, posStart)
-    if (posEnd === -1) { break }
-    encodeHtml += html.slice(posStart, posEnd).replace(/ /g, "\u00A0") + end
+    if (posEnd < 0) { break }
+    encodeHtml += html.slice(posStart, posEnd).replace(/ /g, "&nbsp;") + end
     posEnd += end.length
     posStart = html.indexOf(tag,posEnd)
   }
-  encodeHtml += html.slice( posEnd ).replace(/ /g, "\u00A0")
+  if (posEnd !== -1) {encodeHtml += html.slice( posEnd ).replace(/ /g, "&nbsp;")}
   return encodeHtml
 
 }
