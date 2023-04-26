@@ -76,7 +76,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
               {loaded &&
                 <form>
                   <div className="form-group">
-                    <textarea className='input' name='question_body'
+                    <textarea className='input question' name='question_body'
                               placeholder='What would you ask the team? You could be selected!'
                               value={funQuestion?.question_body || ''}
                               onChange={onChangQuestion} maxLength={700} />

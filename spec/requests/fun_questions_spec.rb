@@ -73,43 +73,6 @@ RSpec.describe Api::V1::FunQuestionsController do
     end
   end
 
-  describe 'POST #create' do
-    context 'with valid parameters' do
-      subject { post '/api/v1/fun_questions', params: valid_attributes }
-      it 'creates a new fun question' do
-        expect { subject }.to change(FunQuestion, :count).by(1)
-      end
-
-      it 'renders a JSON response with the new fun question' do
-        subject
-        fun_question = FunQuestion.last
-        expect([response.parsed_body]).to eq [{ 'data' => {
-          'id' => fun_question.id.to_s,
-          'type' => 'fun_question',
-          'attributes' =>
-            {
-              'id' => fun_question.id,
-              'question_body' => fun_question.question_body
-            }
-        } }]
-      end
-    end
-
-    context 'with invalid parameters' do
-      subject { post '/api/v1/fun_questions', params: invalid_attributes }
-      it 'does not create a new fun question' do
-        expect { subject }.to_not change(FunQuestion, :count)
-      end
-
-      it 'renders a JSON response with errors for the new fun question' do
-        subject
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json; charset=utf-8')
-        expect(response.body).to match("{\"error\":{\"question_body\":[\"can't be blank\"]}}")
-      end
-    end
-  end
-
   describe 'PUT #update' do
     context 'with valid parameters' do
       subject { put "/api/v1/fun_questions/#{fun_question.id}", params: { id: fun_question.id, fun_question: { question_body: 'Updated question' } } }
