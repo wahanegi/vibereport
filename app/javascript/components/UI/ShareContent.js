@@ -41,8 +41,13 @@ export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
     Next
   </button>
 
+export const BtnSkip = ({ addClass = '', hidden = true, onClick, disabled }) =>
+  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+    Skip
+  </button>
+
 export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={backHandling} className={`btn  btn-regular c1 back ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 back ${addClass}`} hidden={hidden} disabled={disabled}>
     Back
   </button>
 
@@ -54,12 +59,14 @@ export const HelpIcon = () =>
     <img src={help_icon} alt="shout out" className='help-icon' />
   </NavLink>
 
-export const Footer = ({nextClick, disabled = false}) => <div className='d-flex justify-content-between m-3'>
-  <ShoutOutIcon />
-  <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
-  <BtnNext onClick={nextClick} disabled={disabled} addClass='m-1 align-self-center' />
-  <HelpIcon />
-</div>
+export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true, }) =>
+  <div className='d-flex justify-content-between m-3'>
+    <ShoutOutIcon />
+    <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
+    <BtnNext onClick={nextClick} disabled={disabled} hidden={hideNext} addClass='m-1 align-self-center' />
+    <BtnSkip onClick={skipClick} hidden={hideSkip} addClass='m-1 align-self-center' />
+    <HelpIcon />
+  </div>
 
 export const Header = () => <div className='d-flex justify-content-between m-3'>
   <Logo />
