@@ -19,10 +19,10 @@
 #  fk_rails_...  (fun_question_id => fun_questions.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class AnswerFunQuestion < ApplicationRecord
-  has_one :response, dependent: :nullify
-  belongs_to :user
-  belongs_to :fun_question
-
-  validates :answer_body, presence: true
+FactoryBot.define do
+  factory :answer_fun_question do
+    answer_body { Faker::Lorem.sentences }
+    association :user, factory: :user
+    association :fun_question, factory: :fun_question
+  end
 end

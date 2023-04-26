@@ -46,5 +46,5 @@ class Response < ApplicationRecord
   validates :user_id, uniqueness: { scope: :time_period_id }
   validates :steps, presence: true
   validates :productivity, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9 }, presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
-  serialize :steps, JSON  
+  serialize :steps, JSON
 end
