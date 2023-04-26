@@ -84,4 +84,14 @@ RSpec.describe User, type: :model do
       expect(User.opt_in).to_not include(opted_out_user)
     end
   end
+
+  describe '.ordered' do
+    it 'orders users by first name in ascending order' do
+      User.destroy_all
+      alica = FactoryBot.create(:user, first_name: 'Alica')
+      bob = FactoryBot.create(:user, first_name: 'Bob')
+      robert = FactoryBot.create(:user, first_name: 'Robert')
+      expect(User.ordered).to match_array [alica, bob, robert]
+    end
+  end
 end

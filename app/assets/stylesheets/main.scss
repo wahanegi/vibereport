@@ -124,8 +124,8 @@ a {
   margin-top:63px;
 }
 .size-message {
-width:746px;
-height:49px;
+  width:746px;
+  height:49px;
 }
 .mt-85 {
   margin-top:85px;
@@ -324,6 +324,13 @@ height:49px;
     margin-top: 5px;
     text-align: justify;
     box-shadow: unset;
+    padding-inline-start: 1.375rem;
+    padding-inline-end:   1.375rem;
+    &.w660-h350-br15 {
+      border-radius: 15px;
+      width: 660px;
+      height: 350px;
+    }
   }
 
   textarea::placeholder {
@@ -481,9 +488,17 @@ height:49px;
   p {
     font-family: $font-family-italic
   }
-}
-//
 
+  input:focus, textarea:focus {
+    border: unset;
+  }
+}
+
+.mentions-mention {
+  z-index: 1;
+  position: relative;
+  color: $red-violet;
+}
 //ShoutoutModal
 .place-size-shout-out {
   width: 884px !important;

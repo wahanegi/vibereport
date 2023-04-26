@@ -51,7 +51,8 @@ RSpec.describe Api::V1::ResponsesController do
             'category' => user_response.emotion.category,
             'created_at' => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
             'updated_at' => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
-            'word' => user_response.emotion.word
+            'word' => user_response.emotion.word,
+            'public' => user_response.emotion.public
           },
         'data' => {
           'id' => user_response.id.to_s,
@@ -65,7 +66,9 @@ RSpec.describe Api::V1::ResponsesController do
               'gif_url' => nil,
               'rating' => user_response.rating,
               'comment' => user_response.comment,
-              'productivity' => user_response.productivity
+              'productivity' => user_response.productivity,
+              'bad_follow_comment' => user_response.bad_follow_comment,
+              'celebrate_comment' => user_response.celebrate_comment
             }
         }
       }]
@@ -90,7 +93,8 @@ RSpec.describe Api::V1::ResponsesController do
             'category' => user_response.emotion.category,
             'created_at' => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
             'updated_at' => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
-            'word' => user_response.emotion.word
+            'word' => user_response.emotion.word,
+            'public' => user_response.emotion.public
           },
         'data' => {
           'id' => response_saved.id.to_s,
@@ -101,10 +105,12 @@ RSpec.describe Api::V1::ResponsesController do
               'time_period_id' => response_saved.time_period_id,
               'emotion_id' => response_saved.emotion_id,
               'steps' => response_saved.steps,
-              'gif_url' => nil,              
+              'gif_url' => nil,
               'rating' => user_response.rating,
               'comment' => user_response.comment,
-              'productivity' => user_response.productivity
+              'productivity' => user_response.productivity,
+              'bad_follow_comment' => user_response.bad_follow_comment,
+              'celebrate_comment' => user_response.celebrate_comment
             }
         }
       }]
@@ -124,7 +130,8 @@ RSpec.describe Api::V1::ResponsesController do
             'category' => emotion.category,
             'created_at' => emotion.created_at.strftime('%FT%T.%LZ'),
             'updated_at' => emotion.updated_at.strftime('%FT%T.%LZ'),
-            'word' => emotion.word
+            'word' => emotion.word,
+            'public' => user_response.emotion.public
           },
         'data' =>
           {
@@ -139,7 +146,9 @@ RSpec.describe Api::V1::ResponsesController do
                 'gif_url' => nil,
                 'rating' => user_response.rating,
                 'comment' => user_response.comment,
-                'productivity' => user_response.productivity
+                'productivity' => user_response.productivity,
+                'bad_follow_comment' => user_response.bad_follow_comment,
+                'celebrate_comment' => user_response.celebrate_comment
               }
           }
       }]
