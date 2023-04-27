@@ -6,22 +6,42 @@ class EmotionSelectionNotificationWorker
     find_or_create_time_period
   end
 
-  def run_notification
-    return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_INVITES'))
+  #def run_notification
+  #  return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_INVITES'))
 
-    time_period.update(due_date: Date.current)
-    run_notification!
+  #  time_period.update(due_date: Date.current)
+  #  run_notification!
+  #end
+  def run_notification(operation = nil)
+    case operation
+    when :send_results_email
+      return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_RESULTS_EMAIL'))
+      run_results_email!
+    else
+      return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_INVITES'))
+      time_period.update(due_date: Date.current)
+      run_notification!
+    end
   end
 
   private
 
-  def run_notification!
+  #def run_notification!
+  #  if time_period_has_ended?
+  #    users.each { |user| send_results_email(user, time_period) }
+  #  elsif time_period.present?
+  #    users.each { |user| UserEmailMailer.response_invite(user, time_period).deliver_now }
+  #  end
+  #end
+
+  def run_results_email!
     if time_period_has_ended?
       users.each { |user| send_results_email(user, time_period) }
-      create_new_time_period_and_send_invites
-    elsif time_period.present?
-      send_response_invites
     end
+  end
+
+  def run_notification!
+    users.each { |user| UserEmailMailer.response_invite(user, time_period).deliver_now }
   end
   
   def send_results_email(user, time_period)
@@ -30,15 +50,17 @@ class EmotionSelectionNotificationWorker
                 .where(opt_out: false)
                 .distinct
   
-    words = Response.joins(:emotion)
-                    .where(time_period_id: time_period.id)
-                    .pluck("emotions.word", "emotions.category")
-                    .uniq
+    word_counts = Response.joins(:emotion)
+                          .where(time_period_id: time_period.id)
+                          .group("emotions.word", "emotions.category")
+                          .order("COUNT(emotions.word) DESC")
+                          .pluck("emotions.word", "emotions.category", "COUNT(emotions.word) AS count_all")
   
-    words = words.first(36).map do |word|
+    words = word_counts.first(36).map do |word, category, count|
       {
-        word: word[0] || "No word found",
-        category: word[1]
+        word: word || "No word found",
+        category: category,
+        count: count
       }
     end
   
@@ -51,17 +73,5 @@ class EmotionSelectionNotificationWorker
 
   def time_period_has_ended?
     time_period.present? && time_period.end_date <= Date.current
-  end
-
-  def send_response_invites
-    users.each { |user| UserEmailMailer.response_invite(user, time_period).deliver_now }
-  end
-
-  def create_new_time_period_and_send_invites
-    if time_period_has_ended?
-      new_time_period = TimePeriod.create_time_period
-      new_time_period.update(due_date: Date.current)
-      users.each { |user| UserEmailMailer.response_invite(user, new_time_period).deliver_now }
-    end
   end
 end

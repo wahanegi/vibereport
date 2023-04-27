@@ -13,7 +13,7 @@ module UserEmailMailerHelper
     end
   end
 
-  def random_position_and_style(category)
+  def random_position_and_style(category, word_count)
     case category
     when "positive"
       color = "#4F9B64"
@@ -22,8 +22,19 @@ module UserEmailMailerHelper
     when "negative"
       color = "#D1794E"
     end
-    font_size_percentage = rand(10..40)
-    font_size = 12 + (12 * (font_size_percentage - 10) / 30.0)
+    
+    min_font_size = 12
+    max_font_size = 24
+    max_word_count = 3 # You can adjust this value based on the desired scaling
+    max_font_size_for_max_word_count = 32
+    
+    # Calculate the font size based on word_count
+    if word_count >= max_word_count
+      font_size = max_font_size_for_max_word_count
+    else
+      font_size = min_font_size + ((max_font_size - min_font_size) * [word_count, max_word_count - 1].min.to_f / (max_word_count - 1))
+    end
+    
     font_families = [
       "Arial",
       "Helvetica",
@@ -41,13 +52,19 @@ module UserEmailMailerHelper
       "Impact"
     ]
     font_family = font_families.sample
-    max_shift = 30 - (font_size / 2).ceil
+
+    if font_size == 32
+      max_shift = 15 - (font_size / 2).ceil
+    else
+      max_shift = 28 - (font_size / 2).ceil
+    end
+
     left_shift = rand(-max_shift..max_shift)
     top_shift = rand(-max_shift..max_shift)
-    padding_top = rand(12..18)
-    padding_right = rand(12..21)
-    padding_bottom = rand(12..18)
-    padding_left = rand(12..21)
+    padding_top = rand(-2..18)
+    padding_right = rand(-2..21)
+    padding_bottom = rand(-2..18)
+    padding_left = rand(-2..21)
   
     "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; left: #{left_shift}px; top: #{top_shift}px; "
   end

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :emotions, only: [:index]
       resources :responses, param: :id
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
+      get '/see_the_results', to: 'responses#see_the_results'
     end
   end
   get '*path', to: 'home#app'

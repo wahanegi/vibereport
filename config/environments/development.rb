@@ -82,6 +82,8 @@ ENV['ADMIN_USER'] = 'admin@example.com'
 ENV['ADMIN_PASSWORD'] = 'password'
 
 # General use
-ENV['DAY_TO_SEND_INVITES'] = 'tuesday'
+ENV['DAY_TO_SEND_INVITES'] = 'thursday'
+# DAY_TO_SEND_RESULTS_EMAIL must be sent on the day when time_period.end_date <= Date.current
+ENV['DAY_TO_SEND_RESULTS_EMAIL'] = 'thursday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
 ENV['DEFAULT_FROM_ADDRESS'] = 'hello'

@@ -41,6 +41,20 @@ module Api
         render json: { error: result[:error] }, status: :unprocessable_entity
       end
 
+      def see_the_results
+        retrieve_user
+        sign_in_user
+        @time_period = TimePeriod.find(params[:time_period_id])
+      
+        @responses = Response.joins(:time_period)
+                             .where(time_period_id: @time_period.id)
+                             .where("time_periods.end_date <= ?", Date.current)
+      
+        return redirect_to root_path if @responses.present?
+      
+        render json: { error: "Some error message" }, status: :unprocessable_entity
+      end
+
       private
 
       def retrieve_response

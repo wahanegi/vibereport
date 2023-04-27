@@ -33,7 +33,7 @@
   </div>
   <div class="second-row">
     <div class="calendar-days ml-55">
-      <div class="data"><%= @view_calendar_days %></div>
+      <div class="date"><%= @view_calendar_days.gsub("\n", "<br>").html_safe %></div>
     </div>
   </div>
   <div class="mx-auto my-0 title">Submissions are in!</div>
@@ -41,9 +41,9 @@
     <div class="mx-auto my-0 text-invitation">See what your team’s week looked like.</div>
   <div class="container">
     <div class="responses-words">
-      <% @words.each_slice(6) do |row| %>
+      <% @words.shuffle.each_slice(6) do |row| %>
         <% row.each do |word| %>
-          <div class="random-word" style="<%= random_position_and_style(word[:category]) %>">
+          <div class="random-word" style="<%= random_position_and_style(word[:category], word[:count]) %>">
             <%= word[:word] || "No word found" %>
           </div>
         <% end %>
