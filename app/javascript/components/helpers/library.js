@@ -42,6 +42,7 @@ export function bindHighlightUserInText(element, event, users, enteredValue, set
 //For set up caret to the defiantly position
 
 export default class Cursor {
+
   static getCurrentCursorPosition(parentElement) {
     const selection = window.getSelection()
     let charCount = -1
@@ -62,6 +63,7 @@ export default class Cursor {
         console.log(realPos,focusNode.parentNode.outerHTML, encodeSpace(decodeSpace160(focusNode.textContent)) )
         realFocusOffset  = encodeSpace(decodeSpace160(focusNode.textContent.slice(0, focusOffset))).length
         console.log(realFocusOffset)
+
 
         while (node) {
           if (node === parentElement) {
@@ -84,8 +86,13 @@ export default class Cursor {
       }
     }
 
-    return {charCount: charCount , focusNode: focusNode, focusOffset: focusOffset,
-      realPos: realPos + realFocusOffset, realFocusOffset: realFocusOffset};
+    return {charCount: charCount ,
+            focusNode: focusNode,
+            focusOffset: focusOffset,
+            realPos: realPos + realFocusOffset,
+            realFocusOffset: realFocusOffset,
+            isDIV: focusNode.parentNode.tagName ==='DIV',
+            isSPAN: focusNode.parentNode.tagName ==='SPAN'};
   }
 
   static setCurrentCursorPosition(chars, element) {
@@ -190,7 +197,7 @@ export function deleteNextChar(str, cursorPosition, obj) {
 
 export function deletePreviousChar (str, cursorPosition, obj) {
   if ( cursorPosition <= 0 ) { return }
-  let n=1
+  let n= 1
   if(cursorPosition>=6 && str.slice(cursorPosition-6, cursorPosition ) === "&nbsp;") { n = 6 }
   return obj( str.slice(0, cursorPosition-n) + str.slice(cursorPosition) )
 

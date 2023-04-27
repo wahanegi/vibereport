@@ -79,10 +79,13 @@ export default class RichText {
   }
 
   static deleteNode( node, cursorPos, tag, endTag, setObjHTML, setCaret){
-    const startPos = cursorPos.realPos - cursorPos.realFocusOffset  - tag.length + 1
+    const startPos =
+        cursorPos.isSPAN ? cursorPos.realPos - cursorPos.realFocusOffset  - tag.length + 1 : cursorPos.realPos
     const endPos  = node.indexOf(endTag, cursorPos.realPos ) + endTag.length
+    console.log(startPos, endPos, this.deleteString(node, startPos, endPos) , cursorPos.focusOffset , cursorPos)
     setObjHTML(this.deleteString(node, startPos, endPos))
-    this.decrementPositionCursor(cursorPos.focusOffset , cursorPos, setCaret)
+    setCaret(cursorPos.isSPAN ? cursorPos.charCount - cursorPos.Offset  - tag.length + 1 : cursorPos.charCount)
+    // this.decrementPositionCursor(cursorPos.focusOffset , cursorPos, setCaret)
   }
 
   static deleteNodePasteChars( node, cursorPos, chars, tag, endTag, setObjHTML, setCaret){

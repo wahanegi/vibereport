@@ -28,6 +28,8 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
   const endTagAT = '</span>'
   const [users, setUsers] = useState([])
   const nonAllowedChars =  /[,@`<>;:\/\\']/
+  const element = textAreaRef.current
+  const [isNotCompleteInputUser, setIsNotCompleteInputUser] = useState(true)
 
   useEffect(() => {
     // const textArea = textAreaRef.current
@@ -42,6 +44,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
       // textArea.focus()
     // }
   }, [caret, enteredHTML])
+
 
   useEffect(()=>{
     if(richText.includes(tagAT)){
@@ -66,8 +69,10 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
     let key = event.key
     let htmlText = ''
     event.preventDefault()
+    if( cursorPos.isDIV ) { setIsDropdownList(false) }
+    if( cursorPos.isSPAN && isNotCompleteInputUser) { setIsDropdownList(true) }
 
-    console.log(key, text.length, caretCur, realPos, isDropdownList)
+    console.log(key, text.length, caretCur,  isDropdownList, enteredHTML, cursorPos.focusNode.parentNode.textContent)
 
     switch(key) {
       case '&':
@@ -93,6 +98,9 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
       let i = index
       if ( key === 'Enter' || key === 'Tab') {
+        console.log("ENTER")
+        // if(cursorPos.isSPAN && cursorPos.focusOffset === 0) {setIsDropdownList(false); return}
+        console.log("ENTER", cursorPos)
         let tempUsers = users
         htmlText = decodeSpace(enteredHTML)
         const nameUserToDel = decodeSpace(enteredHTML.slice(realPos-encodeSpace(searchString).length,
@@ -127,9 +135,10 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         setFilteredUsers(listUsers)
         setSearchString('')
         setIndex(0)
+        setIsNotCompleteInputUser(false)
         return
       }
-
+      setIsNotCompleteInputUser(true)
       if (!(String.fromCharCode(event.keyCode)).match(nonAllowedChars) && key.length === 1 ) {
         const newSearchString = (searchString + event.key).toLowerCase()
         const filteredList = listUsers.filter( user => userFullName(user).toLowerCase().startsWith(newSearchString) )
@@ -201,7 +210,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
       htmlText = encodeSpace(enteredHTML)
       console.log(htmlText)
       console.log(cursorPos.focusNode)//.parentNode.tagName
-      if ( cursorPos.focusNode.parentNode.tagName ==='DIV' && event.key.length === 1 ) {
+      if ( cursorPos.isDIV && event.key.length === 1 ) {
         event.preventDefault()
         switch (event.key) {
           case '@':
@@ -225,9 +234,9 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
             }
           default:
             setEnteredHTML(encodeSpace(enteredHTML.slice(0, realPos) + key + enteredHTML.slice(realPos)))
-            setCaret(caretCur + 1)
+            setCaret ( caret + 1 )
         }
-      } else if ( cursorPos.focusNode.parentNode.tagName ==='SPAN' && event.key.length === 1 ) {
+      } else if ( cursorPos.isSPAN && event.key.length === 1 ) {
         event.preventDefault()
         const startNameUser = realPos - cursorPos.realFocusOffset + 1
         const endNameUser = encodeSpace( enteredHTML ).indexOf(endTagAT, realPos)
@@ -273,24 +282,27 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         setCaret ( text.length )
         break;
       case 'ArrowLeft':
-        if( enteredHTML[cursorPos.realPos] === '@' ) { setIsDropdownList(false) }
+        console.log("283: ARROW", cursorPos)
+          if( cursorPos.isSPAN && cursorPos.focusOffset === 1 ) { setIsDropdownList(false) }
         decrementPositionCursor( 1, cursorPos, setCaret )
         break
+
       case 'ArrowRight':
-        if( enteredHTML[cursorPos.realPos + 1] === '@' ) { setIsDropdownList(true) }
         incrementPositionCursor( 1, cursorPos, text, setCaret )
         break
     }
 
     if (key === 'Backspace' || key === 'Delete') {
-       console.log(" Backspace selection =",cursorPos, enteredHTML,  enteredHTML.indexOf(tagAT, cursorPos.realPos))
+       console.log(" Backspace selection =",cursorPos, enteredHTML,  enteredHTML.indexOf(tagAT, cursorPos.realPos), "@=", enteredHTML[cursorPos.realPos - 1])
       const offset = enteredHTML.indexOf(tagAT, cursorPos.realPos)
-      if ( key === 'Delete' && ( offset === 0 || offset === 1 )) {
+      if (  cursorPos.isSPAN && cursorPos.focusNode.textContent === '@') {
         const endPos = enteredHTML.indexOf(endTagAT, cursorPos.realPos) + endTagAT.length
-        setEnteredHTML(RichText.deleteString(enteredHTML, cursorPos.realPos + offset, endPos))
+        setEnteredHTML(RichText.deleteString(enteredHTML, cursorPos.realPos - tagAT.length, endPos))
+        setCaret(0)
+        setIsDropdownList(false)
         return
       }
-      if ( cursorPos.focusNode.textContent.startsWith('@') ) {
+      if ( cursorPos.focusNode.textContent.startsWith('@') && cursorPos.isSPAN ) {
         console.log(cursorPos.focusNode.textContent, users)
         let findUser = users.find((el) => ('@' + userFullName( el )) === decodeSpace160( cursorPos.focusNode.textContent ))
         if (!!findUser) {
@@ -328,7 +340,12 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
       } else {
         switch (key){
           case 'Delete':
-            deleteNextChar( enteredHTML, realPos, setEnteredHTML )
+            console.log(enteredHTML.indexOf(tagAT, realPos))
+            if( enteredHTML.indexOf(tagAT, realPos) === realPos ) {
+              RichText.deleteNode( enteredHTML, cursorPos, tagAT, endTagAT, setEnteredHTML, setCaret )
+            } else {
+              deleteNextChar( enteredHTML, realPos, setEnteredHTML )
+            }
             break
           case 'Backspace':
             deletePreviousChar( enteredHTML, realPos, setEnteredHTML )
@@ -343,7 +360,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
     const element = textAreaRef.current
     const cursor = Cursor.getCurrentCursorPosition(element)
     console.log("mouseEnterHandling", cursor, cursor.focusNode.textContent, enteredHTML)
-    if (cursor.focusNode.parentNode.nodeName === 'SPAN' && cursor.focusOffset - 1 !== cursor.focusNode.textContent.length){
+    if (cursor.isSPAN && cursor.focusOffset - 1 !== cursor.focusNode.textContent.length){
       console.log(cursor.focusNode.textContent.slice(1), users)
       filteredUsers.map((user, index) => {
         if (userFullName(user) === cursor.focusNode.textContent.slice(1)){

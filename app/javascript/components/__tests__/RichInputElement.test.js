@@ -493,19 +493,63 @@ const highlightAT = '<span class="color-primary">@'
       expect(decodeSpace160(divElement.textContent)).toBe('say Hello world!')
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
       expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(0)
+      fireEvent.keyDown( divElement, { key: '@' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(1)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(1)
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe('say Hello world!')
       fireEvent.keyDown( divElement, { key: ' ' });
-      fireEvent.keyDown( divElement, { key: '@' });
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(7)
-      fireEvent.keyDown( divElement, { key: 'Delete' });
-      expect(decodeSpace160(divElement.textContent)).toBe(' say Hello world!')
-      fireEvent.keyDown( divElement, { key: '@' });
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(7)
       fireEvent.keyDown( divElement, { key: 'ArrowLeft' });
+      fireEvent.keyDown( divElement, { key: '@' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(1)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(29)
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(0)
+      fireEvent.keyDown( divElement, { key: '@' });
+      fireEvent.keyDown( divElement, { key: 'ArrowLeft' });
+      expect(decodeSpace160(divElement.textContent)).toBe('@ say Hello world!')
+      let listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(0);
       fireEvent.keyDown( divElement, { key: 'Enter' });
       expect(decodeSpace160(divElement.textContent)).toBe('@ say Hello world!')
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe('@ say Hello world!')
+      fireEvent.keyDown( divElement, { key: 'Delete' });
+      expect(decodeSpace160(divElement.textContent)).toBe(' say Hello world!')
+      fireEvent.keyDown( divElement, { key: '1' });;
+      fireEvent.keyDown( divElement, { key: ' ' });
+      fireEvent.keyDown( divElement, { key: '@' });
+      expect(decodeSpace160(divElement.textContent)).toBe('1 @ say Hello world!')
+      fireEvent.keyDown( divElement, { key: 'ArrowLeft' });
+      fireEvent.keyDown( divElement, { key: 'Delete' });
+      expect(decodeSpace160(divElement.textContent)).toBe('1  say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
+      fireEvent.keyDown( divElement, { key: '@' });
+      fireEvent.keyDown( divElement, { key: 'Enter' });
+      listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(0);
+      fireEvent.keyDown( divElement, { key: ' ' });
+      listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(0);
+      fireEvent.keyDown( divElement, { key: ' ' });
+      listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(0);
+      fireEvent.keyDown( divElement, { key: 'ArrowLeft' });
+      fireEvent.keyDown( divElement, { key: '@' });
+      fireEvent.keyDown( divElement, { key: 'm' });
+      fireEvent.keyDown( divElement, { key: 'Tab' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(33)
+      expect(decodeSpace160(divElement.textContent)).toBe('1 @George Washington @Mike Snider  say Hello world!')
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(22)
+      expect(encodeSpace(divElement.textContent)).toBe('1 @George Washington   say Hello world!')
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe('1 @George Washington  say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
+
     })
+
 
     it('check correct work of button Delete in different place of the text',()=> {
       const setChosenUsers = jest.fn();
