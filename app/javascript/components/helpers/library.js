@@ -196,16 +196,30 @@ export function deletePreviousChar (str, cursorPosition, obj) {
 
 }
 
-export function incrementPositionCursor (cursorPos, obj) {
-  obj(cursorPos.charCount < text.length ? cursorPos.charCount + 1 : text.length )
+export function incrementPositionCursor (numChars, cursorPos, text, obj) {
+  obj( cursorPos.charCount + numChars < text.length ? cursorPos.charCount + numChars : text.length )
 }
-export function decrementPositionCursor (cursorPos, obj) {
-  obj( cursorPos.charCount > 0 ? cursorPos.charCount - 1 : 0 )
+export function decrementPositionCursor (numChars, cursorPos, obj) {
+  obj( cursorPos.charCount > numChars  ? cursorPos.charCount - numChars : 0 )
 }
 
-export function  addSymbolsToHTMLobj(symbols, htmlText, cursorPos, setObjHTML, setCaret) {
+export function  pasteSymbolsToHTMLobj(symbols, htmlText, cursorPos, setObjHTML, setCaret) {
   setObjHTML(encodeSpace(htmlText.slice(0, cursorPos.realPos) + encodeSpace(symbols) + htmlText.slice(cursorPos.realPos)))
   setCaret(cursorPos.charCount  +symbols.length)
 }
-(/ /g, "\u00A0")
+
+export function deleteString( string, startPos, endPos ) {
+  return string.slice(0, startPos) + string.slice(endPos)
+}
+
+export function deleteNode( node, cursorPos, tag, endTag, setObjHTML, setCaret){
+  // const deleteString = ( string, startPos, endPos ) => {string.slice(0, startPos) + string.slice(endPos)}
+  const startPos = cursorPos.realPos - cursorPos.realFocusOffset  - tag.length + 1
+  const endPos  = node.indexOf(endTag, cursorPos.realPos ) + endTag.length
+  setObjHTML(deleteString(node, startPos, endPos))
+  setCaret( cursorPos.charCount - cursorPos.focusOffset  )
+}
+
+
+// (/ /g, "\u00A0")
 //.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\t/g, "\u00a0").replace(/\n/g, '<br/>')

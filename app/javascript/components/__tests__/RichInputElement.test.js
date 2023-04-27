@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react';
   import { render, fireEvent , screen } from '@testing-library/react';
 import RichInputElement from "../UI/RichInputElement";
 import Cursor, {decodeSpace, decodeSpace160, encodeSpace} from "../helpers/library";
-import {firstLastName} from "../helpers/library";
+import {userFullName} from "../helpers/library";
 
 
 const listUsers = [
@@ -75,9 +75,9 @@ const highlightAT = '<span class="color-primary">@'
 
     it('should change "@George Washington" on the "@s", delete him chosenUsers, open DropDownList',() => {
       const setChosenUsers = jest.fn();
-      const richText = 'Hey ' + highlightAT + firstLastName(listUsers[0]) +'</span> , ' +
-         highlightAT + firstLastName(listUsers[1]) +'</span> and ' +
-         highlightAT + firstLastName(listUsers[2]) +'</span> , thanks for non-stop renew))'
+      const richText = 'Hey ' + highlightAT + userFullName(listUsers[0]) +'</span> , ' +
+         highlightAT + userFullName(listUsers[1]) +'</span> and ' +
+         highlightAT + userFullName(listUsers[2]) +'</span> , thanks for non-stop renew))'
       const { getByTestId } = render(
         <RichInputElement
           richText = {richText}
@@ -100,14 +100,14 @@ const highlightAT = '<span class="color-primary">@'
       const listItems = screen.getAllByRole('listitem');
       expect(listItems).toHaveLength(listUsers.length);
       listItems.forEach((listItem, index) => {
-        expect(listItem.textContent).toBe(firstLastName(listUsers[index]));
+        expect(listItem.textContent).toBe(userFullName(listUsers[index]));
       });
     })
 
     it('should add space after char when cursor before @',() => {
       const setChosenUsers = jest.fn();
-      const richText = 'Hey ' + highlightAT + firstLastName(listUsers[0]) +'</span> and ' +
-          highlightAT + firstLastName(listUsers[1]) +'</span>, thanks for non-stop renew))'
+      const richText = 'Hey ' + highlightAT + userFullName(listUsers[0]) +'</span> and ' +
+          highlightAT + userFullName(listUsers[1]) +'</span>, thanks for non-stop renew))'
       const { getByTestId } = render(
           <RichInputElement
               richText = {richText}
@@ -132,9 +132,9 @@ const highlightAT = '<span class="color-primary">@'
 
     it('should change "@George Washington" on the "@Mike Snider" in the textarea and in the chosenUsers',() => {
       const setChosenUsers = jest.fn();
-      const richText = 'Hey ' + highlightAT + firstLastName(listUsers[0]) +'</span>, ' +
-        highlightAT + firstLastName(listUsers[1]) +'</span> and ' +
-        highlightAT + firstLastName(listUsers[2]) +'</span> , thanks for non-stop renew))'
+      const richText = 'Hey ' + highlightAT + userFullName(listUsers[0]) +'</span>, ' +
+        highlightAT + userFullName(listUsers[1]) +'</span> and ' +
+        highlightAT + userFullName(listUsers[2]) +'</span> , thanks for non-stop renew))'
       const { getByTestId } = render(
         <RichInputElement
           richText = {richText}
@@ -166,7 +166,7 @@ const highlightAT = '<span class="color-primary">@'
 
     it('should check the non allowed characters for user searches ',() => {
       const setChosenUsers = jest.fn();
-      const richText = 'Hey ' + highlightAT + firstLastName(listUsers[0]) +'</span> , thanks for non-stop renew))'
+      const richText = 'Hey ' + highlightAT + userFullName(listUsers[0]) +'</span> , thanks for non-stop renew))'
       const { getByTestId } = render(
         <RichInputElement
           richText = {richText}
@@ -189,7 +189,7 @@ const highlightAT = '<span class="color-primary">@'
       const sentence = [".", "T", "H", "A", "N", "K", " ", "Y", "O", "U", " ", "@"]
       const continueSentence = [ "r", "o", "g","e", "r", " ", "!",]
       const setChosenUsers = jest.fn();
-      const richText = 'Hey ' + highlightAT + firstLastName(listUsers[0]) +'</span>, thanks for non-stop renew))'
+      const richText = 'Hey ' + highlightAT + userFullName(listUsers[0]) +'</span>, thanks for non-stop renew))'
       const { getByTestId } = render(
         <RichInputElement
           richText = {richText}
@@ -215,8 +215,8 @@ const highlightAT = '<span class="color-primary">@'
 
     it('should add userName from DropDownList by press Enter or Space button',() => {
       const setChosenUsers = jest.fn();
-      const richText = 'Hey ' + highlightAT + firstLastName(listUsers[2]) +'</span>, ' +
-          highlightAT + firstLastName(listUsers[1]) +'</span> and '
+      const richText = 'Hey ' + highlightAT + userFullName(listUsers[2]) +'</span>, ' +
+          highlightAT + userFullName(listUsers[1]) +'</span> and '
       const { getByTestId } = render(
           <RichInputElement
               richText = {richText}
@@ -236,7 +236,7 @@ const highlightAT = '<span class="color-primary">@'
       const listItems = screen.getAllByRole('listitem');
       expect(listItems).toHaveLength(listUsers.length);
       listItems.forEach((listItem, index) => {
-        expect(listItem.textContent).toBe(firstLastName(listUsers[index]));
+        expect(listItem.textContent).toBe(userFullName(listUsers[index]));
       });
       fireEvent.keyDown(divElement, { key: 'Tab' });
       expect(decodeSpace160(divElement.textContent)).toBe('Hey @Janice Wednesday, @Jackie Chan and @George Washington');
@@ -262,7 +262,7 @@ const highlightAT = '<span class="color-primary">@'
       const listItems = screen.queryAllByRole('listitem');
       expect(listItems).toHaveLength(listUsers.length);
       listItems.forEach((listItem, index) => {
-        expect(listItem.textContent).toBe(firstLastName(listUsers[index]));
+        expect(listItem.textContent).toBe(userFullName(listUsers[index]));
       });
       const pos = Cursor.getCurrentCursorPosition(divElement)
       expect(pos.realPos).toBe(29)
@@ -510,7 +510,7 @@ const highlightAT = '<span class="color-primary">@'
 
     })
 
-    it('should delete SPAN tags and cancel hightlight text', ()=>{
+    it('should cancel hightlight text', ()=>{
       const setChosenUsers = jest.fn();
       const richText = "Hey <span class=\"color-primary\">@George Washington</span>   . How do you do? " +
         '<span class="color-primary">@Jackie Chan</span> ' +
@@ -534,11 +534,26 @@ const highlightAT = '<span class="color-primary">@'
       const listItems = screen.queryAllByRole('listitem');
       expect(listItems).toHaveLength(listUsers.length);
       listItems.forEach((listItem, index) => {
-        expect(listItem.textContent).toBe(firstLastName(listUsers[index]));
+        expect(listItem.textContent).toBe(userFullName(listUsers[index]));
       });
       fireEvent.keyDown(divElement, { key: '@' });
       expect(decodeSpace160(divElement.textContent)).toContain((('Hey @George Washington   . How do you do? ' )))
-        // '@Jackie Chan @Janice Wednesday @Kieran Roomie @roger !')))
+      fireEvent.keyDown(divElement, { key: 'Backspace' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(4)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(9)
+      expect(decodeSpace160(divElement.textContent)).toContain((('Hey    . How do you do? ' )))
+      fireEvent.keyDown(divElement, { key: '@' });
+      expect(decodeSpace160(divElement.textContent)).toContain((('Hey @   . How do you do? ' )))
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(38)
+      fireEvent.keyDown(divElement, { key: 'Escape' });
+      expect(decodeSpace160(divElement.textContent)).toContain((('Hey @   . How do you do? ' )))
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(10)
+
+
+
+
     })
 
   })
