@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import parse from "html-react-parser";
 import Cursor, {
-  addSymbolsToHTMLobj,
   decodeSpace,
   decodeSpace160, decrementPositionCursor,
-  deleteNextChar, deleteNode,
-  deletePreviousChar, deleteString,
+  deleteNextChar,
+  deletePreviousChar,
   encodeSpace,
   incrementPositionCursor, pasteSymbolsToHTMLobj
 } from "../helpers/library";
@@ -274,16 +273,24 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         setCaret ( text.length )
         break;
       case 'ArrowLeft':
+        if( enteredHTML[cursorPos.realPos] === '@' ) { setIsDropdownList(false) }
         decrementPositionCursor( 1, cursorPos, setCaret )
         break
       case 'ArrowRight':
+        if( enteredHTML[cursorPos.realPos + 1] === '@' ) { setIsDropdownList(true) }
         incrementPositionCursor( 1, cursorPos, text, setCaret )
         break
     }
 
     if (key === 'Backspace' || key === 'Delete') {
-       console.log(" Backspace selection =", cursorPos.focusNode.textContent.startsWith('@'))
-      if (cursorPos.focusNode.textContent.startsWith('@')) {
+       console.log(" Backspace selection =",cursorPos, enteredHTML,  enteredHTML.indexOf(tagAT, cursorPos.realPos))
+      const offset = enteredHTML.indexOf(tagAT, cursorPos.realPos)
+      if ( key === 'Delete' && ( offset === 0 || offset === 1 )) {
+        const endPos = enteredHTML.indexOf(endTagAT, cursorPos.realPos) + endTagAT.length
+        setEnteredHTML(RichText.deleteString(enteredHTML, cursorPos.realPos + offset, endPos))
+        return
+      }
+      if ( cursorPos.focusNode.textContent.startsWith('@') ) {
         console.log(cursorPos.focusNode.textContent, users)
         let findUser = users.find((el) => ('@' + userFullName( el )) === decodeSpace160( cursorPos.focusNode.textContent ))
         if (!!findUser) {
@@ -293,6 +300,13 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
           setUsers(newListUser)
           // console.log("newListUser:", newListUser)
           // let val = event.target.innerHTML
+          // let position = key === 'Delete' ? {
+          //   charCount: cursorPos.charCount + 1,
+          //   focusNode: cursorPos.focusNode,
+          //   focusOffset: cursorPos.focusOffset + 1,
+          //   realPos: cursorPos.realPos + tagAT.length,
+          //   realFocusOffset: cursorPos.realFocusOffset + 1} : 0
+          // console.log(position)
           RichText.deleteNode( enteredHTML, cursorPos, tagAT, endTagAT, setEnteredHTML, setCaret )
           // let positionStart = realPos - cursorPos.realFocusOffset  - highlightAT.length + 1
           // let posEnd = enteredHTML.indexOf(endTagAT, realPos ) + endTagAT.length

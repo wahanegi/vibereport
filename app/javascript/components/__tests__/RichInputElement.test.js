@@ -492,6 +492,51 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.keyDown( divElement, { key: 'Backspace' });
       expect(decodeSpace160(divElement.textContent)).toBe('say Hello world!')
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(0)
+      fireEvent.keyDown( divElement, { key: ' ' });
+      fireEvent.keyDown( divElement, { key: '@' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(7)
+      fireEvent.keyDown( divElement, { key: 'Delete' });
+      expect(decodeSpace160(divElement.textContent)).toBe(' say Hello world!')
+      fireEvent.keyDown( divElement, { key: '@' });
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(7)
+      fireEvent.keyDown( divElement, { key: 'ArrowLeft' });
+      fireEvent.keyDown( divElement, { key: 'Enter' });
+      expect(decodeSpace160(divElement.textContent)).toBe('@ say Hello world!')
+    })
+
+    it('check correct work of button Delete in different place of the text',()=> {
+      const setChosenUsers = jest.fn();
+      const richText = '<span class="color-primary">@George Washington</span>  say Hello world!'
+      const {getByTestId} = render(
+          <RichInputElement
+              richText={richText}
+              listUsers={listUsers}
+              setChosenUsers={setChosenUsers}
+              setRichText={() => {
+              }}
+              onSubmit={() => {
+              }}
+          />
+      );
+      const divElement = getByTestId('editable-div');
+      Cursor.setCurrentCursorPosition(0,divElement )
+      fireEvent.click( divElement );
+      fireEvent.keyDown( divElement, { key: 'Delete' });
+      expect(decodeSpace160(divElement.textContent)).toBe('  say Hello world!')
+      //delete &nbsp;
+      Cursor.setCurrentCursorPosition(2,divElement )
+      fireEvent.click( divElement );
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(12)
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe(' say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(6)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(1)
+      fireEvent.keyDown( divElement, { key: 'Backspace' });
+      expect(decodeSpace160(divElement.textContent)).toBe('say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
 
     })
@@ -550,10 +595,6 @@ const highlightAT = '<span class="color-primary">@'
       expect(decodeSpace160(divElement.textContent)).toContain((('Hey @   . How do you do? ' )))
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
       expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(10)
-
-
-
-
     })
 
   })
