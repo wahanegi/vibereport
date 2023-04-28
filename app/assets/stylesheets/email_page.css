@@ -384,10 +384,10 @@ text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 325px; /* Set the height of the container to 100% of the viewport height */
+    height: 325px;
     padding: 0;
     margin: 31px;
-  }
+}
   
 .random-word:hover {
     transform: scale(1.2);
@@ -430,18 +430,18 @@ html {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
-  }
+}
   
-  .random-word {
+.random-word {
     position: absolute;
     white-space: nowrap;
     font-size: 1rem;
     transition: transform 0.2s ease-in-out;
     min-width: 16.6666%; /* 100% / 6 columns */
     min-height: 16.6666%; /* 100% / 6 rows */
-  }
+}
 
-  .link-text-results{
+.link-text-results{
     display: block;
     width: 385px;
     height: 70px;

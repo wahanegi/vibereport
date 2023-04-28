@@ -6,12 +6,6 @@ class EmotionSelectionNotificationWorker
     find_or_create_time_period
   end
 
-  #def run_notification
-  #  return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_INVITES'))
-
-  #  time_period.update(due_date: Date.current)
-  #  run_notification!
-  #end
   def run_notification(operation = nil)
     case operation
     when :send_results_email
@@ -25,14 +19,6 @@ class EmotionSelectionNotificationWorker
   end
 
   private
-
-  #def run_notification!
-  #  if time_period_has_ended?
-  #    users.each { |user| send_results_email(user, time_period) }
-  #  elsif time_period.present?
-  #    users.each { |user| UserEmailMailer.response_invite(user, time_period).deliver_now }
-  #  end
-  #end
 
   def run_results_email!
     if time_period_has_ended?

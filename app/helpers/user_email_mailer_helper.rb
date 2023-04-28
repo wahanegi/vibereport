@@ -25,14 +25,16 @@ module UserEmailMailerHelper
     
     min_font_size = 12
     max_font_size = 24
-    max_word_count = 3 # You can adjust this value based on the desired scaling
-    max_font_size_for_max_word_count = 32
+    max_word_count = 3 # will be can adjust this value based on the desired number of repetitions of the word by the User
+    max_font_size_for_max_word_count = 28
     
-    # Calculate the font size based on word_count
     if word_count >= max_word_count
       font_size = max_font_size_for_max_word_count
     else
-      font_size = min_font_size + ((max_font_size - min_font_size) * [word_count, max_word_count - 1].min.to_f / (max_word_count - 1))
+      random_factor = rand()
+      font_size_range = max_font_size - min_font_size
+      font_size = min_font_size + (font_size_range * [word_count, max_word_count - 1].min.to_f / (max_word_count - 1) * random_factor)
+      font_size = font_size.round
     end
     
     font_families = [
@@ -53,19 +55,15 @@ module UserEmailMailerHelper
     ]
     font_family = font_families.sample
 
-    if font_size == 32
-      max_shift = 15 - (font_size / 2).ceil
+    if font_size == max_font_size_for_max_word_count
+      max_shift = 5
     else
       max_shift = 28 - (font_size / 2).ceil
     end
 
     left_shift = rand(-max_shift..max_shift)
     top_shift = rand(-max_shift..max_shift)
-    padding_top = rand(-2..18)
-    padding_right = rand(-2..21)
-    padding_bottom = rand(-2..18)
-    padding_left = rand(-2..21)
   
-    "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; left: #{left_shift}px; top: #{top_shift}px; "
+    "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; left: #{left_shift}px; top: #{top_shift}px;"
   end
 end
