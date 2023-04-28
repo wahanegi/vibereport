@@ -10,6 +10,8 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
   //   // steps.push('productivity-check')
   //   saveDataToDb( steps, {bad_follow_comment: comment})
   // }
+
+  // Temporary placement not ready page Shoutout
   const handlingOnClickNext = () => {
     if (!data.fun_question){
       steps.push('causes-to-celebrate')

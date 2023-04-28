@@ -24,5 +24,13 @@
 require 'rails_helper'
 
 RSpec.describe FunQuestion, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'question_public scope' do
+    let!(:public_unused_question) { create(:fun_question, public: true, used: false) }
+    let!(:public_used_question) { create(:fun_question, public: true, used: true) }
+    let!(:private_unused_question) { create(:fun_question, public: false, used: false) }
+
+    it 'returns only public and unused questions' do
+      expect(FunQuestion.question_public).to eq([public_unused_question])
+    end
+  end
 end

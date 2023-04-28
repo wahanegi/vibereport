@@ -43,6 +43,8 @@ RSpec.describe Response, type: :model do
   let!(:user) { create :user}
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
+  let!(:fun_question) { create :fun_question }
+  let!(:answer_fun_question) { create :answer_fun_question }
   let(:response) { FactoryBot.build(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let(:not_working_response) { FactoryBot.build(:response, :not_working_response, user:, time_period:, emotion: nil, steps: %w[emotion-selection-web]) }
 
@@ -57,6 +59,14 @@ RSpec.describe Response, type: :model do
 
     it 'belongs to emotion' do
       expect(response).to belong_to(:emotion).optional
+    end
+
+    it 'belongs to fun question' do
+      expect(response).to belong_to(:fun_question).optional
+    end
+
+    it 'belongs to answer fun question' do
+      expect(response).to belong_to(:answer_fun_question).optional
     end
   end
 
