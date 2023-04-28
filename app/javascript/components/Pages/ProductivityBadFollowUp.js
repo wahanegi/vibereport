@@ -6,9 +6,18 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
   const { bad_follow_comment } = data.response.attributes
   const [comment, setComment] = useState(bad_follow_comment || '');
   const handlingOnClickNext = () => {
-    steps.push('icebreaker-answer')
+
+    // steps.push('productivity-check')
     saveDataToDb( steps, {bad_follow_comment: comment})
   }
+  // const handlingOnClickNext = () => {
+  //   if (!data.fun_question){
+  //     steps.push('causes-to-celebrate')
+  //     saveDataToDb( steps, {bad_follow_comment: comment})
+  //   }else
+  //     steps.push('icebreaker-answer')
+  //     saveDataToDb( steps, {bad_follow_comment: comment})
+  // }
 
   if (!!error) return <p>{error.message}</p>
 
