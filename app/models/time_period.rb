@@ -23,12 +23,18 @@ class TimePeriod < ApplicationRecord
     TimePeriod.create(start_date: start_date, end_date: end_date)
   end
 
-  def self.current_time_period
-    TimePeriod.find_by(start_date: Date.current.., end_date: ..Date.current + 6.days)
-  end
+  class << self
+    def current_time_period
+      TimePeriod.find_by(start_date: Date.current.., end_date: ..Date.current + 6.days)
+    end
 
-  def self.current
-    TimePeriod.find_by(start_date: ..Date.current, end_date: Date.current..)
+    def current
+      TimePeriod.find_by(start_date: ..Date.current, end_date: Date.current..)
+    end
+
+    def find_or_create_time_period
+      TimePeriod.current || TimePeriod.create_time_period
+    end
   end
 
   def date_range

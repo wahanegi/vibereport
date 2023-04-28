@@ -6,13 +6,13 @@ NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 RSpec.describe Api::V1::EmotionsController do
   FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
   let!(:user) { create :user }
-  let!(:emotion) { create(:emotion, category: 'positive') }
+  let!(:emotion) { create(:emotion, category: 'positive', public: true) }
   let!(:emotion_neutral) do
-    NUMBER_OF_ELEMENTS.times { create(:emotion, category: 'neutral') }
+    NUMBER_OF_ELEMENTS.times { create(:emotion, category: 'neutral', public: true) }
   end
 
   let!(:emotion_negative) do
-    18.times { create(:emotion, category: 'negative') }
+    18.times { create(:emotion, category: 'negative', public: true) }
   end
 
   before(:each) do
@@ -27,7 +27,7 @@ RSpec.describe Api::V1::EmotionsController do
 
     it 'should returns a proper format of the JSON response' do
       get '/api/v1/emotions'
-      expect(json.length).to eq(6)
+      expect(json.length).to eq(7)
       expect(json[:time_period][:id]).to eq(TimePeriod.current.id)
       expect(json[:time_period][:start_date]).to eq(TimePeriod.current.start_date.to_s)
       expect(json[:time_period][:end_date]).to eq(TimePeriod.current.end_date.to_s)

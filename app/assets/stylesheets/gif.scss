@@ -82,6 +82,7 @@
     font-size: $h1-font-size;
     background-color: $light-grey !important;
     text-align: start;
+    box-shadow: none;
     &.positive-input {
       color: $sea-green !important;
     }

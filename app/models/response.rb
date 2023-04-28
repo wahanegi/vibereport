@@ -2,19 +2,21 @@
 #
 # Table name: responses
 #
-#  id             :bigint           not null, primary key
-#  comment        :text
-#  gif_url        :string
-#  not_working    :boolean          default(FALSE)
-#  notices        :jsonb
-#  productivity   :integer
-#  rating         :integer
-#  steps          :string           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  emotion_id     :bigint
-#  time_period_id :bigint           not null
-#  user_id        :bigint           not null
+#  id                 :bigint           not null, primary key
+#  bad_follow_comment :text
+#  celebrate_comment  :text
+#  comment            :text
+#  gif_url            :string
+#  not_working        :boolean          default(FALSE)
+#  notices            :jsonb
+#  productivity       :integer
+#  rating             :integer
+#  steps              :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  emotion_id         :bigint
+#  time_period_id     :bigint           not null
+#  user_id            :bigint           not null
 #
 # Indexes
 #
@@ -36,6 +38,7 @@ class Response < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :time_period_id }
   validates :steps, presence: true
-  validates :productivity, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9 }, presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
+  validates :productivity, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9 },
+            presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
   serialize :steps, JSON  
 end

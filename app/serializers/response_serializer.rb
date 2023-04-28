@@ -2,19 +2,21 @@
 #
 # Table name: responses
 #
-#  id             :bigint           not null, primary key
-#  comment        :text
-#  gif_url        :string
-#  not_working    :boolean          default(FALSE)
-#  notices        :jsonb
-#  productivity   :integer
-#  rating         :integer
-#  steps          :string           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  emotion_id     :bigint
-#  time_period_id :bigint           not null
-#  user_id        :bigint           not null
+#  id                 :bigint           not null, primary key
+#  bad_follow_comment :text
+#  celebrate_comment  :text
+#  comment            :text
+#  gif_url            :string
+#  not_working        :boolean          default(FALSE)
+#  notices            :jsonb
+#  productivity       :integer
+#  rating             :integer
+#  steps              :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  emotion_id         :bigint
+#  time_period_id     :bigint           not null
+#  user_id            :bigint           not null
 #
 # Indexes
 #
@@ -32,5 +34,6 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating, :comment, :productivity
+  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating, :comment, :productivity,
+             :bad_follow_comment, :celebrate_comment
 end

@@ -3,7 +3,7 @@ class EmotionSelectionNotificationWorker
 
   def initialize
     @users = User.opt_in
-    find_or_create_time_period
+    @time_period = TimePeriod.find_or_create_time_period
   end
 
   def run_notification(operation = nil)
@@ -52,7 +52,7 @@ class EmotionSelectionNotificationWorker
   
     UserEmailMailer.results_email(user, time_period, words).deliver_now
   end
-  
+
   def find_or_create_time_period
     @time_period = TimePeriod.current || TimePeriod.create_time_period
   end

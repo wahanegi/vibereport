@@ -1,5 +1,6 @@
 ActiveAdmin.register Response do
-  permit_params :time_period_id, :emotion_id, :user_id, :not_working, :steps, :productivity
+  permit_params %i[time_period_id emotion_id user_id not_working steps rating productivity bad_follow_comment
+                   comment celebrate_comment]
 
   index do
     selectable_column
@@ -16,7 +17,7 @@ ActiveAdmin.register Response do
     column :not_working
     column :user
     column :productivity
-    column :created_at
+    column :rating
     actions
   end
 
@@ -26,7 +27,11 @@ ActiveAdmin.register Response do
       f.input :user, collection: User.all.map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
       f.input :time_period, collection: TimePeriod.all.map { |t| ["#{t.date_range}", t.id] }
       f.input :not_working
+      f.input :rating, input_html: { min: 1, max: 5 }
       f.input :productivity, input_html: { min: 0, max: 9 }
+      f.input :comment
+      f.input :bad_follow_comment
+      f.input :celebrate_comment
     end
     f.actions
   end
