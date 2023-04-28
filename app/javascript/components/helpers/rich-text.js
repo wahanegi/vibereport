@@ -1,3 +1,4 @@
+import {userFullName} from "./library";
 
 export default class RichText {
 
@@ -94,5 +95,15 @@ export default class RichText {
     let newHtmlTxt = this.deleteString(node, startPos, endPos)
     setObjHTML(this.pasteCharsToString( chars, newHtmlTxt, startPos))
     this.incrementPositionCursor( chars.length -1 , cursorPos, newHtmlTxt, setCaret)
+  }
+
+  static findUsersInText( tag, endTag, richText, listUsers) {
+      const users = []
+      let pos = 0
+      while ((pos = richText.indexOf(tag, pos)) !== -1) {
+        pos += + tag.length
+        users.push(listUsers.find(user => userFullName(user) === richText.slice(pos, richText.indexOf(endTag, pos))))
+      }
+      return users
   }
 }

@@ -6,7 +6,7 @@ import Cursor, {
   deleteNextChar,
   deletePreviousChar,
   encodeSpace,
-  incrementPositionCursor, pasteSymbolsToHTMLobj
+  incrementPositionCursor, pasteSymbolsToHTMLobj, sortUsersByFullName
 } from "../helpers/library";
 import DropDownList from "./DropDownList";
 import {userFullName} from "../helpers/library";
@@ -18,7 +18,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
                             classAt = 'color-primary'}) =>{
   const [enteredHTML, setEnteredHTML] = useState( encodeSpace(richText))
   const textAreaRef = useRef(richText)
-  const [filteredUsers, setFilteredUsers] = useState(listUsers)
+  const [filteredUsers, setFilteredUsers] = useState(sortUsersByFullName(listUsers))
   const [ isDropdownList, setIsDropdownList ] = useState(false)
   const [searchString, setSearchString] = useState('')
   const [index, setIndex] = useState (0)
@@ -27,6 +27,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
   const tagAT = '<span class=\"' + classAt + '\">@'
   const endTagAT = '</span>'
   const [users, setUsers] = useState([])
+  const [ ctrl, setCtrl] = useState(false)
   const nonAllowedChars =  /[,@`<>;:\/\\']/
   const element = textAreaRef.current
   const [isNotCompleteInputUser, setIsNotCompleteInputUser] = useState(true)
@@ -43,20 +44,23 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
       Cursor.setCurrentCursorPosition(caret, textArea)
       // textArea.focus()
     // }
-  }, [caret, enteredHTML])
+  }, [caret, enteredHTML, current])
 
 
   useEffect(()=>{
     if(richText.includes(tagAT)){
-      let users = []
-      let pos = 0
-      while((pos = richText.indexOf(tagAT,pos)) !== -1){
-        pos +=  + tagAT.length
-        users.push(listUsers.find(user => userFullName(user) === richText.slice(pos, richText.indexOf(endTagAT, pos))))
-      }
+      // let users = []
+      // let pos = 0
+      // while((pos = richText.indexOf(tagAT,pos)) !== -1){
+      //   pos += tagAT.length
+      //   users.push(listUsers.find(user => userFullName(user) === richText.slice(pos, richText.indexOf(endTagAT, pos))))
+      // }
+      let users = RichText.findUsersInText( tagAT,endTagAT, richText, listUsers)
       setChosenUsers(users)
       setUsers(users)
-      setChosenUsers(listUsers.filter(item => !users.includes(item)))
+      setFilteredUsers(listUsers.filter(item=> !users.some(({ id }) => id === item.id)))
+      // setChosenUsers(listUsers.filter(item => !users.includes(item)))
+
     }
   },[])
 
@@ -74,20 +78,8 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
     console.log("75: start", key, text.length, caretCur,  isDropdownList, enteredHTML, cursorPos) //.parentNode.textContent
 
-    switch(key) {
-      case '&':
-        return
-        key='&amp;'
-        break
-      case '<':
-        return
-        key = '&lt;'
-        break
-      case '>':
-        return
-        key = '&rt;'
-        break
-    }
+    if (key.match(/&<>/)){ return}
+
 
     if (isDropdownList) {
       event.preventDefault()
@@ -106,7 +98,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
         console.log("ENTER", cursorPos)
         let tempUsers = users
         htmlText = decodeSpace(enteredHTML)
-        const nameUserToDel = decodeSpace(enteredHTML.slice(realPos-encodeSpace(searchString).length,
+        const nameUserToDel = decodeSpace(enteredHTML.slice(realPos-cursorPos.focusOffset+1-encodeSpace(searchString).length,
           enteredHTML.indexOf(endTagAT, realPos)))
 //undefined !==
         if ( !!users.find(user => userFullName(user) === nameUserToDel) ){
@@ -119,7 +111,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
 
         console.log("CHECK = ", nameUserToDel, filteredUsers[i],i , "htmlText=", htmlText)
 
-        setEnteredHTML( encodeSpace(enteredHTML.slice(0, realPos - encodeSpace(searchString).length) +
+        setEnteredHTML( encodeSpace(enteredHTML.slice(0, realPos - cursorPos.realFocusOffset + 1 ) +
           encodeSpace( userFullName(filteredUsers[i]) ) + enteredHTML.slice(enteredHTML.indexOf(endTagAT, realPos))))
 console.log("encodeSpace(searchString).length=", encodeSpace(searchString).length,
   enteredHTML.slice(0, realPos - encodeSpace(searchString).length),
@@ -134,7 +126,7 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
         setUsers(getUsers)
         setChosenUsers(getUsers)
         setIsDropdownList(false)
-        setCaret(caret + userFullName(filteredUsers[i]).length - decodeSpace(decodeSpace160( searchString)).length)
+        setCaret(caret - cursorPos.focusOffset  + 1 + userFullName(filteredUsers[i]).length - decodeSpace(decodeSpace160( searchString)).length*0)
         setFilteredUsers(listUsers)
         setSearchString('')
         setIndex(0)
@@ -317,29 +309,9 @@ console.log("encodeSpace(searchString).length=", encodeSpace(searchString).lengt
           const newListUser = users.filter(user => user.id !== findUser.id)
           setChosenUsers(newListUser)
           setUsers(newListUser)
-          // console.log("newListUser:", newListUser)
-          // let val = event.target.innerHTML
-          // let position = key === 'Delete' ? {
-          //   charCount: cursorPos.charCount + 1,
-          //   focusNode: cursorPos.focusNode,
-          //   focusOffset: cursorPos.focusOffset + 1,
-          //   realPos: cursorPos.realPos + tagAT.length,
-          //   realFocusOffset: cursorPos.realFocusOffset + 1} : 0
-          // console.log(position)
+
           RichText.deleteNode( enteredHTML, cursorPos, tagAT, endTagAT, setEnteredHTML, setCaret )
-          // let positionStart = realPos - cursorPos.realFocusOffset  - highlightAT.length + 1
-          // let posEnd = enteredHTML.indexOf(endTagAT, realPos ) + endTagAT.length
-          // // let positionEnd = positionStart + encodeSpace( firstLastName( findUser ) ).length + '</span>'.length
-          // // event.target.innerHTML = val.slice(0, positionStart - highlightAT.length) + val.slice(positionEnd)
-          // setFilteredUsers(users)
-          // // setInputValue('')
-          // setCaret(caret - cursorPos.focusOffset )
-          // setEnteredHTML(enteredHTML.slice(0, positionStart) + enteredHTML.slice(posEnd))
-          // // setEnteredHTML( deleteString(enteredHTML, positionStart, posEnd) )
-          // console.log(caret, cursorPos.focusOffset, "positionStart", positionStart, posEnd ,  enteredHTML.slice(0, positionStart) + enteredHTML.slice(posEnd))
-          // // Cursor.setCurrentCursorPosition(2, textAreaRef.current)
-          // //positionStart-"<span class='color-primary'>@".length,
-          //RichText.deleteNode(enteredHTML, cursorPos,  highlightAT,  endTagAT)
+
           event.preventDefault()
           setIsDropdownList(false)
 

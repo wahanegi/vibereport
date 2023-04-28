@@ -151,6 +151,29 @@ export default class Cursor {
   }
 }
 
+export const sortUsersByFullName = users => {
+  return users.sort((a, b) => {
+    const nameA = a.first_name.toLowerCase();
+    const nameB = b.first_name.toLowerCase();
+    const lastNameA = a.last_name.toLowerCase();
+    const lastNameB = b.last_name.toLowerCase();
+
+    if (nameA < nameB) {
+      return -1;
+    } else if (nameA > nameB) {
+      return 1;
+    } else {
+      if (lastNameA < lastNameB) {
+        return -1;
+      } else if (lastNameA > lastNameB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  })
+}
+
 export const userFullName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
 
 export const decodeSpace = html => {

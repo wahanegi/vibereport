@@ -5,6 +5,8 @@ import RichInputElement from "./RichInputElement";
 const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</span>Team2</span>"}) => {
 
   const [users, setUsers] = useState([
+    { id: 10, first_name: 'Vitalii', last_name: 'Shevchenko'},
+    { id: 11, first_name: 'Vitalii', last_name: 'Sokalo'},
     { id: 1, first_name: 'John', last_name: 'Washington' },
     { id: 2, first_name: 'Jackie', last_name: 'Chan' },
     { id: 3, first_name: 'Janice', last_name: 'Wednesday'},
@@ -13,7 +15,7 @@ const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</sp
     { id: 6, first_name: 'Mike', last_name: 'Snider'},
     { id: 7, first_name: 'Marina', last_name: 'Harasko'},
     { id: 8, first_name: 'Serhii', last_name: 'Borozenets'},
-    // other users...
+    { id: 9, first_name: 'Lyuba', last_name: 'Pidoshva'},
   ])
 
 
