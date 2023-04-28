@@ -41,6 +41,7 @@ export default {
   },
 
   suggestions: {
+    marginTop: 25,
     list: {
       backgroundColor: 'white',
       border: '4px solid #D7007B',
