@@ -39,13 +39,13 @@ class EmotionSelectionNotificationWorker
                 .where(responses: { created_at: time_period.start_date..time_period.end_date })
                 .where(opt_out: false)
                 .distinct
-  
+
     word_counts = Response.joins(:emotion)
                           .where(time_period_id: time_period.id)
                           .group('emotions.word', 'emotions.category')
                           .order('COUNT(emotions.word) DESC')
                           .pluck('emotions.word', 'emotions.category', 'COUNT(emotions.word) AS count_all')
-  
+
     words = word_counts.first(36).map do |word, category, count|
       {
         word: word || 'No word found',

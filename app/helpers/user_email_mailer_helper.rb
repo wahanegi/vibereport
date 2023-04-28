@@ -31,23 +31,19 @@ module UserEmailMailerHelper
     if word_count >= max_word_count
       font_size = max_font_size_for_max_word_count
     else
-      random_factor = rand()
+      random_factor = rand
       font_size_range = max_font_size - min_font_size
       font_size = min_font_size + (font_size_range * [word_count, max_word_count - 1].min.to_f / (max_word_count - 1) * random_factor)
       font_size = font_size.round
     end
 
     font_families = [
-      'Arial', 'Helvetica', 'sans-serif', 'Times New Roman', 'Times', 'serif', 'Georgia', 
+      'Arial', 'Helvetica', 'sans-serif', 'Times New Roman', 'Times', 'serif', 'Georgia',
       'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Arial Black', 'Impact'
     ]
     font_family = font_families.sample
 
-    if font_size == max_font_size_for_max_word_count
-      max_shift = 5
-    else
-      max_shift = 28 - (font_size / 2).ceil
-    end
+    max_shift = font_size == max_font_size_for_max_word_count ? 5 : 28 - (font_size / 2).ceil
 
     left_shift = rand(-max_shift..max_shift)
     top_shift = rand(-max_shift..max_shift)

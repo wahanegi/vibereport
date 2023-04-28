@@ -20,13 +20,13 @@ class UserEmailMailer < ApplicationMailer
   end
 
   def results_email(user, time_period, words)
-    # Will have to check back in the future when Epic: Results is done
+    # //Will have to check back in the future when Epic: Results is done
     general_link = api_v1_see_the_results_url(time_period_id: time_period.id, user_id: user.id, not_working: false)
     uri = URI.parse(general_link)
     query_params = URI.decode_www_form(uri.query || '') << ['last_step', 'results']
     uri.query = URI.encode_www_form(query_params)
     @link_see_the_results = uri.to_s
-    #
+    # Will have to check back in the future when Epic: Results is done\\
     @view_calendar_days = "#{time_period.start_date.strftime('%d %b.')} \n – \n#{time_period.end_date.strftime('%d %b.')}"
     @user = user
     @time_period = time_period
