@@ -3,6 +3,8 @@ import SweetAlert from "../UI/SweetAlert";
 import {backHandling} from "../helpers/helpers";
 import {BtnBack, BtnNext} from "../UI/ShareContent";
 import axios from "axios";
+import AnimatedEmotion from "./AnimatedEmotion";
+
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -12,6 +14,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [timePeriodIndex, setTimePeriodIndex] = useState(0);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
+  const [positions, setPositions] = useState([]);
   const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
   const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
   '</br></br>Skip this chek-in if you weren\'t working.'
@@ -63,7 +66,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   }, [timePeriod])
 
   if (error) return <p>{error.message}</p>
-  console.log('timePeriodIndex',timePeriodIndex)
+
   return <Fragment>
     {
       loaded && !isLoading && <div>
@@ -73,6 +76,13 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
         <BtnBack onClick={prevTimePeriod} addClass='m-1 align-self-center' />
         <BtnNext onClick={nextTimePeriod} hidden={timePeriodIndex === 0} addClass='m-1 align-self-center' />
         <p>User was not working for this time period</p>
+        {
+          emotions.map(emotion =>
+            <div key={emotion.id} className='d-flex justify-content-center'>
+              <AnimatedEmotion word={emotion.word} category={emotion.category}/>
+            </div>
+          )}
+
         <BtnBack onClick={backHandling} />
       </div>
     }
