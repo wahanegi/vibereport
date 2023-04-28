@@ -47,14 +47,14 @@ module Api
         retrieve_user
         sign_in_user
         @time_period = TimePeriod.find(params[:time_period_id])
-      
+
         @responses = Response.joins(:time_period)
                              .where(time_period_id: @time_period.id)
                              .where("time_periods.end_date <= ?", Date.current)
-      
+
         return redirect_to root_path if @responses.present?
-      
-        render json: { error: "Some error message" }, status: :unprocessable_entity
+
+        render json: { error: 'No responses found for the given time period' }, status: :unprocessable_entity
       end
 
       private
