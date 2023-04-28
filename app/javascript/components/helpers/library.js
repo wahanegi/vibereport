@@ -91,8 +91,8 @@ export default class Cursor {
             focusOffset: focusOffset,
             realPos: realPos + realFocusOffset,
             realFocusOffset: realFocusOffset,
-            isDIV: focusNode.parentNode.tagName ==='DIV',
-            isSPAN: focusNode.parentNode.tagName ==='SPAN'};
+            isDIV: focusNode !== null ? focusNode.parentNode.tagName ==='DIV' : false,
+            isSPAN: focusNode !== null ?  focusNode.parentNode.tagName ==='SPAN'  : false };
   }
 
   static setCurrentCursorPosition(chars, element) {

@@ -84,7 +84,7 @@ export default class RichText {
     const endPos  = node.indexOf(endTag, cursorPos.realPos ) + endTag.length
     console.log(startPos, endPos, this.deleteString(node, startPos, endPos) , cursorPos.focusOffset , cursorPos)
     setObjHTML(this.deleteString(node, startPos, endPos))
-    setCaret(cursorPos.isSPAN ? cursorPos.charCount - cursorPos.Offset  - tag.length + 1 : cursorPos.charCount)
+    setCaret(cursorPos.isSPAN ? cursorPos.charCount - cursorPos.focusOffset : cursorPos.charCount)
     // this.decrementPositionCursor(cursorPos.focusOffset , cursorPos, setCaret)
   }
 

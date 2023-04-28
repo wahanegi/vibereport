@@ -542,12 +542,14 @@ const highlightAT = '<span class="color-primary">@'
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(33)
       expect(decodeSpace160(divElement.textContent)).toBe('1 @George Washington @Mike Snider  say Hello world!')
       fireEvent.keyDown( divElement, { key: 'Backspace' });
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(22)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(21)
       expect(encodeSpace(divElement.textContent)).toBe('1 @George Washington   say Hello world!')
       fireEvent.keyDown( divElement, { key: 'Backspace' });
       expect(decodeSpace160(divElement.textContent)).toBe('1 @George Washington  say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(20)
+      fireEvent.keyDown( divElement, { key: 'Delete' });
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
-
+      expect(decodeSpace160(divElement.textContent)).toBe('1   say Hello world!')
     })
 
 
