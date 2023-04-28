@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
+import {backHandling, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
@@ -75,7 +75,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
           <div className='d-flex justify-content-center flex-column'>
             <h1 className='mb-0'>Kick back, relax.</h1>
             <h1 className='mb-3'>Time for question of the week!</h1>
-            <h2 className='color-black'>Brought to us by <span className='color-rose'>@</span>{user}</h2>
+            <h2 className='color-black mb-1'>Brought to us by <span className='color-rose'>@</span>{user}</h2>
           </div>
           <div className='icebreaker'>
             <div className='wrap'>
@@ -83,11 +83,11 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
               <h5>{question_body}</h5>
               <form>
                 <div className="form-group">
-                  <textarea className="input" name='answer_body'
-                    placeholder="Tell us what you think!"
-                    value={answerFunQuestion?.answer_body || ''}
-                    onChange={onChangAnswer}
-                    maxLength={700}
+                  <textarea className="input mb-0" name='answer_body'
+                            placeholder="Tell us what you think!"
+                            value={answerFunQuestion?.answer_body || ''}
+                            onChange={onChangAnswer}
+                            maxLength={700}
                   />
                 </div>
               </form>
