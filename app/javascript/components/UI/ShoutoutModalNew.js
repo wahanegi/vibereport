@@ -7,7 +7,7 @@ const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</sp
   const [users, setUsers] = useState([
     { id: 10, first_name: 'Vitalii', last_name: 'Shevchenko'},
     { id: 11, first_name: 'Vitalii', last_name: 'Sokalo'},
-    { id: 1, first_name: 'John', last_name: 'Washington' },
+    { id: 1, first_name: 'George', last_name: 'Washington' },
     { id: 2, first_name: 'Jackie', last_name: 'Chan' },
     { id: 3, first_name: 'Janice', last_name: 'Wednesday'},
     { id: 4, first_name: 'Kara', last_name: 'Friday'},

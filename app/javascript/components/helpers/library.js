@@ -51,6 +51,7 @@ export default class Cursor {
     let focusOffset = null
     let realPos = 0
     let realFocusOffset
+    let coordinates = { x: 0, y: 0 };
 
     if (selection.focusNode) {
       if (Cursor._isChildOf(selection.focusNode, parentElement)) {
@@ -86,13 +87,31 @@ export default class Cursor {
       }
     }
 
+    if (selection.rangeCount) {
+      let range = selection.getRangeAt(0).cloneRange();
+
+      if (range.getClientRects) {
+        range.collapse(true);
+        let rects = range.getClientRects();
+
+        if (rects.length > 0) {
+          let rect = rects[0];
+          coordinates.x = rect.left;
+          coordinates.y = rect.top;
+        }
+      }
+    }
+
     return {charCount: charCount ,
             focusNode: focusNode,
             focusOffset: focusOffset,
             realPos: realPos + realFocusOffset,
             realFocusOffset: realFocusOffset,
             isDIV: focusNode !== null ? focusNode.parentNode.tagName ==='DIV' : false,
-            isSPAN: focusNode !== null ?  focusNode.parentNode.tagName ==='SPAN'  : false };
+            isSPAN: focusNode !== null ?  focusNode.parentNode.tagName ==='SPAN'  : false,
+            coordinates
+    };
+
   }
 
   static setCurrentCursorPosition(chars, element) {
@@ -174,7 +193,10 @@ export const sortUsersByFullName = users => {
   })
 }
 
-export const userFullName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
+export const userFullName = user => {
+  if ( !user ) { return }
+  return user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
+}
 
 export const decodeSpace = html => {
   return html.replace(/&nbsp;/g, " ")

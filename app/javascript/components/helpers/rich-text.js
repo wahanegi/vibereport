@@ -1,6 +1,30 @@
-import {userFullName} from "./library";
+import {decodeSpace, encodeSpace, userFullName} from "./library";
 
 export default class RichText {
+  
+  static filtrationById = ( separatorArr, mainArr ) => {
+    if ( !separatorArr.length ) {return mainArr}
+    return mainArr.filter(item=> !separatorArr.some(({ id }) => id === item.id))
+  }
+
+  static filtrationByName = ( fullName, users ) => {
+    return users.filter( user => this.userFullName(user) !== fullName )
+  }
+
+  static searchUsersByFirstLetters = ( str, users ) => {
+    return users.filter( user => this.userFullName(user).toLowerCase().startsWith(str) )
+  }
+
+  static contentBtwTags = ( htmlText, cursorPos, endTag, startFrom = 0 ) => {
+    return this.decodeSpace(htmlText.slice(
+        cursorPos.realPos-cursorPos.realFocusOffset + startFrom,
+        htmlText.indexOf(endTag, cursorPos.realPos)
+    ))
+  }
+   static pasteContentBtwTags = ( content, htmlText, cursorPos, endTag, startFrom = 0 ) => {
+    return  encodeSpace(htmlText.slice(0, cursorPos.realPos - cursorPos.realFocusOffset + startFrom ) +
+        encodeSpace( content ) + htmlText.slice(htmlText.indexOf(endTag, cursorPos.realPos)))
+   }
 
   static userFullName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
 
@@ -79,20 +103,20 @@ export default class RichText {
     obj( cursorPos.charCount > numChars  ? cursorPos.charCount - numChars : 0 )
   }
 
-  static deleteNode( node, cursorPos, tag, endTag, setObjHTML, setCaret){
+  static deleteNode( htmlStr, cursorPos, tag, endTag, setObjHTML, setCaret){
     const startPos =
         cursorPos.isSPAN ? cursorPos.realPos - cursorPos.realFocusOffset  - tag.length + 1 : cursorPos.realPos
-    const endPos  = node.indexOf(endTag, cursorPos.realPos ) + endTag.length
-    console.log(startPos, endPos, this.deleteString(node, startPos, endPos) , cursorPos.focusOffset , cursorPos)
-    setObjHTML(this.deleteString(node, startPos, endPos))
+    const endPos  = htmlStr.indexOf(endTag, cursorPos.realPos ) + endTag.length
+    console.log(startPos, endPos, this.deleteString(htmlStr, startPos, endPos) , cursorPos.focusOffset , cursorPos)
+    setObjHTML(this.deleteString(htmlStr, startPos, endPos))
     setCaret(cursorPos.isSPAN ? cursorPos.charCount - cursorPos.focusOffset : cursorPos.charCount)
-    // this.decrementPositionCursor(cursorPos.focusOffset , cursorPos, setCaret)
+    return htmlStr.slice(startPos, endPos)
   }
 
-  static deleteNodePasteChars( node, cursorPos, chars, tag, endTag, setObjHTML, setCaret){
+  static deleteNodePasteChars( htmlStr, cursorPos, chars, tag, endTag, setObjHTML, setCaret){
     const startPos = cursorPos.realPos - cursorPos.realFocusOffset  - tag.length + 1
-    const endPos  = node.indexOf(endTag, cursorPos.realPos ) + endTag.length
-    let newHtmlTxt = this.deleteString(node, startPos, endPos)
+    const endPos  = htmlStr.indexOf(endTag, cursorPos.realPos ) + endTag.length
+    let newHtmlTxt = this.deleteString(htmlStr, startPos, endPos)
     setObjHTML(this.pasteCharsToString( chars, newHtmlTxt, startPos))
     this.incrementPositionCursor( chars.length -1 , cursorPos, newHtmlTxt, setCaret)
   }

@@ -11,7 +11,7 @@ const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</sp
   const [enteredValue, setEnteredValue] = useState('')
   const textAreaRef = useRef('')
   const [users, setUsers] = useState([
-    { id: 1, first_name: 'John', last_name: 'Washington' },
+    { id: 1, first_name: 'George', last_name: 'Washington' },
     { id: 2, first_name: 'Jackie', last_name: 'Chan' },
     { id: 3, first_name: 'Janice', last_name: 'Wednesday'},
     { id: 4, first_name: 'Kara', last_name: 'Friday'},

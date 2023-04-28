@@ -296,21 +296,21 @@ const highlightAT = '<span class="color-primary">@'
       expect(decodeSpace160(divElement.textContent)).toBe("@George Washington,")
       fireEvent.keyDown(divElement, {keyCode: 32});
       fireEvent.keyDown(divElement, {key: '@'});
-      fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(decodeSpace160(divElement.textContent)).toBe("@George Washington, @Jackie Chan")
       fireEvent.keyDown(divElement, {keyCode: 32});
       fireEvent.keyDown(divElement, {key: '@'});
-      fireEvent.keyDown(divElement, {key: 'ArrowDown'});
-      fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(decodeSpace160(divElement.textContent)).toBe("@George Washington, @Jackie Chan @Janice Wednesday")
       fireEvent.keyDown(divElement, {keyCode: 32});
       fireEvent.keyDown(divElement, {key: '@'});
       fireEvent.keyDown(divElement, {key: 'ArrowDown'});
-      fireEvent.keyDown(divElement, {key: 'ArrowDown'});
-      fireEvent.keyDown(divElement, {key: 'ArrowDown'});
-      fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(decodeSpace160(divElement.textContent)).toBe("@George Washington, @Jackie Chan @Janice Wednesday @Kieran Roomie")
       fireEvent.keyDown(divElement, {keyCode: 32});
@@ -703,6 +703,64 @@ const highlightAT = '<span class="color-primary">@'
       expect(decodeSpace160(divElement.textContent)).toContain((('Hey @Marina Harasko   . How do you do? ')))
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(19)
   })
+
+    it('should allow to edit user in the string and change them in the chosenUser', ()=>{
+      const setChosenUsers = jest.fn();
+      const richText = "Hey "
+      const {getByTestId} = render(
+          <RichInputElement
+              richText={richText}
+              listUsers={listUsers}
+              setChosenUsers={setChosenUsers}
+              setRichText={() => {
+              }}
+              onSubmit={() => {
+              }}
+          />
+      );
+      const divElement = getByTestId('editable-div');
+      fireEvent.keyDown(divElement, {key: '@'});
+      let listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(9);
+      fireEvent.keyDown(divElement, {key: 'j'});
+      fireEvent.keyDown(divElement, {key: 'a'});
+      fireEvent.keyDown(divElement, {key: 'n'});
+      listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(1);
+      fireEvent.keyDown(divElement, {key: 'Backspace'});
+      expect(decodeSpace160(divElement.textContent)).toBe((('Hey @ja')))
+      fireEvent.keyDown(divElement, {key: 'Enter'});
+      expect(decodeSpace160(divElement.textContent)).toBe((('Hey @Jackie Chan')))
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(16)
+      expect(setChosenUsers).toHaveBeenCalledWith([ { id: 2, first_name: 'Jackie', last_name: 'Chan' }, ])
+      fireEvent.keyDown(divElement, {key: 'ArrowLeft'});
+      fireEvent.keyDown(divElement, {key: 'Enter'});
+      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      fireEvent.keyDown(divElement, {key: 'Enter'});
+      expect(decodeSpace160(divElement.textContent)).toContain((('Hey @George Washington')))
+      expect(setChosenUsers).toHaveBeenCalledWith([ { id: 1, first_name: 'George', last_name: 'Washington' } ])
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(22)
+      Cursor.setCurrentCursorPosition( 4,divElement)
+      console.log("START TO VERIFY")
+      fireEvent.keyDown(divElement, {key: 'Delete'});//in real no delete-???
+      expect(setChosenUsers.mock.calls[8][0]).toEqual(  [])
+      fireEvent.keyDown(divElement, {key: '@'})
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
+      fireEvent.keyDown(divElement, {key: 'Enter'});
+      expect(setChosenUsers.mock.calls[9]).toHaveLength( 1)
+      expect(setChosenUsers.mock.calls[9][0]).toEqual(  [{"first_name": "Jackie", "id": 2, "last_name": "Chan"}])
+      fireEvent.keyDown(divElement, {key: 'Backspace'})
+      expect(setChosenUsers.mock.calls[10][0]).toHaveLength( 0)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(4)
+      listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(0);
+      fireEvent.keyDown(divElement, {key: '@'})
+      fireEvent.keyDown(divElement, {key: 'Enter'});
+      Cursor.setCurrentCursorPosition( 8,divElement)
+      fireEvent.click(divElement)
+      fireEvent.keyDown(divElement, {key: 'j'})
+      expect(decodeSpace160(divElement.textContent)).toBe((('Hey @George Washington')))
+    })
 
   })
 
