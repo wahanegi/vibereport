@@ -25,4 +25,9 @@ class AnswerFunQuestion < ApplicationRecord
   belongs_to :fun_question
 
   validates :answer_body, presence: true
+
+  def self.alert_needed?
+    unused_questions_count = where(used: false).count
+    unused_questions_count.zero?
+  end
 end

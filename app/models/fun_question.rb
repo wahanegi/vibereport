@@ -27,4 +27,5 @@ class FunQuestion < ApplicationRecord
   has_one :response, dependent: :nullify
   has_many :answer_fun_questions, dependent: :destroy
   validates :question_body, presence: true
+  scope :question_public, -> { where(public: true).where(used: false) }
 end
