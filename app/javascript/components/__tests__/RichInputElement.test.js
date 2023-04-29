@@ -735,7 +735,7 @@ const highlightAT = '<span class="color-primary">@'
       expect(setChosenUsers).toHaveBeenCalledWith([ { id: 2, first_name: 'Jackie', last_name: 'Chan' }, ])
       fireEvent.keyDown(divElement, {key: 'ArrowLeft'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
-      // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
+      fireEvent.keyDown(divElement, {key: 'ArrowDown'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(decodeSpace160(divElement.textContent)).toContain((('Hey @George Washington')))
       expect(setChosenUsers).toHaveBeenCalledWith([ { id: 1, first_name: 'George', last_name: 'Washington' } ])

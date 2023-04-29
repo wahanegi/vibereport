@@ -44,74 +44,78 @@ export function bindHighlightUserInText(element, event, users, enteredValue, set
 export default class Cursor {
 
   static getCurrentCursorPosition(parentElement) {
-    const selection = window.getSelection()
-    let charCount = -1
-    let focusNode = null
-    let node = null
-    let focusOffset = null
-    let realPos = 0
-    let realFocusOffset
-    let coordinates = { x: 0, y: 0 };
 
-    if (selection.focusNode) {
-      if (Cursor._isChildOf(selection.focusNode, parentElement)) {
-        focusNode = selection.focusNode;
-        node = focusNode;
-        focusOffset = selection.focusOffset
-        charCount = focusOffset;
-        realPos += focusNode.parentNode.tagName === 'SPAN' ?
-        focusNode.parentNode.outerHTML.length - '</span>'.length - encodeSpace(decodeSpace160(focusNode.textContent)).length : 0
-        console.log(realPos,focusNode.parentNode.outerHTML, encodeSpace(decodeSpace160(focusNode.textContent)) )
-        realFocusOffset  = encodeSpace(decodeSpace160(focusNode.textContent.slice(0, focusOffset))).length
-        console.log(realFocusOffset)
+    if(window.getSelection()) {
+      const selection = window.getSelection()
+      let charCount = -1
+      let focusNode = null
+      let node = null
+      let focusOffset = null
+      let realPos = 0
+      let realFocusOffset
+      let coordinates = {x: 0, y: 0};
 
 
-        while (node) {
-          if (node === parentElement) {
-            break;
-          }
+      if (selection.focusNode) {
+        if (Cursor._isChildOf(selection.focusNode, parentElement)) {
+          focusNode = selection.focusNode;
+          node = focusNode;
+          focusOffset = selection.focusOffset
+          charCount = focusOffset;
+          realPos += focusNode.parentNode.tagName === 'SPAN' ?
+              focusNode.parentNode.outerHTML.length - '</span>'.length - encodeSpace(decodeSpace160(focusNode.textContent)).length : 0
+          console.log(realPos, focusNode.parentNode.outerHTML, encodeSpace(decodeSpace160(focusNode.textContent)))
+          realFocusOffset = encodeSpace(decodeSpace160(focusNode.textContent.slice(0, focusOffset))).length
+          console.log(realFocusOffset)
 
-          if (node.previousSibling) {
-            node = node.previousSibling;
-            charCount += node.textContent.length;
-            realPos +=
-              (node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent) ) : node.outerHTML).length
-            console.log(realPos, node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent) ) : node.outerHTML)
-          } else {
-            node = node.parentNode;
-            if (node === null) {
+
+          while (node) {
+            if (node === parentElement) {
               break;
+            }
+
+            if (node.previousSibling) {
+              node = node.previousSibling;
+              charCount += node.textContent.length;
+              realPos +=
+                  (node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent)) : node.outerHTML).length
+              console.log(realPos, node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent)) : node.outerHTML)
+            } else {
+              node = node.parentNode;
+              if (node === null) {
+                break;
+              }
             }
           }
         }
       }
-    }
 
-    if (selection.rangeCount) {
-      let range = selection.getRangeAt(0).cloneRange();
+      if (selection.rangeCount) {
+        let range = selection.getRangeAt(0).cloneRange();
 
-      if (range.getClientRects) {
-        range.collapse(true);
-        let rects = range.getClientRects();
+        if (range.getClientRects) {
+          range.collapse(true);
+          let rects = range.getClientRects();
 
-        if (rects.length > 0) {
-          let rect = rects[0];
-          coordinates.x = rect.left;
-          coordinates.y = rect.top;
+          if (rects.length > 0) {
+            let rect = rects[0];
+            coordinates.x = rect.left ;
+            coordinates.y = rect.top ;
+          }
         }
       }
+
+      return {
+        charCount: charCount,
+        focusNode: focusNode,
+        focusOffset: focusOffset,
+        realPos: realPos + realFocusOffset,
+        realFocusOffset: realFocusOffset,
+        isDIV: focusNode !== null ? focusNode.parentNode.tagName === 'DIV' : false,
+        isSPAN: focusNode !== null ? focusNode.parentNode.tagName === 'SPAN' : false,
+        coordinates
+      }
     }
-
-    return {charCount: charCount ,
-            focusNode: focusNode,
-            focusOffset: focusOffset,
-            realPos: realPos + realFocusOffset,
-            realFocusOffset: realFocusOffset,
-            isDIV: focusNode !== null ? focusNode.parentNode.tagName ==='DIV' : false,
-            isSPAN: focusNode !== null ?  focusNode.parentNode.tagName ==='SPAN'  : false,
-            coordinates
-    };
-
   }
 
   static setCurrentCursorPosition(chars, element) {
