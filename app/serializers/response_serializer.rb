@@ -6,7 +6,7 @@
 #  bad_follow_comment     :text
 #  celebrate_comment      :text
 #  comment                :text
-#  gif_url                :string
+#  gif                    :jsonb
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb
 #  productivity           :integer
@@ -40,6 +40,6 @@
 class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :time_period_id, :emotion_id, :steps, :gif_url, :rating, :comment, :productivity,
+  attributes :id, :time_period_id, :emotion_id, :steps, :gif, :rating, :comment, :productivity,
              :bad_follow_comment, :celebrate_comment, :fun_question_id, :answer_fun_question_id
 end

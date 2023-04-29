@@ -15,8 +15,14 @@ export const backHandling = () => {
 export const rangeFormat = (tp) => {
   const start_date = new Date(tp.start_date)
   const end_date = new Date(tp.end_date)
-  const month = end_date.toLocaleString('default', {month: 'long'}).slice(0,3)
+  const month = end_date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
   return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
+}
+
+export const datePrepare = (time) => {
+  const date = new Date(time)
+  const month = date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
+  return `${month} ${date.getDate()}`.padStart(2, '0')
 }
 
 export function capitalizeFirstLetter(str) {
@@ -33,4 +39,8 @@ export function isEmptyStr(str) {
 
 export function isNotEmptyStr(str) {
   return isPresent(str) && str.trim() !== '';
+}
+
+export function lastEl(arr) {
+  return !isEmpty(arr) && arr[arr.length-1];
 }

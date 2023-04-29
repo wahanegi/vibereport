@@ -11,15 +11,9 @@ class Api::V1::ResultsPresenter
     {
       time_periods: TimePeriod.ordered || [],
       emotions: time_period.emotions.presence || [],
-      gif_urls: gif_urls.presence || [],
+      gifs: time_period.responses.pluck(:gif).compact || [],
       fun_question: fun_question.presence || {},
       answers: fun_question&.answer_fun_questions.presence || []
     }
-  end
-
-  private
-
-  def gif_urls
-    Response.working.where(time_period_id:).pluck(:gif_url).compact
   end
 end

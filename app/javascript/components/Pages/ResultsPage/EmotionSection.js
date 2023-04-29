@@ -1,6 +1,6 @@
-import React from 'react';
-import { useSpring, animated } from '@react-spring/web';
-import {EMOTION_COLORS} from "../helpers/consts";
+import React from "react";
+import {animated, useSpring} from "@react-spring/web";
+import {EMOTION_COLORS} from "../../helpers/consts";
 
 const AnimatedEmotion = ({word, category}) => {
   const springProps = useSpring({
@@ -22,7 +22,6 @@ const AnimatedEmotion = ({word, category}) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor: '#f6f6f6',
         padding: '10px',
         width: '80%',
         height: '100%',
@@ -35,4 +34,15 @@ const AnimatedEmotion = ({word, category}) => {
   );
 };
 
-export default AnimatedEmotion;
+const EmotionSection = ({emotions}) =>
+  <div className='d-flex justify-content-center'>
+    {
+      emotions.map(emotion =>
+        <div key={emotion.id} className='d-flex justify-content-center'>
+          <AnimatedEmotion word={emotion.word} category={emotion.category}/>
+        </div>
+      )
+    }
+  </div>
+
+export default EmotionSection

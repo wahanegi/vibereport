@@ -1,11 +1,15 @@
 import Menu from "./Menu";
-import React from "react";
-import {backHandling, rangeFormat} from "../helpers/helpers";
+import React, {Fragment} from "react";
+import {backHandling, datePrepare, isPresent, rangeFormat} from "../helpers/helpers";
+import calendar from "../../../assets/images/calendar.svg"
 import shout_out_large from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
 import logo from "../../../assets/images/logo.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
 import {NavLink} from "react-router-dom";
+import polygonLeft from "../../../assets/images/polygon-left.svg"
+import polygonRight from "../../../assets/images/polygon-right.svg"
+import editResponse from "../../../assets/images/editresponse.svg"
 
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
@@ -27,13 +31,14 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
     {text}
   </button>
 
-export const Calendar = ({ timePeriod }) =>
-  <div className="h-40">
-    <div className="calendar ml-240 mt-37">
-      <div className="data mx-auto my-0 ">
-        21 Jan
-      </div>
+export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, hideLeft = false}) =>
+  isPresent(date) && !hidden && <div className="position-relative" onClick={onClick} style={{maxWidth: 82}}>
+    <img src={calendar} alt="calendar" />
+    <div className="position-absolute top-0 mt-4 ms-1">
+      {datePrepare(date)}
     </div>
+    { !hideLeft && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
+    { positionRight && <img className="position-absolute" style={{right: -26, top: 29}} src={polygonRight} alt="polygon right"/> }
   </div>
 
 export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
@@ -46,13 +51,16 @@ export const BtnSkip = ({ addClass = '', hidden = true, onClick, disabled }) =>
     Skip
   </button>
 
-export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
+export const BtnBack = ({ addClass = '', hidden, onClick, disabled, text = 'Back' }) =>
   <button onClick={onClick} className={`btn btn-regular c1 back ${addClass}`} hidden={hidden} disabled={disabled}>
-    Back
+    {text}
   </button>
 
-export const ShoutOutIcon = () =>
-  <img src={shout_out_large} alt="shout out" style={{width: 100, height: 100}} />
+export const ShoutOutIcon = ({addClass = ''}) =>
+  <div className={'m-0'}>
+    <img className={`${addClass}`} src={shout_out_large} alt="shout out" style={{width: 100, height: 100}} />
+  </div>
+
 
 export const HelpIcon = () =>
   <NavLink to="mailto: support@vibereport.app" className='d-flex align-self-center'>
@@ -78,3 +86,6 @@ export const Wrapper = ({children}) => <div className="wrapper">
     {children}
   </div>
 </div>
+
+export const EditResponse = ({ hidden = false, onClick }) =>
+  !hidden && <img src={editResponse} onClick={onClick} alt="edit response" />

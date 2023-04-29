@@ -1,16 +1,24 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import SweetAlert from "../UI/SweetAlert";
-import {backHandling} from "../helpers/helpers";
-import {BtnBack, BtnNext} from "../UI/ShareContent";
+import React, {useEffect, useState} from 'react';
+import SweetAlert from "../../UI/SweetAlert";
+import {rangeFormat} from "../../helpers/helpers";
+import {
+  BtnBack,
+  BtnPrimary,
+  Header,
+  HelpIcon,
+  ShoutOutIcon,
+  Wrapper
+} from "../../UI/ShareContent";
 import axios from "axios";
-import AnimatedEmotion from "./AnimatedEmotion";
-
+import NavigationBar from "./NavigationBar";
+import EmotionSection from "./EmotionSection";
+import GifSection from "./GifSection";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gif_urls, time_periods} = results
+  const {answers, emotions, fun_question, gifs, time_periods} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [timePeriodIndex, setTimePeriodIndex] = useState(0);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
@@ -21,6 +29,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
   console.log('results', results)
+
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
   }
@@ -53,6 +62,16 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     }
   }
 
+  const Footer = () =>
+    <div className='d-flex justify-content-between m-3'>
+      <ShoutOutIcon addClass={timePeriodIndex !== 0 ? 'd-none' : ''} />
+      <div className="d-flex flex-column mb-3">
+        <BtnBack text ='Back to current week' hidden={timePeriodIndex === 0} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
+        <BtnPrimary text ='Done' addClass='mt-auto' />
+      </div>
+      <HelpIcon />
+    </div>
+
   useEffect(() => {
     time_periods && setTimePeriod(time_periods[timePeriodIndex])
   }, [timePeriodIndex])
@@ -67,25 +86,20 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
 
   if (error) return <p>{error.message}</p>
 
-  return <Fragment>
+  return loaded && !isLoading && <Wrapper>
     {
-      loaded && !isLoading && <div>
-        {
-          notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
-        }
-        <BtnBack onClick={prevTimePeriod} addClass='m-1 align-self-center' />
-        <BtnNext onClick={nextTimePeriod} hidden={timePeriodIndex === 0} addClass='m-1 align-self-center' />
-        <p>User was not working for this time period</p>
-        {
-          emotions.map(emotion =>
-            <div key={emotion.id} className='d-flex justify-content-center'>
-              <AnimatedEmotion word={emotion.word} category={emotion.category}/>
-            </div>
-          )}
-
-        <BtnBack onClick={backHandling} />
-      </div>
+      notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
     }
-  </Fragment>
-}
+    <Header />
+    {
+      timePeriod.id === time_periods[0].id ?
+        <h1>So far this week, the <br/> the team is feeling...</h1>:
+        <h1>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
+    }
+    <NavigationBar {...{timePeriod, prevTimePeriod, nextTimePeriod, timePeriodIndex, time_periods}} />
+    <EmotionSection emotions={emotions} />
+    <GifSection gifs={gifs} />
+    <Footer />
+  </Wrapper>
+  }
 export default Results;
