@@ -85,6 +85,12 @@ export default class RichText {
     setCaret(cursorPos.charCount  + symbols.length)
   }
 
+  static  pasteCharsBeforeEndTag(chars, htmlText, cursorPos, endTag, setObjHTML, setCaret) {
+    setObjHTML(this.encodeSpace(htmlText.slice(0, cursorPos.realPos) + this.encodeSpace(chars) +
+        htmlText.slice(htmlText.indexOf(endTag, cursorPos.realPos))))
+    setCaret(cursorPos.charCount  + chars.length)
+  }
+
   static  pasteNodeToHTMLobj(symbols, htmlText, cursorPos, setObjHTML, setCaret, tag, endTag) {
     setObjHTML(this.encodeSpace(htmlText.slice(0, cursorPos.realPos) + tag +
         this.encodeSpace(symbols) + endTag + htmlText.slice(cursorPos.realPos)))
