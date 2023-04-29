@@ -81,7 +81,8 @@ export default class RichText {
     return str.slice(0, startPos) + chars + str.slice(endPos)
   }
   static  pasteSymbolsToHTMLobj(symbols, htmlText, cursorPos, setObjHTML, setCaret) {
-    setObjHTML(this.encodeSpace(htmlText.slice(0, cursorPos.realPos) + this.encodeSpace(symbols) + htmlText.slice(cursorPos.realPos)))
+    setObjHTML(this.encodeSpace(htmlText.slice(0, cursorPos.realPos) + this.encodeSpace(symbols)
+        + htmlText.slice(cursorPos.realPos)))
     setCaret(cursorPos.charCount  + symbols.length)
   }
 
