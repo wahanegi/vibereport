@@ -14,103 +14,88 @@ import RichText from "../helpers/rich-text";
 
 
 
-const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers, setRichText, onSubmit ,
-                            classAt = 'color-primary'}) =>{
+const RichInputElement =
+({ richText = "", listUsers, className, setChosenUsers, setRichText, onSubmit , classAt = 'color-primary'}) =>{
+
   const [enteredHTML, setEnteredHTML] = useState( encodeSpace(richText))
   const textAreaRef = useRef(richText)
   const [filteredUsers, setFilteredUsers] = useState(sortUsersByFullName(listUsers))
   const [ isDropdownList, setIsDropdownList ] = useState(false)
   const [searchString, setSearchString] = useState('')
-  const [index, setIndex] = useState (0)
-  const [current, setCurrent] = useState(filteredUsers[index].id)
+  const [indexOfSelection, setIndexOfSelection] = useState (0)
+  const [current, setCurrent] = useState(filteredUsers[indexOfSelection].id)
   const [caret, setCaret] = useState(textAreaRef.current.length)
-  const tagAT = '<span class=\"' + classAt + '\">@'
-  const endTagAT = '</span>'
   const [copyChosenUsers, setCopyChosenUsers] = useState([])
   const [ ctrl, setCtrl] = useState(false)
   const [ coordinates, setCoordinates] = useState({ x:420, y:386 })
-  const nonAllowedChars =  /[,@`<>;:\/\\']/
-  const element = textAreaRef.current
   const [ cursorPosition, setCursorPosition ] = useState(null)
+
   const [isNotCompleteInputUser, setIsNotCompleteInputUser] = useState(true)
+  const element = textAreaRef.current
+  const NON_ALLOWED_CHARS =  /[,@`<>;:\/\\']/
+  const TAG_AT = '<span class=\"' + classAt + '\">@'
+  const END_TAG_AT = '</span>'
   const OFFSET_X = 0
   const OFFSET_Y = 40
 
   useEffect(() => {
-    // const textArea = textAreaRef.current
-    // if (textArea) {
-    // const range = document.createRange()
-    //   range.selectNodeContents(textArea)
-    //   range.collapse(false)
-    //   const selection = window.getSelection()
-    //   selection.removeAllRanges()
-    //   selection.addRange(range)
       Cursor.setCurrentCursorPosition(caret, textArea)
-    if ( Cursor.getCurrentCursorPosition(element).focusOffset == 1)
-    setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
+    if (Cursor.getCurrentCursorPosition(element).focusOffset == 1)
+      setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
-      // textArea.focus()
-    // }
+
   }, [caret, enteredHTML, current])
 
 
 
   useEffect(()=>{
-    if(richText.includes(tagAT)){
-      // let copyChosenUsers = []
-      // let pos = 0
-      // while((pos = richText.indexOf(tagAT,pos)) !== -1){
-      //   pos += tagAT.length
-      //   copyChosenUsers.push(listUsers.find(user => userFullName(user) === richText.slice(pos, richText.indexOf(endTagAT, pos))))
-      // }
-      let users = RichText.findUsersInText( tagAT,endTagAT, richText, listUsers)
+    if(richText.includes(TAG_AT)){
+      let users = RichText.findUsersInText( TAG_AT,END_TAG_AT, richText, listUsers)
       setChosenUsers(users)
       setCopyChosenUsers(users)
-      setFilteredUsers( RichText.filtrationById( users, listUsers ) )
-      // setChosenUsers(listUsers.filter(item => !copyChosenUsers.includes(item)))
-
-
-    }
+      setFilteredUsers( RichText.filtrationById( users, listUsers ))}
   },[])
 
   const handleKeyDown = event => {
-    const element = textAreaRef.current
+    event.preventDefault()
     const text = element.textContent
     const cursorPos = Cursor.getCurrentCursorPosition(element)
     const caretCur = cursorPos.charCount
     const realPos  = cursorPos.realPos
     let key = event.key
     let htmlText = ''
-    event.preventDefault()
     if( cursorPos.isDIV ) { setIsDropdownList(false) }
     if( cursorPos.isSPAN ) { setIsDropdownList(true) }
 
     console.log("75: start", key, text.length, caretCur,  isDropdownList, enteredHTML, cursorPos) //.parentNode.textContent
 
-    if (key.match(/[&<>]/)){ console.log(/&<>/);event.preventDefault(); return}
+    if (key.match(/[&<>]/)) return
 
 
     if (isDropdownList) {
-      console.log(Cursor.getCurrentCursorPosition(element).coordinates)
-      event.preventDefault()
-      if(event.key === 'Escape' || event.key === '@') {
+
+      if( key === 'Escape' || key === '@') {
         if(text[caret-1] === "@") {
-          RichText.deleteNodePasteChars(enteredHTML, cursorPos, key === '@' ? '@@' : '@' , tagAT, endTagAT, setEnteredHTML, setCaret)
+          RichText.deleteNodePasteChars(
+              enteredHTML, cursorPos, key === '@' ? '@@' : '@' , TAG_AT, END_TAG_AT, setEnteredHTML, setCaret
+          )
         }
         setIsDropdownList(false)
-        return;
+        return
       }
 
       if ( key === 'Enter' || key === 'Tab') {
-        clickEnterTabHandling( index)
+        clickEnterTabHandling( indexOfSelection )
         return
       }
-      let i = index
+
+      let i = indexOfSelection
       setIsNotCompleteInputUser(true)
-      if (!(String.fromCharCode(event.keyCode)).match(nonAllowedChars) && key.length === 1 ) {
-        console.log("138: FFFFFFF", cursorPos.focusOffset, searchString)
-        if (cursorPos.focusOffset - 1  !== searchString.length) {return;}
-        const newSearchString = (searchString + event.key).toLowerCase()
+      if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS) && key.length === 1 ) {
+
+        if ( cursorPos.focusOffset - 1  !== searchString.length )  return
+
+        const newSearchString = ( searchString + key ).toLowerCase()
         const filteredList = listUsers.filter( user => userFullName(user).toLowerCase().startsWith(newSearchString) )
         console.log('search = ', newSearchString, filteredList)
 
@@ -142,38 +127,38 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
           htmlText = decodeSpace(enteredHTML)
           // console.log("128 enteredHtml=", enteredHTML, "htmlText=", htmlText, "key=", encodeSpace(key),)
           const oldUser = decodeSpace(
-            enteredHTML.slice(realPos - cursorPos.focusOffset + 1, enteredHTML.indexOf(endTagAT ,realPos))
+            enteredHTML.slice(realPos - cursorPos.focusOffset + 1, enteredHTML.indexOf(END_TAG_AT ,realPos))
           )
-          console.log(realPos, cursorPos.focusOffset + 1, enteredHTML.indexOf(endTagAT ,realPos))
+          console.log(realPos, cursorPos.focusOffset + 1, enteredHTML.indexOf(END_TAG_AT ,realPos))
           // console.log(oldUser, "key=", encodeSpace(key), copyChosenUsers.filter(user => firstLastName(user) !== oldUser)) //take user from text
           setCopyChosenUsers(copyChosenUsers.filter(user => userFullName(user) !== oldUser)) // delete user from Users
           setChosenUsers(copyChosenUsers.filter(user => userFullName(user) !== oldUser)) // delete user from ChosenUsers
           setEnteredHTML(encodeSpace(enteredHTML.slice(0, realPos) + encodeSpace( key ) +
-            enteredHTML.slice(enteredHTML.indexOf(endTagAT, realPos)))) // input char from key
+            enteredHTML.slice(enteredHTML.indexOf(END_TAG_AT, realPos)))) // input char from key
           console.log("145key=", encodeSpace(key), "charPos/realPos", cursorPos.charCount, realPos,"enteredHtml=", enteredHTML,
             "htmlText=", htmlText, "oldUser=", oldUser, 'result=',
             encodeSpace(enteredHTML.slice(0, realPos) + encodeSpace( key ) +
-              enteredHTML.slice(enteredHTML.indexOf(endTagAT, realPos))),
+              enteredHTML.slice(enteredHTML.indexOf(END_TAG_AT, realPos))),
             'search = ', newSearchString, filteredList
           )
           setSearchString(newSearchString)
           setFilteredUsers( filteredList )
-          setIndex(0)
+          setIndexOfSelection(0)
           setCaret(caretCur + 1)
         }
         // setSearchString(newSearchString)
         setChosenUsers(listUsers.filter(item => !copyChosenUsers.includes(item)))
       }
 
-      if ( (key === 'ArrowDown' ) && index >= 0 ) {
-        setIndex(i = index < filteredUsers.length - 1 ? ++i : 0)
+      if ( (key === 'ArrowDown' ) && indexOfSelection >= 0 ) {
+        setIndexOfSelection(i = indexOfSelection < filteredUsers.length - 1 ? ++i : 0)
         setCurrent(filteredUsers[i].id)
         return
       }
 
-      if ( key === 'ArrowUp' && index >= 0 ) {
+      if ( key === 'ArrowUp' && indexOfSelection >= 0 ) {
         console.log("press Enter or Tab when is Dropdown list turn on", "i=",i, "f=", filteredUsers[i])
-        setIndex(i = index > 0 ? --i : filteredUsers.length - 1)
+        setIndexOfSelection(i = indexOfSelection > 0 ? --i : filteredUsers.length - 1)
         setCurrent(filteredUsers[i].id)
         return
       }
@@ -193,9 +178,9 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
               || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160) {
               // console.log("218: ",)
               // setEnteredHTML(encodeSpace(decodeSpace( htmlText ).slice(0, realPos) +
-              //   highlightAT + endTagAT + decodeSpace( htmlText ).slice(realPos))
+              //   highlightAT + END_TAG_AT + decodeSpace( htmlText ).slice(realPos))
               RichText.pasteNodeToHTMLobj(
-                  "@", enteredHTML, cursorPos, setEnteredHTML, setCaret, tagAT.slice(0,-1), endTagAT
+                  "@", enteredHTML, cursorPos, setEnteredHTML, setCaret, TAG_AT.slice(0,-1), END_TAG_AT
               )
               setIsDropdownList(true)
               if( cursorPos.coordinates.y !==0 && cursorPos.coordinates.x !==0) {
@@ -214,7 +199,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
       } else if ( cursorPos.isSPAN && event.key.length === 1 ) {
         event.preventDefault()
         const startNameUser = realPos - cursorPos.realFocusOffset + 1
-        const endNameUser = encodeSpace( enteredHTML ).indexOf(endTagAT, realPos)
+        const endNameUser = encodeSpace( enteredHTML ).indexOf(END_TAG_AT, realPos)
         const nameUserToDel = decodeSpace(encodeSpace( enteredHTML ).slice(startNameUser, endNameUser))
         console.log(startNameUser, endNameUser, nameUserToDel, cursorPos.focusOffset , realPos, encodeSpace( enteredHTML ))
 //undefined !==
@@ -222,7 +207,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
           && !event.key.match(/[@<>]/) && nameUserToDel.length === cursorPos.focusOffset - 1) {
           //if user have in the ListUsers and key have not chars @,<,> and cursor at the end of firstLastName of user
           //then dropdown turn off
-          const pos = realPos + endTagAT.length
+          const pos = realPos + END_TAG_AT.length
           const end = pos === htmlText.length ? '' : htmlText.slice(pos)
           setEnteredHTML(encodeSpace(htmlText.slice(0,pos ) + event.key + end))
           setCaret(caret + 1)
@@ -246,7 +231,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
       }
 
       if ( event.key.length === 1 && htmlText.length > realPos
-        && htmlText.indexOf(tagAT) === realPos && !event.key.match(/<>&/)) {
+        && htmlText.indexOf(TAG_AT) === realPos && !event.key.match(/<>&/)) {
         pasteSymbolsToHTMLobj( key, htmlText, cursorPos, setEnteredHTML, setCaret )
       }
     }
@@ -277,13 +262,13 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
     }
 
     if (key === 'Backspace' || key === 'Delete') {
-       console.log(enteredHTML[cursorPos.realPos], " Backspace selection =", cursorPos, enteredHTML,  enteredHTML.indexOf(tagAT, cursorPos.realPos), "@=", enteredHTML[cursorPos.realPos - 1])
-      const offset = enteredHTML.indexOf(tagAT, cursorPos.realPos)
+       console.log(enteredHTML[cursorPos.realPos], " Backspace selection =", cursorPos, enteredHTML,  enteredHTML.indexOf(TAG_AT, cursorPos.realPos), "@=", enteredHTML[cursorPos.realPos - 1])
+      const offset = enteredHTML.indexOf(TAG_AT, cursorPos.realPos)
 
       if (  cursorPos.isSPAN && cursorPos.focusNode.textContent === '@') {
         console.log("299: true")
-        const endPos = enteredHTML.indexOf(endTagAT, cursorPos.realPos) + endTagAT.length
-        setEnteredHTML(RichText.deleteString(enteredHTML, cursorPos.realPos - tagAT.length, endPos))
+        const endPos = enteredHTML.indexOf(END_TAG_AT, cursorPos.realPos) + END_TAG_AT.length
+        setEnteredHTML(RichText.deleteString(enteredHTML, cursorPos.realPos - TAG_AT.length, endPos))
         setCaret(caret-1)
         setIsDropdownList(false)
         return
@@ -297,7 +282,7 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
           setChosenUsers(newListUser)
           setCopyChosenUsers(newListUser)
 
-          RichText.deleteNode( enteredHTML, cursorPos, tagAT, endTagAT, setEnteredHTML, setCaret )
+          RichText.deleteNode( enteredHTML, cursorPos, TAG_AT, END_TAG_AT, setEnteredHTML, setCaret )
 
           event.preventDefault()
           setIsDropdownList(false)
@@ -319,12 +304,12 @@ const RichInputElement = ({ richText = "", listUsers, className, setChosenUsers,
       } else {
         switch (key){
           case 'Delete':
-            console.log("tagAT realPos = ", enteredHTML.indexOf(tagAT, realPos))
-            if( enteredHTML.indexOf(tagAT, realPos) === realPos ) {
-              const node = RichText.deleteNode( enteredHTML, cursorPos, tagAT, endTagAT, setEnteredHTML, setCaret )
+            console.log("TAG_AT realPos = ", enteredHTML.indexOf(TAG_AT, realPos))
+            if( enteredHTML.indexOf(TAG_AT, realPos) === realPos ) {
+              const node = RichText.deleteNode( enteredHTML, cursorPos, TAG_AT, END_TAG_AT, setEnteredHTML, setCaret )
               console.log(node)
               const userFromNode = cursorPos.isSPAN ? node
-                  : RichText.findUsersInText(tagAT, endTagAT, decodeSpace( node ), listUsers)
+                  : RichText.findUsersInText(TAG_AT, END_TAG_AT, decodeSpace( node ), listUsers)
               const filtratedUsersByName = RichText.filtrationByName (userFullName( userFromNode[0] ), copyChosenUsers)
               console.log(node, userFromNode, copyChosenUsers, filtratedUsersByName)
               setCopyChosenUsers( filtratedUsersByName )
@@ -351,7 +336,7 @@ const realPos  = cursorPos.realPos
   let chosenUsersWithoutNemo = copyChosenUsers
   let htmlText = decodeSpace(enteredHTML)
 
-  const nemoFromTextArea = RichText.contentBtwTags( enteredHTML, cursorPos, endTagAT, 1)
+  const nemoFromTextArea = RichText.contentBtwTags( enteredHTML, cursorPos, END_TAG_AT, 1)
 //undefined !==
   if ( copyChosenUsers.find(user => userFullName(user) === nemoFromTextArea ) ){
     chosenUsersWithoutNemo = copyChosenUsers.filter(user => userFullName(user) !== nemoFromTextArea)
@@ -367,11 +352,11 @@ const realPos  = cursorPos.realPos
   console.log("CHECK = ", nemoFromTextArea, filteredUsers[i],i , "htmlText=", htmlText)
 
   setEnteredHTML(
-      RichText.pasteContentBtwTags( userFullName(filteredUsers[i]), enteredHTML, cursorPos, endTagAT, 1)
+      RichText.pasteContentBtwTags( userFullName(filteredUsers[i]), enteredHTML, cursorPos, END_TAG_AT, 1)
   )
   console.log("encodeSpace(searchString).length=", encodeSpace(searchString).length,
       enteredHTML.slice(0, realPos - encodeSpace(searchString).length),
-      enteredHTML.slice(enteredHTML.indexOf(endTagAT, realPos))
+      enteredHTML.slice(enteredHTML.indexOf(END_TAG_AT, realPos))
   )
   const hadSelectedUsers = [ ...chosenUsersWithoutNemo, { ...filteredUsers[i] }]
 
@@ -382,10 +367,10 @@ const realPos  = cursorPos.realPos
   setCaret(caret - cursorPos.focusOffset  + 1 + userFullName(filteredUsers[i]).length )
   let temp = RichText.filtrationById( hadSelectedUsers, listUsers )
   setFilteredUsers( RichText.filtrationById( hadSelectedUsers, listUsers ))
-  setIndex(0)
+  setIndexOfSelection(0)
   setCurrent(temp[0].id)
   setSearchString('')
-  setIndex(0)
+  setIndexOfSelection(0)
   setIsNotCompleteInputUser(false)
 setCursorPosition(cursorPos)
 }
@@ -398,7 +383,7 @@ setCursorPosition(cursorPos)
       filteredUsers.map((user, index) => {
         if (userFullName(user) === cursor.focusNode.textContent.slice(1)){
           setCurrent(user.id)
-          setIndex(index)
+          setIndexOfSelection(index)
           console.log(user, index, filteredUsers)
         }
       })
@@ -440,9 +425,8 @@ setCursorPosition(cursorPos)
                         coordX={coordinates.x + OFFSET_X}
                         coordY={coordinates.y + OFFSET_Y}
                         onClick={clickEnterTabHandling}
-                        indexSel={ index }
                         valSel={current}
-                        changeIndexSel={ (val) =>{ setIndex(val) }}
+                        changeIndexSel={ (val) =>{ setIndexOfSelection(val) }}
                         changeValSel={ (val) =>{ setCurrent(val) }}
           />}
 
