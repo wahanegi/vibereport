@@ -563,14 +563,14 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.keyDown(divElement, {key: '@'});
       fireEvent.keyDown(divElement, {key: 'm'});
       fireEvent.keyDown(divElement, {key: 'Tab'});
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(30)
-      expect(decodeSpace160(divElement.textContent)).toBe('1 @Jackie Chan @Marina Harasko  say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(36)
+      expect(decodeSpace160(divElement.textContent)).toBe('1 @George Washington @Marina Harasko  say Hello world!')
       fireEvent.keyDown(divElement, {key: 'Backspace'});
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(15)
-      expect(encodeSpace(divElement.textContent)).toBe('1 @Jackie Chan   say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(21)
+      expect(encodeSpace(divElement.textContent)).toBe('1 @George Washington   say Hello world!')
       fireEvent.keyDown(divElement, {key: 'Backspace'});
-      expect(decodeSpace160(divElement.textContent)).toBe('1 @Jackie Chan  say Hello world!')
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(14)
+      expect(decodeSpace160(divElement.textContent)).toBe('1 @George Washington  say Hello world!')
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(20)
       fireEvent.keyDown(divElement, {key: 'Delete'});
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(2)
       expect(decodeSpace160(divElement.textContent)).toBe('1   say Hello world!')
@@ -760,6 +760,37 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.click(divElement)
       fireEvent.keyDown(divElement, {key: 'j'})
       expect(decodeSpace160(divElement.textContent)).toBe((('Hey @George Washington')))
+    })
+
+    it('should allow to choose all users from dropdown list', ()=> {
+      const setChosenUsers = jest.fn();
+      const richText = "Hey "
+      const {getByTestId} = render(
+          <RichInputElement
+              richText={richText}
+              listUsers={listUsers}
+              setChosenUsers={setChosenUsers}
+              setRichText={() => {
+              }}
+              onSubmit={() => {
+              }}
+          />
+      );
+      const divElement = getByTestId('editable-div');
+      listUsers.forEach((listItem, index) => {
+        fireEvent.keyDown(divElement, {key: ' '});
+        fireEvent.keyDown(divElement, {key: '@'});
+        fireEvent.keyDown(divElement, {key: 'Enter'});
+      });
+      expect(setChosenUsers.mock.calls).toHaveLength( 9)
+      fireEvent.keyDown(divElement, {key: 'Backspace'});
+      fireEvent.keyDown(divElement, {key: 'Backspace'});
+      fireEvent.keyDown(divElement, {key: 'Backspace'});
+      expect(setChosenUsers.mock.calls[9][0]).toHaveLength( 8)
+      fireEvent.keyDown(divElement, {key: '@'});
+      const listItems = screen.queryAllByRole('listitem');
+      expect(listItems).toHaveLength(2);
+
     })
   })
 
