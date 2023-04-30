@@ -27,6 +27,6 @@ class FunQuestion < ApplicationRecord
   has_one :response, dependent: :nullify
   has_many :answer_fun_questions, dependent: :destroy
   validates :question_body, presence: true
-  validates :time_period, uniqueness: true
+  validates :time_period, uniqueness: true, unless: -> { time_period.nil? }
   scope :question_public, -> { where(public: true).where(used: false) }
 end

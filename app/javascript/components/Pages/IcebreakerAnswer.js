@@ -3,6 +3,7 @@ import {backHandling, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/hel
 import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
+import {DEFAULT_USER_NAME} from "../helpers/consts";
 
 const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -12,7 +13,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const prevAnswerBody = prevStateAnswer?.answer_body
   const answerBody = answerFunQuestion?.answer_body
   const {user_name, question_body} = data.fun_question
-  const user = user_name || 'Admin'
+  const user = user_name || DEFAULT_USER_NAME
   const current_user_id = data.current_user.id
 
   const handlingOnClickNext = () => {
@@ -28,7 +29,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
       }
     }
     const goToResultPage = () => {
-      steps.push('productivity-bad-follow-up')
+      steps.push('results')
       saveDataToDb(steps)
     }
     const url = '/api/v1/answer_fun_questions/'
@@ -44,7 +45,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
         saveDataToDb(steps)
       }
     } else if (isEmptyStr(answerBody)) {
-      steps.push('productivity-bad-follow-up')
+      steps.push('results')
       saveDataToDb(steps)
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();

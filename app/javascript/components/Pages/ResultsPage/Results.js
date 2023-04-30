@@ -13,6 +13,7 @@ import axios from "axios";
 import NavigationBar from "./NavigationBar";
 import EmotionSection from "./EmotionSection";
 import GifSection from "./GifSection";
+import QuestionSection from "./QuestionSection";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -28,7 +29,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   '</br></br>Skip this chek-in if you weren\'t working.'
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
-  console.log('results', results)
+  // console.log('results', results)
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
@@ -99,6 +100,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     <NavigationBar {...{timePeriod, prevTimePeriod, nextTimePeriod, timePeriodIndex, time_periods}} />
     <EmotionSection emotions={emotions} />
     <GifSection gifs={gifs} />
+    <QuestionSection fun_question={fun_question} answers={answers} />
     <Footer />
   </Wrapper>
   }

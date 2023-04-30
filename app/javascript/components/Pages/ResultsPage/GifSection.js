@@ -11,7 +11,7 @@ const GifSection = ({ gifs }) => {
     </div>
   });
 
-  return <div className='align-self-center gif-wrap'>
+  return <div className='align-self-center gif-wrap mb-1'>
     <div className='gif-result-card'>
       <div className='gif-result-card card'>
         <div className='card-body card-full'>

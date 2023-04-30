@@ -37,7 +37,7 @@ class Api::V1::AnswerFunQuestionsController < ApplicationController
   private
 
   def retrieve_answer
-    @answer = AnswerFunQuestion.find_by(id: params[:id])
+    @answer = AnswerFunQuestion.find_by(id: params[:id], user_id: current_user.id)
   end
 
   def answer_params

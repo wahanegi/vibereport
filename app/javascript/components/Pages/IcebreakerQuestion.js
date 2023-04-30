@@ -15,7 +15,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
-      steps.push('meme-selection')
+      steps.push('results')
       saveDataToDb( steps, {fun_question_id: fun_question.data.id})
     }
     const dataRequest = {
@@ -25,7 +25,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
       }
     }
     const goToResultPage = () => {
-      steps.push('productivity-bad-follow-up')
+      steps.push('results')
       saveDataToDb(steps)
     }
     const url = '/api/v1/fun_questions/'
@@ -51,6 +51,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
 
   useEffect(() => {
     const fun_question_id = data.response.attributes.fun_question_id
+    isBlank(fun_question_id) && setLoaded(true)
     fun_question_id && axios.get(`/api/v1/fun_questions/${fun_question_id}`)
       .then(res => {
         setPrevStateQuestion(res.data.data?.attributes)

@@ -12,8 +12,32 @@ class Api::V1::ResultsPresenter
       time_periods: TimePeriod.ordered || [],
       emotions: time_period.emotions.presence || [],
       gifs: time_period.responses.pluck(:gif).compact || [],
-      fun_question: fun_question.presence || {},
-      answers: fun_question&.answer_fun_questions.presence || []
+      fun_question: question,
+      answers:
+    }
+  end
+
+  private
+
+  def question
+    return nil if fun_question.blank?
+
+    {
+      question_body: fun_question.question_body,
+      user: fun_question.user
+    }
+  end
+
+  def answers
+    return nil if fun_question&.answer_fun_questions.blank?
+
+    fun_question&.answer_fun_questions&.map { |answer| answer_block(answer) }
+  end
+
+  def answer_block(answer)
+    {
+      answer:,
+      user: answer.user
     }
   end
 end

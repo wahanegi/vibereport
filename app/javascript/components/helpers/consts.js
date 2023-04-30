@@ -39,3 +39,5 @@ export const EMOTION_COLORS = {
     {width: '221px', height: '271px', marginTop: '40px'},
     {width: '382px', height: '311px', marginTop: '0'},
   ];
+
+export const DEFAULT_USER_NAME = 'Admin'
