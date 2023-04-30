@@ -1,6 +1,6 @@
 import React from 'react';
 import ListItem from "./ListItem";
-import {userFullName} from "../helpers/library";
+import {userFullName} from "../../helpers/library";
 
 const DropDownList = ({ dataList,  coordX, coordY, onClick, valSel, changeIndexSel, changeValSel }) => {
 

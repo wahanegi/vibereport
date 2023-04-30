@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import ShoutoutModal from '../UI/ShoutoutModal';
+import ShoutoutModal from '../UI/ShoutoutModalNew';
 import Cursor from "../helpers/library";
 
 describe('ShoutoutModal', () => {

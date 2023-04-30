@@ -1,27 +1,22 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import parse from "html-react-parser";
-import Cursor, {
-  decodeSpace,
-  decodeSpace160, decrementPositionCursor,
-  deleteNextChar,
-  deletePreviousChar,
-  encodeSpace,
-  incrementPositionCursor, pasteSymbolsToHTMLobj, sortUsersByFullName
-} from "../helpers/library";
+import Cursor from "../rich-text/cursor";
 import DropDownList from "./DropDownList";
-import {userFullName} from "../helpers/library";
-import RichText from "../helpers/rich-text";
-import xClose from "../../../assets/sys_svg/x-close.svg";
-import Button from "./Button";
+import {userFullName} from "../../helpers/library";
+import RichText from "./rich-text";
+import xClose from "../../../../assets/sys_svg/x-close.svg";
+import Button from "../Button";
 
 
 
-const RichInputElement =
-({ richText = "", listUsers: listAllUsers, className, setChosenUsers, setRichText, onSubmit , classAt = 'color-primary'}) =>{
+const RichInputElement =({ richText = "",
+                           listUsers: listAllUsers, className, setChosenUsers,
+                           setRichText, onSubmit , onClose,
+                           classAt = 'color-primary'}) =>{
 
-  const [enteredHTML, setEnteredHTML] = useState( encodeSpace(richText))
+  const [textHTML, setTextHTML] = useState( RichText.encodeSpace(richText))
   const textAreaRef = useRef(richText)
-  const [filteredUsers, setFilteredUsers] = useState(sortUsersByFullName(listAllUsers))
+  const [filteredUsers, setFilteredUsers] = useState(RichText.sortUsersByFullName(listAllUsers))
   const [ isDropdownList, setIsDropdownList ] = useState(false)
   const [searchString, setSearchString] = useState('')
   const [indexOfSelection, setIndexOfSelection] = useState (0)
@@ -33,12 +28,13 @@ const RichInputElement =
   const [ cursorPosition, setCursorPosition ] = useState(null)
 
   const element = textAreaRef.current
-  const NON_ALLOWED_CHARS =  /[,@`<>;:\/\\']/
+
+  const NON_ALLOWED_CHARS_OF_NAME =  /[,@`<>;:\/\\']/
   const MARKER = '@'
   const TAG_AT = '<span class=\"' + classAt + '\">' + MARKER
   const END_TAG_AT = '</span>'
   const OFFSET_X = 0
-  const OFFSET_Y = 40
+  const OFFSET_Y = 10
   const LIMIT_CHARS = 387
 
   useEffect(() => {
@@ -47,7 +43,7 @@ const RichInputElement =
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
 
-  }, [caret, enteredHTML, currentSelection])
+  }, [caret, textHTML, currentSelection])
 
 
 
@@ -65,104 +61,103 @@ const RichInputElement =
     const cursorPos = Cursor.getCurrentCursorPosition(element)
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
-    let key = event.key
-    let htmlText = ''
+    let char = event.key
     if (cursorPos.isDIV) {
       setIsDropdownList(false)
     }
     if (cursorPos.isSPAN) {
       setIsDropdownList(true)
     }
-    console.log("75: start", key, text.length, caretCur, isDropdownList, enteredHTML, cursorPos) //.parentNode.textContent
 
-
-    if (key.match(/[&<>]/)) return
+    if (char.match(/[&<>]/)) return
 
     if (text.length < LIMIT_CHARS) {
 
 
     if (isDropdownList) {
 
-      if (key === 'Escape' || key === MARKER) {
+      if (char === 'Escape' || char === MARKER) {
         if (text[caret - 1] === MARKER) {
           RichText.deleteNodePasteChars(
-              enteredHTML, cursorPos, key === MARKER
+              textHTML, cursorPos, char === MARKER
                   ? MARKER + MARKER
-                  : MARKER, TAG_AT, END_TAG_AT, setEnteredHTML, setCaret
+                  : MARKER, TAG_AT, END_TAG_AT, setTextHTML, setCaret
           )
         }
         setIsDropdownList(false)
         return
       }
 
-      if (key === 'Enter' || key === 'Tab') {
+      if (char === 'Enter' || char === 'Tab') {
         clickEnterTabHandling(indexOfSelection)
         return
       }
 
       let indexOfSel = indexOfSelection
-      if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS) && key.length === 1) {
+      if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
 
         if (cursorPos.focusOffset - 1 !== searchString.length) return
 
-        const newSearchString = (searchString + key).toLowerCase()
-        const listFoundUsers = listAllUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
+        const newSearchString = (searchString + char).toLowerCase()
+        const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
 
+        //when full name of user to equal to search string
+        // and only one element in the array than start update copyChosenUsers and chosenUsers
         if (listFoundUsers.length === 1 && userFullName(listFoundUsers[0]).toLowerCase() === newSearchString) {
-          //when full name of user to equal to search string
-          // and one element in the array than start update copyChosenUsers and chosenUsers
 
+           //check if user have in the chosenUsers
           if (copyChosenUsers.find(user => userFullName(user) === newSearchString))
-            return //if user have in the chosenUsers
+            return
 
-          setEnteredHTML(
-              RichText.pasteContentBtwTags(userFullName(listFoundUsers[0]), enteredHTML, cursorPos, END_TAG_AT, 1)
+          setTextHTML(
+              RichText.pasteContentBtwTags(userFullName(listFoundUsers[0]), textHTML, cursorPos, END_TAG_AT, 1)
           )
-          setCopyChosenUsers([...copyChosenUsers, listFoundUsers[0]])
-          setChosenUsers([...copyChosenUsers, listFoundUsers[0]])
+          const incrementedNumberChosenUsers = [...copyChosenUsers, listFoundUsers[0]]
+          setCopyChosenUsers(incrementedNumberChosenUsers)
+          setChosenUsers(incrementedNumberChosenUsers)
           setIsDropdownList(false)
           RichText.incrementPositionCursor(1, cursorPos, text + " ", setCaret)
           setSearchString('')
+          setFilteredUsers( RichText.filtrationById( incrementedNumberChosenUsers, listAllUsers ))
         } else if (listFoundUsers.length) {
-          //delete user from text, Users, ChosenUsers and put in it char
+          //delete user from text, Users, ChosenUsers and put instead of it char
 
-          htmlText = decodeSpace(enteredHTML)
-          const userToDel = RichText.contentBtwTags(enteredHTML, cursorPos, END_TAG_AT, 1)
-          setCopyChosenUsers(copyChosenUsers.filter(user => userFullName(user) !== userToDel)) // delete user from Users
-          setChosenUsers(copyChosenUsers.filter(user => userFullName(user) !== userToDel)) // delete user from ChosenUsers
+          const userToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
+          const decrementedNumberChosenUsers = copyChosenUsers.filter(user => userFullName(user) !== userToDel) // delete user from chosenUsers
+          setCopyChosenUsers( decrementedNumberChosenUsers )
+          setChosenUsers( decrementedNumberChosenUsers )
 
-          RichText.pasteCharsBeforeEndTag(key, enteredHTML, cursorPos, END_TAG_AT, setEnteredHTML, setCaret)
+          RichText.pasteCharsBeforeEndTag(char, textHTML, cursorPos, END_TAG_AT, setTextHTML, setCaret)
 
           setSearchString(newSearchString)
           setFilteredUsers(listFoundUsers)
           setIndexOfSelection(0)
-          // setCaret(caretCur + 1)
         }
         setChosenUsers(listAllUsers.filter(item => !copyChosenUsers.includes(item)))
       }
 
-      if ((key === 'ArrowDown') && indexOfSelection >= 0) {
+      if ((char === 'ArrowDown') && indexOfSelection >= 0) {
         setIndexOfSelection(indexOfSel = indexOfSelection < filteredUsers.length - 1 ? ++indexOfSel : 0)
         setCurrentSelection(filteredUsers[indexOfSel].id)
         return
       }
 
-      if (key === 'ArrowUp' && indexOfSelection >= 0) {
+      if (char === 'ArrowUp' && indexOfSelection >= 0) {
         setIndexOfSelection(indexOfSel = indexOfSelection > 0 ? --indexOfSel : filteredUsers.length - 1)
         setCurrentSelection(filteredUsers[indexOfSel].id)
         return
       }
 
     } else {
-      if (cursorPos.isDIV && key.length === 1) {
-        switch (key) {
+      if (cursorPos.isDIV && char.length === 1) {
+        switch (char) {
           case MARKER:
             if (text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
                 || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 160
                 && text.charCodeAt(caretCur) === 160
                 || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160) {
               RichText.pasteNodeToHTMLobj(
-                  MARKER, enteredHTML, cursorPos, setEnteredHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
+                  MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
               )
               setIsDropdownList(true)
               if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
@@ -173,40 +168,40 @@ const RichInputElement =
 
             }
           default:
-            RichText.pasteSymbolsToHTMLobj(key, enteredHTML, cursorPos, setEnteredHTML, setCaret)
+            RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
         }
-      } else if (cursorPos.isSPAN && key.length === 1) {
-        const nameUserToDel = RichText.contentBtwTags(enteredHTML, cursorPos, END_TAG_AT, 1)
-        if (listAllUsers.find(user => userFullName(user) === nameUserToDel) && !key.match(/[@<>]/)
+      } else if (cursorPos.isSPAN && char.length === 1) {
+        const nameUserToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
+        if (listAllUsers.find(user => userFullName(user) === nameUserToDel) && !char.match(/[@<>]/)
             && nameUserToDel.length === cursorPos.focusOffset - 1) {
           //if user have in the ListUsers  and cursor at the end of firstLastName of user
           //then dropdown turn off and put chars in the DIV after endTag
 
           const pos = realPos + END_TAG_AT.length
-          const end = pos === enteredHTML.length ? '' : enteredHTML.slice(pos)
-          setEnteredHTML(encodeSpace(enteredHTML.slice(0, pos) + key + end))
+          const end = pos === textHTML.length ? '' : textHTML.slice(pos)
+          setTextHTML(RichText.encodeSpace(textHTML.slice(0, pos) + char + end))
           setCaret(caret + 1)
           setIsDropdownList(false)
 
-        } else if (!key.match(/[,@`<>;:\\\/\s]/)) {
+        } else if (!char.match(/[,@`<>;:\\\/\s]/)) {
           const renewUsers = copyChosenUsers.filter(user => userFullName(user) !== nameUserToDel)
           setCopyChosenUsers(!renewUsers ? [] : renewUsers)
           setChosenUsers(!renewUsers ? [] : [...renewUsers])
-          RichText.pasteCharsBeforeEndTag(key, enteredHTML, cursorPos, END_TAG_AT, setEnteredHTML, setCaret)
+          RichText.pasteCharsBeforeEndTag(char, textHTML, cursorPos, END_TAG_AT, setTextHTML, setCaret)
           setIsDropdownList(true)
           setCaret(caretCur - cursorPos.focusOffset + 2)
-          setSearchString(key)
+          setSearchString(char)
         }
       }
 
-      if (key.length === 1 && enteredHTML.length > realPos
-          && enteredHTML.indexOf(TAG_AT) === realPos && !key.match(/<>&/)) {
-        pasteSymbolsToHTMLobj(key, enteredHTML, cursorPos, setEnteredHTML, setCaret)
+      if (char.length === 1 && textHTML.length > realPos
+          && textHTML.indexOf(TAG_AT) === realPos && !char.match(/<>&/)) {
+        RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
       }
     }
   }
 
-    switch (key){
+    switch (char){
       case 'Home':
         setCaret ( 0 )
         break;
@@ -218,7 +213,7 @@ const RichInputElement =
             setIsDropdownList(false)
             setCoordinates(cursorPos.coordinates)
           }
-        decrementPositionCursor( 1, cursorPos, setCaret )
+        RichText.decrementPositionCursor( 1, cursorPos, setCaret )
         break
 
       case 'ArrowRight':
@@ -226,41 +221,41 @@ const RichInputElement =
           setIsDropdownList(true)
           setCoordinates(cursorPos.coordinates)
         }
-        incrementPositionCursor( 1, cursorPos, text, setCaret )
+        RichText.incrementPositionCursor( 1, cursorPos, text, setCaret )
         break
     }
 
-    if (key === 'Backspace' || key === 'Delete') {
+    if (char === 'Backspace' || char === 'Delete') {
       if (  cursorPos.isSPAN && cursorPos.focusNode.textContent === MARKER) {
-        const endPos = enteredHTML.indexOf(END_TAG_AT, cursorPos.realPos) + END_TAG_AT.length
-        setEnteredHTML(RichText.deleteString(enteredHTML, cursorPos.realPos - TAG_AT.length, endPos))
+        const endPos = textHTML.indexOf(END_TAG_AT, cursorPos.realPos) + END_TAG_AT.length
+        setTextHTML(RichText.deleteString(textHTML, cursorPos.realPos - TAG_AT.length, endPos))
         setCaret(caret - 1)
         setIsDropdownList(false)
         return
       }
       if ( cursorPos.focusNode.textContent.startsWith(MARKER) && cursorPos.isSPAN ) {
         let findUser = copyChosenUsers.find((el) => (
-            MARKER + userFullName( el )) === decodeSpace160( cursorPos.focusNode.textContent ))
+            MARKER + userFullName( el )) === RichText.decodeSpace( cursorPos.focusNode.textContent ))
 
         if (findUser) {
           const newListUser = copyChosenUsers.filter(user => user.id !== findUser.id)
           setChosenUsers(newListUser)
           setCopyChosenUsers(newListUser)
-          const sortUsers = sortUsersByFullName([...filteredUsers, findUser])
+          const sortUsers = RichText.sortUsersByFullName([...filteredUsers, findUser])
           setFilteredUsers( sortUsers )
           setIndexOfSelection(0)
           setCurrentSelection(sortUsers[0].id)
 
-          RichText.deleteNode( enteredHTML, cursorPos, TAG_AT, END_TAG_AT, setEnteredHTML, setCaret )
+          RichText.deleteNode( textHTML, cursorPos, TAG_AT, END_TAG_AT, setTextHTML, setCaret )
 
           event.preventDefault()
           setIsDropdownList(false)
 
         } else {
-          if (key === 'Backspace') {
+          if (char === 'Backspace') {
             const updateSearchString =  searchString.slice(0,-1)
 
-            RichText.deletePreviousChar( enteredHTML, realPos, setEnteredHTML )
+            RichText.deletePreviousChar( textHTML, realPos, setTextHTML )
             RichText.decrementPositionCursor( 1, cursorPos, setCaret )
 
             const foundUsersByFirstLetters =
@@ -271,21 +266,21 @@ const RichInputElement =
           }
         }
       } else {
-        switch (key){
+        switch (char){
           case 'Delete':
-            if( enteredHTML.indexOf(TAG_AT, realPos) === realPos ) {
-              const node = RichText.deleteNode( enteredHTML, cursorPos, TAG_AT, END_TAG_AT, setEnteredHTML, setCaret )
+            if( textHTML.indexOf(TAG_AT, realPos) === realPos ) {
+              const node = RichText.deleteNode( textHTML, cursorPos, TAG_AT, END_TAG_AT, setTextHTML, setCaret )
               const userFromNode = cursorPos.isSPAN ? node
-                  : RichText.findUsersInText(TAG_AT, END_TAG_AT, decodeSpace( node ), listAllUsers)
+                  : RichText.findUsersInText(TAG_AT, END_TAG_AT, RichText.decodeSpace( node ), listAllUsers)
               const filtratedUsersByName = RichText.filtrationByName (userFullName( userFromNode[0] ), copyChosenUsers)
               setCopyChosenUsers( filtratedUsersByName )
               setChosenUsers( filtratedUsersByName )
             } else {
-              deleteNextChar( enteredHTML, realPos, setEnteredHTML )
+              RichText.deleteNextChar( textHTML, realPos, setTextHTML )
             }
             break
           case 'Backspace':
-            deletePreviousChar( enteredHTML, realPos, setEnteredHTML )
+            RichText.deletePreviousChar( textHTML, realPos, setTextHTML )
             RichText.decrementPositionCursor( 1, cursorPos, setCaret )
             break
         }
@@ -301,7 +296,7 @@ const clickEnterTabHandling = ( i ) => {
     const realPos  = cursorPos.realPos
      let chosenUsersWithoutNemo = copyChosenUsers
 
-  const nemoFromTextArea = RichText.contentBtwTags( enteredHTML, cursorPos, END_TAG_AT, 1)
+  const nemoFromTextArea = RichText.contentBtwTags( textHTML, cursorPos, END_TAG_AT, 1)
   if ( copyChosenUsers.find(user => userFullName(user) === nemoFromTextArea ) ){
     chosenUsersWithoutNemo = copyChosenUsers.filter(user => userFullName(user) !== nemoFromTextArea)
   }
@@ -309,8 +304,8 @@ const clickEnterTabHandling = ( i ) => {
     alert ("This user has already been selected!")
     return }
 
-  setEnteredHTML(
-      RichText.pasteContentBtwTags( userFullName(filteredUsers[i]), enteredHTML, cursorPos, END_TAG_AT, 1)
+  setTextHTML(
+      RichText.pasteContentBtwTags( userFullName(filteredUsers[i]), textHTML, cursorPos, END_TAG_AT, 1)
   )
   const hadSelectedUsers = [ ...chosenUsersWithoutNemo, { ...filteredUsers[i] }]
 
@@ -318,7 +313,7 @@ const clickEnterTabHandling = ( i ) => {
   setChosenUsers( hadSelectedUsers )
   setIsDropdownList(false)
   RichText.incrementPositionCursor(  userFullName(filteredUsers[i]).length -cursorPos.focusOffset  + 1 ,
-      cursorPos, enteredHTML , setCaret )
+      cursorPos, textHTML , setCaret )
   const listChosenUsers = RichText.filtrationById( hadSelectedUsers, listAllUsers )
   setIndexOfSelection(0)
   setSearchString('')
@@ -346,9 +341,8 @@ const clickEnterTabHandling = ( i ) => {
   }
 
   return (
-    <div className='col-8 offset-2 positon-absolute'>
-      <div className='shoutout-input-block mt327'>
-      <img src={xClose} className='position-absolute x-close' onClick={()=>{alert("onClose")}}/>
+    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327'>
+      <img src={xClose} className='position-absolute x-close' onClick={onClose}/>
       <div className=' d-flex flex-column align-items-center'>
         <div contentEditable={true}
              suppressContentEditableWarning = {true}
@@ -358,7 +352,7 @@ const clickEnterTabHandling = ( i ) => {
              data-testid ="editable-div"
                       id = 'textArea'
                className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-3'>
-          {parse(enteredHTML)}
+          {parse(textHTML)}
         </div>
         <Button className='placement-shoutout-btn position-relative btn-modal system c2 p-0' onClick={()=>{}}>
           Send Shoutout
@@ -373,7 +367,6 @@ const clickEnterTabHandling = ( i ) => {
                         changeIndexSel={ (val) =>{ setIndexOfSelection(val) }}
                         changeValSel={ (val) =>{ setCurrentSelection(val) }}
           />}
-      </div>
     </div>
   )}
 

@@ -1,4 +1,3 @@
-import {decodeSpace, encodeSpace, userFullName} from "./library";
 
 export default class RichText {
   
@@ -22,14 +21,14 @@ export default class RichText {
     ))
   }
    static pasteContentBtwTags = ( content, htmlText, cursorPos, endTag, startFrom = 0 ) => {
-    return  encodeSpace(htmlText.slice(0, cursorPos.realPos - cursorPos.realFocusOffset + startFrom ) +
-        encodeSpace( content ) + htmlText.slice(htmlText.indexOf(endTag, cursorPos.realPos)))
+    return  this.encodeSpace(htmlText.slice(0, cursorPos.realPos - cursorPos.realFocusOffset + startFrom ) +
+        this.encodeSpace( content ) + htmlText.slice(htmlText.indexOf(endTag, cursorPos.realPos)))
    }
 
   static userFullName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
 
   static decodeSpace = html => {
-    return html.replace(/&nbsp;/g, " ")
+    return  html.replace(/(&nbsp;|\u00A0)/g, " ")
   }
 
   static decodeSpace160 = html => {
@@ -133,8 +132,31 @@ export default class RichText {
       let pos = 0
       while ((pos = richText.indexOf(tag, pos)) !== -1) {
         pos += + tag.length
-        users.push(listUsers.find(user => userFullName(user) === richText.slice(pos, richText.indexOf(endTag, pos))))
+        users.push(listUsers.find(user => this.userFullName(user) === richText.slice(pos, richText.indexOf(endTag, pos))))
       }
       return users
+  }
+
+  static sortUsersByFullName = users => {
+    return users.sort((a, b) => {
+      const nameA = a.first_name.toLowerCase();
+      const nameB = b.first_name.toLowerCase();
+      const lastNameA = a.last_name.toLowerCase();
+      const lastNameB = b.last_name.toLowerCase();
+
+      if (nameA < nameB) {
+        return -1;
+      } else if (nameA > nameB) {
+        return 1;
+      } else {
+        if (lastNameA < lastNameB) {
+          return -1;
+        } else if (lastNameA > lastNameB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    })
   }
 }

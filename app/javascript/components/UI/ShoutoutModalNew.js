@@ -1,8 +1,9 @@
 import React, {Fragment,  useState} from 'react'
 import ReactDOM from 'react-dom'
-import RichInputElement from "./RichInputElement";
+import RichInputElement from "./rich-text/RichInputElement";
 
-const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</span>Team2</span>"}) => {
+const ShoutoutModalNew = ({onClose,
+                            value="<span><span style='color: #D7070A'>@</span>Team2</span>"}) => {
 
   const [users, setUsers] = useState([
     { id: 10, first_name: 'Vitalii', last_name: 'Shevchenko'},
@@ -16,6 +17,7 @@ const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</sp
     { id: 7, first_name: 'Marina', last_name: 'Harasko'},
     { id: 8, first_name: 'Serhii', last_name: 'Borozenets'},
     { id: 9, first_name: 'Lyuba', last_name: 'Pidoshva'},
+    { id: 12, first_name: 'Kolobok', last_name: 'Vpalto)'},
   ])
 
 
@@ -30,6 +32,7 @@ const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</sp
       richText=''
       listUsers={users}
       className=''
+      onClose={onClose}
       setChosenUsers={()=>{}}
       setRichText={()=>{}}
     />
@@ -45,4 +48,4 @@ const ShoutoutModal = ({onClose, value="<span><span style='color: #D7070A'>@</sp
   );
 };
 
-export default ShoutoutModal;
+export default ShoutoutModalNew;
