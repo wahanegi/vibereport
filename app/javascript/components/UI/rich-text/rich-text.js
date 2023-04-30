@@ -25,7 +25,10 @@ export default class RichText {
         this.encodeSpace( content ) + htmlText.slice(htmlText.indexOf(endTag, cursorPos.realPos)))
    }
 
-  static userFullName = user => user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
+  static userFullName = user => {
+    if (!user) return ''
+    return user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
+  }
 
   static decodeSpace = html => {
     return  html.replace(/(&nbsp;|\u00A0)/g, " ")

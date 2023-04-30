@@ -57,6 +57,9 @@
       &:hover{
         background-color: shift-color($primary,30%);
       }
+      &:disabled {
+        opacity: 0.45;
+      }
     }
   }
 

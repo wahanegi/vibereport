@@ -26,6 +26,7 @@ const RichInputElement =({ richText = "",
   const [copyChosenUsers, setCopyChosenUsers] = useState([])
   const [ coordinates, setCoordinates] = useState({ x:420, y:386 })
   const [ cursorPosition, setCursorPosition ] = useState(null)
+  const [ isDisabled, setIsDisabled] = useState(true)
 
   const element = textAreaRef.current
 
@@ -34,16 +35,29 @@ const RichInputElement =({ richText = "",
   const TAG_AT = '<span class=\"' + classAt + '\">' + MARKER
   const END_TAG_AT = '</span>'
   const OFFSET_X = 0
-  const OFFSET_Y = 10
+  const OFFSET_Y = 40
   const LIMIT_CHARS = 387
+  const NUM_ENTERED_CHARS = 7
 
   useEffect(() => {
-      Cursor.setCurrentCursorPosition(caret, textArea)
-    if (Cursor.getCurrentCursorPosition(element).focusOffset == 1)
+    Cursor.setCurrentCursorPosition(caret, textArea)
+    if ( Cursor.getCurrentCursorPosition(element).focusOffset == 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
 
+    if ( !RichText.userFullName( copyChosenUsers[0] ).length ) return
+    if ( caret > RichText.userFullName( copyChosenUsers[0] ).length + NUM_ENTERED_CHARS )  {
+      let usersLen = copyChosenUsers.reduce((prev, cur) => prev + RichText.userFullName(cur).length + 2, 0)
+      if ( caret > usersLen + NUM_ENTERED_CHARS ) {
+        setIsDisabled(false)
+      } else {
+        setIsDisabled(true)
+      }} else {
+      setIsDisabled(true)
+    }
+
   }, [caret, textHTML, currentSelection])
+
 
 
 
@@ -76,7 +90,7 @@ const RichInputElement =({ richText = "",
 
     if (isDropdownList) {
 
-      if (char === 'Escape' || char === MARKER) {
+      if ( char === 'Escape' || char === MARKER ) {
         if (text[caret - 1] === MARKER) {
           RichText.deleteNodePasteChars(
               textHTML, cursorPos, char === MARKER
@@ -152,10 +166,10 @@ const RichInputElement =({ richText = "",
       if (cursorPos.isDIV && char.length === 1) {
         switch (char) {
           case MARKER:
-            if (text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
+            if (filteredUsers.length && (text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
                 || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 160
                 && text.charCodeAt(caretCur) === 160
-                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160) {
+                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160)) {
               RichText.pasteNodeToHTMLobj(
                   MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
               )
@@ -354,7 +368,8 @@ const clickEnterTabHandling = ( i ) => {
                className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-3'>
           {parse(textHTML)}
         </div>
-        <Button className='placement-shoutout-btn position-relative btn-modal system c2 p-0' onClick={()=>{}}>
+        <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
+                onClick={()=>{}}>
           Send Shoutout
         </Button>
       </div>
