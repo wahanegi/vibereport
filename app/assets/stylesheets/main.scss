@@ -500,22 +500,7 @@ a {
   color: $red-violet;
 }
 //ShoutoutModal
-.place-size-shout-out {
-  width: 884px !important;
-  min-width: 884px !important;
-  height: 514px;
-  margin-top: 327px;
-  border-radius: 20px !important;
-  z-index: 30;
-  animation: slide-down 300ms ease-out forwards;
-  overflow: auto;
-  &.form-control{
-    border: 4px solid $primary !important;
-    &:focus {
-      border: 4px solid $primary !important;
-    }
-  }
-}
+
 .backdrop {
   position: fixed;
   top: 0;
@@ -526,10 +511,37 @@ a {
   background: #A6A1A1;
   filter: blur(50px);
 }
-.x-close {
-  z-index: 31;
-  margin-top: 302px;
-  margin-left: 413px;
+
+.shoutout-input-block {
+  //width: 884px;
+  height:514px;
+  top:0;
+  margin-top: 327px;
+  .x-close {
+    z-index: 31;
+    margin-top: -25px;
+    margin-left: 414px;
+  }
+  .placement-shoutout-btn {
+    z-index: 31;
+    top: -90px;
+    right: -297px;
+  }
+  .place-size-shout-out {
+    width: 884px !important;
+    min-width: 884px !important;
+    height: 514px;
+    border-radius: 20px !important;
+    z-index: 30;
+    animation: slide-down 300ms ease-out forwards;
+    overflow: auto;
+    &.form-control{
+      border: 4px solid $primary !important;
+      &:focus {
+        border: 4px solid $primary !important;
+      }
+    }
+  }
 }
 
 //DropDownList

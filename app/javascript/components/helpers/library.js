@@ -64,10 +64,7 @@ export default class Cursor {
           charCount = focusOffset;
           realPos += focusNode.parentNode.tagName === 'SPAN' ?
               focusNode.parentNode.outerHTML.length - '</span>'.length - encodeSpace(decodeSpace160(focusNode.textContent)).length : 0
-          console.log(realPos, focusNode.parentNode.outerHTML, encodeSpace(decodeSpace160(focusNode.textContent)))
           realFocusOffset = encodeSpace(decodeSpace160(focusNode.textContent.slice(0, focusOffset))).length
-          console.log(realFocusOffset)
-
 
           while (node) {
             if (node === parentElement) {
@@ -79,7 +76,6 @@ export default class Cursor {
               charCount += node.textContent.length;
               realPos +=
                   (node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent)) : node.outerHTML).length
-              console.log(realPos, node.outerHTML === undefined ? encodeSpace(decodeSpace160(node.textContent)) : node.outerHTML)
             } else {
               node = node.parentNode;
               if (node === null) {

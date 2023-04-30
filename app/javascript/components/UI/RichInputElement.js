@@ -11,6 +11,8 @@ import Cursor, {
 import DropDownList from "./DropDownList";
 import {userFullName} from "../helpers/library";
 import RichText from "../helpers/rich-text";
+import xClose from "../../../assets/sys_svg/x-close.svg";
+import Button from "./Button";
 
 
 
@@ -146,7 +148,6 @@ const RichInputElement =
       }
 
       if (key === 'ArrowUp' && indexOfSelection >= 0) {
-        // console.log("press Enter or Tab when is Dropdown list turn on", "indexOfSel=",indexOfSel, "f=", filteredUsers[indexOfSel])
         setIndexOfSelection(indexOfSel = indexOfSelection > 0 ? --indexOfSel : filteredUsers.length - 1)
         setCurrentSelection(filteredUsers[indexOfSel].id)
         return
@@ -213,7 +214,6 @@ const RichInputElement =
         setCaret ( text.length )
         break;
       case 'ArrowLeft':
-        // console.log("283: ARROW", cursorPos)
           if( cursorPos.isSPAN && cursorPos.focusOffset === 1 ) {
             setIsDropdownList(false)
             setCoordinates(cursorPos.coordinates)
@@ -232,7 +232,6 @@ const RichInputElement =
 
     if (key === 'Backspace' || key === 'Delete') {
       if (  cursorPos.isSPAN && cursorPos.focusNode.textContent === MARKER) {
-        // console.log("299: true")
         const endPos = enteredHTML.indexOf(END_TAG_AT, cursorPos.realPos) + END_TAG_AT.length
         setEnteredHTML(RichText.deleteString(enteredHTML, cursorPos.realPos - TAG_AT.length, endPos))
         setCaret(caret - 1)
@@ -294,7 +293,6 @@ const RichInputElement =
     }
   }
 const clickEnterTabHandling = ( i ) => {
-    console.log("i=",i)
   if ( i === undefined ) {
     setIsDropdownList(false)
     return
@@ -348,8 +346,10 @@ const clickEnterTabHandling = ( i ) => {
   }
 
   return (
-    <Fragment>
-      <div className='col-8 offset-2 position-absolute mt-327 d-flex justify-content-center'>
+    <div className='col-8 offset-2 positon-absolute'>
+      <div className='shoutout-input-block mt327'>
+      <img src={xClose} className='position-absolute x-close' onClick={()=>{alert("onClose")}}/>
+      <div className=' d-flex flex-column align-items-center'>
         <div contentEditable={true}
              suppressContentEditableWarning = {true}
                onKeyDown = {handleKeyDown}
@@ -360,6 +360,9 @@ const clickEnterTabHandling = ( i ) => {
                className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-3'>
           {parse(enteredHTML)}
         </div>
+        <Button className='placement-shoutout-btn position-relative btn-modal system c2 p-0' onClick={()=>{}}>
+          Send Shoutout
+        </Button>
       </div>
       {isDropdownList && filteredUsers.length && indexOfSelection !== undefined &&
           <DropDownList dataList={filteredUsers}
@@ -370,8 +373,8 @@ const clickEnterTabHandling = ( i ) => {
                         changeIndexSel={ (val) =>{ setIndexOfSelection(val) }}
                         changeValSel={ (val) =>{ setCurrentSelection(val) }}
           />}
-
-    </Fragment>
+      </div>
+    </div>
   )}
 
 export default RichInputElement;
