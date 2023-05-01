@@ -506,8 +506,9 @@ a {
 //ShoutoutModal
 #overlays {
   position: absolute;
-  z-index: 20;
-  overflow:           hidden;
+   z-index: 20;
+  overflow: hidden;
+       top: 0;
 }
 
 .backdrop {
