@@ -1,14 +1,18 @@
 import React from "react";
 import {animated, useSpring} from "@react-spring/web";
-import {EMOTION_COLORS} from "../../helpers/consts";
+import {EMOTION_COL_NUMBERS, EMOTION_COLORS} from "../../helpers/consts";
+import {splitArray} from "../../helpers/helpers";
 
 const AnimatedEmotion = ({word, category}) => {
+  const shift= Math.round(Math.random() * 10)/10
+  console.log('shift', shift)
+  const minOpacity = (shift - 0.3) > 0 ? (shift - 0.3) : 0.1
   const springProps = useSpring({
-    from: { fontSize: '1.5rem', opacity: 0.5 },
+    from: { fontSize: `${shift + 0.2}rem`, opacity: minOpacity },
     to: async (next) => {
       while (true) {
-        await next({ fontSize: '2rem', opacity: 1 });
-        await next({ fontSize: '1.5rem', opacity: 0.5 });
+        await next({ fontSize: `${shift + 1}rem`, opacity: 1 });
+        await next({ fontSize: '1.5rem', opacity: minOpacity });
       }
     },
     config: { duration: 4000 },
@@ -19,14 +23,9 @@ const AnimatedEmotion = ({word, category}) => {
       style={{
         fontSize: '1.5rem',
         fontWeight: 'bold',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '10px',
-        width: '80%',
-        height: '100%',
         willChange: 'transform, opacity',
-        color: EMOTION_COLORS[`${category}`][5]
+        color: EMOTION_COLORS[`${category}`][5],
+        marginTop: `${shift * 40}px`
       }}
     >
       <animated.span style={springProps}>{word}</animated.span>
@@ -34,15 +33,25 @@ const AnimatedEmotion = ({word, category}) => {
   );
 };
 
-const EmotionSection = ({emotions}) =>
-  <div className='d-flex justify-content-center'>
+const EmotionSection = ({emotions}) => {
+  const splitEmotions = splitArray(emotions, EMOTION_COL_NUMBERS)
+
+  return <table className="table table-borderless d-flex justify-content-center">
+    <tbody>
     {
-      emotions.map(emotion =>
-        <div key={emotion.id} className='d-flex justify-content-center'>
-          <AnimatedEmotion word={emotion.word} category={emotion.category}/>
-        </div>
+      splitEmotions.map((emotions, index) =>
+        <tr key={index}>
+          {
+            emotions.map(emotion =>
+              <td key={emotion.id}>
+                <AnimatedEmotion word={emotion.word} category={emotion.category} />
+              </td>
+            )
+          }
+        </tr>
       )
     }
-  </div>
-
+    </tbody>
+  </table>
+}
 export default EmotionSection

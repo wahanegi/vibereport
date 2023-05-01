@@ -49,3 +49,14 @@ export function isNotEmptyStr(str) {
 export function lastEl(arr) {
   return !isEmpty(arr) && arr[arr.length-1];
 }
+
+export function splitArray(arr, n) {
+  const len = arr.length;
+  const result = [];
+
+  for (i = 0; i < len; i += n) {
+    result.push(arr.slice(i, i + n));
+  }
+
+  return result;
+}

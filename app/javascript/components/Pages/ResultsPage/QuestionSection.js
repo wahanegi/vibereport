@@ -38,13 +38,12 @@ const QuestionSection = ({fun_question, answers}) => {
     setNavState((prev) => {
       return { ...prev, [navId]: !prev[navId] };
     });
-  console.log('navState', navState)
   const handleExpandAll = () => setNavState(answers.reduce((a, v) => ({ ...a, [v.answer.id]: true }), {}))
 
   const Question = () =>
     <div className='row wrap mb-1 position-relative'>
       <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asked:</p><br/>
-      <h5 className='w-auto'> {fun_question.question_body}</h5>
+      <h5 className='w-auto text-start'> {fun_question.question_body}</h5>
       <div className='text-end' onClick={handleExpandAll}>
         <img src={expand_icon} alt="expand all" style={{width: 26.6, height: 26, padding: 0}} />
         <span className='ms-1 muted'>Expand all</span>

@@ -10,7 +10,7 @@ class Api::V1::ResultsPresenter
   def json_hash
     {
       time_periods: TimePeriod.ordered || [],
-      emotions: time_period.emotions.presence || [],
+      emotions: time_period.emotions.shuffle.presence || [],
       gifs: time_period.responses.pluck(:gif).compact || [],
       fun_question: question,
       answers:
