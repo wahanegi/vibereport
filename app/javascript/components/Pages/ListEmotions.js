@@ -80,6 +80,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <div className="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
             <div className='d-flex mx-auto emotions'>
                 {emotions.map((emotion, index) =>
+                  <div className='width-block'>
                    <ButtonEmotion key={emotion.id}
                                   category={emotions[mixUp(index+1)].attributes.category}
                                   onClick={() =>
@@ -89,6 +90,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                                   )}>{emotions[mixUp(index+1)].attributes.word}
                      
                    </ButtonEmotion>
+                  </div>
                 )}
               </div>
           <div className="big-btn-tooltip correct">Share it in your own words!</div>

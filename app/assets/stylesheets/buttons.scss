@@ -70,6 +70,9 @@
       border-radius:  15px;
       box-shadow:     $btn-box-shadow;
       min-width:      8rem;
+      margin:         5px 0;
+      max-width:      175px;
+      overflow:       hidden;
       @include emotion
     }
     &.wb2{
