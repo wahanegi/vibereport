@@ -15,8 +15,13 @@ export const backHandling = () => {
 export const rangeFormat = (tp) => {
   const start_date = new Date(tp.start_date)
   const end_date = new Date(tp.end_date)
-  const month = end_date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
-  return `${start_date.getDate()}`.padStart(2, '0') + '-' + `${end_date.getDate()}`.padStart(2, '0') + ' ' + month
+  const month_start = start_date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
+  const month_end = end_date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
+  if (month_start === month_end) {
+    return `${start_date.getDate()}-${end_date.getDate()} ${month_start}`
+  } else {
+    return `${month_start} ${start_date.getDate()} - ${month_end} ${end_date.getDate()}`
+  }
 }
 
 export const datePrepare = (time) => {
