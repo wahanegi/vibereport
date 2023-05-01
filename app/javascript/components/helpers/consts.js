@@ -41,4 +41,4 @@ export const EMOTION_COLORS = {
   ];
 
 export const DEFAULT_USER_NAME = 'Admin'
-export const EMOTION_COL_NUMBERS = 4
+export const EMOTION_COL_NUMBERS = 6

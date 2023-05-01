@@ -5,7 +5,6 @@ import {splitArray} from "../../helpers/helpers";
 
 const AnimatedEmotion = ({word, category}) => {
   const shift= Math.round(Math.random() * 10)/10
-  console.log('shift', shift)
   const minOpacity = (shift - 0.3) > 0 ? (shift - 0.3) : 0.1
   const springProps = useSpring({
     from: { fontSize: `${shift + 0.2}rem`, opacity: minOpacity },
@@ -35,8 +34,9 @@ const AnimatedEmotion = ({word, category}) => {
 
 const EmotionSection = ({emotions}) => {
   const splitEmotions = splitArray(emotions, EMOTION_COL_NUMBERS)
+  const rowsNumber = splitEmotions.length
 
-  return <table className="table table-borderless d-flex justify-content-center">
+  return <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 70}px`}}>
     <tbody>
     {
       splitEmotions.map((emotions, index) =>

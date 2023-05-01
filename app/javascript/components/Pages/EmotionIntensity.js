@@ -58,7 +58,7 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
 const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const { word, category } = data.emotion
-  const gif_url = data.response.attributes.gif.src
+  const gif_url = data.response.attributes.gif?.src
   const [rating, setRating] = useState(data.response.attributes.rating || null);
   const [comment, setComment] = useState(data.response.attributes.comment || '');
   const isBlankGif = isBlank(gif_url)
