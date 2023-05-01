@@ -5,6 +5,7 @@ import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
 import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
+import CornerElements from "../UI/CornerElements";
 // import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
@@ -99,7 +100,8 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
             I was not working this week
           </NavLink>
           <QuestionButton />
-          <ShoutoutButton />
+          <CornerElements         data = { data }
+                                  percentCompletion = {0}/>
           <Menu className='placement-menu' percent_completion='100' />
         </div>
       }

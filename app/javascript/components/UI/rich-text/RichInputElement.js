@@ -1,11 +1,11 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
-import parse from "html-react-parser";
+import React, { useEffect, useRef, useState} from 'react';
 import Cursor from "../rich-text/cursor";
 import DropDownList from "./DropDownList";
 import {userFullName} from "../../helpers/library";
 import RichText from "./rich-text";
 import xClose from "../../../../assets/sys_svg/x-close.svg";
 import Button from "../Button";
+import RichTextArea from "./RichTextArea";
 
 
 
@@ -36,7 +36,7 @@ const RichInputElement =({ richText = "",
   const END_TAG_AT = '</span>'
   const OFFSET_X = 0
   const OFFSET_Y = 40
-  const LIMIT_CHARS = 387
+  const LIMIT_CHARS = 700
   const NUM_ENTERED_CHARS = 7
 
   useEffect(() => {
@@ -358,29 +358,24 @@ const clickEnterTabHandling = ( i ) => {
     <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327'>
       <img src={xClose} className='position-absolute x-close' onClick={onClose}/>
       <div className=' d-flex flex-column align-items-center'>
-        <div contentEditable={true}
-             suppressContentEditableWarning = {true}
-               onKeyDown = {handleKeyDown}
-                 onClick = {clickHandling}
-                     ref = {textAreaRef}
-             data-testid ="editable-div"
-                      id = 'textArea'
-               className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-3'>
-          {parse(textHTML)}
-        </div>
+        <RichTextArea      textHTML = { textHTML }
+                               refs = { textAreaRef }
+                          onKeyDown = { handleKeyDown }
+                            onClick = { clickHandling }
+                          className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'/>
         <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
-                onClick={()=>{}}>
+                onClick = { ()=>{} }>
           Send Shoutout
         </Button>
       </div>
       {isDropdownList && filteredUsers.length && indexOfSelection !== undefined &&
-          <DropDownList dataList={filteredUsers}
-                        coordX={coordinates.x + OFFSET_X}
-                        coordY={coordinates.y + OFFSET_Y}
-                        onClick={clickEnterTabHandling}
-                        valSel={currentSelection}
-                        changeIndexSel={ (val) =>{ setIndexOfSelection(val) }}
-                        changeValSel={ (val) =>{ setCurrentSelection(val) }}
+          <DropDownList       dataList = { filteredUsers }
+                                coordX = { coordinates.x + OFFSET_X }
+                                coordY = { coordinates.y + OFFSET_Y }
+                               onClick = { clickEnterTabHandling }
+                                valSel = { currentSelection }
+                        changeIndexSel = { (val) =>{ setIndexOfSelection(val) }}
+                          changeValSel = { (val) =>{ setCurrentSelection(val) }}
           />}
     </div>
   )}

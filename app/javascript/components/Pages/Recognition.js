@@ -89,7 +89,10 @@ const numShoutOuts = shoutOuts.length
         </div>
         }
       <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext = { !!numShoutOuts } />
-      <CornerElements numShoutouts={ numShoutOuts } moveShoutout={true}/>
+      <CornerElements data = { data }
+         percentCompletion = {80}
+              numShoutouts = { numShoutOuts }
+            isMoveShoutout = { true }/>
     </Wrapper>
   );
 };

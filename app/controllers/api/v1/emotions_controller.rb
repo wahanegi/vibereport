@@ -44,7 +44,9 @@ class Api::V1::EmotionsController < ApplicationController
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
-      users: User.ordered.map { |user| { id: user.id, display: user.first_name } }
+      users: User.ordered.map do |user|
+        { id: user.id, display: user.first_name, first_name: user.first_name, last_name: user.last_name }
+      end
     }
   end
 
