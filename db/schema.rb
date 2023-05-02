@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_02_090321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
     t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
   end
 
+  create_table "recipient_shoutouts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "shoutout_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["shoutout_id"], name: "index_recipient_shoutouts_on_shoutout_id"
+    t.index ["user_id"], name: "index_recipient_shoutouts_on_user_id"
+  end
+
   create_table "responses", force: :cascade do |t|
     t.text "bad_follow_comment"
     t.text "celebrate_comment"
@@ -81,6 +90,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
     t.index ["user_id", "time_period_id"], name: "index_responses_on_user_id_and_time_period_id", unique: true
     t.index ["user_id"], name: "index_responses_on_user_id"
+  end
+
+  create_table "shoutouts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "recipients"
+    t.text "rich_text"
+    t.bigint "time_period_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["time_period_id"], name: "index_shoutouts_on_time_period_id"
+    t.index ["user_id", "time_period_id"], name: "index_shoutouts_on_user_id_and_time_period_id", unique: true
+    t.index ["user_id"], name: "index_shoutouts_on_user_id"
   end
 
   create_table "time_periods", force: :cascade do |t|
@@ -106,7 +127,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "recipient_shoutouts", "shoutouts"
+  add_foreign_key "recipient_shoutouts", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
+  add_foreign_key "shoutouts", "time_periods"
+  add_foreign_key "shoutouts", "users"
 end

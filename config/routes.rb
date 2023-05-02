@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :emotions, only: %i[index create]
       resources :responses, param: :id
+      resources :shoutouts, only: [:create, :update]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
     end

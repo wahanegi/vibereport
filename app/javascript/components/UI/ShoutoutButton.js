@@ -28,10 +28,7 @@ const ShoutoutButton = ({ data, num = 0,  isMove = false}) => {
     return (
         <div>
         {shoutOutForm &&
-            <ShoutoutModal onClose = { closeHandling }
-                           user_id = { data.current_user_id  }
-                    time_period_id = { data.time_period_id }
-                         listUsers = { data.users }/>}
+            <ShoutoutModal onClose = { closeHandling } data = { data }/>}
       <div>
         <NavLink className ={style}  to = {'#'}>
             <img src={ShoutoutIcon} alt = 'Shoutout' onClick={clickHandling}/>

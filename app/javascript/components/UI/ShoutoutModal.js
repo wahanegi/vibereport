@@ -2,7 +2,7 @@ import React, {Fragment,  useState} from 'react'
 import ReactDOM from 'react-dom'
 import RichInputElement from "./rich-text/RichInputElement";
 
-const ShoutoutModal = ({onClose, user_id, time_period_id, listUsers}) => {
+const ShoutoutModal = ({ onClose, data }) => {
 
   const BackDrop = ({onClose}) => {
     return <div className='backdrop' onClick={onClose}>
@@ -12,7 +12,7 @@ const ShoutoutModal = ({onClose, user_id, time_period_id, listUsers}) => {
   const ModalOverlay = ({onClose}) =>{
     return <RichInputElement
       richText=''
-      listUsers={listUsers}
+      listUsers={data.users}
       className=''
       onClose={onClose}
       setChosenUsers={()=>{}}

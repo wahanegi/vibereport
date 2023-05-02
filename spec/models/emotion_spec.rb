@@ -11,7 +11,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Emotion, type: :model do
+RSpec.describe Emotion, type: :shoutout do
   let!(:emotion) { create :emotion }
   let!(:emotion_positive) { create(:emotion, category: 'positive') }
   let!(:emotion_neutral) { create(:emotion, category: 'neutral') }

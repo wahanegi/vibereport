@@ -18,7 +18,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe AdminUser, type: :model do
+RSpec.describe AdminUser, type: :shoutout do
   let!(:admin_user) { create :admin_user }
 
   context 'Factories' do
