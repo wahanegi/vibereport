@@ -64,11 +64,14 @@
   &.btn-bubbles{
     border:           1px solid $black;
     &.wb1{
-      padding: 0 5px;
+      padding:        0 5px;
       height:         2rem;
       border-radius:  15px;
       box-shadow:     $btn-box-shadow;
       min-width:      8rem;
+      margin:         5px 0;
+      max-width:      175px;
+      overflow:       hidden;
       @include emotion
     }
     &.wb2{
