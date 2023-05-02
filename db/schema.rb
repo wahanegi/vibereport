@@ -61,11 +61,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_104828) do
   create_table "fun_questions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.boolean "public", default: false, null: false
-    t.text "question_body"
+    t.string "question_body"
     t.bigint "time_period_id"
     t.datetime "updated_at", null: false
     t.boolean "used", default: false, null: false
     t.bigint "user_id"
+    t.index ["question_body"], name: "index_fun_questions_on_question_body", unique: true
     t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
   end

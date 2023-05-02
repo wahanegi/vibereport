@@ -4,7 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  public         :boolean          default(FALSE), not null
-#  question_body  :text
+#  question_body  :string
 #  used           :boolean          default(FALSE), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -13,6 +13,7 @@
 #
 # Indexes
 #
+#  index_fun_questions_on_question_body   (question_body) UNIQUE
 #  index_fun_questions_on_time_period_id  (time_period_id)
 #  index_fun_questions_on_user_id         (user_id)
 #
@@ -31,6 +32,15 @@ RSpec.describe FunQuestion, type: :model do
 
     it 'returns only public and unused questions' do
       expect(FunQuestion.question_public.not_used).to eq([public_unused_question])
+    end
+  end
+
+  describe 'validations' do
+    let(:fun_question) { build(:fun_question) }
+
+    it 'is invalid when question_body is not unique' do
+      fun_question.save
+      expect(build(:fun_question, question_body: fun_question.question_body)).to_not be_valid
     end
   end
 end
