@@ -28,8 +28,7 @@ module UserEmailMailerHelper
     font_size = text_style.font_size
 
     font_families = [
-      'Arial', 'Helvetica', 'sans-serif', 'Times New Roman', 'Times', 'serif', 'Georgia',
-      'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Arial Black', 'Impact'
+      'Josefin Sans', 'Arial'
     ]
     font_family = font_families.sample
 

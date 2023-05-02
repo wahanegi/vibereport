@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe TextStyle do
-  describe '#initialize' do
-    it 'initializes a TextStyle' do
+  describe 'TextStyle' do
+    it 'initializes' do
       text_style = TextStyle.new(2)
       expect(text_style.word_count).to eq(2)
       expect(text_style.font_size).to be_between(TextStyle::MIN_FONT_SIZE, TextStyle::MAX_FONT_SIZE_FOR_MAX_WORD_COUNT)
