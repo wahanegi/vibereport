@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: answer_fun_questions
+# Table name: fun_question_answers
 #
 #  id              :bigint           not null, primary key
 #  answer_body     :text
@@ -11,15 +11,15 @@
 #
 # Indexes
 #
-#  index_answer_fun_questions_on_fun_question_id  (fun_question_id)
-#  index_answer_fun_questions_on_user_id          (user_id)
+#  index_fun_question_answers_on_fun_question_id  (fun_question_id)
+#  index_fun_question_answers_on_user_id          (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (fun_question_id => fun_questions.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class AnswerFunQuestion < ApplicationRecord
+class FunQuestionAnswer < ApplicationRecord
   has_one :response, dependent: :nullify
   belongs_to :user
   belongs_to :fun_question

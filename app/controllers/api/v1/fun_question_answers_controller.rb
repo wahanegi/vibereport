@@ -1,18 +1,18 @@
-class Api::V1::AnswerFunQuestionsController < ApplicationController
+class Api::V1::FunQuestionAnswersController < ApplicationController
   include ApplicationHelper
   before_action :retrieve_answer, only: %i[show update destroy]
   before_action :require_user!
 
   def show
-    render json: AnswerFunQuestionSerializer.new(@answer).serializable_hash
+    render json: FunQuestionAnswerSerializer.new(@answer).serializable_hash
   end
 
   def create
-    answer = AnswerFunQuestion.new(answer_params)
+    answer = FunQuestionAnswer.new(answer_params)
 
     if answer.save
       update_question(answer)
-      render json: AnswerFunQuestionSerializer.new(answer).serializable_hash
+      render json: FunQuestionAnswerSerializer.new(answer).serializable_hash
     else
       render json: { error: answer.errors }, status: :unprocessable_entity
     end
@@ -20,7 +20,7 @@ class Api::V1::AnswerFunQuestionsController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      render json: AnswerFunQuestionSerializer.new(@answer).serializable_hash
+      render json: FunQuestionAnswerSerializer.new(@answer).serializable_hash
     else
       render json: { error: @answer.errors }, status: :unprocessable_entity
     end
@@ -37,11 +37,11 @@ class Api::V1::AnswerFunQuestionsController < ApplicationController
   private
 
   def retrieve_answer
-    @answer = current_user.answer_fun_questions.find_by(id: params[:id])
+    @answer = current_user.fun_question_answers.find_by(id: params[:id])
   end
 
   def answer_params
-    params.require(:answer_fun_question).permit(:answer_body, :response_id, :user_id, :fun_question_id)
+    params.require(:fun_question_answer).permit(:answer_body, :response_id, :user_id, :fun_question_id)
   end
 
   def update_question(answer)

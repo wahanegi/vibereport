@@ -25,6 +25,7 @@ class FunQuestion < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :time_period, optional: true
   has_one :response, dependent: :nullify
-  has_many :answer_fun_questions, dependent: :destroy
-  scope :question_public, -> { where(public: true).where(used: false) }
+  has_many :fun_question_answers, dependent: :destroy
+  scope :question_public, -> { where(public: true) }
+  scope :not_used, -> { where(used: false) }
 end

@@ -1,4 +1,4 @@
-ActiveAdmin.register AnswerFunQuestion do
+ActiveAdmin.register FunQuestionAnswer do
   belongs_to :fun_question
   actions :all
 
@@ -13,7 +13,7 @@ ActiveAdmin.register AnswerFunQuestion do
   end
 
   show do |fun_question|
-    answer = AnswerFunQuestion.find_by(id: fun_question.id)
+    answer = FunQuestionAnswer.find_by(id: fun_question.id)
     columns do
       column do
         attributes_table do
