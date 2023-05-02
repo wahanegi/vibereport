@@ -29,7 +29,6 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   }
 
   const chooseGIPHYHandling = () => {
-    console.log('gifUrl', gifUrl)
     if (emotion.category === "neutral") {
       steps.push('productivity-check');
     } else {

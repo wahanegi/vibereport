@@ -1,6 +1,6 @@
+import React from "react";
 import {Calendar, EditResponse} from "../../UI/ShareContent";
 import {backHandling, isEmpty, lastEl} from "../../helpers/helpers";
-import React from "react";
 
 const NavigationBar = ({timePeriod, prevTimePeriod, nextTimePeriod, timePeriodIndex, time_periods}) => {
   if(isEmpty(time_periods)) return null
