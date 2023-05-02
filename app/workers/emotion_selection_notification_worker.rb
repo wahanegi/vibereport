@@ -24,7 +24,7 @@ class EmotionSelectionNotificationWorker
 
   def run_results_email!
     return unless time_period_has_ended?
-  
+
     users.each do |user|
       send_results_email(user, time_period) if user_has_response?(user)
     end

@@ -33,11 +33,10 @@
   </div>
   <div class="second-row">
     <div class="calendar-days ml-55">
-      <div class="date"><%= @view_calendar_days.gsub("\n", "<br>").html_safe %></div>
+       <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')} <br> – <br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
     </div>
   </div>
   <div class="mx-auto my-0 title">Submissions are in!</div>
-  <div>
     <div class="mx-auto my-0 text-invitation">See how the team has been doing.</div>
   <div class="container">
     <div class="responses-words">
