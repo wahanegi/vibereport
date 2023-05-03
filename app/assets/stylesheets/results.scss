@@ -4,10 +4,20 @@
     padding: 32px 27px 18px 27px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
-    border: 3px solid $emerald;
-    background: $tea-green;
     width: 75vw;
+    &.question {
+      border: 3px solid $emerald;
+      background: $tea-green;
+    }
+    &.shoutout {
+      background: $pink;
+      border: 3px solid $red-violet;
+      &.preview {
+        height: 700px;
+        filter: blur(8px);
+      }
 
+    }
     &.answer {
       background: none;
       min-height: auto;
@@ -17,7 +27,7 @@
         white-space: nowrap;
       }
       .rotate {
-        rotate: 90deg;
+        rotate: -90deg;
       }
     }
     .expand-icon {

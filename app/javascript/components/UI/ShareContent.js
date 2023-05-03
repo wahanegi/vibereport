@@ -32,7 +32,7 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
   </button>
 
 export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, hideLeft = false}) =>
-  isPresent(date) && !hidden && <div className="position-relative" onClick={onClick} style={{maxWidth: 82}}>
+  isPresent(date) && !hidden && <div className="position-relative pointer" onClick={onClick} style={{maxWidth: 82}}>
     <img src={calendar} alt="calendar" />
     <div className="position-absolute top-0 mt-4 ms-1">
       {datePrepare(date)}
@@ -88,4 +88,4 @@ export const Wrapper = ({children}) => <div className="wrapper">
 </div>
 
 export const EditResponse = ({ hidden = false, onClick }) =>
-  !hidden && <img src={editResponse} onClick={onClick} alt="edit response" />
+  !hidden && <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />

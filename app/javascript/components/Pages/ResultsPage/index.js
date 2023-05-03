@@ -14,6 +14,7 @@ import NavigationBar from "./NavigationBar";
 import EmotionSection from "./EmotionSection";
 import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
+import ShoutoutSection from "./ShoutoutSection";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -23,13 +24,14 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [timePeriodIndex, setTimePeriodIndex] = useState(0);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
-  const [positions, setPositions] = useState([]);
   const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
   const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
   '</br></br>Skip this chek-in if you weren\'t working.'
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
-  // console.log('results', results)
+  const [isCurrentTimePeriod, setIsCurrentTimePeriod] = useState(false)
+  console.log('results', results)
+  console.log('data', data)
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
@@ -65,9 +67,9 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
 
   const Footer = () =>
     <div className='d-flex justify-content-between m-3'>
-      <ShoutOutIcon addClass={timePeriodIndex !== 0 ? 'd-none' : ''} />
+      <ShoutOutIcon addClass={!isCurrentTimePeriod ? 'd-none' : ''} />
       <div className="d-flex flex-column mb-3">
-        <BtnBack text ='Back to current week' hidden={timePeriodIndex === 0} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
+        <BtnBack text ='Back to current week' hidden={isCurrentTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
         <BtnPrimary text ='Done' addClass='mt-auto' />
       </div>
       <HelpIcon />
@@ -81,6 +83,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     axios.get(`/api/v1/results/${timePeriod.id}`)
       .then(res => {
         setResults(res.data)
+        setIsCurrentTimePeriod(timePeriodIndex === 0)
         setLoaded(true)
       })
   }, [timePeriod])
@@ -98,8 +101,9 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
         <h1>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
     }
     <NavigationBar {...{timePeriod, prevTimePeriod, nextTimePeriod, timePeriodIndex, time_periods}} />
-    <EmotionSection emotions={emotions} />
-    <GifSection gifs={gifs} />
+    <EmotionSection emotions={emotions} isCurrentTimePeriod={isCurrentTimePeriod} data={data} />
+    <GifSection gifs={gifs} isCurrentTimePeriod={isCurrentTimePeriod} />
+    <ShoutoutSection isCurrentTimePeriod={isCurrentTimePeriod} />
     <QuestionSection fun_question={fun_question} answers={answers} />
     <Footer />
   </Wrapper>

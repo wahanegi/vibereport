@@ -1,56 +1,83 @@
 import React from "react";
 import {animated, useSpring} from "@react-spring/web";
-import {EMOTION_COL_NUMBERS, EMOTION_COLORS} from "../../helpers/consts";
+import {EMOTION_COL_NUMBERS, EMOTION_COLORS, MIN_USERS_RESPONSES} from "../../helpers/consts";
 import {splitArray} from "../../helpers/helpers";
 
-const AnimatedEmotion = ({word, category}) => {
-  const shift= Math.round(Math.random() * 10)/10
+const animatedStyles = (shift, category, addBlur) => {
+  return {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    willChange: 'transform, opacity',
+    color: EMOTION_COLORS[`${category}`][5],
+    marginTop: `${shift * 40}px`,
+    filter: `${addBlur? 'blur(8px)' : ''}`
+  }
+}
+
+const AnimatedEmotion = ({word, category, addBlur = false}) => {
+  const shift = Math.round(Math.random() * 10)/10
   const minOpacity = (shift - 0.3) > 0 ? (shift - 0.3) : 0.1
   const springProps = useSpring({
-    from: { fontSize: `${shift + 0.2}rem`, opacity: minOpacity },
+    from: { fontSize: `${shift ** 2}rem`, opacity: minOpacity },
     to: async (next) => {
       while (true) {
-        await next({ fontSize: `${shift + 1}rem`, opacity: 1 });
-        await next({ fontSize: '1.5rem', opacity: minOpacity });
+        await next({ fontSize: `${shift + 0.7}rem`, opacity: 1 });
+        await next({ fontSize: '1.8rem', opacity: minOpacity });
       }
     },
     config: { duration: 4000 },
   });
 
   return (
-    <div
-      style={{
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-        willChange: 'transform, opacity',
-        color: EMOTION_COLORS[`${category}`][5],
-        marginTop: `${shift * 40}px`
-      }}
-    >
+    <div style={animatedStyles(shift, category, addBlur)}>
       <animated.span style={springProps}>{word}</animated.span>
     </div>
   );
 };
 
-const EmotionSection = ({emotions}) => {
+const PreviewEmotionSection = ({data}) => {
+  const splitEmotions = splitArray(data.data, EMOTION_COL_NUMBERS)
+  const rowsNumber = splitEmotions.length
+  return <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
+    <tbody>
+      {
+        splitEmotions.map((emotions, index) =>
+          <tr key={index}>
+            {
+              emotions.map((emotion, index) =>
+                <td key={index}>
+                  <AnimatedEmotion word={emotion.attributes.word} category={emotion.attributes.category} addBlur={true} />
+                </td>
+              )
+            }
+          </tr>
+        )
+      }
+    </tbody>
+  </table>
+}
+
+const EmotionSection = ({emotions, isCurrentTimePeriod, data}) => {
   const splitEmotions = splitArray(emotions, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
 
-  return <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 70}px`}}>
+  if(isCurrentTimePeriod && emotions.length < MIN_USERS_RESPONSES) return <PreviewEmotionSection data={data} />
+
+  return <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
     <tbody>
-    {
-      splitEmotions.map((emotions, index) =>
-        <tr key={index}>
-          {
-            emotions.map(emotion =>
-              <td key={emotion.id}>
-                <AnimatedEmotion word={emotion.word} category={emotion.category} />
-              </td>
-            )
-          }
-        </tr>
-      )
-    }
+      {
+        splitEmotions.map((emotions, index) =>
+          <tr key={index}>
+            {
+              emotions.map((emotion, index) =>
+                <td key={index}>
+                  <AnimatedEmotion word={emotion.word} category={emotion.category} />
+                </td>
+              )
+            }
+          </tr>
+        )
+      }
     </tbody>
   </table>
 }

@@ -13,7 +13,7 @@ import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
-import Results from "./Pages/ResultsPage/Results";
+import Results from "./Pages/ResultsPage";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
