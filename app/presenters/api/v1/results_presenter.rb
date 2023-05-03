@@ -29,9 +29,9 @@ class Api::V1::ResultsPresenter
   end
 
   def answers
-    return nil if fun_question&.answer_fun_questions.blank?
+    return nil if fun_question&.fun_question_answers.blank?
 
-    fun_question&.answer_fun_questions&.map { |answer| answer_block(answer) }
+    fun_question&.fun_question_answers&.map { |answer| answer_block(answer) }
   end
 
   def answer_block(answer)

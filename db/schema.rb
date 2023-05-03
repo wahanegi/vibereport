@@ -40,16 +40,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_223547) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "answer_fun_questions", force: :cascade do |t|
-    t.text "answer_body"
-    t.datetime "created_at", null: false
-    t.bigint "fun_question_id", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["fun_question_id"], name: "index_answer_fun_questions_on_fun_question_id"
-    t.index ["user_id"], name: "index_answer_fun_questions_on_user_id"
-  end
-
   create_table "emotions", force: :cascade do |t|
     t.integer "category", default: 1
     t.datetime "created_at", null: false
@@ -58,14 +48,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_223547) do
     t.string "word"
   end
 
+  create_table "fun_question_answers", force: :cascade do |t|
+    t.text "answer_body"
+    t.datetime "created_at", null: false
+    t.bigint "fun_question_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["fun_question_id"], name: "index_fun_question_answers_on_fun_question_id"
+    t.index ["user_id"], name: "index_fun_question_answers_on_user_id"
+  end
+
   create_table "fun_questions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.boolean "public", default: false, null: false
-    t.text "question_body"
+    t.string "question_body"
     t.bigint "time_period_id"
     t.datetime "updated_at", null: false
     t.boolean "used", default: false, null: false
     t.bigint "user_id"
+    t.index ["question_body"], name: "index_fun_questions_on_question_body", unique: true
     t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
   end
@@ -85,12 +86,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_223547) do
   end
 
   create_table "responses", force: :cascade do |t|
-    t.bigint "answer_fun_question_id"
     t.text "bad_follow_comment"
     t.text "celebrate_comment"
     t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
+    t.bigint "fun_question_answer_id"
     t.bigint "fun_question_id"
     t.jsonb "gif"
     t.boolean "not_working", default: false
@@ -101,8 +102,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_223547) do
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["answer_fun_question_id"], name: "index_responses_on_answer_fun_question_id"
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
+    t.index ["fun_question_answer_id"], name: "index_responses_on_fun_question_answer_id"
     t.index ["fun_question_id"], name: "index_responses_on_fun_question_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
     t.index ["user_id", "time_period_id"], name: "index_responses_on_user_id_and_time_period_id", unique: true
@@ -132,12 +133,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_223547) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "answer_fun_questions", "fun_questions"
-  add_foreign_key "answer_fun_questions", "users"
+  add_foreign_key "fun_question_answers", "fun_questions"
+  add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
-  add_foreign_key "responses", "answer_fun_questions"
   add_foreign_key "responses", "emotions"
+  add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"

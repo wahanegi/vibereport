@@ -1,15 +1,15 @@
 require 'rails_helper'
 require 'passwordless/test_helpers'
 
-RSpec.describe Api::V1::AnswerFunQuestionsController do
+RSpec.describe Api::V1::FunQuestionAnswersController do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
   let!(:fun_question) { create :fun_question, time_period: }
-  let!(:answer_fun_question) { create :answer_fun_question, user:, fun_question: }
+  let!(:fun_question_answer) { create :fun_question_answer, user:, fun_question: }
 
   let!(:valid_attributes) do
     {
-      answer_fun_question: {
+      fun_question_answer: {
         user_id: user.id,
         fun_question_id: fun_question.id,
         answer_body: Faker::Lorem.sentences.first
@@ -19,7 +19,7 @@ RSpec.describe Api::V1::AnswerFunQuestionsController do
 
   let!(:invalid_attributes) do
     {
-      answer_fun_question: {
+      fun_question_answer: {
         user_id: user.id,
         fun_question_id: fun_question.id,
         answer_body: ''
@@ -33,37 +33,37 @@ RSpec.describe Api::V1::AnswerFunQuestionsController do
 
   describe 'GET #show' do
     it 'returns a success response' do
-      get "/api/v1/answer_fun_questions/#{answer_fun_question.id}"
+      get "/api/v1/fun_question_answers/#{fun_question_answer.id}"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'POST #create' do
     context 'with valid parameters' do
-      subject { post '/api/v1/answer_fun_questions/', params: valid_attributes }
+      subject { post '/api/v1/fun_question_answers/', params: valid_attributes }
       it 'creates a new answer fun question' do
-        expect { subject }.to change(AnswerFunQuestion, :count).by(1)
+        expect { subject }.to change(FunQuestionAnswer, :count).by(1)
       end
 
       it 'renders a JSON response with the new answer fun question' do
         subject
-        answer_fun_question = AnswerFunQuestion.last
+        fun_question_answer = FunQuestionAnswer.last
         expect([response.parsed_body]).to eq [{ 'data' => {
-          'id' => answer_fun_question.id.to_s,
-          'type' => 'answer_fun_question',
+          'id' => fun_question_answer.id.to_s,
+          'type' => 'fun_question_answer',
           'attributes' =>
             {
-              'id' => answer_fun_question.id,
-              'answer_body' => answer_fun_question.answer_body
+              'id' => fun_question_answer.id,
+              'answer_body' => fun_question_answer.answer_body
             }
         } }]
       end
     end
 
     context 'with invalid parameters' do
-      subject { post '/api/v1/answer_fun_questions', params: invalid_attributes }
+      subject { post '/api/v1/fun_question_answers', params: invalid_attributes }
       it 'does not create a new fun question' do
-        expect { subject }.to_not change(AnswerFunQuestion, :count)
+        expect { subject }.to_not change(FunQuestionAnswer, :count)
       end
 
       it 'renders a JSON response with errors for the new answer fun question' do
@@ -77,11 +77,11 @@ RSpec.describe Api::V1::AnswerFunQuestionsController do
 
   describe 'PATCH #update' do
     context 'with valid parameters' do
-      subject { patch "/api/v1/answer_fun_questions/#{answer_fun_question.id}", params: { id: answer_fun_question.id, answer_fun_question: { answer_body: 'Updated answer' } } }
+      subject { patch "/api/v1/fun_question_answers/#{fun_question_answer.id}", params: { id: fun_question_answer.id, fun_question_answer: { answer_body: 'Updated answer' } } }
       it 'updates the answer fun question' do
         subject
         expect(response).to have_http_status(:success)
-        updated_answer = AnswerFunQuestion.find_by(id: answer_fun_question.id)
+        updated_answer = FunQuestionAnswer.find_by(id: fun_question_answer.id)
         expect(updated_answer.answer_body).to eq('Updated answer')
       end
 
@@ -94,7 +94,7 @@ RSpec.describe Api::V1::AnswerFunQuestionsController do
     end
 
     context 'with invalid parameters' do
-      subject { patch "/api/v1/answer_fun_questions/#{answer_fun_question.id}", params: { id: answer_fun_question.id, answer_fun_question: { answer_body: '' } } }
+      subject { patch "/api/v1/fun_question_answers/#{fun_question_answer.id}", params: { id: fun_question_answer.id, fun_question_answer: { answer_body: '' } } }
       it 'returns an error message' do
         subject
         expect(response).to have_http_status(:unprocessable_entity)
@@ -106,9 +106,9 @@ RSpec.describe Api::V1::AnswerFunQuestionsController do
 
   describe 'DELETE #destroy' do
     context 'when the answer fun question exists' do
-      subject { delete "/api/v1/answer_fun_questions/#{answer_fun_question.id}", params: { id: answer_fun_question.id } }
+      subject { delete "/api/v1/fun_question_answers/#{fun_question_answer.id}", params: { id: fun_question_answer.id } }
       it 'deletes the answer fun question' do
-        expect { subject }.to change(AnswerFunQuestion, :count).by(-1)
+        expect { subject }.to change(FunQuestionAnswer, :count).by(-1)
       end
 
       it 'returns a 204 No Content status' do
@@ -119,7 +119,7 @@ RSpec.describe Api::V1::AnswerFunQuestionsController do
 
     context 'when the answer fun question does not exist' do
       it 'returns a 404 Not Found status' do
-        delete "/api/v1/answer_fun_questions/#{answer_fun_question.id}", params: { id: 'invalid-id' }
+        delete "/api/v1/fun_question_answers/#{fun_question_answer.id}", params: { id: 'invalid-id' }
         expect(response).to have_http_status(:no_content)
       end
     end

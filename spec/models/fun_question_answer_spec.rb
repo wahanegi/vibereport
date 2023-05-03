@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: answer_fun_questions
+# Table name: fun_question_answers
 #
 #  id              :bigint           not null, primary key
 #  answer_body     :text
@@ -11,8 +11,8 @@
 #
 # Indexes
 #
-#  index_answer_fun_questions_on_fun_question_id  (fun_question_id)
-#  index_answer_fun_questions_on_user_id          (user_id)
+#  index_fun_question_answers_on_fun_question_id  (fun_question_id)
+#  index_fun_question_answers_on_user_id          (user_id)
 #
 # Foreign Keys
 #
@@ -21,7 +21,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe AnswerFunQuestion, type: :model do
+RSpec.describe FunQuestionAnswer, type: :model do
   describe 'associations' do
     it { should belong_to :user }
     it { should have_one(:response).dependent(:nullify) }
@@ -30,8 +30,8 @@ RSpec.describe AnswerFunQuestion, type: :model do
 
   describe 'factory' do
     it 'should be valid' do
-      answer_fun_question = FactoryBot.build(:answer_fun_question)
-      expect(answer_fun_question).to be_valid
+      fun_question_answer = FactoryBot.build(:fun_question_answer)
+      expect(fun_question_answer).to be_valid
     end
   end
 

@@ -23,7 +23,7 @@ ActiveAdmin.register FunQuestion do
     f.actions
   end
 
-  sidebar :answer_fun_questions, only: :show do
-    link_to 'Go to answers', admin_fun_question_answer_fun_questions_path(fun_question)
+  sidebar :fun_question_answers, only: :show do
+    link_to 'Go to answers', admin_fun_question_fun_question_answers_path(fun_question)
   end
 end

@@ -116,7 +116,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
         <Header />
         <div className='central-element'>
           <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
-          <h4 className="emotion-entry mt-3">What word best describes your week?</h4>
+          <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>
           <Form.Control className ={`${getEmojiClass(selectedEmoji)} input-${emotion.category} email_field input-new-word`}  type="text" maxLength={15} placeholder="Add a new word" name="word" value={emotion.word || ''} onChange={onChangeEmotion} />
           <CSSTransition in={show} timeout={500} classNames="fade-text" unmountOnExit>
             <TextSelectCategory show={show}/>

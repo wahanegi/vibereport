@@ -36,15 +36,14 @@
       font-size: 26px;
       text-align: initial;
     }
-
-
   }
 
-  textarea.input:focus,
-  input.input:focus {
-    border: 3px solid $emerald !important;
-    outline: none;
-    box-shadow: none !important;
-    border: unset;
+  textarea, input{
+    &.input:focus {
+      border: 3px solid $emerald !important;
+      outline: none;
+      box-shadow: none !important;
+      border: unset;
+    }
   }
 }

@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :emotions, only: %i[index create]
-      resources :responses, param: :id
-      resources :answer_fun_questions, only: %i[show create update destroy]
+      resources :responses, only: %i[create update], param: :id
+      resources :fun_question_answers, only: %i[show create update destroy]
       resources :fun_questions, only: %i[show create update destroy]
       resources :results, only: %i[show]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'

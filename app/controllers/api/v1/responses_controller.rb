@@ -4,7 +4,7 @@ module Api
       include ApplicationHelper
 
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices, :rating,
-                      :comment, :productivity, :bad_follow_comment, :fun_question_id, :answer_fun_question_id,
+                      :comment, :productivity, :bad_follow_comment, :fun_question_id, :fun_question_answer_id,
                       { gif: %i[src height] }].freeze
 
       before_action :retrieve_response, only: %i[update]
