@@ -65,6 +65,6 @@ describe('ListEmotions component', () => {
         <ListEmotions service={mockService} data={data} setData={() => {}} saveDataToDb={() => {}} steps={{}}/>
       </MemoryRouter>
     );
-    expect(screen.getByText("Which word best describes how you felt at work this week?")).toBeInTheDocument();
+    expect(screen.getByText("Which word best describes how you’ve recently felt about work?")).toBeInTheDocument();
   });
 });
