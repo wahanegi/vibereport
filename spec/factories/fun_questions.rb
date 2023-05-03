@@ -4,7 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  public         :boolean          default(FALSE), not null
-#  question_body  :text
+#  question_body  :string
 #  used           :boolean          default(FALSE), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -13,6 +13,7 @@
 #
 # Indexes
 #
+#  index_fun_questions_on_question_body   (question_body) UNIQUE
 #  index_fun_questions_on_time_period_id  (time_period_id)
 #  index_fun_questions_on_user_id         (user_id)
 #

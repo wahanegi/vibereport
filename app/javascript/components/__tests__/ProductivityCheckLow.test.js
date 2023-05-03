@@ -33,7 +33,7 @@ const mockService = {
             <ProductivityCheckLow data={data} setData={setData} service={mockService} />
         </MemoryRouter>
         );
-      expect(screen.getByText('How productive has this week felt to you?')).toBeInTheDocument();
+      expect(screen.getByText('How productive have you been feeling recently?')).toBeInTheDocument();
       expect(screen.getByText('Use the slider')).toBeInTheDocument();
     });
   

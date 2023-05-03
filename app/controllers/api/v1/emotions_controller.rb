@@ -72,12 +72,12 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def fun_question
-    custom_question.presence || FunQuestion.question_public.order('RANDOM()').first
+    custom_question.presence || FunQuestion.question_public.not_used.sample
   end
 
   def custom_question
     current_fun_question = FunQuestion.find_by(time_period_id: TimePeriod.current.id)
-    @fun_question ||= current_fun_question || FunQuestion.question_public.where.not(user_id: nil).first
+    @fun_question ||= current_fun_question || FunQuestion.question_public.not_used.where.not(user_id: nil).first
     return nil if @fun_question.blank?
 
     {

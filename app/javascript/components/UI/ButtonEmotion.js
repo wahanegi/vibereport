@@ -1,19 +1,13 @@
 import React, {useState} from 'react';
-import {specialProp} from "../helpers/library";
 
 const ButtonEmotion = (props) => {
-  const word = props.children
-  const expandableCss = { minWidth: specialProp(word, 'width' ), margin: specialProp(word, 'margin') }
 
   const clickHandling = () =>{
     props.onClick()
   }
 
   return (
-      <button type='button'
-            className={`btn btn-bubbles wb1 ${props.category}`}
-            style={expandableCss}
-            onClick={clickHandling}>
+      <button type='button' className={`btn btn-bubbles wb1 ${props.category}`} onClick={clickHandling}>
         {props.children}
       </button>
   );

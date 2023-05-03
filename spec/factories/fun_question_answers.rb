@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: answer_fun_questions
+# Table name: fun_question_answers
 #
 #  id              :bigint           not null, primary key
 #  answer_body     :text
@@ -11,8 +11,8 @@
 #
 # Indexes
 #
-#  index_answer_fun_questions_on_fun_question_id  (fun_question_id)
-#  index_answer_fun_questions_on_user_id          (user_id)
+#  index_fun_question_answers_on_fun_question_id  (fun_question_id)
+#  index_fun_question_answers_on_user_id          (user_id)
 #
 # Foreign Keys
 #
@@ -20,7 +20,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
-  factory :answer_fun_question do
+  factory :fun_question_answer do
     answer_body { Faker::Lorem.sentences }
     association :user, factory: :user
     association :fun_question, factory: :fun_question

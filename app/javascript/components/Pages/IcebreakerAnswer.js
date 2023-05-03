@@ -16,12 +16,12 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const current_user_id = data.current_user.id
 
   const handlingOnClickNext = () => {
-    const dataFromServer = (answer_fun_question) =>{
+    const dataFromServer = (fun_question_answer) =>{
       steps.push('icebreaker-question')
-      saveDataToDb( steps, {answer_fun_question_id: answer_fun_question.data.id} )
+      saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id} )
     }
     const dataRequest = {
-      answer_fun_question: {
+      fun_question_answer: {
         answer_body: answerBody,
         user_id: current_user_id,
         fun_question_id: data.fun_question.id
@@ -31,7 +31,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
       steps.push('productivity-bad-follow-up')
       saveDataToDb(steps)
     }
-    const url = '/api/v1/answer_fun_questions/'
+    const url = '/api/v1/fun_question_answers/'
     const id = prevStateAnswer?.id
 
     if(isPresent(prevAnswerBody)) {
@@ -56,8 +56,8 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   useEffect(() => {
-    const id = data.response.attributes.answer_fun_question_id
-    axios.get(`/api/v1/answer_fun_questions/${id}`)
+    const id = data.response.attributes.fun_question_answer_id
+    axios.get(`/api/v1/fun_question_answers/${id}`)
       .then(res => {
         setPrevStateAnswer(res.data.data?.attributes)
         setAnswerFunQuestion(res.data.data?.attributes)
@@ -80,7 +80,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
           <div className='icebreaker'>
             <div className='wrap'>
               <p className='b3 muted'><span className='color-rose'>@</span>{user} asks:</p>
-              <h5>{question_body}</h5>
+              <h5 className='text-start'>{question_body}</h5>
               <form>
                 <div className="form-group">
                   <textarea className="input mb-0" name='answer_body'
