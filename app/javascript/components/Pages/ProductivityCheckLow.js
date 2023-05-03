@@ -16,7 +16,7 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
 <Fragment>
     <div className="productivity-container">
       <form>        
-        <h1 className="mb-2 mx-auto my-0 question">How productive has this week felt to you?</h1>
+        <h1 className="mb-2 mx-auto my-0 question">How productive have you been feeling recently?</h1>
         <br />
         <div className='productivity-card'>     
           {productivity > 0 && (
