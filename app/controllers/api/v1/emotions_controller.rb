@@ -72,7 +72,7 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def fun_question
-    custom_question.presence || FunQuestion.question_public.not_used.order('RANDOM()').first
+    custom_question.presence || FunQuestion.question_public.not_used.sample
   end
 
   def custom_question
