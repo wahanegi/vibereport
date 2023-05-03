@@ -21,7 +21,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe User, type: :shoutout do
+RSpec.describe User, type: :model do
   let!(:user) { create :user, opt_out: false }
   let!(:user2) { create :user, opt_out: false }
   let!(:opted_out_user) { create :user, opt_out: true }

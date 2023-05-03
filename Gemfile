@@ -52,6 +52,7 @@ group :test do
   gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'simplecov', require: false     # Code coverage for Ruby. See https://github.com/simplecov-ruby/simplecov for setting options
   gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
+  gem 'rspec-json_expectations'       # for testing a JSON response
 end
 
 group :production do

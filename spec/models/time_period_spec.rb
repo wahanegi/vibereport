@@ -11,7 +11,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe TimePeriod, type: :shoutout do
+RSpec.describe TimePeriod, type: :model do
   let!(:time_period1) { create :time_period }
   let!(:time_period2) { create :time_period }
 

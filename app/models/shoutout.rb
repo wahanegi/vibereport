@@ -3,8 +3,9 @@
 # Table name: shoutouts
 #
 #  id             :bigint           not null, primary key
+#  digest         :bigint           not null
 #  recipients     :string
-#  rich_text      :text
+#  rich_text      :text             not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  time_period_id :bigint           not null
@@ -12,9 +13,9 @@
 #
 # Indexes
 #
-#  index_shoutouts_on_time_period_id              (time_period_id)
-#  index_shoutouts_on_user_id                     (user_id)
-#  index_shoutouts_on_user_id_and_time_period_id  (user_id,time_period_id) UNIQUE
+#  index_shoutouts_on_digest          (digest) UNIQUE
+#  index_shoutouts_on_time_period_id  (time_period_id)
+#  index_shoutouts_on_user_id         (user_id)
 #
 # Foreign Keys
 #
@@ -25,4 +26,7 @@ class Shoutout < ApplicationRecord
   has_many :recipients_shoutouts
   belongs_to :user
   belongs_to :time_period
+
+  validates :rich_text, presence: true
+  serialize :recipients, JSON
 end

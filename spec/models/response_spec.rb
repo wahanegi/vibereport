@@ -33,7 +33,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Response, type: :shoutout do
+RSpec.describe Response, type: :model do
   let!(:user) { create :user}
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
