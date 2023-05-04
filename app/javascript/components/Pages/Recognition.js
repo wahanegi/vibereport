@@ -1,12 +1,14 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {BtnBack, BtnNext, Wrapper} from "../UI/ShareContent";
 import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
 import edit_pencil from "../../../assets/images/edit-pencil.svg";
+import ShoutoutModal from "../UI/ShoutoutModal";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
+  const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
   const limit = 40
   const shoutOuts = [{id:0, msg:'@Team2 you\'re all doing so awesome! thanks!'},
     {id:1, msg:'@roger thanks for the help with Project1'},
@@ -27,7 +29,14 @@ const numShoutOuts = shoutOuts.length
   }
   const editHandling = (e) =>{
     e.preventDefault()
-    alert(e.target.attributes.id.value)
+
+    const editObj = data.my_shout_outs_to_other.find(item => item.id === Number(e.target.attributes.id.value))
+
+    setShoutOutForm( { status: true, editObj: editObj } )
+  }
+
+  const closeHandling = () => {
+    setShoutOutForm( { status: false, editObj: '' } )
   }
 
 
@@ -81,15 +90,25 @@ const numShoutOuts = shoutOuts.length
         }
 
       {!!numShoutOuts && <div><h2 className='color-black mb-1'>You've mentioned:</h2></div>}
-        {!!numShoutOuts && <div>
-          <div className='d-flex justify-content-center field-shout-outs mx-auto'>
-            {output(shoutOuts)}
-          </div>
-          <p className='b3 mt-4 lh-base'>Any more shoutouts to give?</p>
-        </div>
+        {!!numShoutOuts &&
+            <div>
+              {shoutOutForm.status &&
+                  <ShoutoutModal onClose = { closeHandling }
+                                 data = { data }
+                                 setData = { setData }
+                                 editObj = { shoutOutForm.editObj } />}
+              <div className='d-flex justify-content-center field-shout-outs mx-auto'>
+                {output(shoutOuts)}
+              </div>
+              <p className='b3 mt-4 lh-base'>Any more shoutouts to give?</p>
+            </div>
         }
       <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext = { !!numShoutOuts } />
-      <CornerElements numShoutouts={ numShoutOuts } moveShoutout={true}/>
+      <CornerElements data = { data }
+                   setData = { setData }
+         percentCompletion = {80}
+              numShoutouts = { numShoutOuts }
+            isMoveShoutout = { true }/>
     </Wrapper>
   );
 };

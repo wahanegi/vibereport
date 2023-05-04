@@ -4,7 +4,6 @@ import ResponseFlow from "./ResponseFlow";
 import { ALL_STEPS } from "./helpers/routes";
 import {apiRequest} from "./requests/axios_requests";
 import ShoutoutModal from "./UI/ShoutoutModal";
-import ShoutoutModalNew from "./UI/ShoutoutModalNew";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
@@ -50,7 +49,6 @@ const App = () => {
     <Fragment>
       {isLoading && <p >Loading...</p>}
       {error && <p>{error}</p>}
-      <ShoutoutModalNew/>
       <BrowserRouter>
         {!isNotLoadedData && <Routes>
           <Route path="*" element={<Navigate to={`/${step}`}/>}/>

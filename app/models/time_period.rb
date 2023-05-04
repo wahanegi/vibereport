@@ -11,6 +11,7 @@
 #
 class TimePeriod < ApplicationRecord
   has_many :responses, dependent: :destroy
+  has_many :shoutouts
 
   validates :end_date, :start_date, presence: true
   validates :end_date, comparison: { greater_than: :start_date }

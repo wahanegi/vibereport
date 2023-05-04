@@ -3,9 +3,8 @@ import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
 import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
-import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-// import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
+import CornerElements from "../UI/CornerElements";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -39,7 +38,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
   }
 
   const onClickNotWorking = () => {
-    steps.push('recognition')
+    steps.push('results')
     const dataRequest = {
       emotion_id: '',
       not_working: true,
@@ -99,7 +98,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
             I was not working this week
           </NavLink>
           <QuestionButton />
-          <ShoutoutButton />
+          <CornerElements         data = { data }
+                               setData = { setData }
+                     percentCompletion = {0}/>
           <Menu className='placement-menu' percent_completion='100' />
         </div>
       }

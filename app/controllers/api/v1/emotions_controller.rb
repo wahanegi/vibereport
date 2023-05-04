@@ -44,7 +44,11 @@ class Api::V1::EmotionsController < ApplicationController
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
-      users: User.ordered.map { |user| { id: user.id, display: user.first_name } }
+      users: User.ordered.map do |user|
+        { id: user.id, display: user.first_name, first_name: user.first_name, last_name: user.last_name }
+      end,
+      my_shout_outs_to_other: Shoutout.where(user_id: current_user.id),
+      other_shout_outs_to_me: list_shoutouts_to(current_user)
     }
   end
 
@@ -72,5 +76,13 @@ class Api::V1::EmotionsController < ApplicationController
 
   def time_period
     @time_period ||= TimePeriod.find_or_create_time_period
+  end
+  
+  def list_shoutouts_to(user)
+    list_ids_shot_outs = RecipientShoutout.find_by(user_id: user.id)
+    return {} if list_ids_shot_outs.nil?
+    return Shoutout.find(list_ids_shot_outs.shoutout_id) if list_ids_shot_outs.length == 1
+
+    list_ids_shot_outs.map { |item| Shoutout.find(item.shoutout_id) }
   end
 end

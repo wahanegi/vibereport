@@ -273,7 +273,11 @@ a {
     }
   }
 }
-.field-shout-outs , .drop-down-block {
+
+//system scroll
+.field-shout-outs ,
+.drop-down-block,
+.inner-div  {
   &::-webkit-scrollbar {
     width: 26px;
     border-radius: 20px;
@@ -500,36 +504,65 @@ a {
   color: $red-violet;
 }
 //ShoutoutModal
-.place-size-shout-out {
-  width: 884px !important;
-  min-width: 884px !important;
-  height: 514px;
-  margin-top: 327px;
-  border-radius: 20px !important;
-  z-index: 30;
-  animation: slide-down 300ms ease-out forwards;
-  overflow: auto;
-  &.form-control{
-    border: 4px solid $primary !important;
-    &:focus {
-      border: 4px solid $primary !important;
-    }
-  }
+#overlays {
+  position: absolute;
+   z-index: 20;
+  overflow: hidden;
+       top: 0;
 }
+
 .backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100vh;
   z-index: 20;
   background: #A6A1A1;
   filter: blur(50px);
 }
-.x-close {
-  z-index: 31;
-  margin-top: 302px;
-  margin-left: 413px;
+
+.shoutout-input-block {
+  min-width: 925px;
+  height:514px;
+  top:0;
+  margin-top: 327px;
+  .x-close {
+    z-index: 31;
+    margin-top: -25px;
+    margin-left: 414px;
+  }
+  .placement-shoutout-btn {
+    z-index: 31;
+    top: -90px;
+    right: -297px;
+  }
+  .place-size-shout-out {
+    width: 884px !important;
+    min-width: 884px !important;
+    height: 514px;
+    border-radius: 20px !important;
+    z-index: 30;
+    animation: slide-down 300ms ease-out forwards;
+    overflow: auto;
+    &.form-control{
+      border: 4px solid $primary !important;
+      &:focus {
+        border: 4px solid $primary !important;
+      }
+    }
+    .inner-div {
+      width:861px;
+      height:390px;
+      z-index:31;
+      overflow: auto;
+      borderColor: transparent;
+      &.form-control{
+        border-color: transparent !important;
+        &:focus {
+          border-color: transparent !important;
+        }
+      }
+    }
+  }
 }
 
 //DropDownList
@@ -545,7 +578,8 @@ a {
   border:               3px solid $primary;
   padding:              8px 1px 7px;
   padding-inline-start: 0px;
-  overflow-y:           auto;
+  background-color: $white;
+  overflow: auto;
   li {
     list-style:         none;
     text-align:         left;
