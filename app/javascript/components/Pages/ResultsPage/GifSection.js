@@ -39,9 +39,9 @@ const PreviewGifSection = () => {
 }
 
 const GifSection = ({ gifs, isCurrentTimePeriod }) => {
-  if(isEmpty(gifs)) return null
-
   if(isCurrentTimePeriod && gifs.length < MIN_USERS_RESPONSES) return <PreviewGifSection />
+
+  if(isEmpty(gifs)) return null
 
   const gifItems = sortImagesByHeight(gifs).map((gif, index) => {
     return <div className='gif-item result-page' key={index}>
