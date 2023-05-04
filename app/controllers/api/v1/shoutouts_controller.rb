@@ -11,10 +11,8 @@ class Api::V1::ShoutoutsController < ApplicationController
     return unless @shoutout[:user_id] == current_user.id
 
     if !Shoutout.exists?(digest: @shoutout.digest) && @shoutout.save
-      debugger
-    if @shoutout[:recipients].length.positive?
-      RecipientShoutout.save(create_records_recipients @shoutout)
-    end
+
+      RecipientShoutout.create(records_recipients(@shoutout)) if @shoutout[:recipients].length.positive?
 
       render json: @shoutout, status: :ok
     else
@@ -23,11 +21,17 @@ class Api::V1::ShoutoutsController < ApplicationController
   end
 
   def update
+
     @shoutout = Shoutout.find(params[:id])
 
     return unless @shoutout[:user_id] == current_user.id
 
     if !Shoutout.exists?(digest: shoutout_params[:digest]) && @shoutout.update(shoutout_params)
+      if @shoutout[:recipients].length.positive?
+        RecipientShoutout.where(shoutout_id: @shoutout.id).destroy_all
+        RecipientShoutout.create(records_recipients(@shoutout))
+      end
+
       render json: @shoutout, status: :ok
     else
       render json: { error: @shoutout[:errors] }, status: :unprocessable_entity
@@ -41,11 +45,11 @@ class Api::V1::ShoutoutsController < ApplicationController
     parameters.merge({ 'digest' => digest_fields(parameters) })
   end
 
-  def create_records_recipients( shoutout )
-    records = []
-    return [{ user_id: shoutout[:user_id].to_i, id: shoutout.id }] if shoutout[:recipients].length == 1
+  def records_recipients( shoutout )
 
-    shoutout[:recipients].each { |user_id| records.push ({ user_id: user_id.to_i, id: shoutout.id }) }
-    records
+    return { user_id: shoutout[:user_id].to_i, shoutout_id: shoutout[:id] } if shoutout[:recipients].length == 1
+
+    shoutout[:recipients].map { |user_id| ({ user_id: user_id.to_i, shoutout_id: shoutout.id }) }
+
   end
 end

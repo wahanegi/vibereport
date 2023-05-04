@@ -21,7 +21,7 @@ module ApplicationHelper
     passwordless_session.expires_at <= Time.current
   end
 
-  def digest_fields( row )
+  def digest_fields(row)
     row_sum = 0
     [row[:user_id], row[:time_period_id], row[:rich_text], row[:recipients]].each do |field|
         digest = Digest::SHA1.hexdigest(field.to_s)
