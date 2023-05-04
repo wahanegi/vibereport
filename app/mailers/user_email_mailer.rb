@@ -16,6 +16,20 @@ class UserEmailMailer < ApplicationMailer
     emotions = Emotion.positive.sample(NUMBER) + Emotion.neutral.sample(NUMBER) + Emotion.negative.sample(NUMBER)
     emotions.each_slice(6) { |sliced_emotions| @table << sliced_emotions }
     @table = @table.transpose.flatten
-    mail(to: user.email, subject: "Hey #{user.first_name}, how was your week?")
+    mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
+  end
+
+  def results_email(user, time_period, words)
+    # TODO: Check back here when Epic: Results is done
+    general_link = api_v1_see_results_url(time_period_id: time_period.id, user_id: user.id, not_working: false)
+    uri = URI.parse(general_link)
+    query_params = URI.decode_www_form(uri.query || '') << ['last_step', 'results']
+    uri.query = URI.encode_www_form(query_params)
+    @link_see_the_results = uri.to_s
+    # TODO: Check back here when Epic: Results is done
+    @user = user
+    @time_period = time_period
+    @words = words
+    mail(to: @user.email, subject: "Hey #{user.first_name}, the results are in!")
   end
 end
