@@ -47,9 +47,9 @@ class Api::V1::ShoutoutsController < ApplicationController
 
   def records_recipients( shoutout )
 
-    return { user_id: shoutout[:user_id].to_i, shoutout_id: shoutout[:id] } if shoutout[:recipients].length == 1
+    return { user_id: shoutout[:recipients][0].to_i, shoutout_id: shoutout[:id] } if shoutout[:recipients].length == 1
 
-    shoutout[:recipients].map { |user_id| ({ user_id: user_id.to_i, shoutout_id: shoutout.id }) }
+    shoutout[:recipients].map { |user_id| { user_id: user_id.to_i, shoutout_id: shoutout.id } }
 
   end
 end
