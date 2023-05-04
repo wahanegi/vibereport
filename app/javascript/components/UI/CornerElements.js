@@ -5,6 +5,7 @@ import Menu from "./Menu";
 
 const CornerElements = ({
                             data,
+                            setData,
                             percentCompletion,
                             numShoutouts = 0,
                             isMoveShoutout }) => {
@@ -19,6 +20,7 @@ const CornerElements = ({
       </div>
       <QuestionButton />
       <ShoutoutButton   data = { data }
+                     setData = { setData }
                          num = { numShoutouts }
                       isMove = { isMoveShoutout }/>
       <Menu percentCompletion={percentCompletion} className='placement-menu'/>

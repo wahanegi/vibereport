@@ -10,15 +10,17 @@ class Api::V1::ShoutoutsController < ApplicationController
 
     return unless @shoutout[:user_id] == current_user.id
 
-    if !Shoutout.exists?(digest: @shoutout.digest) && @shoutout.save
+    if Shoutout.exists?(digest: shoutout_params[:digest])
+      render json: { error: 'Content shout out is exist!' }, status: :unprocessable_entity
 
+    elsif @shoutout.save
       RecipientShoutout.create(records_recipients(@shoutout)) if @shoutout[:recipients].length.positive?
 
       render json: @shoutout, status: :ok
     else
       render json: { error: @shoutout[:errors] }, status: :unprocessable_entity
     end
-  end
+end
 
   def update
 
@@ -26,7 +28,11 @@ class Api::V1::ShoutoutsController < ApplicationController
 
     return unless @shoutout[:user_id] == current_user.id
 
-    if !Shoutout.exists?(digest: shoutout_params[:digest]) && @shoutout.update(shoutout_params)
+    if Shoutout.exists?(digest: shoutout_params[:digest])
+      render json: { error: 'Content shout out is exist!' }, status: :unprocessable_entity
+
+    elsif @shoutout.update(shoutout_params)
+
       if @shoutout[:recipients].length.positive?
         RecipientShoutout.where(shoutout_id: @shoutout.id).destroy_all
         RecipientShoutout.create(records_recipients(@shoutout))

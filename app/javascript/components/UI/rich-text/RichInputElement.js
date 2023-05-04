@@ -6,6 +6,7 @@ import RichText from "./rich-text";
 import xClose from "../../../../assets/sys_svg/x-close.svg";
 import Button from "../Button";
 import RichTextArea from "./RichTextArea";
+import {apiRequest} from "../../requests/axios_requests";
 
 
 
@@ -13,7 +14,6 @@ const RichInputElement =({ richText = "",
                            listUsers: listAllUsers, className, setChosenUsers,
                            setRichText, onSubmit , onClose,
                            classAt = 'color-primary'}) =>{
-
   const [textHTML, setTextHTML] = useState( RichText.encodeSpace(richText))
   const textAreaRef = useRef(richText)
   const [filteredUsers, setFilteredUsers] = useState(RichText.sortUsersByFullName(listAllUsers))
@@ -63,7 +63,7 @@ const RichInputElement =({ richText = "",
 
   useEffect(()=>{
     if(richText.includes(TAG_AT)){
-      let users = RichText.findUsersInText( TAG_AT,END_TAG_AT, richText, listAllUsers)
+      let users = RichText.findUsersInText( TAG_AT,END_TAG_AT, RichText.decodeSpace(richText), listAllUsers)
       setChosenUsers(users)
       setCopyChosenUsers(users)
       setFilteredUsers( RichText.filtrationById( users, listAllUsers ))}
@@ -354,6 +354,13 @@ const clickEnterTabHandling = ( i ) => {
     } else { setIsDropdownList(false) }
   }
 
+  const submitHandling = () => {
+    onSubmit({
+      richText: textHTML,
+      chosenUsers: copyChosenUsers
+    })
+  }
+
   return (
     <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327'>
       <img src={xClose} className='position-absolute x-close' onClick={onClose}/>
@@ -364,7 +371,7 @@ const clickEnterTabHandling = ( i ) => {
                             onClick = { clickHandling }
                           className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'/>
         <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
-                onClick = { ()=>{} }>
+                onClick = { submitHandling }>
           Send Shoutout
         </Button>
       </div>
