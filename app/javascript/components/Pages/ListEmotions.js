@@ -103,7 +103,6 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <CornerElements         data = { data }
                                setData = { setData }
                      percentCompletion = {0}/>
-          <Menu className='placement-menu' percent_completion='100' />
         </div>
       }
     </Fragment>

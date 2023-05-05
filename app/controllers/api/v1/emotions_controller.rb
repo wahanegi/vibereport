@@ -79,10 +79,10 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def list_shoutouts_to(user)
-    list_ids_shot_outs = RecipientShoutout.where(user_id: user.id)
-    return {} if list_ids_shot_outs.nil?
-    return Shoutout.where(id: list_ids_shot_outs[0].shoutout_id) if list_ids_shot_outs.length == 1
+    shoutouts_to_user = ShoutoutRecipient.where(user_id: user.id)
+    return {} if shoutouts_to_user.empty?
+    return Shoutout.where(id: shoutouts_to_user[0].shoutout_id) if shoutouts_to_user.length == 1
 
-    list_ids_shot_outs.map { |item| Shoutout.find(item.shoutout_id) }
+    shoutouts_to_user.map { |item| Shoutout.find_by(id: item.shoutout_id) }
   end
 end

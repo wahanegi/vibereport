@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_02_090321) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_05_213955) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,6 +92,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_02_090321) do
     t.index ["user_id"], name: "index_responses_on_user_id"
   end
 
+  create_table "shoutout_recipients", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "shoutout_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["shoutout_id"], name: "index_shoutout_recipients_on_shoutout_id"
+    t.index ["user_id"], name: "index_shoutout_recipients_on_user_id"
+  end
+
   create_table "shoutouts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "digest", null: false
@@ -133,6 +142,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_02_090321) do
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
+  add_foreign_key "shoutout_recipients", "shoutouts"
+  add_foreign_key "shoutout_recipients", "users"
   add_foreign_key "shoutouts", "time_periods"
   add_foreign_key "shoutouts", "users"
 end

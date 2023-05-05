@@ -4,44 +4,29 @@ class Api::V1::ShoutoutsController < ApplicationController
   include ApplicationHelper
   before_action :require_user!
 
-  ERROR_1 = 'Content shout out is exist!'.freeze
+  CONTENT_SHOUTOUT_EXISTS_ERROR = 'A content shoutout already exists!'.freeze
 
   def create
+    return render_error(CONTENT_SHOUTOUT_EXISTS_ERROR) if Shoutout.exists?(digest: shoutout_params[:digest])
+
     @shoutout = Shoutout.new(shoutout_params)
-
-    return unless @shoutout[:user_id] == current_user.id
-
-    if Shoutout.exists?(digest: shoutout_params[:digest])
-      render json: { error: ERROR_1 }, status: :unprocessable_entity
-
-    elsif @shoutout.save
-      RecipientShoutout.create(records_recipients(@shoutout)) if @shoutout[:recipients].length.positive?
-
+    if @shoutout.save
+      create_shoutout_recipients(@shoutout) unless @shoutout[:recipients].empty?
       render json: @shoutout, status: :ok
     else
-      render json: { error: @shoutout[:errors] }, status: :unprocessable_entity
+      render_error(@shoutout.errors.full_messages)
     end
 end
 
   def update
+    return render_error(CONTENT_SHOUTOUT_EXISTS_ERROR) if similar_shoutout_exists?(shoutout_params[:digest])
 
     @shoutout = Shoutout.find(params[:id])
-
-    return unless @shoutout[:user_id] == current_user.id
-
-    if Shoutout.exists?(digest: shoutout_params[:digest])
-      render json: { error: ERROR_1 }, status: :unprocessable_entity
-
-    elsif @shoutout.update(shoutout_params)
-
-      if @shoutout[:recipients].length.positive?
-        RecipientShoutout.where(shoutout_id: @shoutout.id).destroy_all
-        RecipientShoutout.create(records_recipients(@shoutout))
-      end
-
+    if @shoutout.update(shoutout_params)
+      update_shoutout_recipients(@shoutout)
       render json: @shoutout, status: :ok
     else
-      render json: { error: @shoutout[:errors] }, status: :unprocessable_entity
+      render_error(@shoutout.errors.full_messages)
     end
   end
 
@@ -52,11 +37,29 @@ end
     parameters.merge({ 'digest' => digest_fields(parameters) })
   end
 
-  def records_recipients( shoutout )
-
+  def records_recipients(shoutout)
     return { user_id: shoutout[:recipients][0].to_i, shoutout_id: shoutout[:id] } if shoutout[:recipients].length == 1
 
     shoutout[:recipients].map { |user_id| { user_id: user_id.to_i, shoutout_id: shoutout.id } }
-
   end
+
+  def similar_shoutout_exists?(digest)
+    Shoutout.exists?(digest:)
+  end
+
+  def render_error(error_message)
+    render json: { error: error_message }, status: :unprocessable_entity
+  end
+
+  def create_shoutout_recipients(recipients)
+    ShoutoutRecipient.create(records_recipients(recipients))
+  end
+
+  def update_shoutout_recipients(shoutout)
+    return unless shoutout[:recipients].empty?
+
+    ShoutoutRecipient.where(shoutout_id: shoutout.id).destroy_all
+    create_shoutout_recipients(shoutout.recipients)
+  end
+
 end

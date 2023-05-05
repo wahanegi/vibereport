@@ -20,7 +20,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                               rich_text: 'value2',
                                               recipients: [user2.id, user3.id, user4.id] } }
         end.to change(Shoutout, :count).by(1)
-        expect(RecipientShoutout.all.length).to be(3)
+        expect(ShoutoutRecipient.all.length).to be(3)
       end
 
       it 'not allow duplicate records' do
@@ -35,7 +35,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                               rich_text: 'Similar message',
                                               recipients: [user2.id, user3.id, user4.id] } }
         end.to change(Shoutout, :count).by(1)
-        expect(RecipientShoutout.all.length).to be(3)
+        expect(ShoutoutRecipient.all.length).to be(3)
       end
     end
 
@@ -48,21 +48,21 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                               rich_text: 'value2',
                                               recipients: [user2.id, user3.id, user4.id] } }
         end.not_to change(Shoutout, :count)
-        expect(RecipientShoutout.all.length).to be(0)
+        expect(ShoutoutRecipient.all.length).to be(0)
         expect do
           post :create, params: { shoutout: { user_id: nil,
                                               time_period_id: time_period[:id],
                                               rich_text: 'value2',
                                               recipients: [user2.id, user3.id, user4.id] } }
         end.not_to change(Shoutout, :count)
-        expect(RecipientShoutout.all.length).to be(0)
+        expect(ShoutoutRecipient.all.length).to be(0)
         expect do
           post :create, params: { shoutout: { user_id: user[:id],
                                               time_period_id: time_period[:id],
                                               rich_text: nil,
                                               recipients: [user2.id, user3.id, user4.id] } }
         end.not_to change(Shoutout, :count)
-        expect(RecipientShoutout.all.length).to be(0)
+        expect(ShoutoutRecipient.all.length).to be(0)
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                           time_period_id: time_period[:id],
                                           rich_text: '<br>',
                                           recipients: [user5.id] } }
-      expect(RecipientShoutout.all.length).to be(1)
+      expect(ShoutoutRecipient.all.length).to be(1)
       expect(response.body).to include_json({
                                               user_id: user[:id],
                                               time_period_id: time_period[:id],
@@ -87,7 +87,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                           time_period_id: time_period[:id],
                                           rich_text: '<br>',
                                           recipients: [user2.id, user3.id, user4.id] } }
-      expect(RecipientShoutout.all.length).to be(3)
+      expect(ShoutoutRecipient.all.length).to be(3)
       expect(response.body).to include_json({
                                               user_id: user[:id],
                                               time_period_id: time_period[:id],
@@ -110,9 +110,9 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                           digest: 1234567890 })
     end
     let!(:recipients) do
-      create(:recipient_shoutout, { shoutout_id: 1, user_id: user2[:id] })
-      create(:recipient_shoutout, { shoutout_id: 1, user_id: user3[:id] })
-      create(:recipient_shoutout, { shoutout_id: 1, user_id: user4[:id] })
+      create(:shoutout_recipient, { shoutout_id: 1, user_id: user2[:id] })
+      create(:shoutout_recipient, { shoutout_id: 1, user_id: user3[:id] })
+      create(:shoutout_recipient, { shoutout_id: 1, user_id: user4[:id] })
     end
     let!(:shoutout2) do
       create(:shoutout, { id: 2,
@@ -126,9 +126,9 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                                  recipients: [user5.id.to_s, user3.id.to_s, user4.id.to_s] }) })
     end
     let!(:recipients2) do
-      create(:recipient_shoutout, { shoutout_id: 2, user_id: user5[:id] })
-      create(:recipient_shoutout, { shoutout_id: 2, user_id: user3[:id] })
-      create(:recipient_shoutout, { shoutout_id: 2, user_id: user4[:id] })
+      create(:shoutout_recipient, { shoutout_id: 2, user_id: user5[:id] })
+      create(:shoutout_recipient, { shoutout_id: 2, user_id: user3[:id] })
+      create(:shoutout_recipient, { shoutout_id: 2, user_id: user4[:id] })
     end
     context 'with valid attributes' do
       it 'updates shoutouts' do
@@ -140,8 +140,8 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                               recipients: [user2.id, user3.id, user5.id] } }
         shoutout.reload
         expect(shoutout.rich_text).to eq('@Person1 thanks')
-        expect(RecipientShoutout.all.length).to be(6)
-        expect(RecipientShoutout.find_by(user_id: user5.id)[:user_id]).to be(user5.id)
+        expect(ShoutoutRecipient.all.length).to be(6)
+        expect(ShoutoutRecipient.find_by(user_id: user5.id)[:user_id]).to be(user5.id)
       end
     end
     context 'with similar rich text' do
@@ -151,7 +151,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                             time_period_id: time_period[:id],
                                             rich_text: '@Person1 thanks',
                                             recipients: [user2.id, user3.id, user4.id] } }
-        expect(RecipientShoutout.all.length).to be(9)
+        expect(ShoutoutRecipient.all.length).to be(9)
         patch :update, params: {  id: shoutout.id,
                                   shoutout: { user_id: user[:id],
                                               time_period_id: time_period[:id],
@@ -170,7 +170,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                               recipients: [user2.id, user3.id, user4.id] } }
           shoutout.reload
         end.to change(Shoutout, :count).by(1)
-        expect(RecipientShoutout.all.length).to be(9)
+        expect(ShoutoutRecipient.all.length).to be(9)
         patch :update, params: {  id: Shoutout.last[:id],
                                   shoutout: { user_id: user1[:id],
                                               time_period_id: time_period[:id],

@@ -19,7 +19,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
-  factory :recipient_shoutout do
+  factory :shoutout_recipient do
     user { "MyString" }
     shoutout { "MyString" }
   end
