@@ -64,7 +64,6 @@ const ResponseFlow = ({step, data, setData}) => {
           }
         }
         apiRequest("GET", "", handlingSteps, ()=>{}, '/api/v1/emotions.json').catch(e=>setError(e))
-
       });
   },[])
 

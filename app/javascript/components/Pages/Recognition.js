@@ -9,22 +9,20 @@ import ShoutoutModal from "../UI/ShoutoutModal";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
-  const limit = 40
-  const shoutOuts = [{id:0, msg:'@Team2 you\'re all doing so awesome! thanks!'},
-    {id:1, msg:'@roger thanks for the help with Project1'},
-    {id:2, msg:'@roger thanks for the help with Project2'},
-    {id:3, msg:'@roger thanks for the help with Vibe Report Project. ' +
-        'Significant pleasure to @Marina Harashko @Lyuba Pidoshva @Serhii Borozenets @Alona @Marta'}]
-const numShoutOuts = shoutOuts.length
 
+  const shoutOuts = data.my_shout_outs_to_other
+      .filter( item => item.time_period_id === data.time_period.id)
+      .sort( (a,b) =>  a.updated_at < b.updated_at ? 1 : -1 )
+
+  const numShoutOuts = shoutOuts.length
 
   const skipHandling = () =>{
-    steps.push('emotion-selection-web')
+    steps.push('recognition')
     saveDataToDb( steps )
   }
 
   const nextHandling = () =>{
-    steps.push('emotion-selection-web')
+    steps.push('recognition')
     saveDataToDb( steps )
   }
   const editHandling = (e) =>{
@@ -36,46 +34,32 @@ const numShoutOuts = shoutOuts.length
   }
 
   const closeHandling = () => {
-    setShoutOutForm( { status: false, editObj: '' } )
+    setShoutOutForm( { status: false, editObj: {} } )
   }
 
 
   const output = (shoutOuts) =>{
-    const findUniteNames  = (words) => {
-      const arr = []
-      for( let i=0; i < words.length; i++){
-        let word = words[i]
-        if (word[0] === '@' && i < words.length - 1){
-          if (null !== words[i + 1].match(/[A-Z]/)) {
-            word +=  ' ' + words[++i]
-          }
-        }
-        arr.push(word)
-      }
-      return arr
-    }
-    shoutOuts.forEach((shoutOut, index) => {
-      let words = findUniteNames(shoutOut.msg.split(" "))
-      for (let i=0; i<words.length; i++){
-        words[i] = words[i][0] ==='@' ? '<span className="color-primary">' + words[i] + '</span>' : words[i]
-      }
-      shoutOuts[index].msg = words.join(' ')
-    })
 
     return (
       <ul>
       {shoutOuts.map( shoutOut => (
       <li className='c3' key={ shoutOut.id }>
         <span>
-          <p className='fw-semibold mb-0  cut-text'>{parse(shoutOut.msg)}</p>
+          <p className='fw-semibold mb-0  cut-text'>{parse(shoutOut.rich_text)}</p>
         </span>
         <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" onClick={editHandling}/>
       </li>
       ))}
       </ul>
     )
+  }
 
-
+  const cornerElements = (num) => {
+    return <CornerElements data = { data }
+                        setData = { setData }
+              percentCompletion = { 80 }
+                   numShoutouts = { num }
+                 isMoveShoutout = { true }/>
   }
 
   return (
@@ -101,14 +85,11 @@ const numShoutOuts = shoutOuts.length
                 {output(shoutOuts)}
               </div>
               <p className='b3 mt-4 lh-base'>Any more shoutouts to give?</p>
+              { cornerElements( numShoutOuts ) }
             </div>
         }
-      <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext = { !!numShoutOuts } />
-      <CornerElements data = { data }
-                   setData = { setData }
-         percentCompletion = {80}
-              numShoutouts = { numShoutOuts }
-            isMoveShoutout = { true }/>
+      <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext = { !!numShoutOuts } />
+      {!numShoutOuts && cornerElements( numShoutOuts )}
     </Wrapper>
   );
 };

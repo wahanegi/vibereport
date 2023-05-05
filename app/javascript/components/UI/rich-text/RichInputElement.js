@@ -6,7 +6,6 @@ import RichText from "./rich-text";
 import xClose from "../../../../assets/sys_svg/x-close.svg";
 import Button from "../Button";
 import RichTextArea from "./RichTextArea";
-import {apiRequest} from "../../requests/axios_requests";
 
 
 

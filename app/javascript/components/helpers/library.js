@@ -30,7 +30,10 @@ export  const mergeData = (receivedData, data, setData) =>{
       attributes: {
         ...receivedData.data.attributes}},
     emotion:{
-      ...receivedData.emotion}
+      ...receivedData.emotion},
+    my_shout_outs_to_other: [
+      ...receivedData.my_shout_outs_to_other
+    ]
   })
 }
 

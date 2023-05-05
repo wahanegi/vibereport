@@ -4,6 +4,7 @@ class Api::V1::ShoutoutsController < ApplicationController
   include ApplicationHelper
   before_action :require_user!
 
+  ERROR_1 = 'Content shout out is exist!'.freeze
 
   def create
     @shoutout = Shoutout.new(shoutout_params)
@@ -11,7 +12,7 @@ class Api::V1::ShoutoutsController < ApplicationController
     return unless @shoutout[:user_id] == current_user.id
 
     if Shoutout.exists?(digest: shoutout_params[:digest])
-      render json: { error: 'Content shout out is exist!' }, status: :unprocessable_entity
+      render json: { error: ERROR_1 }, status: :unprocessable_entity
 
     elsif @shoutout.save
       RecipientShoutout.create(records_recipients(@shoutout)) if @shoutout[:recipients].length.positive?
@@ -29,7 +30,7 @@ end
     return unless @shoutout[:user_id] == current_user.id
 
     if Shoutout.exists?(digest: shoutout_params[:digest])
-      render json: { error: 'Content shout out is exist!' }, status: :unprocessable_entity
+      render json: { error: ERROR_1 }, status: :unprocessable_entity
 
     elsif @shoutout.update(shoutout_params)
 

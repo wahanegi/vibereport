@@ -28,7 +28,7 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
         })
         let  currentShoutOuts  = data.my_shout_outs_to_other
 
-        if (idEditText === null) {
+        if ( idEditText ) {
           currentShoutOuts = currentShoutOuts.filter( item => item.id !== idEditText )
         }
 
@@ -47,7 +47,7 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
     }
     return <RichInputElement
             richText = { richText }
-           listUsers = { data.users }
+           listUsers = { data.users.filter(user => user.id !== data.current_user_id) }
            className = ''
              onClose = { onClose }
       setChosenUsers = { ()=>{} }
