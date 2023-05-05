@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {rangeFormat} from "../../helpers/helpers";
+import {lastEl, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   BtnPrimary,
@@ -22,6 +22,8 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const [results, setResults] = useState( {})
   const {answers, emotions, fun_question, gifs, time_periods} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
+  const [prevTimePeriod, setPrevTimePeriod] = useState(null)
+  const [nextTimePeriod, setNextTimePeriod] = useState(null)
   const [timePeriodIndex, setTimePeriodIndex] = useState(0);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
   const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
@@ -29,9 +31,6 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   '</br></br>Skip this chek-in if you weren\'t working.'
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
-  const [isCurrentTimePeriod, setIsCurrentTimePeriod] = useState(false)
-  console.log('results', results)
-  console.log('data', data)
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
@@ -53,13 +52,13 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     onRemoveAlert()
   }
 
-  const nextTimePeriod = () => {
+  const showNextTimePeriod = () => {
     if (timePeriodIndex > 0) {
       setTimePeriodIndex(index => (index - 1));
     }
   }
 
-  const prevTimePeriod = () => {
+  const showPrevTimePeriod = () => {
     if (timePeriodIndex < (time_periods.length - 1)) {
       setTimePeriodIndex(index => (index + 1));
     }
@@ -67,23 +66,26 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
 
   const Footer = () =>
     <div className='d-flex justify-content-between m-3'>
-      <ShoutOutIcon addClass={!isCurrentTimePeriod ? 'd-none' : ''} />
+      <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : ''} />
       <div className="d-flex flex-column mb-3">
-        <BtnBack text ='Back to current week' hidden={isCurrentTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
+        <BtnBack text ='Back to current week' hidden={!nextTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
         <BtnPrimary text ='Done' addClass='mt-auto' />
       </div>
       <HelpIcon />
     </div>
 
   useEffect(() => {
-    time_periods && setTimePeriod(time_periods[timePeriodIndex])
-  }, [timePeriodIndex])
+    if (time_periods) {
+      setTimePeriod(time_periods[timePeriodIndex])
+      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
+      setNextTimePeriod(time_periods[timePeriodIndex - 1])
+    }
+    }, [timePeriodIndex, time_periods?.length])
 
   useEffect(() => {
     axios.get(`/api/v1/results/${timePeriod.id}`)
       .then(res => {
         setResults(res.data)
-        setIsCurrentTimePeriod(timePeriodIndex === 0)
         setLoaded(true)
       })
   }, [timePeriod])
@@ -100,11 +102,11 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
         <h1>So far this week, the <br/> the team is feeling...</h1>:
         <h1>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
     }
-    <NavigationBar {...{timePeriod, prevTimePeriod, nextTimePeriod, timePeriodIndex, time_periods}} />
-    <EmotionSection emotions={emotions} isCurrentTimePeriod={isCurrentTimePeriod} data={data} />
-    <GifSection gifs={gifs} isCurrentTimePeriod={isCurrentTimePeriod} />
-    <ShoutoutSection isCurrentTimePeriod={isCurrentTimePeriod} />
-    <QuestionSection fun_question={fun_question} answers={answers} />
+    <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod}} />
+    <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
+    <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
+    <ShoutoutSection nextTimePeriod={nextTimePeriod} />
+    <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
     <Footer />
   </Wrapper>
   }

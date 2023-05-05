@@ -10,6 +10,7 @@ import {NavLink} from "react-router-dom";
 import polygonLeft from "../../../assets/images/polygon-left.svg"
 import polygonRight from "../../../assets/images/polygon-right.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
+import line from "../../../assets/images/line.svg"
 
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
@@ -31,13 +32,21 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
     {text}
   </button>
 
-export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, hideLeft = false}) =>
+export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
+                           positionRight = false, prevTimePeriod}) =>
   isPresent(date) && !hidden && <div className="position-relative pointer" onClick={onClick} style={{maxWidth: 82}}>
     <img src={calendar} alt="calendar" />
-    <div className="position-absolute top-0 mt-4 ms-1">
-      {datePrepare(date)}
+    <div className="position-absolute top-0">
+      {date.includes('—') ?
+        <div className='mt-3 d-flex'>
+          {date.split('—')[0]}
+          <img src={line} alt="line" />
+          {date.split('—')[1]}
+        </div>:
+        <div className='mt-5' style={{marginLeft: 7}}>{date}</div>
+      }
     </div>
-    { !hideLeft && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
+    { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
     { positionRight && <img className="position-absolute" style={{right: -26, top: 29}} src={polygonRight} alt="polygon right"/> }
   </div>
 

@@ -13,22 +13,26 @@ export const backHandling = () => {
 }
 
 export const rangeFormat = (tp) => {
+  if (isBlank(tp)) return null
+
   const start_date = new Date(tp.start_date)
   const end_date = new Date(tp.end_date)
-  const month_start = start_date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
-  const month_end = end_date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
+  const month_start = shortMonth(start_date)
+  const month_end = shortMonth(end_date)
   if (month_start === month_end) {
     return `${start_date.getDate()}-${end_date.getDate()} ${month_start}`
   } else {
-    return `${month_start} ${start_date.getDate()} - ${month_end} ${end_date.getDate()}`
+    return `${datePrepare(start_date)} — ${datePrepare(end_date)}`
   }
 }
 
 export const datePrepare = (time) => {
   const date = new Date(time)
-  const month = date.toLocaleString('en-GB', {month: 'long'}).slice(0,3)
-  return `${month} ${date.getDate()}`.padStart(2, '0')
+  const month = shortMonth(date)
+  return `${month} ${date.getDate()}`
 }
+
+export const shortMonth = (date) => date.toLocaleString('en-GB', {month: 'short'})
 
 export function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);

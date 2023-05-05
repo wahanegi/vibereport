@@ -1,14 +1,16 @@
 import React from "react";
 import {Calendar, EditResponse} from "../../UI/ShareContent";
-import {backHandling, isEmpty, lastEl} from "../../helpers/helpers";
+import {backHandling, datePrepare, isBlank, isEmpty, isPresent, lastEl, rangeFormat} from "../../helpers/helpers";
 
-const NavigationBar = ({timePeriod, prevTimePeriod, nextTimePeriod, timePeriodIndex, time_periods}) => {
+const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod}) => {
   if(isEmpty(time_periods)) return null
 
   return <div className='d-flex justify-content-between' style={{marginLeft: 140, marginRight: 140}}>
-    <Calendar date={timePeriod.start_date} onClick={prevTimePeriod} positionLeft={true} hideLeft={timePeriod.id === lastEl(time_periods).id} />
-    <Calendar date={timePeriod.end_date} onClick={nextTimePeriod} positionRight={true} hidden={timePeriodIndex === 0} />
-    <EditResponse onClick={backHandling} hidden={timePeriodIndex !== 0} />
+    <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
+              positionLeft={true} prevTimePeriod={prevTimePeriod} />
+    <Calendar date={isPresent(prevTimePeriod) && isPresent(nextTimePeriod) ? rangeFormat(nextTimePeriod) : datePrepare(timePeriod.end_date)} onClick={showNextTimePeriod}
+              positionRight={true} hidden={isBlank(nextTimePeriod)} prevTimePeriod={prevTimePeriod} />
+    <EditResponse onClick={backHandling} hidden={nextTimePeriod} />
   </div>
 }
 

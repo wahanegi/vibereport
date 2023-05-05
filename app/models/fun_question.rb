@@ -30,7 +30,6 @@ class FunQuestion < ApplicationRecord
 
   scope :question_public, -> { where(public: true) }
   scope :not_used, -> { where(used: false) }
-  scope :question_public, -> { where(public: true).where(used: false) }
 
   validates :question_body, presence: true
   validates :time_period, uniqueness: true, unless: -> { time_period.nil? }

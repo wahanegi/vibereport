@@ -8,16 +8,20 @@
     &.question {
       border: 3px solid $emerald;
       background: $tea-green;
+      &.preview {
+        height: 500px;
+        filter: blur(8px);
+      }
     }
     &.shoutout {
       background: $pink;
       border: 3px solid $red-violet;
       &.preview {
-        height: 700px;
+        height: 500px;
         filter: blur(8px);
       }
-
     }
+
     &.answer {
       background: none;
       min-height: auto;

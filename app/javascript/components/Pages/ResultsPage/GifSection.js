@@ -38,8 +38,8 @@ const PreviewGifSection = () => {
   </Wrapper>
 }
 
-const GifSection = ({ gifs, isCurrentTimePeriod }) => {
-  if(isCurrentTimePeriod && gifs.length < MIN_USERS_RESPONSES) return <PreviewGifSection />
+const GifSection = ({ gifs, nextTimePeriod }) => {
+  if(!nextTimePeriod && gifs.length < MIN_USERS_RESPONSES) return <PreviewGifSection />
 
   if(isEmpty(gifs)) return null
 
