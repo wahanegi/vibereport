@@ -7,7 +7,7 @@ class Api::V1::ShoutoutsController < ApplicationController
   CONTENT_SHOUTOUT_EXISTS_ERROR = 'A content shoutout already exists!'.freeze
 
   def create
-    return render_error(CONTENT_SHOUTOUT_EXISTS_ERROR) if Shoutout.exists?(digest: shoutout_params[:digest])
+    return render_error(CONTENT_SHOUTOUT_EXISTS_ERROR) if similar_shoutout_exists?(shoutout_params[:digest])
 
     @shoutout = Shoutout.new(shoutout_params)
     if @shoutout.save
