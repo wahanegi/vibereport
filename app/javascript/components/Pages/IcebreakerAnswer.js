@@ -12,7 +12,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const prevAnswerBody = prevStateAnswer?.answer_body
   const answerBody = answerFunQuestion?.answer_body
   const {user_name, question_body} = data.fun_question
-  const user = user_name || 'Admin'
+  const user = user_name
   const current_user_id = data.current_user.id
 
   const handlingOnClickNext = () => {
@@ -72,15 +72,15 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
       {loaded && !isLoading && !error &&
         <Wrapper>
           <Header/>
-          <div className='d-flex justify-content-center flex-column'>
+          <div className='d-flex justify-content-beetwen flex-column' style={{height: '200px'}}>
             <h1 className='mb-0'>Kick back, relax.</h1>
-            <h1 className='mb-3'>Time for question of the week!</h1>
-            <h2 className='color-black mb-1'>Brought to us by <span className='color-rose'>@</span>{user}</h2>
+            <h1 className='mb-3'>Time for a team question!</h1>
+            {user && <h2 className='color-black mb-0'>Brought to us by <span className='red-violet'>@</span>{user}</h2>}
           </div>
           <div className='icebreaker'>
             <div className='wrap'>
-              <p className='b3 muted'><span className='color-rose'>@</span>{user} asks:</p>
-              <h5>{question_body}</h5>
+              {user && <p className='b3 muted align-content-end'><span className='red-violet'>@</span>{user} asks:</p>}
+              <h5 className='text-md-start'>{question_body}</h5>
               <form>
                 <div className="form-group">
                   <textarea className="input mb-0" name='answer_body'
