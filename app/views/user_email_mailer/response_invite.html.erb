@@ -36,8 +36,8 @@
       <div class="data"><%= @view_complete_by %></div>
     </div>
   </div>
-  <div class="mx-auto my-0 invitation">Time for this week's check-in!</div>
-  <div class="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
+  <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
+  <div class="mx-auto my-0 question">Which word best describes how you’ve recently felt about work?</div>
   <div>
       <% (0..@table.length/6-1).each do |row|%>
         <div class="emotions d-flex">
@@ -60,7 +60,7 @@
   </div>
   <div class="row-over-links">
     <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
-      <%= link_to "I was not working this week", @link_for_was_not %>
+      <%= link_to "I was not working recently", @link_for_was_not %>
     </div>
   </div>
   <div class="lnk-unsubscribe" style="text-align: left">

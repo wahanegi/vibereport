@@ -9,9 +9,11 @@ import RichTextArea from "./RichTextArea";
 
 
 
-const RichInputElement =({ richText = "",
-                           listUsers: listAllUsers, className, setChosenUsers,
-                           setRichText, onSubmit , onClose,
+const RichInputElement =({ richText = '',
+                           listUsers: listAllUsers,
+                           setChosenUsers = ()=>{},
+                           onSubmit ,
+                           onClose,
                            classAt = 'color-primary'}) =>{
   const [textHTML, setTextHTML] = useState( RichText.encodeSpace(richText))
   const textAreaRef = useRef(richText)

@@ -75,10 +75,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                </div>
              </div>
           </div>
-          <div className="invitation mx-auto p-0">Time for this week's check-in!</div>
-          <div className="mx-auto my-0 question">Which word best describes how you felt at work this week?</div>
+          <div className="invitation mx-auto p-0">Time for your latest check-in!</div>
+          <div className="mx-auto my-0 question">Which word best describes how you’ve recently felt about work?</div>
             <div className='d-flex mx-auto emotions'>
                 {emotions.map((emotion, index) =>
+                  <div className='width-block' key={emotion.id}>
                    <ButtonEmotion key={emotion.id}
                                   category={emotions[mixUp(index+1)].attributes.category}
                                   onClick={() =>
@@ -88,6 +89,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                                   )}>{emotions[mixUp(index+1)].attributes.word}
                      
                    </ButtonEmotion>
+                  </div>
                 )}
               </div>
           <div className="big-btn-tooltip correct">Share it in your own words!</div>
@@ -95,7 +97,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
           </div>
           <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
-            I was not working this week
+            I was not working recently
           </NavLink>
           <QuestionButton />
           <CornerElements         data = { data }
