@@ -2,7 +2,7 @@
 export default class RichText {
   
   static filtrationById = ( separatorArr, mainArr ) => {
-    if ( !separatorArr.length ) {return mainArr}
+    if ( !separatorArr?.length ) {return mainArr}
     return mainArr.filter(item=> !separatorArr.some(({ id }) => id === item.id))
   }
 

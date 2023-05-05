@@ -7,8 +7,7 @@ import {isEmpty} from "../helpers/helpers";
 const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) => {
 
   const BackDrop = () => {
-    return <div className='backdrop' onClick={ onClose }>
-    </div>
+    return <div className='backdrop' onClick={ onClose }/>
   }
 
   const ModalOverlay = () =>{
