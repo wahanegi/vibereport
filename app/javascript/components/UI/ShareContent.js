@@ -43,7 +43,7 @@ export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
           <img src={line} alt="line" />
           {date.split('—')[1]}
         </div>:
-        <div className='mt-5' style={{marginLeft: 7}}>{date}</div>
+        <div className='mt-5' style={{marginLeft: `${isPresent(prevTimePeriod) ? '7px' : '15px'}`}}>{date}</div>
       }
     </div>
     { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
