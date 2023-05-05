@@ -573,8 +573,6 @@ a {
   &::-webkit-scrollbar {
     width: 16px;
   }
-}
-.drop-down-block {
   width:                200px;
   height:               155px;
   border-radius:        8px;
@@ -591,7 +589,7 @@ a {
     overflow:           hidden;
     padding-inline-start: 7px;
     &:focus, &.highlight   {
-      background-color: #CCCCCC;
+      background-color: $gray-100;
     }
     &.item:hover {
       border: 1px solid $primary;

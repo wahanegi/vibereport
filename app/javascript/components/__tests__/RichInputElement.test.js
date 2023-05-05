@@ -4,7 +4,6 @@ import RichInputElement from "../UI/rich-text/RichInputElement";
 import Cursor from "../UI/rich-text/cursor";
 import  RichText  from "../UI/rich-text/rich-text"
 
-
 const listUsers = [
   { id: 1, first_name: 'George', last_name: 'Washington' },
   { id: 2, first_name: 'Jackie', last_name: 'Chan' },

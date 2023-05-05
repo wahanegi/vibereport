@@ -116,7 +116,6 @@ export default class RichText {
     const startPos =
         cursorPos.isSPAN ? cursorPos.realPos - cursorPos.realFocusOffset  - tag.length + 1 : cursorPos.realPos
     const endPos  = htmlStr.indexOf(endTag, cursorPos.realPos ) + endTag.length
-    console.log(startPos, endPos, this.deleteString(htmlStr, startPos, endPos) , cursorPos.focusOffset , cursorPos)
     setObjHTML(this.deleteString(htmlStr, startPos, endPos))
     setCaret(cursorPos.isSPAN ? cursorPos.charCount - cursorPos.focusOffset : cursorPos.charCount)
     return htmlStr.slice(startPos, endPos)
@@ -126,15 +125,16 @@ export default class RichText {
     const startPos = cursorPos.realPos - cursorPos.realFocusOffset  - tag.length + 1
     const endPos  = htmlStr.indexOf(endTag, cursorPos.realPos ) + endTag.length
     let newHtmlTxt = this.deleteString(htmlStr, startPos, endPos)
-    setObjHTML(this.pasteCharsToString( chars, newHtmlTxt, startPos))
-    this.incrementPositionCursor( chars.length -1 , cursorPos, newHtmlTxt, setCaret)
+    newHtmlTxt = this.pasteCharsToString( chars, newHtmlTxt, startPos)
+    setObjHTML(newHtmlTxt)
+    this.incrementPositionCursor( chars.length - 1, cursorPos, newHtmlTxt, setCaret)
   }
 
   static findUsersInText( tag, endTag, richText, listUsers) {
       const users = []
       let pos = 0
       while ((pos = richText.indexOf(tag, pos)) !== -1) {
-        pos += + tag.length
+        pos += tag.length
         users.push(listUsers.find(user => this.userFullName(user) === richText.slice(pos, richText.indexOf(endTag, pos))))
       }
       return users

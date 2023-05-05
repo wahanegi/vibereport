@@ -3,7 +3,7 @@ import parse from "html-react-parser";
 
 const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className }) => {
     return (
-        <div className = { className } style={{overflow: "hidden"}}>
+        <div className = {` ${className} overflow-hidden`}>
           <div contentEditable={ true }
              suppressContentEditableWarning = { true }
              onKeyDown = { onKeyDown }

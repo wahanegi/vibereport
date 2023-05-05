@@ -1,11 +1,8 @@
 //For set up caret to the defiantly position
 
 import RichText from "./rich-text";
-
 export default class Cursor {
-
     static getCurrentCursorPosition(parentElement) {
-
         if(window.getSelection()) {
             const selection = window.getSelection()
             let charCount = -1
@@ -15,8 +12,6 @@ export default class Cursor {
             let realPos = 0
             let realFocusOffset
             let coordinates = {x: 0, y: 0};
-
-
             if (selection.focusNode) {
                 if (Cursor._isChildOf(selection.focusNode, parentElement)) {
                     focusNode = selection.focusNode;
@@ -27,12 +22,10 @@ export default class Cursor {
                         focusNode.parentNode.outerHTML.length - '</span>'.length -
                         RichText.encodeSpace(RichText.decodeSpace160(focusNode.textContent)).length : 0
                     realFocusOffset = RichText.encodeSpace(RichText.decodeSpace160(focusNode.textContent.slice(0, focusOffset))).length
-
                     while (node) {
                         if (node === parentElement) {
                             break;
                         }
-
                         if (node.previousSibling) {
                             node = node.previousSibling;
                             charCount += node.textContent.length;
@@ -47,14 +40,11 @@ export default class Cursor {
                     }
                 }
             }
-
             if (selection.rangeCount) {
                 let range = selection.getRangeAt(0).cloneRange();
-
                 if (range.getClientRects) {
                     range.collapse(true);
                     let rects = range.getClientRects();
-
                     if (rects.length > 0) {
                         let rect = rects[0];
                         coordinates.x = rect.left ;
@@ -62,7 +52,6 @@ export default class Cursor {
                     }
                 }
             }
-
             return {
                 charCount: charCount,
                 focusNode: focusNode,
@@ -80,7 +69,6 @@ export default class Cursor {
         if (chars >= 0) {
             const selection = window.getSelection();
             let range = Cursor._createRange(element, { count: chars });
-
             if (range) {
                 range.collapse(false);
                 selection.removeAllRanges();
@@ -95,7 +83,6 @@ export default class Cursor {
             range.selectNode(node);
             range.setStart(node, 0);
         }
-
         if (chars.count === 0) {
             range.setEnd(node, chars.count);
         } else if (node && chars.count >0) {
@@ -109,14 +96,12 @@ export default class Cursor {
             } else {
                 for (let lp = 0; lp < node.childNodes.length; lp++) {
                     range = Cursor._createRange(node.childNodes[lp], chars, range);
-
                     if (chars.count === 0) {
                         break;
                     }
                 }
             }
         }
-
         return range;
     }
 
@@ -127,7 +112,6 @@ export default class Cursor {
             }
             node = node.parentNode;
         }
-
         return false;
     }
 }
