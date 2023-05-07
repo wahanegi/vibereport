@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :results, only: %i[show]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
+      get '/see_results', to: 'responses#see_results'
     end
   end
   get '*path', to: 'home#app'
