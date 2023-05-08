@@ -10,7 +10,7 @@ import ShoutoutModal from "../UI/ShoutoutModal";
 const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
 
-  const shoutOuts = data.my_shout_outs_to_other
+  const shoutOuts = data.user_shoutouts
       .filter( item => item.time_period_id === data.time_period.id)
       .sort( (a,b) =>  a.updated_at < b.updated_at ? 1 : -1 )
 
@@ -28,7 +28,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
   const editHandling = (e) =>{
     e.preventDefault()
 
-    const editObj = data.my_shout_outs_to_other.find(item => item.id === Number(e.target.attributes.id.value))
+    const editObj = data.user_shoutouts.find(item => item.id === Number(e.target.attributes.id.value))
 
     setShoutOutForm( { status: true, editObj: editObj } )
   }

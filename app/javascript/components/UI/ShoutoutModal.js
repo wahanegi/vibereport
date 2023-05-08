@@ -22,14 +22,14 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
           recipients: chosenUsers.map(user => user.id)
         }}
       const dataFromServer = ( createdUpdatedShoutOut ) =>{
-        let  currentShoutOuts  = data.my_shout_outs_to_other
+        let  currentShoutOuts  = data.user_shoutouts
 
         if ( idEditText ) {
           currentShoutOuts = currentShoutOuts.filter( item => item.id !== idEditText )
         }
 
         setDataInDB({...data,
-          my_shout_outs_to_other: [...currentShoutOuts, createdUpdatedShoutOut]
+          user_shoutouts: [...currentShoutOuts, createdUpdatedShoutOut]
         })
 
         onClose()

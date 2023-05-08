@@ -41,10 +41,13 @@ const RichInputElement =({ richText = '',
     if ( Cursor.getCurrentCursorPosition(element).focusOffset == 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
+    setIsDisabled(true)
     if ( !RichText.userFullName( copyChosenUsers[0] ).length ) return
-    if ( caret > RichText.userFullName( copyChosenUsers[0] ).length + NUM_ENTERED_CHARS )  {
+    const lenText = element.innerText.length
+    if ( lenText > RichText.userFullName( copyChosenUsers[0] ).length + NUM_ENTERED_CHARS )  {
       let usersLen = copyChosenUsers.reduce((prev, cur) => prev + RichText.userFullName(cur).length + 2, 0)
-      if ( caret > usersLen + NUM_ENTERED_CHARS ) {
+      console.log( usersLen + NUM_ENTERED_CHARS )
+      if ( lenText > usersLen + NUM_ENTERED_CHARS ) {
         setIsDisabled(false)
       } else {
         setIsDisabled(true)

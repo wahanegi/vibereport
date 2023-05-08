@@ -8,8 +8,8 @@ export  const mergeData = (receivedData, data, setData) =>{
         ...receivedData.data.attributes}},
     emotion:{
       ...receivedData.emotion},
-    my_shout_outs_to_other: [
-      ...receivedData.my_shout_outs_to_other
+    user_shoutouts: [
+      ...receivedData.user_shoutouts
     ]
   })
 }
