@@ -25,5 +25,42 @@
 require 'rails_helper'
 
 RSpec.describe Shoutout, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  let!(:user) { User.create(first_name: 'Fu', last_name: 'Li', email: 'fuli45u6795@example.com', password: 'password') }
+  let!(:time_period) { TimePeriod.create(start_date: Time.zone.now, end_date: 7.days.from_now) }
+
+  describe 'validations' do
+    it 'should be valid with valid attributes' do
+      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person3 thanks!', user:, time_period:, recipients: [1, 2, 3])
+      expect(shoutout).to be_valid
+    end
+
+    it 'should be invalid without rich_text' do
+      shoutout = Shoutout.new(user:, time_period:, recipients: [1, 2, 3])
+      expect(shoutout).to be_invalid
+    end
+
+    it 'should be invalid without user' do
+      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person3 thanks!', time_period:, recipients: [1, 2, 3])
+      expect(shoutout).to be_invalid
+    end
+
+    it 'should be invalid without time_period' do
+      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person3 thanks!', user:, recipients: [1, 2, 3])
+      expect(shoutout).to be_invalid
+    end
+
+    it 'should be invalid with duplicate shoutouts' do
+      digest = 1234567890123456
+      Shoutout.create(rich_text: '@Person 1 @ @Person 2 @Person 3 thanks!', user:, time_period:, recipients: [1, 2, 3], digest:)
+      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person 3 thanks!', user:, time_period:, recipients: [1, 2, 3], digest:)
+      expect(shoutout).to be_invalid
+    end
+  end
+
+  describe 'associations' do
+    it { should belong_to(:user) }
+    it { should belong_to(:time_period) }
+    it { should have_many(:shoutout_recipients) }
+  end
+
 end

@@ -16,7 +16,6 @@ const ListItem = ( props ) => {
         props.onClick( props.index )
         break
       case 'ArrowUp':
-        console.log(i, props.dataList)
         props.changeIndexSel(i = props.index > 0 ? --i : props.dataList.length - 1)
         props.changeValSel(props.dataList[i].id)
         break

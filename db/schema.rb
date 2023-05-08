@@ -62,15 +62,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_213955) do
     t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
   end
 
-  create_table "recipient_shoutouts", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.bigint "shoutout_id"
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["shoutout_id"], name: "index_recipient_shoutouts_on_shoutout_id"
-    t.index ["user_id"], name: "index_recipient_shoutouts_on_user_id"
-  end
-
   create_table "responses", force: :cascade do |t|
     t.text "bad_follow_comment"
     t.text "celebrate_comment"
@@ -137,8 +128,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_213955) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "recipient_shoutouts", "shoutouts"
-  add_foreign_key "recipient_shoutouts", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"

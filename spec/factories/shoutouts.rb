@@ -24,7 +24,7 @@
 #
 FactoryBot.define do
   factory :shoutout do
-    rich_text { "MyText" }
-    recipients { "MyString" }
+    association :user, factory: :user
+    association :time_period, factory: :time_period
   end
 end

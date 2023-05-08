@@ -47,7 +47,7 @@ class Api::V1::EmotionsController < ApplicationController
       users: User.ordered.map do |user|
         { id: user.id, display: user.first_name, first_name: user.first_name, last_name: user.last_name }
       end,
-      my_shout_outs_to_other: Shoutout.where(user_id: current_user.id),
+      my_shout_outs_to_other: current_user.shoutouts,
       other_shout_outs_to_me: list_shoutouts_to(current_user)
     }
   end
@@ -79,10 +79,7 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def list_shoutouts_to(user)
-    shoutouts_to_user = ShoutoutRecipient.where(user_id: user.id)
-    return {} if shoutouts_to_user.empty?
-    return Shoutout.where(id: shoutouts_to_user[0].shoutout_id) if shoutouts_to_user.length == 1
-
-    shoutouts_to_user.map { |item| Shoutout.find_by(id: item.shoutout_id) }
+    shoutout_ids = ShoutoutRecipient.where(user_id: user.id).pluck(:shoutout_id)
+    Shoutout.where(id: shoutout_ids).presence || {}
   end
 end

@@ -11,7 +11,7 @@ class Api::V1::ShoutoutsController < ApplicationController
 
     @shoutout = Shoutout.new(shoutout_params)
     if @shoutout.save
-      create_shoutout_recipients(@shoutout) unless @shoutout[:recipients].empty?
+      create_shoutout_recipients unless @shoutout.recipients.empty?
       render json: @shoutout, status: :ok
     else
       render_error(@shoutout.errors.full_messages)
@@ -23,7 +23,7 @@ end
 
     @shoutout = Shoutout.find(params[:id])
     if @shoutout.update(shoutout_params)
-      update_shoutout_recipients(@shoutout)
+      update_shoutout_recipients
       render json: @shoutout, status: :ok
     else
       render_error(@shoutout.errors.full_messages)
@@ -37,12 +37,6 @@ end
     parameters.merge({ 'digest' => digest_fields(parameters) })
   end
 
-  def records_recipients(shoutout)
-    return { user_id: shoutout[:recipients][0].to_i, shoutout_id: shoutout[:id] } if shoutout[:recipients].length == 1
-
-    shoutout[:recipients].map { |user_id| { user_id: user_id.to_i, shoutout_id: shoutout.id } }
-  end
-
   def similar_shoutout_exists?(digest)
     Shoutout.exists?(digest:)
   end
@@ -51,15 +45,17 @@ end
     render json: { error: error_message }, status: :unprocessable_entity
   end
 
-  def create_shoutout_recipients(recipients)
-    ShoutoutRecipient.create(records_recipients(recipients))
+  def create_shoutout_recipients
+    shoutout_params['recipients'].each do |recipient_id|
+      ShoutoutRecipient.create(user_id: recipient_id, shoutout_id: @shoutout.id)
+    end
   end
 
-  def update_shoutout_recipients(shoutout)
-    return unless shoutout[:recipients].empty?
+  def update_shoutout_recipients
+    return unless @shoutout.recipients.empty?
 
-    ShoutoutRecipient.where(shoutout_id: shoutout.id).destroy_all
-    create_shoutout_recipients(shoutout.recipients)
+    ShoutoutRecipient.where(shoutout_id: @shoutout.id).destroy_all
+    create_shoutout_recipients
   end
 
 end
