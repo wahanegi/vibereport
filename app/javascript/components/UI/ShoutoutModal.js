@@ -22,9 +22,6 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
           recipients: chosenUsers.map(user => user.id)
         }}
       const dataFromServer = ( createdUpdatedShoutOut ) =>{
-        console.log({...data,
-          my_shout_outs_to_other: [...data.my_shout_outs_to_other, createdUpdatedShoutOut]
-        })
         let  currentShoutOuts  = data.my_shout_outs_to_other
 
         if ( idEditText ) {
