@@ -52,7 +52,8 @@
         "SMTP_PASSWORD": "xxx",
         "SMTP_PORT": "2525",
         "SMTP_USERNAME": "xxx",
-        "DEFAULT_FROM_ADDRESS": "hello"
+        "DEFAULT_FROM_ADDRESS": "hello",
+        "DAY_TO_SEND_RESULTS_EMAIL": "friday"
       },
       "scripts": {
         "postdeploy": "rails db:schema:load db:seed"
