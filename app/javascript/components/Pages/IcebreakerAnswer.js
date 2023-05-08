@@ -95,8 +95,8 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
           </div>
           <div className='d-flex justify-content-between m-3'>
             <ShoutOutIcon/>
-            <BtnBack addClass='btn-question' onClick={backHandling}/>
-            <BtnPrimary onClick={handlingOnClickNext} text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
+            <BtnBack addClass="answer-custom" onClick={backHandling}/>
+            <BtnPrimary addClass="answer-custom"  onClick={handlingOnClickNext} text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
             <HelpIcon/>
           </div>
         </Wrapper>
