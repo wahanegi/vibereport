@@ -79,6 +79,9 @@ body {
 .color-rose {
   color: $color-rose;
 }
+.red-violet {
+  color: $red-violet;
+}
 .gray-600 {
   color: $gray-600
 }
@@ -349,4 +352,9 @@ body {
   z-index: 1;
   position: relative;
   color: $red-violet;
+}
+
+.email-input {
+  padding-inline-start: 1.375rem !important;
+  padding-inline-end:   1.375rem !important;
 }
