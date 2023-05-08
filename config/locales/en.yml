@@ -33,3 +33,13 @@ en:
   passwordless:
     mailer:
       subject: "Your Vibe Report Login Request"
+
+  activerecord:
+    errors:
+      models:
+        shoutout:
+          attributes:
+            digest:
+              taken: "A content shoutout already exists!"
+
+

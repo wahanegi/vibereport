@@ -37,10 +37,14 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
 
       idEditText === null
           ? apiRequest("POST", dataSend, dataFromServer, ()=>{}, "/api/v1/shoutouts")
-              .catch(error => {alert( error.response.data.error )})
+              .catch( handlingErrors )
           : apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, "/api/v1/shoutouts/" + idEditText)
-              .catch(error => {alert( error.response.data.error )})
+              .catch( handlingErrors )
     }
+    const handlingErrors = (errors) => {
+      if (errors.response.data.error.digest?.length) alert( errors.response.data.error.digest )
+    }
+
     return <RichInputElement
             richText = { richText }
            listUsers = { data.users.filter(user => user.id !== data.current_user_id) }

@@ -126,10 +126,10 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                           time_period_id: time_period.id,
                           rich_text: '@Person1 thanks',
                           recipients: [user5.id.to_s, user3.id.to_s, user4.id.to_s],
-                          digest: digest_fields({ user_id: user1.id.to_s,
-                                                  time_period_id: time_period.id.to_s,
-                                                  rich_text: '@Person1 thanks',
-                                                  recipients: [user5.id.to_s, user3.id.to_s, user4.id.to_s] }) })
+                          digest: digital_signature_to_prevent_duplication({ user_id: user1.id.to_s,
+                                                                             time_period_id: time_period.id.to_s,
+                                                                             rich_text: '@Person1 thanks',
+                                                                             recipients: [user5.id.to_s, user3.id.to_s, user4.id.to_s] }) })
     end
     let!(:recipients2) do
       create(:shoutout_recipient, { shoutout_id: 2, user_id: user5[:id] })
@@ -237,7 +237,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                             Digest::SHA1.hexdigest(row[:time_period_id].to_s).to_i(16) +
                             Digest::SHA1.hexdigest(row[:rich_text].to_s).to_i(16) +
                             Digest::SHA1.hexdigest(row[:recipients].to_s).to_i(16)
-          expect(digest_fields(row)).to be(expected_digest.to_s.slice(0, 16).to_i)
+          expect(digital_signature_to_prevent_duplication(row)).to be(expected_digest.to_s.slice(0, 16).to_i)
         end
       end
     end
