@@ -47,8 +47,8 @@ class Api::V1::EmotionsController < ApplicationController
       users: User.ordered.map do |user|
         { id: user.id, display: user.first_name, first_name: user.first_name, last_name: user.last_name }
       end,
-      my_shout_outs_to_other: current_user.shoutouts,
-      other_shout_outs_to_me: list_shoutouts_to(current_user)
+      user_shoutouts: current_user.shoutouts,
+      shoutouts_to_user: list_shoutouts_to(current_user)
     }
   end
 
