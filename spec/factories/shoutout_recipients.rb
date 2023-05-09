@@ -20,7 +20,7 @@
 #
 FactoryBot.define do
   factory :shoutout_recipient do
-    association :user, factory: :user
-    association :shoutout, factory: :shoutout
+    user
+    shoutout
   end
 end

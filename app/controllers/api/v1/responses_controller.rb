@@ -72,7 +72,8 @@ module Api
 
       def add_chosen_emotion
         { emotion: @response.emotion,
-          user_shoutouts: Shoutout.where(user_id: current_user.id) }
+          user_shoutouts: current_user.shoutouts
+        }
       end
 
       def retrieve_user

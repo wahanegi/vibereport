@@ -23,11 +23,13 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Shoutout < ApplicationRecord
-  has_many :shoutout_recipients
+  has_many :shoutout_recipients, dependent: :destroy
   belongs_to :user
   belongs_to :time_period
 
   validates :rich_text, presence: true
   validates_uniqueness_of :digest
   serialize :recipients, JSON
+
 end
+

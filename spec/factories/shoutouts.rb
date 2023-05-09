@@ -24,7 +24,17 @@
 #
 FactoryBot.define do
   factory :shoutout do
-    association :user, factory: :user
-    association :time_period, factory: :time_period
+    user
+    time_period
+    rich_text { Faker::Emotion.unique.adjective }
+    recipients { [build(:user)] }
+    after(:build) do |shoutout|
+      row_sum = 0
+      [shoutout.user_id, shoutout.time_period_id, shoutout.rich_text, shoutout.recipients].each do |field|
+        digest = Digest::SHA1.hexdigest(field.to_s)
+        row_sum += digest.to_i(16)
+      end
+      shoutout.digest = row_sum.to_s.slice(0, 16).to_i
+    end
   end
 end

@@ -87,10 +87,10 @@ RSpec.describe Response, type: :model do
       response.steps << 'productivity-bad-follow-up'
       response.productivity = 5
       expect(response).to be_valid
-    
+
       response.productivity = 'invalid'
       expect(response).to_not be_valid
-    
+
       response.productivity = 10
       expect(response).to_not be_valid
     end

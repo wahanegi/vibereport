@@ -79,7 +79,7 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def list_shoutouts_to(user)
-    shoutout_ids = ShoutoutRecipient.where(user_id: user.id).pluck(:shoutout_id)
+    shoutout_ids = user.shoutout_recipients.pluck(:shoutout_id)
     Shoutout.where(id: shoutout_ids).presence || {}
   end
 end

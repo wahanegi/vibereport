@@ -15,7 +15,7 @@ class Api::V1::ShoutoutsController < ApplicationController
 end
 
   def update
-    @shoutout = Shoutout.find(params[:id])
+    @shoutout = Shoutout.find_by(id: params[:id])
     if @shoutout.update(shoutout_params)
       update_shoutout_recipients
       render json: @shoutout, status: :ok
@@ -31,13 +31,9 @@ end
     parameters.merge({ 'digest' => digital_signature_to_prevent_duplication(parameters) })
   end
 
-  def similar_shoutout_exists?(digest)
-    Shoutout.exists?(digest:)
-  end
-
   def create_shoutout_recipients
     shoutout_params['recipients'].each do |recipient_id|
-      ShoutoutRecipient.create(user_id: recipient_id, shoutout_id: @shoutout.id)
+      current_user.shoutout_recipients.create(user_id: recipient_id, shoutout_id: @shoutout.id)
     end
   end
 

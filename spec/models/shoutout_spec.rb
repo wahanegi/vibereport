@@ -25,8 +25,8 @@
 require 'rails_helper'
 
 RSpec.describe Shoutout, type: :model do
-  let!(:user) { User.create(first_name: 'Fu', last_name: 'Li', email: 'fuli45u6795@example.com', password: 'password') }
-  let!(:time_period) { TimePeriod.create(start_date: Time.zone.now, end_date: 7.days.from_now) }
+  let!(:user) { create :user }
+  let!(:time_period) { create :time_period }
 
   describe 'validations' do
     it 'should be valid with valid attributes' do
