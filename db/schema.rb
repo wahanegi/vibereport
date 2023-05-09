@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_24_104828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
     t.string "word"
   end
 
+  create_table "fun_question_answers", force: :cascade do |t|
+    t.text "answer_body"
+    t.datetime "created_at", null: false
+    t.bigint "fun_question_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["fun_question_id"], name: "index_fun_question_answers_on_fun_question_id"
+    t.index ["user_id"], name: "index_fun_question_answers_on_user_id"
+  end
+
+  create_table "fun_questions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "public", default: false, null: false
+    t.string "question_body"
+    t.bigint "time_period_id"
+    t.datetime "updated_at", null: false
+    t.boolean "used", default: false, null: false
+    t.bigint "user_id"
+    t.index ["question_body"], name: "index_fun_questions_on_question_body", unique: true
+    t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
+    t.index ["user_id"], name: "index_fun_questions_on_user_id"
+  end
+
   create_table "passwordless_sessions", force: :cascade do |t|
     t.bigint "authenticatable_id"
     t.string "authenticatable_type"
@@ -68,6 +91,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
+    t.bigint "fun_question_answer_id"
+    t.bigint "fun_question_id"
     t.string "gif_url"
     t.boolean "not_working", default: false
     t.jsonb "notices"
@@ -78,6 +103,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
+    t.index ["fun_question_answer_id"], name: "index_responses_on_fun_question_answer_id"
+    t.index ["fun_question_id"], name: "index_responses_on_fun_question_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
     t.index ["user_id", "time_period_id"], name: "index_responses_on_user_id_and_time_period_id", unique: true
     t.index ["user_id"], name: "index_responses_on_user_id"
@@ -106,7 +133,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_202440) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "fun_question_answers", "fun_questions"
+  add_foreign_key "fun_question_answers", "users"
+  add_foreign_key "fun_questions", "time_periods"
+  add_foreign_key "fun_questions", "users"
   add_foreign_key "responses", "emotions"
+  add_foreign_key "responses", "fun_question_answers"
+  add_foreign_key "responses", "fun_questions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
 end
