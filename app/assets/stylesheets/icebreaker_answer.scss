@@ -27,7 +27,7 @@
     min-height: 350px;
     border: 3px solid $emerald;
     border-radius: 15px;
-    &:hover {
+    &:focus-within {
       border: 6px solid $emerald !important;
     }
   }
