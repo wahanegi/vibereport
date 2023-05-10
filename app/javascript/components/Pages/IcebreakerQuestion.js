@@ -15,7 +15,8 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
-      // TODO: add a redirect to the results page when it appears
+      // TODO: change to redirect to the results page when it appears
+      steps.push('icebreaker-answer')
       saveDataToDb( steps, {fun_question_id: fun_question.data.id})
     }
     const dataRequest = {
@@ -25,7 +26,8 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
       }
     }
     const goToResultPage = () => {
-      // TODO: add a redirect to the results page when it appears
+      // TODO: change to redirect to the results page when it appears
+      steps.push('icebreaker-answer')
       saveDataToDb(steps)
     }
     const url = '/api/v1/fun_questions/'

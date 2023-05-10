@@ -31,6 +31,5 @@ class FunQuestion < ApplicationRecord
   scope :question_public, -> { where(public: true) }
   scope :not_used, -> { where(used: false) }
 
-  validates :question_body, presence: true
-  validates :question_body, uniqueness: { case_sensitive: false }
+  validates :question_body, presence: true, uniqueness: { case_sensitive: false }
 end

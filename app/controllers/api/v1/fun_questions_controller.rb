@@ -1,10 +1,9 @@
 class Api::V1::FunQuestionsController < ApplicationController
   include ApplicationHelper
-  before_action :fun_question, only: %i[show update destroy]
   before_action :require_user!
 
   def show
-    render json: FunQuestionSerializer.new(@fun_question).serializable_hash
+    render json: FunQuestionSerializer.new(fun_question).serializable_hash
   end
 
   def create
@@ -18,25 +17,25 @@ class Api::V1::FunQuestionsController < ApplicationController
   end
 
   def update
-    if @fun_question.update(fun_question_params)
-      render json: FunQuestionSerializer.new(@fun_question).serializable_hash
+    if fun_question.update(fun_question_params)
+      render json: FunQuestionSerializer.new(fun_question).serializable_hash
     else
-      render json: { error: @fun_question.errors }, status: :unprocessable_entity
+      render json: { error: fun_question.errors }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @fun_question.destroy
+    if fun_question.destroy
       head :no_content, notice: 'Fun question was successfully destroyed.'
     else
-      render json: { error: @fun_question.errors }, status: :unprocessable_entity
+      render json: { error: fun_question.errors }, status: :unprocessable_entity
     end
   end
 
   private
 
   def fun_question
-    @fun_question = FunQuestion.find_by(id: params[:id])
+    @fun_question ||= FunQuestion.find_by(id: params[:id])
   end
 
   def fun_question_params
