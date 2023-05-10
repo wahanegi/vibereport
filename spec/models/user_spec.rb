@@ -30,9 +30,17 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
-  context 'associations' do
+  context 'Associations' do
     it 'has many responses' do
       expect(user).to have_many(:responses).dependent(:destroy)
+    end
+
+    it 'has many users_teams' do
+      expect(user).to have_many(:users_teams)
+    end
+  
+    it 'has many teams through users_teams' do
+      expect(user).to have_many(:teams).through(:users_teams)
     end
   end
 
