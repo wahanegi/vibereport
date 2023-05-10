@@ -75,7 +75,7 @@ RSpec.describe FunQuestion, type: :model do
       let!(:used_fun_question) { create(:fun_question, public: true, used: true) }
 
       it 'returns public and unused questions' do
-        expect(FunQuestion.question_public).to eq([public_fun_question])
+        expect(FunQuestion.question_public.not_used.to_a).to eq([public_fun_question])
       end
     end
   end

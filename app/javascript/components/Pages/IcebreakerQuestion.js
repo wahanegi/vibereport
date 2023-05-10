@@ -7,7 +7,7 @@ import axios from "axios";
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
-  const [prevStateQuestion, setPrevStateQuestion] = useState( {})
+  const [prevStateQuestion, setPrevStateQuestion] = useState({})
   const [funQuestion, setFunQuestion] = useState( {})
   const prevQuestionBody = prevStateQuestion?.question_body
   const funQuestionBody = funQuestion?.question_body
