@@ -27,32 +27,32 @@ require 'rails_helper'
 RSpec.describe Shoutout, type: :model do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
+  let!(:shoutout) { build :shoutout }
 
   describe 'validations' do
     it 'should be valid with valid attributes' do
-      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person3 thanks!', user:, time_period:, recipients: [1, 2, 3])
       expect(shoutout).to be_valid
     end
 
     it 'should be invalid without rich_text' do
-      shoutout = Shoutout.new(user:, time_period:, recipients: [1, 2, 3])
+      shoutout.rich_text = nil
       expect(shoutout).to be_invalid
     end
 
     it 'should be invalid without user' do
-      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person3 thanks!', time_period:, recipients: [1, 2, 3])
+      shoutout.user = nil
       expect(shoutout).to be_invalid
     end
 
     it 'should be invalid without time_period' do
-      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person3 thanks!', user:, recipients: [1, 2, 3])
+      shoutout.time_period = nil
       expect(shoutout).to be_invalid
     end
 
     it 'should be invalid with duplicate shoutouts' do
-      digest = 1234567890123456
-      Shoutout.create(rich_text: '@Person 1 @ @Person 2 @Person 3 thanks!', user:, time_period:, recipients: [1, 2, 3], digest:)
-      shoutout = Shoutout.new(rich_text: '@Person 1 @ @Person 2 @Person 3 thanks!', user:, time_period:, recipients: [1, 2, 3], digest:)
+      shoutout.assign_attributes(digest: 1234567890123456)
+      Shoutout.create(shoutout.as_json)
+      shoutout = Shoutout.new(shoutout.as_json)
       expect(shoutout).to be_invalid
     end
   end
