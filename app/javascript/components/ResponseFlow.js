@@ -12,6 +12,7 @@ import Results from "./Pages/Results";
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
 import Recognition from "./Pages/Recognition";
+import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -117,12 +118,8 @@ const ResponseFlow = ({step, data, setData}) => {
        return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "recognition" :
       return <Recognition data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "ShoutoutModalExample" :
-    //   return <ShoutoutModalExample data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "ShoutoutModal_FlexUse" :
-    //   return <ShoutoutModal_FlexUse data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "Icebreaker" :
-    //   return <Icebreaker data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "icebreaker-answer" :
+      return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "MemeWallThisWeekSoFar" :
     //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     // case  "MemeWallPrevWeek" :

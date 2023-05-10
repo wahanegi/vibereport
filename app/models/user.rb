@@ -27,6 +27,8 @@ class User < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :shoutouts
   has_many :shoutout_recipients
+  has_many :fun_questions, dependent: :destroy
+  has_many :fun_question_answers, dependent: :destroy
 
   MAX_NAME_LENGTH = 15
 

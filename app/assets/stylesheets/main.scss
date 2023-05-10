@@ -80,6 +80,12 @@ a {
 .color-black {
   color: $black;
 }
+.color-rose {
+  color: $color-rose;
+}
+.red-violet {
+  color: $red-violet;
+}
 .gray-600 {
   color: $gray-600
 }
@@ -595,4 +601,8 @@ a {
       border: 1px solid $primary;
     }
   }
+}
+.email-input {
+  padding-inline-start: 1.375rem !important;
+  padding-inline-end:   1.375rem !important;
 }

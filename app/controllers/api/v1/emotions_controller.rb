@@ -15,7 +15,7 @@ class Api::V1::EmotionsController < ApplicationController
 
   def create
     emotion = Emotion.new(emotion_params)
-    emotion_existed = Emotion.all.find_by(word: params.dig('emotion', 'word'))
+    emotion_existed = Emotion.find_by(word: params.dig('emotion', 'word'))
 
     if emotion_existed.present?
       render json: EmotionSerializer.new(emotion_existed).serializable_hash
@@ -39,7 +39,7 @@ class Api::V1::EmotionsController < ApplicationController
   def additional_params
     #  below in the response steps must be wrote with only such format in other case will be mistakes
     {
-      current_user_id: current_user.id,
+      current_user:,
       time_period:,
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
@@ -72,6 +72,23 @@ class Api::V1::EmotionsController < ApplicationController
 
   def emotion_params
     params.require(:emotion).permit(:word, :category)
+  end
+
+  def fun_question
+    custom_question.presence || FunQuestion.question_public.not_used.sample
+  end
+
+  def custom_question
+    current_fun_question = FunQuestion.find_by(time_period_id: TimePeriod.current.id)
+    @fun_question ||= current_fun_question || FunQuestion.question_public.not_used.where.not(user_id: nil).first
+    return nil if @fun_question.blank?
+
+    {
+      id: @fun_question.id,
+      user_id: @fun_question.user&.id,
+      user_name: @fun_question.user&.first_name,
+      question_body: @fun_question.question_body
+    }
   end
 
   def time_period

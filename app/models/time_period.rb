@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #
 class TimePeriod < ApplicationRecord
+  has_one :fun_question, dependent: :destroy
   has_many :responses, dependent: :destroy
   has_many :shoutouts
 

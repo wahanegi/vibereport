@@ -22,22 +22,24 @@ h4.emotion-entry {
   }
 }
 
-.input-positive{
-  background-color: $gray-tea-green;
-  color: $green-700;
-  border-color: $dark-blue !important;
-}
+.form-control {
+  &.input-positive {
+    background-color: $gray-tea-green;
+    color: $green-700;
+    border-color: $dark-blue !important;
+  }
 
-.input-negative{
-  background-color: $light-red;
-  color: $orange-700;
-  border-color: $dark-blue !important;
-}
+  &.input-negative {
+    background-color: $light-red;
+    color: $orange-700;
+    border-color: $dark-blue !important;
+  }
 
-.input-neutral{
-  background-color: $light-blue-input;
-  color: $dark-blue;
-  border-color: $dark-blue !important;
+  &.input-neutral {
+    background-color: $light-blue-input;
+    color: $dark-blue;
+    border-color: $dark-blue !important;
+  }
 }
 
 h4.emotion-entry-feel{

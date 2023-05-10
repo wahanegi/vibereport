@@ -418,7 +418,7 @@ html {
     text-align: left;
     width: 102px;
     height: 115px;
-    background-image: url("calendar_days.svg");
+    background-image: url("calendar_days.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
