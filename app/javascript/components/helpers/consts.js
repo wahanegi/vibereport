@@ -40,6 +40,5 @@ export const EMOTION_COLORS = {
     {width: '382px', height: '311px', marginTop: '0'},
   ];
 
-export const DEFAULT_USER_NAME = 'Admin'
 export const EMOTION_COL_NUMBERS = 6
 export const MIN_USERS_RESPONSES = 5

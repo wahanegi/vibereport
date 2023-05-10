@@ -1,6 +1,11 @@
 @import "colors";
 @import "design_system_vibereport";
 
+.icebreaker-position {
+  position: relative;
+  top: -68px;
+}
+
 .icebreaker {
   .wrap {
     display: inline-flex;
@@ -18,7 +23,7 @@
   .input {
     bottom: 28px;
     width: 746px;
-    min-height: 280px;
+    min-height: 350px;
     resize: none;
     border: 3px solid $emerald;
     border-radius: 15px;
@@ -40,10 +45,14 @@
 
   textarea, input{
     &.input:focus {
-      border: 3px solid $emerald !important;
+      border: 6px solid $emerald !important;
       outline: none;
       box-shadow: none !important;
       border: unset;
     }
   }
+}
+
+.c1.answer-custom {
+  font-size: 26px !important;
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {DEFAULT_USER_NAME, MIN_USERS_RESPONSES} from "../../helpers/consts";
+import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import {isBlank} from "../../helpers/helpers";
 import Collapse from 'react-bootstrap/Collapse';
 import polygon_answer from "../../../../assets/images/polygon-answer.svg";
@@ -44,7 +44,7 @@ const QuestionSection = ({fun_question, answers, isCurrentTimePeriod}) => {
 
   if (isBlank(fun_question) || isBlank(answers)) return null
 
-  const userName = fun_question.user?.first_name || DEFAULT_USER_NAME
+  const userName = fun_question.user?.first_name
   const [collapse, setCollapse] = useState(true);
   const [title, setTitle] = useState("Expand all");
   const collapseAll = () => {
