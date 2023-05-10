@@ -5,7 +5,8 @@ class Api::V1::ShoutoutsController < ApplicationController
   before_action :require_user!
 
   def create
-    @shoutout = Shoutout.new(shoutout_params)
+    # @shoutout = Shoutout.new(shoutout_params)
+    @shoutout = current_user.shoutouts.new(shoutout_params)
     if @shoutout.save
       create_shoutout_recipients unless @shoutout.recipients.empty?
       render json: @shoutout, status: :ok
@@ -27,7 +28,7 @@ end
   private
 
   def shoutout_params
-    parameters = params.require(:shoutout).permit(:user_id, :time_period_id, :rich_text, [recipients: []])
+    parameters = params.require(:shoutout).permit( :time_period_id, :rich_text, [recipients: []])
     parameters.merge({ 'digest' => digital_signature_to_prevent_duplication(parameters) })
   end
 
