@@ -47,8 +47,7 @@ class Api::V1::EmotionsController < ApplicationController
       users: User.ordered.map do |user|
         { id: user.id, display: user.first_name, first_name: user.first_name, last_name: user.last_name }
       end,
-      user_shoutouts: current_user.shoutouts,
-      shoutouts_to_user: list_shoutouts_to(current_user)
+      user_shoutouts: current_user.shoutouts
     }
   end
 
@@ -93,10 +92,5 @@ class Api::V1::EmotionsController < ApplicationController
 
   def time_period
     @time_period ||= TimePeriod.find_or_create_time_period
-  end
-
-  def list_shoutouts_to(user)
-    shoutout_ids = user.shoutout_recipients.pluck(:shoutout_id)
-    Shoutout.where(id: shoutout_ids).presence || {}
   end
 end

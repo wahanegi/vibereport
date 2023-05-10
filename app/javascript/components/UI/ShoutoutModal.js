@@ -18,9 +18,9 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
         shoutout:{
           user_id: data.current_user_id,
           time_period_id: data.time_period.id,
-          rich_text: richText,
-          recipients: chosenUsers.map(user => user.id)
-        }}
+          rich_text: richText
+        },
+        recipients: chosenUsers.map(user => user.id)}
       const dataFromServer = ( createdUpdatedShoutOut ) =>{
         let  currentShoutOuts  = data.user_shoutouts
 

@@ -3,8 +3,6 @@
 # Table name: shoutouts
 #
 #  id             :bigint           not null, primary key
-#  digest         :bigint           not null
-#  recipients     :string
 #  rich_text      :text             not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -13,9 +11,9 @@
 #
 # Indexes
 #
-#  index_shoutouts_on_digest          (digest) UNIQUE
-#  index_shoutouts_on_time_period_id  (time_period_id)
-#  index_shoutouts_on_user_id         (user_id)
+#  index_shoutouts_on_rich_text_and_user_id_and_time_period_id  (rich_text,user_id,time_period_id) UNIQUE
+#  index_shoutouts_on_time_period_id                            (time_period_id)
+#  index_shoutouts_on_user_id                                   (user_id)
 #
 # Foreign Keys
 #
@@ -50,7 +48,6 @@ RSpec.describe Shoutout, type: :model do
     end
 
     it 'should be invalid with duplicate shoutouts' do
-      shoutout.assign_attributes(digest: 1234567890123456)
       Shoutout.create(shoutout.as_json)
       shoutout = Shoutout.new(shoutout.as_json)
       expect(shoutout).to be_invalid

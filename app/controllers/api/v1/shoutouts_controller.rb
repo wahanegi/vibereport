@@ -5,10 +5,9 @@ class Api::V1::ShoutoutsController < ApplicationController
   before_action :require_user!
 
   def create
-    # @shoutout = Shoutout.new(shoutout_params)
     @shoutout = current_user.shoutouts.new(shoutout_params)
     if @shoutout.save
-      create_shoutout_recipients unless @shoutout.recipients.empty?
+      create_shoutout_recipients
       render json: @shoutout, status: :ok
     else
       render json: { error: @shoutout.errors.messages }, status: :unprocessable_entity
@@ -28,21 +27,21 @@ end
   private
 
   def shoutout_params
-    parameters = params.require(:shoutout).permit( :time_period_id, :rich_text, [recipients: []])
-    parameters.merge({ 'digest' => digital_signature_to_prevent_duplication(parameters) })
+    params.require(:shoutout).permit(:time_period_id, :rich_text)
   end
 
   def create_shoutout_recipients
-    shoutout_params['recipients'].each do |recipient_id|
-      current_user.shoutout_recipients.create(user_id: recipient_id, shoutout_id: @shoutout.id)
+    return if params['recipients'].empty?
+
+    params['recipients'].each do |recipient_id|
+      ShoutoutRecipient.create(user_id: recipient_id, shoutout_id: @shoutout.id)
     end
   end
 
   def update_shoutout_recipients
-    return if @shoutout.recipients.empty?
+    return if params['recipients'].empty?
 
     @shoutout.shoutout_recipients.destroy_all
     create_shoutout_recipients
   end
-
 end

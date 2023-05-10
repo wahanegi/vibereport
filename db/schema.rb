@@ -121,13 +121,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_213955) do
 
   create_table "shoutouts", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "digest", null: false
-    t.string "recipients"
     t.text "rich_text", null: false
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["digest"], name: "index_shoutouts_on_digest", unique: true
+    t.index ["rich_text", "user_id", "time_period_id"], name: "index_shoutouts_on_rich_text_and_user_id_and_time_period_id", unique: true
     t.index ["time_period_id"], name: "index_shoutouts_on_time_period_id"
     t.index ["user_id"], name: "index_shoutouts_on_user_id"
   end
