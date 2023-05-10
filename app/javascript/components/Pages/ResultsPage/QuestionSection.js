@@ -39,8 +39,8 @@ const AnswerItem = ({answer, user, collapse}) => {
   </div>
 }
 
-const QuestionSection = ({fun_question, answers, isCurrentTimePeriod}) => {
-  if(isCurrentTimePeriod && answers.length < MIN_USERS_RESPONSES) return <PreviewQuestionSection />
+const QuestionSection = ({fun_question, answers, nextTimePeriod}) => {
+  if(!nextTimePeriod && answers?.length < MIN_USERS_RESPONSES) return <PreviewQuestionSection />
 
   if (isBlank(fun_question) || isBlank(answers)) return null
 

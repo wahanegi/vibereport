@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {lastEl, rangeFormat} from "../../helpers/helpers";
+import {rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   BtnPrimary,

@@ -57,11 +57,11 @@ const PreviewEmotionSection = ({data}) => {
   </table>
 }
 
-const EmotionSection = ({emotions, isCurrentTimePeriod, data}) => {
+const EmotionSection = ({emotions, nextTimePeriod, data}) => {
   const splitEmotions = splitArray(emotions, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
 
-  if(isCurrentTimePeriod && emotions.length < MIN_USERS_RESPONSES) return <PreviewEmotionSection data={data} />
+  if(!nextTimePeriod && emotions.length < MIN_USERS_RESPONSES) return <PreviewEmotionSection data={data} />
 
   return <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
     <tbody>

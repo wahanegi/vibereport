@@ -22,7 +22,7 @@ export const rangeFormat = (tp) => {
   if (month_start === month_end) {
     return `${start_date.getDate()}-${end_date.getDate()} ${month_start}`
   } else {
-    return `${datePrepare(start_date)} — ${datePrepare(end_date)}`
+    return `${datePrepare(start_date)} - ${datePrepare(end_date)}`
   }
 }
 
@@ -48,10 +48,6 @@ export function isEmptyStr(str) {
 
 export function isNotEmptyStr(str) {
   return isPresent(str) && str.trim() !== '';
-}
-
-export function lastEl(arr) {
-  return !isEmpty(arr) && arr[arr.length-1];
 }
 
 export function splitArray(arr, n) {

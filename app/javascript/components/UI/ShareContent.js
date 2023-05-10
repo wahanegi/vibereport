@@ -33,17 +33,17 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
   </button>
 
 export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
-                           positionRight = false, prevTimePeriod}) =>
+                           positionRight = false, prevTimePeriod, isPenultimatePeriod = false}) =>
   isPresent(date) && !hidden && <div className="position-relative pointer" onClick={onClick} style={{maxWidth: 82}}>
     <img src={calendar} alt="calendar" />
     <div className="position-absolute top-0">
-      {date.includes('—') ?
+      {date.includes(' - ') ?
         <div className='mt-3 d-flex'>
-          {date.split('—')[0]}
+          {date.split(' - ')[0]}
           <img src={line} alt="line" />
-          {date.split('—')[1]}
+          {date.split(' - ')[1]}
         </div>:
-        <div className='mt-5' style={{marginLeft: `${isPresent(prevTimePeriod) ? '7px' : '15px'}`}}>{date}</div>
+        <div className='mt-5' style={{marginLeft: `${(isPresent(prevTimePeriod) && !isPenultimatePeriod) ? '9px' : '15px'}`}}>{date}</div>
       }
     </div>
     { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
