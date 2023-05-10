@@ -7,7 +7,7 @@ import axios from "axios";
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
-  const [prevStateQuestion, setPrevStateQuestion] = useState( {})
+  const [prevStateQuestion, setPrevStateQuestion] = useState({})
   const [funQuestion, setFunQuestion] = useState( {})
   const prevQuestionBody = prevStateQuestion?.question_body
   const funQuestionBody = funQuestion?.question_body
@@ -15,7 +15,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
-      // steps.push('meme-selection')
+      // TODO: add a redirect to the results page when it appears
       saveDataToDb( steps, {fun_question_id: fun_question.data.id})
     }
     const dataRequest = {
@@ -25,7 +25,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
       }
     }
     const goToResultPage = () => {
-      // steps.push('productivity-bad-follow-up')
+      // TODO: add a redirect to the results page when it appears
       saveDataToDb(steps)
     }
     const url = '/api/v1/fun_questions/'
