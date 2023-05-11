@@ -20,12 +20,25 @@
     border-radius: 15px;
   }
 
-  .input {
-    bottom: 28px;
+  .wrap-textarea{
+    padding-top: 10px;
+    padding-bottom: 5px;
     width: 746px;
     min-height: 350px;
-    resize: none;
     border: 3px solid $emerald;
+    border-radius: 15px;
+    &:focus-within {
+      border: 6px solid $emerald !important;
+    }
+  }
+
+  .input {
+    margin-right: 5px;
+    bottom: 28px;
+    width: 733px;
+    min-height: 350px;
+    resize: none;
+    border: none;
     border-radius: 15px;
     padding: 14px 22px;
     font-size: 26px;
@@ -42,7 +55,7 @@
 
   textarea, input{
     &.input:focus {
-      border: 6px solid $emerald !important;
+      border: none;
       outline: none;
       box-shadow: none !important;
       border: unset;

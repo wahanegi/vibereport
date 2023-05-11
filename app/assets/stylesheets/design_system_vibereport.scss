@@ -109,6 +109,25 @@ input, textarea{
   &:focus{
     border:             3px solid $royal-blue ;
   }
+
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $light-grey;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-300;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: shade-color($gray-300,10%);
+  }
 }
 textarea {
   &.b1{
