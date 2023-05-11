@@ -27,6 +27,6 @@ class Shoutout < ApplicationRecord
   has_many :shoutout_recipients, dependent: :destroy
   has_many :recipients, through: :shoutout_recipients, source: :user
 
-  validates :rich_text, presence: true, uniqueness:{ scope: %i[user_id time_period_id] }
+  validates :rich_text, presence: true, uniqueness: { scope: %i[user_id time_period_id] }
 end
 
