@@ -48,7 +48,6 @@ export default class RichText {
     while (posStart >= 0){
       encodeHtml += html.slice(posEnd, posStart).replace(/ /g, "&nbsp;") + tag
       posStart += tag.length
-      // if (posStart >= html.length) { break }
       posEnd = html.indexOf(end, posStart)
       if (posEnd < 0) { break }
       encodeHtml += html.slice(posStart, posEnd).replace(/ /g, "&nbsp;") + end

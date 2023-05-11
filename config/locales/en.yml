@@ -39,7 +39,7 @@ en:
       models:
         shoutout:
           attributes:
-            digest:
+            rich_text:
               taken: "A content shoutout already exists!"
 
 

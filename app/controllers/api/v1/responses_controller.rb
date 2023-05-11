@@ -71,7 +71,8 @@ module Api
       end
 
       def add_chosen_emotion
-        { emotion: @response.emotion,
+        {
+          emotion: @response.emotion,
           user_shoutouts: current_user.shoutouts
         }
       end

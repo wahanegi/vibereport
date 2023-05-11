@@ -190,18 +190,5 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         expect(shoutout.rich_text).to eq('<br>')
       end
     end
-    context 'checks to calculate text digest' do
-      describe '#digest_fields' do
-        let(:row) do
-          {
-            user_id: 1,
-            time_period_id: 2,
-            rich_text: '@user1 @user2 some text shoutouts',
-            recipients: [1, 2]
-          }
-        end
-
-      end
-    end
   end
 end

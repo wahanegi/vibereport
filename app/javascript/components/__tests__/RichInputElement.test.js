@@ -742,7 +742,6 @@ const highlightAT = '<span class="color-primary">@'
       expect(setChosenUsers).toHaveBeenCalledWith([ { id: 1, first_name: 'George', last_name: 'Washington' } ])
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(22)
       Cursor.setCurrentCursorPosition( 4,divElement)
-      console.log("START TO VERIFY")
       fireEvent.keyDown(divElement, {key: 'Delete'});//in real no delete-???
       expect(setChosenUsers.mock.calls[8][0]).toEqual(  [])
       fireEvent.keyDown(divElement, {key: '@'})

@@ -11,8 +11,8 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
   }
 
   const ModalOverlay = () =>{
-    const [ richText ] = useState( isEmpty(editObj) ? '' : editObj.rich_text )
-    const [ idEditText ] =  useState( isEmpty(editObj) ? null : editObj.id )
+    const  richText  =  isEmpty(editObj) ? '' : editObj.rich_text
+    const  idEditText =  isEmpty(editObj) ? null : editObj.id
     const submitHandling = ({richText, chosenUsers}) => {
       const dataSend = {
         shoutout:{
@@ -42,7 +42,7 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
               .catch( handlingErrors )
     }
     const handlingErrors = (errors) => {
-      if (errors.response.data.error.digest?.length) alert( errors.response.data.error.digest )
+      if (errors.response.data.error.rich_text?.length) alert( errors.response.data.error.rich_text[0] )
     }
 
     return <RichInputElement
