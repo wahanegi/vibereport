@@ -21,9 +21,11 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Shoutout < ApplicationRecord
-  has_many :shoutout_recipients, dependent: :destroy
   belongs_to :user
   belongs_to :time_period
+
+  has_many :shoutout_recipients, dependent: :destroy
+  has_many :recipients, through: :shoutout_recipients, source: :user
 
   validates :rich_text, presence: true, uniqueness:{ scope: %i[user_id time_period_id] }
 end
