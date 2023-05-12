@@ -67,30 +67,32 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
       {!isLoading && !error &&
         <Wrapper>
           <Header/>
-          <div className='d-flex justify-content-center flex-column'>
-            <h4 className='mb-0'>Thanks for answering!</h4>
-            <h1 className='mb-3'>Interested in submitting your <br/> own question to the team?</h1>
-          </div>
-          <div className='icebreaker'>
-            <div className='wrap'>
-              <p className='b3 muted'><span className='color-rose'>@</span>{userName} asks:</p>
-              {loaded &&
-                <form>
-                  <div className="form-group">
-                    <textarea className='input question' name='question_body'
+          <div className='icebreaker-position'>
+            <div className='d-flex justify-content-center flex-column'>
+              <h4 className='mb-0'>Thanks for answering!</h4>
+              <h1 className='mb-3'>Interested in submitting your <br/> own question to the team?</h1>
+            </div>
+            <div className='icebreaker'>
+              <div className='wrap'>
+                <p className='b3 muted'><span className='red-violet'>@</span>{userName} asks:</p>
+                {loaded &&
+                  <form>
+                    <div className="form-group">
+                    <textarea className='input' name='question_body'
                               placeholder='What would you ask the team? You could be selected!'
                               value={funQuestion?.question_body || ''}
                               onChange={onChangQuestion} maxLength={700} />
-                  </div>
-                </form>
-              }
+                    </div>
+                  </form>
+                }
+              </div>
             </div>
-          </div>
-          <div className='d-flex justify-content-between m-3'>
-            <ShoutOutIcon/>
-            <BtnBack addClass='btn-question' onClick={backHandling}/>
-            <BtnPrimary onClick={handlingOnClickNext} text={isEmptyStr(funQuestionBody) ? 'Skip to Results' : 'Submit'} />
-            <HelpIcon/>
+            <div className='d-flex justify-content-between m-3'>
+              <ShoutOutIcon/>
+              <BtnBack addClass="answer-custom" onClick={backHandling}/>
+              <BtnPrimary addClass="answer-custom" onClick={handlingOnClickNext} text={isEmptyStr(funQuestionBody) ? 'Skip to Results' : 'Submit'} />
+              <HelpIcon/>
+            </div>
           </div>
         </Wrapper>
       }

@@ -20,20 +20,30 @@
     border-radius: 15px;
   }
 
-  .input {
-    bottom: 28px;
+  .wrap-textarea{
+    padding-top: 10px;
+    padding-bottom: 5px;
     width: 746px;
-    min-height: 350px;
-    resize: none;
+    height: 350px;
     border: 3px solid $emerald;
+    border-radius: 15px;
+    &:focus-within {
+      border: 6px solid $emerald !important;
+    }
+  }
+
+  .input {
+    margin-right: 5px;
+    bottom: 28px;
+    width: 733px;
+    height: 325px;
+    resize: none;
+    border: none;
     border-radius: 15px;
     padding: 14px 22px;
     font-size: 26px;
     box-shadow: none;
     cursor: pointer;
-    &.question {
-      min-height: 330px;
-    }
 
     &::placeholder {
       color: $gray-600;
@@ -45,7 +55,7 @@
 
   textarea, input{
     &.input:focus {
-      border: 6px solid $emerald !important;
+      border: none;
       outline: none;
       box-shadow: none !important;
       border: unset;

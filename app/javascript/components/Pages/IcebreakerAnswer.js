@@ -82,22 +82,24 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
               <div className='wrap'>
                 {user && <p className='b3 muted align-content-end'><span className='red-violet'>@</span>{user} asks:</p>}
                 <h5 className='text-md-start'>{question_body}</h5>
-                <form>
-                  <div className="form-group">
-                    <textarea className="input mb-0" name='answer_body'
-                              placeholder="Tell us what you think!"
-                              value={answerFunQuestion?.answer_body || ''}
-                              onChange={onChangAnswer}
-                              maxLength={700}
-                    />
-                  </div>
-                </form>
+                <div className='wrap-textarea'>
+                  <form>
+                    <div className="form-group">
+                      <textarea className="input mb-0" name='answer_body'
+                                placeholder="Tell us what you think!"
+                                value={answerFunQuestion?.answer_body || ''}
+                                onChange={onChangAnswer}
+                                maxLength={700}
+                      />
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
             <div className='d-flex justify-content-between m-3'>
               <ShoutOutIcon/>
               <BtnBack addClass="answer-custom" onClick={backHandling}/>
-              <BtnPrimary addClass="answer-custom"  onClick={handlingOnClickNext} text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
+              <BtnPrimary addClass="answer-custom" onClick={handlingOnClickNext} text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
               <HelpIcon/>
             </div>
           </div>
