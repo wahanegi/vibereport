@@ -6,15 +6,6 @@ export const createCsrfToken = () => {
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 }
 
-export const createResponse = async (emotion_id, time_period_id, navigate, steps, not_working = false) => {
-  createCsrfToken()
-  await axios.post('/api/v1/responses', {emotion_id, time_period_id, steps, not_working})
-    .then(resp => {
-      not_working ? navigate(`/app/results`) : navigate(`/responses/${resp.data.data.id}`)
-    })
-    .catch(resp => {console.log(resp)})
-}
-
 //*** method (POST/PATCH)
 //*** data = {...} data which send to the controller
 //*** setData - this is Hook for saving data of answer of the controller
