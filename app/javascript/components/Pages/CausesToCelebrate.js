@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import {
   Footer, Header, Logo, Wrapper
 } from "../UI/ShareContent";
@@ -12,12 +12,12 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const [celebrateComment, setCelebrateComment] = useState(response.attributes.celebrate_comment || '')
 
   const onClickSkip = () =>{
-    // steps.push('ProductivityCheckLow')
+    steps.push('recognition')
     saveDataToDb( steps , {celebrate_comment: null})
   }
 
   const onClickNext = () => {
-    // steps.push('ProductivityCheckLow')
+    steps.push('recognition')
     saveDataToDb( steps, {celebrate_comment: celebrateComment})
   }
 

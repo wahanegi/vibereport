@@ -13,7 +13,7 @@ module Api
       def create
         @response = current_user.responses.build(response_params)
         if @response.save
-          render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
+          render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
         end
@@ -21,7 +21,7 @@ module Api
 
       def update
         if @response.update(response_params)
-          render json: ResponseSerializer.new(@response).serializable_hash.merge(add_chosen_emotion)
+          render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
         end
@@ -63,8 +63,11 @@ module Api
         params.require(:response).permit(attributes: PARAMS_ATTRS)
       end
 
-      def add_chosen_emotion
-        { emotion: @response.emotion }
+      def additional_data
+        {
+          emotion: @response.emotion,
+          user_shoutouts: current_user.shoutouts
+        }
       end
 
       def retrieve_user

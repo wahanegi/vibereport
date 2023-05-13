@@ -11,6 +11,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
     "esbuild": "^0.17.7",
+    "html-react-parser": "^3.0.15",
     "jquery": "^3.6.3",
     "ramda": "^0.29.0",
     "react": "^18.2.0",

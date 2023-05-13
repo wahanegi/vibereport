@@ -42,17 +42,20 @@ export default {
 
   suggestions: {
     marginTop: 28,
+    width: 200,
     list: {
       backgroundColor: 'white',
       border: '4px solid #D7007B',
       fontSize: 23,
       borderRadius: 10,
-      maxHeight: 205,
-      overflow: 'auto'
+      maxHeight: 205
     },
     item: {
-      padding: '5px 15px',
+      padding: '5px 7px',
       color: '#666666',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
       '&focused': {
         color: '#000000',
         backgroundColor: '#D2D2D2'

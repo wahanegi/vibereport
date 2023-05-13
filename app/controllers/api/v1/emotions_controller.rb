@@ -37,15 +37,22 @@ class Api::V1::EmotionsController < ApplicationController
   private
 
   def additional_params
-    #  below in the response steps must be wrote with only such format in other case will be mistakes
     {
       current_user:,
       time_period:,
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
-      users: User.ordered.map { |user| { id: user.id, display: user.first_name } },
-      fun_question:
+      users: User.ordered.map do |user|
+        {
+          id: user.id,
+          display: "#{user.first_name} #{user.last_name}",
+          first_name: user.first_name,
+          last_name: user.last_name
+        }
+      end,
+      fun_question:,
+      user_shoutouts: current_user.shoutouts
     }
   end
 

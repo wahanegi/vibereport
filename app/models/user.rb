@@ -25,8 +25,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable
 
   has_many :responses, dependent: :destroy
+  has_many :shoutouts, dependent: :destroy
+  has_many :shoutout_recipients, dependent: :destroy
   has_many :fun_questions, dependent: :destroy
   has_many :fun_question_answers, dependent: :destroy
+  has_many :mentions, through: :shoutout_recipients, source: :shoutout
 
   MAX_NAME_LENGTH = 15
 
