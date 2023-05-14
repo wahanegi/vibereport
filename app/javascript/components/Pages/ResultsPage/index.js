@@ -20,7 +20,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gifs, time_periods} = results
+  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -88,7 +88,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
         setResults(res.data)
         setLoaded(true)
       })
-  }, [timePeriod])
+  }, [timePeriod, data])
 
   if (error) return <p>{error.message}</p>
 
@@ -105,7 +105,12 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod}} />
     <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
     <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
-    <ShoutoutSection nextTimePeriod={nextTimePeriod} />
+    <ShoutoutSection nextTimePeriod={nextTimePeriod}
+                     timePeriod={timePeriod}
+                     sentShoutouts={sent_shoutouts}
+                     receivedShoutouts={received_shoutouts}
+                     data={data} setData={setData}
+                     currentUserShoutouts={current_user_shoutouts} />
     <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
     <Footer />
   </Wrapper>

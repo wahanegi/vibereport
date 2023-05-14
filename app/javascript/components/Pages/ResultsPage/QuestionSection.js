@@ -22,19 +22,19 @@ const AnswerItem = ({answer, user, collapse}) => {
   }, [collapse]);
 
   return <div className='row wrap question answer mb-1'>
-    <div className="col-10">
-      <div className='h5 w-auto text-start truncated'>
-        <span className='color-rose'>@</span>{user.first_name} said: {`${isCollapse ? '"' + answer.answer_body + '"' : '' }`}
+    <div className="col-9">
+      <div className='h5 w-auto text-start truncated fw-semibold'>
+        <span className='color-rose'>@</span>{user.first_name} said: {isCollapse && answer.answer_body}
       </div>
     </div>
-    <div className="col-2">
-      <div className='d-flex justify-content-end align-items-center pointer' onClick={toggle}>
+    <div className="col-3">
+      <div className='d-flex flex-nowrap justify-content-end align-items-center pointer' onClick={toggle}>
         <span className='me-1 mb-0 muted h6'>{isCollapse ? 'See more ' : 'See less '}</span>
-        <img src={polygon_answer} alt="answer" className={`${isCollapse ? '' : 'rotate'}`} />
+        <img src={polygon_answer} alt="answer" className={isCollapse ? '' : 'rotate'} />
       </div>
     </div>
     <Collapse in={!isCollapse}>
-      <div className={`h5 text-start`}>{`"${answer.answer_body}"`}</div>
+      <div className='h5 text-start fw-semibold'>{answer.answer_body}</div>
     </Collapse>
   </div>
 }
@@ -56,8 +56,10 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod}) => {
 
   const Question = () =>
     <div className='row wrap question mb-1'>
-      <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asked:</p><br/>
-      <h5 className='w-auto text-start'> {fun_question.question_body}</h5>
+      {
+        userName && <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asked:<br/></p>
+      }
+      <h5 className='w-auto text-start fw-semibold'> {fun_question.question_body}</h5>
       <div className='text-end pointer' onClick={collapseAll}>
         <img src={collapse ? expand_icon : collapse_icon} alt="expand all" className='expand-icon' />
         <a className='ms-1 text-black h6'>{title}</a>

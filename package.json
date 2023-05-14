@@ -13,6 +13,7 @@
     "esbuild": "^0.17.7",
     "html-react-parser": "^3.0.15",
     "jquery": "^3.6.3",
+    "pluralize": "^8.0.0",
     "ramda": "^0.29.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",

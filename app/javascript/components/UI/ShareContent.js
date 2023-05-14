@@ -1,8 +1,8 @@
+import React from "react";
 import Menu from "./Menu";
-import React, {Fragment} from "react";
-import {backHandling, datePrepare, isPresent, rangeFormat} from "../helpers/helpers";
+import {backHandling, isPresent} from "../helpers/helpers";
 import calendar from "../../../assets/images/calendar.svg"
-import shout_out_large from "../../../assets/images/shoutout.svg"
+import shoutout from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
 import logo from "../../../assets/images/logo.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
@@ -20,6 +20,12 @@ export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = 
       <img src={edit_pencil} alt="pencil"/>
     </span>
     {emotion.word}
+  </button>
+
+export const BtnSendMoreShoutouts = ({ onClick, }) =>
+  <button className={'btn-custom shoutout d-flex flex-nowrap align-items-center'} onClick={onClick}>
+    Send more Shoutouts
+    <span><img src={shoutout} alt="shoutout" style={{width: 36, height: 36, marginLeft: 5}}/></span>
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
@@ -67,7 +73,7 @@ export const BtnBack = ({ addClass = '', hidden, onClick, disabled, text = 'Back
 
 export const ShoutOutIcon = ({addClass = ''}) =>
   <div className={'m-0'}>
-    <img className={`${addClass}`} src={shout_out_large} alt="shout out" style={{width: 100, height: 100}} />
+    <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}} />
   </div>
 
 

@@ -17,7 +17,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
       steps.push('causes-to-celebrate')
       saveDataToDb( steps, {bad_follow_comment: comment})
     }else
-      steps.push('icebreaker-answer')
+      steps.push('recognition')
       saveDataToDb( steps, {bad_follow_comment: comment})
   }
 

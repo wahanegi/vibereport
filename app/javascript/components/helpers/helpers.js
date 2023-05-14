@@ -1,3 +1,6 @@
+import React, {Fragment} from "react";
+import parse from 'html-react-parser'
+
 export const isEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
 
 export function isBlank(obj) {
@@ -59,4 +62,37 @@ export function splitArray(arr, n) {
   }
 
   return result;
+}
+
+function lastEl(arr) {
+  return !isEmpty(arr) && arr[arr.length-1];
+}
+
+export function insertSpanBeforeElements(users) {
+  return users.map(function (user) {
+    return "<span class='color-rose'>@</span>" + user.first_name;
+  });
+}
+
+export function convertUsersToString(users) {
+  if (users.length === 0) {
+    return '';
+  } else if (users.length === 1) {
+    return <Fragment>
+      {parse(insertSpanBeforeElements(users).join())}:&nbsp;
+    </Fragment>
+  } else if (users.length === 2) {
+    return <Fragment>
+      {parse(insertSpanBeforeElements(users).join(' and '))}:&nbsp;
+    </Fragment>
+  } else {
+    const lastElement = lastEl(users);
+    const popUsers = users.slice(0, -1)
+    return <Fragment>
+      {
+        parse(insertSpanBeforeElements(popUsers).join(', ') + ', and ' +
+        insertSpanBeforeElements(Array(lastElement)).join(''))
+      }:&nbsp;
+    </Fragment>
+  }
 }

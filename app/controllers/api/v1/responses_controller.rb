@@ -28,29 +28,11 @@ module Api
       end
 
       def response_flow_from_email
-        retrieve_user
-        sign_in_user
+        sign_in(user)
         result = ResponseFlowFromEmail.new(params, @user).call
         return redirect_to root_path if result[:success]
 
         render json: { error: result[:error] }, status: :unprocessable_entity
-      end
-
-      def see_results
-        retrieve_user
-        sign_in_user
-        @time_period = TimePeriod.find_by(id: params[:time_period_id])
-
-        msg = 'Time period not found' unless @time_period
-        if @time_period.present?
-          @responses = Response.joins(:time_period)
-                               .where(time_period_id: @time_period.id)
-                               .where("time_periods.end_date <= ?", Date.current)
-
-          msg ||= 'No responses found' if @responses.blank?
-        end
-
-        render json: { error: msg }, status: :unprocessable_entity
       end
 
       private
@@ -70,12 +52,8 @@ module Api
         }
       end
 
-      def retrieve_user
-        @user = User.find_by(id: params[:user_id])
-      end
-
-      def sign_in_user
-        sign_in @user
+      def user
+        @user ||= User.find_by(id: params[:user_id])
       end
     end
   end

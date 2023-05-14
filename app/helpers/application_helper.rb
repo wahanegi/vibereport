@@ -21,4 +21,7 @@ module ApplicationHelper
     passwordless_session.expires_at <= Time.current
   end
 
+  def sign_in(user)
+    sign_in user
+  end
 end
