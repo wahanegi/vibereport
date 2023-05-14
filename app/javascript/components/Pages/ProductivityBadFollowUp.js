@@ -29,7 +29,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
       <h1>It's like that sometimes...</h1>
       <h2 className="color-black">Reflect on what you think limited <br /> your productivity...</h2>
       <div className="rating-comment-container">
-        <div className="wrap-textarea-bad-follow d-flex justify-content-center">
+        <div className="wrap-textarea wrap-textarea-bad-follow">
           <form>
             <div className="form-group">
               <label className="comment-label">
