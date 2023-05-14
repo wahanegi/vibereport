@@ -29,19 +29,21 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
       <h1>It's like that sometimes...</h1>
       <h2 className="color-black">Reflect on what you think limited <br /> your productivity...</h2>
       <div className="rating-comment-container">
-        <form>
-          <div className="form-group">
-            <label className="comment-label">
-              <textarea
-                className="form-control w660-h350-br15"
-                placeholder="Is there anything that we can do to help?"
-                defaultValue={bad_follow_comment}
-                onChange={(e) => {setComment(e.target.value)} }
-                maxLength={700}
-              />
-            </label>
-          </div>
-        </form>
+        <div className="wrap-textarea-bad-follow d-flex justify-content-center">
+          <form>
+            <div className="form-group">
+              <label className="comment-label">
+                <textarea
+                  className="form-control w660-h350-br15"
+                  placeholder="Is there anything that we can do to help?"
+                  defaultValue={bad_follow_comment}
+                  onChange={(e) => {setComment(e.target.value)} }
+                  maxLength={700}
+                />
+              </label>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <Footer nextClick={handlingOnClickNext} />
