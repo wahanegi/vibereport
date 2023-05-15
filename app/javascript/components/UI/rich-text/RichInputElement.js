@@ -65,6 +65,7 @@ const RichInputElement =({ richText = '',
 
   const handleKeyDown = event => {
     event.preventDefault()
+    if ( window.getSelection().toString() ) return
     const text = element.textContent
     const cursorPos = Cursor.getCurrentCursorPosition(element)
     const caretCur = cursorPos.charCount
