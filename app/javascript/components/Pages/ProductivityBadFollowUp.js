@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Footer, Header, Wrapper} from "../UI/ShareContent";
+import {isPresent} from "../helpers/helpers";
 
 const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -39,7 +40,6 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
                 maxLength={700}
               />
             </label>
-
           </div>
         </form>
       </div>

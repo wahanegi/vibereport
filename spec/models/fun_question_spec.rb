@@ -25,6 +25,20 @@
 require 'rails_helper'
 
 RSpec.describe FunQuestion, type: :model do
+  describe 'associations' do
+    it { should belong_to(:user).optional }
+    it { should belong_to(:time_period).optional }
+    it { should have_one(:response).dependent(:nullify) }
+    it { should have_many(:fun_question_answers).dependent(:destroy) }
+  end
+
+  describe 'factory' do
+    it 'should be valid' do
+      fun_question = FactoryBot.build(:fun_question)
+      expect(fun_question).to be_valid
+    end
+  end
+
   describe 'question_public scope' do
     let!(:public_unused_question) { create(:fun_question, public: true, used: false) }
     let!(:public_used_question) { create(:fun_question, public: true, used: true) }
@@ -37,7 +51,7 @@ RSpec.describe FunQuestion, type: :model do
 
   describe 'validations' do
     let(:fun_question) { build(:fun_question) }
-
+    it { should validate_presence_of(:question_body) }
     it 'is invalid when question_body is not unique' do
       fun_question.save
       expect(build(:fun_question, question_body: fun_question.question_body)).to_not be_valid

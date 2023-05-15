@@ -22,14 +22,8 @@
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class FunQuestion < ApplicationRecord
-  belongs_to :user, optional: true
-  belongs_to :time_period, optional: true
-  has_one :response, dependent: :nullify
-  has_many :fun_question_answers, dependent: :destroy
+class FunQuestionSerializer
+  include JSONAPI::Serializer
 
-  scope :question_public, -> { where(public: true) }
-  scope :not_used, -> { where(used: false) }
-
-  validates :question_body, presence: true, uniqueness: { case_sensitive: false }
+  attributes :id, :question_body
 end

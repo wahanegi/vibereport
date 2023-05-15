@@ -6,7 +6,7 @@ import {apiRequest} from "./requests/axios_requests";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
-  current_user_id: null,
+  current_user: null,
   emotion:{id: null, word:null, category: null},
   response: { id: null, type: null, attributes:{
       steps:[ 'emotion-selection-web']}},
