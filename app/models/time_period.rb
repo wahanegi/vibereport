@@ -40,6 +40,11 @@ class TimePeriod < ApplicationRecord
     def find_or_create_time_period
       TimePeriod.current || TimePeriod.create_time_period
     end
+
+    def previous_time_period
+      find_or_create_time_period
+      TimePeriod.find_by(end_date: TimePeriod.current.start_date - 1)
+    end
   end
 
   def date_range

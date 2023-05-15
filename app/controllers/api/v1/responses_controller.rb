@@ -28,7 +28,7 @@ module Api
       end
 
       def response_flow_from_email
-        sign_in(user)
+        sign_in_user
         result = ResponseFlowFromEmail.new(params, @user).call
         return redirect_to root_path if result[:success]
 
@@ -54,6 +54,10 @@ module Api
 
       def user
         @user ||= User.find_by(id: params[:user_id])
+      end
+
+      def sign_in_user
+        sign_in user
       end
     end
   end

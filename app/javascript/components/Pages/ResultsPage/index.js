@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {rangeFormat} from "../../helpers/helpers";
+import {isPresent, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   BtnPrimary,
@@ -15,6 +15,7 @@ import EmotionSection from "./EmotionSection";
 import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
+import isEmpty from "ramda/src/isEmpty";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -80,7 +81,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
       setPrevTimePeriod(time_periods[timePeriodIndex + 1])
       setNextTimePeriod(time_periods[timePeriodIndex - 1])
     }
-    }, [timePeriodIndex, time_periods?.length])
+  }, [timePeriodIndex, time_periods?.length])
 
   useEffect(() => {
     axios.get(`/api/v1/results/${timePeriod.id}`)
@@ -89,6 +90,14 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
         setLoaded(true)
       })
   }, [timePeriod, data])
+
+  useEffect(() => {
+    const time_period_id = window.location.search.replace('?id=', '')
+    if (isPresent(time_periods) && window.location.search.includes('?id=')) {
+      const index = time_periods?.findIndex(element => String(element.id) === time_period_id);
+      setTimePeriodIndex(index)
+    }
+  }, [window.location.search, loaded])
 
   if (error) return <p>{error.message}</p>
 
@@ -102,7 +111,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
         <h1>So far this week, the <br/> the team is feeling...</h1>:
         <h1>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
     }
-    <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod}} />
+    <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb}} />
     <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
     <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
     <ShoutoutSection nextTimePeriod={nextTimePeriod}

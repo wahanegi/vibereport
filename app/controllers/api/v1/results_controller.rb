@@ -6,16 +6,12 @@ class Api::V1::ResultsController < ApplicationController
     render json: Api::V1::ResultsPresenter.new(@time_period.id, current_user).json_hash
   end
 
-  def see_results
-    sign_in(user)
-    time_period
-    msg = 'Time period not found' unless time_period
-    if time_period.present?
-      @responses = Response.joins(:time_period)
-                           .where(time_period_id: @time_period.id)
-                           .where('time_periods.end_date <= ?', Date.current)
-      msg ||= 'No responses found' if @responses.blank?
-    end
+  def results_email
+    sign_in_user
+    msg = time_period.present? ? '' : 'Time period not found'
+    msg ||= 'No responses found' if time_period.present? && time_period.responses.blank?
+    return redirect_to "/results?id=#{params[:id]}" if msg.blank?
+
     render json: { error: msg }, status: :unprocessable_entity
   end
 
@@ -27,5 +23,9 @@ class Api::V1::ResultsController < ApplicationController
 
   def user
     @user ||= User.find_by(id: params[:user_id])
+  end
+
+  def sign_in_user
+    sign_in user
   end
 end
