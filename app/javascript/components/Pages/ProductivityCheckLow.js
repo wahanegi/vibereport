@@ -1,5 +1,5 @@
 import React, {useState, Fragment} from 'react';
-import {Footer, Header, Wrapper} from "../UI/ShareContent";
+import {Wrapper} from "../UI/ShareContent";
 import flame2 from '../../../assets/images/flame2.svg';
 import flame3 from '../../../assets/images/flame3.svg';
 import flame4 from '../../../assets/images/flame4.svg';
@@ -11,6 +11,8 @@ import flame9 from '../../../assets/images/flame9.svg';
 import flame10 from '../../../assets/images/flame10.svg';
 import { FLAME_IMAGE_SIZES } from '../helpers/consts';
 import {isBlank} from "../helpers/helpers";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
+import CornerElements from "../UI/CornerElements";
 
 const ProductivitySlider = ({productivity, handleSliderChange, flameImages, generateStyles, imageSizes}) => 
 <Fragment>
@@ -80,13 +82,16 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   
   if (!!error) return <p>{error.message}</p>
 
-  return !isLoading && <Wrapper>
-    <Header />
-    <div className='central-element'>
-      <ProductivitySlider productivity={productivity} handleSliderChange={handleSliderChange} flameImages={flameImages} generateStyles={generateStyles} imageSizes={imageSizes}/>
-    </div>
-    <Footer nextClick={handlingOnClickNext} disabled={isBlank(productivity) || productivity === 0}/>
-  </Wrapper>
+  return !isLoading &&
+    <Wrapper>
+      <div className='central-element'>
+        <ProductivitySlider productivity={productivity} handleSliderChange={handleSliderChange} flameImages={flameImages} generateStyles={generateStyles} imageSizes={imageSizes}/>
+      </div>
+      <BlockLowerBtns nextHandling={ handlingOnClickNext } disabled={isBlank(productivity) || productivity === 0} />
+      <CornerElements data = { data }
+                      setData = { setData }
+                      percentCompletion = { 30 } />
+    </Wrapper>
 };
 
 export default ProductivityCheckLow;

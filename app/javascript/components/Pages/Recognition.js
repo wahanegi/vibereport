@@ -22,7 +22,9 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   const nextHandling = () =>{
-    steps.push('recognition')
+      if (!data.fun_question){
+        steps.push('causes-to-celebrate')
+      }else { steps.push('icebreaker-answer') }
     saveDataToDb( steps )
   }
   const editHandling = (e) =>{

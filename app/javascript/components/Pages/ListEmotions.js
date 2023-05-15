@@ -99,7 +99,6 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
             I was not working recently
           </NavLink>
-          <QuestionButton />
           <CornerElements         data = { data }
                                setData = { setData }
                      percentCompletion = {0}/>

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import parse from "html-react-parser";
 
 const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className }) => {
+    useEffect(()=>{
+        const div = document.getElementById("textArea");
+        div.addEventListener("contextmenu", (e) => {e.preventDefault()});
+    },[])
     return (
         <div className = {` ${className} overflow-hidden`}>
           <div contentEditable={ true }

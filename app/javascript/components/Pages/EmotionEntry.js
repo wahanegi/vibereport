@@ -8,6 +8,9 @@ import iconPositive from "../../../assets/images/icon_positive.svg";
 import axios from "axios";
 import {CSSTransition} from 'react-transition-group';
 import {backHandling} from "../helpers/helpers";
+import ShoutoutButton from "../UI/ShoutoutButton";
+import CornerElements from "../UI/CornerElements";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
 
@@ -113,7 +116,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     { !!error && <p>{error.message}</p>}
     {!isLoading && !error &&
       <Wrapper className='position-relative'>
-        <Header />
+
         <div className='central-element'>
           <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
           <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>
@@ -125,13 +128,15 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
             <Emojis show={show}/>
           </CSSTransition>
         </div>
-        <div className='d-flex justify-content-between m-3'>
-          <ShoutOutIcon/>
+        <div className='d-flex position-absolute placement-buttons justify-content-between col-6 offset-3'>
           <BtnBack onClick={backHandling} addClass='m-1 align-self-center'/>
           <BtnNext data={data} setData={setData} onClick={emotion.category  ? handlingOnClickNext : null} disabled={!emotion.category || emotion.word.length < 2} addClass='m-1 align-self-center'/>
-          <HelpIcon/>
         </div>
+        <CornerElements data = { data }
+                        setData = { setData }
+                        percentCompletion = { 0 } />
       </Wrapper>
+
     }
   </Fragment>
 }
