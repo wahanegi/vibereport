@@ -78,14 +78,16 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
               <div className='wrap'>
                 <p className='b3 muted'><span className='red-violet'>@</span>{userName} asks:</p>
                 {loaded &&
-                  <form>
-                    <div className="form-group">
-                    <textarea className='input' name='question_body'
-                              placeholder='What would you ask the team? You could be selected!'
-                              value={funQuestion?.question_body || ''}
-                              onChange={onChangQuestion} maxLength={700} />
-                    </div>
-                  </form>
+                  <div className='wrap-textarea'>
+                    <form>
+                      <div className="form-group">
+                      <textarea className='input' name='question_body'
+                                placeholder='What would you ask the team? You could be selected!'
+                                value={funQuestion?.question_body || ''}
+                                onChange={onChangQuestion} maxLength={700} />
+                      </div>
+                    </form>
+                  </div>
                 }
               </div>
             </div>
