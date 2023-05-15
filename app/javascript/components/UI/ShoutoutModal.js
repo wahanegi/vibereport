@@ -47,7 +47,7 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
 
     return <RichInputElement
             richText = { richText }
-           listUsers = { data.users.filter(user => user.id !== data.current_user_id) }
+           listUsers = { data.users.filter(user => user.id !== data.current_user.id) }
              onClose = { onClose }
             onSubmit = { submitHandling }
     />
