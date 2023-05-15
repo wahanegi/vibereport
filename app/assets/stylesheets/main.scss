@@ -164,6 +164,28 @@ body {
   .rating-label:hover {
     transform: scale(1.1);
   }
+
+  .wrap-textarea{
+    margin: auto;
+    border: 2px solid $black !important;
+
+    &:focus-within {
+      outline: 0;
+      border: 3px solid $royal-blue !important;
+    }
+  }
+  //Productivity Bad Follow Up
+  .wrap-textarea-bad-follow{
+    border-radius: 15px;
+    width: 660px;
+    height: 350px;
+  }
+  // Emotion intensity
+  .wrap-textarea-intensity{
+    width: 550px;
+    height: 190px;
+    border-radius: 28.7214px;
+  }
 }
 
 .comment-label {
@@ -180,10 +202,22 @@ body {
     box-shadow: unset;
     padding-inline-start: 1.375rem;
     padding-inline-end:   1.375rem;
+    resize: none;
     &.w660-h350-br15 {
-      border-radius: 15px;
-      width: 660px;
-      height: 350px;
+      margin: 10px 0;
+      padding: 5px 15px;
+      width: 642px;
+      height: 325px !important;
+      border: none !important;
+      border-radius: 0;
+    }
+    &.form-control-intensity{
+      margin-top: 12px;
+      padding: 5px 15px;
+      width: 530px;
+      height: 160px !important;
+      border: none !important;
+      border-radius: 0;
     }
   }
 
@@ -192,12 +226,6 @@ body {
     font-style: normal;
     font-size: 23px;
     text-align: initial;
-  }
-
-  .form-control:focus {
-    background-color: white;
-    outline: 0;
-    border: 2px solid $royal-blue;
   }
 }
 
