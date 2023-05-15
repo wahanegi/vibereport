@@ -113,7 +113,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     { !!error && <p>{error.message}</p>}
     {!isLoading && !error &&
       <Wrapper className='position-relative'>
-        <Header />
+        <Header  saveDataToDb={saveDataToDb} steps={steps} />
         <div className='central-element'>
           <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
           <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>

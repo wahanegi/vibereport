@@ -5,7 +5,7 @@ module Api
 
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :gif_url, :notices, :rating,
                       :comment, :productivity, :bad_follow_comment, :celebrate_comment, :fun_question_id,
-                      :fun_question_answer_id].freeze
+                      :fun_question_answer_id, :draft].freeze
 
       before_action :retrieve_response, only: %i[show update]
       before_action :require_user!, only: %i[index show create update]
@@ -59,6 +59,10 @@ module Api
         end
 
         render json: { error: msg }, status: :unprocessable_entity
+      end
+
+      def sign_out_user
+        redirect_to auth.sign_in_path if sign_out User
       end
 
       private

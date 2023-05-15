@@ -68,7 +68,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
     <Fragment>
       {!isLoading && !error &&
         <Wrapper>
-          <Header/>
+          <Header saveDataToDb={saveDataToDb} steps={steps} />
           <div className='icebreaker-position'>
             <div className='d-flex justify-content-center flex-column'>
               <h4 className='mb-0'>Thanks for answering!</h4>

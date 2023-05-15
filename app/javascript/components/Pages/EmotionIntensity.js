@@ -126,7 +126,7 @@ const generateStyles = (value, selected, category) => {
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header />
+    <Header saveDataToDb={saveDataToDb} steps={steps} />
     <div className='central-element'>
       <EmotionSection />
       <IntenseLine

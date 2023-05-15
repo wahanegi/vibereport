@@ -81,7 +81,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header />
+    <Header saveDataToDb={saveDataToDb} steps={steps} />
     <div className='central-element'>
       <ProductivitySlider productivity={productivity} handleSliderChange={handleSliderChange} flameImages={flameImages} generateStyles={generateStyles} imageSizes={imageSizes}/>
     </div>

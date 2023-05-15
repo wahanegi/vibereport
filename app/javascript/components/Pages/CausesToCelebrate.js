@@ -23,7 +23,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
 
   const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
     <Logo />
-    <Menu>X% complete</Menu>
+    <Menu saveDataToDb={saveDataToDb} steps={steps} >X% complete</Menu>
   </div>
 
   const onCommentChange = (e) => {

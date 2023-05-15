@@ -24,7 +24,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header />
+    <Header saveDataToDb={saveDataToDb} steps={steps} />
     <div className='central-element'>
       <h1>It's like that sometimes...</h1>
       <h2 className="color-black">Reflect on what you think limited <br /> your productivity...</h2>

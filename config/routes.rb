@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/see_results', to: 'responses#see_results'
+      get '/sign_out_user', to: 'responses#sign_out_user'
     end
   end
   get '*path', to: 'home#app'

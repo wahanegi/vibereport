@@ -68,7 +68,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
       <h5 style={{opacity: 0.6}}>You picked:</h5>
       <BigBtnEmotion emotion={emotion} onClick={backHandling} />
     </div>
-    <Menu>X% complete</Menu>
+    <Menu saveDataToDb={saveDataToDb} steps={steps}>X% complete</Menu>
   </div>
 
   if (!!error) return <p>{error.message}</p>

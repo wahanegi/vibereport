@@ -15,7 +15,7 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header />
+    <Header saveDataToDb={saveDataToDb} steps={steps}/>
     <div className='central-element'>
       {
         isCustomGif ?
