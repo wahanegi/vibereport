@@ -7,7 +7,6 @@ import SweetAlert from "./SweetAlert";
 const Menu = ({ percent_completion, addClass = '', saveDataToDb, steps }) => {
   const [showModal, setShowModal] = useState(false);
 
-
   const handleSaveDraft = () => {
     console.log('draft', steps)
     saveDataToDb( steps, {draft: true})
@@ -37,7 +36,7 @@ const Menu = ({ percent_completion, addClass = '', saveDataToDb, steps }) => {
       <div className='fs-6 text-primary' style={{margin: 19+"px 0 0 0"}}>{percent_completion}% complete</div>
       {showModal && (
         <SweetAlert
-          alertTitle="Are you sure you want to log out?"
+          alertTitle={"Are you sure you <br/>  want to log out?"}
           cancelButtonText="No, go back"
           confirmButtonText="Yes, log out"
           onConfirmAction={() => {
@@ -46,6 +45,8 @@ const Menu = ({ percent_completion, addClass = '', saveDataToDb, steps }) => {
           onDeclineAction={() => {
             setShowModal(false);
           }}
+          cancelButtonClass='btn-logout-modal'
+          backdropClass='backdrop-logout-modal'
         />
       )}
     </div>
