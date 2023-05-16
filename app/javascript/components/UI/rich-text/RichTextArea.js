@@ -1,7 +1,14 @@
 import React, {useEffect} from 'react';
 import parse from "html-react-parser";
+import Cursor from "./cursor";
 
-const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className }) => {
+const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursorPos }) => {
+  useEffect(() => {
+    const rect = refs.current.getBoundingClientRect();
+    const isCaretWithinBounds = rect.top < cursorPos.coordinates.y && rect.bottom > cursorPos.coordinates.y
+    if(!isCaretWithinBounds) refs.current.scrollBy({ top: cursorPos.coordinates.y - rect.y })
+
+  }, [cursorPos]);
     const onContextMenuHandling = (e) => {
         e.preventDefault()
     }
@@ -15,7 +22,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className }) => {
              ref = { refs }
              data-testid ="editable-div"
              id = 'textArea'
-             className = 'c3 form-control text-start  inner-div '>
+             className = 'c3 form-control text-start  inner-div scrolling'>
             { parse( textHTML ) }
           </div>
         </div>

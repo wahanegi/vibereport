@@ -339,13 +339,14 @@ const clickEnterTabHandling = ( i ) => {
   }
 
   return (
-    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327'>
+    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327 mb-7 overflow-hidden'>
       <img src={xClose} className='position-absolute x-close' onClick={onClose}/>
       <div className=' d-flex flex-column align-items-center'>
         <RichTextArea      textHTML = { textHTML }
                                refs = { textAreaRef }
                           onKeyDown = { handleKeyDown }
                             onClick = { clickHandling }
+                          cursorPos = { Cursor.getCurrentCursorPosition(element) }
                           className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'/>
         <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
                 onClick = { submitHandling }>

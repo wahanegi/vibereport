@@ -304,7 +304,10 @@ a {
   }
 }
 
-
+.scrolling {
+  scroll-behavior: smooth;
+  overflow-wrap: anywhere;
+}
 
 //IntenseLine
 .rating-comment-container {
@@ -534,6 +537,7 @@ a {
   height:514px;
   top:0;
   margin-top: 327px;
+  overflow-x: hidden;
   .x-close {
     z-index: 31;
     margin-top: -25px;
