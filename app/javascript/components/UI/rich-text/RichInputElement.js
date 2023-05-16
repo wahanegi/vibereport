@@ -38,7 +38,8 @@ const RichInputElement =({ richText = '',
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
-    if ( Cursor.getCurrentCursorPosition(element).focusOffset == 1 )
+    if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
+      Cursor.getCurrentCursorPosition(element).isSPAN ? setIsDropdownList(true) :  setIsDropdownList(false)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
     setIsDisabled(true)
@@ -91,6 +92,7 @@ const RichInputElement =({ richText = '',
 
       if (char === 'Enter' || char === 'Tab') {
         clickEnterTabHandling(indexOfSelection)
+        //filteredUsers.indexOf(filteredUsers.find(user => user.id === currentSelection))
         return 0
       }
 
@@ -101,6 +103,19 @@ const RichInputElement =({ richText = '',
 
         const newSearchString = (searchString + char).toLowerCase()
         const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
+        console.log(filteredUsers.indexOf(filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))), filteredUsers)
+        const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
+        console.log(findUser)
+        if( findUser === undefined) {
+          const node = TAG_AT + END_TAG_AT
+          RichText.deleteNodePasteChars( textHTML, cursorPos, node+newSearchString.charAt(0).toUpperCase() + newSearchString.slice(1), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
+          setIsDropdownList(false)
+          RichText.incrementPositionCursor(1, cursorPos, textHTML, setCaret)
+          setSearchString('')
+          setFilteredUsers(listAllUsers)
+          return
+        }
+        setCurrentSelection(findUser.id)
 
         //when full name of user to equal to search string
         // and only one element in the array than start update copyChosenUsers and chosenUsers

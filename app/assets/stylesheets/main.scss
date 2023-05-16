@@ -626,8 +626,10 @@ a {
     white-space:        nowrap;
     overflow:           hidden;
     padding-inline-start: 7px;
+    color: $gray-300;
     &:focus, &.highlight   {
       background-color: $gray-100;
+      color: $black;
     }
     &.item:hover {
       border: 1px solid $primary;

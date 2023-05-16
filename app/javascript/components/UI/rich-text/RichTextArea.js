@@ -6,7 +6,9 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
   useEffect(() => {
     const rect = refs.current.getBoundingClientRect();
     const isCaretWithinBounds = rect.top < cursorPos.coordinates.y && rect.bottom > cursorPos.coordinates.y
-    if(!isCaretWithinBounds) refs.current.scrollBy({ top: cursorPos.coordinates.y - rect.y })
+    if( process.env.NODE_ENV !== 'test' && !isCaretWithinBounds ) {
+      refs.current.scrollBy({ top: cursorPos.coordinates.y - rect.y })
+    }
 
   }, [cursorPos]);
     const onContextMenuHandling = (e) => {
@@ -17,11 +19,11 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
           <div contentEditable={ true }
              suppressContentEditableWarning = { true }
              onKeyDown = { onKeyDown }
-             onClick = { onClick }
-             onContextMenu={ onContextMenuHandling }
-             ref = { refs }
-             data-testid ="editable-div"
-             id = 'textArea'
+               onClick = { onClick }
+         onContextMenu = { onContextMenuHandling }
+                   ref = { refs }
+           data-testid = "editable-div"
+                    id = 'textArea'
              className = 'c3 form-control text-start  inner-div scrolling'>
             { parse( textHTML ) }
           </div>
