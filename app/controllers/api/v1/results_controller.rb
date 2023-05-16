@@ -10,6 +10,8 @@ class Api::V1::ResultsController < ApplicationController
     sign_in_user
     msg = time_period.present? ? '' : 'Time period not found'
     msg ||= 'No responses found' if time_period.present? && time_period.responses.blank?
+    steps = current_response.steps << 'results'
+    current_response.update(steps:)
     return redirect_to "/results?id=#{params[:id]}" if msg.blank?
 
     render json: { error: msg }, status: :unprocessable_entity
@@ -27,5 +29,9 @@ class Api::V1::ResultsController < ApplicationController
 
   def sign_in_user
     sign_in user
+  end
+
+  def current_response
+    @current_response ||= Response.find_by(time_period_id: TimePeriod.current.id, user_id: current_user.id)
   end
 end
