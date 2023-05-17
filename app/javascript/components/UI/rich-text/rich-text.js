@@ -134,7 +134,6 @@ export default class RichText {
       let pos = 0
       while ((pos = richText.indexOf(tag, pos)) !== -1) {
         pos += tag.length
-        console.log(pos, richText.indexOf(endTag, pos), richText)
         if(richText.indexOf(endTag, pos)===pos) continue
         users.push(listUsers.find(user => this.userFullName(user) === richText.slice(pos, richText.indexOf(endTag, pos))))
       }

@@ -39,7 +39,6 @@ const RichInputElement =({ richText = '',
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
     if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
-      Cursor.getCurrentCursorPosition(element).isSPAN ? setIsDropdownList(true) :  setIsDropdownList(false)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
     setIsDisabled(true)
@@ -75,7 +74,7 @@ const RichInputElement =({ richText = '',
     if (cursorPos.isDIV) {
       setIsDropdownList(false)
     }
-    if (cursorPos.isSPAN) {
+    if (cursorPos.isSPAN && textHTML[cursorPos.realPos] !== '<') {
       setIsDropdownList(true)
     }
     if (char.match(/[&<>]/)) return 0
@@ -92,23 +91,22 @@ const RichInputElement =({ richText = '',
 
       if (char === 'Enter' || char === 'Tab') {
         clickEnterTabHandling(indexOfSelection)
-        //filteredUsers.indexOf(filteredUsers.find(user => user.id === currentSelection))
         return 0
       }
 
       let indexOfSel = indexOfSelection
       if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
-
-        if (cursorPos.focusOffset - 1 !== searchString.length) return 0
+        console.log(RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1) , cursorPos.focusOffset)
+        if (cursorPos.focusOffset - 1 !== searchString.length
+          || RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1).length !== cursorPos.focusOffset-1) return 0
 
         const newSearchString = (searchString + char).toLowerCase()
         const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
-        console.log(filteredUsers.indexOf(filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))), filteredUsers)
         const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
-        console.log(findUser)
         if( findUser === undefined) {
           const node = TAG_AT + END_TAG_AT
-          RichText.deleteNodePasteChars( textHTML, cursorPos, node+newSearchString.charAt(0).toUpperCase() + newSearchString.slice(1), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
+          RichText.deleteNodePasteChars( textHTML, cursorPos, node+newSearchString.charAt(0).toUpperCase()
+            + RichText.encodeSpace( newSearchString.slice(1) ), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
           setIsDropdownList(false)
           RichText.incrementPositionCursor(1, cursorPos, textHTML, setCaret)
           setSearchString('')
@@ -231,10 +229,11 @@ const RichInputElement =({ richText = '',
         break
 
       case 'ArrowRight':
-        if( cursorPos.isSPAN && cursorPos.focusOffset === 1 ) {
+        if( cursorPos.isSPAN && cursorPos.focusOffset === 1 && text[cursorPos.charCount] === MARKER ) {
           setIsDropdownList(true)
           setCoordinates(cursorPos.coordinates)
         }
+        if( cursorPos.isSPAN && (textHTML[cursorPos.realPos+1] === '<')) setIsDropdownList(false)
         RichText.incrementPositionCursor( 1, cursorPos, text, setCaret )
         break
     }

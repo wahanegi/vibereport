@@ -45,7 +45,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
       {shoutOuts.map( shoutOut => (
       <li className='c3' key={ shoutOut.id }>
         <span>
-          <p className='fw-semibold mb-0  cut-text'>{parse(shoutOut.rich_text)}</p>
+          <p className='fw-semibold mb-0  pt-1 pb-1 cut-text'>{parse(shoutOut.rich_text)}</p>
         </span>
         <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" onClick={editHandling}/>
       </li>
