@@ -15,15 +15,21 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
       .sort( (a,b) =>  a.updated_at < b.updated_at ? 1 : -1 )
 
   const numShoutOuts = shoutOuts.length
-
-  const skipHandling = () =>{
-    steps.push('recognition')
+  // Temporary placement not ready page Shoutout
+  const handlingOnClickNext = () => {
+    if (!data.fun_question){
+      steps.push('causes-to-celebrate')
+      saveDataToDb( steps )
+    }else
+      steps.push('icebreaker-answer')
     saveDataToDb( steps )
+  }
+  const skipHandling = () =>{
+    handlingOnClickNext()
   }
 
   const nextHandling = () =>{
-    steps.push('recognition')
-    saveDataToDb( steps )
+    handlingOnClickNext()
   }
   const editHandling = (e) =>{
     e.preventDefault()
