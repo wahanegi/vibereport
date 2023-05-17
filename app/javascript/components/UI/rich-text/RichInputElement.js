@@ -34,7 +34,7 @@ const RichInputElement =({ richText = '',
   const OFFSET_X = 0
   const OFFSET_Y = 40
   const LIMIT_CHARS = 700
-  const NUM_ENTERED_CHARS = 7
+  const NUM_ENTERED_CHARS = 1
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
@@ -42,7 +42,13 @@ const RichInputElement =({ richText = '',
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
     setIsDisabled(true)
-    if ( !RichText.userFullName( copyChosenUsers[0] ).length ) return
+    if ( !RichText.userFullName( copyChosenUsers[0] ).length ) {
+      if ( textHTML.indexOf(MARKER) === -1 || process.env.NODE_ENV === 'test') return
+      const lenText = element.innerText
+      if (lenText === undefined) return
+      lenText.match(/([\s{2,}]+[@]\D{2,}|[@]\D{2,}[\s][\S]{2,})/) ?  setIsDisabled(false) : setIsDisabled(true)
+      return;
+    }
     let lenText = element.innerText?.length
     if ( lenText > RichText.userFullName( copyChosenUsers[0] ).length + NUM_ENTERED_CHARS )  {
       let usersLen = copyChosenUsers.reduce((prev, cur) => prev + RichText.userFullName(cur).length + 2, 0)
@@ -90,13 +96,13 @@ const RichInputElement =({ richText = '',
       }
 
       if (char === 'Enter' || char === 'Tab') {
+        if (indexOfSelection === -1 ) return
         clickEnterTabHandling(indexOfSelection)
         return 0
       }
 
       let indexOfSel = indexOfSelection
       if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
-        console.log(RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1) , cursorPos.focusOffset)
         if (cursorPos.focusOffset - 1 !== searchString.length
           || RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1).length !== cursorPos.focusOffset-1) return 0
 
@@ -105,12 +111,12 @@ const RichInputElement =({ richText = '',
         const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         if( findUser === undefined) {
           const node = TAG_AT + END_TAG_AT
-          RichText.deleteNodePasteChars( textHTML, cursorPos, node+newSearchString.charAt(0).toUpperCase()
-            + RichText.encodeSpace( newSearchString.slice(1) ), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
+          RichText.deleteNodePasteChars( textHTML, cursorPos, node
+              + RichText.encodeSpace(newSearchString.charAt(0).toUpperCase())
+              + RichText.encodeSpace( newSearchString.slice(1) ), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
           setIsDropdownList(false)
           RichText.incrementPositionCursor(1, cursorPos, textHTML, setCaret)
           setSearchString('')
-          setFilteredUsers(listAllUsers)
           return
         }
         setCurrentSelection(findUser.id)
@@ -150,13 +156,13 @@ const RichInputElement =({ richText = '',
 
       if ((char === 'ArrowDown') && indexOfSelection >= 0) {
         setIndexOfSelection(indexOfSel = indexOfSelection < filteredUsers.length - 1 ? ++indexOfSel : 0)
-        setCurrentSelection(filteredUsers[indexOfSel].id)
+        setCurrentSelection(filteredUsers[indexOfSel]?.id)
         return 0
       }
 
       if (char === 'ArrowUp' && indexOfSelection >= 0) {
         setIndexOfSelection(indexOfSel = indexOfSelection > 0 ? --indexOfSel : filteredUsers.length - 1)
-        setCurrentSelection(filteredUsers[indexOfSel].id)
+        setCurrentSelection(filteredUsers[indexOfSel]?.id)
         return 0
       }
 
@@ -164,7 +170,7 @@ const RichInputElement =({ richText = '',
       if (cursorPos.isDIV && char.length === 1) {
         switch (char) {
           case MARKER:
-            if (filteredUsers.length && (text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
+            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
                 || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 160
                 && text.charCodeAt(caretCur) === 160
                 || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160)) {

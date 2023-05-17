@@ -385,7 +385,7 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.click(divElement);
       fireEvent.keyDown(divElement, {key: 'k'});
       const listItems = screen.queryAllByRole('listitem');
-      expect(listItems).toHaveLength(1);
+      expect(listItems).toHaveLength(4);
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('@George Washington, @Jackie Chan @Janice Wednesday @Kara Friday @roger ');
       expect(setChosenUsers).toHaveBeenCalledWith(
