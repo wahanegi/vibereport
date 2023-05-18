@@ -276,13 +276,16 @@ a {
       &.cut-text {
         text-overflow: ellipsis;
         overflow: hidden;
-        width: 750px;
+        width: 740px;
         white-space: nowrap;
       }
     }
   }
 }
-
+.click-annotation {
+  margin-top: 350px;
+  color: $gray-600;
+}
 //system scroll
 .field-shout-outs ,
 .drop-down-block,

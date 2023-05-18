@@ -4,7 +4,7 @@ import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
-import edit_pencil from "../../../assets/images/edit-pencil.svg";
+import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
 import ShoutoutModal from "../UI/ShoutoutModal";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
@@ -73,10 +73,11 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
       <div className='mx-auto w-746 h-59 mt-151 mb-4'>
         <h1 className='color-black'>Recognition is important!</h1>
       </div>
-        {!numShoutOuts && <h2 className='color-black'>
+        {!numShoutOuts && <div><h2 className='color-black'>
           Consider giving members of your team a <br/>
           Shoutout to show your appreciation.</h2>
-
+          <div className='click-annotation b4'>Click to give a Shoutout!</div>
+        </div>
         }
 
       {!!numShoutOuts && <div><h2 className='color-black mb-1'>You've mentioned:</h2></div>}

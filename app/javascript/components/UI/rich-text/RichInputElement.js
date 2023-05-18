@@ -35,6 +35,7 @@ const RichInputElement =({ richText = '',
   const OFFSET_Y = 40
   const LIMIT_CHARS = 700
   const NUM_ENTERED_CHARS = 1
+  const highlightSmbATUnknownUser = false
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
@@ -110,7 +111,7 @@ const RichInputElement =({ richText = '',
         const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         if( findUser === undefined) {
-          const node = TAG_AT + END_TAG_AT
+          const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
           RichText.deleteNodePasteChars( textHTML, cursorPos, node
               + RichText.encodeSpace(newSearchString.charAt(0).toUpperCase())
               + RichText.encodeSpace( newSearchString.slice(1) ), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
