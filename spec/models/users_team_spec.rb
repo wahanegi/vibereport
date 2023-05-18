@@ -31,8 +31,6 @@ RSpec.describe UsersTeam, type: :model do
     let(:team) { create(:team) }
     subject { UsersTeam.new(user: user, team: team) }
 
-    it { should validate_presence_of(:user_id) }
-    it { should validate_presence_of(:team_id) }
     it { should validate_uniqueness_of(:user_id).scoped_to(:team_id).with_message("User should belong to a team only once") }
   end
 end

@@ -25,7 +25,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable
 
   has_many :responses, dependent: :destroy
-  has_many :users_teams
+  has_many :users_teams, dependent: :destroy
   has_many :teams, through: :users_teams
 
   MAX_NAME_LENGTH = 15

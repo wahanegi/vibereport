@@ -22,7 +22,5 @@ class UsersTeam < ApplicationRecord
   belongs_to :user
   belongs_to :team
 
-  validates :user_id, presence: true
-  validates :team_id, presence: true
   validates :user_id, uniqueness: { scope: :team_id, message: "User should belong to a team only once" }
 end

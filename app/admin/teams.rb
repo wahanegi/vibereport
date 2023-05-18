@@ -36,7 +36,7 @@ ActiveAdmin.register Team do
   
         team.save
       end
-  
+
       redirect_to admin_teams_path, notice: 'CSV imported successfully!'
     else
       render 'admin/teams/import'
@@ -61,13 +61,204 @@ ActiveAdmin.register Team do
     send_data csv_data, type: 'text/csv; charset=utf-8; header=present', disposition: "attachment; filename=teams.csv"
   end
 
-  show do
+  show do |team|
     attributes_table do
       row :name
-      row "Users" do |team|
-        team.users.map { |user| user.email }.join(", ")
+      row "Users" do
+        if team.users.empty?
+          "User List is Empty"
+        else
+          team.users.map { |user| user.email }.join(", ")
+        end
+      end
+      row "Total Users" do
+        team.users.count
       end
     end
+  
+    panel "Single Time Period" do
+      attributes_table_for team do
+        current_time_period = TimePeriod.current
+        time_period_id = current_time_period.id
+  
+        responses = Response.joins(user: { teams: :users_teams })
+        .where(users_teams: { team_id: team.id }, responses: { time_period_id: time_period_id })
+  
+        if responses.any?
+          row :Emotion_Index do
+            positive_emotion_ids = responses.joins(:emotion)
+                               .where(emotions: { category: 'positive' })
+                               .distinct
+                               .pluck(:emotion_id)
+            negative_emotion_ids = responses.joins(:emotion)
+                               .where(emotions: { category: 'negative' })
+                               .distinct
+                               .pluck(:emotion_id)
+            
+            positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
+            negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
+            
+            total_responses = team.users.includes(:responses).distinct.count
+            
+            result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
+          end
+        
+          row :Productivity_Average do
+            responses.average(:productivity) || "No productivitys available"
+          end
+        
+          row :Productivity_Verbatims do
+            low_productivity_comments = Response.joins(user: :users_teams)
+              .where(users_teams: { team_id: team.id })
+              .where('productivity <= ?', 2)
+              .pluck(:comment)
+          
+            if low_productivity_comments.empty?
+              "No comments available"
+            else
+              low_productivity_comments.join(", ")
+            end
+          end
+        
+          row :Participation_Percentage do
+            total_users = team.users.distinct.count
+            responding_users = User.joins(:teams, :responses)
+                                   .where(teams: {id: team.id}, responses: {time_period_id: time_period_id})
+                                   .distinct
+                                   .count
+            total_users > 0 ? (responding_users.to_f / total_users * 100).round(2) : 0
+          end
+
+          row :Total_Responses do
+            team.users.joins(:responses).where(responses: { time_period_id: time_period_id }).distinct.count
+          end
+        else
+          span "No response available for the current time period."
+        end
+      end
+    end
+  
+    panel "Monthly" do
+      attributes_table_for team do
+        time_period_ids = TimePeriod.where(start_date: 1.month.ago.beginning_of_day..Time.current.end_of_day).ids
+        responses = Response.joins(user: { teams: :users_teams })
+        .where(users_teams: { team_id: team.id })
+        .where(responses: { time_period_id: time_period_ids })
+  
+        if responses.any?
+          row :Emotion_Index do
+            positive_emotion_ids = responses.joins(:emotion)
+                                            .where(emotions: { category: 'positive' })
+                                            .distinct
+                                            .pluck(:emotion_id)
+            negative_emotion_ids = responses.joins(:emotion)
+                                            .where(emotions: { category: 'negative' })
+                                            .distinct
+                                            .pluck(:emotion_id)
+  
+            positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
+            negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
+  
+            total_responses = team.users.includes(:responses).where(responses: { time_period_id: time_period_ids }).distinct.count
+  
+            result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
+          end
+  
+          row :Productivity_Average do
+            responses.average(:productivity) || "No productivitys available"
+          end
+  
+          row :Productivity_Verbatims do
+            low_productivity_comments = Response.joins(user: :users_teams)
+              .where(users_teams: { team_id: team.id })
+              .where('productivity <= ?', 2)
+              .pluck(:comment)
+          
+            if low_productivity_comments.empty?
+              "No comments available"
+            else
+              low_productivity_comments.join(", ")
+            end
+          end
+  
+          row :Response_Percentage do
+            total_users = team.users.count
+            responding_users = User.joins(:teams, :responses)
+                                   .where(teams: { id: team.id }, responses: { time_period_id: time_period_ids })
+                                   .distinct
+                                   .count
+            total_users > 0 ? (responding_users.to_f / total_users * 100).round(2) : 0
+          end
+
+          row :Total_Responses do
+            team.users.joins(:responses).where(responses: { time_period_id: time_period_ids }).distinct.count
+          end
+        else
+          span "No response available for the current time period."
+        end
+      end
+    end
+  
+    panel "All Time" do
+      attributes_table_for team do
+        responses = Response.joins(user: { teams: :users_teams })
+                            .where(users_teams: { team_id: team.id })
+    
+        if responses.any?
+          row :Emotion_Index do
+            positive_emotion_ids = responses.joins(:emotion)
+                                            .where(emotions: { category: 'positive' })
+                                            .distinct
+                                            .pluck(:emotion_id)
+            negative_emotion_ids = responses.joins(:emotion)
+                                            .where(emotions: { category: 'negative' })
+                                            .distinct
+                                            .pluck(:emotion_id)
+    
+            positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
+            negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
+    
+            total_responses = team.users.includes(:responses).distinct.count
+    
+            result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
+          end
+    
+          row :Productivity_Average do
+            responses.average(:productivity) || "No productivitys available"
+          end
+    
+          row :Productivity_Verbatims do
+            low_productivity_comments = Response.joins(user: :users_teams)
+              .where(users_teams: { team_id: team.id })
+              .where('productivity <= ?', 2)
+              .pluck(:comment)
+          
+            if low_productivity_comments.empty?
+              "No comments available"
+            else
+              low_productivity_comments.join(", ")
+            end
+          end
+    
+          row :Response_Percentage do
+            total_users = team.users.count
+            responding_users = User.joins(:teams, :responses)
+                                   .where(teams: { id: team.id })
+                                   .distinct
+                                   .count
+            total_users > 0 ? (responding_users.to_f / total_users * 100).round(2) : 0
+          end
+
+          row :Total_Responses do
+            team.users.joins(:responses).distinct.count
+          end
+        else
+          span "No response available for the current time period."
+        end
+      end
+    end
+  
+    active_admin_comments
   end
 
   controller do
