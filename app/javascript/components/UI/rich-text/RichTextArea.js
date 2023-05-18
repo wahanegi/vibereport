@@ -13,7 +13,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
   }, [cursorPos]);
 
     const handleOnKeyUp= (e) =>{
-        setIsNotActive(false)
+        !textHTML.length ? setIsNotActive(true) : setIsNotActive(false)
     }
     const handleOnClick = () =>{
         onClick()
