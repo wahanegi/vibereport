@@ -44,10 +44,10 @@ const RichInputElement =({ richText = '',
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
     setIsDisabled(true)
     if ( !RichText.userFullName( copyChosenUsers[0] ).length ) {
-      if ( textHTML.indexOf(MARKER) === -1 || process.env.NODE_ENV === 'test') return
+      if (process.env.NODE_ENV === 'test') return
       const lenText = element.innerText
       if (lenText === undefined) return
-      lenText.match(/([\s{2,}]+[@]\D{2,}|[@]\D{2,}[\s][\S]{2,})/) ?  setIsDisabled(false) : setIsDisabled(true)
+      lenText.match(/([\s{2,}]+[@]\D{2,}|[@]\D{2,}[\s][\S]{2,}|\S{2,})/) ?  setIsDisabled(false) : setIsDisabled(true)
       return;
     }
     let lenText = element.innerText?.length
