@@ -39,6 +39,7 @@ export default class RichText {
   }
 
   static encodeSpace = html => {
+    const NBSP = " "
     let encodeHtml = ''
     const tag = '<span class="color-primary">@'
     const end = '</span>'
@@ -46,15 +47,15 @@ export default class RichText {
     let posEnd = 0
 
     while (posStart >= 0){
-      encodeHtml += html.slice(posEnd, posStart).replace(/ /g, "&nbsp;") + tag
+      encodeHtml += html.slice(posEnd, posStart).replace(/ /g, NBSP) + tag
       posStart += tag.length
       posEnd = html.indexOf(end, posStart)
       if (posEnd < 0) { break }
-      encodeHtml += html.slice(posStart, posEnd).replace(/ /g, "&nbsp;") + end
+      encodeHtml += html.slice(posStart, posEnd).replace(/ /g, NBSP) + end
       posEnd += end.length
       posStart = html.indexOf(tag,posEnd)
     }
-    if (posEnd !== -1) {encodeHtml += html.slice( posEnd ).replace(/ /g, "&nbsp;")}
+    if (posEnd !== -1) {encodeHtml += html.slice( posEnd ).replace(/ /g, NBSP)}
     return encodeHtml
 
   }
@@ -82,7 +83,7 @@ export default class RichText {
     return str.slice(0, startPos) + chars + str.slice(endPos)
   }
   static  pasteSymbolsToHTMLobj(symbols, htmlText, cursorPos, setObjHTML, setCaret) {
-    setObjHTML(this.encodeSpace(htmlText.slice(0, cursorPos.realPos) + this.encodeSpace(symbols)
+    setObjHTML((htmlText.slice(0, cursorPos.realPos) + (symbols)
         + htmlText.slice(cursorPos.realPos)))
     setCaret(cursorPos.charCount  + symbols.length)
   }

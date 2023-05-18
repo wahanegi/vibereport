@@ -47,7 +47,7 @@ export const BtnSkip = ({ addClass = '', hidden = true, onClick, disabled }) =>
   </button>
 
 export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-regular c1 back ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 back ${addClass} mb-6`} hidden={hidden} disabled={disabled}>
     Back
   </button>
 

@@ -20,6 +20,11 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
         setIsNotActive(false)
     }
 
+    const trick = (textHtml) => {
+        if (!textHtml.length) return textHtml
+        return textHtml[textHtml.length-1] === " " ? textHtml.slice(0,-1) + '&nbsp;' : textHtml
+        // return !reTextHtml.length && isNotActive ?   placeholder : reTextHtml
+    }
     const onContextMenuHandling = (e) => {
         e.preventDefault()
     }
@@ -35,7 +40,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
            data-testid = "editable-div"
                     id = 'textArea'
              className = {`c3 form-control text-start  inner-div scrolling  ${isNotActive && 'gray-300'}`}>
-            { parse( !textHTML.length && isNotActive ?   placeholder : textHTML ) }
+            { parse( !textHTML.length && isNotActive ?   placeholder : trick(textHTML) ) }
           </div>
         </div>
     );

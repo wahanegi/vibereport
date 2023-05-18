@@ -102,7 +102,7 @@ const RichInputElement =({ richText = '',
         clickEnterTabHandling(indexOfSelection)
         return 0
       }
-
+      console.log("105")
       let indexOfSel = indexOfSelection
       if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
         if (cursorPos.focusOffset - 1 !== searchString.length
@@ -166,10 +166,11 @@ const RichInputElement =({ richText = '',
 
     } else {
       if (cursorPos.isDIV && char.length === 1) {
+        console.log("168")
         switch (char) {
           case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
-                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 160
+            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === " "
+                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 32
                 && text.charCodeAt(caretCur) === 160
                 || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160)) {
               RichText.pasteNodeToHTMLobj(
@@ -184,9 +185,12 @@ const RichInputElement =({ richText = '',
 
             }
           default:
-            RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
+              let chr = cursorPos.realPos > 0 ? textHTML[cursorPos.realPos-1].match(/ /) ? '\u00A0' :  " " : char
+            console.log("188", "'",chr,"'")
+            RichText.pasteSymbolsToHTMLobj(chr, textHTML, cursorPos, setTextHTML, setCaret)
         }
-      } else if (cursorPos.isSPAN && char.length === 1) {
+      // } else if (cursorPos.isSPAN && char.length === 1) {
+        console.log("191")
         const nameUserToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
         if (listAllUsers.find(user => userFullName(user) === nameUserToDel) && !char.match(/[@<>]/)
             && nameUserToDel.length === cursorPos.focusOffset - 1) {
@@ -200,6 +204,7 @@ const RichInputElement =({ richText = '',
           setIsDropdownList(false)
 
         } else if (!char.match(/[,@`<>;:\\\/\s]/)) {
+          console.log("203")
           const renewUsers = copyChosenUsers.filter(user => userFullName(user) !== nameUserToDel)
           setCopyChosenUsers(!renewUsers ? [] : renewUsers)
           setChosenUsers(!renewUsers ? [] : [...renewUsers])
@@ -218,9 +223,10 @@ const RichInputElement =({ richText = '',
           setCaret(caretCur - cursorPos.focusOffset + 2)
         }
       }
-
+      console.log("224",char.length)
       if (char.length === 1 && textHTML.length > realPos
           && textHTML.indexOf(TAG_AT) === realPos && !char.match(/<>&/)) {
+        console.log("226")
         RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
       }
     }
@@ -362,7 +368,6 @@ const clickEnterTabHandling = ( i ) => {
           setIndexOfSelection(index)
         }
       })
-      console.log(textHTML[cursor.realPos])
       textHTML[cursor.realPos] !== '<' ? setIsDropdownList(true) : setIsDropdownList(false)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
       setCaret(cursor.charCount )
