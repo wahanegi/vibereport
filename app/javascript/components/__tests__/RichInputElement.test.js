@@ -97,12 +97,15 @@ const highlightAT = '<span class="color-primary">@'
       Cursor.setCurrentCursorPosition(5, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
       expect(pos.realPos).toBe(38)
+      fireEvent.keyDown(divElement, {key: 'ArrowLeft'});
+      fireEvent.keyDown(divElement, {key: 'ArrowRight'});
       fireEvent.keyDown(divElement, {key: 's'});
       expect(divElement.innerHTML).toContain(RichText.encodeSpace('Hey&nbsp;<span class=\"color-primary\">@s</span>&nbsp;,&nbsp;<span class=\"color-primary\">@'));
       expect(setChosenUsers).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       const listItems = screen.getAllByRole('listitem');
       const expectedUsers = [
+        { id: 1, first_name: 'George', last_name: 'Washington'},
         { id: 4, first_name: 'Kara', last_name: 'Friday'},
         { id: 5, first_name: 'Kieran', last_name: 'Roomie'},
         { id: 7, first_name: 'Marina', last_name: 'Harasko'},

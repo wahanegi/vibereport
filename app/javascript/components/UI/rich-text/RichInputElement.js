@@ -36,6 +36,7 @@ const RichInputElement =({ richText = '',
   const LIMIT_CHARS = 700
   const NUM_ENTERED_CHARS = 1
   const highlightSmbATUnknownUser = false
+  const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
@@ -111,11 +112,7 @@ const RichInputElement =({ richText = '',
         const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         if( findUser === undefined) {
-          const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
-          RichText.deleteNodePasteChars( textHTML, cursorPos, node
-              + RichText.encodeSpace(newSearchString.charAt(0).toUpperCase())
-              + RichText.encodeSpace( newSearchString.slice(1) ), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
-          setIsDropdownList(false)
+          transformNodeToSimple(textHTML, cursorPos, char)
           RichText.incrementPositionCursor(1, cursorPos, textHTML, setCaret)
           setSearchString('')
           return
@@ -206,10 +203,19 @@ const RichInputElement =({ richText = '',
           const renewUsers = copyChosenUsers.filter(user => userFullName(user) !== nameUserToDel)
           setCopyChosenUsers(!renewUsers ? [] : renewUsers)
           setChosenUsers(!renewUsers ? [] : [...renewUsers])
-          RichText.pasteCharsBeforeEndTag(char, textHTML, cursorPos, END_TAG_AT, setTextHTML, setCaret)
-          setIsDropdownList(true)
+          const filtrationUsersById = RichText.filtrationById( renewUsers, listAllUsers )
+          setFilteredUsers(filtrationUsersById)
+          if(cursorPos.isSPAN && cursorPos.focusOffset !== 1) {
+            transformNodeToSimple(textHTML, cursorPos, char)
+          } else {
+            RichText.pasteCharsBeforeEndTag(char, textHTML, cursorPos, END_TAG_AT, setTextHTML, setCaret)
+            setIsDropdownList(true)
+            setSearchString(char)
+            const findUser = filtrationUsersById.find(user => userFullName(user).toLowerCase().startsWith(char))
+            setCurrentSelection(!findUser ? filteredUsers[0].id: findUser.id)
+            setIndexOfSelection(!findUser ? 0 : filtrationUsersById.indexOf(findUser))
+          }
           setCaret(caretCur - cursorPos.focusOffset + 2)
-          setSearchString(char)
         }
       }
 
@@ -302,6 +308,14 @@ const RichInputElement =({ richText = '',
       }
     }
   }
+
+  const transformNodeToSimple = (textHTML, cursorPos, char) => {
+    RichText.deleteNodePasteChars( textHTML, cursorPos, node
+        + RichText.encodeSpace(char.charAt(0).toUpperCase())
+        + RichText.encodeSpace( char.slice(1) ), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
+    setIsDropdownList(false)
+  }
+
 const clickEnterTabHandling = ( i ) => {
   if ( i === undefined ) {
     setIsDropdownList(false)
