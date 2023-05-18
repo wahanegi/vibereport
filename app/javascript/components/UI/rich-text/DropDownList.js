@@ -10,6 +10,7 @@ const DropDownList = ({ dataList,  coordX, coordY, onClick, valSel, changeIndexS
         {dataList.map(( item ,index ) => (
           <ListItem
             key = { item.id }
+            id = { item.id }
             dataList = { dataList }
             index = { index }
             className = {`item b3 ${valSel === item.id ? 'highlight' : ''}`}

@@ -25,6 +25,11 @@ const ListItem = ( props ) => {
         break
     }
   }
+  const handleOnMouseMove = (e) => {
+    const i = +e.target.attributes.index.value
+    props.changeIndexSel( i )
+    props.changeValSel(props.dataList[i].id)
+  }
 
 
   const onClickHandling = () =>{
@@ -33,8 +38,11 @@ const ListItem = ( props ) => {
 
   return (
     <li ref={ref} className={props.className} tabIndex={props.focus ? 0 : -1}
+        index = { props.index }
         onClick={ onClickHandling }
         onKeyDown = { handleKeyDown }
+        onMouseMove={ handleOnMouseMove }
+
     >
       {props.children}
     </li>
