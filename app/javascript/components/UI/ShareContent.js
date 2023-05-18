@@ -22,7 +22,7 @@ export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = 
     {emotion.word}
   </button>
 
-export const BtnSendMoreShoutouts = ({ onClick, }) =>
+export const BtnSendMoreShoutouts = ({ onClick }) =>
   <button className={'btn-custom shoutout d-flex flex-nowrap align-items-center'} onClick={onClick}>
     Send more Shoutouts
     <span><img src={shoutout} alt="shoutout" style={{width: 36, height: 36, marginLeft: 5}}/></span>

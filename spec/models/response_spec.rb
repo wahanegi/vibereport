@@ -40,11 +40,12 @@
 require 'rails_helper'
 
 RSpec.describe Response, type: :model do
-  let!(:user) { create :user}
+  let!(:user) { create :user }
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
   let!(:fun_question) { create :fun_question }
   let!(:fun_question_answer) { create :fun_question_answer }
+  let(:completed_response) { create :response, user:, time_period:, emotion:, steps: %w[emotion-selection-web results] }
   let(:response) { FactoryBot.build(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let(:not_working_response) { FactoryBot.build(:response, :not_working_response, user:, time_period:, emotion: nil, steps: %w[emotion-selection-web]) }
 
@@ -109,6 +110,15 @@ RSpec.describe Response, type: :model do
 
       response.productivity = 10
       expect(response).to_not be_valid
+    end
+  end
+
+  context 'Scopes' do
+    it 'working scope' do
+      expect(Response.working).to match_array([completed_response])
+    end
+    it 'completed scope' do
+      expect(Response.completed).to match_array([completed_response])
     end
   end
 end

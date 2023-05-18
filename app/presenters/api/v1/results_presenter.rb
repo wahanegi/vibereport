@@ -1,19 +1,21 @@
 class Api::V1::ResultsPresenter
   include ApplicationHelper
-  attr_reader :time_period_id, :fun_question, :time_period, :current_user
+  attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users
 
   def initialize(time_period_id, current_user)
-    @time_period_id = time_period_id
-    @time_period ||= TimePeriod.find(time_period_id)
-    @fun_question ||= FunQuestion.find_by(time_period_id:)
-    @current_user ||= current_user
+    @time_period = TimePeriod.find(time_period_id)
+    @responses = time_period.responses.completed
+    @fun_question_answers = responses.filter_map(&:fun_question_answer)
+    @fun_question = fun_question_answers&.first&.fun_question.presence
+    @users = responses.filter_map(&:user)
+    @current_user = current_user
   end
 
   def json_hash
     {
       time_periods: TimePeriod.ordered || [],
-      emotions: time_period.emotions.shuffle.presence || [],
-      gifs: time_period.responses.pluck(:gif).compact || [],
+      emotions: responses.map(&:emotion).shuffle.presence || [],
+      gifs: responses.pluck(:gif).compact || [],
       fun_question: question,
       answers:,
       sent_shoutouts:,
@@ -34,9 +36,9 @@ class Api::V1::ResultsPresenter
   end
 
   def answers
-    return nil if fun_question&.fun_question_answers.blank?
+    return nil if fun_question_answers.blank?
 
-    fun_question&.fun_question_answers&.map { |answer| answer_block(answer) }
+    fun_question_answers.map { |answer| answer_block(answer) }
   end
 
   def answer_block(answer)
@@ -47,11 +49,11 @@ class Api::V1::ResultsPresenter
   end
 
   def sent_shoutouts
-    sent_shoutouts = User.ordered.filter_map do |user|
-      if user.mentions.where(time_period_id: @time_period.id).any?
+    sent_shoutouts = users.filter_map do |user|
+      if user.mentions.where(time_period_id: time_period.id).any?
         {
           recipient: user,
-          count: user.mentions.where(time_period_id: @time_period.id).size
+          count: user.mentions.where(time_period_id: time_period.id).size
         }
       end
     end
@@ -59,24 +61,36 @@ class Api::V1::ResultsPresenter
   end
 
   def received_shoutouts
-    received_shoutouts = @time_period.shoutouts.filter_map do |shoutout|
-      {
-        sender: shoutout.user,
-        count: @time_period.shoutouts.where(user_id: shoutout.user.id).size
-      }
+    received_shoutouts = users.filter_map do |user|
+      if user.shoutouts.where(time_period_id: time_period.id).any?
+        {
+          sender: user,
+          count: user.shoutouts.where(time_period_id: time_period.id).size
+        }
+      end
     end
     received_shoutouts.sort_by { |hash| -hash[:count] }.uniq
   end
 
   def current_user_shoutouts
     {
-      received: current_user.mentions.where(time_period_id: @time_period.id).map { |shoutout| shoutout_block(shoutout) },
-      sent: current_user.shoutouts.where(time_period_id: @time_period.id).map { |shoutout| recipients_block(shoutout) },
-      total_count: @time_period.shoutouts.size
+      received:,
+      sent:,
+      total_count: time_period.shoutouts.size
     }
   end
 
+  def received
+    current_user.mentions.where(time_period_id: time_period.id).filter_map { |shoutout| shoutout_block(shoutout) }
+  end
+
+  def sent
+    current_user.shoutouts.where(time_period_id: time_period.id).filter_map { |shoutout| recipients_block(shoutout) }
+  end
+
   def shoutout_block(shoutout)
+    return nil unless users.include?(shoutout.user)
+
     {
       shoutout:,
       users: [shoutout.user]

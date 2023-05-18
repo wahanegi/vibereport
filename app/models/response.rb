@@ -50,4 +50,5 @@ class Response < ApplicationRecord
                            presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
   serialize :steps, JSON
   scope :working, -> { where(not_working: false) }
+  scope :completed, -> { where("steps LIKE '%results%'") }
 end

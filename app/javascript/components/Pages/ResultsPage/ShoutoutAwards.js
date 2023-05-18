@@ -20,7 +20,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
   if (sentShoutouts.length < 2 || receivedShoutouts.length < 2) return null
 
   return <Fragment>
-    <div className='col-8'>
+    <div className={`${nextTimePeriod ? '' : 'col-8'}`}>
       <div className='d-flex flex-nowrap'>
         <img src={cup} alt="cup" style={{width: 76, height: 75}} />
         <div>
@@ -45,7 +45,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
         <img src={cup} alt="cup" style={{width: 76, height: 75}} />
       </div>
     </div>
-    <div className='col-4'>
+    <div className='col-4' hidden={nextTimePeriod}>
       <h6 className='mb-0 fw-semibold'>It's not too late!</h6>
       <BtnSendMoreShoutouts onClick={() => {setShowModal(true)}} />
     </div>

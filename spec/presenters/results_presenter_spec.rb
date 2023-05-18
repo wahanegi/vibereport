@@ -8,7 +8,8 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:emotion) { create :emotion }
   let!(:fun_question) { create :fun_question, time_period: }
   let!(:fun_question_answer) { create :fun_question_answer, fun_question:, user: }
-  let!(:user_response) { create :response, emotion:, time_period:, user:, fun_question:, steps: %w[emotion-selection-web meme-selection], gif: {src: 'https://giphy.com/gifs/mls-chicharito-chicha-savor-it-IXKJ943d0GOIV6UMFj', height: 100} }
+  let!(:user_response) { create :response, emotion:, time_period:, user:, fun_question_answer:, steps: %w[emotion-selection-web meme-selection results], gif: {src: 'https://giphy.com/gifs/mls-chicharito-chicha-savor-it-IXKJ943d0GOIV6UMFj', height: 100} }
+  let!(:user_response2) { create :response, emotion:, time_period:, user: user2, steps: %w[emotion-selection-web meme-selection results] }
   let!(:shoutout) { create :shoutout, time_period:, user: user2 }
   let!(:shoutout2) { create :shoutout, time_period:, user: }
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
@@ -43,11 +44,11 @@ RSpec.describe Api::V1::ResultsPresenter do
           ],
           received_shoutouts: [
             {
-              sender: shoutout.user,
+              sender: shoutout2.user,
               count: 1
             },
             {
-              sender: shoutout2.user,
+              sender: shoutout.user,
               count: 1
             }
           ],
