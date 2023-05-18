@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import parse from "html-react-parser";
-import Cursor from "./cursor";
 
-const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursorPos }) => {
+const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursorPos, placeholder }) => {
+    const [isNotActive, setIsNotActive] = useState(true)
   useEffect(() => {
     const rect = refs.current.getBoundingClientRect();
     const isCaretWithinBounds = rect.top < cursorPos.coordinates.y && rect.bottom > cursorPos.coordinates.y
@@ -11,6 +11,11 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
     }
 
   }, [cursorPos]);
+
+    const handleOnKeyUp= (e) =>{
+        setIsNotActive(false)
+    }
+
     const onContextMenuHandling = (e) => {
         e.preventDefault()
     }
@@ -19,13 +24,15 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
           <div contentEditable={ true }
              suppressContentEditableWarning = { true }
              onKeyDown = { onKeyDown }
+               onKeyUp = { handleOnKeyUp }
                onClick = { onClick }
+          onMouseEnter = { handleOnKeyUp }
          onContextMenu = { onContextMenuHandling }
                    ref = { refs }
            data-testid = "editable-div"
                     id = 'textArea'
-             className = 'c3 form-control text-start  inner-div scrolling'>
-            { parse( textHTML ) }
+             className = {`c3 form-control text-start  inner-div scrolling  ${isNotActive && 'gray-300'}`}>
+            { parse( !textHTML.length && isNotActive ?   placeholder : textHTML ) }
           </div>
         </div>
     );
