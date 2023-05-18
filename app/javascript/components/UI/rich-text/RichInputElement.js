@@ -228,9 +228,11 @@ const RichInputElement =({ richText = '',
 
     switch (char){
       case 'Home':
+        setIsDropdownList(false)
         setCaret ( 0 )
         break;
       case 'End':
+        setIsDropdownList(false)
         setCaret ( text.length )
         break;
       case 'ArrowLeft':
@@ -360,7 +362,8 @@ const clickEnterTabHandling = ( i ) => {
           setIndexOfSelection(index)
         }
       })
-      setIsDropdownList(true)
+      console.log(textHTML[cursor.realPos])
+      textHTML[cursor.realPos] !== '<' ? setIsDropdownList(true) : setIsDropdownList(false)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
       setCaret(cursor.charCount )
     } else { setIsDropdownList(false) }

@@ -15,6 +15,10 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
     const handleOnKeyUp= (e) =>{
         setIsNotActive(false)
     }
+    const handleOnClick = () =>{
+        onClick()
+        setIsNotActive(false)
+    }
 
     const onContextMenuHandling = (e) => {
         e.preventDefault()
@@ -25,8 +29,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
              suppressContentEditableWarning = { true }
              onKeyDown = { onKeyDown }
                onKeyUp = { handleOnKeyUp }
-               onClick = { onClick }
-          onMouseEnter = { handleOnKeyUp }
+               onClick = { handleOnClick }
          onContextMenu = { onContextMenuHandling }
                    ref = { refs }
            data-testid = "editable-div"
