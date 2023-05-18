@@ -634,6 +634,7 @@ a {
     padding-inline-start: 7px;
     color: $gray-300;
     &:focus, &.highlight   {
+      cursor: pointer;
       background-color: $gray-100;
       color: $black;
     }
