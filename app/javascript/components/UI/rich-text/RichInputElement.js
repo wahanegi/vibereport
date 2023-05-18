@@ -364,7 +364,7 @@ const clickEnterTabHandling = ( i ) => {
       })
       console.log(textHTML[cursor.realPos])
       textHTML[cursor.realPos] !== '<' ? setIsDropdownList(true) : setIsDropdownList(false)
-      setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
+      setCoordinates(cursor.coordinates)
       setCaret(cursor.charCount )
     } else { setIsDropdownList(false) }
   }

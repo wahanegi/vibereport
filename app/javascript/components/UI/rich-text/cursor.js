@@ -47,8 +47,8 @@ export default class Cursor {
                     let rects = range.getClientRects();
                     if (rects.length > 0) {
                         let rect = rects[0];
-                        coordinates.x = rect.left ;
-                        coordinates.y = rect.top ;
+                        coordinates.x = rect.left + window.scrollX ;
+                        coordinates.y = rect.top + window.scrollY ;
                     }
                 }
             }
