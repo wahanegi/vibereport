@@ -371,6 +371,26 @@ const clickEnterTabHandling = ( i ) => {
     })
   }
 
+  useEffect(()=>{
+    window.addEventListener("paste", function(e) {
+      e.preventDefault()
+      const cursorPos = Cursor.getCurrentCursorPosition(element)
+      navigator.clipboard.readText()
+        .then(text => {
+          if( cursorPos.isDIV ) {
+            if((text.length + textAreaRef.current.innerText.length) >= LIMIT_CHARS) return
+            RichText.pasteSymbolsToHTMLobj(text, textHTML, cursorPos, setTextHTML, setCaret)
+          }
+        })
+        .catch(err => {
+          console.log('Something went wrong', err);
+        })
+    })
+    window.addEventListener('cut', function (e){
+         e.preventDefault()
+    })
+  }, [textHTML])
+
   return (
     <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327 mb-7 overflow-hidden'>
       <img src={xClose} className='position-absolute x-close' onClick={onClose}/>

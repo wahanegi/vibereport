@@ -21,7 +21,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
     }
 
     const onContextMenuHandling = (e) => {
-        e.preventDefault()
+      setIsNotActive(false)
     }
     return (
         <div className = {` ${className} overflow-hidden`}>

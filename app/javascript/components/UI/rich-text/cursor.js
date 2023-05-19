@@ -59,7 +59,7 @@ export default class Cursor {
                 realPos: realPos + realFocusOffset,
                 realFocusOffset: realFocusOffset,
                 isDIV: focusNode !== null ? focusNode.parentNode.tagName === 'DIV' : false,
-                isSPAN: focusNode !== null ? focusNode.parentNode.tagName === 'SPAN' : false,
+                isSPAN: focusNode !== null ? focusNode.parentNode.className === 'color-primary'  : false,
                 coordinates
             }
         }
