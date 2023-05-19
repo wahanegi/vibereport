@@ -120,12 +120,11 @@ const RichInputElement =({ richText = '',
       if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
         if (cursorPos.focusOffset - 1 !== searchString.length
           || RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1).length !== cursorPos.focusOffset-1) return 0
-
         const newSearchString = (searchString + char).toLowerCase()
         const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         if( findUser === undefined) {
-          transformNodeToSimple(textHTML, cursorPos, char)
+          transformNodeToSimple(textHTML, cursorPos, newSearchString)
           RichText.incrementPositionCursor(1, cursorPos, textHTML, setCaret)
           setSearchString('')
           return
