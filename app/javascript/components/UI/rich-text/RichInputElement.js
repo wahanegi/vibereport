@@ -90,7 +90,11 @@ const RichInputElement =({ richText = '',
         if(isCtrl) {
          return copyToClipboard(selectedValue)
         }
+      case'Enter':
+        if(!isDropdownList) char='\u000A'
+        break
     }
+
     setIsCtrl(false)
 
     if (cursorPos.isDIV) {
@@ -180,7 +184,7 @@ const RichInputElement =({ richText = '',
       if (cursorPos.isDIV && char.length === 1) {
         switch (char) {
           case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === " "
+            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1].match(/ |\u000A/)
                 || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 32
                 && text.charCodeAt(caretCur) === 32
                 || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 32)) {
