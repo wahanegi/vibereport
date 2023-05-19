@@ -369,7 +369,7 @@ const clickEnterTabHandling = ( i ) => {
         }
       })
       textHTML[cursor.realPos] !== '<' ? setIsDropdownList(true) : setIsDropdownList(false)
-      setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
+      setCoordinates(cursor.coordinates)
       setCaret(cursor.charCount )
     } else { setIsDropdownList(false) }
   }
