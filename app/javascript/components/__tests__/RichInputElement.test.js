@@ -69,7 +69,7 @@ const highlightAT = '<span class="color-primary">@'
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(35, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
-      expect(pos.realPos).toBe(135)
+      expect(pos.realPos).toBe(105)
       fireEvent.keyDown(divElement, {key: 's'});
       fireEvent.keyDown(divElement, {key: '@'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('@roger and @Mike Snider say Hi Teams@!');
@@ -96,11 +96,11 @@ const highlightAT = '<span class="color-primary">@'
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}, {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       Cursor.setCurrentCursorPosition(5, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
-      expect(pos.realPos).toBe(38)
+      expect(pos.realPos).toBe(33)
       fireEvent.keyDown(divElement, {key: 'ArrowLeft'});
       fireEvent.keyDown(divElement, {key: 'ArrowRight'});
       fireEvent.keyDown(divElement, {key: 's'});
-      expect(divElement.innerHTML).toContain(RichText.encodeSpace('Hey&nbsp;<span class=\"color-primary\">@s</span>&nbsp;,&nbsp;<span class=\"color-primary\">@'));
+      expect(divElement.innerHTML).toContain(RichText.encodeSpace('Hey <span class=\"color-primary\">@s</span> , <span class=\"color-primary\">@'));
       expect(setChosenUsers).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       const listItems = screen.getAllByRole('listitem');
@@ -139,7 +139,7 @@ const highlightAT = '<span class="color-primary">@'
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}])
       Cursor.setCurrentCursorPosition(4, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
-      expect(pos.realPos).toBe(9);
+      expect(pos.realPos).toBe(4);
       const userName = 'guys '
       userName.split('').forEach(char => {
         fireEvent.keyDown(divElement, {key: char});
@@ -256,7 +256,7 @@ const highlightAT = '<span class="color-primary">@'
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}])
       Cursor.setCurrentCursorPosition(40, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
-      expect(pos.realPos).toBe(140)
+      expect(pos.realPos).toBe(110)
       fireEvent.keyDown(divElement, {key: '@'});
       const listItems = screen.getAllByRole('listitem');
       expect(listItems).toHaveLength(listUsers.length - 2);
@@ -511,10 +511,10 @@ const highlightAT = '<span class="color-primary">@'
       //delete &nbsp;
       Cursor.setCurrentCursorPosition(2, divElement)
       fireEvent.click(divElement);
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(12)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(2)
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe(' say Hello world!')
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(6)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(1)
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(1)
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('say Hello world!')
@@ -571,7 +571,7 @@ const highlightAT = '<span class="color-primary">@'
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('1 @George Washington @Marina Harasko  say Hello world!')
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(21)
-      expect(RichText.encodeSpace(divElement.textContent)).toBe('1 @George Washington   say Hello world!')
+      expect(RichText.encodeSpace(divElement.textContent)).toBe('1 @George Washington   say Hello world!')
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('1 @George Washington  say Hello world!')
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(20)
@@ -603,10 +603,10 @@ const highlightAT = '<span class="color-primary">@'
       //delete &nbsp;
       Cursor.setCurrentCursorPosition(2, divElement)
       fireEvent.click(divElement);
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(12)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(2)
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe(' say Hello world!')
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(6)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(1)
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(1)
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('say Hello world!')
@@ -666,16 +666,16 @@ const highlightAT = '<span class="color-primary">@'
       expect(RichText.decodeSpace160(divElement.textContent)).toContain((('Hey @George Washington   . How do you do? ')))
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(4)
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(9)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(4)
       expect(RichText.decodeSpace160(divElement.textContent)).toContain((('Hey    . How do you do? ')))
       fireEvent.keyDown(divElement, {key: '@'});
       expect(RichText.decodeSpace160(divElement.textContent)).toContain((('Hey @   . How do you do? ')))
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(38)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(33)
       fireEvent.keyDown(divElement, {key: 'Escape'});
       expect(RichText.decodeSpace160(divElement.textContent)).toContain((('Hey @   . How do you do? ')))
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
-      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(10)
+      expect(Cursor.getCurrentCursorPosition(divElement).realPos).toBe(5)
     })
 
     it('should open dropdown list and chose other user by any position of text cursor', ()=>{
