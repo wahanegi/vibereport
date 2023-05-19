@@ -169,8 +169,8 @@ const RichInputElement =({ richText = '',
         console.log("168")
         switch (char) {
           case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === " "
-                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 32
+            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
+                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 160
                 && text.charCodeAt(caretCur) === 160
                 || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160)) {
               RichText.pasteNodeToHTMLobj(
@@ -185,9 +185,9 @@ const RichInputElement =({ richText = '',
 
             }
           default:
-              let chr = cursorPos.realPos > 0 ? textHTML[cursorPos.realPos-1].match(/ /) ? '\u00A0' :  " " : char
-            console.log("188", "'",chr,"'")
-            RichText.pasteSymbolsToHTMLobj(chr, textHTML, cursorPos, setTextHTML, setCaret)
+            //   let chr = cursorPos.realPos > 0 ? textHTML[cursorPos.realPos-1].match(/ /) ? '\u00A0' :  " " : char
+            // console.log("188", "'",chr,"'")
+            RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
         }
       // } else if (cursorPos.isSPAN && char.length === 1) {
         console.log("191")

@@ -39,7 +39,7 @@ export default class RichText {
   }
 
   static encodeSpace = html => {
-    const NBSP = " "
+    const NBSP = "&nbsp;"
     let encodeHtml = ''
     const tag = '<span class="color-primary">@'
     const end = '</span>'
