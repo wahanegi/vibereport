@@ -49,7 +49,7 @@ const RichInputElement =({ richText = '',
       if (process.env.NODE_ENV === 'test') return
       const lenText = element.innerText
       if (lenText === undefined) return
-      lenText.match(/([\s{2,}]+[@]\D{2,}|[@]\D{2,}[\s][\S]{2,}|\S{2,})/) ?  setIsDisabled(false) : setIsDisabled(true)
+      lenText.match(/([\s{1,}]+[@]\D{1,}|[@]\D{1,}[\s][\S]{1,}|\S{1,})/) ?  setIsDisabled(false) : setIsDisabled(true)
       return;
     }
     let lenText = element.innerText?.length
