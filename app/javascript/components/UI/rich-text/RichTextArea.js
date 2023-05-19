@@ -20,11 +20,6 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
         setIsNotActive(false)
     }
 
-    const trick = (textHtml) => {
-        if (!textHtml.length) return textHtml
-        return textHtml[textHtml.length-1] === " " ? textHtml.slice(0,-1) + '&nbsp;' : textHtml
-        // return !reTextHtml.length && isNotActive ?   placeholder : reTextHtml
-    }
     const onContextMenuHandling = (e) => {
         e.preventDefault()
     }

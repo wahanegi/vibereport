@@ -314,6 +314,7 @@ a {
 }
 
 .scrolling {
+  white-space: break-spaces;
   scroll-behavior: smooth;
   overflow-wrap: anywhere;
 }

@@ -56,7 +56,7 @@ export default class RichText {
       posStart = html.indexOf(tag,posEnd)
     }
     if (posEnd !== -1) {encodeHtml += html.slice( posEnd ).replace(/ /g, NBSP)}
-    return encodeHtml
+    return html
 
   }
 
@@ -83,7 +83,7 @@ export default class RichText {
     return str.slice(0, startPos) + chars + str.slice(endPos)
   }
   static  pasteSymbolsToHTMLobj(symbols, htmlText, cursorPos, setObjHTML, setCaret) {
-    setObjHTML((htmlText.slice(0, cursorPos.realPos) + (symbols)
+    setObjHTML(this.encodeSpace(htmlText.slice(0, cursorPos.realPos) + this.encodeSpace(symbols)
         + htmlText.slice(cursorPos.realPos)))
     setCaret(cursorPos.charCount  + symbols.length)
   }

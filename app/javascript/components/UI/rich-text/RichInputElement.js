@@ -13,7 +13,7 @@ const RichInputElement =({ richText = '',
                            onSubmit ,
                            onClose,
                            classAt = 'color-primary'}) =>{
-  const [textHTML, setTextHTML] = useState( RichText.encodeSpace(richText))
+  const [textHTML, setTextHTML] = useState( richText )
   const textAreaRef = useRef(richText)
   const [filteredUsers, setFilteredUsers] = useState(RichText.sortUsersByFullName(listAllUsers))
   const [ isDropdownList, setIsDropdownList ] = useState(false)
@@ -102,7 +102,6 @@ const RichInputElement =({ richText = '',
         clickEnterTabHandling(indexOfSelection)
         return 0
       }
-      console.log("105")
       let indexOfSel = indexOfSelection
       if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
         if (cursorPos.focusOffset - 1 !== searchString.length
@@ -166,13 +165,12 @@ const RichInputElement =({ richText = '',
 
     } else {
       if (cursorPos.isDIV && char.length === 1) {
-        console.log("168")
         switch (char) {
           case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
-                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 160
-                && text.charCodeAt(caretCur) === 160
-                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160)) {
+            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === " "
+                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 32
+                && text.charCodeAt(caretCur) === 32
+                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 32)) {
               RichText.pasteNodeToHTMLobj(
                   MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
               )
@@ -185,12 +183,9 @@ const RichInputElement =({ richText = '',
 
             }
           default:
-            //   let chr = cursorPos.realPos > 0 ? textHTML[cursorPos.realPos-1].match(/ /) ? '\u00A0' :  " " : char
-            // console.log("188", "'",chr,"'")
             RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
         }
-      // } else if (cursorPos.isSPAN && char.length === 1) {
-        console.log("191")
+      } else if (cursorPos.isSPAN && char.length === 1) {
         const nameUserToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
         if (listAllUsers.find(user => userFullName(user) === nameUserToDel) && !char.match(/[@<>]/)
             && nameUserToDel.length === cursorPos.focusOffset - 1) {
@@ -199,12 +194,11 @@ const RichInputElement =({ richText = '',
 
           const pos = realPos + END_TAG_AT.length
           const end = pos === textHTML.length ? '' : textHTML.slice(pos)
-          setTextHTML(RichText.encodeSpace(textHTML.slice(0, pos) + char + end))
+          setTextHTML(textHTML.slice(0, pos) + char + end )
           setCaret(caret + 1)
           setIsDropdownList(false)
 
         } else if (!char.match(/[,@`<>;:\\\/\s]/)) {
-          console.log("203")
           const renewUsers = copyChosenUsers.filter(user => userFullName(user) !== nameUserToDel)
           setCopyChosenUsers(!renewUsers ? [] : renewUsers)
           setChosenUsers(!renewUsers ? [] : [...renewUsers])
@@ -223,10 +217,8 @@ const RichInputElement =({ richText = '',
           setCaret(caretCur - cursorPos.focusOffset + 2)
         }
       }
-      console.log("224",char.length)
       if (char.length === 1 && textHTML.length > realPos
           && textHTML.indexOf(TAG_AT) === realPos && !char.match(/<>&/)) {
-        console.log("226")
         RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
       }
     }
@@ -318,9 +310,7 @@ const RichInputElement =({ richText = '',
   }
 
   const transformNodeToSimple = (textHTML, cursorPos, char) => {
-    RichText.deleteNodePasteChars( textHTML, cursorPos, node
-        + RichText.encodeSpace(char.charAt(0).toUpperCase())
-        + RichText.encodeSpace( char.slice(1) ), TAG_AT, END_TAG_AT, setTextHTML, setCaret )
+    RichText.deleteNodePasteChars( textHTML, cursorPos, node + char.charAt(0).toUpperCase() +  char.slice(1) , TAG_AT, END_TAG_AT, setTextHTML, setCaret )
     setIsDropdownList(false)
   }
 
@@ -391,7 +381,7 @@ const clickEnterTabHandling = ( i ) => {
                             onClick = { clickHandling }
                           cursorPos = { Cursor.getCurrentCursorPosition(element) }
                           className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'
-                        placeholder = {`&nbsp;Use "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!`}/>
+                        placeholder = {` Use "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!`}/>
         <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
                 onClick = { submitHandling }>
           Send Shoutout
