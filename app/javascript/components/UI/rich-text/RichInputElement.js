@@ -26,6 +26,7 @@ const RichInputElement =({ richText = '',
   const [ coordinates, setCoordinates] = useState({ x:420, y:386 })
   const [ cursorPosition, setCursorPosition ] = useState(null)
   const [ isDisabled, setIsDisabled] = useState(true)
+  const [ isCtrl, setIsCtrl ] = useState( false )
   const element = textAreaRef.current
   const NON_ALLOWED_CHARS_OF_NAME =  /[,@`<>;:\/\\']/
   const MARKER = '@'
@@ -73,12 +74,25 @@ const RichInputElement =({ richText = '',
 
   const handleKeyDown = event => {
     event.preventDefault()
-    if ( window.getSelection().toString() ) return
+    const selectedValue = window.getSelection().toString();
     const text = element.textContent
     const cursorPos = Cursor.getCurrentCursorPosition(element)
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
     let char = event.key
+    switch(char) {
+      case'Control':
+        return setIsCtrl(true)
+      case'v':
+        if(isCtrl) paste()
+        return
+      case'c':
+        if(isCtrl) {
+         return copyToClipboard(selectedValue)
+        }
+    }
+    setIsCtrl(false)
+
     if (cursorPos.isDIV) {
       setIsDropdownList(false)
     }
@@ -287,6 +301,7 @@ const RichInputElement =({ richText = '',
           }
         }
       } else {
+
         switch (char){
           case 'Delete':
             if( textHTML.indexOf(TAG_AT, realPos) === realPos ) {
@@ -304,6 +319,7 @@ const RichInputElement =({ richText = '',
             RichText.deletePreviousChar( textHTML, realPos, setTextHTML )
             RichText.decrementPositionCursor( 1, cursorPos, setCaret )
             break
+
         }
       }
     }
@@ -374,22 +390,39 @@ const clickEnterTabHandling = ( i ) => {
   useEffect(()=>{
     window.addEventListener("paste", function(e) {
       e.preventDefault()
-      const cursorPos = Cursor.getCurrentCursorPosition(element)
-      navigator.clipboard.readText()
-        .then(text => {
-          if( cursorPos.isDIV ) {
-            if((text.length + textAreaRef.current.innerText.length) >= LIMIT_CHARS) return
-            RichText.pasteSymbolsToHTMLobj(text, textHTML, cursorPos, setTextHTML, setCaret)
-          }
-        })
-        .catch(err => {
-          console.log('Something went wrong', err);
-        })
+      paste()
     })
     window.addEventListener('cut', function (e){
          e.preventDefault()
     })
   }, [textHTML])
+
+  const pasteFromClipboard = (text) => {
+    const cursorPos = Cursor.getCurrentCursorPosition(element)
+    if( cursorPos.isDIV ) {
+      if((text.length + textAreaRef.current.innerText.length) >= LIMIT_CHARS) return
+      RichText.pasteSymbolsToHTMLobj(text, textHTML, cursorPos, setTextHTML, setCaret)
+      setCaret(caret + text.length)
+    }
+  }
+
+  const copyToClipboard = (inputValue) => {
+    if (inputValue) {
+      navigator.clipboard.writeText(inputValue)
+          .then(() => {})
+          .catch(err => {
+            console.log('Something went wrong', err);
+          })
+    }
+  }
+
+  const paste = () => {
+    navigator.clipboard.readText()
+        .then(text => { pasteFromClipboard(text) })
+        .catch(err => {
+          console.log('Something went wrong', err);
+        })
+  }
 
   return (
     <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327 mb-7 overflow-hidden'>
