@@ -46,8 +46,10 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
       </div>
     </div>
     <div className='col-4' hidden={nextTimePeriod}>
-      <h6 className='mb-0 fw-semibold'>It's not too late!</h6>
-      <BtnSendMoreShoutouts onClick={() => {setShowModal(true)}} />
+      <div className='d-flex justify-content-center'>
+        <h6 className='mb-0 fw-semibold'>It's not too late!</h6>
+        <BtnSendMoreShoutouts onClick={() => {setShowModal(true)}} />
+      </div>
     </div>
     {
       showModal && <ShoutoutModal onClose = {() => {setShowModal(false)} }

@@ -25,7 +25,7 @@ export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = 
 export const BtnSendMoreShoutouts = ({ onClick }) =>
   <button className={'btn-custom shoutout d-flex flex-nowrap align-items-center'} onClick={onClick}>
     Send more Shoutouts
-    <span><img src={shoutout} alt="shoutout" style={{width: 36, height: 36, marginLeft: 5}}/></span>
+    <span><img src={shoutout} alt="shoutout"/></span>
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
@@ -38,18 +38,17 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
     {text}
   </button>
 
-export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
-                           positionRight = false, prevTimePeriod, isPenultimatePeriod = false}) =>
-  isPresent(date) && !hidden && <div className="position-relative pointer" onClick={onClick} style={{maxWidth: 82}}>
+export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, prevTimePeriod}) =>
+  isPresent(date) && !hidden && <div className="position-relative pointer w-82" onClick={onClick}>
     <img src={calendar} alt="calendar" />
-    <div className="position-absolute top-0">
+    <div className="position-absolute top-0 w-82" >
       {date.includes(' - ') ?
         <div className='mt-3 d-flex'>
           {date.split(' - ')[0]}
           <img src={line} alt="line" />
           {date.split(' - ')[1]}
         </div>:
-        <div className='mt-5' style={{marginLeft: `${(isPresent(prevTimePeriod) && !isPenultimatePeriod) ? '9px' : '15px'}`}}>{date}</div>
+        <div className='mt-5 d-flex'>{date}</div>
       }
     </div>
     { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
