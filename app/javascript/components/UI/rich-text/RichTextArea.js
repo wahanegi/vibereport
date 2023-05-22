@@ -23,6 +23,9 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
     const onContextMenuHandling = (e) => {
       setIsNotActive(false)
     }
+
+    const isPlaceholder = !textHTML.length && isNotActive
+
     return (
         <div className = {` ${className} overflow-hidden`}>
           <div contentEditable={ true }
@@ -34,8 +37,8 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
                    ref = { refs }
            data-testid = "editable-div"
                     id = 'textArea'
-             className = {`c3 form-control text-start  inner-div scrolling  ${isNotActive && 'gray-300'}`}>
-            { parse( !textHTML.length && isNotActive ?   placeholder : textHTML ) }
+             className = {`c3 form-control text-start  inner-div scrolling  ${isPlaceholder && 'gray-300'}`}>
+            { parse( isPlaceholder ?   placeholder : textHTML ) }
           </div>
         </div>
     );

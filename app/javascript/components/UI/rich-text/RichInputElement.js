@@ -63,8 +63,8 @@ const RichInputElement =({ richText = '',
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
     let char = event.key
-    switch(char) {
-      case'Control':
+    switch(char.toLowerCase()) {
+      case'control':
         return setIsCtrl(true)
       case'v':
         if(isCtrl) paste()
@@ -73,7 +73,11 @@ const RichInputElement =({ richText = '',
         if(isCtrl) {
          return copyToClipboard(selectedValue)
         }
+      case'enter':
+        if(!isDropdownList) char='\u000A'
+        break
     }
+
     setIsCtrl(false)
 
     if (cursorPos.isDIV) {
@@ -103,12 +107,11 @@ const RichInputElement =({ richText = '',
       if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
         if (cursorPos.focusOffset - 1 !== searchString.length
           || RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1).length !== cursorPos.focusOffset-1) return 0
-
         const newSearchString = (searchString + char).toLowerCase()
         const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
         if( findUser === undefined) {
-          transformNodeToSimple(textHTML, cursorPos, char)
+          transformNodeToSimple(textHTML, cursorPos, newSearchString)
           RichText.incrementPositionCursor(1, cursorPos, textHTML, setCaret)
           setSearchString('')
           return
@@ -164,7 +167,7 @@ const RichInputElement =({ richText = '',
       if (cursorPos.isDIV && char.length === 1) {
         switch (char) {
           case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1] === " "
+            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1].match(/ |\u000A/)
                 || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 32
                 && text.charCodeAt(caretCur) === 32
                 || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 32)) {
