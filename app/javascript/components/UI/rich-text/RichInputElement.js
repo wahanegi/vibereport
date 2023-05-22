@@ -168,9 +168,9 @@ const RichInputElement =({ richText = '',
         switch (char) {
           case MARKER:
             if ((text.length === 0 || caretCur === text.length && text[caretCur - 1].match(/ |\u000A/)
-                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 32
-                && text.charCodeAt(caretCur) === 32
-                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 32)) {
+                || caretCur > 0 && caretCur < text.length && text[caretCur - 1].match(/ |\x0A/)
+                && text[caretCur].match(/ |\x00/)
+                || caretCur === 0 && text.length > 0 && text[caretCur].match(/ |\x00/))) {
               RichText.pasteNodeToHTMLobj(
                   MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
               )
