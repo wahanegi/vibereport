@@ -67,12 +67,11 @@ const RichInputElement =({ richText = '',
       case'control':
         return setIsCtrl(true)
       case'v':
-        if(isCtrl) paste()
-        return
+        if(isCtrl) return paste()
+      break
       case'c':
-        if(isCtrl) {
-         return copyToClipboard(selectedValue)
-        }
+        if(isCtrl) return copyToClipboard(selectedValue)
+      break
       case'enter':
         if(!isDropdownList) char='\x0A'
         break
