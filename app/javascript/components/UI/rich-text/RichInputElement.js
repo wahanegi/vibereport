@@ -35,7 +35,7 @@ const RichInputElement =({ richText = '',
   const OFFSET_X = 0
   const OFFSET_Y = 40
   const LIMIT_CHARS = 700
-  const NUM_ENTERED_CHARS = 1
+  const NUM_ENTERED_CHARS = 0
   const highlightSmbATUnknownUser = false
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
 
@@ -44,24 +44,7 @@ const RichInputElement =({ richText = '',
     if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
-    setIsDisabled(true)
-    if ( !RichText.userFullName( copyChosenUsers[0] ).length ) {
-      if (process.env.NODE_ENV === 'test') return
-      const lenText = element.innerText
-      if (lenText === undefined) return
-      lenText.match(/([\s{1,}]+[@]\D{1,}|[@]\D{1,}[\s][\S]{1,}|\S{1,})/) ?  setIsDisabled(false) : setIsDisabled(true)
-      return;
-    }
-    let lenText = element.innerText?.length
-    if ( lenText > RichText.userFullName( copyChosenUsers[0] ).length + NUM_ENTERED_CHARS )  {
-      let usersLen = copyChosenUsers.reduce((prev, cur) => prev + RichText.userFullName(cur).length + 2, 0)
-      if ( lenText > usersLen + NUM_ENTERED_CHARS ) {
-        setIsDisabled(false)
-      } else {
-        setIsDisabled(true)
-      }} else {
-      setIsDisabled(true)
-    }
+    element.innerText === '' ? setIsDisabled(true) : setIsDisabled(false)
   }, [caret, textHTML, currentSelection])
 
   useEffect(()=>{
