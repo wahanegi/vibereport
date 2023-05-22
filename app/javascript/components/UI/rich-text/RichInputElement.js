@@ -80,8 +80,8 @@ const RichInputElement =({ richText = '',
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
     let char = event.key
-    switch(char) {
-      case'Control':
+    switch(char.toLowerCase()) {
+      case'control':
         return setIsCtrl(true)
       case'v':
         if(isCtrl) paste()
@@ -90,7 +90,7 @@ const RichInputElement =({ richText = '',
         if(isCtrl) {
          return copyToClipboard(selectedValue)
         }
-      case'Enter':
+      case'enter':
         if(!isDropdownList) char='\u000A'
         break
     }
