@@ -539,7 +539,7 @@ const highlightAT = '<span class="color-primary">@'
       let listItems = screen.queryAllByRole('listitem');
       expect(listItems).toHaveLength(0);
       fireEvent.keyDown(divElement, {key: 'Enter'});
-      expect(RichText.decodeSpace160(divElement.textContent)).toBe('@ say Hello world!')
+      expect(RichText.decodeSpace160(divElement.textContent)).toBe('\x0A@ say Hello world!')
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('@ say Hello world!')
       fireEvent.keyDown(divElement, {key: 'Delete'});
