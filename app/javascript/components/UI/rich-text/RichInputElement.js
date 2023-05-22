@@ -74,7 +74,7 @@ const RichInputElement =({ richText = '',
          return copyToClipboard(selectedValue)
         }
       case'enter':
-        if(!isDropdownList) char='\u000A'
+        if(!isDropdownList) char='\x0A'
         break
     }
 
