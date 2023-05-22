@@ -66,12 +66,26 @@ const RichInputElement =({ richText = '',
     switch(char.toLowerCase()) {
       case'control':
         return setIsCtrl(true)
+        break
       case'v':
-        if(isCtrl) return paste()
-      break
+        if(isCtrl) {
+          setIsCtrl(false)
+          paste()
+          return
+        }
+        break
       case'c':
-        if(isCtrl) return copyToClipboard(selectedValue)
-      break
+        if(isCtrl) {
+          setIsCtrl(false)
+          return copyToClipboard(selectedValue)
+        }
+        break
+      // case'a':
+      //   if(isCtrl) {
+      //     setIsCtrl(false)
+      //     return highlightAll()
+      //   }
+        break
       case'enter':
         if(!isDropdownList) char='\x0A'
         break
