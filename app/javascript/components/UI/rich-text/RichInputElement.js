@@ -13,7 +13,7 @@ const RichInputElement =({ richText = '',
                            onSubmit ,
                            onClose,
                            classAt = 'color-primary'}) =>{
-  const [textHTML, setTextHTML] = useState( RichText.encodeSpace(richText))
+  const [textHTML, setTextHTML] = useState( richText )
   const textAreaRef = useRef(richText)
   const [filteredUsers, setFilteredUsers] = useState(RichText.sortUsersByFullName(listAllUsers))
   const [ isDropdownList, setIsDropdownList ] = useState(false)
@@ -34,25 +34,15 @@ const RichInputElement =({ richText = '',
   const OFFSET_X = 0
   const OFFSET_Y = 40
   const LIMIT_CHARS = 700
-  const NUM_ENTERED_CHARS = 7
+  const highlightSmbATUnknownUser = false
+  const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
-    if ( Cursor.getCurrentCursorPosition(element).focusOffset == 1 )
+    if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
-    setIsDisabled(true)
-    if ( !RichText.userFullName( copyChosenUsers[0] ).length ) return
-    let lenText = element.innerText?.length
-    if ( lenText > RichText.userFullName( copyChosenUsers[0] ).length + NUM_ENTERED_CHARS )  {
-      let usersLen = copyChosenUsers.reduce((prev, cur) => prev + RichText.userFullName(cur).length + 2, 0)
-      if ( lenText > usersLen + NUM_ENTERED_CHARS ) {
-        setIsDisabled(false)
-      } else {
-        setIsDisabled(true)
-      }} else {
-      setIsDisabled(true)
-    }
+    element.innerText === undefined || element.innerText === '\x00' ? setIsDisabled(true) : setIsDisabled(false)
   }, [caret, textHTML, currentSelection])
 
   useEffect(()=>{
@@ -65,15 +55,24 @@ const RichInputElement =({ richText = '',
 
   const handleKeyDown = event => {
     event.preventDefault()
+    const selectedValue = window.getSelection().toString();
     const text = element.textContent
     const cursorPos = Cursor.getCurrentCursorPosition(element)
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
     let char = event.key
+    if (event.ctrlKey && event.keyCode === 67) {   return copyToClipboard(selectedValue) }
+    if (event.ctrlKey && event.keyCode === 86) {   return paste() }
+    switch(char.toLowerCase()) {
+      case'enter':
+        if(!isDropdownList) char='\x0A'
+        break
+    }
+
     if (cursorPos.isDIV) {
       setIsDropdownList(false)
     }
-    if (cursorPos.isSPAN) {
+    if (cursorPos.isSPAN && textHTML[cursorPos.realPos] !== '<') {
       setIsDropdownList(true)
     }
     if (char.match(/[&<>]/)) return 0
@@ -89,17 +88,24 @@ const RichInputElement =({ richText = '',
       }
 
       if (char === 'Enter' || char === 'Tab') {
+        if (indexOfSelection === -1 ) return
         clickEnterTabHandling(indexOfSelection)
         return 0
       }
-
       let indexOfSel = indexOfSelection
       if (!(String.fromCharCode(event.keyCode)).match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
-
-        if (cursorPos.focusOffset - 1 !== searchString.length) return 0
-
+        if (cursorPos.focusOffset - 1 !== searchString.length
+          || RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1).length !== cursorPos.focusOffset-1) return 0
         const newSearchString = (searchString + char).toLowerCase()
         const listFoundUsers = filteredUsers.filter(user => userFullName(user).toLowerCase().startsWith(newSearchString))
+        const findUser = filteredUsers.find(user => userFullName(user).toLowerCase().startsWith(newSearchString))
+        if( findUser === undefined) {
+          transformNodeToSimple(textHTML, cursorPos, newSearchString)
+          RichText.incrementPositionCursor(1, cursorPos, textHTML, setCaret)
+          setSearchString('')
+          return
+        }
+        setCurrentSelection(findUser.id)
 
         //when full name of user to equal to search string
         // and only one element in the array than start update copyChosenUsers and chosenUsers
@@ -136,13 +142,13 @@ const RichInputElement =({ richText = '',
 
       if ((char === 'ArrowDown') && indexOfSelection >= 0) {
         setIndexOfSelection(indexOfSel = indexOfSelection < filteredUsers.length - 1 ? ++indexOfSel : 0)
-        setCurrentSelection(filteredUsers[indexOfSel].id)
+        setCurrentSelection(filteredUsers[indexOfSel]?.id)
         return 0
       }
 
       if (char === 'ArrowUp' && indexOfSelection >= 0) {
         setIndexOfSelection(indexOfSel = indexOfSelection > 0 ? --indexOfSel : filteredUsers.length - 1)
-        setCurrentSelection(filteredUsers[indexOfSel].id)
+        setCurrentSelection(filteredUsers[indexOfSel]?.id)
         return 0
       }
 
@@ -150,10 +156,10 @@ const RichInputElement =({ richText = '',
       if (cursorPos.isDIV && char.length === 1) {
         switch (char) {
           case MARKER:
-            if (filteredUsers.length && (text.length === 0 || caretCur === text.length && text[caretCur - 1] === "\u00A0"
-                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) === 160
-                && text.charCodeAt(caretCur) === 160
-                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) === 160)) {
+            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1].match(/ |\u000A/)
+                || caretCur > 0 && caretCur < text.length && text[caretCur - 1].match(/ |\x0A/)
+                && text[caretCur].match(/ |\x00/)
+                || caretCur === 0 && text.length > 0 && text[caretCur].match(/ |\x00/))) {
               RichText.pasteNodeToHTMLobj(
                   MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
               )
@@ -177,7 +183,7 @@ const RichInputElement =({ richText = '',
 
           const pos = realPos + END_TAG_AT.length
           const end = pos === textHTML.length ? '' : textHTML.slice(pos)
-          setTextHTML(RichText.encodeSpace(textHTML.slice(0, pos) + char + end))
+          setTextHTML(textHTML.slice(0, pos) + char + end )
           setCaret(caret + 1)
           setIsDropdownList(false)
 
@@ -185,13 +191,21 @@ const RichInputElement =({ richText = '',
           const renewUsers = copyChosenUsers.filter(user => userFullName(user) !== nameUserToDel)
           setCopyChosenUsers(!renewUsers ? [] : renewUsers)
           setChosenUsers(!renewUsers ? [] : [...renewUsers])
-          RichText.pasteCharsBeforeEndTag(char, textHTML, cursorPos, END_TAG_AT, setTextHTML, setCaret)
-          setIsDropdownList(true)
+          const filtrationUsersById = RichText.filtrationById( renewUsers, listAllUsers )
+          setFilteredUsers(filtrationUsersById)
+          if(cursorPos.isSPAN && cursorPos.focusOffset !== 1) {
+            transformNodeToSimple(textHTML, cursorPos, char)
+          } else {
+            RichText.pasteCharsBeforeEndTag(char, textHTML, cursorPos, END_TAG_AT, setTextHTML, setCaret)
+            setIsDropdownList(true)
+            setSearchString(char)
+            const findUser = filtrationUsersById.find(user => userFullName(user).toLowerCase().startsWith(char))
+            setCurrentSelection(!findUser ? filteredUsers[0].id: findUser.id)
+            setIndexOfSelection(!findUser ? 0 : filtrationUsersById.indexOf(findUser))
+          }
           setCaret(caretCur - cursorPos.focusOffset + 2)
-          setSearchString(char)
         }
       }
-
       if (char.length === 1 && textHTML.length > realPos
           && textHTML.indexOf(TAG_AT) === realPos && !char.match(/<>&/)) {
         RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
@@ -201,9 +215,11 @@ const RichInputElement =({ richText = '',
 
     switch (char){
       case 'Home':
+        setIsDropdownList(false)
         setCaret ( 0 )
         break;
       case 'End':
+        setIsDropdownList(false)
         setCaret ( text.length )
         break;
       case 'ArrowLeft':
@@ -215,10 +231,11 @@ const RichInputElement =({ richText = '',
         break
 
       case 'ArrowRight':
-        if( cursorPos.isSPAN && cursorPos.focusOffset === 1 ) {
+        if( cursorPos.isSPAN && cursorPos.focusOffset === 1 && text[cursorPos.charCount] === MARKER ) {
           setIsDropdownList(true)
           setCoordinates(cursorPos.coordinates)
         }
+        if( cursorPos.isSPAN && (textHTML[cursorPos.realPos+1] === '<')) setIsDropdownList(false)
         RichText.incrementPositionCursor( 1, cursorPos, text, setCaret )
         break
     }
@@ -259,6 +276,7 @@ const RichInputElement =({ richText = '',
           }
         }
       } else {
+
         switch (char){
           case 'Delete':
             if( textHTML.indexOf(TAG_AT, realPos) === realPos ) {
@@ -276,10 +294,17 @@ const RichInputElement =({ richText = '',
             RichText.deletePreviousChar( textHTML, realPos, setTextHTML )
             RichText.decrementPositionCursor( 1, cursorPos, setCaret )
             break
+
         }
       }
     }
   }
+
+  const transformNodeToSimple = (textHTML, cursorPos, char) => {
+    RichText.deleteNodePasteChars( textHTML, cursorPos, node + char.charAt(0).toUpperCase() +  char.slice(1) , TAG_AT, END_TAG_AT, setTextHTML, setCaret )
+    setIsDropdownList(false)
+  }
+
 const clickEnterTabHandling = ( i ) => {
   if ( i === undefined ) {
     setIsDropdownList(false)
@@ -324,8 +349,8 @@ const clickEnterTabHandling = ( i ) => {
           setIndexOfSelection(index)
         }
       })
-      setIsDropdownList(true)
-      setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
+      textHTML[cursor.realPos] !== '<' ? setIsDropdownList(true) : setIsDropdownList(false)
+      setCoordinates(cursor.coordinates)
       setCaret(cursor.charCount )
     } else { setIsDropdownList(false) }
   }
@@ -337,15 +362,54 @@ const clickEnterTabHandling = ( i ) => {
     })
   }
 
+  useEffect(()=>{
+    window.addEventListener("paste", function(e) {
+      e.preventDefault()
+      paste()
+    })
+    window.addEventListener('cut', function (e){
+         e.preventDefault()
+    })
+  }, [textHTML])
+
+  const pasteFromClipboard = (text) => {
+    const cursorPos = Cursor.getCurrentCursorPosition(element)
+    if( cursorPos.isDIV ) {
+      if((text.length + textAreaRef.current.innerText.length) >= LIMIT_CHARS) return
+      RichText.pasteSymbolsToHTMLobj(text, textHTML, cursorPos, setTextHTML, setCaret)
+      setCaret(caret + text.length)
+    }
+  }
+
+  const copyToClipboard = (inputValue) => {
+    if (inputValue) {
+      navigator.clipboard.writeText(inputValue)
+          .then(() => {})
+          .catch(err => {
+            console.log('Something went wrong', err);
+          })
+    }
+  }
+
+  const paste = () => {
+    navigator.clipboard.readText()
+        .then(text => { pasteFromClipboard(text) })
+        .catch(err => {
+          console.log('Something went wrong', err);
+        })
+  }
+
   return (
-    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327'>
+    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327 mb-7 overflow-hidden'>
       <img src={xClose} className='position-absolute x-close' onClick={onClose}/>
       <div className=' d-flex flex-column align-items-center'>
         <RichTextArea      textHTML = { textHTML }
                                refs = { textAreaRef }
                           onKeyDown = { handleKeyDown }
                             onClick = { clickHandling }
-                          className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'/>
+                          cursorPos = { Cursor.getCurrentCursorPosition(element) }
+                          className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'
+                        placeholder = {` Use "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!`}/>
         <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
                 onClick = { submitHandling }>
           Send Shoutout

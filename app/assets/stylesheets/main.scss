@@ -89,6 +89,9 @@ a {
 .gray-600 {
   color: $gray-600
 }
+.gray-300 {
+  color: $gray-300 !important;
+}
 
 //new.html.erb
 .welcome-field {
@@ -171,6 +174,9 @@ a {
 }
 .mt-180 {
   margin-top: 180px;
+}
+.pencil {
+  cursor: pointer;
 }
 .left-bottom-corner {
   position: absolute;
@@ -279,13 +285,16 @@ a {
       &.cut-text {
         text-overflow: ellipsis;
         overflow: hidden;
-        width: 750px;
+        width: 740px;
         white-space: nowrap;
       }
     }
   }
 }
-
+.click-annotation {
+  margin-top: 350px;
+  color: $gray-600;
+}
 //system scroll
 .field-shout-outs ,
 .drop-down-block,
@@ -307,7 +316,11 @@ a {
   }
 }
 
-
+.scrolling {
+  white-space: break-spaces;
+  scroll-behavior: smooth;
+  overflow-wrap: anywhere;
+}
 
 //IntenseLine
 .rating-comment-container {
@@ -569,6 +582,7 @@ a {
   height:514px;
   top:0;
   margin-top: 327px;
+  overflow-x: hidden;
   .x-close {
     z-index: 31;
     margin-top: -25px;
@@ -629,11 +643,11 @@ a {
     white-space:        nowrap;
     overflow:           hidden;
     padding-inline-start: 7px;
+    color: $gray-300;
     &:focus, &.highlight   {
+      cursor: pointer;
       background-color: $gray-100;
-    }
-    &.item:hover {
-      border: 1px solid $primary;
+      color: $black;
     }
   }
 }

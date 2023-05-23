@@ -4,7 +4,7 @@ import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
-import edit_pencil from "../../../assets/images/edit-pencil.svg";
+import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
 import ShoutoutModal from "../UI/ShoutoutModal";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
@@ -15,15 +15,21 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
       .sort( (a,b) =>  a.updated_at < b.updated_at ? 1 : -1 )
 
   const numShoutOuts = shoutOuts.length
-
-  const skipHandling = () =>{
-    steps.push('icebreaker-answer')
+  // Temporary placement not ready page Shoutout
+  const handlingOnClickNext = () => {
+    if (!data.fun_question){
+      steps.push('causes-to-celebrate')
+      saveDataToDb( steps )
+    }else
+      steps.push('icebreaker-answer')
     saveDataToDb( steps )
+  }
+  const skipHandling = () =>{
+    handlingOnClickNext()
   }
 
   const nextHandling = () =>{
-    steps.push('icebreaker-answer')
-    saveDataToDb( steps )
+    handlingOnClickNext()
   }
   const editHandling = (e) =>{
     e.preventDefault()
@@ -37,20 +43,20 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
     setShoutOutForm( { status: false, editObj: {} } )
   }
 
-
-  const output = (shoutOuts) =>
-    <ul>
-      {
-        shoutOuts.map( shoutOut =>
-          <li className='c3' key={ shoutOut.id }>
-            <span>
-              <p className='fw-semibold mb-0  cut-text'>{parse(shoutOut.rich_text)}</p>
-            </span>
-            <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" onClick={editHandling}/>
-          </li>
-        )
-      }
-    </ul>
+  const output = (shoutOuts) =>{
+    return (
+      <ul>
+      {shoutOuts.map( shoutOut => (
+      <li className='c3' key={ shoutOut.id }>
+        <span>
+          <p className='fw-semibold mb-0  pt-1 pb-1 cut-text'>{parse(shoutOut.rich_text)}</p>
+        </span>
+        <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" className='pencil' onClick={editHandling}/>
+      </li>
+      ))}
+      </ul>
+    )
+  }
 
   const cornerElements = (num) => {
     return <CornerElements data = { data }
@@ -65,10 +71,11 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
       <div className='mx-auto w-746 h-59 mt-151 mb-4'>
         <h1 className='color-black'>Recognition is important!</h1>
       </div>
-        {
-          !numShoutOuts && <h2 className='color-black'>
+        {!numShoutOuts && <div><h2 className='color-black'>
           Consider giving members of your team a <br/>
           Shoutout to show your appreciation.</h2>
+          <div className='click-annotation b4'>Click to give a Shoutout!</div>
+        </div>
         }
 
       {!!numShoutOuts && <div><h2 className='color-black mb-1'>You've mentioned:</h2></div>}
