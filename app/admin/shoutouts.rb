@@ -13,7 +13,7 @@ ActiveAdmin.register Shoutout do
 
   filter :user, as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }, label: 'Sender'
   filter :time_period, as: :select, collection: TimePeriod.all.map { |item| [item.date_range, item.id] }
-  # filter :recipients,  as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }
+  filter :recipients,  as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }
 
 
 end
