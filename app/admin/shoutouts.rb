@@ -5,7 +5,7 @@ ActiveAdmin.register Shoutout do
 
     column :id
     column 'Shoutout', :to_text
-    # column 'Sender', :to_full_name
+    column 'Sender', :to_full_name
     # column 'Recipients', :recipient
     # column :time_period_range
 
