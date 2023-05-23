@@ -39,4 +39,8 @@ class User < ApplicationRecord
   passwordless_with :email
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
+
+  def to_full_name
+    "#{first_name} #{last_name}"
+  end
 end

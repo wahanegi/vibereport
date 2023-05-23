@@ -63,29 +63,9 @@ const RichInputElement =({ richText = '',
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
     let char = event.key
+    if (event.ctrlKey && event.keyCode === 67) {   return copyToClipboard(selectedValue) }
+    if (event.ctrlKey && event.keyCode === 86) {   return paste() }
     switch(char.toLowerCase()) {
-      case'control':
-        return setIsCtrl(true)
-        break
-      case'v':
-        if(isCtrl) {
-          setIsCtrl(false)
-          paste()
-          return
-        }
-        break
-      case'c':
-        if(isCtrl) {
-          setIsCtrl(false)
-          return copyToClipboard(selectedValue)
-        }
-        break
-      // case'a':
-      //   if(isCtrl) {
-      //     setIsCtrl(false)
-      //     return highlightAll()
-      //   }
-        break
       case'enter':
         if(!isDropdownList) char='\x0A'
         break

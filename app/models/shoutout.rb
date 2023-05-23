@@ -28,5 +28,24 @@ class Shoutout < ApplicationRecord
   has_many :recipients, through: :shoutout_recipients, source: :user
 
   validates :rich_text, presence: true, uniqueness: { scope: %i[user_id time_period_id] }
+
+  def to_text
+    rich_text.gsub(%r{<span class="color-primary">|</span>}, '')
+  end
+
+  def recipient
+    shoutout_recipients.ids.map do |id|
+      user = User.find(ShoutoutRecipient.find(id).user_id)
+      "#{user.first_name} #{user.last_name}"
+    end
+  end
+
+  def to_full_name
+    "#{user.first_name} #{user.last_name}"
+  end
+
+  def time_period_range
+    time_period.date_range
+  end
 end
 
