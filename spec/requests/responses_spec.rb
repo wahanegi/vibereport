@@ -54,6 +54,7 @@ RSpec.describe Api::V1::ResponsesController do
             'word' => user_response.emotion.word,
             'public' => user_response.emotion.public
           },
+        'user_shoutouts' => [],
         'data' => {
           'id' => user_response.id.to_s,
           'type' => 'response',
@@ -98,6 +99,7 @@ RSpec.describe Api::V1::ResponsesController do
             'word' => user_response.emotion.word,
             'public' => user_response.emotion.public
           },
+        'user_shoutouts' => [],
         'data' => {
           'id' => response_saved.id.to_s,
           'type' => 'response',
@@ -137,6 +139,7 @@ RSpec.describe Api::V1::ResponsesController do
             'word' => emotion.word,
             'public' => user_response.emotion.public
           },
+        'user_shoutouts' => [],
         'data' =>
           {
             'id' => user_response.id.to_s,
