@@ -1,5 +1,5 @@
 ActiveAdmin.register Shoutout do
-  permit_params :user, :to_text, :to_full_name, :recipient, :time_period_range, time_period
+  permit_params :user, :to_text, :to_full_name, :recipient, :time_period_range
 
   index do
 
@@ -11,9 +11,9 @@ ActiveAdmin.register Shoutout do
 
   end
 
-  filter :user, as: :select, collection: user.all.map { |item| [item.to_full_name, item.id] }, label: 'Sender'
-  filter :time_period, as: :select, collection: time_period.all.map { |item| [item.date_range, item.id] }
-  filter :recipients,  as: :select, collection: user.all.map { |item| [item.to_full_name, item.id] }
+  filter :user, as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }, label: 'Sender'
+  filter :time_period, as: :select, collection: TimePeriod.all.map { |item| [item.date_range, item.id] }
+  filter :recipients,  as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }
 
 
 end
