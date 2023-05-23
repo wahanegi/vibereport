@@ -26,7 +26,6 @@ const RichInputElement =({ richText = '',
   const [ coordinates, setCoordinates] = useState({ x:420, y:386 })
   const [ cursorPosition, setCursorPosition ] = useState(null)
   const [ isDisabled, setIsDisabled] = useState(true)
-  const [ isCtrl, setIsCtrl ] = useState( false )
   const element = textAreaRef.current
   const NON_ALLOWED_CHARS_OF_NAME =  /[,@`<>;:\/\\']/
   const MARKER = '@'
@@ -35,7 +34,6 @@ const RichInputElement =({ richText = '',
   const OFFSET_X = 0
   const OFFSET_Y = 40
   const LIMIT_CHARS = 700
-  const NUM_ENTERED_CHARS = 0
   const highlightSmbATUnknownUser = false
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
 
@@ -70,8 +68,6 @@ const RichInputElement =({ richText = '',
         if(!isDropdownList) char='\x0A'
         break
     }
-
-    setIsCtrl(false)
 
     if (cursorPos.isDIV) {
       setIsDropdownList(false)
