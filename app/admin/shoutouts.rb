@@ -1,4 +1,6 @@
 ActiveAdmin.register Shoutout do
+  permit_params :user, :to_text, :to_full_name, :recipient, :time_period_range
+
   index do
 
     column :id
