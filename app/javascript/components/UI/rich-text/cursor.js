@@ -47,8 +47,8 @@ export default class Cursor {
                     let rects = range.getClientRects();
                     if (rects.length > 0) {
                         let rect = rects[0];
-                        coordinates.x = rect.left ;
-                        coordinates.y = rect.top ;
+                        coordinates.x = rect.left + window.scrollX ;
+                        coordinates.y = rect.top + window.scrollY ;
                     }
                 }
             }
@@ -59,7 +59,7 @@ export default class Cursor {
                 realPos: realPos + realFocusOffset,
                 realFocusOffset: realFocusOffset,
                 isDIV: focusNode !== null ? focusNode.parentNode.tagName === 'DIV' : false,
-                isSPAN: focusNode !== null ? focusNode.parentNode.tagName === 'SPAN' : false,
+                isSPAN: focusNode !== null ? focusNode.parentNode.className === 'color-primary'  : false,
                 coordinates
             }
         }

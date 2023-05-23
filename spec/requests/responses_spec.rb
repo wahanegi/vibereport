@@ -79,7 +79,7 @@ RSpec.describe Api::V1::ResponsesController do
   end
 
   describe '#create' do
-    subject { post '/api/v1/responses', params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection]  } }, format: :json } }
+    subject { post '/api/v1/responses', params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection] } }, format: :json } }
     it 'responds to json formats when provided in the params' do
       subject
       expect(response.media_type).to eq 'application/json'

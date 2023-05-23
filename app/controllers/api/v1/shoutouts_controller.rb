@@ -39,8 +39,6 @@ end
   end
 
   def update_shoutout_recipients
-    return if params['recipients'].empty?
-
     @shoutout.shoutout_recipients.destroy_all
     create_shoutout_recipients
   end

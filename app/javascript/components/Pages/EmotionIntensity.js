@@ -40,16 +40,18 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
       </div>
       <div className="form-group">
         {rating && (
-          <label className="comment-label">
-            <textarea
-              className="form-control"
-              placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
-              defaultValue={comment}
-              onChange={handleCommentClick}
-              maxLength={700}
-              onFocus={handleCommentFocus}
-            />
-          </label>
+          <div className='wrap-textarea wrap-textarea-intensity'>
+            <label className="comment-label">
+              <textarea
+                className="form-control form-control-intensity"
+                placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
+                defaultValue={comment}
+                onChange={handleCommentClick}
+                maxLength={700}
+                onFocus={handleCommentFocus}
+              />
+            </label>
+          </div>
         )}
       </div>
     </form>
