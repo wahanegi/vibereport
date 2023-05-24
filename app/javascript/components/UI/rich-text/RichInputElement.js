@@ -155,14 +155,16 @@ const RichInputElement =({ richText = '',
     } else {
       if (cursorPos.isDIV && char.length === 1) {
         if( char === MARKER ){
-          const symbolCodeAt = (pos) => text.charCodeAt(caretCur + pos)
-          const isSpecialSmb = (pos) => isNaN( symbolCodeAt(pos) ) ? true : symbolCodeAt(pos) < 33
-          const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0) && filteredUsers?.length
-          if ( isBtwSpecialSmb ) {
-            RichText.pasteNodeToHTMLobj( MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT )
-            setIsDropdownList(true)
-            setCoordinates(cursorPos.coordinates)
-            return 0
+          if( filteredUsers?.length ) {
+            const symbolCodeAt = (pos) => text.charCodeAt(caretCur + pos)
+            const isSpecialSmb = (pos) => isNaN(symbolCodeAt(pos)) ? true : symbolCodeAt(pos) < 33
+            const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
+            if (isBtwSpecialSmb) {
+              RichText.pasteNodeToHTMLobj(MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT)
+              setIsDropdownList(true)
+              setCoordinates(cursorPos.coordinates)
+              return 0
+            }
           }
         }
             RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
