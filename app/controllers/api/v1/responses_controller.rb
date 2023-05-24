@@ -63,6 +63,7 @@ module Api
 
       def sign_out_user
         redirect_to auth.sign_in_path if sign_out User
+        # UserEmailMailer.draft_saved_email(current_user).deliver_now
       end
 
       private

@@ -9,13 +9,15 @@ import axios from "axios";
 import {CSSTransition} from 'react-transition-group';
 import {backHandling} from "../helpers/helpers";
 
-const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
-
+const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [emotion, setEmotion] = useState({ word: data.emotion?.word || '', category: data.emotion?.category || '' });
   const [emotions, setEmotions] = useState([]);
   const [show, setShow] = useState(false);
+  const [isDraft, setDraft] = useState(draft);
 
+  // console.log('change', draft)
+  // console.log('emotion entry', emotion)
   const onChangeEmotion = (e) => {
     const { name, value } = e.target;
     const trimmedValue = value.toLowerCase().trim();
@@ -41,17 +43,32 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     setHoveredEmoji("");
   };
 
+  const dataRequest = {
+    emotion: {word: emotion.word, category: emotion.category}
+  }
+
+  const handleSaveDraft = () => {
+    const dataFromServer = (word) =>{
+      saveDataToDb( steps, {emotion_id: word.data.id} )    }
+    const dataDraft = {...dataRequest};
+    saveDataToDb(steps, dataDraft)
+    setDraft(true)
+    console.log("Emotion data:", data)
+    saveDataEmotion(dataFromServer);
+  }
+// console.log("Emotion data:", data)
   const handlingOnClickNext = () => {
     const dataFromServer = (word) =>{
       steps.push('meme-selection')
-      saveDataToDb( steps, {emotion_id: word.data.id} )
+      saveDataToDb( steps, {emotion_id: word.data.id, draft: false} )
     }
-    const dataRequest = {
-      emotion: {word: emotion.word, category: emotion.category}
-    }
+    saveDataEmotion(dataFromServer)
+  };
+
+  const saveDataEmotion = (dataFromServer) => {
     apiRequest("POST", dataRequest, dataFromServer, ()=>{}, "/api/v1/emotions").then(response => {
     });
-  };
+  }
 
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const getEmojiClass = (category, name) => {
@@ -113,7 +130,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     { !!error && <p>{error.message}</p>}
     {!isLoading && !error &&
       <Wrapper className='position-relative'>
-        <Header  saveDataToDb={saveDataToDb} steps={steps} />
+        <Header  saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}/>
         <div className='central-element'>
           <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
           <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>

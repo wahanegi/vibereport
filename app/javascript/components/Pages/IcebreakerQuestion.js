@@ -4,7 +4,7 @@ import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../U
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 
-const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
+const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [prevStateQuestion, setPrevStateQuestion] = useState({})
@@ -12,6 +12,30 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const prevQuestionBody = prevStateQuestion?.question_body
   const funQuestionBody = funQuestion?.question_body
   const userName = data.current_user.first_name
+  const [isDraft, setDraft] = useState(draft)
+
+  const dataRequest = {
+    fun_question: {
+      question_body: funQuestionBody,
+      user_id: data.current_user.id
+    }
+  }
+
+  useEffect(() => {
+    if (funQuestionBody !== prevQuestionBody && isDraft) {
+      setDraft(false);
+    }
+  }, [funQuestionBody]);
+
+  const handleSaveDraft = () => {
+    const dataFromServer = (fun_question) =>{
+      saveDataToDb( steps, {fun_question_id: fun_question.data.id})
+    }
+    const dataDraft = {...dataRequest};
+    saveDataToDb(steps, dataDraft)
+    setDraft(true)
+    saveDataQuestion(()=>{}, dataFromServer);
+  }
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
@@ -19,17 +43,15 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
       steps.push('icebreaker-answer')
       saveDataToDb( steps, {fun_question_id: fun_question.data.id})
     }
-    const dataRequest = {
-      fun_question: {
-        question_body: funQuestionBody,
-        user_id: data.current_user.id
-      }
-    }
     const goToResultPage = () => {
       // TODO: change to redirect to the results page when it appears
       steps.push('icebreaker-answer')
-      saveDataToDb(steps)
+      saveDataToDb(steps, {draft: false})
     }
+    saveDataQuestion(goToResultPage, dataFromServer);
+  };
+
+  const saveDataQuestion = (goToResultPage, dataFromServer) =>{
     const url = '/api/v1/fun_questions/'
     const id = prevStateQuestion?.id
     if(isPresent(prevQuestionBody)) {
@@ -45,7 +67,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }
-  };
+  }
 
   const onChangQuestion = (e) => {
     setFunQuestion(Object.assign({}, funQuestion, {[e.target.name]: e.target.value}))
@@ -68,7 +90,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
     <Fragment>
       {!isLoading && !error &&
         <Wrapper>
-          <Header saveDataToDb={saveDataToDb} steps={steps} />
+          <Header saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}/>
           <div className='icebreaker-position'>
             <div className='d-flex justify-content-center flex-column'>
               <h4 className='mb-0'>Thanks for answering!</h4>

@@ -57,17 +57,32 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
   );
   };
   
-const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
+const EmotionIntensity = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const { word, category } = data.emotion
   const { gif_url } = data.response.attributes
   const [rating, setRating] = useState(data.response.attributes.rating || null);
   const [comment, setComment] = useState(data.response.attributes.comment || '');
   const isBlankGif = isBlank(gif_url)
-  
+  const dataDraft = {rating, comment}
+  const [isDraft, setDraft] = useState(draft);
+
+  const handleSaveDraft = () => {
+    saveDataToDb(steps, dataDraft);
+    setDraft(true)
+  }
+
+  useEffect(() => {
+    const dataComment = data.response.attributes.comment;
+    const dataRating = data.response.attributes.rating;
+    if ((comment !== dataComment || rating !== dataRating) && isDraft) {
+      setDraft(false);
+    }
+  }, [comment, rating]);
+
   const handlingOnClickNext = () => {
     steps.push('productivity-check')
-    saveDataToDb( steps, {rating, comment})
+    saveDataToDb( steps, {rating, comment, draft: false})
   }
 
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
@@ -128,7 +143,7 @@ const generateStyles = (value, selected, category) => {
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header saveDataToDb={saveDataToDb} steps={steps} />
+    <Header saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft} />
     <div className='central-element'>
       <EmotionSection />
       <IntenseLine

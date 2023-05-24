@@ -68,9 +68,9 @@ export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false
     <HelpIcon />
   </div>
 
-export const Header = ({saveDataToDb, steps}) => <div className='d-flex justify-content-between m-3'>
+export const Header = ({saveDataToDb, steps, draft, disabled, data, handleSaveDraft}) => <div className='d-flex justify-content-between m-3'>
   <Logo />
-  <Menu saveDataToDb={saveDataToDb} steps={steps}>X% complete</Menu>
+  <Menu saveDataToDb={saveDataToDb} steps={steps} draft={draft} disabled={disabled} data={data} handleSaveDraft={handleSaveDraft}>X% complete</Menu>
 </div>
 
 export const Wrapper = ({children}) => <div className="wrapper">

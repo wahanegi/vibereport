@@ -4,7 +4,7 @@ import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../U
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 
-const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
+const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [prevStateAnswer, setPrevStateAnswer] = useState( {})
@@ -14,23 +14,46 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const {user_name, question_body} = data.fun_question
   const user = user_name
   const current_user_id = data.current_user.id
+  const [isDraft, setDraft] = useState(draft)
+  const dataRequest = {
+    fun_question_answer: {
+      answer_body: answerBody,
+      user_id: current_user_id,
+      fun_question_id: data.fun_question.id
+    }
+  }
+
+  useEffect(() => {
+    if (answerBody !== prevAnswerBody && isDraft) {
+      setDraft(false);
+    }
+  }, [answerBody]);
+
+  const handleSaveDraft = () => {
+    const dataFromServer = (fun_question_answer) =>{
+      saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id} )
+    }
+
+    const dataDraft = {...dataRequest};
+    saveDataToDb(steps, dataDraft)
+    setDraft(true)
+    saveDataAnswer(()=>{}, dataFromServer);
+  }
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question_answer) =>{
       steps.push('icebreaker-question')
-      saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id} )
+      saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id, draft: false} )
     }
-    const dataRequest = {
-      fun_question_answer: {
-        answer_body: answerBody,
-        user_id: current_user_id,
-        fun_question_id: data.fun_question.id
-      }
-    }
+
     const goToResultPage = () => {
       steps.push('productivity-bad-follow-up')
-      saveDataToDb(steps)
+      saveDataToDb( steps, {draft: false} )
     }
+    saveDataAnswer(dataFromServer, goToResultPage)
+  };
+
+  const saveDataAnswer = (dataFromServer, goToResultPage) =>{
     const url = '/api/v1/fun_question_answers/'
     const id = prevStateAnswer?.id
 
@@ -41,15 +64,15 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
         apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
         steps.push('icebreaker-question')
-        saveDataToDb(steps)
+        saveDataToDb(steps, {draft: false})
       }
     } else if (isEmptyStr(answerBody)) {
       steps.push('productivity-bad-follow-up')
-      saveDataToDb(steps)
+      saveDataToDb(steps, {draft: false})
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }
-  };
+  }
 
   const onChangAnswer = (e) => {
     setAnswerFunQuestion(Object.assign({}, answerFunQuestion, {[e.target.name]: e.target.value}))
@@ -71,7 +94,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
     <Fragment>
       {loaded && !isLoading && !error &&
         <Wrapper>
-          <Header saveDataToDb={saveDataToDb} steps={steps} />
+          <Header saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft} />
           <div className='icebreaker-position'>
             <div className='justify-content-beetwen flex-column' style={{height: '180px'}}>
               <h1 className='mb-0'>Kick back, relax.</h1>

@@ -12,12 +12,27 @@ import {backHandling, isBlank, isPresent} from "../helpers/helpers";
 import {GIPHY_UPLOAD_URL} from "../helpers/consts";
 import Menu from "../UI/Menu";
 
-const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif}) => {
+const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif, draft}) => {
   const {emotion, api_giphy_key, response} = data
   const navigate = useNavigate()
   const {isLoading, error} = service
   const [gifUrl, setGifUrl] = useState(response.attributes.gif_url || '')
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
+  const dataDraft = {gif_url: gifUrl || null}
+  const [isDraft, setDraft] = useState(draft);
+
+  const handleSaveDraft = () => {
+    saveDataToDb(steps, dataDraft);
+    setDraft(true)
+  }
+  // useEffect(() => {
+  //   const dataComment = data.response.attributes.comment;
+  //   const dataRating = data.response.attributes.rating;
+  //   if (comment !== dataComment || rating !== dataRating) {
+  //     setDraft(false);
+  //   }else
+  //     setDraft(true);
+  // }, [comment, rating, data.response.attributes.comment, data.response.attributes.rating, draft]);
 
   const handlingOnClickSkip = () =>{
     if (emotion.category === "neutral") {
@@ -25,7 +40,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('emotion-intensity')
     }
-    saveDataToDb( steps , { gif_url: null })
+    saveDataToDb( steps , { gif_url: null, draft: false })
   }
 
   const chooseGIPHYHandling = () => {
@@ -34,7 +49,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('selected-giphy-follow');
     }
-    saveDataToDb(steps, { gif_url: gifUrl });
+    saveDataToDb(steps, { gif_url: gifUrl, draft: false });
   }
   
   const uploadGIPHYHandling = () => {
@@ -68,7 +83,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
       <h5 style={{opacity: 0.6}}>You picked:</h5>
       <BigBtnEmotion emotion={emotion} onClick={backHandling} />
     </div>
-    <Menu saveDataToDb={saveDataToDb} steps={steps}>X% complete</Menu>
+    <Menu saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}>X% complete</Menu>
   </div>
 
   if (!!error) return <p>{error.message}</p>

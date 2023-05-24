@@ -12,7 +12,7 @@ import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 //***               response:{attributes: {steps: "[\"ListEmotions\"]", word:""}},
 //***               current_user_id: ...,
 //***               time_period:{...}
-function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
+function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
@@ -25,10 +25,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       comment: '',
       rating: '',
       productivity: '0',
+      draft: false,
     }
     saveDataToDb( steps, dataRequest )
   }
-
+  console.log(data.response.attributes)
   const ownWordHandling = () => {
     steps.push('emotion-entry')
     const dataRequest = {
@@ -102,7 +103,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           </NavLink>
           <QuestionButton />
           <ShoutoutButton />
-          <Menu addClass='placement-menu' percent_completion='0' />
+          <Menu addClass='placement-menu' saveDataToDb={saveDataToDb} steps={steps} draft={draft}/>
         </div>
       }
     </Fragment>

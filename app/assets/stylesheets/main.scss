@@ -400,3 +400,10 @@ body {
     background-color: shift-color($gray-200, 30%) !important;
   }
 }
+
+.disabled-btn-draft{
+  pointer-events: none;
+  cursor: none;
+  overflow: hidden;
+  opacity: 0.6;
+}

@@ -20,7 +20,7 @@ const ResponseFlow = ({step, data, setData}) => {
                    const stepsArr = data.response.attributes.steps
                    const navigate = useNavigate()
                     const service = { isLoading,  error , setIsLoading}
-
+                    const draft = data.response.attributes.draft
   const mainPage = 'emotion-selection-web'
   const [go, setGo] = useState(null)
   const [isCustomGif, setIsCustomGif] = useState(false)
@@ -100,43 +100,43 @@ const ResponseFlow = ({step, data, setData}) => {
 
   switch (go) {
     case  "emotion-selection-web" :
-      return <ListEmotions data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <ListEmotions data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "emotion-entry" :
-      return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "meme-selection" :
-      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />
+      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} draft={draft} />
     case  "results" :
-      return <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "selected-giphy-follow" :
-      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} />
+      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} draft={draft} />
     case  "emotion-intensity" :
-      return <EmotionIntensity data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <EmotionIntensity data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "productivity-check" :
-      return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft}/>
     case  "productivity-bad-follow-up" :
-      return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "causes-to-celebrate" :
-       return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+       return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "ShoutoutPromptNone" :
-    //   return <ShoutoutPromptNone data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <ShoutoutPromptNone data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "ShoutoutModalExample" :
-    //   return <ShoutoutModalExample data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <ShoutoutModalExample data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "ShoutoutModal_FlexUse" :
-    //   return <ShoutoutModal_FlexUse data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <ShoutoutModal_FlexUse data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "icebreaker-answer" :
-      return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "icebreaker-question" :
-      return <IcebreakerQuestion data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <IcebreakerQuestion data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "MemeWallThisWeekSoFar" :
-    //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "MemeWallPrevWeek" :
-    //   return <MemeWallPrevWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <MemeWallPrevWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "MemeWallThisWeek" :
-    //   return <MemeWallThisWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <MemeWallThisWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "MemeWallThisWeekSoFarDrop" :
-    //   return <MemeWallThisWeekSoFarDrop data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <MemeWallThisWeekSoFarDrop data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     // case  "PromptEmailResults" :
-    //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     default:
       // navigate ( `/emotion-selection-web`)
 
