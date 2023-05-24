@@ -37,7 +37,8 @@ class Api::V1::EmotionsController < ApplicationController
   private
 
   def additional_params
-    { current_user:,
+    {
+      current_user:,
       time_period:,
       response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
       emotion: @current_response ? @current_response.emotion : {},
@@ -45,7 +46,9 @@ class Api::V1::EmotionsController < ApplicationController
       users: User.ordered.map do |user|
         { id: user.id, display: user.first_name, first_name: user.first_name, last_name: user.last_name }
       end,
-      user_shoutouts: current_user.shoutouts }
+      fun_question:,
+      user_shoutouts: current_user.shoutouts
+    }
   end
 
   def current_response
