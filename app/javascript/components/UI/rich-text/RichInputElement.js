@@ -157,13 +157,11 @@ const RichInputElement =({ richText = '',
         switch (char) {
           case MARKER:
             const isNewText = text.length === 0
-            const isSpecialSmb = (pos) => text.charCodeAt(caretCur + pos) < 33
-            const isBeginText = caretCur === 0 && !isNewText && isSpecialSmb(0)
-            const isBtwSpecialSmb = isSpecialSmb(-1, caretCur) && isSpecialSmb(0, caretCur)
-            const isBtwBeginEnd = caretCur > 0 && caretCur < text.length && isBtwSpecialSmb
-            const isEndText = caretCur > 0 && caretCur === text.length && isSpecialSmb(-1)
-            console.log(isNewText, isBeginText, isBtwBeginEnd, caretCur, text.length, isSpecialSmb(-1),isSpecialSmb(0))
-            if ( isNewText || isBeginText || isBtwBeginEnd || isEndText ) {
+            const isSpecialSmb = (pos) =>  text.charCodeAt(caretCur + pos) < 33
+            const isAtBeginText = caretCur === 0 && !isNewText && isSpecialSmb(0)
+            const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
+            const isInsideText = caretCur > 0 && caretCur < text.length && isBtwSpecialSmb
+            if (( isNewText || isAtBeginText || isInsideText) && filteredUsers?.length ) {
               RichText.pasteNodeToHTMLobj(
                   MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
               )
@@ -224,7 +222,7 @@ const RichInputElement =({ richText = '',
         break;
       case 'End':
         setIsDropdownList(false)
-        setCaret ( text.length )
+        setCaret ( text.length - 1 )
         break;
       case 'ArrowLeft':
           if( cursorPos.isSPAN && cursorPos.focusOffset === 1 ) {
@@ -290,6 +288,7 @@ const RichInputElement =({ richText = '',
               const filtratedUsersByName = RichText.filtrationByName (userFullName( userFromNode[0] ), copyChosenUsers)
               setCopyChosenUsers( filtratedUsersByName )
               setChosenUsers( filtratedUsersByName )
+              setFilteredUsers(RichText.sortUsersByFullName([...filteredUsers, userFromNode[0]]))
             } else {
               RichText.deleteNextChar( textHTML, realPos, setTextHTML )
             }
