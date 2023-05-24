@@ -161,9 +161,7 @@ const RichInputElement =({ richText = '',
           if ( isBtwSpecialSmb ) {
             RichText.pasteNodeToHTMLobj( MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT )
             setIsDropdownList(true)
-            if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
-              setCoordinates(cursorPos.coordinates)
-            }
+            setCoordinates(cursorPos.coordinates)
             return 0
           }
         }
