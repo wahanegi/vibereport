@@ -156,10 +156,10 @@ const RichInputElement =({ richText = '',
       if (cursorPos.isDIV && char.length === 1) {
         switch (char) {
           case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1].match(/ |\u000A/)
-                || caretCur > 0 && caretCur < text.length && text[caretCur - 1].match(/ |\x0A/)
-                && text[caretCur].match(/ |\x00/)
-                || caretCur === 0 && text.length > 0 && text[caretCur].match(/ |\x00/))) {
+            if ((text.length === 0 || caretCur === text.length &&text.charCodeAt(caretCur - 1) < 33
+                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) < 33
+                && text.charCodeAt(caretCur) < 33
+                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) < 33)) {
               RichText.pasteNodeToHTMLobj(
                   MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
               )
