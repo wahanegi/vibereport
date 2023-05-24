@@ -154,23 +154,19 @@ const RichInputElement =({ richText = '',
 
     } else {
       if (cursorPos.isDIV && char.length === 1) {
-            if( filteredUsers?.length && char === MARKER){
-              const isNewText = text.length === 0
-              const isSpecialSmb = (pos) =>  text.charCodeAt(caretCur + pos) < 33
-              const isAtBeginText = caretCur === 0 && !isNewText && isSpecialSmb(0)
-              const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
-              const isInsideText = caretCur > 0 && caretCur < text.length && isBtwSpecialSmb
-              if (( isNewText || isAtBeginText || isInsideText) ) {
-                RichText.pasteNodeToHTMLobj(
-                    MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
-                )
-                setIsDropdownList(true)
-                if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
-                  setCoordinates(cursorPos.coordinates)
-                }
-                return 0
-              }
+        if( char === MARKER ){
+          const symbolCodeAt = (pos) => text.charCodeAt(caretCur + pos)
+          const isSpecialSmb = (pos) => isNaN( symbolCodeAt(pos) ) ? true : symbolCodeAt(pos) < 33
+          const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0) && filteredUsers?.length
+          if ( isBtwSpecialSmb ) {
+            RichText.pasteNodeToHTMLobj( MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT )
+            setIsDropdownList(true)
+            if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
+              setCoordinates(cursorPos.coordinates)
             }
+            return 0
+          }
+        }
             RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
       } else if (cursorPos.isSPAN && char.length === 1) {
         const nameUserToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
