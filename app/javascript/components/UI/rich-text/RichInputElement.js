@@ -154,28 +154,24 @@ const RichInputElement =({ richText = '',
 
     } else {
       if (cursorPos.isDIV && char.length === 1) {
-        switch (char) {
-          case MARKER:
-            const isNewText = text.length === 0
-            const isSpecialSmb = (pos) =>  text.charCodeAt(caretCur + pos) < 33
-            const isAtBeginText = caretCur === 0 && !isNewText && isSpecialSmb(0)
-            const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
-            const isInsideText = caretCur > 0 && caretCur < text.length && isBtwSpecialSmb
-            if (( isNewText || isAtBeginText || isInsideText) && filteredUsers?.length ) {
-              RichText.pasteNodeToHTMLobj(
-                  MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
-              )
-              setIsDropdownList(true)
-              if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
-                setCoordinates(cursorPos.coordinates)
+            if( filteredUsers?.length && char === MARKER){
+              const isNewText = text.length === 0
+              const isSpecialSmb = (pos) =>  text.charCodeAt(caretCur + pos) < 33
+              const isAtBeginText = caretCur === 0 && !isNewText && isSpecialSmb(0)
+              const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
+              const isInsideText = caretCur > 0 && caretCur < text.length && isBtwSpecialSmb
+              if (( isNewText || isAtBeginText || isInsideText) ) {
+                RichText.pasteNodeToHTMLobj(
+                    MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
+                )
+                setIsDropdownList(true)
+                if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
+                  setCoordinates(cursorPos.coordinates)
+                }
+                return 0
               }
-              return 0
-            } else {
-
             }
-          default:
             RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
-        }
       } else if (cursorPos.isSPAN && char.length === 1) {
         const nameUserToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
         if (listAllUsers.find(user => userFullName(user) === nameUserToDel) && !char.match(/[@<>]/)
