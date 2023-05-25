@@ -1,5 +1,5 @@
-include Chartkick::Helper
 class ResponsesReport < AdminReport
+  include Chartkick::Helper
   def initialize(team, time_periods)
     super(team)
     @time_periods = time_periods
@@ -21,8 +21,7 @@ class ResponsesReport < AdminReport
     end
 
     chart_id = SecureRandom.uuid
-    chart = area_chart data, xtitle: 'Period', ytitle: 'Count', id: chart_id, library: { title: { fontName: 'Arial', fontSize: 18 } }
-    
-    {chart: chart, id: chart_id}
+    chart = area_chart data, xtitle: 'Period', ytitle: 'Count', id: chart_id, library: { title: { fontName: 'Arial', fontSize: 18 } }    
+    { chart: chart, id: chart_id }
   end
 end

@@ -11,7 +11,7 @@ class ProductivityVerbatims < AdminReport
                                         .pluck(:comment)
 
     if low_productivity_comments.empty?
-      "No comments available"
+      'No comments available'
     else
       low_productivity_comments
     end

@@ -11,7 +11,7 @@ class ProductivityAverage < AdminReport
     average_productivity = responses.average(:productivity)
 
     if average_productivity.nil?
-      "No productivity available"
+      'No productivity available'
     else
       average_productivity.round(2)
     end
