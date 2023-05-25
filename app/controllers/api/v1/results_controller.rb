@@ -3,19 +3,29 @@ class Api::V1::ResultsController < ApplicationController
   before_action :require_user!, :time_period, only: %i[show]
 
   def show
-    render json: Api::V1::ResultsPresenter.new(@time_period.id, current_user).json_hash
+    if @time_period.present?
+      render json: Api::V1::ResultsPresenter.new(@time_period.id, current_user).json_hash
+    else
+      render json: { error: 'Time period not found' }, status: :not_found
+    end
   end
 
   def results_email
-    sign_in_user
-    msg = time_period.present? ? '' : 'Time period not found'
-    msg ||= 'No responses found' if time_period.present? && time_period.responses.blank?
+    sign_in user
+    msg = results_email_error_message
     return redirect_to "/results?id=#{params[:id]}" if msg.blank?
 
     render json: { error: msg }, status: :unprocessable_entity
   end
 
   private
+
+  def results_email_error_message
+    return 'Time period not found' if time_period.blank?
+    return 'No responses found' if time_period.responses.blank?
+
+    ''
+  end
 
   def time_period
     @time_period ||= TimePeriod.find_by(id: params[:id])
@@ -25,11 +35,7 @@ class Api::V1::ResultsController < ApplicationController
     @user ||= User.find_by(id: params[:user_id])
   end
 
-  def sign_in_user
-    sign_in user
-  end
-
   def current_response
-    @current_response ||= Response.find_by(time_period_id: TimePeriod.current.id, user_id: current_user.id)
+    @current_response ||= current_user.responses.find_by(time_period_id: TimePeriod.current.id)
   end
 end

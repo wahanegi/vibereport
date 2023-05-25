@@ -16,5 +16,11 @@ RSpec.describe Api::V1::ResultsController do
       subject
       expect(response).to have_http_status(:success)
     end
+
+    it 'returns a failed response' do
+      time_period.destroy
+      subject
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end

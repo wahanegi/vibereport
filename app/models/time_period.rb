@@ -43,7 +43,7 @@ class TimePeriod < ApplicationRecord
 
     def previous_time_period
       find_or_create_time_period
-      TimePeriod.find_by(end_date: TimePeriod.current.start_date - 1)
+      TimePeriod.find_by(end_date: TimePeriod.current.end_date.ago(1.week))
     end
   end
 

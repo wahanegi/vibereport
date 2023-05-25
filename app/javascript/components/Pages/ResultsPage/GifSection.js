@@ -5,12 +5,10 @@ import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import PoweredBy from "../../../../assets/images/PoweredBy.svg";
 
 const Wrapper = ({children}) => <div className='align-self-center gif-wrap result-page mb-3'>
-  <div className='gif-result-card'>
-    <div className='gif-result-card card'>
-      <div className='card-body card-full'>
-        <div className="gif-list">
-          {children}
-        </div>
+  <div className='border-none card'>
+    <div className='card-body h-auto p-0'>
+      <div className="gif-list">
+        {children}
       </div>
     </div>
   </div>
