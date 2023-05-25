@@ -74,7 +74,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
     <Fragment>
       {loaded && !isLoading && !error &&
           <div className='icebreaker-position'>
-            <div className='justify-content-beetwen flex-column' style={{height: '176px'}}>
+            <div className='justify-content-beetwen flex-column h-176'>
               <h1 className='mb-0 lh-1'>Kick back, relax.</h1>
               <h1 className='mb-3'>Time for a team question!</h1>
               <h2 className={`${'color-black mb-0'} ${!user && 'transparent'}`}>Brought to us by {onOffSmbAT}{user}</h2>
