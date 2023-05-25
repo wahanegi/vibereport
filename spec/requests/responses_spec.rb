@@ -71,7 +71,8 @@ RSpec.describe Api::V1::ResponsesController do
               'bad_follow_comment' => user_response.bad_follow_comment,
               'celebrate_comment' => user_response.celebrate_comment,
               'fun_question_id' => user_response.fun_question.id,
-              'fun_question_answer_id' => user_response.fun_question_answer
+              'fun_question_answer_id' => user_response.fun_question_answer,
+              'draft' => user_response.draft
             }
         }
       }]
@@ -116,7 +117,8 @@ RSpec.describe Api::V1::ResponsesController do
               'bad_follow_comment' => user_response.bad_follow_comment,
               'celebrate_comment' => user_response.celebrate_comment,
               'fun_question_id' => nil,
-              'fun_question_answer_id' => nil
+              'fun_question_answer_id' => nil,
+              'draft' => user_response.draft
             }
         }
       }]
@@ -157,7 +159,8 @@ RSpec.describe Api::V1::ResponsesController do
                 'bad_follow_comment' => user_response.bad_follow_comment,
                 'celebrate_comment' => user_response.celebrate_comment,
                 'fun_question_id' => user_response.fun_question.id,
-                'fun_question_answer_id' => nil
+                'fun_question_answer_id' => nil,
+                'draft' => user_response.draft
               }
           }
       }]
