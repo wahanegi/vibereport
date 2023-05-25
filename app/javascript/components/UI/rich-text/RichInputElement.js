@@ -42,7 +42,7 @@ const RichInputElement =({ richText = '',
     if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
-    element.innerText === undefined || element.innerText === '\x00' ? setIsDisabled(true) : setIsDisabled(false)
+    element.innerText === undefined || element.innerText === '\x0A' ? setIsDisabled(true) : setIsDisabled(false)
   }, [caret, textHTML, currentSelection])
 
   useEffect(()=>{
@@ -155,10 +155,15 @@ const RichInputElement =({ richText = '',
     } else {
       if (cursorPos.isDIV && char.length === 1) {
         if( char === MARKER && filteredUsers?.length ){
+          const symbolCodeAt = (pos) => text.charCodeAt(caretCur + pos)
+          const isSpecialSmb = (pos) => isNaN(symbolCodeAt(pos)) ? true : symbolCodeAt(pos) < 33
+          const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
+          if (isBtwSpecialSmb) {
             RichText.pasteNodeToHTMLobj( MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT )
             setIsDropdownList(true)
             setCoordinates(cursorPos.coordinates)
             return 0
+          }
         }
             RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
       } else if (cursorPos.isSPAN && char.length === 1) {
@@ -270,10 +275,12 @@ const RichInputElement =({ richText = '',
               const node = RichText.deleteNode( textHTML, cursorPos, TAG_AT, END_TAG_AT, setTextHTML, setCaret )
               const userFromNode = cursorPos.isSPAN ? node
                   : RichText.findUsersInText(TAG_AT, END_TAG_AT, RichText.decodeSpace( node ), listAllUsers)
-              const filtratedUsersByName = RichText.filtrationByName (userFullName( userFromNode[0] ), copyChosenUsers)
-              setCopyChosenUsers( filtratedUsersByName )
-              setChosenUsers( filtratedUsersByName )
-              setFilteredUsers(RichText.sortUsersByFullName([...filteredUsers, userFromNode[0]]))
+              if(userFromNode?.length) {
+                const filtratedUsersByName = RichText.filtrationByName(userFullName(userFromNode[0]), copyChosenUsers)
+                setCopyChosenUsers(filtratedUsersByName)
+                setChosenUsers(filtratedUsersByName)
+                setFilteredUsers(RichText.sortUsersByFullName([...filteredUsers, userFromNode[0]]))
+              }
             } else {
               RichText.deleteNextChar( textHTML, realPos, setTextHTML )
             }
