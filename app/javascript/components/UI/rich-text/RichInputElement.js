@@ -42,7 +42,7 @@ const RichInputElement =({ richText = '',
     if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
-    element.innerText === undefined || element.innerText === '\x00' ? setIsDisabled(true) : setIsDisabled(false)
+    element.innerText === undefined || element.innerText === '\x0A' ? setIsDisabled(true) : setIsDisabled(false)
   }, [caret, textHTML, currentSelection])
 
   useEffect(()=>{
@@ -154,26 +154,18 @@ const RichInputElement =({ richText = '',
 
     } else {
       if (cursorPos.isDIV && char.length === 1) {
-        switch (char) {
-          case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text.charCodeAt(caretCur - 1) < 33
-                || caretCur > 0 && caretCur < text.length && text.charCodeAt(caretCur - 1) < 33
-                && text.charCodeAt(caretCur) < 33
-                || caretCur === 0 && text.length > 0 && text.charCodeAt(caretCur) < 33)) {
-              RichText.pasteNodeToHTMLobj(
-                  MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
-              )
-              setIsDropdownList(true)
-              if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
-                setCoordinates(cursorPos.coordinates)
-              }
-              return 0
-            } else {
-
-            }
-          default:
-            RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
+        if( char === MARKER && filteredUsers?.length ){
+          const symbolCodeAt = (pos) => text.charCodeAt(caretCur + pos)
+          const isSpecialSmb = (pos) => isNaN(symbolCodeAt(pos)) ? true : symbolCodeAt(pos) < 33
+          const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
+          if (isBtwSpecialSmb) {
+            RichText.pasteNodeToHTMLobj( MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT )
+            setIsDropdownList(true)
+            setCoordinates(cursorPos.coordinates)
+            return 0
+          }
         }
+            RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
       } else if (cursorPos.isSPAN && char.length === 1) {
         const nameUserToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
         if (listAllUsers.find(user => userFullName(user) === nameUserToDel) && !char.match(/[@<>]/)
@@ -220,7 +212,7 @@ const RichInputElement =({ richText = '',
         break;
       case 'End':
         setIsDropdownList(false)
-        setCaret ( text.length )
+        setCaret ( text.length - 1 )
         break;
       case 'ArrowLeft':
           if( cursorPos.isSPAN && cursorPos.focusOffset === 1 ) {
@@ -283,9 +275,12 @@ const RichInputElement =({ richText = '',
               const node = RichText.deleteNode( textHTML, cursorPos, TAG_AT, END_TAG_AT, setTextHTML, setCaret )
               const userFromNode = cursorPos.isSPAN ? node
                   : RichText.findUsersInText(TAG_AT, END_TAG_AT, RichText.decodeSpace( node ), listAllUsers)
-              const filtratedUsersByName = RichText.filtrationByName (userFullName( userFromNode[0] ), copyChosenUsers)
-              setCopyChosenUsers( filtratedUsersByName )
-              setChosenUsers( filtratedUsersByName )
+              if(userFromNode?.length) {
+                const filtratedUsersByName = RichText.filtrationByName(userFullName(userFromNode[0]), copyChosenUsers)
+                setCopyChosenUsers(filtratedUsersByName)
+                setChosenUsers(filtratedUsersByName)
+                setFilteredUsers(RichText.sortUsersByFullName([...filteredUsers, userFromNode[0]]))
+              }
             } else {
               RichText.deleteNextChar( textHTML, realPos, setTextHTML )
             }
