@@ -36,6 +36,7 @@ FactoryBot.define do
     association :user, factory: :user
     association :time_period, factory: :time_period
     association :emotion, factory: :emotion
+    steps { 'Some steps' }
   end
 
   trait :not_working_response do

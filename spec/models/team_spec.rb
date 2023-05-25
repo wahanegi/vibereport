@@ -30,7 +30,7 @@ RSpec.describe Team, type: :model do
       long_name = 'a' * 101
       team = Team.new(name: long_name)
       expect(team).not_to be_valid
-      expect(team.errors[:name]).to include("is too long (maximum is 100 characters)")
+      expect(team.errors[:name]).to include('is too long (maximum is 100 characters)')
     end
   end
 end

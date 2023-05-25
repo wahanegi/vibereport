@@ -37,7 +37,7 @@ RSpec.describe Response, type: :model do
   let!(:user) { create :user}
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
-  let(:response) { FactoryBot.build(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
+  let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let(:not_working_response) { FactoryBot.build(:response, :not_working_response, user:, time_period:, emotion: nil, steps: %w[emotion-selection-web]) }
 
   context 'associations' do

@@ -6,8 +6,10 @@ ruby '3.1.2'
 gem 'activeadmin', '~> 2.13', '>= 2.13.1'                     # The administration framework for Ruby on Rails
 gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted data structures in console.
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
+gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful Javascript charts with one line of Ruby
 gem 'cssbundling-rails', '~> 1.1', '>= 1.1.2'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem 'devise', '~> 4.8'                                        # Flexible authentication solution for Rails with Warden
+gem 'groupdate', '~> 6.2', '>= 6.2.1'                         # The simplest way to group temporal data
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).

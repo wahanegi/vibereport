@@ -18,12 +18,12 @@ ActiveAdmin.register Team do
       file = params[:file].tempfile
       options = { header_transformations: [:downcase], col_sep: ',', row_sep: :auto }
       csv_data = SmarterCSV.process(file, options)
-  
+
       csv_data.each do |row|
         team = Team.find_or_create_by(name: row[:name])
         user_emails = row[:user_emails].split(',')
         existing_user_ids = team.users.map(&:id)
-  
+
         user_emails.each do |email|
           user = User.find_by(email: email.strip)
           if user
@@ -31,9 +31,9 @@ ActiveAdmin.register Team do
             existing_user_ids.delete(user.id)
           end
         end
-  
+
         team.users.delete(User.find(existing_user_ids))
-  
+
         team.save
       end
 
@@ -75,196 +75,248 @@ ActiveAdmin.register Team do
         team.users.count
       end
     end
-  
+
     panel "Single Time Period" do
-      attributes_table_for team do
-        current_time_period = TimePeriod.current
-        time_period_id = current_time_period.id
-  
-        responses = Response.joins(user: { teams: :users_teams })
-        .where(users_teams: { team_id: team.id }, responses: { time_period_id: time_period_id })
-  
-        if responses.any?
+
+      current_time_periods = TimePeriod.current
+
+      responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: current_time_periods).count
+
+      if responses_count == 0
+        div "No data available for the current period."
+      else        
+        emotion_index_report = EmotionIndex.new(team, current_time_periods)
+        emotion_index = emotion_index_report.generate
+        formatted_result = emotion_index[:emotion_index]
+        chart = emotion_index[:chart]
+        previous_period_emotion_index = 0
+
+        productivity_avg_report = ProductivityAverage.new(team, current_time_periods)
+        productivity_avg = productivity_avg_report.generate
+        previous_period_productivity_avg = 5
+
+        response_percentage_report = ResponsePercentage.new(team, current_time_periods)
+        response_percentage = response_percentage_report.generate
+        previous_period_response_percentage = 80
+
+        productivity_verbatims_report = ProductivityVerbatims.new(team, current_time_periods)
+        productivity_verbatims = productivity_verbatims_report.generate
+
+        attributes_table_for team do
           row :Emotion_Index do
-            positive_emotion_ids = responses.joins(:emotion)
-                               .where(emotions: { category: 'positive' })
-                               .distinct
-                               .pluck(:emotion_id)
-            negative_emotion_ids = responses.joins(:emotion)
-                               .where(emotions: { category: 'negative' })
-                               .distinct
-                               .pluck(:emotion_id)
-            
-            positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
-            negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
-            
-            total_responses = team.users.includes(:responses).distinct.count
-            
-            result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
-          end
-        
-          row :Productivity_Average do
-            responses.average(:productivity) || "No productivitys available"
-          end
-        
-          row :Productivity_Verbatims do
-            low_productivity_comments = Response.joins(user: :users_teams)
-              .where(users_teams: { team_id: team.id })
-              .where('productivity <= ?', 2)
-              .pluck(:comment)
-          
-            if low_productivity_comments.empty?
-              "No comments available"
-            else
-              low_productivity_comments.join(", ")
+            trend = previous_period_emotion_index.to_i < formatted_result.to_i ? :up : :down
+
+            div do
+              span formatted_result, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
             end
           end
-        
-          row :Participation_Percentage do
-            total_users = team.users.distinct.count
-            responding_users = User.joins(:teams, :responses)
-                                   .where(teams: {id: team.id}, responses: {time_period_id: time_period_id})
-                                   .distinct
-                                   .count
-            total_users > 0 ? (responding_users.to_f / total_users * 100).round(2) : 0
+          row :Emotion_Chart do
+            chart
           end
 
-          row :Total_Responses do
-            team.users.joins(:responses).where(responses: { time_period_id: time_period_id }).distinct.count
+          row :Productivity_Average do
+            trend = previous_period_productivity_avg.to_f < productivity_avg.to_f ? :up : :down
+
+            div do
+              span productivity_avg, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
+            end
           end
-        else
-          span "No response available for the current time period."
+
+          row :Response_Percentage do
+            if response_percentage.is_a?(String)
+              span response_percentage
+            else
+              trend = previous_period_response_percentage < response_percentage ? :up : :down
+          
+              div do
+                span response_percentage, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
+              end
+            end
+          end
+
+          row :Productivity_Verbatims do
+            if productivity_verbatims.is_a?(Array)
+              ul class: "bubble-list" do
+                productivity_verbatims.each do |comment|
+                  li class: "bubble" do
+                    span comment
+                  end
+                end
+              end
+            else
+              div productivity_verbatims
+            end
+          end
         end
       end
     end
-  
+
     panel "Monthly" do
-      attributes_table_for team do
-        time_period_ids = TimePeriod.where(start_date: 1.month.ago.beginning_of_day..Time.current.end_of_day).ids
-        responses = Response.joins(user: { teams: :users_teams })
-        .where(users_teams: { team_id: team.id })
-        .where(responses: { time_period_id: time_period_ids })
-  
-        if responses.any?
+
+      monthly_time_periods = TimePeriod.where(start_date: 1.month.ago.beginning_of_day..Time.current.end_of_day)
+
+      responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: monthly_time_periods).count
+
+      if responses_count == 0
+        div "No data available for the monthly period."
+      else
+        emotion_index_report = EmotionIndex.new(team, monthly_time_periods)
+        emotion_index = emotion_index_report.generate
+        formatted_result = emotion_index[:emotion_index]
+        chart = emotion_index[:chart]
+        previous_period_emotion_index = 0
+
+        productivity_avg_report = ProductivityAverage.new(team, monthly_time_periods)
+        productivity_avg = productivity_avg_report.generate
+        previous_period_productivity_avg = 5
+
+        response_percentage_report = ResponsePercentage.new(team, monthly_time_periods)
+        response_percentage = response_percentage_report.generate
+        previous_period_response_percentage = 80
+
+        productivity_verbatims_report = ProductivityVerbatims.new(team, monthly_time_periods)
+        productivity_verbatims = productivity_verbatims_report.generate
+
+        attributes_table_for team do
           row :Emotion_Index do
-            positive_emotion_ids = responses.joins(:emotion)
-                                            .where(emotions: { category: 'positive' })
-                                            .distinct
-                                            .pluck(:emotion_id)
-            negative_emotion_ids = responses.joins(:emotion)
-                                            .where(emotions: { category: 'negative' })
-                                            .distinct
-                                            .pluck(:emotion_id)
-  
-            positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
-            negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
-  
-            total_responses = team.users.includes(:responses).where(responses: { time_period_id: time_period_ids }).distinct.count
-  
-            result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
-          end
-  
-          row :Productivity_Average do
-            responses.average(:productivity) || "No productivitys available"
-          end
-  
-          row :Productivity_Verbatims do
-            low_productivity_comments = Response.joins(user: :users_teams)
-              .where(users_teams: { team_id: team.id })
-              .where('productivity <= ?', 2)
-              .pluck(:comment)
-          
-            if low_productivity_comments.empty?
-              "No comments available"
-            else
-              low_productivity_comments.join(", ")
+            trend = previous_period_emotion_index.to_i < formatted_result.to_i ? :up : :down
+      
+            div do
+              span formatted_result, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
             end
           end
-  
-          row :Response_Percentage do
-            total_users = team.users.count
-            responding_users = User.joins(:teams, :responses)
-                                   .where(teams: { id: team.id }, responses: { time_period_id: time_period_ids })
-                                   .distinct
-                                   .count
-            total_users > 0 ? (responding_users.to_f / total_users * 100).round(2) : 0
+          row :Emotion_Chart do
+            chart
           end
 
-          row :Total_Responses do
-            team.users.joins(:responses).where(responses: { time_period_id: time_period_ids }).distinct.count
+          row :Productivity_Average do
+            trend = previous_period_productivity_avg.to_f < productivity_avg.to_f ? :up : :down
+
+            div do
+              span productivity_avg, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
+            end
           end
-        else
-          span "No response available for the current time period."
+
+          row :Response_Percentage do
+            if response_percentage.is_a?(String)
+              span response_percentage
+            else
+              trend = previous_period_response_percentage < response_percentage ? :up : :down
+          
+              div do
+                span response_percentage, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
+              end
+            end
+          end
+
+          row :Productivity_Verbatims do
+            if productivity_verbatims.is_a?(Array)
+              ul class: "bubble-list" do
+                productivity_verbatims.each do |comment|
+                  li class: "bubble" do
+                    span comment
+                  end
+                end
+              end
+            else
+              div productivity_verbatims
+            end
+          end
         end
       end
     end
-  
+
     panel "All Time" do
-      attributes_table_for team do
-        responses = Response.joins(user: { teams: :users_teams })
-                            .where(users_teams: { team_id: team.id })
-    
-        if responses.any?
+
+      all_time_periods = TimePeriod.pluck(:id)
+
+      responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods).count
+
+      if responses_count == 0
+        div "No data available for the all time period."
+      else
+        emotion_index_report = EmotionIndex.new(team, all_time_periods)
+        emotion_index = emotion_index_report.generate
+        formatted_result = emotion_index[:emotion_index]
+        chart = emotion_index[:chart]
+        previous_period_emotion_index = 0
+
+        productivity_avg_report = ProductivityAverage.new(team, all_time_periods)
+        productivity_avg = productivity_avg_report.generate
+        previous_period_productivity_avg = 5
+
+        response_percentage_report = ResponsePercentage.new(team, all_time_periods)
+        response_percentage = response_percentage_report.generate
+        previous_period_response_percentage = 80
+
+        productivity_verbatims_report = ProductivityVerbatims.new(team, all_time_periods)
+        productivity_verbatims = productivity_verbatims_report.generate
+
+        responses_report = ResponsesReport.new(team, all_time_periods)
+        responses_data = responses_report.generate
+
+        attributes_table_for team do
           row :Emotion_Index do
-            positive_emotion_ids = responses.joins(:emotion)
-                                            .where(emotions: { category: 'positive' })
-                                            .distinct
-                                            .pluck(:emotion_id)
-            negative_emotion_ids = responses.joins(:emotion)
-                                            .where(emotions: { category: 'negative' })
-                                            .distinct
-                                            .pluck(:emotion_id)
-    
-            positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
-            negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
-    
-            total_responses = team.users.includes(:responses).distinct.count
-    
-            result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
-          end
-    
-          row :Productivity_Average do
-            responses.average(:productivity) || "No productivitys available"
-          end
-    
-          row :Productivity_Verbatims do
-            low_productivity_comments = Response.joins(user: :users_teams)
-              .where(users_teams: { team_id: team.id })
-              .where('productivity <= ?', 2)
-              .pluck(:comment)
-          
-            if low_productivity_comments.empty?
-              "No comments available"
-            else
-              low_productivity_comments.join(", ")
+            trend = previous_period_emotion_index.to_i < formatted_result.to_i ? :up : :down
+
+            div do
+              span formatted_result, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
             end
           end
-    
-          row :Response_Percentage do
-            total_users = team.users.count
-            responding_users = User.joins(:teams, :responses)
-                                   .where(teams: { id: team.id })
-                                   .distinct
-                                   .count
-            total_users > 0 ? (responding_users.to_f / total_users * 100).round(2) : 0
+          row :Emotion_Chart do
+            chart
           end
 
-          row :Total_Responses do
-            team.users.joins(:responses).distinct.count
+          row :Productivity_Average do
+            trend = previous_period_productivity_avg.to_f < productivity_avg.to_f ? :up : :down
+
+            div do
+              span productivity_avg, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
+            end
           end
-        else
-          span "No response available for the current time period."
+
+          row :Response_Percentage do
+            if response_percentage.is_a?(String)
+              span response_percentage
+            else
+              trend = previous_period_response_percentage < response_percentage ? :up : :down
+          
+              div do
+                span response_percentage, style: "color: #{trend == :up ? 'green' : 'red'}; font-weight: bold;"
+              end
+            end
+          end
+
+          row :Productivity_Verbatims do
+            if productivity_verbatims.is_a?(Array)
+              ul class: "bubble-list" do
+                productivity_verbatims.each do |comment|
+                  li class: "bubble" do
+                    span comment
+                  end
+                end
+              end
+            else
+              div productivity_verbatims
+            end
+          end
+
+          row :Responses_Report do
+            div do
+              raw responses_data[:chart]
+            end
+          end
         end
       end
     end
-  
+
     active_admin_comments
   end
 
   controller do
     def create
       @team = Team.new(permitted_params[:team].except(:user_ids))
-      
+
       if @team.save
         user_ids = permitted_params[:team][:user_ids].reject(&:blank?)
         user_ids.each { |user_id| UsersTeam.create(user_id: user_id, team_id: @team.id) }

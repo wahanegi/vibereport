@@ -1,5 +1,5 @@
 ActiveAdmin.register TimePeriod do
-  permit_params :end_date, :start_date, :due_date
+  permit_params  :start_date, :end_date, :due_date
 
   index do
     selectable_column
