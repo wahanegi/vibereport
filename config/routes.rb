@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'responses/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
   devise_for :users
   passwordless_for :users, at: '/', as: :auth
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :emotions, only: %i[index create]
       resources :responses, param: :id
+      resources :shoutouts, only: %i[create update]
       resources :fun_question_answers, only: %i[show create update destroy]
       resources :fun_questions, only: %i[show create update destroy]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'

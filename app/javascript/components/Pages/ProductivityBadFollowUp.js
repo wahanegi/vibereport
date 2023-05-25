@@ -21,21 +21,16 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
       setDraft(false);
     }
   }, [comment]);
-
-  // const handlingOnClickNext = () => {
-  //   steps.push('causes-to-celebrate')
-  //   saveDataToDb( steps, {bad_follow_comment: comment})
-  // }
-
-  // Temporary placement not ready page Shoutout
   const handlingOnClickNext = () => {
-    if (!data.fun_question){
-      steps.push('causes-to-celebrate')
-      saveDataToDb( steps, {bad_follow_comment: comment, draft: false })
-    }else {
-      steps.push('icebreaker-answer')
-      saveDataToDb(steps, {bad_follow_comment: comment, draft: false})
-    }
+    // if (!data.fun_question){
+    //   steps.push('causes-to-celebrate')
+    //   saveDataToDb( steps, {bad_follow_comment: comment, draft: false })
+    // }else {
+    //   steps.push('icebreaker-answer')
+    //   saveDataToDb(steps, {bad_follow_comment: comment, draft: false})
+    // }
+    steps.push('causes-to-celebrate')
+    saveDataToDb( steps, {bad_follow_comment: comment})
   }
 
   if (!!error) return <p>{error.message}</p>

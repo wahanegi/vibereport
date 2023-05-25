@@ -7,9 +7,10 @@ a {
   font-size: 23px;
   color: #0007A3;
 }
-body {
+* {
   font-family: $font-family-base;
   font-style: normal;
+  font-weight: $font-weight-bold !important;
 }
 .header {
   font-weight: 700;
@@ -73,6 +74,9 @@ body {
 }
 //</ListEmotion
 
+.color-primary {
+  color: $primary;
+}
 .color-black {
   color: $black;
 }
@@ -84,6 +88,9 @@ body {
 }
 .gray-600 {
   color: $gray-600
+}
+.gray-300 {
+  color: $gray-300 !important;
 }
 
 //new.html.erb
@@ -145,6 +152,171 @@ body {
 }
 .h-0 {
   height: 0;
+}
+
+// for drawing envelope -------
+.t-35 {
+  top:35px;
+}
+//-----------------------------
+// for Recognition page
+.w-746 {
+  width: 746px;
+}
+.h-59 {
+  height: 59px;
+}
+.mt-151 {
+  margin-top: 151px;
+}
+.mt-180 {
+  margin-top: 180px;
+}
+.pencil {
+  cursor: pointer;
+}
+.left-bottom-corner {
+  position: absolute;
+  left: 45px;
+  top: 756px;
+  border-radius: 50%;
+    &.circle {
+      border: 1px solid $gray-500;
+      width: 98px;
+      height: 98px;
+    }
+}
+.into-centerX2_5 {
+  animation-name: moveIntoCenterX2_5;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  @keyframes moveIntoCenterX2_5 {
+    0%{
+      left: 45px;
+      top:  756px;
+    }
+    100% {
+      scale: 2.384;
+      top:   465px;
+      left: calc(50vw - 50px);
+    }
+  }
+}
+
+.into-centerX {
+  animation-name: moveIntoCenter;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  @keyframes moveIntoCenter {
+    0% {
+      left: 45px;
+      top:  756px;
+    }
+    100% {
+      scale:1.06;
+      top:   606px;
+      left: calc(50vw - 50px);
+      filter: drop-shadow(1.744px 2.616px 1.744px rgba(0, 0, 0, 0.25));
+    }
+  }
+}
+
+.blink {
+  top:  459px;
+  left: calc(50vw - 54px);
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  animation-name: blinking;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  box-shadow: 2px 3px 2px $gray-250;
+  scale: 2.5;
+  @keyframes blinking {
+    0% {
+      border: 3px solid $gray-100;
+    }
+    50% {
+      scale: 2.4;
+      border: 3px solid $primary;
+    }
+    100% {
+      border: 3px solid $gray-100;;
+      background-color: $gray-100;
+    }
+  }
+}
+.placement-buttons {
+  top: 784px;
+}
+.field-shout-outs {
+  width: 884px !important;
+  height: 239px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 4px solid $primary;
+  border-radius: 18px;
+  ul {
+    list-style: none;
+    padding-inline-start: 20px !important;
+  }
+  li {
+    margin: 24px 20px;
+    margin-inline-start: 0;
+    width: 822px;
+    min-height: 83px;
+    background-color: $gray-100;
+    padding-inline-start: 19px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    border: 4px solid $primary;
+    border-radius: 18px;
+    p {
+      font-weight: 600 !important;
+      text-align: left;
+      color: $black;
+      &.cut-text {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 740px;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+.click-annotation {
+  margin-top: 350px;
+  color: $gray-600;
+}
+//system scroll
+.field-shout-outs ,
+.drop-down-block,
+.inner-div  {
+  &::-webkit-scrollbar {
+    width: 26px;
+    border-radius: 20px;
+    background-color: $gray-200;
+    border: 3px solid $white;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $primary ;
+    border-radius: 20px;
+    border: 2px solid $pink;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: shade-color($primary,10%);
+  }
+}
+
+.scrolling {
+  white-space: break-spaces;
+  scroll-behavior: smooth;
+  overflow-wrap: anywhere;
 }
 
 //IntenseLine
@@ -381,7 +553,97 @@ body {
   position: relative;
   color: $red-violet;
 }
+//ShoutoutModal
+#overlays {
+  position: absolute;
+   z-index: 20;
+  overflow: hidden;
+       top: 0;
+}
 
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background: #A6A1A1;
+  filter: blur(50px);
+}
+
+.shoutout-input-block {
+  min-width: 925px;
+  height:514px;
+  top:0;
+  margin-top: 327px;
+  overflow-x: hidden;
+  .x-close {
+    z-index: 31;
+    margin-top: -25px;
+    margin-left: 414px;
+  }
+  .placement-shoutout-btn {
+    z-index: 31;
+    top: -90px;
+    right: -297px;
+  }
+  .place-size-shout-out {
+    width: 884px !important;
+    min-width: 884px !important;
+    height: 514px;
+    border-radius: 20px !important;
+    z-index: 30;
+    animation: slide-down 300ms ease-out forwards;
+    overflow: auto;
+    &.form-control{
+      border: 4px solid $primary !important;
+      &:focus {
+        border: 4px solid $primary !important;
+      }
+    }
+    .inner-div {
+      width:861px;
+      height:390px;
+      z-index:31;
+      overflow: auto;
+      borderColor: transparent;
+      &.form-control{
+        border-color: transparent !important;
+        &:focus {
+          border-color: transparent !important;
+        }
+      }
+    }
+  }
+}
+
+//DropDownList
+.drop-down-block {
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+  width:                200px;
+  height:               155px;
+  border-radius:        8px;
+  border:               3px solid $primary;
+  padding:              8px 1px 7px;
+  padding-inline-start: 0px;
+  background-color: $white;
+  overflow: auto;
+  li {
+    list-style:         none;
+    text-align:         left;
+    text-overflow:      ellipsis;
+    white-space:        nowrap;
+    overflow:           hidden;
+    padding-inline-start: 7px;
+    color: $gray-300;
+    &:focus, &.highlight   {
+      cursor: pointer;
+      background-color: $gray-100;
+      color: $black;
+    }
+  }
+}
 .email-input {
   padding-inline-start: 1.375rem !important;
   padding-inline-end:   1.375rem !important;

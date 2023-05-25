@@ -111,6 +111,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_151812) do
     t.index ["user_id"], name: "index_responses_on_user_id"
   end
 
+  create_table "shoutout_recipients", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "shoutout_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["shoutout_id"], name: "index_shoutout_recipients_on_shoutout_id"
+    t.index ["user_id"], name: "index_shoutout_recipients_on_user_id"
+  end
+
+  create_table "shoutouts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "rich_text", null: false
+    t.bigint "time_period_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["rich_text", "user_id", "time_period_id"], name: "index_shoutouts_on_rich_text_and_user_id_and_time_period_id", unique: true
+    t.index ["time_period_id"], name: "index_shoutouts_on_time_period_id"
+    t.index ["user_id"], name: "index_shoutouts_on_user_id"
+  end
+
   create_table "time_periods", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "due_date"
@@ -143,4 +163,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_151812) do
   add_foreign_key "responses", "fun_questions"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
+  add_foreign_key "shoutout_recipients", "shoutouts"
+  add_foreign_key "shoutout_recipients", "users"
+  add_foreign_key "shoutouts", "time_periods"
+  add_foreign_key "shoutouts", "users"
 end

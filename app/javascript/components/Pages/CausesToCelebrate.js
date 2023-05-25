@@ -26,13 +26,13 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   }, [celebrateComment]);
 
   const onClickSkip = () =>{
-    // steps.push('ProductivityCheckLow')
+    steps.push('recognition')
     saveDataToDb( steps , {celebrate_comment: null})
   }
   console.log(data.response.attributes)
   const onClickNext = () => {
-    // steps.push('ProductivityCheckLow')
-    saveDataToDb( steps, {celebrate_comment: celebrateComment, draft: false})
+    steps.push('recognition')
+    saveDataToDb( steps, {celebrate_comment: celebrateComment})
   }
 
   const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>

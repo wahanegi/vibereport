@@ -107,7 +107,7 @@ RSpec.describe Response, type: :model do
 
       response.productivity = 'invalid'
       expect(response).to_not be_valid
-    
+
       response.productivity = 10
       expect(response).to_not be_valid
     end

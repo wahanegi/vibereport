@@ -3,9 +3,8 @@ import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
 import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
-import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-// import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
+import CornerElements from "../UI/CornerElements";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -81,7 +80,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
           <div className="mx-auto my-0 question">Which word best describes how you’ve recently felt about work?</div>
             <div className='d-flex mx-auto emotions'>
                 {emotions.map((emotion, index) =>
-                  <div className='width-block'>
+                  <div className='width-block' key={emotion.id}>
                    <ButtonEmotion key={emotion.id}
                                   category={emotions[mixUp(index+1)].attributes.category}
                                   onClick={() =>
@@ -102,8 +101,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
             I was not working recently
           </NavLink>
           <QuestionButton />
-          <ShoutoutButton />
-          <Menu addClass='placement-menu' saveDataToDb={saveDataToDb} steps={steps} draft={draft}/>
+          {/*<ShoutoutButton />*/}
+          {/*<Menu addClass='placement-menu' saveDataToDb={saveDataToDb} steps={steps} draft={draft}/>*/}
+          <CornerElements         data = { data }
+                               setData = { setData }
+                     percentCompletion = {0}/>
         </div>
       }
     </Fragment>

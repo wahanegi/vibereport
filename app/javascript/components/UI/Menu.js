@@ -139,8 +139,7 @@ const Menu = ({ addClass = '', saveDataToDb, steps, draft, handleSaveDraft }) =>
             percent: 45,
           };
         }
-      //TODO check after the merge to master branch
-      case 'ShoutoutModalExample':
+      case 'recognition':
         if (activeImg === true) {
           return {
             src: complete65_act,
@@ -199,6 +198,7 @@ const Menu = ({ addClass = '', saveDataToDb, steps, draft, handleSaveDraft }) =>
       <Dropdown onClick={handleChangeImg}>
         <Dropdown.Toggle  id='dropdown-stick'>
           <img src={getSrcMenu(lastSegment).src} alt='complete' />
+  {/*const Menu = ({ percentCompletion, className = ''  }) => {*/}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {/*<Dropdown.Item href="#" ><Button className='btn-item-menu wb1 mx-auto my-auto' onClick={()=>{}}>Manage Profile</Button></Dropdown.Item>*/}
