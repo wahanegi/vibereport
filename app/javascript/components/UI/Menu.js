@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 import {Dropdown} from "react-bootstrap";
 import Button from "./Button";
 import {signOutUser} from "../requests/axios_requests";
@@ -26,45 +26,16 @@ import complete90_act from '../../../assets/images/complete90_act.svg'
 import complete100 from '../../../assets/images/complete100.svg'
 import complete100_act from '../../../assets/images/complete100_act.svg'
 
-
 const Menu = ({ addClass = '', saveDataToDb, steps, draft, handleSaveDraft }) => {
   const [showModal, setShowModal] = useState(false);
-  // const [isExpanded, setIsExpanded] = useState(false);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
+  const [activeImg, setActiveImg] = useState(false);
 
   const handleSignOut = () => {
     setShowModal(true);
   }
 
-  // const handleDropdownToggle = () => {
-  //   setIsDropdownExpanded(!isDropdownExpanded);
-  // };
-
-  // const buttonRef = useRef(null);
-  //
-  // useEffect(() => {
-  //   const buttonElement = buttonRef.current;
-  //   if (buttonElement) {
-  //     setIsExpanded(buttonElement.getAttribute('aria-expanded') === 'true');
-  //   }
-  // }, []);
-
-  // const handleDropdownToggle = () => {
-  //   setIsExpanded(!isExpanded);
-  //   console.log('buttonRef', !isExpanded);
-  // };
-  // console.log('buttonRef', isExpanded);
-
-  // console.log(buttonElement)
- // // document.addEventListener()
-  useEffect(() => {
-    console.log(isDropdownVisible);
-  }, [isDropdownVisible]);
-
-  const handleToggle = (isOpen) => {
-    console.log("Toggle event:", isOpen);
-    setIsDropdownVisible(isOpen);
+  const handleChangeImg =() =>{
+    setActiveImg(!activeImg)
   };
 
   const location = window.location.href;
@@ -73,103 +44,151 @@ const Menu = ({ addClass = '', saveDataToDb, steps, draft, handleSaveDraft }) =>
   const getSrcMenu = (lastSegment) => {
     switch (lastSegment) {
       case 'emotion-selection-web':
-        return {
-          src: complete0,
-          percent: 0,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete0_act,
+            percent: 0,
+          };
+        } else {
+          return {
+            src: complete0,
+            percent: 0,
+          };
+        }
       case 'emotion-entry':
-        return {
-          src: complete5_10,
-          percent: 5,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete5_10_act,
+            percent: 5,
+          };
+        } else {
+          return {
+            src: complete5_10,
+            percent: 5,
+          };
+        }
       case 'meme-selection':
-        return {
-          src: complete5_10,
-          percent: 10,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete5_10_act,
+            percent: 10,
+          };
+        } else {
+          return {
+            src: complete5_10,
+            percent: 5,
+          };
+        }
       case 'selected-giphy-follow':
-        return {
-          src: complete15,
-          percent: 15,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete15_act,
+            percent: 15,
+          };
+        } else {
+          return {
+            src: complete15,
+            percent: 15,
+          };
+        }
       case 'emotion-intensity':
-        return {
-          src: complete20,
-          percent: 20,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete20_act,
+            percent: 20,
+          };
+        } else {
+          return {
+            src: complete20,
+            percent: 20,
+          };
+        }
       case 'productivity-check':
+        if (activeImg === true) {
+          return {
+            src: complete25_act,
+            percent: 25,
+          };
+        } else {
           return {
             src: complete25,
-            src_act: complete25_act,
             percent: 25,
-          }
+          };
+        }
       case 'productivity-bad-follow-up':
-        return {
-          src: complete35,
-          percent: 35,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete35_act,
+            percent: 35,
+          };
+        } else {
+          return {
+            src: complete35,
+            percent: 35,
+          };
+        }
       case 'causes-to-celebrate':
-        return {
-          src: complete45,
-          percent: 45,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete45_act,
+            percent: 45,
+          };
+        } else {
+          return {
+            src: complete45,
+            percent: 45,
+          };
+        }
       //TODO check after the merge to master branch
       case 'ShoutoutModalExample':
-        return {
-          src: complete65,
-          percent: 65,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete65_act,
+            percent: 65,
+          };
+        } else {
+          return {
+            src: complete65,
+            percent: 65,
+          };
+        }
       case 'icebreaker-answer':
-        return {
-          src: complete85,
-          percent: 85,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete85_act,
+            percent: 85,
+          };
+        } else {
+          return {
+            src: complete85,
+            percent: 85,
+          };
+        }
       case 'icebreaker-question':
-        return {
-          src: complete90,
-          percent: 90,
-        };
+        if (activeImg === true) {
+          return {
+            src: complete90_act,
+            percent: 90,
+          };
+        } else {
+          return {
+            src: complete90,
+            percent: 90,
+          };
+        }
         //TODO check after the merge to master branch
       case 'results':
-        return {
-          src: complete100,
-          percent: 100,
-        };
-      //   if (draft) {
-      //     return {
-      //       src: complete0_act,
-      //       percent: 0
-      //     };
-      //   } else {
-      //     return {
-      //       src: complete0,
-      //       percent: 0
-      //     };
-      //   }
-      // case 'productivity-check':
-      //   if (draft) {
-      //     return {
-      //       src: complete25_act,
-      //       percent: 25
-      //     };
-      //   } else {
-      //     return {
-      //       src: complete25,
-      //       percent: 25
-      //     };
-      //   }
-      // case 'productivity-check':
-      //   if (ariaExpanded) {
-      //     return {
-      //       src: complete25_act,
-      //       percent: 25
-      //     };
-      //   } else {
-      //     return {
-      //       src: complete25,
-      //       percent: 25
-      //     };
-      //   }
+        if (activeImg === true) {
+          return {
+            src: complete100_act,
+            percent: 100,
+          };
+        } else {
+          return {
+            src: complete100,
+            percent: 100,
+          };
+        }
         default:
           return "";
         }
@@ -177,17 +196,9 @@ const Menu = ({ addClass = '', saveDataToDb, steps, draft, handleSaveDraft }) =>
 
   return (
     <div className={`${addClass}`}>
-      <Dropdown>
-        <Dropdown.Toggle  id='dropdown-stick' onToggle={handleToggle}>
-          <img src={isDropdownVisible ? getSrcMenu(lastSegment).src_act : getSrcMenu(lastSegment).src} alt='complete' />
-
-          {/*<img src={getSrcMenu(lastSegment).src } alt='complete'/>*/}
-        {/*<div  className="menu">*/}
-        {/*  <div  className="m-cover"></div>*/}
-        {/*  <div className='one-line-menu'></div>*/}
-        {/*  <div className='one-line-menu'></div>*/}
-        {/*  <div className='one-line-menu'></div>*/}
-        {/*</div>*/}
+      <Dropdown onClick={handleChangeImg}>
+        <Dropdown.Toggle  id='dropdown-stick'>
+          <img src={getSrcMenu(lastSegment).src} alt='complete' />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {/*<Dropdown.Item href="#" ><Button className='btn-item-menu wb1 mx-auto my-auto' onClick={()=>{}}>Manage Profile</Button></Dropdown.Item>*/}

@@ -37,7 +37,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
     const dataDraft = {...dataRequest};
     saveDataToDb(steps, dataDraft)
     setDraft(true)
-    saveDataAnswer(()=>{}, dataFromServer);
+    saveDataAnswer(()=>{}, dataFromServer, true);
   }
 
   const handlingOnClickNext = () => {
@@ -53,7 +53,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
     saveDataAnswer(dataFromServer, goToResultPage)
   };
 
-  const saveDataAnswer = (dataFromServer, goToResultPage) =>{
+  const saveDataAnswer = (dataFromServer, goToResultPage, isDraft=false) =>{
     const url = '/api/v1/fun_question_answers/'
     const id = prevStateAnswer?.id
 
@@ -63,7 +63,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
       } else if(isEmptyStr(answerBody)) {
         apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
-        steps.push('icebreaker-question')
+        !isDraft && steps.push('icebreaker-question')
         saveDataToDb(steps, {draft: false})
       }
     } else if (isEmptyStr(answerBody)) {
