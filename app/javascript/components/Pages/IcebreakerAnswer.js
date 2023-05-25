@@ -3,6 +3,7 @@ import {backHandling, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/hel
 import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
+import CornerElements from "../UI/CornerElements";
 
 const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -67,20 +68,20 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
 
   if (!!error) return <p>{error.message}</p>
 
+  const onOffSmbAT = <span className={`${'red-violet'} && ${!user && 'transparent'}`}>@</span>
+
   return (
     <Fragment>
       {loaded && !isLoading && !error &&
-        <Wrapper>
-          <Header/>
           <div className='icebreaker-position'>
-            <div className='justify-content-beetwen flex-column' style={{height: '180px'}}>
-              <h1 className='mb-0'>Kick back, relax.</h1>
+            <div className='justify-content-beetwen flex-column' style={{height: '176px'}}>
+              <h1 className='mb-0 lh-1'>Kick back, relax.</h1>
               <h1 className='mb-3'>Time for a team question!</h1>
-              {user && <h2 className='color-black mb-0'>Brought to us by <span className='red-violet'>@</span>{user}</h2>}
+              <h2 className={`${'color-black mb-0'} ${!user && 'transparent'}`}>Brought to us by {onOffSmbAT}{user}</h2>
             </div>
             <div className='icebreaker'>
               <div className='wrap'>
-                {user && <p className='b3 muted align-content-end'><span className='red-violet'>@</span>{user} asks:</p>}
+                <p className={`${'b3 muted align-content-end'} ${!user && 'transparent'}`}>{onOffSmbAT}{user} asks:</p>
                 <h5 className='text-md-start'>{question_body}</h5>
                 <div className='wrap-textarea'>
                   <form>
@@ -96,15 +97,17 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
                 </div>
               </div>
             </div>
-            <div className='d-flex justify-content-between m-3'>
-              <ShoutOutIcon/>
-              <BtnBack addClass="answer-custom" onClick={backHandling}/>
-              <BtnPrimary addClass="answer-custom" onClick={handlingOnClickNext} text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
-              <HelpIcon/>
+            <div className='d-flex placement-buttons justify-content-between col-6 offset-3 pb-53 mt-5'>
+              <BtnBack onClick={backHandling}/>
+              <BtnPrimary addClass={`${isEmptyStr(answerBody) ? "answer-custom" : ""}`}
+                          onClick={handlingOnClickNext}
+                          text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
             </div>
           </div>
-        </Wrapper>
       }
+      <CornerElements         data = { data }
+                              setData = { setData }
+                              percentCompletion = {0}/>
     </Fragment>
   );
 };

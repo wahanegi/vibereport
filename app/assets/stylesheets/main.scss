@@ -94,6 +94,9 @@ a {
 .gray-300 {
   color: $gray-300 !important;
 }
+.transparent {
+  color: transparent;
+}
 
 //new.html.erb
 .welcome-field {
@@ -173,6 +176,9 @@ a {
 }
 .mt-180 {
   margin-top: 180px;
+}
+.pb-53 {
+  padding-bottom: 53px;
 }
 .pencil {
   cursor: pointer;
