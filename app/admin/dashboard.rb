@@ -48,34 +48,34 @@ ActiveAdmin.register_page 'Dashboard' do
       super
     end
   end
-end
 
-private
+  private
 
-def calculate_emotion_index(responses)
-  positive_emotion_ids = responses.joins(:emotion)
-                                  .where(emotions: { category: 'positive' })
-                                  .distinct
-                                  .pluck(:emotion_id)
-  negative_emotion_ids = responses.joins(:emotion)
-                                  .where(emotions: { category: 'negative' })
-                                  .distinct
-                                  .pluck(:emotion_id)
+  def calculate_emotion_index(responses)
+    positive_emotion_ids = responses.joins(:emotion)
+                                    .where(emotions: { category: 'positive' })
+                                    .distinct
+                                    .pluck(:emotion_id)
+    negative_emotion_ids = responses.joins(:emotion)
+                                    .where(emotions: { category: 'negative' })
+                                    .distinct
+                                    .pluck(:emotion_id)
 
-  puts "Positive Emotion IDs: #{positive_emotion_ids}"
-  puts "Negative Emotion IDs: #{negative_emotion_ids}"
+    puts "Positive Emotion IDs: #{positive_emotion_ids}"
+    puts "Negative Emotion IDs: #{negative_emotion_ids}"
 
-  positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
-  negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
+    positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
+    negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
 
-  puts "Positive Ratings Sum: #{positive_ratings_sum}"
-  puts "Negative Ratings Sum: #{negative_ratings_sum}"
+    puts "Positive Ratings Sum: #{positive_ratings_sum}"
+    puts "Negative Ratings Sum: #{negative_ratings_sum}"
 
-  total_responses = responses.count
+    total_responses = responses.count
 
-  total_responses > 0 ? (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f : 0
-end
+    total_responses > 0 ? (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f : 0
+  end
 
-def total_responses(responses)
-  responses.count
+  def total_responses(responses)
+    responses.count
+  end
 end
