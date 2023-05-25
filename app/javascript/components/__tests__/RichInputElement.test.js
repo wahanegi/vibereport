@@ -464,15 +464,16 @@ const highlightAT = '<span class="color-primary">@'
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(0)
       //Button End
       fireEvent.keyDown(divElement, {key: 'End'});
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(13)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(12)
       // Button BackSpace
       fireEvent.keyDown(divElement, {key: 'Backspace'});
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(12)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(11)
       // Button delete
       fireEvent.keyDown(divElement, {key: 'ArrowLeft'});
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(11)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(10)
       fireEvent.keyDown(divElement, {key: 'Delete'});
-      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(11)
+      expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(10)
+      fireEvent.keyDown(divElement, {key: 'd'});
       fireEvent.keyDown(divElement, {key: ' '});
       fireEvent.keyDown(divElement, {key: '@'});
       let listItems = screen.queryAllByRole('listitem');
@@ -751,7 +752,7 @@ const highlightAT = '<span class="color-primary">@'
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(setChosenUsers.mock.calls[9]).toHaveLength( 1)
-      expect(setChosenUsers.mock.calls[9][0]).toEqual(  [{"first_name": "Jackie", "id": 2, "last_name": "Chan"}])
+      expect(setChosenUsers.mock.calls[9][0]).toEqual(  [{"first_name": "George", "id": 1, "last_name": "Washington"}])
       fireEvent.keyDown(divElement, {key: 'Backspace'})
       expect(setChosenUsers.mock.calls[10][0]).toHaveLength( 0)
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(4)

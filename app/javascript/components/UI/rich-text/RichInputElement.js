@@ -42,7 +42,7 @@ const RichInputElement =({ richText = '',
     if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
-    element.innerText === undefined || element.innerText === '\x00' ? setIsDisabled(true) : setIsDisabled(false)
+    element.innerText === undefined || element.innerText === '\x0A' ? setIsDisabled(true) : setIsDisabled(false)
   }, [caret, textHTML, currentSelection])
 
   useEffect(()=>{
@@ -275,10 +275,12 @@ const RichInputElement =({ richText = '',
               const node = RichText.deleteNode( textHTML, cursorPos, TAG_AT, END_TAG_AT, setTextHTML, setCaret )
               const userFromNode = cursorPos.isSPAN ? node
                   : RichText.findUsersInText(TAG_AT, END_TAG_AT, RichText.decodeSpace( node ), listAllUsers)
-              const filtratedUsersByName = RichText.filtrationByName (userFullName( userFromNode[0] ), copyChosenUsers)
-              setCopyChosenUsers( filtratedUsersByName )
-              setChosenUsers( filtratedUsersByName )
-              setFilteredUsers(RichText.sortUsersByFullName([...filteredUsers, userFromNode[0]]))
+              if(userFromNode?.length) {
+                const filtratedUsersByName = RichText.filtrationByName(userFullName(userFromNode[0]), copyChosenUsers)
+                setCopyChosenUsers(filtratedUsersByName)
+                setChosenUsers(filtratedUsersByName)
+                setFilteredUsers(RichText.sortUsersByFullName([...filteredUsers, userFromNode[0]]))
+              }
             } else {
               RichText.deleteNextChar( textHTML, realPos, setTextHTML )
             }
