@@ -101,11 +101,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
             I was not working recently
           </NavLink>
           <QuestionButton />
-          {/*<ShoutoutButton />*/}
-          {/*<Menu addClass='placement-menu' saveDataToDb={saveDataToDb} steps={steps} draft={draft}/>*/}
           <CornerElements         data = { data }
                                setData = { setData }
-                     percentCompletion = {0}/>
+                          saveDataToDb = {saveDataToDb}
+                                  steps = {steps}
+                                  draft = {draft}/>
         </div>
       }
     </Fragment>

@@ -7,7 +7,7 @@ import parse from 'html-react-parser'
 import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
 import ShoutoutModal from "../UI/ShoutoutModal";
 
-const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
+const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
 
   const shoutOuts = data.user_shoutouts
@@ -65,7 +65,10 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
                         setData = { setData }
               percentCompletion = { 80 }
                    numShoutouts = { num }
-                 isMoveShoutout = { true }/>
+                 isMoveShoutout = { true }
+                   saveDataToDb = {saveDataToDb}
+                          steps = {steps}
+                          draft = {draft}/>
   }
 
   return (

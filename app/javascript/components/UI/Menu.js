@@ -26,7 +26,7 @@ import complete90_act from '../../../assets/images/complete90_act.svg'
 import complete100 from '../../../assets/images/complete100.svg'
 import complete100_act from '../../../assets/images/complete100_act.svg'
 
-const Menu = ({ addClass = '', saveDataToDb, steps, draft, handleSaveDraft }) => {
+const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
 
@@ -194,11 +194,10 @@ const Menu = ({ addClass = '', saveDataToDb, steps, draft, handleSaveDraft }) =>
     }
 
   return (
-    <div className={`${addClass}`}>
+    <div className={ `${className}` }>
       <Dropdown onClick={handleChangeImg}>
         <Dropdown.Toggle  id='dropdown-stick'>
           <img src={getSrcMenu(lastSegment).src} alt='complete' />
-  {/*const Menu = ({ percentCompletion, className = ''  }) => {*/}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {/*<Dropdown.Item href="#" ><Button className='btn-item-menu wb1 mx-auto my-auto' onClick={()=>{}}>Manage Profile</Button></Dropdown.Item>*/}
