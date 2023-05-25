@@ -25,6 +25,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable
 
   has_many :responses, dependent: :destroy
+  has_many :shoutouts, dependent: :destroy
+  has_many :shoutout_recipients, dependent: :destroy
+  has_many :fun_questions, dependent: :destroy
+  has_many :fun_question_answers, dependent: :destroy
+  has_many :mentions, through: :shoutout_recipients, source: :shoutout
   has_many :users_teams, dependent: :destroy
   has_many :teams, through: :users_teams
 
@@ -36,4 +41,8 @@ class User < ApplicationRecord
   passwordless_with :email
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
+
+  def to_full_name
+    "#{first_name} #{last_name}"
+  end
 end

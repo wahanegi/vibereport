@@ -35,6 +35,19 @@ ActiveAdmin.register_page 'Dashboard' do
       end
     end
   end
+
+  controller do
+    include EmotionsHelper
+
+    helper_method :alert_questions_needed?
+
+    def index
+      if alert_questions_needed?
+        flash[:alert] = "Alert: No unused questions left for upcoming check-in. Please add more questions."
+      end
+      super
+    end
+  end
 end
 
 private

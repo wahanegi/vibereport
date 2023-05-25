@@ -3,9 +3,8 @@ import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
 import QuestionButton from "../UI/QuestionButton";
 import Menu from "../UI/Menu";
-import ShoutoutButton from "../UI/ShoutoutButton";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
-// import {Calendar, HelpIcon, Logo, ShoutOutIcon} from "../UI/ShareContent";
+import CornerElements from "../UI/CornerElements";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -21,7 +20,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     const dataRequest = {
       emotion_id: emotion_id,
       time_period_id: timePeriod.id,
-      user_id: data.current_user_id,
+      user_id: data.current_user.id,
       comment: '',
       rating: '',
       productivity: '0',
@@ -33,7 +32,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     steps.push('emotion-entry')
     const dataRequest = {
       time_period_id: data.time_period.id,
-      user_id: data.current_user_id,
+      user_id: data.current_user.id,
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -44,7 +43,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       emotion_id: '',
       not_working: true,
       time_period_id: timePeriod.id,
-      user_id: data.current_user_id,
+      user_id: data.current_user.id,
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -80,7 +79,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <div className="mx-auto my-0 question">Which word best describes how you’ve recently felt about work?</div>
             <div className='d-flex mx-auto emotions'>
                 {emotions.map((emotion, index) =>
-                  <div className='width-block'>
+                  <div className='width-block' key={emotion.id}>
                    <ButtonEmotion key={emotion.id}
                                   category={emotions[mixUp(index+1)].attributes.category}
                                   onClick={() =>
@@ -101,8 +100,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
             I was not working recently
           </NavLink>
           <QuestionButton />
-          <ShoutoutButton />
-          <Menu addClass='placement-menu' percent_completion='0' />
+          <CornerElements         data = { data }
+                               setData = { setData }
+                     percentCompletion = {0}/>
         </div>
       }
     </Fragment>

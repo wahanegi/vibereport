@@ -54,6 +54,7 @@ RSpec.describe Api::V1::ResponsesController do
             'word' => user_response.emotion.word,
             'public' => user_response.emotion.public
           },
+        'user_shoutouts' => [],
         'data' => {
           'id' => user_response.id.to_s,
           'type' => 'response',
@@ -68,7 +69,9 @@ RSpec.describe Api::V1::ResponsesController do
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
-              'celebrate_comment' => user_response.celebrate_comment
+              'celebrate_comment' => user_response.celebrate_comment,
+              'fun_question_id' => user_response.fun_question.id,
+              'fun_question_answer_id' => user_response.fun_question_answer
             }
         }
       }]
@@ -76,7 +79,7 @@ RSpec.describe Api::V1::ResponsesController do
   end
 
   describe '#create' do
-    subject { post '/api/v1/responses', params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection]  } }, format: :json } }
+    subject { post '/api/v1/responses', params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection] } }, format: :json } }
     it 'responds to json formats when provided in the params' do
       subject
       expect(response.media_type).to eq 'application/json'
@@ -96,6 +99,7 @@ RSpec.describe Api::V1::ResponsesController do
             'word' => user_response.emotion.word,
             'public' => user_response.emotion.public
           },
+        'user_shoutouts' => [],
         'data' => {
           'id' => response_saved.id.to_s,
           'type' => 'response',
@@ -110,7 +114,9 @@ RSpec.describe Api::V1::ResponsesController do
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
-              'celebrate_comment' => user_response.celebrate_comment
+              'celebrate_comment' => user_response.celebrate_comment,
+              'fun_question_id' => nil,
+              'fun_question_answer_id' => nil
             }
         }
       }]
@@ -133,6 +139,7 @@ RSpec.describe Api::V1::ResponsesController do
             'word' => emotion.word,
             'public' => user_response.emotion.public
           },
+        'user_shoutouts' => [],
         'data' =>
           {
             'id' => user_response.id.to_s,
@@ -148,7 +155,9 @@ RSpec.describe Api::V1::ResponsesController do
                 'comment' => user_response.comment,
                 'productivity' => user_response.productivity,
                 'bad_follow_comment' => user_response.bad_follow_comment,
-                'celebrate_comment' => user_response.celebrate_comment
+                'celebrate_comment' => user_response.celebrate_comment,
+                'fun_question_id' => user_response.fun_question.id,
+                'fun_question_answer_id' => nil
               }
           }
       }]

@@ -7,6 +7,15 @@ export  const mergeData = (receivedData, data, setData) =>{
       attributes: {
         ...receivedData.data.attributes}},
     emotion:{
-      ...receivedData.emotion}
+      ...receivedData.emotion},
+    user_shoutouts: [
+      ...receivedData.user_shoutouts
+    ]
   })
+}
+
+
+export const userFullName = user => {
+  if ( !user ) { return }
+  return user.last_name === '' ?  user.first_name :  `${user.first_name} ${user.last_name}`
 }

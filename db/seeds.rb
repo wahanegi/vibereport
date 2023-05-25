@@ -1,3 +1,4 @@
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
@@ -19,5 +20,13 @@ if Emotion.count.zero?
     words_list = category_and_words.second
 
     words_list.each { |word| Emotion.create(word: word, category: category, public: true) }
+  end
+end
+
+if FunQuestion.count.zero?
+  questions = YAML::load_file(Rails.root.join('db', 'seeds', 'default_questions.yml'))
+
+  questions['questions'].each do |question|
+    FunQuestion.create(question_body: question['question_body'], public: true)
   end
 end
