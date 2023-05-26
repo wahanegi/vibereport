@@ -80,10 +80,10 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
               <h2 className={`${'color-black mb-0'} ${!user && 'transparent'}`}>Brought to us by {onOffSmbAT}{user}</h2>
             </div>
             <div className='icebreaker'>
-              <div className='wrap'>
-                <p className={`${'b3 muted align-content-end'} ${!user && 'transparent'}`}>{onOffSmbAT}{user} asks:</p>
+              <div  className='wrap'>
+                {user && <p className='b3 muted align-content-end'>{onOffSmbAT}{user} asks:</p>}
                 <h5 className='text-md-start'>{question_body}</h5>
-                <div className='wrap-textarea'>
+                <div className={`${'wrap-textarea'} ${!user && 'h-320'}`}>
                   <form>
                     <div className="form-group">
                       <textarea className="input mb-0" name='answer_body'
