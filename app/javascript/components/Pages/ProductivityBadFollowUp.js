@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import {Footer, Header, Wrapper} from "../UI/ShareContent";
-import {isPresent} from "../helpers/helpers";
+import {Wrapper} from "../UI/ShareContent";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
-import {isBlank} from "../helpers/helpers";
 import CornerElements from "../UI/CornerElements";
 
 const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) => {

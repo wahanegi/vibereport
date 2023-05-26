@@ -1,16 +1,14 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
 import {apiRequest} from "../requests/axios_requests";
-import {ShoutOutIcon, BtnBack, BtnNext, HelpIcon, Header, Wrapper} from "../UI/ShareContent";
+import {BtnBack, BtnNext, Wrapper} from "../UI/ShareContent";
 import iconNegative from "../../../assets/images/icon_negative.svg";
 import iconNeutral from "../../../assets/images/icon_neutral.svg";
 import iconPositive from "../../../assets/images/icon_positive.svg";
 import axios from "axios";
 import {CSSTransition} from 'react-transition-group';
 import {backHandling} from "../helpers/helpers";
-import ShoutoutButton from "../UI/ShoutoutButton";
 import CornerElements from "../UI/CornerElements";
-import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
 

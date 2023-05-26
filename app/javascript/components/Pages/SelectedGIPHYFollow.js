@@ -1,8 +1,7 @@
 import React from 'react';
-import {BigBtnEmotion, Footer, Header, Wrapper} from "../UI/ShareContent";
+import {BigBtnEmotion, Wrapper} from "../UI/ShareContent";
 import PoweredBy from '../../../assets/images/PoweredBy.svg';
 import BlockLowerBtns from "../UI/BlockLowerBtns";
-import {isBlank} from "../helpers/helpers";
 import CornerElements from "../UI/CornerElements";
 
 const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCustomGif}) => {

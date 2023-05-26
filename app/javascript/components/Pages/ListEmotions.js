@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
-import QuestionButton from "../UI/QuestionButton";
-import Menu from "../UI/Menu";
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 import CornerElements from "../UI/CornerElements";
 

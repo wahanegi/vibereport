@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
-import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
+import {BtnBack, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
