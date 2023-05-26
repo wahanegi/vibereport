@@ -70,7 +70,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     <div className='d-flex justify-content-between text-header-position m-3'>
       <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : ''} />
       <div className="d-flex flex-column mb-3">
-        <BtnBack text ='Back to current week' hidden={!nextTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
+        <BtnBack text ='Back to most recent' hidden={!nextTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
       </div>
       <HelpIcon />
     </div>
