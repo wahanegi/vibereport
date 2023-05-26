@@ -86,8 +86,8 @@ export const ShoutOutIcon = ({addClass = ''}) =>
   </div>
 
 
-export const HelpIcon = () =>
-  <NavLink to="mailto: support@vibereport.app" className='d-flex align-self-center'>
+export const HelpIcon = ({addClass=''}) =>
+  <NavLink to="mailto: support@vibereport.app" className={`${addClass} d-flex align-self-center`}>
     <img src={help_icon} alt="shout out" className='help-icon' />
   </NavLink>
 

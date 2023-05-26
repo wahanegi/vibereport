@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
 import {isPresent, rangeFormat} from "../../helpers/helpers";
 import {
@@ -66,14 +66,15 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     }
   }
 
-  const Footer = () =>
-    <div className='d-flex justify-content-between text-header-position m-3'>
-      <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : ''} />
-      <div className="d-flex flex-column mb-3">
-        <BtnBack text ='Back to most recent' hidden={!nextTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
+  const Footer = () => <Fragment>
+    <HelpIcon addClass='hud help' />
+    <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} />
+    <div className="hud-container" hidden={!nextTimePeriod}>
+      <div className='hud recent_btn'>
+        <BtnBack text ='Back to most recent' addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
       </div>
-      <HelpIcon />
     </div>
+  </Fragment>
 
   useEffect(() => {
     if (time_periods) {
@@ -101,32 +102,34 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
 
   if (error) return <p>{error.message}</p>
 
-  return loaded && !isLoading && <Wrapper>
-    {
-      notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
-    }
-    <Header className='mt-4' />
-    {
-      timePeriod.id === time_periods[0].id ?
-        emotions.length < MIN_USERS_RESPONSES ?
-          <div className='text-header-position'>
-            <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
-            <h6>Come back later to view the results </h6>
-          </div>:
-          <h1 className='text-header-position'>The team is feeling...</h1>:
-        <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
-    }
-    <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
-    <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
-    <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
-    <ShoutoutSection nextTimePeriod={nextTimePeriod}
-                     timePeriod={timePeriod}
-                     sentShoutouts={sent_shoutouts}
-                     receivedShoutouts={received_shoutouts}
-                     data={data} setData={setData}
-                     currentUserShoutouts={current_user_shoutouts} />
-    <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
+  return loaded && !isLoading && <div className='position-relative'>
+    <Wrapper>
+      {
+        notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
+      }
+      <Header className='mt-4' />
+      {
+        timePeriod.id === time_periods[0].id ?
+          emotions.length < MIN_USERS_RESPONSES ?
+            <div className='text-header-position'>
+              <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
+              <h6>Come back later to view the results </h6>
+            </div>:
+            <h1 className='text-header-position'>The team is feeling...</h1>:
+          <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
+      }
+      <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
+      <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
+      <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
+      <ShoutoutSection nextTimePeriod={nextTimePeriod}
+                       timePeriod={timePeriod}
+                       sentShoutouts={sent_shoutouts}
+                       receivedShoutouts={received_shoutouts}
+                       data={data} setData={setData}
+                       currentUserShoutouts={current_user_shoutouts} />
+      <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
+    </Wrapper>
     <Footer />
-  </Wrapper>
-  }
+  </div>
+}
 export default Results;
