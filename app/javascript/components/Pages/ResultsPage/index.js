@@ -15,7 +15,6 @@ import EmotionSection from "./EmotionSection";
 import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
-import isEmpty from "ramda/src/isEmpty";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
@@ -115,7 +114,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
               <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
               <h6>Come back later to view the results </h6>
             </div>:
-            <h1 className='text-header-position'>The team is feeling...</h1>:
+            <h1 className='text-header-position'><br/>The team is feeling...</h1> :
           <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
       }
       <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
