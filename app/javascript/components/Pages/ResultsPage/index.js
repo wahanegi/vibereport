@@ -71,7 +71,6 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
       <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : ''} />
       <div className="d-flex flex-column mb-3">
         <BtnBack text ='Back to current week' hidden={!nextTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
-        <BtnPrimary text ='Done' addClass='mt-auto' />
       </div>
       <HelpIcon />
     </div>
