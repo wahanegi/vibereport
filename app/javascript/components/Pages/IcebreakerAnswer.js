@@ -97,7 +97,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
                 </div>
               </div>
             </div>
-            <div className='d-flex placement-buttons justify-content-between col-6 offset-3 pb-53 mt-5'>
+            <div className='d-flex placement-buttons justify-content-between col-6 offset-3 pb-52 mt-5'>
               <BtnBack onClick={backHandling}/>
               <BtnPrimary addClass={`${isEmptyStr(answerBody) ? "answer-custom" : ""}`}
                           onClick={handlingOnClickNext}
