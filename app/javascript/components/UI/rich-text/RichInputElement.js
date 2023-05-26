@@ -3,7 +3,7 @@ import Cursor from "../rich-text/cursor";
 import DropDownList from "./DropDownList";
 import {userFullName} from "../../helpers/library";
 import RichText from "./rich-text";
-import xClose from "../../../../assets/sys_svg/x-close.svg";
+import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 import Button from "../Button";
 import RichTextArea from "./RichTextArea";
 
