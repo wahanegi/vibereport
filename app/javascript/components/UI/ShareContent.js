@@ -112,7 +112,7 @@ export const Wrapper = ({children}) => <div className="wrapper">
 </div>
 
 export const EditResponse = ({ hidden = false, onClick }) =>
-  !hidden && <div>
-    <p className='mb-0'>Edit responses</p>
+  !hidden && <div style={{width: 135}}>
+    <p className='mb-0 text-start'>Edit responses</p>
     <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
   </div>

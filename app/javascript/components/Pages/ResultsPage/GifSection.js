@@ -1,19 +1,8 @@
-import React from "react"
+import React, {Fragment} from "react"
 import isEmpty from "ramda/src/isEmpty";
 import {sortImagesByHeight} from "../../helpers/helpers";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import PoweredBy from "../../../../assets/images/PoweredBy.svg";
-
-const Wrapper = ({children}) => <div className='align-self-center gif-wrap result-page mb-3'>
-  <div className='border-none card'>
-    <div className='card-body h-auto p-0'>
-      <div className="gif-list">
-        {children}
-      </div>
-    </div>
-  </div>
-  <img src={PoweredBy} alt='PoweredBy' className={`big image-powered-by align-top`}/>
-</div>
 
 const PreviewGifSection = () => {
   const squareStyle = {
@@ -31,13 +20,20 @@ const PreviewGifSection = () => {
     </div>);
   }
 
-  return <Wrapper>
-    {squares}
-  </Wrapper>
+  return <div className='align-self-center gif-wrap result-page mb-3'>
+    <div className='border-none card'>
+      <div className='card-body h-auto p-0'>
+        <div className="gif-list">
+          {squares}
+        </div>
+      </div>
+    </div>
+  </div>
 }
 
 const GifSection = ({ gifs, nextTimePeriod }) => {
-  if(!nextTimePeriod && gifs.length < MIN_USERS_RESPONSES) return <PreviewGifSection />
+  const showPreview = !nextTimePeriod && gifs.length < MIN_USERS_RESPONSES
+  if(showPreview) return <PreviewGifSection />
 
   if(isEmpty(gifs)) return null
 
@@ -47,9 +43,16 @@ const GifSection = ({ gifs, nextTimePeriod }) => {
     </div>
   });
 
-  return <Wrapper>
-    {gifItems}
-  </Wrapper>
+  return <div className='align-self-center gif-wrap result-page mb-3'>
+    <div className='border-none card'>
+      <div className='card-body h-auto p-0'>
+        <div className="gif-list">
+          {gifItems}
+        </div>
+      </div>
+    </div>
+    <img src={PoweredBy} alt='PoweredBy' className={`big image-powered-by align-top`}/>
+  </div>
 };
 
 export default GifSection
