@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Menu from "./Menu";
 import {backHandling, isPresent} from "../helpers/helpers";
 import calendar from "../../../assets/images/calendar.svg"
@@ -11,6 +11,7 @@ import polygonLeft from "../../../assets/images/polygon-left.svg"
 import polygonRight from "../../../assets/images/polygon-right.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
 import line from "../../../assets/images/line.svg"
+import {MIN_USERS_RESPONSES} from "../helpers/consts";
 
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
@@ -38,21 +39,30 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
     {text}
   </button>
 
-export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, prevTimePeriod}) =>
-  isPresent(date) && !hidden && <div className="position-relative pointer w-82" onClick={onClick}>
-    <img src={calendar} alt="calendar" />
-    <div className="position-absolute top-0 w-82" >
-      {date.includes(' - ') ?
-        <div className='mt-3 d-flex'>
-          {date.split(' - ')[0]}
-          <img src={line} alt="line" />
-          {date.split(' - ')[1]}
-        </div>:
-        <div className='mt-5 d-flex'>{date}</div>
-      }
+export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, prevTimePeriod, emotions}) =>
+  isPresent(date) && !hidden && <div className="position-relative">
+    { prevTimePeriod && positionLeft ?
+      emotions.length < MIN_USERS_RESPONSES ?
+        <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See last week’s results</p>:
+        <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See previous results</p>:
+      null
+    }
+    { positionRight && <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See next results</p> }
+    <div className="position-relative pointer w-82 mt-1" onClick={onClick}>
+      <img src={calendar} alt="calendar" />
+      <div className="position-absolute top-0 w-82" >
+        {date.includes(' - ') ?
+          <div className='mt-3 d-flex'>
+            {date.split(' - ')[0]}
+            <img src={line} alt="line" />
+            {date.split(' - ')[1]}
+          </div>:
+          <div className='mt-5 d-flex'>{date}</div>
+        }
+      </div>
+      { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
+      { positionRight && <img className="position-absolute" style={{right: -26, top: 29}} src={polygonRight} alt="polygon right"/> }
     </div>
-    { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
-    { positionRight && <img className="position-absolute" style={{right: -26, top: 29}} src={polygonRight} alt="polygon right"/> }
   </div>
 
 export const BtnNext = ({ addClass = '', hidden, onClick, disabled }) =>
@@ -102,4 +112,7 @@ export const Wrapper = ({children}) => <div className="wrapper">
 </div>
 
 export const EditResponse = ({ hidden = false, onClick }) =>
-  !hidden && <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
+  !hidden && <div>
+    <p className='mb-0'>Edit responses</p>
+    <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
+  </div>

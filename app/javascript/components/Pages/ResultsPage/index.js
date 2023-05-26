@@ -117,7 +117,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
           <h1>The team is feeling...</h1>:
         <h1>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
     }
-    <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb}} />
+    <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
     <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
     <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
     <ShoutoutSection nextTimePeriod={nextTimePeriod}

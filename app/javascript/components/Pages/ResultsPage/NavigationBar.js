@@ -2,7 +2,7 @@ import React from "react";
 import {Calendar, EditResponse} from "../../UI/ShareContent";
 import {datePrepare, isBlank, isEmpty, isPresent, rangeFormat} from "../../helpers/helpers";
 
-const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb}) => {
+const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}) => {
   if(isEmpty(time_periods)) return null
 
   const handlingBack = () => {
@@ -13,9 +13,9 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
 
   return <div className='d-flex justify-content-between' style={{marginLeft: 140, marginRight: 140}}>
     <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
-              positionLeft={true} prevTimePeriod={prevTimePeriod} />
+              positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} />
     <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
-              positionRight={true} hidden={isBlank(nextTimePeriod)} prevTimePeriod={prevTimePeriod} />
+              positionRight={true} hidden={isBlank(nextTimePeriod)} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
     <EditResponse onClick={handlingBack} hidden={nextTimePeriod} />
   </div>
 }
