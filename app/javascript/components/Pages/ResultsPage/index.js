@@ -67,7 +67,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   }
 
   const Footer = () =>
-    <div className='d-flex justify-content-between m-3'>
+    <div className='d-flex justify-content-between text-header-position m-3'>
       <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : ''} />
       <div className="d-flex flex-column mb-3">
         <BtnBack text ='Back to current week' hidden={!nextTimePeriod} addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
@@ -105,16 +105,16 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     {
       notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
     }
-    <Header />
+    <Header className='mt-4' />
     {
       timePeriod.id === time_periods[0].id ?
         emotions.length < MIN_USERS_RESPONSES ?
-          <div>
+          <div className='text-header-position'>
             <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
             <h6>Come back later to view the results </h6>
           </div>:
-          <h1>The team is feeling...</h1>:
-        <h1>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
+          <h1 className='text-header-position'>The team is feeling...</h1>:
+        <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
     }
     <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
     <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />

@@ -7,7 +7,7 @@ import expand_icon from "../../../../assets/images/expand-icon.svg";
 import collapse_icon from "../../../../assets/images/collapse.svg";
 
 const PreviewQuestionSection = () =>
-  <div className='results col'>
+  <div className='results col text-header-position'>
     <div className='row wrap question preview mb-3' />
   </div>
 
@@ -66,7 +66,7 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod}) => {
       </div>
     </div>
 
-  return <div className='results col'>
+  return <div className='results col text-header-position'>
     <Question />
     {
       answers.map(data => {

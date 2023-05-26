@@ -38,8 +38,9 @@ const AnimatedEmotion = ({word, category, addBlur = false}) => {
 const PreviewEmotionSection = ({data}) => {
   const splitEmotions = splitArray(data.data, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
-  return <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
-    <tbody>
+  return <div className="text-header-position">
+    <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
+      <tbody>
       {
         splitEmotions.map((emotions, index) =>
           <tr key={index}>
@@ -53,8 +54,9 @@ const PreviewEmotionSection = ({data}) => {
           </tr>
         )
       }
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 }
 
 const EmotionSection = ({emotions, nextTimePeriod, data}) => {
@@ -63,8 +65,9 @@ const EmotionSection = ({emotions, nextTimePeriod, data}) => {
 
   if(!nextTimePeriod && emotions.length < MIN_USERS_RESPONSES) return <PreviewEmotionSection data={data} />
 
-  return <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
-    <tbody>
+  return <div className="text-header-position">
+    <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
+      <tbody>
       {
         splitEmotions.map((emotions, index) =>
           <tr key={index}>
@@ -78,7 +81,9 @@ const EmotionSection = ({emotions, nextTimePeriod, data}) => {
           </tr>
         )
       }
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+
 }
 export default EmotionSection

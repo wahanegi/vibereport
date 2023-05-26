@@ -100,9 +100,9 @@ export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false
     <HelpIcon />
   </div>
 
-export const Header = () => <div className='d-flex justify-content-between m-3'>
+export const Header = ({className}) => <div className='d-flex justify-content-between m-3'>
   <Logo />
-  <Menu>X% complete</Menu>
+  <Menu className={className}>X% complete</Menu>
 </div>
 
 export const Wrapper = ({children}) => <div className="wrapper">
