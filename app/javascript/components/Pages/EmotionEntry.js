@@ -127,8 +127,8 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
           </CSSTransition>
         </div>
         <div className='d-flex position-absolute placement-buttons justify-content-between col-6 offset-3'>
-          <BtnBack onClick={backHandling} addClass='m-1 align-self-center'/>
-          <BtnNext data={data} setData={setData} onClick={emotion.category  ? handlingOnClickNext : null} disabled={!emotion.category || emotion.word.length < 2} addClass='m-1 align-self-center'/>
+          <BtnBack onClick={backHandling} addClass='align-self-center'/>
+          <BtnNext data={data} setData={setData} onClick={emotion.category  ? handlingOnClickNext : null} disabled={!emotion.category || emotion.word.length < 2} addClass='align-self-center'/>
         </div>
         <CornerElements data = { data }
                         setData = { setData }
