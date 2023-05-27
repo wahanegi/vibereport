@@ -42,8 +42,8 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
     <div className='row wrap shoutout mb-1'>
       <ShoutoutAwards {...{timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, data, setData}} />
       <div className='d-flex justify-content-start ps-2 mb-1'>
-        {!isEmpty(currentUserShoutouts.received) && <h5 className='fw-semibold'>{Pluralize( 'Shoutout', currentUserShoutouts.received.length )} received: {currentUserShoutouts.received.length};</h5>}&nbsp;
-        {!isEmpty(currentUserShoutouts.sent) && <h5 className='fw-semibold'> {Pluralize( 'Shoutout', currentUserShoutouts.sent.length )} sent: {currentUserShoutouts.sent.length}</h5>}
+        {!isEmpty(currentUserShoutouts.received) && <h5>{Pluralize( 'Shoutout', currentUserShoutouts.received.length )} received: {currentUserShoutouts.received.length};</h5>}&nbsp;
+        {!isEmpty(currentUserShoutouts.sent) && <h5> {Pluralize( 'Shoutout', currentUserShoutouts.sent.length )} given: {currentUserShoutouts.sent.length}</h5>}
       </div>
       <ReceivedShoutouts />
       <SentShoutouts />
