@@ -5,11 +5,17 @@ import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
 
+const FULL_PRIMARY_HEIGHT = 401
+const MARGIN_BOTTOM = 8
+const HEIGHT_ROW_USER = 40
+const SUM_EDGE_DOWN_UP = 21
+
 const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [prevStateAnswer, setPrevStateAnswer] = useState( {})
   const [answerFunQuestion, setAnswerFunQuestion] = useState( {})
+  const [ computedHeight, setComputedHeight ] = useState(260)
   const prevAnswerBody = prevStateAnswer?.answer_body
   const answerBody = answerFunQuestion?.answer_body
   const {user_name, question_body} = data.fun_question
@@ -68,6 +74,15 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
 
   if (!!error) return <p>{error.message}</p>
 
+  useEffect(()=>{
+    setTimeout(function() {
+      const el = document.getElementById("question")
+    if(el === null) return
+      const style = el.getBoundingClientRect();
+      setComputedHeight(FULL_PRIMARY_HEIGHT - (style.height + MARGIN_BOTTOM) - (user ? HEIGHT_ROW_USER : 0))
+    }, 1);
+  })
+
   const onOffSmbAT = <span className={`${'red-violet'} && ${!user && 'transparent'}`}>@</span>
 
   return (
@@ -82,11 +97,12 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
             <div className='icebreaker'>
               <div  className='wrap'>
                 {user && <p className='b3 muted align-content-end'>{onOffSmbAT}{user} asks:</p>}
-                <h5 className='text-md-start'>{question_body}</h5>
-                <div className={`${'wrap-textarea'} ${!user && 'h-320'}`}>
+                <h5 id='question' className='text-md-start'>{question_body}</h5>
+                <div className='wrap-textarea' style={{height:computedHeight}}>
                   <form>
                     <div className="form-group">
                       <textarea className="input mb-0" name='answer_body'
+                                style={{height:computedHeight - SUM_EDGE_DOWN_UP}}
                                 placeholder="Tell us what you think!"
                                 value={answerFunQuestion?.answer_body || ''}
                                 onChange={onChangAnswer}

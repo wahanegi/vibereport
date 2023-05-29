@@ -404,7 +404,7 @@ const clickEnterTabHandling = ( i ) => {
                             onClick = { clickHandling }
                           cursorPos = { Cursor.getCurrentCursorPosition(element) }
                           className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'
-                        placeholder = {` Use "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!`}/>
+                        placeholder = {`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}/>
         <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
                 onClick = { submitHandling }>
           Send Shoutout

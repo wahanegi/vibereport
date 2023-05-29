@@ -31,13 +31,10 @@
     border: 3px solid $emerald;
     border-radius: 15px;
     &:focus-within {
-      border: 6px solid $emerald !important;
+      border: 3px solid shade-color( $emerald, 30 ) !important;
     }
     &.middle{
       height: 350px;
-    }
-    &.h-320 {
-      height: 320px;
     }
   }
 
