@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  rich_text      :text             not null
+#  type           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  time_period_id :bigint           not null

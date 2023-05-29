@@ -48,7 +48,8 @@ module Api
       def additional_data
         {
           emotion: @response.emotion,
-          user_shoutouts: current_user.shoutouts
+          user_shoutouts: current_user.shoutouts,
+          celebrate_shoutout: current_user.celebrate_shoutouts.find_by(time_period_id: TimePeriod.current.id)
         }
       end
 

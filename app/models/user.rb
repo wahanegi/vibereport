@@ -26,6 +26,7 @@ class User < ApplicationRecord
 
   has_many :responses, dependent: :destroy
   has_many :shoutouts, dependent: :destroy
+  has_many :celebrate_shoutouts, dependent: :destroy
   has_many :shoutout_recipients, dependent: :destroy
   has_many :fun_questions, dependent: :destroy
   has_many :fun_question_answers, dependent: :destroy

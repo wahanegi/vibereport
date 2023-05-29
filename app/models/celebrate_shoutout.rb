@@ -1,0 +1,2 @@
+class CelebrateShoutout < Shoutout
+end

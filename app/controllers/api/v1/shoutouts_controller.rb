@@ -5,26 +5,41 @@ class Api::V1::ShoutoutsController < ApplicationController
   before_action :require_user!
 
   def create
-    @shoutout = current_user.shoutouts.new(shoutout_params)
+    @shoutout = if params[:is_celebrate]
+                  current_user.celebrate_shoutouts.new(shoutout_params)
+                else
+                  current_user.shoutouts.new(shoutout_params)
+                end
     if @shoutout.save
       create_shoutout_recipients
       render json: @shoutout, status: :ok
     else
       render json: { error: @shoutout.errors.messages }, status: :unprocessable_entity
     end
-end
+  end
 
   def update
-    @shoutout = Shoutout.find_by(id: params[:id])
-    if @shoutout.update(shoutout_params)
+    if shoutout.update(shoutout_params)
       update_shoutout_recipients
-      render json: @shoutout, status: :ok
+      render json: shoutout, status: :ok
     else
-      render json: { error: @shoutout.errors.messages }, status: :unprocessable_entity
+      render json: { error: shoutout.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if shoutout.destroy
+      head :no_content, notice: 'Shoutout was successfully destroyed.'
+    else
+      render json: { error: shoutout.errors }, status: :unprocessable_entity
     end
   end
 
   private
+
+  def shoutout
+    @shoutout ||= Shoutout.find_by(id: params[:id])
+  end
 
   def shoutout_params
     params.require(:shoutout).permit(:time_period_id, :rich_text)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_05_213955) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_27_115115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -123,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_213955) do
     t.datetime "created_at", null: false
     t.text "rich_text", null: false
     t.bigint "time_period_id", null: false
+    t.string "type"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["rich_text", "user_id", "time_period_id"], name: "index_shoutouts_on_rich_text_and_user_id_and_time_period_id", unique: true
