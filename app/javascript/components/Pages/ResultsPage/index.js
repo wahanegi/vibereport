@@ -68,10 +68,8 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const Footer = () => <Fragment>
     <HelpIcon addClass='hud help' />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} />
-    <div className="hud-container" hidden={!nextTimePeriod}>
-      <div className='hud recent_btn'>
-        <BtnBack text ='Back to most recent' addClass='mb-2' onClick={() => setTimePeriodIndex(0)} />
-      </div>
+    <div hidden={!nextTimePeriod}>
+      <BtnBack text ='Back to most recent' addClass='mb-2 mt-2' onClick={() => setTimePeriodIndex(0)} />
     </div>
   </Fragment>
 
