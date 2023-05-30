@@ -53,6 +53,9 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     onRemoveAlert()
   }
 
+  const isMinUsersResponses = emotions?.length < MIN_USERS_RESPONSES || gifs?.length < MIN_USERS_RESPONSES ||
+    answers?.length < MIN_USERS_RESPONSES || current_user_shoutouts?.total_count < MIN_USERS_RESPONSES
+
   const showNextTimePeriod = () => {
     if (timePeriodIndex > 0) {
       setTimePeriodIndex(index => (index - 1));
@@ -68,9 +71,13 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const Footer = () => <Fragment>
     <HelpIcon addClass='hud help' />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} />
-    <div className='mt-5' hidden={!nextTimePeriod}>
-      <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
-    </div>
+    {
+      nextTimePeriod ?
+        <div className='mt-5'>
+          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
+        </div>:
+        <div style={{height: 120}}></div>
+    }
   </Fragment>
 
   useEffect(() => {
@@ -115,7 +122,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
       }
       {
         timePeriod.id === time_periods[0].id ?
-          emotions.length < MIN_USERS_RESPONSES ?
+          isMinUsersResponses ?
             <div className='text-header-position'>
               <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
               <h6>Come back later to view the results </h6><br/>
