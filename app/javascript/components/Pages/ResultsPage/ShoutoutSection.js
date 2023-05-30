@@ -6,7 +6,7 @@ import ShoutoutAwards from "./ShoutoutAwards";
 import ShoutoutItem from "./ShoutoutItem";
 
 const PreviewShoutoutSection = () =>
-  <div className='results col text-header-position'>
+  <div className='results col'>
     <div className='row wrap shoutout preview mb-3' />
   </div>
 
@@ -38,7 +38,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
     </div>
   }
 
-  return <div className='results col text-header-position'>
+  return <div className='results col'>
     <div className='row wrap shoutout mb-1'>
       <ShoutoutAwards {...{timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, data, setData}} />
       <div className='d-flex justify-content-start ps-2 mb-1'>

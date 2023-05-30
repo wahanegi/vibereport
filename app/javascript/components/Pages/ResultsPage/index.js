@@ -1,10 +1,8 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
 import {isPresent, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
-  BtnPrimary,
-  Header,
   HelpIcon,
   ShoutOutIcon,
   Wrapper
@@ -16,6 +14,7 @@ import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
+import CornerElements from "../../UI/CornerElements";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -32,6 +31,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   '</br></br>Skip this chek-in if you weren\'t working.'
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
+  const ref = useRef(null)
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
@@ -68,8 +68,8 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const Footer = () => <Fragment>
     <HelpIcon addClass='hud help' />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} />
-    <div hidden={!nextTimePeriod}>
-      <BtnBack text ='Back to most recent' addClass='mb-2 mt-2' onClick={() => setTimePeriodIndex(0)} />
+    <div className='mt-5' hidden={!nextTimePeriod}>
+      <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
     </div>
   </Fragment>
 
@@ -99,20 +99,28 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
 
   if (error) return <p>{error.message}</p>
 
-  return loaded && !isLoading && <div className='position-relative'>
+  useEffect(() => {
+    if (!nextTimePeriod) {
+      const element = ref.current;
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [nextTimePeriod]);
+
+  return loaded && !isLoading && <div className='position-relative' ref={ref}>
     <Wrapper>
       {
         notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
       }
-      <Header className='mt-4' />
       {
         timePeriod.id === time_periods[0].id ?
           emotions.length < MIN_USERS_RESPONSES ?
             <div className='text-header-position'>
               <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
-              <h6>Come back later to view the results </h6>
+              <h6>Come back later to view the results </h6><br/>
             </div>:
-            <h1 className='text-header-position'><br/>The team is feeling...</h1> :
+            <h1 className='text-header-position'><br/>The team is feeling...</h1>:
           <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
       }
       <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
@@ -125,6 +133,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
                        data={data} setData={setData}
                        currentUserShoutouts={current_user_shoutouts} />
       <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
+      <CornerElements data={ data} setData={setData} percentCompletion={100} hideBottom={true}/>
     </Wrapper>
     <Footer />
   </div>

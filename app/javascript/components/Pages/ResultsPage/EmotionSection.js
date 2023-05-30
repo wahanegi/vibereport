@@ -38,7 +38,7 @@ const AnimatedEmotion = ({word, category, addBlur = false}) => {
 const PreviewEmotionSection = ({data}) => {
   const splitEmotions = splitArray(data.data, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
-  return <div className="text-header-position">
+  return <div className='mb-2' style={{marginTop: 60}}>
     <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
       <tbody>
       {
@@ -65,7 +65,7 @@ const EmotionSection = ({emotions, nextTimePeriod, data}) => {
 
   if(!nextTimePeriod && emotions.length < MIN_USERS_RESPONSES) return <PreviewEmotionSection data={data} />
 
-  return <div className="text-header-position">
+  return <div className='mb-2' style={{marginTop: 60}}>
     <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
       <tbody>
       {
