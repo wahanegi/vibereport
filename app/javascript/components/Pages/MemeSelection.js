@@ -5,12 +5,12 @@ import {
   BigBtnEmotion,
   BtnOutline,
   BtnPrimary,
-  Header, HelpIcon, Logo, ShoutOutIcon,
+  Header,
   Wrapper
 } from "../UI/ShareContent";
 import {backHandling, isBlank, isPresent} from "../helpers/helpers";
 import {GIPHY_UPLOAD_URL} from "../helpers/consts";
-import Menu from "../UI/Menu";
+import CornerElements from "../UI/CornerElements";
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif}) => {
   const {emotion, api_giphy_key, response} = data
@@ -45,10 +45,6 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     navigate(`/${data.response.attributes.steps.slice(-1).toString()}`);
   },[])
 
-  const FooterIcons = () => <div className='d-flex justify-content-between gap-3 mx-3 mb-2'>
-    <ShoutOutIcon />
-    <HelpIcon />
-  </div>
 
   const Navigation = () =>
     <div className='d-flex justify-content-between gap-3'>
@@ -62,13 +58,11 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
       </div>
     </div>
 
-  const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
-    <Logo />
-    <div className='mt-5' style={{marginLeft: '-101px'}}>
+  const Header = () => <div className='d-flex justify-content-between mx-3 mt-8'>
+    <div className='mx-auto' >
       <h5 style={{opacity: 0.6}}>You picked:</h5>
       <BigBtnEmotion emotion={emotion} onClick={backHandling} />
     </div>
-    <Menu>X% complete</Menu>
   </div>
 
   if (!!error) return <p>{error.message}</p>
@@ -76,10 +70,12 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   return !isLoading && <Wrapper>
     <Header />
     <div className='align-self-center gif-wrap'>
-      <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif}} />
+        <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif}} />
       <Navigation />
     </div>
-    <FooterIcons />
+    <CornerElements data = { data }
+                    setData = { setData }
+                    percentCompletion = { 10 } />
   </Wrapper>
 }
 
