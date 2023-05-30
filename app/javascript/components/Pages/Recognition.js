@@ -1,7 +1,6 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {BtnBack, BtnNext, Wrapper} from "../UI/ShareContent";
+import React, {useState} from 'react';
+import {Wrapper} from "../UI/ShareContent";
 import CornerElements from "../UI/CornerElements";
-import Button from "../UI/Button";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
 import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";

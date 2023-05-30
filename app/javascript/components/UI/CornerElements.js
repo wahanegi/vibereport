@@ -22,8 +22,9 @@ const CornerElements = ({
       <ShoutoutButton   data = { data }
                      setData = { setData }
                          num = { numShoutouts }
+                   className = ''
                       isMove = { isMoveShoutout }/>
-      <Menu percentCompletion={percentCompletion} className='placement-menu'/>
+     <Menu percentCompletion = {percentCompletion} className='placement-menu'/>
     </Fragment>
   );
 };
