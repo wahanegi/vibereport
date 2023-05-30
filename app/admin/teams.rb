@@ -118,6 +118,9 @@ ActiveAdmin.register Team do
           teammate_engagement_count_report = TeammateEngagementCount.new(team, previous_time_periods)
           teammate_engagement_count = teammate_engagement_count_report.generate
 
+          previous_teammate_engagement_count_report = TeammateEngagementCount.new(team, time_period)
+          previous_teammate_engagement_count = previous_teammate_engagement_count_report.generate
+
           verbatim_list_report = TeammateEngagementVerbatims.new(team, previous_time_periods)
           verbatim_list = verbatim_list_report.generate
 
@@ -200,7 +203,16 @@ ActiveAdmin.register Team do
             end
 
             row :Teammate_Engagement_Count do
-              teammate_engagement_count
+              if teammate_engagement_count.is_a?(String)
+                span teammate_engagement_count
+              else
+                trend = previous_teammate_engagement_count.to_f < teammate_engagement_count.to_f ? '&#x2191;' : '&#x2193;'
+
+                div do
+                  span teammate_engagement_count
+                  span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                end
+              end
             end
 
             row :Teammate_Engagement_Verbatims do
