@@ -21,7 +21,7 @@ class ResponsesReport < AdminReport
     end
 
     chart_id = SecureRandom.uuid
-    chart = area_chart data, xtitle: 'Period', ytitle: 'Count', id: chart_id, library: { title: { fontName: 'Arial', fontSize: 18 } }    
+    chart = area_chart data, xtitle: 'Period', ytitle: 'Count', id: chart_id, library: { colors: ['green'], title: { fontName: 'Arial', fontSize: 18 } }    
     { chart: chart, id: chart_id }
   end
 end

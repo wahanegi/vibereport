@@ -5,9 +5,12 @@ class ProductivityAverage < AdminReport
   end
 
   def generate
-    responses = Response.joins(user: { teams: :users_teams })
-                        .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
-
+    responses = if @team
+      Response.joins(user: { teams: :users_teams })
+              .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
+    else
+      Response.where(responses: { time_period_id: @time_periods }).distinct
+    end
     average_productivity = responses.average(:productivity)
 
     if average_productivity.nil?

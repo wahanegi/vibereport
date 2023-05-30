@@ -6,8 +6,12 @@ class EmotionIndex < AdminReport
   end
 
   def generate
-    responses = Response.joins(user: { teams: :users_teams })
-                        .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods }).distinct
+    responses = if @team
+      Response.joins(user: { teams: :users_teams })
+              .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods }).distinct
+    else
+      Response.where(responses: { time_period_id: @time_periods }).distinct
+    end
 
     return { emotion_index: 'No emotion index available.', chart: nil } if responses.empty?
 
@@ -23,7 +27,11 @@ class EmotionIndex < AdminReport
     positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
     negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
 
-    total_responses = @team.users.includes(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
+    total_responses = if @team
+      @team.users.includes(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
+    else
+      User.joins(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
+    end
 
     result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
     formatted_result = result.round(2)

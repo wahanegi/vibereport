@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe ResponsePercentage do
+RSpec.describe ParticipationPercentage do
   let(:team) { create(:team) }
   let(:time_periods) { create_list(:time_period, 3) }
-  let(:report) { ResponsePercentage.new(team, time_periods) }
+  let(:report) { ParticipationPercentage.new(team, time_periods) }
 
   describe '#generate' do
     context 'when there are users in the team' do

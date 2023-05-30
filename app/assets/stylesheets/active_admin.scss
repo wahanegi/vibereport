@@ -29,11 +29,13 @@
 }
 
 .bubble-list .bubble:nth-child(odd) {
-  background-color: #bde0fe;
-  color: #007bff;
+  background-color: green; 
+  color: white;
+  font-weight: bold;
 }
 
 .bubble-list .bubble:nth-child(even) {
-  background-color: #ffdab3;
-  color: #ff6600;
+  background-color: red;
+  color: white;
+  font-weight: bold;
 }

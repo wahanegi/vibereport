@@ -1,4 +1,4 @@
-class ResponsePercentage < AdminReport
+class ParticipationPercentage < AdminReport
   def initialize(team, time_periods)
     super(team)
     @time_periods = time_periods
