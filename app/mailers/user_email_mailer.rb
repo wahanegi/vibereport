@@ -33,9 +33,11 @@ class UserEmailMailer < ApplicationMailer
     mail(to: @user.email, subject: "Hey #{user.first_name}, the results are in!")
   end
 
-  def draft_saved_email(user)
+  def reminder_email(user, response, time_period)
+    # debugger
+    @response = response
     @user = user
-    # @time_period = time_period
+    @time_period = time_period
     mail(to: user.email, subject: "#{user.first_name}, your check-in was saved.")
   end
 end

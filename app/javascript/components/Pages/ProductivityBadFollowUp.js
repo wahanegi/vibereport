@@ -22,15 +22,8 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
     }
   }, [comment]);
   const handlingOnClickNext = () => {
-    // if (!data.fun_question){
-    //   steps.push('causes-to-celebrate')
-    //   saveDataToDb( steps, {bad_follow_comment: comment, draft: false })
-    // }else {
-    //   steps.push('icebreaker-answer')
-    //   saveDataToDb(steps, {bad_follow_comment: comment, draft: false})
-    // }
     steps.push('causes-to-celebrate')
-    saveDataToDb( steps, {bad_follow_comment: comment})
+    saveDataToDb( steps, {bad_follow_comment: comment, draft: false})
   }
 
   if (!!error) return <p>{error.message}</p>

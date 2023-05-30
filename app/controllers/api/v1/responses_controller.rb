@@ -62,14 +62,20 @@ module Api
       end
 
       def sign_out_user
+        # debugger
+        ReminderEmailWorker.new(current_user, @response, TimePeriod.current).run_notification
         redirect_to auth.sign_in_path if sign_out User
-        # UserEmailMailer.draft_saved_email(current_user).deliver_now
+      end
+
+      def sign_in_from_email
+        debugger
+        sign_in_user
       end
 
       private
 
       def retrieve_response
-        @response = Response.find_by(id: params[:id])
+        @response ||= Response.find_by(id: params[:id])
       end
 
       def response_params

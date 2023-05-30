@@ -9,20 +9,27 @@ import ShoutoutModal from "../UI/ShoutoutModal";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
+  const [isDraft, setIsDraft] = useState(draft)
 
   const shoutOuts = data.user_shoutouts
       .filter( item => item.time_period_id === data.time_period.id)
       .sort( (a,b) =>  a.updated_at < b.updated_at ? 1 : -1 )
 
   const numShoutOuts = shoutOuts.length
+
+  const handleSaveDraft = () => {
+    saveDataToDb(steps);
+    setIsDraft(true);
+  }
+
   // Temporary placement not ready page Shoutout
   const handlingOnClickNext = () => {
     if (!data.fun_question){
       steps.push('causes-to-celebrate')
-      saveDataToDb( steps )
+      saveDataToDb( steps, {draft: false} )
     }else
       steps.push('icebreaker-answer')
-    saveDataToDb( steps )
+    saveDataToDb( steps, {draft: false} )
   }
   const skipHandling = () =>{
     handlingOnClickNext()
@@ -33,14 +40,15 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }
   const editHandling = (e) =>{
     e.preventDefault()
-
+    setIsDraft(false)
     const editObj = data.user_shoutouts.find(item => item.id === Number(e.target.attributes.id.value))
 
-    setShoutOutForm( { status: true, editObj: editObj } )
+    setShoutOutForm( { status: true, editObj: editObj} )
   }
 
-  const closeHandling = () => {
+  const closeHandling = (draft) => {
     setShoutOutForm( { status: false, editObj: {} } )
+    setIsDraft(draft)
   }
 
 
@@ -68,7 +76,8 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
                  isMoveShoutout = { true }
                    saveDataToDb = {saveDataToDb}
                           steps = {steps}
-                          draft = {draft}/>
+                          draft = {isDraft}
+                 handleSaveDraft={handleSaveDraft}/>
   }
 
   return (
@@ -90,7 +99,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
                   <ShoutoutModal onClose = { closeHandling }
                                  data = { data }
                                  setData = { setData }
-                                 editObj = { shoutOutForm.editObj } />}
+                                 editObj = { shoutOutForm.editObj }/>}
               <div className='d-flex justify-content-center field-shout-outs mx-auto'>
                 {output(shoutOuts)}
               </div>

@@ -14,10 +14,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [emotion, setEmotion] = useState({ word: data.emotion?.word || '', category: data.emotion?.category || '' });
   const [emotions, setEmotions] = useState([]);
   const [show, setShow] = useState(false);
-  const [isDraft, setDraft] = useState(draft);
 
-  // console.log('change', draft)
-  // console.log('emotion entry', emotion)
   const onChangeEmotion = (e) => {
     const { name, value } = e.target;
     const trimmedValue = value.toLowerCase().trim();
@@ -47,16 +44,6 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
     emotion: {word: emotion.word, category: emotion.category}
   }
 
-  const handleSaveDraft = () => {
-    const dataFromServer = (word) =>{
-      saveDataToDb( steps, {emotion_id: word.data.id} )    }
-    const dataDraft = {...dataRequest};
-    saveDataToDb(steps, dataDraft)
-    setDraft(true)
-    console.log("Emotion data:", data)
-    saveDataEmotion(dataFromServer);
-  }
-// console.log("Emotion data:", data)
   const handlingOnClickNext = () => {
     const dataFromServer = (word) =>{
       steps.push('meme-selection')
@@ -130,7 +117,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
     { !!error && <p>{error.message}</p>}
     {!isLoading && !error &&
       <Wrapper className='position-relative'>
-        <Header  saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}/>
+        <Header  saveDataToDb={saveDataToDb} steps={steps} draft={draft}/>
         <div className='central-element'>
           <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
           <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>

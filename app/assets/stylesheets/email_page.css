@@ -463,3 +463,19 @@ html {
     white-space: nowrap;
     text-transform: capitalize;
 }
+
+/* reminder_email */
+.second-row-reminder{
+    height: 3.7rem;
+    margin-top: 182px;
+}
+
+.mt-40{
+    margin-top: 40px;
+}
+
+.text-reminder{
+    margin:auto;
+    width: 453px;
+    color: rgba(0, 0, 0, 0.7);
+}

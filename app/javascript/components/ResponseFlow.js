@@ -118,7 +118,7 @@ const ResponseFlow = ({step, data, setData}) => {
     case  "causes-to-celebrate" :
        return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "recognition" :
-      return <Recognition data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+      return <Recognition data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft}/>
     case  "icebreaker-answer" :
       return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "icebreaker-question" :

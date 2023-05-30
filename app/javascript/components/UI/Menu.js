@@ -41,166 +41,40 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
   const location = window.location.href;
   const lastSegment = location.substring(location.lastIndexOf("/") + 1);
 
-  const getSrcMenu = (lastSegment) => {
-    switch (lastSegment) {
-      case 'emotion-selection-web':
-        if (activeImg === true) {
-          return {
-            src: complete0_act,
-            percent: 0,
-          };
-        } else {
-          return {
-            src: complete0,
-            percent: 0,
-          };
-        }
-      case 'emotion-entry':
-        if (activeImg === true) {
-          return {
-            src: complete5_10_act,
-            percent: 5,
-          };
-        } else {
-          return {
-            src: complete5_10,
-            percent: 5,
-          };
-        }
-      case 'meme-selection':
-        if (activeImg === true) {
-          return {
-            src: complete5_10_act,
-            percent: 10,
-          };
-        } else {
-          return {
-            src: complete5_10,
-            percent: 5,
-          };
-        }
-      case 'selected-giphy-follow':
-        if (activeImg === true) {
-          return {
-            src: complete15_act,
-            percent: 15,
-          };
-        } else {
-          return {
-            src: complete15,
-            percent: 15,
-          };
-        }
-      case 'emotion-intensity':
-        if (activeImg === true) {
-          return {
-            src: complete20_act,
-            percent: 20,
-          };
-        } else {
-          return {
-            src: complete20,
-            percent: 20,
-          };
-        }
-      case 'productivity-check':
-        if (activeImg === true) {
-          return {
-            src: complete25_act,
-            percent: 25,
-          };
-        } else {
-          return {
-            src: complete25,
-            percent: 25,
-          };
-        }
-      case 'productivity-bad-follow-up':
-        if (activeImg === true) {
-          return {
-            src: complete35_act,
-            percent: 35,
-          };
-        } else {
-          return {
-            src: complete35,
-            percent: 35,
-          };
-        }
-      case 'causes-to-celebrate':
-        if (activeImg === true) {
-          return {
-            src: complete45_act,
-            percent: 45,
-          };
-        } else {
-          return {
-            src: complete45,
-            percent: 45,
-          };
-        }
-      case 'recognition':
-        if (activeImg === true) {
-          return {
-            src: complete65_act,
-            percent: 65,
-          };
-        } else {
-          return {
-            src: complete65,
-            percent: 65,
-          };
-        }
-      case 'icebreaker-answer':
-        if (activeImg === true) {
-          return {
-            src: complete85_act,
-            percent: 85,
-          };
-        } else {
-          return {
-            src: complete85,
-            percent: 85,
-          };
-        }
-      case 'icebreaker-question':
-        if (activeImg === true) {
-          return {
-            src: complete90_act,
-            percent: 90,
-          };
-        } else {
-          return {
-            src: complete90,
-            percent: 90,
-          };
-        }
-        //TODO check after the merge to master branch
-      case 'results':
-        if (activeImg === true) {
-          return {
-            src: complete100_act,
-            percent: 100,
-          };
-        } else {
-          return {
-            src: complete100,
-            percent: 100,
-          };
-        }
-        default:
-          return "";
-        }
+  const segmentsMap = {
+    'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
+    'emotion-entry': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
+    'meme-selection': { src: complete5_10, activeSrc: complete5_10_act, percent: 10 },
+    'selected-giphy-follow': { src: complete15, activeSrc: complete15_act, percent: 15 },
+    'emotion-intensity': { src: complete20, activeSrc: complete20_act, percent: 20 },
+    'productivity-check': { src: complete25, activeSrc: complete25_act, percent: 25 },
+    'productivity-bad-follow-up': { src: complete35, activeSrc: complete35_act, percent: 35 },
+    'causes-to-celebrate': { src: complete45, activeSrc: complete45_act, percent: 45 },
+    'recognition': { src: complete65, activeSrc: complete65_act, percent: 65 },
+    'icebreaker-answer': { src: complete85, activeSrc: complete85_act, percent: 85 },
+    'icebreaker-question': { src: complete90, activeSrc: complete90_act, percent: 90 },
+    'results': { src: complete100, activeSrc: complete100_act, percent: 100 },
+  };
+
+  const getSrcMenu = (lastSegment, activeImg) => {
+    if (segmentsMap[lastSegment]) {
+      const { src, activeSrc, percent } = segmentsMap[lastSegment];
+      return {
+        src: activeImg ? activeSrc : src,
+        percent: percent,
+      };
+    } else {
+      return "";
     }
+  };
 
   return (
     <div className={ `${className}` }>
       <Dropdown onClick={handleChangeImg}>
         <Dropdown.Toggle  id='dropdown-stick'>
-          <img src={getSrcMenu(lastSegment).src} alt='complete' />
+          <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' />
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {/*<Dropdown.Item href="#" ><Button className='btn-item-menu wb1 mx-auto my-auto' onClick={()=>{}}>Manage Profile</Button></Dropdown.Item>*/}
           <Dropdown.Item href="#" >
             <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || steps.length === 1 ? ' disabled-btn-draft' : ''}`}
                     disabled={draft || steps.length === 1} onClick={handleSaveDraft}>
