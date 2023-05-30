@@ -26,6 +26,7 @@ const CornerElements = ({
       <ShoutoutButton   data = { data }
                      setData = { setData }
                          num = { numShoutouts }
+                   className = ''
                       isMove = { isMoveShoutout }/>
       <Menu
             saveDataToDb={saveDataToDb}

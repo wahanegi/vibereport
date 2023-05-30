@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react"
+import React, { useState } from "react"
 import {
-  Footer, Header, Logo, Wrapper
+  Wrapper
 } from "../UI/ShareContent";
-import Menu from "../UI/Menu";
 import { MentionsInput, Mention } from 'react-mentions'
 import mentionsInputStyles from "../UI/mention/mentionsInputStyles";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
+import CornerElements from "../UI/CornerElements";
 
 const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {response, users} = data
@@ -35,11 +36,14 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
     saveDataToDb( steps, {celebrate_comment: celebrateComment, draft: false})
   }
 
+<<<<<<< HEAD
   const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
     <Logo />
     <Menu saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}>X% complete</Menu>
   </div>
 
+=======
+>>>>>>> master
   const onCommentChange = (e) => {
     setCelebrateComment(e.target.value)
   }
@@ -47,13 +51,12 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header />
-    <h1>Are there any recent <br/> causes to celebrate?</h1>
-    <div className='d-flex justify-content-center'>
-      <MentionsInput value={celebrateComment}
-                     onChange={onCommentChange}
-                     placeholder='Are you grateful for anything that happened at work recently?'
-                     style={mentionsInputStyles}
+    <h1 className='mt-151'>Are there any recent <br/> causes to celebrate?</h1>
+    <div className='d-flex justify-content-center mt-1'>
+      <MentionsInput value = { celebrateComment }
+                     onChange = { onCommentChange }
+                     placeholder = 'Are you grateful for anything that happened at work recently?'
+                     style = { mentionsInputStyles }
       >
         <Mention
           className={'mentions-mention'}
@@ -63,11 +66,10 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
         />
       </MentionsInput>
     </div>
-
-    <Footer nextClick={onClickNext}
-            skipClick={onClickSkip}
-            hideNext={celebrateComment === ''}
-            hideSkip={celebrateComment !== ''}/>
+    <BlockLowerBtns nextHandling={ onClickNext } skipHandling={ onClickSkip } isNext={ celebrateComment !== '' } />
+    <CornerElements data = { data }
+                    setData = { setData }
+                    percentCompletion = { 40 } />
   </Wrapper>
 }
 

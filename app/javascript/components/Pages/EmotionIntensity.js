@@ -1,9 +1,11 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {Footer, Header, Wrapper} from "../UI/ShareContent";
+import React, {Fragment, useState} from 'react';
+import {Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
 import PoweredBy from '../../../assets/images/PoweredBy.svg';
 import { EMOTION_COLORS } from '../helpers/consts';
+import CornerElements from "../UI/CornerElements";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, category, isBlankGif}) => {
   const [isTextareaActive, setIsTextareaActive] = useState(false);
@@ -143,7 +145,6 @@ const generateStyles = (value, selected, category) => {
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft} />
     <div className='central-element'>
       <EmotionSection />
       <IntenseLine
@@ -156,7 +157,13 @@ const generateStyles = (value, selected, category) => {
               isBlankGif={isBlankGif}
        />
     </div>
-    <Footer nextClick={handlingOnClickNext} disabled={isBlank(rating)}/>
+    <BlockLowerBtns nextHandling={ handlingOnClickNext } disabled={isBlank(rating)} />
+    <CornerElements data = { data }
+                    setData = { setData }
+                    saveDataToDb={saveDataToDb}
+                    steps={steps}
+                    draft={isDraft}
+                    handleSaveDraft={handleSaveDraft}/>
   </Wrapper>
 };
 

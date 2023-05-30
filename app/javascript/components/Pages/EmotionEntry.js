@@ -1,13 +1,14 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
 import {apiRequest} from "../requests/axios_requests";
-import {ShoutOutIcon, BtnBack, BtnNext, HelpIcon, Header, Wrapper} from "../UI/ShareContent";
+import {BtnBack, BtnNext, Wrapper} from "../UI/ShareContent";
 import iconNegative from "../../../assets/images/icon_negative.svg";
 import iconNeutral from "../../../assets/images/icon_neutral.svg";
 import iconPositive from "../../../assets/images/icon_positive.svg";
 import axios from "axios";
 import {CSSTransition} from 'react-transition-group';
 import {backHandling} from "../helpers/helpers";
+import CornerElements from "../UI/CornerElements";
 
 const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -117,7 +118,6 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
     { !!error && <p>{error.message}</p>}
     {!isLoading && !error &&
       <Wrapper className='position-relative'>
-        <Header  saveDataToDb={saveDataToDb} steps={steps} draft={draft}/>
         <div className='central-element'>
           <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
           <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>
@@ -129,13 +129,18 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
             <Emojis show={show}/>
           </CSSTransition>
         </div>
-        <div className='d-flex justify-content-between m-3'>
-          <ShoutOutIcon/>
-          <BtnBack onClick={backHandling} addClass='m-1 align-self-center'/>
-          <BtnNext data={data} setData={setData} onClick={emotion.category  ? handlingOnClickNext : null} disabled={!emotion.category || emotion.word.length < 2} addClass='m-1 align-self-center'/>
-          <HelpIcon/>
+        <div className='d-flex position-absolute placement-buttons justify-content-between col-6 offset-3'>
+          <BtnBack onClick={backHandling} addClass='align-self-center'/>
+          <BtnNext data={data} setData={setData} onClick={emotion.category  ? handlingOnClickNext : null} disabled={!emotion.category || emotion.word.length < 2} addClass='align-self-center'/>
         </div>
+        <CornerElements data = { data }
+                        setData = { setData }
+                        percentCompletion = { 0 }
+                        saveDataToDb={saveDataToDb}
+                        steps={steps}
+                        draft={draft}/>
       </Wrapper>
+
     }
   </Fragment>
 }

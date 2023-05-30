@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {Footer, Header, Wrapper} from "../UI/ShareContent";
-import {isPresent} from "../helpers/helpers";
+import React, {useState} from 'react';
+import {Wrapper} from "../UI/ShareContent";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
+import CornerElements from "../UI/CornerElements";
 
 const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -29,7 +30,6 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft} />
     <div className='central-element'>
       <h1>It's like that sometimes...</h1>
       <h2 className="color-black">Reflect on what you think limited <br /> your productivity...</h2>
@@ -51,7 +51,13 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
         </div>
       </div>
     </div>
-    <Footer nextClick={handlingOnClickNext} />
+    <BlockLowerBtns nextHandling={ handlingOnClickNext } />
+    <CornerElements data = { data }
+                    setData = { setData }
+                    saveDataToDb={saveDataToDb}
+                    steps={steps}
+                    draft={isDraft}
+                    handleSaveDraft={handleSaveDraft} />
   </Wrapper>
 };
 

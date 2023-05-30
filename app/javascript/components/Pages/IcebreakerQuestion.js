@@ -1,8 +1,9 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
-import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
+import {BtnBack, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
+import CornerElements from "../UI/CornerElements";
 
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -89,21 +90,19 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
   return (
     <Fragment>
       {!isLoading && !error &&
-        <Wrapper>
-          <Header saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}/>
           <div className='icebreaker-position'>
             <div className='d-flex justify-content-center flex-column'>
               <h4 className='mb-0'>Thanks for answering!</h4>
               <h1 className='mb-3'>Interested in submitting your <br/> own question to the team?</h1>
             </div>
             <div className='icebreaker'>
-              <div className='wrap'>
+              <div className='wrap pt-32'>
                 <p className='b3 muted'><span className='red-violet'>@</span>{userName} asks:</p>
                 {loaded &&
-                  <div className='wrap-textarea'>
+                  <div className='wrap-textarea middle'>
                     <form>
                       <div className="form-group">
-                      <textarea className='input' name='question_body'
+                      <textarea className='input middle' name='question_body'
                                 placeholder='What would you ask the team? You could be selected!'
                                 value={funQuestion?.question_body || ''}
                                 onChange={onChangQuestion} maxLength={700} />
@@ -113,15 +112,20 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
                 }
               </div>
             </div>
-            <div className='d-flex justify-content-between m-3'>
-              <ShoutOutIcon/>
-              <BtnBack addClass="answer-custom" onClick={backHandling}/>
-              <BtnPrimary addClass="answer-custom" onClick={handlingOnClickNext} text={isEmptyStr(funQuestionBody) ? 'Skip to Results' : 'Submit'} />
-              <HelpIcon/>
+            <div className='d-flex placement-buttons justify-content-between col-6 offset-3 pb-52 mt-5'>
+              <BtnBack onClick={backHandling}/>
+              <BtnPrimary addClass={`${isEmptyStr(funQuestionBody) ? "answer-custom" : ""}`}
+                          onClick={handlingOnClickNext}
+                          text={isEmptyStr(funQuestionBody) ? 'Skip to Results' : 'Submit'} />
             </div>
           </div>
-        </Wrapper>
       }
+      <CornerElements         data = { data }
+                              setData = { setData }
+                              saveDataToDb={saveDataToDb}
+                              steps={steps}
+                              draft={isDraft}
+                              handleSaveDraft={handleSaveDraft}/>
     </Fragment>
   );
 };
