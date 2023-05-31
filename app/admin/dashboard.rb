@@ -3,8 +3,8 @@ ActiveAdmin.register_page 'Dashboard' do
 
   content title: proc { I18n.t("active_admin.dashboard") } do
     columns do
-      panel 'This Time Period compared to Average' do
-        current_period = TimePeriod.current
+      current_period = TimePeriod.current
+      panel "Average for range #{current_period&.date_range} / Average for all time periods" do
         all_periods = TimePeriod.all
 
         emotion_index_current_period = EmotionIndex.new(nil, [current_period]).generate

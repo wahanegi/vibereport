@@ -71,403 +71,247 @@ ActiveAdmin.register Team do
           team.users.map { |user| user.email }.sort.join("<br>").html_safe
         end
       end
-    end
+      panel 'Select Time Period' do
+        form action: admin_team_path(team), method: :get do
+          select_tag :time_period, 
+                     options_from_collection_for_select(TimePeriod.all.order(end_date: :desc), :id, :date_range, params[:time_period]), 
+                     include_blank: 'Select Time Period',
+                     onchange: "this.form.submit();"
+        end
+      end
+      time_periods = TimePeriod.where(id: params[:time_period]).first if params[:time_period].present?
+      if time_periods
+        previous_time_periods = TimePeriod.where("end_date < ?", time_periods.start_date).order(end_date: :desc).first
+        panel "Time Period: <span style='color: #007bff; font-weight: bold;'>#{time_periods.date_range}</span>".html_safe do
+          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_periods).count
 
-    previous_time_periods = TimePeriod.where("end_date < ?", Date.current).order(end_date: :desc).first
+          if responses_count == 0
+            div 'No data available for the time period.'
+          else
+            emotion_index_report = EmotionIndex.new(team, time_periods)
+            emotion_index = emotion_index_report.generate
+            formatted_result = emotion_index[:emotion_index]
+            chart = emotion_index[:chart]
+            previous_emotion_index_report = EmotionIndex.new(team, previous_time_periods)
+            previous_emotion_index = previous_emotion_index_report.generate
+            previous_period_emotion_index = previous_emotion_index[:emotion_index]
 
-    if previous_time_periods.present?
+            productivity_avg_report = ProductivityAverage.new(team, time_periods)
+            productivity_avg = productivity_avg_report.generate
+            previous_period_productivity_avg_report = ProductivityAverage.new(team, previous_time_periods)
+            previous_period_productivity_avg = previous_period_productivity_avg_report.generate
 
-      panel "Time Period: <span style='color: #007bff; font-weight: bold;'>#{previous_time_periods.date_range}</span>".html_safe do   
-        responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: previous_time_periods).count
+
+            participation_percentage_report = ParticipationPercentage.new(team, time_periods)
+            participation_percentage = participation_percentage_report.generate
+            previous_period_participation_percentage_report = ParticipationPercentage.new(team, previous_time_periods)
+            previous_period_participation_percentage = previous_period_participation_percentage_report.generate
+
+            productivity_verbatims_report = ProductivityVerbatims.new(team, time_periods)
+            productivity_verbatims = productivity_verbatims_report.generate
+
+            celebrate_comments_count_report = CelebrationsCount.new(team, time_periods)
+            celebrate_comments_count = celebrate_comments_count_report.generate
+            previous_period_celebrate_comments_count_report = CelebrationsCount.new(team, previous_time_periods)
+            previous_period_celebrate_comments_count = previous_period_celebrate_comments_count_report.generate
+
+            celebrate_verbatims_report = CelebrationVerbatims.new(team, time_periods)
+            celebrate_verbatims = celebrate_verbatims_report.generate
+
+            teammate_engagement_count_report = TeammateEngagementCount.new(team, time_periods)
+            teammate_engagement_count = teammate_engagement_count_report.generate
+
+            previous_teammate_engagement_count_report = TeammateEngagementCount.new(team, previous_time_periods)
+            previous_teammate_engagement_count = previous_teammate_engagement_count_report.generate
+
+            verbatim_list_report = TeammateEngagementVerbatims.new(team, time_periods)
+            verbatim_list = verbatim_list_report.generate
+          
+            attributes_table_for team do
+              row :Emotion_Index do
+                trend = previous_period_emotion_index.to_f < formatted_result.to_f ? '&#x2191;' : '&#x2193;'
+
+                div do
+                  span formatted_result
+                  span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                end
+              end
+              row :Emotion_Chart do
+                chart
+              end
+
+              row :Productivity_Average do
+                trend = previous_period_productivity_avg.to_f < productivity_avg.to_f ? '&#x2191;' : '&#x2193;'
+
+                div do
+                  span productivity_avg
+                  span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                end
+              end
+              
+              row :Participation_Percentage do
+                if participation_percentage.is_a?(String)
+                  span participation_percentage
+                else
+                  trend = previous_period_participation_percentage < participation_percentage ? '&#x2191;' : '&#x2193;'
+                  div do
+                    span participation_percentage
+                    span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                  end
+                end
+              end
+
+              row :Productivity_Verbatims do
+                if productivity_verbatims.is_a?(Array)
+                  ul class: 'bubble-list' do
+                    productivity_verbatims.each do |comment|
+                      li class: 'bubble' do
+                        span comment
+                      end
+                    end
+                  end
+                else
+                  div productivity_verbatims
+                end
+              end
+
+              row :Celebrations_Count do
+                if celebrate_comments_count.is_a?(String)
+                  span celebrate_comments_count
+                else
+                  trend = previous_period_celebrate_comments_count.to_f < celebrate_comments_count.to_f ? '&#x2191;' : '&#x2193;'
+
+                  div do
+                    span celebrate_comments_count
+                    span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                  end
+                end
+              end
+
+              row :Celebration_Verbatims do
+                if celebrate_verbatims.is_a?(Array)
+                  ul class: 'bubble-list' do
+                    celebrate_verbatims.each do |comment|
+                      unless comment.blank?
+                        li class: 'bubble' do
+                          span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+                        end
+                      end
+                    end
+                  end
+                else
+                  div celebrate_verbatims
+                end
+              end
+
+              row :Teammate_Engagement_Count do
+                if teammate_engagement_count.is_a?(String)
+                  span teammate_engagement_count
+                else
+                  trend = previous_teammate_engagement_count.to_f < teammate_engagement_count.to_f ? '&#x2191;' : '&#x2193;'
+
+                  div do
+                    span teammate_engagement_count
+                    span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                  end
+                end
+              end
+
+              row :Teammate_Engagement_Verbatims do
+                if verbatim_list.is_a?(Array)
+                  ul class: 'bubble-list' do
+                    verbatim_list.each do |comment|
+                      unless comment.blank?
+                        li class: 'bubble' do
+                          span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+                        end
+                      end
+                    end
+                  end
+                else
+                  div verbatim_list
+                end
+              end
+            end
+          end
+        end
+      else
+        panel "No Time Period Selected" do
+          "Please select a time period to view the report."
+        end
+      end
+
+      all_time_periods = TimePeriod.pluck(:id)
+      earliest_start_date = TimePeriod.minimum(:start_date)
+      latest_end_date = TimePeriod.maximum(:end_date)
+
+      panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do    
+
+        responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods).count
 
         if responses_count == 0
-          div 'No data available for the previous period.'
+          div 'No data available for the all time period.'
         else
-          emotion_index_report = EmotionIndex.new(team, previous_time_periods)
+          emotion_index_report = EmotionIndex.new(team, all_time_periods)
           emotion_index = emotion_index_report.generate
           formatted_result = emotion_index[:emotion_index]
-          chart = emotion_index[:chart]        
-          time_period = TimePeriod.where("end_date < ?", previous_time_periods.start_date).order(end_date: :desc).first
-          previous_emotion_index_report = EmotionIndex.new(team, time_period)
-          previous_emotion_index = previous_emotion_index_report.generate
-          previous_period_emotion_index = previous_emotion_index[:emotion_index]
+          chart = emotion_index[:chart]
 
-          productivity_avg_report = ProductivityAverage.new(team, previous_time_periods)
+          productivity_avg_report = ProductivityAverage.new(team, all_time_periods)
           productivity_avg = productivity_avg_report.generate
-          previous_period_productivity_avg_report = ProductivityAverage.new(team, time_period)
-          previous_period_productivity_avg = previous_period_productivity_avg_report.generate
 
-          participation_percentage_report = ParticipationPercentage.new(team, previous_time_periods)
+          participation_percentage_report = ParticipationPercentage.new(team, all_time_periods)
           participation_percentage = participation_percentage_report.generate
 
-          previous_period_participation_percentage_report = ParticipationPercentage.new(team, time_period)
-          previous_period_participation_percentage = previous_period_participation_percentage_report.generate
-
-          productivity_verbatims_report = ProductivityVerbatims.new(team, previous_time_periods)
+          productivity_verbatims_report = ProductivityVerbatims.new(team, all_time_periods)
           productivity_verbatims = productivity_verbatims_report.generate
 
-          celebrate_comments_count_report = CelebrationsCount.new(team, previous_time_periods)
+          responses_report = ResponsesReport.new(team, all_time_periods)
+          responses_data = responses_report.generate
+
+          celebrate_comments_count_report = CelebrationsCount.new(team, all_time_periods)
           celebrate_comments_count = celebrate_comments_count_report.generate
 
-          previous_period_celebrate_comments_count_report = CelebrationsCount.new(team, time_period)
-          previous_period_celebrate_comments_count = previous_period_celebrate_comments_count_report.generate
-
-          celebrate_verbatims_report = CelebrationVerbatims.new(team, previous_time_periods)
+          celebrate_verbatims_report = CelebrationVerbatims.new(team, all_time_periods)
           celebrate_verbatims = celebrate_verbatims_report.generate
 
-          teammate_engagement_count_report = TeammateEngagementCount.new(team, previous_time_periods)
+          teammate_engagement_count_report = TeammateEngagementCount.new(team, all_time_periods)
           teammate_engagement_count = teammate_engagement_count_report.generate
 
-          previous_teammate_engagement_count_report = TeammateEngagementCount.new(team, time_period)
-          previous_teammate_engagement_count = previous_teammate_engagement_count_report.generate
-
-          verbatim_list_report = TeammateEngagementVerbatims.new(team, previous_time_periods)
+          verbatim_list_report = TeammateEngagementVerbatims.new(team, all_time_periods)
           verbatim_list = verbatim_list_report.generate
 
           attributes_table_for team do
             row :Emotion_Index do
-              trend = previous_period_emotion_index.to_f < formatted_result.to_f ? '&#x2191;' : '&#x2193;'
-
-              div do
-                span formatted_result
-                span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
-              end
+              span formatted_result
             end
             row :Emotion_Chart do
               chart
             end
 
             row :Productivity_Average do
-              trend = previous_period_productivity_avg.to_f < productivity_avg.to_f ? '&#x2191;' : '&#x2193;'
-
-              div do
-                span productivity_avg
-                span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
-              end
+              span productivity_avg
             end
 
             row :Participation_Percentage do
-              if participation_percentage.is_a?(String)
-                span participation_percentage
-              else
-                trend = previous_period_participation_percentage < participation_percentage ? '&#x2191;' : '&#x2193;'
-
-                div do
-                  span participation_percentage
-                  span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
-                end
-              end
+              span participation_percentage
             end
 
-            row :Productivity_Verbatims do
-              if productivity_verbatims.is_a?(Array)
-                ul class: 'bubble-list' do
-                  productivity_verbatims.each do |comment|
-                    li class: 'bubble' do
-                      span comment
-                    end
-                  end
-                end
-              else
-                div productivity_verbatims
-              end
+            row :Responses_Report do
+              raw responses_data[:chart]
             end
 
             row :Celebrations_Count do
-              if celebrate_comments_count.is_a?(String)
-                span celebrate_comments_count
-              else
-                trend = previous_period_celebrate_comments_count.to_f < celebrate_comments_count.to_f ? '&#x2191;' : '&#x2193;'
-
-                div do
-                  span celebrate_comments_count
-                  span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
-                end
-              end
-            end
-
-            row :Celebration_Verbatims do
-              if celebrate_verbatims.is_a?(Array)
-                ul class: 'bubble-list' do
-                  celebrate_verbatims.each do |comment|
-                    unless comment.blank?
-                      li class: 'bubble' do
-                        span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
-                      end
-                    end
-                  end
-                end
-              else
-                div celebrate_verbatims
-              end
+              celebrate_comments_count
             end
 
             row :Teammate_Engagement_Count do
-              if teammate_engagement_count.is_a?(String)
-                span teammate_engagement_count
-              else
-                trend = previous_teammate_engagement_count.to_f < teammate_engagement_count.to_f ? '&#x2191;' : '&#x2193;'
-
-                div do
-                  span teammate_engagement_count
-                  span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
-                end
-              end
-            end
-
-            row :Teammate_Engagement_Verbatims do
-              if verbatim_list.is_a?(Array)
-                ul class: 'bubble-list' do
-                  verbatim_list.each do |comment|
-                    unless comment.blank?
-                      li class: 'bubble' do
-                        span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
-                      end
-                    end
-                  end
-                end
-              else
-                div verbatim_list
-              end
-            end
-          end
-        end
-      end
-    else
-      div 'No data available for the previous period.'
-    end
-
-    month = Date.today.month
-    year = Date.today.year
-    start_date = Date.new(year, month, 1)
-    end_date = start_date.end_of_month
-
-    panel "Monthly: <span style='color: #007bff; font-weight: bold;'>#{start_date.strftime('%B %Y')}</span>".html_safe do
-      monthly_time_periods = TimePeriod.where(start_date: start_date..end_date)
-      responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: monthly_time_periods).count
-
-      if responses_count == 0
-        div 'No data available for the monthly period.'
-      else
-        emotion_index_report = EmotionIndex.new(team, monthly_time_periods)
-        emotion_index = emotion_index_report.generate
-        formatted_result = emotion_index[:emotion_index]
-        chart = emotion_index[:chart]
-
-        productivity_avg_report = ProductivityAverage.new(team, monthly_time_periods)
-        productivity_avg = productivity_avg_report.generate
-
-        participation_percentage_report = ParticipationPercentage.new(team, monthly_time_periods)
-        participation_percentage = participation_percentage_report.generate
-
-        productivity_verbatims_report = ProductivityVerbatims.new(team, monthly_time_periods)
-        productivity_verbatims = productivity_verbatims_report.generate
-
-        celebrate_comments_count_report = CelebrationsCount.new(team, monthly_time_periods)
-        celebrate_comments_count = celebrate_comments_count_report.generate
-
-        celebrate_verbatims_report = CelebrationVerbatims.new(team, monthly_time_periods)
-        celebrate_verbatims = celebrate_verbatims_report.generate
-
-        teammate_engagement_count_report = TeammateEngagementCount.new(team, monthly_time_periods)
-        teammate_engagement_count = teammate_engagement_count_report.generate
-
-        verbatim_list_report = TeammateEngagementVerbatims.new(team, monthly_time_periods)
-        verbatim_list = verbatim_list_report.generate
-
-        attributes_table_for team do
-          row :Emotion_Index do
-            span formatted_result
-          end
-          row :Emotion_Chart do
-            chart
-          end
-
-          row :Productivity_Average do
-            span productivity_avg
-          end
-
-          row :Participation_Percentage do
-            span participation_percentage
-          end
-
-          row :Productivity_Verbatims do
-            if productivity_verbatims.is_a?(Array)
-              ul class: 'bubble-list' do
-                productivity_verbatims.each do |comment|
-                  li class: 'bubble' do
-                    span comment
-                  end
-                end
-              end
-            else
-              div productivity_verbatims
-            end
-          end
-
-          row :Celebrations_Count do
-            celebrate_comments_count
-          end
-
-          row :Celebration_Verbatims do
-            if celebrate_verbatims.is_a?(Array)
-              ul class: 'bubble-list' do
-                celebrate_verbatims.each do |comment|
-                  unless comment.blank?
-                    li class: 'bubble' do
-                      span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
-                    end
-                  end
-                end
-              end
-            else
-              div celebrate_verbatims
-            end
-          end
-
-          row :Teammate_Engagement_Count do
-            teammate_engagement_count
-          end
-
-          row :Teammate_Engagement_Verbatims do
-            if verbatim_list.is_a?(Array)
-              ul class: 'bubble-list' do
-                verbatim_list.each do |comment|
-                  unless comment.blank?
-                    li class: 'bubble' do
-                      span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
-                    end
-                  end
-                end
-              end
-            else
-              div verbatim_list
+              teammate_engagement_count
             end
           end
         end
       end
     end
-
-    all_time_periods = TimePeriod.pluck(:id)
-    earliest_start_date = TimePeriod.minimum(:start_date)
-    latest_end_date = TimePeriod.maximum(:end_date)
-
-    panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do    
-
-      responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods).count
-
-      if responses_count == 0
-        div 'No data available for the all time period.'
-      else
-        emotion_index_report = EmotionIndex.new(team, all_time_periods)
-        emotion_index = emotion_index_report.generate
-        formatted_result = emotion_index[:emotion_index]
-        chart = emotion_index[:chart]
-        previous_period_emotion_index = 0
-
-        productivity_avg_report = ProductivityAverage.new(team, all_time_periods)
-        productivity_avg = productivity_avg_report.generate
-        previous_period_productivity_avg = 5
-
-        participation_percentage_report = ParticipationPercentage.new(team, all_time_periods)
-        participation_percentage = participation_percentage_report.generate
-        previous_period_participation_percentage = 80
-
-        productivity_verbatims_report = ProductivityVerbatims.new(team, all_time_periods)
-        productivity_verbatims = productivity_verbatims_report.generate
-
-        responses_report = ResponsesReport.new(team, all_time_periods)
-        responses_data = responses_report.generate
-
-        celebrate_comments_count_report = CelebrationsCount.new(team, all_time_periods)
-        celebrate_comments_count = celebrate_comments_count_report.generate
-
-        celebrate_verbatims_report = CelebrationVerbatims.new(team, all_time_periods)
-        celebrate_verbatims = celebrate_verbatims_report.generate
-
-        teammate_engagement_count_report = TeammateEngagementCount.new(team, all_time_periods)
-        teammate_engagement_count = teammate_engagement_count_report.generate
-
-        verbatim_list_report = TeammateEngagementVerbatims.new(team, all_time_periods)
-        verbatim_list = verbatim_list_report.generate
-
-        attributes_table_for team do
-          row :Emotion_Index do
-            span formatted_result
-          end
-          row :Emotion_Chart do
-            chart
-          end
-
-          row :Productivity_Average do
-            span productivity_avg
-          end
-
-          row :Participation_Percentage do
-            span participation_percentage
-          end
-
-          row :Productivity_Verbatims do
-            if productivity_verbatims.is_a?(Array)
-              ul class: 'bubble-list' do
-                productivity_verbatims.each do |comment|
-                  li class: 'bubble' do
-                    span comment
-                  end
-                end
-              end
-            else
-              div productivity_verbatims
-            end
-          end
-
-          row :Responses_Report do
-            raw responses_data[:chart]
-          end
-
-          row :Celebrations_Count do
-            celebrate_comments_count
-          end
-
-          row :Celebration_Verbatims do
-            if celebrate_verbatims.is_a?(Array)
-              ul class: 'bubble-list' do
-                celebrate_verbatims.each do |comment|
-                  unless comment.blank?
-                    li class: 'bubble' do
-                      span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
-                    end
-                  end
-                end
-              end
-            else
-              div celebrate_verbatims
-            end
-          end
-
-          row :Teammate_Engagement_Count do
-            teammate_engagement_count
-          end
-
-          row :Teammate_Engagement_Verbatims do
-            if verbatim_list.is_a?(Array)
-              ul class: 'bubble-list' do
-                verbatim_list.each do |comment|
-                  unless comment.blank?
-                    li class: 'bubble' do
-                      span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
-                    end
-                  end
-                end
-              end
-            else
-              div verbatim_list
-            end
-          end
-        end
-      end
-    end
-
     active_admin_comments
   end
 
