@@ -19,24 +19,22 @@ class EmotionIndex < AdminReport
   private
 
   def responses
-    @responses ||= begin
+    @responses ||=
       if @team
         Response.joins(user: { teams: :users_teams })
                 .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods }).distinct
       else
         Response.where(responses: { time_period_id: @time_periods }).distinct
       end
-    end
   end
 
   def total_responses
-    @total_responses ||= begin
+    @total_responses ||=
       if @team
         @team.users.includes(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
       else
         User.joins(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
       end
-    end
   end
 
   def calculate_emotion_index

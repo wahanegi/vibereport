@@ -12,7 +12,7 @@ class ResponsesReport < AdminReport
 
     chart_id = SecureRandom.uuid
     chart = create_chart(data, chart_id)
-    
+
     { chart: chart, id: chart_id }
   end
 
