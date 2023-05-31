@@ -17,13 +17,12 @@ class ProductivityAverage < AdminReport
   private
 
   def responses
-    @responses ||= begin
-      if @team
-        Response.joins(user: { teams: :users_teams })
-                .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
-      else
-        Response.where(time_period_id: @time_periods).distinct
-      end
+    @responses ||=
+    if @team
+      Response.joins(user: { teams: :users_teams })
+              .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
+    else
+      Response.where(time_period_id: @time_periods).distinct
     end
   end
 end

@@ -7,9 +7,9 @@ class TeammateEngagementCount < AdminReport
   def generate
     teammate_engagement_count = if @team
                                   @team.users.joins(:shoutouts)
-                                      .where(shoutouts: { time_period_id: @time_periods })
-                                      .distinct
-                                      .count
+                                       .where(shoutouts: { time_period_id: @time_periods })
+                                       .distinct
+                                       .count
                                 else
                                   User.joins(:shoutouts)
                                       .where(shoutouts: { time_period_id: @time_periods })
