@@ -5,7 +5,8 @@ class TeammateEngagementCount < AdminReport
   end
 
   def generate
-    teammate_engagement_count = if @team
+    teammate_engagement_count =
+    if @team
       @team.users.joins(:shoutouts)
            .where(shoutouts: { time_period_id: @time_periods })
            .distinct
@@ -16,7 +17,7 @@ class TeammateEngagementCount < AdminReport
           .distinct
           .count
     end
-    if teammate_engagement_count == 0
+    if teammate_engagement_count.zero?
       'No teammate engagement available'
     else
       teammate_engagement_count

@@ -6,7 +6,8 @@ class EmotionIndex < AdminReport
   end
 
   def generate
-    responses = if @team
+    responses =
+    if @team
       Response.joins(user: { teams: :users_teams })
               .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods }).distinct
     else
@@ -27,7 +28,8 @@ class EmotionIndex < AdminReport
     positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
     negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
 
-    total_responses = if @team
+    total_responses =
+    if @team
       @team.users.includes(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
     else
       User.joins(:responses).where(responses: { time_period_id: @time_periods }).distinct.count

@@ -5,7 +5,8 @@ class CelebrationsCount < AdminReport
   end
 
   def generate
-    celebrate_comments_count = if @team
+    celebrate_comments_count =
+    if @team
       Response.joins(user: :users_teams)
               .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
               .where.not(celebrate_comment: [nil, ''])
@@ -16,7 +17,7 @@ class CelebrationsCount < AdminReport
               .count
     end
 
-    if celebrate_comments_count == 0
+    if celebrate_comments_count.zero?
       'No celebrate comments available'
     else
       celebrate_comments_count

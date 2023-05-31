@@ -17,7 +17,7 @@ class TeammateEngagementVerbatims < AdminReport
     team_member_ids = team_members.map { |member| member[0] }
     team_member_names = team_members.map { |member| member[1] }
     
-    shoutouts = shoutouts.select do |shoutout| 
+    shoutouts = shoutouts.select do |shoutout|
       user_ids = User.extract_user_ids_from_comment(shoutout)
       (user_ids & team_member_ids).any? || team_member_names.any? { |name| shoutout.include?(name) }
     end
