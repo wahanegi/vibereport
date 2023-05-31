@@ -6,9 +6,9 @@ import axios from "axios";
 import CornerElements from "../UI/CornerElements";
 
 const FULL_PRIMARY_HEIGHT = 401
-const MARGIN_BOTTOM = 8
+const MARGIN_BOTTOM = 17
 const HEIGHT_ROW_USER = 40
-const SUM_EDGE_DOWN_UP = 21
+const SUM_EDGE_DOWN_UP = 26
 
 const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service

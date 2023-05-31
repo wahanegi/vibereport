@@ -74,7 +74,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
               <h1 className='mb-3'>Interested in submitting your <br/> own question to the team?</h1>
             </div>
             <div className='icebreaker'>
-              <div className='wrap pt-32'>
+              <div className='wrap'>
                 <p className='b3 muted'><span className='red-violet'>@</span>{userName} asks:</p>
                 {loaded &&
                   <div className='wrap-textarea middle'>
