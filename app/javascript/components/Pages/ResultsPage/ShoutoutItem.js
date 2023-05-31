@@ -14,8 +14,13 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
     <div className="col-9">
       <div className='h5 w-auto text-start truncated fw-semibold'>
         {prefix}
-        {convertUsersToString(users)}
+        {prefix && convertUsersToString(users)}
         {isCollapse && parse(shoutout.rich_text)}
+        {
+          !isCollapse && !prefix && <Collapse in={!isCollapse}>
+            <div className='h5 d-flex justify-content-start fw-semibold'>{parse(shoutout.rich_text)}</div>
+          </Collapse>
+        }
       </div>
     </div>
     <div className="col-3">
@@ -25,7 +30,7 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
       </div>
     </div>
     {
-      !isCollapse && <Collapse in={!isCollapse}>
+      !isCollapse && prefix && <Collapse in={!isCollapse}>
         <div className='h5 d-flex justify-content-start fw-semibold'>{parse(shoutout.rich_text)}</div>
       </Collapse>
     }

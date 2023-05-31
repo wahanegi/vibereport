@@ -32,7 +32,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
       {
         currentUserShoutouts.sent.map(data => {
           const {shoutout, users} = data
-          return <ShoutoutItem key={shoutout.id} {...{shoutout, users}} prefix={'To '} />
+          return <ShoutoutItem key={shoutout.id} {...{shoutout, users}} />
         })
       }
     </div>
