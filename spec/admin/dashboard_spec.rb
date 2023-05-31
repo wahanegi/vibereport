@@ -14,7 +14,7 @@ RSpec.describe "Admin Dashboard", type: :request do
     it 'displays the Time Period compared to Average' do
       get "/admin/dashboard"
 
-      expect(response.body).to include('This Time Period compared to Average')
+      expect(response.body).to include('/ Average for all time periods')
       expect(response.body).to include('Emotion Index:')
       expect(response.body).to include('Productivity Average:')
       expect(response.body).to include('Celebrations Count:')
