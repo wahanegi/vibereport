@@ -15,6 +15,7 @@ import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
+import ShoutoutModal from "../../UI/ShoutoutModal";
 
 const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -32,6 +33,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
   const ref = useRef(null)
+  const [showModal, setShowModal] = useState(false)
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
@@ -70,7 +72,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
 
   const Footer = () => <Fragment>
     <HelpIcon addClass='hud help' />
-    <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} />
+    <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
       nextTimePeriod ?
         <div className='mt-5'>
@@ -107,42 +109,49 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   if (error) return <p>{error.message}</p>
 
   useEffect(() => {
-    if (!nextTimePeriod) {
+    if (!nextTimePeriod || showModal) {
       const element = ref.current;
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  }, [nextTimePeriod]);
+  }, [nextTimePeriod, showModal]);
 
-  return loaded && !isLoading && <div className='position-relative' ref={ref}>
-    <Wrapper>
-      {
-        notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
-      }
-      {
-        timePeriod.id === time_periods[0].id ?
-          isMinUsersResponses ?
-            <div className='text-header-position'>
-              <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
-              <h6>Come back later to view the results </h6><br/>
-            </div>:
-            <h1 className='text-header-position'><br/>The team is feeling...</h1>:
-          <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
-      }
-      <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
-      <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
-      <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
-      <ShoutoutSection nextTimePeriod={nextTimePeriod}
-                       timePeriod={timePeriod}
-                       sentShoutouts={sent_shoutouts}
-                       receivedShoutouts={received_shoutouts}
-                       data={data} setData={setData}
-                       currentUserShoutouts={current_user_shoutouts} />
-      <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
-      <CornerElements data={ data} setData={setData} percentCompletion={100} hideBottom={true}/>
-    </Wrapper>
-    <Footer />
-  </div>
+  return loaded && !isLoading && <Fragment>
+    <div className='position-relative' ref={ref}>
+      <Wrapper>
+        {
+          notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
+        }
+        {
+          timePeriod.id === time_periods[0].id ?
+            isMinUsersResponses ?
+              <div className='text-header-position'>
+                <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
+                <h6>Come back later to view the results </h6><br/>
+              </div>:
+              <h1 className='text-header-position'><br/>The team is feeling...</h1>:
+            <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
+        }
+        <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
+        <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
+        <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
+        <ShoutoutSection nextTimePeriod={nextTimePeriod}
+                         timePeriod={timePeriod}
+                         sentShoutouts={sent_shoutouts}
+                         receivedShoutouts={received_shoutouts}
+                         data={data} setData={setData}
+                         currentUserShoutouts={current_user_shoutouts} />
+        <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
+        <CornerElements data={ data} setData={setData} percentCompletion={100} hideBottom={true}/>
+      </Wrapper>
+      <Footer />
+    </div>
+    {
+      showModal && <ShoutoutModal onClose = {() => {setShowModal(false)} }
+                                  data={data} setData={setData} />
+
+    }
+  </Fragment>
 }
 export default Results;

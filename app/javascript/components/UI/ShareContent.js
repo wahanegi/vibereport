@@ -80,8 +80,8 @@ export const BtnBack = ({ addClass = '', hidden, onClick, disabled, text = 'Back
     {text}
   </button>
 
-export const ShoutOutIcon = ({addClass = ''}) =>
-  <div className={'m-0'}>
+export const ShoutOutIcon = ({addClass = '', onClick}) =>
+  <div className={'m-0 pointer'} onClick={onClick}>
     <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}} />
   </div>
 

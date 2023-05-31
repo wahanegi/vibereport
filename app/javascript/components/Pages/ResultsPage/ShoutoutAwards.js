@@ -27,8 +27,8 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
           <h6 className='w-auto text-center fw-semibold'>
             {
               nextTimePeriod ?
-                <Fragment>The most Active Award for {rangeFormat(timePeriod)} goes to...</Fragment>:
-                <Fragment>The most Active team members are currently...</Fragment>
+                <Fragment>The Most Active Awards for {rangeFormat(timePeriod)} go to...</Fragment>:
+                <Fragment>The Most Active team members are currently...</Fragment>
             }
           </h6>
           <h6 className='w-auto text-center fw-semibold'>
