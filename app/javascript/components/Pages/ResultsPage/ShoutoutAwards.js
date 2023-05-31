@@ -10,10 +10,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
 
   useEffect(() => {
     if (showModal) {
-      const modalElement = document.getElementById('overlays');
-      if (modalElement) {
-        modalElement.scrollIntoView({ behavior: 'smooth' });
-      }
+      window.scrollTo({top: 0, behavior: 'smooth'})
     }
   }, [showModal]);
 

@@ -32,7 +32,6 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   '</br></br>Skip this chek-in if you weren\'t working.'
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
-  const ref = useRef(null)
   const [showModal, setShowModal] = useState(false)
 
   const onRemoveAlert = () => {
@@ -110,15 +109,12 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
 
   useEffect(() => {
     if (!nextTimePeriod || showModal) {
-      const element = ref.current;
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      window.scrollTo({top: 0, behavior: 'smooth'})
     }
   }, [nextTimePeriod, showModal]);
 
   return loaded && !isLoading && <Fragment>
-    <div className='position-relative' ref={ref}>
+    <div className='position-relative'>
       <Wrapper>
         {
           notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
