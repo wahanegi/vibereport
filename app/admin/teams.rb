@@ -141,11 +141,17 @@ ActiveAdmin.register Team do
               end
 
               row :Productivity_Average do
-                trend = previous_period_productivity_avg.to_f < productivity_avg.to_f ? '&#x2191;' : '&#x2193;'
-
-                div do
-                  span productivity_avg
-                  span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                if productivity_avg != 'No productivity available'
+                  trend = previous_period_productivity_avg.to_f < productivity_avg.to_f ? '&#x2191;' : '&#x2193;'
+              
+                  div do
+                    span productivity_avg
+                    span trend.html_safe, style: "color: #{trend == '&#x2191;' ? 'green' : 'red'}; font-size: 20px; font-weight: bold;"
+                  end
+                else
+                  div do
+                    span productivity_avg
+                  end
                 end
               end
               

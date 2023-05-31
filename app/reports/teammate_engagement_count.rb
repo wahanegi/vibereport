@@ -18,7 +18,7 @@ class TeammateEngagementCount < AdminReport
           .count
     end
     if teammate_engagement_count.zero?
-      'No teammate engagement available'
+      'No teammate engagement count available'
     else
       teammate_engagement_count
     end
