@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Footer, Header, Wrapper} from "../UI/ShareContent";
-import {isPresent} from "../helpers/helpers";
+import {Wrapper} from "../UI/ShareContent";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
+import CornerElements from "../UI/CornerElements";
 
 const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -15,7 +16,6 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading && <Wrapper>
-    <Header />
     <div className='central-element'>
       <h1>It's like that sometimes...</h1>
       <h2 className="color-black">Reflect on what you think limited <br /> your productivity...</h2>
@@ -37,7 +37,10 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
         </div>
       </div>
     </div>
-    <Footer nextClick={handlingOnClickNext} />
+    <BlockLowerBtns nextHandling={ handlingOnClickNext } />
+    <CornerElements data = { data }
+                    setData = { setData }
+                    percentCompletion = { 30 } />
   </Wrapper>
 };
 

@@ -64,9 +64,11 @@ a {
   text-align: center;
 }
 .central-element {
+  margin-top: 151px;
   min-height: 60vh;
 }
 .help-icon {
+  z-index: 21;
   filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 .width-block {
@@ -92,14 +94,17 @@ a {
 .gray-300 {
   color: $gray-300 !important;
 }
+.transparent {
+  color: transparent;
+}
 
 //new.html.erb
 .welcome-field {
   width: 746px;
   height: 59px;
 }
-.mt-125 {
-  margin-top: 125px;
+.mt-123 {
+  margin-top: 123px;
 }
 .mt-negative-17 {
   margin-top:-17px !important;
@@ -171,6 +176,9 @@ a {
 }
 .mt-180 {
   margin-top: 180px;
+}
+.pb-52 {
+  padding-bottom: 52px;
 }
 .pencil {
   cursor: pointer;
@@ -418,6 +426,7 @@ a {
   right: 47px;
   top: 756px;
   border-radius: 50%;
+  z-index:21;
 }
 
 //ProductivitySlider
@@ -580,6 +589,7 @@ a {
     z-index: 31;
     margin-top: -25px;
     margin-left: 414px;
+    cursor: pointer
   }
   .placement-shoutout-btn {
     z-index: 31;
