@@ -15,8 +15,7 @@ const BlockLowerBtns = ({ isNext = true,
               <BtnBack onClick={backHandling}/>
               {isNext  && !isSubmit && <BtnPrimary text='Next' onClick={nextHandling} disabled={disabled} />}
               {!isNext && !isSubmit && <BtnPrimary text='Skip' onClick={skipHandling} />}
-              {isSubmit && <BtnPrimary
-                                       onClick={handlingOnClickNext}
+              {isSubmit && <BtnPrimary onClick={handlingOnClickNext}
                                        text={isEmptyStr(stringBody) ? 'Skip to Results' : 'Submit'} />}
           </div>
       </div>
