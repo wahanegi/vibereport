@@ -108,10 +108,16 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   if (error) return <p>{error.message}</p>
 
   useEffect(() => {
-    if (!nextTimePeriod || showModal) {
+    if (!nextTimePeriod) {
       window.scrollTo({top: 0, behavior: 'smooth'})
     }
-  }, [nextTimePeriod, showModal]);
+  }, [nextTimePeriod]);
+
+  useEffect(() => {
+    if (showModal) {
+      window.scrollTo({top: 200, behavior: 'smooth'})
+    }
+  }, [showModal]);
 
   return loaded && !isLoading && <Fragment>
     <div className='position-relative'>

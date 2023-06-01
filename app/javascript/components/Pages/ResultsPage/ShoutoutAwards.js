@@ -10,7 +10,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
 
   useEffect(() => {
     if (showModal) {
-      window.scrollTo({top: 0, behavior: 'smooth'})
+      window.scrollTo({top: 200, behavior: 'smooth'})
     }
   }, [showModal]);
 
