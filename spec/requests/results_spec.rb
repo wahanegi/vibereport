@@ -10,7 +10,7 @@ RSpec.describe Api::V1::ResultsController do
   end
 
   describe 'GET #show' do
-    subject { get "/api/v1/results/#{time_period.id}" }
+    subject { get "/api/v1/results/#{time_period.slug}" }
 
     it 'returns a success response' do
       subject

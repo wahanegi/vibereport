@@ -14,7 +14,7 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:shoutout2) { create :shoutout, time_period:, user: }
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
-  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.id, user) }
+  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user) }
 
   describe '#render' do
     subject { presenter.json_hash }

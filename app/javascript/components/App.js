@@ -3,6 +3,7 @@ import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import ResponseFlow from "./ResponseFlow";
 import { ALL_STEPS } from "./helpers/routes";
 import {apiRequest} from "./requests/axios_requests";
+import ResultsPreview from "./Pages/ResultsPage/ResultsPreview";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
@@ -64,6 +65,7 @@ const App = () => {
               }
             />
           ))}
+          <Route path="results/:slug" element={<ResultsPreview />} />
         </Routes>}
       </BrowserRouter>
     </Fragment>

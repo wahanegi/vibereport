@@ -90,20 +90,12 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   }, [timePeriodIndex, time_periods?.length])
 
   useEffect(() => {
-    axios.get(`/api/v1/results/${timePeriod.id}`)
+    axios.get(`/api/v1/results/${timePeriod.slug}`)
       .then(res => {
         setResults(res.data)
         setLoaded(true)
       })
   }, [timePeriod, data])
-
-  useEffect(() => {
-    const time_period_id = window.location.search.replace('?id=', '')
-    if (isPresent(time_periods) && window.location.search.includes('?id=')) {
-      const index = time_periods?.findIndex(element => String(element.id) === time_period_id);
-      setTimePeriodIndex(index)
-    }
-  }, [window.location.search, loaded])
 
   if (error) return <p>{error.message}</p>
 

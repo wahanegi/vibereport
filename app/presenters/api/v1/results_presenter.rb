@@ -2,8 +2,8 @@ class Api::V1::ResultsPresenter
   include ApplicationHelper
   attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users
 
-  def initialize(time_period_id, current_user)
-    @time_period = TimePeriod.find(time_period_id)
+  def initialize(time_period_slug, current_user)
+    @time_period = TimePeriod.find_by(slug: time_period_slug)
     @responses = time_period.responses.completed
     @fun_question_answers = responses.filter_map(&:fun_question_answer)
     @fun_question = fun_question_answers&.first&.fun_question.presence

@@ -16,12 +16,10 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
         {prefix}
         {prefix && convertUsersToString(users)}
         {isCollapse && parse(shoutout.rich_text)}
-        {
-          !isCollapse && !prefix && <Collapse in={!isCollapse}>
-            <div className='h5 d-flex justify-content-start fw-semibold'>{parse(shoutout.rich_text)}</div>
-          </Collapse>
-        }
       </div>
+      {
+        !isCollapse && !prefix && <div className='h5 text-start fw-semibold'>{parse(shoutout.rich_text)}</div>
+      }
     </div>
     <div className="col-3">
       <div className='d-flex flex-nowrap justify-content-end align-items-center pointer' onClick={toggle}>
@@ -31,7 +29,7 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
     </div>
     {
       !isCollapse && prefix && <Collapse in={!isCollapse}>
-        <div className='h5 d-flex justify-content-start fw-semibold'>{parse(shoutout.rich_text)}</div>
+        <div className='h5 text-start fw-semibold'>{parse(shoutout.rich_text)}</div>
       </Collapse>
     }
   </div>

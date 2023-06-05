@@ -8,6 +8,7 @@ ActiveAdmin.register TimePeriod do
     column :end_date
     column :created_at
     column :due_date
+    column :slug
     actions
   end
 end
