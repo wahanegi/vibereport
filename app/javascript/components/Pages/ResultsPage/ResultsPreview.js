@@ -25,7 +25,7 @@ const ResultsPreview = () => {
     <HelpIcon addClass='hud help' />
     <div className='mt-5'>
       <Link to='/'>
-        <BtnBack text ='Back to current week' addClass='mb-4 mt-5' onClick={() => {}} />
+        <BtnBack text ='Go to current week' addClass='mb-4 mt-5' onClick={() => {}} />
       </Link>
     </div>
     <div style={{height: 120}}></div>
@@ -48,7 +48,10 @@ const ResultsPreview = () => {
   return loaded && <Fragment>
     <div className='position-relative'>
       <Wrapper>
-        <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
+        <div className='mb-5'>
+          <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
+        </div>
+
         <EmotionSection emotions={emotions} nextTimePeriod={true} />
         <GifSection gifs={gifs} nextTimePeriod={true} />
         <ShoutoutSection nextTimePeriod={true}

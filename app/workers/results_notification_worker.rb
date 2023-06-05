@@ -23,7 +23,7 @@ class ResultsNotificationWorker
   end
 
   def send_results_email(user, time_period)
-    word_counts = time_period.responses.includes(:emotion)
+    word_counts = time_period.responses.completed.includes(:emotion)
                              .group('emotions.word', 'emotions.category')
                              .order('COUNT(emotions.word) DESC')
                              .pluck('emotions.word', 'emotions.category', 'COUNT(emotions.word) AS count_all')
