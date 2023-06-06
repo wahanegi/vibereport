@@ -25,7 +25,7 @@ const ResultsPreview = () => {
     <HelpIcon addClass='hud help' />
     <div className='mt-5'>
       <Link to='/'>
-        <BtnBack text ='Go to current week' addClass='mb-4 mt-5' onClick={() => {}} />
+        <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' />
       </Link>
     </div>
     <div style={{height: 120}}></div>
