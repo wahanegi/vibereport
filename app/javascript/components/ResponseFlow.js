@@ -123,19 +123,8 @@ const ResponseFlow = ({step, data, setData}) => {
       return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "icebreaker-question" :
       return <IcebreakerQuestion data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    // case  "MemeWallThisWeekSoFar" :
-    //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    // case  "MemeWallPrevWeek" :
-    //   return <MemeWallPrevWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    // case  "MemeWallThisWeek" :
-    //   return <MemeWallThisWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    // case  "MemeWallThisWeekSoFarDrop" :
-    //   return <MemeWallThisWeekSoFarDrop data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    // case  "PromptEmailResults" :
-    //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     default:
       // navigate ( `/emotion-selection-web`)
-
   }
 }
 export default ResponseFlow;
