@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Wrapper
 } from "../UI/ShareContent";
@@ -11,12 +11,12 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   const {response, users} = data
   const {isLoading, error} = service
   const [celebrateComment, setCelebrateComment] = useState(response.attributes.celebrate_comment || '')
-  const dataDraft = {celebrate_comment: celebrateComment || null}
   const [isDraft, setDraft] = useState(draft);
 
   const handleSaveDraft = () => {
+    const dataDraft = { celebrate_comment: celebrateComment || null, draft: true };
     saveDataToDb(steps, dataDraft);
-    setDraft(true)
+    setDraft(true);
   }
 
   useEffect(() => {
@@ -30,20 +30,12 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
     steps.push('recognition')
     saveDataToDb( steps , {celebrate_comment: null})
   }
-  console.log(data.response.attributes)
+
   const onClickNext = () => {
     steps.push('recognition')
     saveDataToDb( steps, {celebrate_comment: celebrateComment, draft: false})
   }
 
-<<<<<<< HEAD
-  const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
-    <Logo />
-    <Menu saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}>X% complete</Menu>
-  </div>
-
-=======
->>>>>>> master
   const onCommentChange = (e) => {
     setCelebrateComment(e.target.value)
   }
@@ -69,7 +61,10 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
     <BlockLowerBtns nextHandling={ onClickNext } skipHandling={ onClickSkip } isNext={ celebrateComment !== '' } />
     <CornerElements data = { data }
                     setData = { setData }
-                    percentCompletion = { 40 } />
+                    saveDataToDb={saveDataToDb}
+                    steps={steps}
+                    draft={isDraft}
+                    handleSaveDraft={handleSaveDraft} />
   </Wrapper>
 }
 

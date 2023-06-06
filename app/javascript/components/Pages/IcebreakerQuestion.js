@@ -32,7 +32,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
     const dataFromServer = (fun_question) =>{
       saveDataToDb( steps, {fun_question_id: fun_question.data.id})
     }
-    const dataDraft = {...dataRequest};
+    const dataDraft = {dataRequest, draft: true};
     saveDataToDb(steps, dataDraft)
     setDraft(true)
     saveDataQuestion(()=>{}, dataFromServer);

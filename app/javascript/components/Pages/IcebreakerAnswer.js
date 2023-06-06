@@ -24,7 +24,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
   const [isDraft, setDraft] = useState(draft)
   const dataRequest = {
     fun_question_answer: {
-      answer_body: answerBody,
+      answer_body: answerBody  || '',
       user_id: current_user_id,
       fun_question_id: data.fun_question.id
     }
@@ -41,10 +41,10 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
       saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id} )
     }
 
-    const dataDraft = {...dataRequest};
+    const dataDraft = {dataRequest, draft: true};
     saveDataToDb(steps, dataDraft)
     setDraft(true)
-    saveDataAnswer(()=>{}, dataFromServer, true);
+    saveDataAnswer(dataFromServer, ()=>{}, true);
   }
 
   const handlingOnClickNext = () => {
@@ -74,8 +74,13 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
         saveDataToDb(steps, {draft: false})
       }
     } else if (isEmptyStr(answerBody)) {
-      steps.push('productivity-bad-follow-up')
-      saveDataToDb(steps, {draft: false})
+      if (isDraft){
+        steps.push('icebreaker-answer')
+        saveDataToDb(steps, {draft: true})
+      }else {
+        steps.push('productivity-bad-follow-up')
+        saveDataToDb(steps, {draft: false})
+      }
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }

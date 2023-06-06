@@ -18,21 +18,19 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const {isLoading, error} = service
   const [gifUrl, setGifUrl] = useState(response.attributes.gif_url || '')
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
-  const dataDraft = {gif_url: gifUrl || null}
   const [isDraft, setDraft] = useState(draft);
 
   const handleSaveDraft = () => {
+    const dataDraft = {gif_url: gifUrl, draft: true}
     saveDataToDb(steps, dataDraft);
     setDraft(true)
   }
-  // useEffect(() => {
-  //   const dataComment = data.response.attributes.comment;
-  //   const dataRating = data.response.attributes.rating;
-  //   if (comment !== dataComment || rating !== dataRating) {
-  //     setDraft(false);
-  //   }else
-  //     setDraft(true);
-  // }, [comment, rating, data.response.attributes.comment, data.response.attributes.rating, draft]);
+
+  useEffect(() => {
+    if (gifUrl !== response.attributes.gif_url && isDraft) {
+      setDraft(false);
+    }
+  }, [gifUrl]);
 
   const handlingOnClickSkip = () =>{
     if (emotion.category === "neutral") {

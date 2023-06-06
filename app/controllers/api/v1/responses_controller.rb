@@ -62,14 +62,14 @@ module Api
       end
 
       def sign_out_user
-        # debugger
         ReminderEmailWorker.new(current_user, @response, TimePeriod.current).run_notification
         redirect_to auth.sign_in_path if sign_out User
       end
 
       def sign_in_from_email
-        debugger
+        retrieve_user
         sign_in_user
+        redirect_to root_path
       end
 
       private

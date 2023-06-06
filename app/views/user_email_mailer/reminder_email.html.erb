@@ -46,9 +46,9 @@
     <div class="big-btn mx-auto mt-40">
       <div class="big-btn-text mx-auto">
         <%= link_to "Back to check-in", { controller: 'api/v1/responses',
-                                         action: 'sign_in_from_email',
-                                         id: @time_period.id,
-                                         user_id: @user }%>
+                                          action: 'sign_in_from_email',
+                                          id: @time_period.id,
+                                          user_id: @user.id }%>
       </div>
   </div>
 </div>

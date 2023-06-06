@@ -660,19 +660,6 @@ a {
 }
 
 // Menu modal
-
-.backdrop-logout-modal{
-  background: #A6A1A1 !important;
-  filter: blur(50px) !important;
-}
-
-.btn-logout-modal{
-  background-color: $gray-200 !important;
-  &:hover {
-    background-color: shift-color($gray-200, 30%) !important;
-  }
-}
-
 .disabled-btn-draft{
   pointer-events: none;
   cursor: none;

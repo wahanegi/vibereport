@@ -34,7 +34,6 @@ class UserEmailMailer < ApplicationMailer
   end
 
   def reminder_email(user, response, time_period)
-    # debugger
     @response = response
     @user = user
     @time_period = time_period

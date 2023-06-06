@@ -26,7 +26,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
     }
     saveDataToDb( steps, dataRequest )
   }
-  console.log(data.response.attributes)
+
   const ownWordHandling = () => {
     steps.push('emotion-entry')
     const dataRequest = {

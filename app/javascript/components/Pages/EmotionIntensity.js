@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
@@ -66,10 +66,10 @@ const EmotionIntensity = ({data, setData, saveDataToDb, steps, service, draft}) 
   const [rating, setRating] = useState(data.response.attributes.rating || null);
   const [comment, setComment] = useState(data.response.attributes.comment || '');
   const isBlankGif = isBlank(gif_url)
-  const dataDraft = {rating, comment}
   const [isDraft, setDraft] = useState(draft);
 
   const handleSaveDraft = () => {
+    const dataDraft = {rating, comment, draft: true}
     saveDataToDb(steps, dataDraft);
     setDraft(true)
   }

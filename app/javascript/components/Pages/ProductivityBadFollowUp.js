@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
@@ -7,21 +7,20 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
   const {isLoading, error} = service
   const { bad_follow_comment } = data.response.attributes
   const [comment, setComment] = useState(bad_follow_comment || '');
-  const dataDraft = {bad_follow_comment: comment}
   const [isDraft, setDraft] = useState(draft);
 
   const handleSaveDraft = () => {
+    const dataDraft = { bad_follow_comment: comment, draft: true };
     saveDataToDb(steps, dataDraft);
-    setDraft(true)
+    setDraft(true);
   }
-
-  console.log('page dataDraft', isDraft )
 
   useEffect(() => {
    if (bad_follow_comment !== comment && isDraft) {
       setDraft(false);
     }
   }, [comment]);
+
   const handlingOnClickNext = () => {
     steps.push('causes-to-celebrate')
     saveDataToDb( steps, {bad_follow_comment: comment, draft: false})

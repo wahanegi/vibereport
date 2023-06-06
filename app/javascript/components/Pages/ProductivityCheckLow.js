@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import flame2 from '../../../assets/images/flame2.svg';
 import flame3 from '../../../assets/images/flame3.svg';
@@ -50,12 +50,12 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
 const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [productivity, setProductivity] = useState(data.response.attributes.productivity || 0);
-  const dataDraft = {productivity}
   const [isDraft, setDraft] = useState(draft);
 
   const handleSaveDraft = () => {
+    const dataDraft = { productivity, draft: true };
     saveDataToDb(steps, dataDraft);
-    setDraft(true)
+    setDraft(true);
   }
 
   useEffect(() => {
@@ -65,7 +65,6 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service, draf
     }
   }, [productivity]);
 
-  console.log(data)
   const handlingOnClickNext = () => {
     if (productivity < 3) {
       steps.push('productivity-bad-follow-up');
@@ -104,7 +103,10 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service, draf
       <BlockLowerBtns nextHandling={ handlingOnClickNext } disabled={isBlank(productivity) || productivity === 0} />
       <CornerElements data = { data }
                       setData = { setData }
-                      percentCompletion = { 30 } />
+                      saveDataToDb={saveDataToDb}
+                      steps={steps}
+                      draft={isDraft}
+                      handleSaveDraft={handleSaveDraft} />
     </Wrapper>
 };
 

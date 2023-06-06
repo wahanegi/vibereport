@@ -8,11 +8,14 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
   const {isLoading, error} = service
   const gif_url = data.response.attributes.gif_url
 
+  const handleSaveDraft = () => {
+    saveDataToDb(steps, {draft: true});
+  }
+
   const handlingOnClickNext = () => {
     steps.push('emotion-intensity')
     saveDataToDb( steps, {draft: false})
   }
-
 
   if (!!error) return <p>{error.message}</p>
 
@@ -39,7 +42,8 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
                       setData = { setData }
                       saveDataToDb={saveDataToDb}
                       steps={steps}
-                      draft={draft} />
+                      draft={draft}
+                      handleSaveDraft={handleSaveDraft}/>
     </Wrapper>
 };
 
