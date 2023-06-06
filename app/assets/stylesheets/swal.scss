@@ -21,3 +21,10 @@ body.swal2-shown > [aria-hidden="true"] {
   border: 4.01818px solid $royal-blue;
   border-radius: 15px;
 }
+
+.btn-logout-modal{
+  background-color: $gray-200 !important;
+  &:hover {
+    background-color: shift-color($gray-200, 30%) !important;
+  }
+}
