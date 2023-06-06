@@ -21,12 +21,14 @@ class ResponsesReport < AdminReport
   private
 
   def receive_response_counts
-    Response.joins(user: { teams: :users_teams })
-            .where(users_teams: { team_id: @team.id })
-            .where(time_period_id: @time_periods)
-            .distinct
-            .group('responses.time_period_id')
-            .count
+    @receive_response_counts ||= begin
+      Response.joins(user: { teams: :users_teams })
+              .where(users_teams: { team_id: @team.id })
+              .where(time_period_id: @time_periods)
+              .distinct
+              .group('responses.time_period_id')
+              .count
+    end
   end
 
   def response_data(response_counts)

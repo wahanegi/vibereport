@@ -8,7 +8,7 @@ class ProductivityAverage < AdminReport
     responses = receive_responses
     average_productivity = responses.average(:productivity)
 
-    average_productivity.nil? ? 'No productivity available' : average_productivity.round(2)
+    average_productivity.nil? ? 'No productivity present' : average_productivity.round(2)
   end
 
   private

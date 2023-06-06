@@ -6,7 +6,7 @@ class TeammateEngagementVerbatims < AdminReport
 
   def generate
     return 'No team provided' unless @team
-    
+
     team_members = receive_team_members
     team_member_ids = team_members.map { |member| member[0] }
     team_member_names = team_members.map { |member| member[1] }
@@ -22,24 +22,30 @@ class TeammateEngagementVerbatims < AdminReport
   private
 
   def receive_shoutouts
-    Shoutout.where(time_period_id: @time_periods).pluck(:rich_text)
+    @receive_shoutouts ||= begin
+      Shoutout.where(time_period_id: @time_periods).pluck(:rich_text)
+    end
   end
 
   def receive_celebrate_comments
-    Response.where(time_period_id: @time_periods)
-            .where.not(celebrate_comment: nil)
-            .pluck(:celebrate_comment)
+    @receive_celebrate_comments ||= begin
+      Response.where(time_period_id: @time_periods)
+              .celebrated
+              .pluck(:celebrate_comment)
+    end
   end
 
   def receive_team_members
-    User.joins(:users_teams)
-        .where(users_teams: { team_id: @team.id })
-        .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
+    @receive_team_members ||= begin
+      User.joins(:users_teams)
+          .where(users_teams: { team_id: @team.id })
+          .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
+    end
   end
 
   def filter_comments(comments, team_member_ids, team_member_names)
     comments.select do |comment|
-      user_ids = User.extract_user_ids_from_comment(comment)
+      user_ids = Response.celebrate_user_ids_from_comment(comment)
       (user_ids & team_member_ids).any? || team_member_names.any? { |name| comment.include?(name) }
     end
   end
@@ -56,8 +62,8 @@ class TeammateEngagementVerbatims < AdminReport
   end
 
   def message_for(verbatim_list)
-    if verbatim_list.empty? || (verbatim_list.length == 1 && verbatim_list[0] == "")
-      'No teammate engagement verbatims available'
+    if verbatim_list.empty? || (verbatim_list.length == 1 && verbatim_list[0] == '')
+      'No teammate engagement verbatims present'
     else
       verbatim_list
     end

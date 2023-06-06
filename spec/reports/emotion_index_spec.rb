@@ -8,8 +8,8 @@ RSpec.describe EmotionIndex, type: :model do
     subject { described_class.new(team, time_periods).generate }
 
     context 'when there are no responses' do
-      it 'returns a string indicating no emotion index available' do
-        expect(subject).to eq({ emotion_index: 'No emotion index available.', chart: nil })
+      it 'returns a string indicating no emotion index present' do
+        expect(subject).to eq({ emotion_index: 'No emotion index present.', chart: nil })
       end
     end
 

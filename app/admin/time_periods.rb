@@ -27,14 +27,14 @@ ActiveAdmin.register TimePeriod do
               end
             end
           else
-            'No comments available.'
+            'No comments present.'
           end
         end
       end
 
       column do
         panel 'Celebration Verbatims' do
-          celebrate_responses = time_period.responses.select { |response| response.celebrate_comment.present? }
+          celebrate_responses = time_period.responses.celebrated { |response| response.celebrate_comment.present? }
           
           if celebrate_responses.any?
             table_for celebrate_responses do
@@ -46,7 +46,7 @@ ActiveAdmin.register TimePeriod do
               end
             end
           else
-            'No celebration comments available.'
+            'No celebration comments present.'
           end
         end
       end
@@ -65,7 +65,7 @@ ActiveAdmin.register TimePeriod do
               end
             end
           else
-            'No teammate engagement verbatims available.'
+            'No teammate engagement verbatims present.'
           end
         end
       end

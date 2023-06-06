@@ -7,7 +7,7 @@ class ProductivityVerbatims < AdminReport
   def generate
     low_productivity_comments = receive_low_productivity_comments
 
-    low_productivity_comments.empty? ? 'No comments available' : low_productivity_comments
+    low_productivity_comments.empty? ? 'No comments present' : low_productivity_comments
   end
 
   private
@@ -34,7 +34,7 @@ class ProductivityVerbatims < AdminReport
                                     .reject(&:empty?)
                                     .map { |str| str.gsub(/\r\n/, '') }
                                     .reject(&:empty?)
-        comments[emotion] = comments[emotion].empty? ? 'No comments available' : comments[emotion].join(", ")
+        comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(", ")
       end
     end
   end

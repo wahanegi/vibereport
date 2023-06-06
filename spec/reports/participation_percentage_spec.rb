@@ -22,9 +22,9 @@ RSpec.describe ParticipationPercentage do
     end
 
     context 'when there are no users in the team' do
-      it 'returns "No users available"' do
+      it 'returns "No users present"' do
         percentage = report.generate
-        expect(percentage).to eq('No users available')
+        expect(percentage).to eq('No users present')
       end
     end
   end

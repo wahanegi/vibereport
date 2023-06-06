@@ -104,7 +104,7 @@ ActiveAdmin.register Team do
           responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period).count
 
           if responses_count == 0
-            div 'No data available for the time period.'
+            div 'No data present for this time period.'
           else
             formatted_result = vars[:emotion_index][:emotion_index]
             chart = vars[:emotion_index][:chart]
@@ -150,7 +150,7 @@ ActiveAdmin.register Team do
               end
 
               row :Productivity_Average do
-                if previous_time_period && productivity_avg != 'No productivity available'
+                if previous_time_period && productivity_avg != 'No productivity present'
                   trend_data = trend_direction(previous_period_productivity_avg, productivity_avg, compare_as_floats: true)
               
                   div do
@@ -270,7 +270,7 @@ ActiveAdmin.register Team do
         responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_period).count
 
         if responses_count == 0
-          div 'No data available for the all time period.'
+          div 'No data present for the all time period.'
         else
           responses_data = vars[:responses_data_all]
 

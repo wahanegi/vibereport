@@ -43,15 +43,15 @@ ActiveAdmin.register User do
               end
             end
           else
-            'No received shoutouts available.'
+            'No received shoutouts present.'
           end
         end
       end
 
       column do
         panel 'Celebration Verbatims' do
-          if user.received_celebrate_comments.present?
-            table_for user.received_celebrate_comments.sort_by(&:created_at).reverse do
+          if user.responses.celebrated.present?
+            table_for user.responses.celebrated.sort_by(&:created_at).reverse do
               column 'From' do |response|
                 response.user.to_full_name
               end
@@ -65,7 +65,7 @@ ActiveAdmin.register User do
               end
             end
           else
-            'No celebration verbatims available.'
+            'No celebration verbatims present.'
           end
         end
       end

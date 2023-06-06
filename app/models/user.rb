@@ -45,8 +45,4 @@ class User < ApplicationRecord
   def to_full_name
     "#{first_name} #{last_name}"
   end
-
-  def self.extract_user_ids_from_comment(comment)
-    comment.scan(/@\[.*?\]\((\d+)\)/).flatten.map(&:to_i)
-  end
 end

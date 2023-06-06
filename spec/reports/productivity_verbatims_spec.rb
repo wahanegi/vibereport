@@ -20,10 +20,10 @@ RSpec.describe ProductivityVerbatims do
       expect(comments).to eq(expected_comments)
     end
 
-    it 'returns "No comments available" if no low productivity responses are found' do
+    it 'returns "No comments present" if no low productivity responses are found' do
       Response.where('productivity <= ?', 2).destroy_all
       comments = report.generate
-      expect(comments).to eq('No comments available')
+      expect(comments).to eq('No comments present')
     end
   end
 end

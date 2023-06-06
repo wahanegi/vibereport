@@ -20,10 +20,10 @@ RSpec.describe ProductivityAverage do
       expect(average).to eq(expected_average)
     end
 
-    it 'returns "No productivity available" if no responses are found' do
+    it 'returns "No productivity present" if no responses are found' do
       Response.destroy_all
       average = report.generate
-      expect(average).to eq('No productivity available')
+      expect(average).to eq('No productivity present')
     end
   end
 end
