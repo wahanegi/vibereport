@@ -19,7 +19,6 @@ const ResultsPreview = () => {
   const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts} = results
   const [timePeriod, setTimePeriod] = useState({})
   const params = useParams();
-  console.log('results', results)
 
   const Footer = () => <Fragment>
     <HelpIcon addClass='hud help' />
