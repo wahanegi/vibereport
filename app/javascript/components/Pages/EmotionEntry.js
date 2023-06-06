@@ -135,7 +135,6 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
         </div>
         <CornerElements data = { data }
                         setData = { setData }
-                        percentCompletion = { 0 }
                         saveDataToDb={saveDataToDb}
                         steps={steps}
                         draft={draft}/>

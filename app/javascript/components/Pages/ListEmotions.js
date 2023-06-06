@@ -99,11 +99,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
           <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
             I was not working recently
           </NavLink>
-          <CornerElements         data = { data }
-                               setData = { setData }
+          <CornerElements data = { data }
+                          setData = { setData }
                           saveDataToDb = {saveDataToDb}
-                                  steps = {steps}
-                                  draft = {draft}/>
+                          steps = {steps}
+                          draft = {draft}/>
         </div>
       }
     </Fragment>

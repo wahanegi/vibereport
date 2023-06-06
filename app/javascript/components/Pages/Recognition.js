@@ -69,14 +69,13 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
   const cornerElements = (num) => {
     return <CornerElements data = { data }
-                        setData = { setData }
-              percentCompletion = { 80 }
-                   numShoutouts = { num }
-                 isMoveShoutout = { true }
-                   saveDataToDb = {saveDataToDb}
-                          steps = {steps}
-                          draft = {isDraft}
-                 handleSaveDraft={handleSaveDraft}/>
+                           setData = { setData }
+                           numShoutouts = { num }
+                           isMoveShoutout = { true }
+                           saveDataToDb = {saveDataToDb}
+                           steps = {steps}
+                           draft = {isDraft}
+                           handleSaveDraft={handleSaveDraft}/>
   }
 
   return (
