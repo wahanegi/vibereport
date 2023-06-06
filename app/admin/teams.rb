@@ -155,7 +155,7 @@ ActiveAdmin.register Team do
               
                   div do
                     span productivity_avg
-                    span span trend_data[:trend].html_safe, style: trend_data[:style]
+                    span trend_data[:trend].html_safe, style: trend_data[:style]
                   end
                 else
                   div do
@@ -174,7 +174,7 @@ ActiveAdmin.register Team do
                     trend_data = trend_direction(previous_period_participation_percentage, participation_percentage, compare_as_floats: true)
                     div do
                       span participation_percentage
-                      span span trend_data[:trend].html_safe, style: trend_data[:style]
+                      span trend_data[:trend].html_safe, style: trend_data[:style]
                     end
                   end
                 end
@@ -204,7 +204,7 @@ ActiveAdmin.register Team do
                     trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count, compare_as_floats: true)
                     div do
                       span celebrate_comments_count
-                      span span trend_data[:trend].html_safe, style: trend_data[:style]
+                      span trend_data[:trend].html_safe, style: trend_data[:style]
                     end
                   end
                 end
@@ -236,7 +236,7 @@ ActiveAdmin.register Team do
                     trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count, compare_as_floats: true)
                     div do
                       span teammate_engagement_count
-                      span span trend_data[:trend].html_safe, style: trend_data[:style]
+                      span trend_data[:trend].html_safe, style: trend_data[:style]
                     end
                   end
                 end

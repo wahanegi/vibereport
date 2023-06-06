@@ -20,7 +20,7 @@ class EmotionIndex < AdminReport
 
     result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
     formatted_result = result.round(2)
-    
+
     data = {
       'Positive Emotions' => positive_emotion_ids.count,
       'Negative Emotions' => negative_emotion_ids.count
@@ -35,7 +35,7 @@ class EmotionIndex < AdminReport
       colors: ['#00FF00', '#FF0000'],
       library: { legend: { position: 'bottom' } }
     )
-    
+
     { emotion_index: formatted_result, chart: chart }
   end
 

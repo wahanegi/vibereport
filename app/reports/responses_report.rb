@@ -8,7 +8,7 @@ class ResponsesReport < AdminReport
 
   def generate
     return 'No team provided' unless @team
-    
+
     response_counts = receive_response_counts
     data = response_data(response_counts)
 

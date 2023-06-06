@@ -27,7 +27,7 @@ class ProductivityVerbatims < AdminReport
     else
       comments.each_key do |emotion|
         comments[emotion] = receive_comments(emotion)
-        comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(", ")
+        comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(', ')
       end
     end
   end
