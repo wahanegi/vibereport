@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {Fragment, useEffect, useState} from "react"
 import {
   Footer, Header, Logo, Wrapper
 } from "../UI/ShareContent";
@@ -7,6 +7,8 @@ import { MentionsInput, Mention } from 'react-mentions'
 import mentionsInputStyles from "../UI/mention/mentionsInputStyles";
 import {apiRequest} from "../requests/axios_requests";
 import {isBlank, isEmptyStr, isNotEmptyStr} from "../helpers/helpers";
+import axios from "axios";
+import CelebrateModal from "./modals/CelebrateModal";
 
 const mentionToRichText = (mention) => {
   const regExpStart = /@\[/g
@@ -15,7 +17,7 @@ const mentionToRichText = (mention) => {
 }
 
 const richTextToMention = (celebrate_shoutout) => {
-  if (isBlank(celebrate_shoutout)) return null
+  if (isBlank(celebrate_shoutout) || isBlank(celebrate_shoutout.id)) return null
 
   const regExpStart = /<span class="color-primary">@/g
   const regExpEnd = /<\/span>/g
@@ -23,16 +25,24 @@ const richTextToMention = (celebrate_shoutout) => {
 }
 
 const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
-  const {celebrate_shoutout, users} = data
+  const {users, response} = data
   const {isLoading, error} = service
-  const prevCelebrateComment = richTextToMention(celebrate_shoutout) || ''
-  const [celebrateComment, setCelebrateComment] = useState(prevCelebrateComment)
-  const isEdited = prevCelebrateComment.trim() !== celebrateComment.trim()
-  console.log('celebrateComment', celebrateComment)
-  console.log('celebrate_shoutout', celebrate_shoutout)
+  const [loaded, setLoaded] = useState(false)
+  const [celebrateShoutout, setCelebrateShoutout] = useState({})
+  const [prevCelebrateComment, setPrevCelebrateComment] = useState('')
+  const [celebrateComment, setCelebrateComment] = useState('')
+  const isEdited = prevCelebrateComment?.trim() !== celebrateComment?.trim()
+  const placeholder ='Are you grateful for anything that happened at work recently? \n \n' +
+  'Use "@" to include Shoutouts to members of the team!'
+  const [show, setShow] = useState(false);
+
   const goToRecognitionPage = () => {
-    steps.push('recognition')
-    saveDataToDb(steps)
+    if (!celebrateShoutout.not_ask && celebrateShoutout.visible) {
+      setShow(true)
+    } else {
+      steps.push('recognition')
+      saveDataToDb(steps)
+    }
   }
 
   const onClickNext = () => {
@@ -45,38 +55,38 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
       is_celebrate: true,
       recipients: celebrateComment.match(/[^(]+(?=\))/g) || []
     }
-    const dataFromServer = ( createdUpdatedShoutOut ) => {
-      console.log("createdUpdatedShoutOut", createdUpdatedShoutOut)
-      let  currentCelebrateShoutout  = data.celebrate_shoutout
-      if (isEdited && isNotEmptyStr(prevCelebrateComment)) {
-        // currentCelebrateShoutout = currentShoutOuts.filter( item => item.id !== celebrate_shoutout.id )
-      }
-      setData({
-        ...data,
-        // user_shoutouts: [...currentShoutOuts, createdUpdatedShoutOut],
-        celebrate_shoutout: {...{ rich_text: mentionToRichText(celebrateComment)}}
-      })
+    const dataFromServer = (shoutout) => {
+      saveDataToDb(steps, {shoutout_id: shoutout.id})
     }
 
     const url = '/api/v1/shoutouts/'
-    const id = celebrate_shoutout?.id
+    const id = celebrateShoutout?.id
     if(isNotEmptyStr(prevCelebrateComment)) {
       if(isEdited && isNotEmptyStr(celebrateComment)) {
-        goToRecognitionPage()
-        apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then();
+        apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then(goToRecognitionPage);
       } else if(isEmptyStr(celebrateComment)) {
-        goToRecognitionPage()
-        apiRequest("DESTROY", dataSend, dataFromServer, () => {}, `${url}${id}`).then();
+        apiRequest("DESTROY", dataSend, dataFromServer, () => {}, `${url}${id}`).then(goToRecognitionPage);
       } else {
         goToRecognitionPage()
       }
     } else if (isEmptyStr(celebrateComment)) {
       goToRecognitionPage()
     } else {
-      apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then();
-      goToRecognitionPage()
+      apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then(goToRecognitionPage);
     }
   }
+
+  useEffect(() => {
+    const shoutout_id = response.attributes.shoutout_id
+    isBlank(shoutout_id) && setLoaded(true)
+    shoutout_id && axios.get(`/api/v1/shoutouts/${shoutout_id}`)
+      .then(res => {
+        setCelebrateShoutout(res.data.data?.attributes)
+        setPrevCelebrateComment(richTextToMention(res.data.data?.attributes))
+        setCelebrateComment(richTextToMention(res.data.data?.attributes))
+        setLoaded(true)
+      })
+  }, [])
 
   const Header = () => <div className='d-flex justify-content-between mx-3 mt-3'>
     <Logo />
@@ -89,29 +99,37 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
 
   if (!!error) return <p>{error.message}</p>
 
-  return !isLoading && <Wrapper>
-    <Header />
-    <h1>Are there any recent <br/> causes to celebrate?</h1>
-    <div className='d-flex justify-content-center'>
-      <MentionsInput value={celebrateComment}
-                     onChange={onCommentChange}
-                     placeholder='Are you grateful for anything that happened at work recently?'
-                     style={mentionsInputStyles}
-      >
-        <Mention
-          className={'mentions-mention'}
-          trigger="@"
-          displayTransform={(id, display) => `@${display}`}
-          data={users}
-        />
-      </MentionsInput>
-    </div>
+  return loaded && !isLoading && <Fragment>
+    <Wrapper>
+      <Header />
+      <h1>Are there any recent <br/> causes to celebrate?</h1>
+      <div className='d-flex justify-content-center'>
+        <MentionsInput value={celebrateComment}
+                       onChange={onCommentChange}
+                       placeholder={placeholder}
+                       style={mentionsInputStyles}
+        >
+          <Mention
+            className={'mentions-mention'}
+            trigger="@"
+            displayTransform={(id, display) => `@${display}`}
+            data={users}
+          />
+        </MentionsInput>
+      </div>
 
-    <Footer nextClick={onClickNext}
-            skipClick={onClickNext}
-            hideNext={isEmptyStr(celebrateComment)}
-            hideSkip={isNotEmptyStr(celebrateComment)}/>
-  </Wrapper>
+      <Footer nextClick={onClickNext}
+              skipClick={onClickNext}
+              hideNext={isEmptyStr(celebrateComment)}
+              hideSkip={isNotEmptyStr(celebrateComment)}/>
+    </Wrapper>
+    <CelebrateModal show={show}
+                    steps={steps}
+                    setShow={setShow}
+                    goToRecognitionPage={goToRecognitionPage}
+                    celebrateShoutout={celebrateShoutout}
+                    setCelebrateShoutout={setCelebrateShoutout} />
+  </Fragment>
 }
 
 export default CausesToCelebrate;

@@ -33,6 +33,11 @@
     }
   }
 
+  &.btn-danger{
+    color: $white;
+    background-color: $red;
+  }
+
   // use with C2 or C3 text
   &.btn-feature{
     width:            26.25rem;

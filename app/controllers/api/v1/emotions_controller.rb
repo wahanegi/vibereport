@@ -52,8 +52,7 @@ class Api::V1::EmotionsController < ApplicationController
         }
       end,
       fun_question:,
-      user_shoutouts: current_user.shoutouts,
-      celebrate_shoutout: current_user.celebrate_shoutouts.find_by(time_period_id: time_period.id)
+      user_shoutouts: current_user.shoutouts
     }
   end
 

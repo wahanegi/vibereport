@@ -4,7 +4,7 @@ module Api
       include ApplicationHelper
 
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices, :rating,
-                      :comment, :productivity, :bad_follow_comment, :celebrate_comment, :fun_question_id,
+                      :comment, :productivity, :bad_follow_comment, :fun_question_id, :shoutout_id,
                       :fun_question_answer_id, { gif: %i[src height] }].freeze
 
       before_action :retrieve_response, only: %i[update]
@@ -48,8 +48,7 @@ module Api
       def additional_data
         {
           emotion: @response.emotion,
-          user_shoutouts: current_user.shoutouts,
-          celebrate_shoutout: current_user.celebrate_shoutouts.find_by(time_period_id: TimePeriod.current.id)
+          user_shoutouts: current_user.shoutouts
         }
       end
 
