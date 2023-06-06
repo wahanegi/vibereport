@@ -26,16 +26,23 @@ class ProductivityVerbatims < AdminReport
               .pluck(:comment)
     else
       comments.each_key do |emotion|
-        comments[emotion] = Response.joins(:emotion)
-                                    .where(responses: { time_period_id: @time_periods })
-                                    .where(emotion: { category: emotion.to_s })
-                                    .pluck(:comment)
-                                    .compact
-                                    .reject(&:empty?)
-                                    .map { |str| str.gsub(/\r\n/, '') }
-                                    .reject(&:empty?)
+        comments[emotion] = receive_comments(emotion)
         comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(", ")
       end
+    end
+  end
+
+  def receive_comments(emotion)
+    @comments ||= {}
+    @comments[emotion] ||= begin
+      Response.joins(:emotion)
+              .where(responses: { time_period_id: @time_periods })
+              .where(emotion: { category: emotion.to_s })
+              .pluck(:comment)
+              .compact
+              .reject(&:empty?)
+              .map { |str| str.gsub(/\r\n/, '') }
+              .reject(&:empty?)
     end
   end
 end
