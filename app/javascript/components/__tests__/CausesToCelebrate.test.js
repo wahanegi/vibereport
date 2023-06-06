@@ -22,7 +22,7 @@ const mockService = {
     test('checking components for crashing', () => {
       render(
         <MemoryRouter>
-          <CausesToCelebrate data={data} setData={setData} service={mockService} />
+          <CausesToCelebrate data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
         </MemoryRouter>
         );
     });
@@ -30,7 +30,7 @@ const mockService = {
     it('reproduces page celebrate', () => {
       render(
         <MemoryRouter>
-            <CausesToCelebrate data={data} setData={setData} service={mockService} />
+            <CausesToCelebrate data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
         </MemoryRouter>
         );
       expect(screen.getByText('Are there any recent causes to celebrate?')).toBeInTheDocument();
@@ -39,7 +39,7 @@ const mockService = {
     it('should update the celebrateComment state when the comment input is changed', () => {
       const { getByPlaceholderText } = render(
         <MemoryRouter>
-          <CausesToCelebrate data={data} setData={setData} service={mockService} />
+          <CausesToCelebrate data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
         </MemoryRouter>
       );
       const commentInput = getByPlaceholderText('Are you grateful for anything that happened at work recently?');

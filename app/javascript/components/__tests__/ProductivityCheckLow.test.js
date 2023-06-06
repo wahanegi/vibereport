@@ -22,7 +22,7 @@ const mockService = {
     test('checking components for crashing', () => {
       render(
         <MemoryRouter>
-            <ProductivityCheckLow data={data} setData={setData} service={mockService} />
+            <ProductivityCheckLow data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
         </MemoryRouter>
         );
     });
@@ -30,7 +30,7 @@ const mockService = {
     test('reproduces  page productivity', () => {
       render(
         <MemoryRouter>
-            <ProductivityCheckLow data={data} setData={setData} service={mockService} />
+            <ProductivityCheckLow data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
         </MemoryRouter>
         );
       expect(screen.getByText('How productive have you been feeling recently?')).toBeInTheDocument();
@@ -40,7 +40,7 @@ const mockService = {
     test('productivity value changes on input', () => {
       render(
         <MemoryRouter>
-            <ProductivityCheckLow data={data} setData={setData} service={mockService} />
+            <ProductivityCheckLow data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
         </MemoryRouter>
         );
       const productivity = screen.getByRole('slider');

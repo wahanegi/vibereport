@@ -22,7 +22,7 @@ describe('ProductivityBadFollowUp', () => {
   test('checking components for crashing', () => {
     render(
       <MemoryRouter>
-        <ProductivityBadFollowUp data={data} setData={setData} service={mockService} />
+        <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
       </MemoryRouter>
       );
   });
@@ -30,7 +30,7 @@ describe('ProductivityBadFollowUp', () => {
   it('render page ProductivityBadFollowUp', () => {
     render(
       <MemoryRouter>
-        <ProductivityBadFollowUp data={data} setData={setData} service={mockService} />
+        <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
       </MemoryRouter>
       );
     expect(screen.getByText('It\'s like that sometimes...')).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('ProductivityBadFollowUp', () => {
   it('should update the bad_follow_comment state when the comment input is changed', () => {
     const { getByPlaceholderText } = render(
       <MemoryRouter>
-        <ProductivityBadFollowUp data={data} setData={setData} service={mockService} />
+        <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
       </MemoryRouter>
     );
     const commentInput = getByPlaceholderText('Is there anything that we can do to help?');
