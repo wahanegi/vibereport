@@ -4,6 +4,7 @@ import {BtnBack, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -96,7 +97,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
               <h1 className='mb-3'>Interested in submitting your <br/> own question to the team?</h1>
             </div>
             <div className='icebreaker'>
-              <div className='wrap pt-32'>
+              <div className='wrap'>
                 <p className='b3 muted'><span className='red-violet'>@</span>{userName} asks:</p>
                 {loaded &&
                   <div className='wrap-textarea middle'>
@@ -112,14 +113,9 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
                 }
               </div>
             </div>
-            <div className='d-flex placement-buttons justify-content-between col-6 offset-3 pb-52 mt-5'>
-              <BtnBack onClick={backHandling}/>
-              <BtnPrimary addClass={`${isEmptyStr(funQuestionBody) ? "answer-custom" : ""}`}
-                          onClick={handlingOnClickNext}
-                          text={isEmptyStr(funQuestionBody) ? 'Skip to Results' : 'Submit'} />
-            </div>
           </div>
       }
+      <BlockLowerBtns isSubmit={true} handlingOnClickNext={handlingOnClickNext} stringBody={funQuestionBody}/>
       <CornerElements         data = { data }
                               setData = { setData }
                               saveDataToDb={saveDataToDb}

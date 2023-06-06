@@ -4,11 +4,12 @@ import { BtnBack, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const FULL_PRIMARY_HEIGHT = 401
-const MARGIN_BOTTOM = 8
+const MARGIN_BOTTOM = 17
 const HEIGHT_ROW_USER = 40
-const SUM_EDGE_DOWN_UP = 21
+const SUM_EDGE_DOWN_UP = 26
 
 const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -141,14 +142,9 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
                 </div>
               </div>
             </div>
-            <div className='d-flex placement-buttons justify-content-between col-6 offset-3 pb-52 mt-5'>
-              <BtnBack onClick={backHandling}/>
-              <BtnPrimary addClass={`${isEmptyStr(answerBody) ? "answer-custom" : ""}`}
-                          onClick={handlingOnClickNext}
-                          text={isEmptyStr(answerBody) ? 'Skip to Results' : 'Submit'} />
-            </div>
           </div>
       }
+      <BlockLowerBtns isSubmit={true} handlingOnClickNext={handlingOnClickNext} stringBody={answerBody}/>
       <CornerElements         data = { data }
                               setData = { setData }
                               saveDataToDb={saveDataToDb}
