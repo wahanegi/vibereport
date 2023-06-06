@@ -5,21 +5,21 @@ class TeammateEngagementCount < AdminReport
   end
 
   def generate
-    teammate_engagement_count = if @team
-                                  @team.users.joins(:shoutouts)
-                                       .where(shoutouts: { time_period_id: @time_periods })
-                                       .distinct
-                                       .count
-                                else
-                                  User.joins(:shoutouts)
-                                      .where(shoutouts: { time_period_id: @time_periods })
-                                      .distinct
-                                      .count
-                                end
-    if teammate_engagement_count.zero?
-      'No teammate engagement count available'
+    teammate_engagement_count = receive_teammate_engagement_count
+    teammate_engagement_count.zero? ? 'No teammate engagement count available' : teammate_engagement_count
+  end
+
+  private
+
+  def receive_teammate_engagement_count
+    if @team
+      @team.users.joins(:shoutouts)
+           .where(shoutouts: { time_period_id: @time_periods })
+           .count
     else
-      teammate_engagement_count
+      User.joins(:shoutouts)
+          .where(shoutouts: { time_period_id: @time_periods })
+          .count
     end
   end
 end

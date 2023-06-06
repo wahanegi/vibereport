@@ -5,6 +5,8 @@ class TeammateEngagementVerbatims < AdminReport
   end
 
   def generate
+    return 'No team provided' unless @team
+    
     team_members = receive_team_members
     team_member_ids = team_members.map { |member| member[0] }
     team_member_names = team_members.map { |member| member[1] }
