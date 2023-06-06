@@ -55,8 +55,9 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
     }
 
     const goToResultPage = () => {
+      // TODO: change to redirect to the results page when it appears
       steps.push('productivity-bad-follow-up')
-      saveDataToDb( steps, {draft: false} )
+      saveDataToDb( steps, {draft: true} )
     }
     saveDataAnswer(dataFromServer, goToResultPage)
   };
@@ -77,11 +78,11 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
     } else if (isEmptyStr(answerBody)) {
       if (isDraft){
         steps.push('icebreaker-answer')
-        saveDataToDb(steps, {draft: true})
       }else {
+        // TODO: change to redirect to the results page when it appears
         steps.push('productivity-bad-follow-up')
-        saveDataToDb(steps, {draft: false})
       }
+      saveDataToDb(steps, {draft: true})
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }
