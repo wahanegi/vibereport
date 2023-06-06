@@ -49,4 +49,11 @@ class Response < ApplicationRecord
   validates :productivity, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9 },
                            presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
   serialize :steps, JSON
+
+  def received_celebrate_comments
+    comment_user_ids = User.extract_user_ids_from_comment(celebrate_comment)
+    Response.where.not(celebrate_comment: nil)
+            .where("? = ANY(STRING_TO_ARRAY(celebrate_comment, ' '))", user_id)
+            .where(user_id: comment_user_ids)
+  end
 end

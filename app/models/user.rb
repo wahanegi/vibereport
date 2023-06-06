@@ -49,12 +49,4 @@ class User < ApplicationRecord
   def self.extract_user_ids_from_comment(comment)
     comment.scan(/@\[.*?\]\((\d+)\)/).flatten.map(&:to_i)
   end
-
-  def received_celebrate_comments
-    Response.where.not(celebrate_comment: nil).select do |response|
-      user_ids = User.extract_user_ids_from_comment(response.celebrate_comment)
-      puts "User IDs in comment: #{user_ids}"
-      user_ids.include?(id)
-    end
-  end
 end
