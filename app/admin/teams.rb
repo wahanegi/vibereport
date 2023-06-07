@@ -266,7 +266,7 @@ ActiveAdmin.register Team do
         end
       end
       if earliest_start_date.nil? || latest_end_date.nil?
-        panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data available for this period</span>".html_safe do
+        panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe do
         end
       else
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
