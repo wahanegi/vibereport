@@ -14,13 +14,14 @@
 require 'rails_helper'
 
 RSpec.describe Team, type: :model do
+  let(:team) { create(:team) }
+  
   describe 'Associations' do
     it { should have_many(:users_teams).dependent(:destroy) }
     it { should have_many(:users).through(:users_teams) }
   end
 
   describe 'Validations' do
-    let(:team) { create(:team) }
     let(:long_name) { 'a' * 101 }
 
     it 'validates name length' do
@@ -29,11 +30,7 @@ RSpec.describe Team, type: :model do
     end
   end
 
-  describe 'Factory' do
-    let(:team) { build(:team) }
-
-    it 'factory works' do
-      expect(team).to be_valid
-    end
+  it 'factory works' do
+    expect(team).to be_valid
   end
 end

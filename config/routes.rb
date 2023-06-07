@@ -22,9 +22,5 @@ Rails.application.routes.draw do
   get '*path', to: 'home#app'
   get '/*undefined', to: redirect('/')
 
-  namespace :admin do
-    resources :teams
-  end
-
   root to: 'home#index'
 end

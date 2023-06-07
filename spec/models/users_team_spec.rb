@@ -21,22 +21,18 @@
 require 'rails_helper'
 
 RSpec.describe UsersTeam, type: :model do
+  let(:users_team) { create(:users_team) }
+  
   describe 'Associations' do
     it { should belong_to(:user) }
     it { should belong_to(:team) }
   end
 
   describe 'Validations' do
-    let(:users_team) { create(:users_team) }
-
     it { expect(users_team).to validate_uniqueness_of(:user_id).scoped_to(:team_id) }
   end
 
-  describe 'Factory' do
-    let(:users_team) { build(:users_team) }
-
-    it 'factory works' do
-      expect(users_team).to be_valid
-    end
+  it 'factory works' do
+    expect(users_team).to be_valid
   end
 end
