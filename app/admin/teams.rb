@@ -265,41 +265,45 @@ ActiveAdmin.register Team do
           'Please select a time period to view the report.'
         end
       end
+      if earliest_start_date.nil? || latest_end_date.nil?
+        panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data available for this period</span>".html_safe do
+        end
+      else
+        panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
+          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_period).count
 
-      panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
-        responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_period).count
+          if responses_count == 0
+            div 'No data present for the all time period.'
+          else
+            responses_data = vars[:responses_data_all]
 
-        if responses_count == 0
-          div 'No data present for the all time period.'
-        else
-          responses_data = vars[:responses_data_all]
+            attributes_table_for team do
+              row :Emotion_Index do
+                span vars[:emotion_index_all][:emotion_index]
+              end
+              row :Emotion_Chart do
+                vars[:emotion_index_all][:chart]
+              end
 
-          attributes_table_for team do
-            row :Emotion_Index do
-              span vars[:emotion_index_all][:emotion_index]
-            end
-            row :Emotion_Chart do
-              vars[:emotion_index_all][:chart]
-            end
+              row :Productivity_Average do
+                span vars[:productivity_avg_all]
+              end
 
-            row :Productivity_Average do
-              span vars[:productivity_avg_all]
-            end
+              row :Participation_Percentage do
+                span vars[:participation_percentage_all]
+              end
 
-            row :Participation_Percentage do
-              span vars[:participation_percentage_all]
-            end
+              row :Responses_Report do
+                raw responses_data[:chart]
+              end
 
-            row :Responses_Report do
-              raw responses_data[:chart]
-            end
+              row :Celebrations_Count do
+                vars[:celebrate_comments_count_all]
+              end
 
-            row :Celebrations_Count do
-              vars[:celebrate_comments_count_all]
-            end
-
-            row :Teammate_Engagement_Count do
-              vars[:teammate_engagement_count_all]
+              row :Teammate_Engagement_Count do
+                vars[:teammate_engagement_count_all]
+              end
             end
           end
         end
