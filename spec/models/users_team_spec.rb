@@ -27,10 +27,16 @@ RSpec.describe UsersTeam, type: :model do
   end
 
   describe 'Validations' do
-    let(:user) { create(:user) }
-    let(:team) { create(:team) }
-    subject { UsersTeam.new(user: user, team: team) }
+    let(:users_team) { create(:users_team) }
 
-    it { should validate_uniqueness_of(:user_id).scoped_to(:team_id) }
+    it { expect(users_team).to validate_uniqueness_of(:user_id).scoped_to(:team_id) }
+  end
+
+  describe 'Factory' do
+    let(:users_team) { build(:users_team) }
+
+    it 'factory works' do
+      expect(users_team).to be_valid
+    end
   end
 end

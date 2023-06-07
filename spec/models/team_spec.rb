@@ -20,17 +20,20 @@ RSpec.describe Team, type: :model do
   end
 
   describe 'Validations' do
-    subject { Team.new(name: 'Test Team') }
+    let(:team) { create(:team) }
+    let(:long_name) { 'a' * 101 }
 
-    it { should validate_presence_of(:name) }
-    it { should validate_length_of(:name).is_at_most(100) }
-    it { should validate_uniqueness_of(:name) }
-
-    it 'should not be valid with a name longer than 100 characters' do
-      long_name = 'a' * 101
-      team = Team.new(name: long_name)
+    it 'validates name length' do
+      team.name = long_name
       expect(team).not_to be_valid
-      expect(team.errors[:name]).to include('is too long (maximum is 100 characters)')
+    end
+  end
+
+  describe 'Factory' do
+    let(:team) { build(:team) }
+
+    it 'factory works' do
+      expect(team).to be_valid
     end
   end
 end

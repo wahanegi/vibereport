@@ -23,12 +23,8 @@ Rails.application.routes.draw do
   get '/*undefined', to: redirect('/')
 
   namespace :admin do
-    resources :teams do
-      collection do
-        get :export_csv
-      end
-    end
+    resources :teams
   end
-  
+
   root to: 'home#index'
 end

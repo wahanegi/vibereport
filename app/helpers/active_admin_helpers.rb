@@ -46,18 +46,18 @@ module ActiveAdminHelpers
     { trend: trend, style: trend_style }
   end
 
-  def calculate_trend(value1, value2, compare_as_floats)
-    comparison_result = compare_as_floats ? compare_as_floats(value1, value2) : compare_as_strings(value1, value2)
+  def calculate_trend(value1, value2, compare_as_float)
+    comparison_result = compare_as_float ? float_lesser_than?(value1, value2) : string_lesser_than?(value1, value2)
     comparison_result ? '&#x2191;' : '&#x2193;'
   end
 
   private
 
-  def compare_as_floats(value1, value2)
+  def float_lesser_than?(value1, value2)
     value1.to_f < value2.to_f
   end
-  
-  def compare_as_strings(value1, value2)
+
+  def string_lesser_than?(value1, value2)
     value1.to_s < value2.to_s
   end
 

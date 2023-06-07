@@ -33,7 +33,7 @@ ActiveAdmin.register Team do
         existing_user_ids = team.users.pluck(:id)
 
         user_emails.each do |email|
-          user = User.find_by(email: email.strip)
+          user = User.find_by(email: email.strip.downcase)
           if user
             UsersTeam.find_or_create_by(user_id: user.id, team_id: team.id)
             existing_user_ids.delete(user.id)
