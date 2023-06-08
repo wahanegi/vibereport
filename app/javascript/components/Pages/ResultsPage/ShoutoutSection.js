@@ -15,6 +15,7 @@ const PreviewShoutoutSection = () =>
 const NoShoutoutSent = ({nextTimePeriod, setShowModal}) =>
   <Fragment>
     <div className={`${nextTimePeriod ? '' : 'col-8'}`}>
+      <h5 className='text-start fw-semibold px-2'>Sent:</h5>
       <h5 className='text-center muted fw-semibold mt-3'>No Shoutouts sent for this check-in period...</h5>
     </div>
     <div className='col-4' hidden={nextTimePeriod}>
@@ -33,7 +34,8 @@ const NoShoutoutReceived = () =>
 
 const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts, data, setData}) => {
   const [showModal, setShowModal] = useState(false)
-  const emptyShoutouts = isEmpty(sentShoutouts) && isEmpty(receivedShoutouts) && isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
+  const emptyCurrentUserShoutouts = isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
+  const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
 
   useEffect(() => {
     if (showModal) {
@@ -44,7 +46,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   if(!nextTimePeriod && currentUserShoutouts.total_count < MIN_USERS_RESPONSES) return <PreviewShoutoutSection />
 
   const ReceivedShoutouts = () => {
-    if(!isEmpty(currentUserShoutouts.sent) && isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived />
+    if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived />
 
     return !isEmpty(currentUserShoutouts.received) && <div className='px-2'>
       <h5 className='text-start'>Received:</h5>
@@ -58,7 +60,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   }
 
   const SentShoutouts = () => {
-    if(!isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)) return <NoShoutoutSent {...{nextTimePeriod, setShowModal}} />
+    if(isEmpty(currentUserShoutouts.sent)) return <NoShoutoutSent {...{nextTimePeriod, setShowModal}} />
 
     return !isEmpty(currentUserShoutouts.sent) && <div className='px-2'>
       <h5 className='text-start'>Sent:</h5>
