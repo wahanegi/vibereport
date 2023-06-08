@@ -13,6 +13,8 @@ const RichInputElement =({ richText = '',
                            onSubmit ,
                            onClose,
                            classAt = 'color-primary'}) =>{
+  const calculateInitX = (window.innerWidth-884)/2+69
+  const initCoordinates = {x: calculateInitX, y: 373}
   const [textHTML, setTextHTML] = useState( richText )
   const textAreaRef = useRef(richText)
   const [filteredUsers, setFilteredUsers] = useState(RichText.sortUsersByFullName(listAllUsers))
@@ -23,7 +25,7 @@ const RichInputElement =({ richText = '',
       filteredUsers.length ? filteredUsers[0].id : "")
   const [caret, setCaret] = useState(textAreaRef.current.length)
   const [copyChosenUsers, setCopyChosenUsers] = useState([])
-  const [ coordinates, setCoordinates] = useState({ x:420, y:386 })
+  const [ coordinates, setCoordinates] = useState( initCoordinates )
   const [ cursorPosition, setCursorPosition ] = useState(null)
   const [ isDisabled, setIsDisabled] = useState(true)
   const element = textAreaRef.current
@@ -57,7 +59,7 @@ const RichInputElement =({ richText = '',
     event.preventDefault()
     const selectedValue = window.getSelection().toString();
     const text = element.textContent
-    const cursorPos = Cursor.getCurrentCursorPosition(element)
+    const cursorPos = Cursor.getCurrentCursorPosition(element, initCoordinates)
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
     let char = event.key
