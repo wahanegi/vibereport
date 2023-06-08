@@ -10,6 +10,11 @@ class ProductivityVerbatims < AdminReport
     low_productivity_comments.empty? ? 'No comments present' : low_productivity_comments
   end
 
+  def receive_comments(emotion)
+    @comments ||= {}
+    @comments[emotion] ||= fetch_comments(emotion)
+  end
+
   private
 
   def receive_low_productivity_comments
@@ -31,17 +36,19 @@ class ProductivityVerbatims < AdminReport
     comments
   end
 
-  def receive_comments(emotion)
-    @comments ||= {}
-    @comments[emotion] ||= begin
-      Response.joins(:emotion)
-              .where(responses: { time_period_id: @time_periods })
-              .where(emotion: { category: emotion.to_s })
-              .pluck(:comment)
-              .compact
-              .reject(&:empty?)
-              .map { |str| str.gsub(/\r\n/, '') }
-              .reject(&:empty?)
-    end
+  def fetch_comments(emotion)
+    comments = Response.joins(:emotion)
+                       .where(responses: { time_period_id: @time_periods })
+                       .where(emotion: { category: emotion.to_s })
+                       .pluck(:comment)
+
+    clean_comments(comments)
+  end
+
+  def clean_comments(comments)
+    comments.compact
+            .reject(&:empty?)
+            .map { |str| str.gsub(/\r\n/, '') }
+            .reject(&:empty?)
   end
 end

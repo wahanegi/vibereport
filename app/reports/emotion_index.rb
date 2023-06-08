@@ -26,16 +26,8 @@ class EmotionIndex < AdminReport
       'Negative Emotions' => negative_emotion_ids.count
     }
 
-    chart_id = SecureRandom.uuid
-
-    chart = pie_chart(
-      data,
-      id: chart_id,
-      donut: true,
-      colors: ['#00FF00', '#FF0000'],
-      library: { legend: { position: 'bottom' } }
-    )
-
+    chart = generate_chart(data)
+  
     { emotion_index: formatted_result, chart: chart }
   end
 
@@ -70,5 +62,17 @@ class EmotionIndex < AdminReport
              .where(emotions: { category: 'negative' })
              .distinct
              .pluck(:emotion_id)
+  end
+
+  def generate_chart(data)
+    chart_id = SecureRandom.uuid
+  
+    pie_chart(
+      data,
+      id: chart_id,
+      donut: true,
+      colors: ['#00FF00', '#FF0000'],
+      library: { legend: { position: 'bottom' } }
+    )
   end
 end
