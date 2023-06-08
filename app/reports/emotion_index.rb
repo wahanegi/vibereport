@@ -27,7 +27,7 @@ class EmotionIndex < AdminReport
     }
 
     chart = generate_chart(data)
-  
+
     { emotion_index: formatted_result, chart: chart }
   end
 
@@ -66,7 +66,7 @@ class EmotionIndex < AdminReport
 
   def generate_chart(data)
     chart_id = SecureRandom.uuid
-  
+
     pie_chart(
       data,
       id: chart_id,

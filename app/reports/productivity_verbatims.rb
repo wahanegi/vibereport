@@ -28,7 +28,7 @@ class ProductivityVerbatims < AdminReport
 
   def team_not_present
     comments = { positive: [], neutral: [], negative: [] }
-  
+
     comments.each_key do |emotion|
       comments[emotion] += receive_comments(emotion)
       comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(', ')
