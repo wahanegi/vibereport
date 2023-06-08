@@ -46,7 +46,16 @@ class ResponsesReport < AdminReport
   end
 
   def create_chart(data, chart_id)
-    area_chart data, xtitle: 'Period', ytitle: 'Count', id: chart_id,
-               library: { colors: ['green'], title: { fontName: 'Arial', fontSize: 18 } }
+    area_chart data,
+               xtitle: 'Period',
+               ytitle: 'Count',
+               id: chart_id,
+               library: {
+                 colors: ['green'],
+                 title: {
+                   fontName: 'Arial',
+                   fontSize: 18
+                 }
+               }
   end
 end
