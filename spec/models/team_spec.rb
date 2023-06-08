@@ -15,6 +15,10 @@ require 'rails_helper'
 
 RSpec.describe Team, type: :model do
   let(:team) { create(:team) }
+
+  it 'factory works' do
+    expect(team).to be_valid
+  end
   
   describe 'Associations' do
     it { should have_many(:users_teams).dependent(:destroy) }
@@ -28,9 +32,5 @@ RSpec.describe Team, type: :model do
       team.name = long_name
       expect(team).not_to be_valid
     end
-  end
-
-  it 'factory works' do
-    expect(team).to be_valid
   end
 end
