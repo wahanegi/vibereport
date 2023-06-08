@@ -13,23 +13,22 @@ class ProductivityVerbatims < AdminReport
   private
 
   def receive_low_productivity_comments
-    comments = {
-      positive: [],
-      neutral: [],
-      negative: []
-    }
-
-    if @team
-      Response.joins(user: :users_teams)
-              .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
-              .where('productivity <= ?', 2)
-              .pluck(:comment)
-    else
-      comments.each_key do |emotion|
-        comments[emotion] = receive_comments(emotion)
-        comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(', ')
-      end
-    end
+    return team_not_present if @team.nil?
+  
+    Response.joins(user: :users_teams)
+            .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
+            .where('productivity <= ?', 2)
+            .pluck(:comment)
+  end
+  
+  def team_not_present
+    comments = { positive: [], neutral: [], negative: [] }
+    
+    comments.each_key do |emotion|
+      comments[emotion] += receive_comments(emotion)
+      comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(', ')
+    end    
+    comments
   end
 
   def receive_comments(emotion)
