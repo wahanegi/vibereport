@@ -5,9 +5,9 @@ import {datePrepare, isBlank, isEmpty, isPresent, rangeFormat} from "../../helpe
 const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}) => {
   if(isEmpty(time_periods)) return null
 
-  const index = steps.indexOf('emotion-intensity');
-  const new_steps = steps.slice(0, index + 1);
   const handlingBack = () => {
+    const index = steps.indexOf('productivity-check');
+    const new_steps = steps.slice(0, index + 1);
     saveDataToDb( new_steps )
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
