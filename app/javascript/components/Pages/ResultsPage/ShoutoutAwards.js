@@ -39,20 +39,20 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
             }
           </h6>
           <h6 className='text-center fw-semibold row'>
-            <div className='col p-0' hidden={isEmpty(sentShoutouts)}>
-              {sentShoutouts.slice(0, 2).map((shoutout, i) =>
-                <div className='row d-inline-block'>
-                  <p className='fw-semibold d-inline' key={i}>
-                    <span className='color-rose'>@</span>{shoutout.recipient.first_name} sent {shoutout.count} {Pluralize( 'Shoutout', shoutout.count )}
+            <div className='col p-0' hidden={isEmpty(receivedShoutouts)}>
+              {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
+                <div className='row d-inline-block' key={i}>
+                  <p className='fw-semibold d-inline'>
+                    <span className='color-rose'> @</span>{shoutout.sender.first_name} sent {shoutout.count} {Pluralize( 'Shoutout', shoutout.count )}
                   </p>
                 </div>
               )}
             </div>
-            <div className='col p-0' hidden={isEmpty(receivedShoutouts)}>
-              {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
-                <div className='row d-inline-block'>
-                  <p className='fw-semibold d-inline' key={i}>
-                    <span className='color-rose'> @</span>{shoutout.sender.first_name} got {shoutout.count} {Pluralize( 'Shoutout', shoutout.count )}
+            <div className='col p-0' hidden={isEmpty(sentShoutouts)}>
+              {sentShoutouts.slice(0, 2).map((shoutout, i) =>
+                <div className='row d-inline-block'  key={i}>
+                  <p className='fw-semibold d-inline'>
+                    <span className='color-rose'>@</span>{shoutout.recipient.first_name} got {shoutout.count} {Pluralize( 'Shoutout', shoutout.count )}
                   </p>
                 </div>
               )}
