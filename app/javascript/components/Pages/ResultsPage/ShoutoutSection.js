@@ -47,7 +47,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
     if(!isEmpty(currentUserShoutouts.sent) && isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived />
 
     return !isEmpty(currentUserShoutouts.received) && <div className='px-2'>
-      <h5 className='text-start fw-semibold'>Received:</h5>
+      <h5 className='text-start'>Received:</h5>
       {
         currentUserShoutouts.received.map(data => {
           const {shoutout, users} = data
@@ -61,7 +61,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
     if(!isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)) return <NoShoutoutSent {...{nextTimePeriod, setShowModal}} />
 
     return !isEmpty(currentUserShoutouts.sent) && <div className='px-2'>
-      <h5 className='text-start fw-semibold'>Sent:</h5>
+      <h5 className='text-start'>Sent:</h5>
       {
         currentUserShoutouts.sent.map(data => {
           const {shoutout, users} = data
