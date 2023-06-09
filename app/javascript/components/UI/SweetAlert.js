@@ -19,7 +19,6 @@ const SweetAlert = ({onConfirmAction, onDeclineAction, alertTitle, alertHtml, ca
     cancelButtonText: cancelButtonText,
     confirmButtonText: confirmButtonText,
     reverseButtons: true,
-    backdrop:  'rgba(166, 161, 161, 85%)',
   }).then((result) => {
     if (result.isConfirmed) {
       return onConfirmAction()

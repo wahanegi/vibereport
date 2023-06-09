@@ -84,7 +84,7 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
           <Dropdown.Item href="#" ><Button className='btn-item-menu wb1  mx-auto my-auto' onClick={handleSignOut}>Log Out</Button></Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <div className='fs-6 text-primary' style={{margin: 19+"px 0 0 0"}}>{getSrcMenu(lastSegment).percent }% complete</div>
+      <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
       {showModal && (
         <SweetAlert
           alertTitle={"Are you sure you <br/>  want to log out?"}
@@ -97,7 +97,6 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
             setShowModal(false);
           }}
           cancelButtonClass='btn-logout-modal'
-          backdropClass='backdrop-logout-modal'
         />
       )}
     </div>

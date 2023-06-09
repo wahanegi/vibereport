@@ -660,10 +660,13 @@ a {
   padding-inline-end:   1.375rem !important;
 }
 
-// Menu modal
+// Menu
 .disabled-btn-draft{
   pointer-events: none;
   cursor: none;
   overflow: hidden;
   opacity: 0.6;
+}
+.text-complete{
+  margin: 19px 0 0 0;
 }

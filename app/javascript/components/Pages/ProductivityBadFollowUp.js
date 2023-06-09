@@ -7,17 +7,17 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
   const {isLoading, error} = service
   const { bad_follow_comment } = data.response.attributes
   const [comment, setComment] = useState(bad_follow_comment || '');
-  const [isDraft, setDraft] = useState(draft);
+  const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
     const dataDraft = { bad_follow_comment: comment, draft: true };
     saveDataToDb(steps, dataDraft);
-    setDraft(true);
+    setIsDraft(true);
   }
 
   useEffect(() => {
    if (bad_follow_comment !== comment && isDraft) {
-      setDraft(false);
+      setIsDraft(false);
     }
   }, [comment]);
 

@@ -50,18 +50,18 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
 const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [productivity, setProductivity] = useState(data.response.attributes.productivity || 0);
-  const [isDraft, setDraft] = useState(draft);
+  const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
     const dataDraft = { productivity, draft: true };
     saveDataToDb(steps, dataDraft);
-    setDraft(true);
+    setIsDraft(true);
   }
 
   useEffect(() => {
     const dataProductivity = data.response.attributes.productivity || 0
     if (productivity !== dataProductivity && isDraft) {
-      setDraft(false);
+      setIsDraft(false);
     }
   }, [productivity]);
 

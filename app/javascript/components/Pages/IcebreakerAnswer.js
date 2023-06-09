@@ -1,6 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {backHandling, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
-import { BtnBack, BtnPrimary} from "../UI/ShareContent";
+import {isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
@@ -22,7 +21,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
   const {user_name, question_body} = data.fun_question
   const user = user_name
   const current_user_id = data.current_user.id
-  const [isDraft, setDraft] = useState(draft)
+  const [isDraft, setIsDraft] = useState(draft)
   const dataRequest = {
     fun_question_answer: {
       answer_body: answerBody  || '',
@@ -33,7 +32,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
 
   useEffect(() => {
     if (answerBody !== prevAnswerBody && isDraft) {
-      setDraft(false);
+      setIsDraft(false);
     }
   }, [answerBody]);
 
@@ -44,7 +43,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
 
     const dataDraft = {dataRequest, draft: true};
     saveDataToDb(steps, dataDraft)
-    setDraft(true)
+    setIsDraft(true)
     saveDataAnswer(dataFromServer, ()=>{}, true);
   }
 

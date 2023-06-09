@@ -11,18 +11,18 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   const {response, users} = data
   const {isLoading, error} = service
   const [celebrateComment, setCelebrateComment] = useState(response.attributes.celebrate_comment || '')
-  const [isDraft, setDraft] = useState(draft);
+  const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
     const dataDraft = { celebrate_comment: celebrateComment || null, draft: true };
     saveDataToDb(steps, dataDraft);
-    setDraft(true);
+    setIsDraft(true);
   }
 
   useEffect(() => {
     const comment = response.attributes.celebrate_comment
     if (celebrateComment !== comment && isDraft) {
-      setDraft(false);
+      setIsDraft(false);
     }
   }, [celebrateComment]);
 

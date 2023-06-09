@@ -8,7 +8,7 @@ import ShoutoutModal from "../UI/ShoutoutModal";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
-  const [isDraft, setDraft] = useState(draft)
+  const [isDraft, setIsDraft] = useState(draft)
 
   const shoutOuts = data.user_shoutouts
       .filter( item => item.time_period_id === data.time_period.id)
@@ -18,7 +18,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
   const handleSaveDraft = () => {
     saveDataToDb(steps, {draft: true});
-    setDraft(true);
+    setIsDraft(true);
   }
 
   // Temporary placement not ready page Shoutout
@@ -39,7 +39,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }
   const editHandling = (e) =>{
     e.preventDefault()
-    setDraft(false)
+    setIsDraft(false)
     const editObj = data.user_shoutouts.find(item => item.id === Number(e.target.attributes.id.value))
 
     setShoutOutForm( { status: true, editObj: editObj} )
@@ -47,7 +47,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
   const closeHandling = (draft) => {
     setShoutOutForm( { status: false, editObj: {} } )
-    setDraft(draft)
+    setIsDraft(draft)
   }
 
 

@@ -18,17 +18,17 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const {isLoading, error} = service
   const [gifUrl, setGifUrl] = useState(response.attributes.gif_url || '')
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
-  const [isDraft, setDraft] = useState(draft);
+  const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
     const dataDraft = {gif_url: gifUrl, draft: true}
     saveDataToDb(steps, dataDraft);
-    setDraft(true)
+    setIsDraft(true)
   }
 
   useEffect(() => {
     if (gifUrl !== response.attributes.gif_url && isDraft) {
-      setDraft(false);
+      setIsDraft(false);
     }
   }, [gifUrl]);
 

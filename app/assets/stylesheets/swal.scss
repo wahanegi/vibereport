@@ -22,9 +22,9 @@ body.swal2-shown > [aria-hidden="true"] {
   border-radius: 15px;
 }
 
-.btn-logout-modal{
-  background-color: $gray-200 !important;
+.btn.btn-logout-modal{
+  background-color: $gray-200;
   &:hover {
-    background-color: shift-color($gray-200, 30%) !important;
+    background-color: shift-color($gray-200, 30%);
   }
 }

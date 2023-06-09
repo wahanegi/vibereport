@@ -123,8 +123,6 @@ const ResponseFlow = ({step, data, setData}) => {
       return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
     case  "icebreaker-question" :
       return <IcebreakerQuestion data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    default:
-      // navigate ( `/emotion-selection-web`)
   }
 }
 export default ResponseFlow;

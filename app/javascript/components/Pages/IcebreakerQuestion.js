@@ -14,7 +14,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
   const prevQuestionBody = prevStateQuestion?.question_body
   const funQuestionBody = funQuestion?.question_body
   const userName = data.current_user.first_name
-  const [isDraft, setDraft] = useState(draft)
+  const [isDraft, setIsDraft] = useState(draft)
 
   const dataRequest = {
     fun_question: {
@@ -25,7 +25,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
 
   useEffect(() => {
     if (funQuestionBody !== prevQuestionBody && isDraft) {
-      setDraft(false);
+      setIsDraft(false);
     }
   }, [funQuestionBody]);
 
@@ -35,7 +35,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
     }
     const dataDraft = {dataRequest, draft: true};
     saveDataToDb(steps, dataDraft)
-    setDraft(true)
+    setIsDraft(true)
     saveDataQuestion(()=>{}, dataFromServer);
   }
 
