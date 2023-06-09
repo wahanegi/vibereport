@@ -10,8 +10,9 @@
 #
 # Indexes
 #
-#  index_users_teams_on_team_id  (team_id)
-#  index_users_teams_on_user_id  (user_id)
+#  index_users_teams_on_team_id              (team_id)
+#  index_users_teams_on_user_id              (user_id)
+#  index_users_teams_on_user_id_and_team_id  (user_id,team_id) UNIQUE
 #
 # Foreign Keys
 #
