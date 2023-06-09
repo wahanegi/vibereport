@@ -27,7 +27,6 @@ const ResultsPreview = () => {
         <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' />
       </Link>
     </div>
-    <div style={{height: 120}}></div>
   </Fragment>
 
   useEffect(() => {

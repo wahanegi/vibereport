@@ -12,8 +12,10 @@ const PreviewShoutoutSection = () =>
     <div className='row wrap shoutout preview mb-3' />
   </div>
 
-const NoShoutoutSent = ({nextTimePeriod, setShowModal}) =>
-  <Fragment>
+const NoShoutoutSent = ({nextTimePeriod, setShowModal, emptyShoutouts}) => {
+  if(emptyShoutouts) return null;
+
+  return <Fragment>
     <div className={`${nextTimePeriod ? '' : 'col-8'}`}>
       <h5 className='text-start fw-semibold px-2'>Sent:</h5>
       <h5 className='text-center muted fw-semibold mt-3'>No Shoutouts sent for this check-in period...</h5>
@@ -25,12 +27,16 @@ const NoShoutoutSent = ({nextTimePeriod, setShowModal}) =>
       </div>
     </div>
   </Fragment>
+}
 
-const NoShoutoutReceived = () =>
-  <div className='px-2'>
+const NoShoutoutReceived = ({emptyShoutouts}) => {
+  if(emptyShoutouts) return null;
+
+  return <div className='px-2'>
     <h5 className='text-start fw-semibold'>Received:</h5>
     <br/><h5 className='text-center muted fw-semibold'>Shoutouts sent to you appear here! </h5>
   </div>
+}
 
 const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts, data, setData}) => {
   const [showModal, setShowModal] = useState(false)
@@ -46,7 +52,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   if(!nextTimePeriod && currentUserShoutouts.total_count < MIN_USERS_RESPONSES) return <PreviewShoutoutSection />
 
   const ReceivedShoutouts = () => {
-    if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived />
+    if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived emptyShoutouts={emptyShoutouts} />
 
     return !isEmpty(currentUserShoutouts.received) && <div className='px-2'>
       <h5 className='text-start'>Received:</h5>
@@ -60,7 +66,8 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   }
 
   const SentShoutouts = () => {
-    if(isEmpty(currentUserShoutouts.sent)) return <NoShoutoutSent {...{nextTimePeriod, setShowModal}} />
+    if(isEmpty(currentUserShoutouts.sent)) return <NoShoutoutSent {...{nextTimePeriod, setShowModal, emptyShoutouts}} />
+    if(isEmpty(emptyShoutouts)) return null
 
     return !isEmpty(currentUserShoutouts.sent) && <div className='px-2'>
       <h5 className='text-start'>Sent:</h5>
