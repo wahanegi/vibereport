@@ -46,7 +46,7 @@ module ActiveAdminHelpers
   def trend_direction(value1, value2, compare_as_floats: true)
     trend = calculate_trend(value1, value2, compare_as_floats)
     trend_style = calculate_trend_style(trend)
-    { trend: trend, style: trend_style }
+    [trend, trend_style]
   end
 
   def calculate_trend(value1, value2, compare_as_float)
