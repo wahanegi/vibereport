@@ -17,7 +17,7 @@ const NoShoutoutSent = ({nextTimePeriod, setShowModal, emptyShoutouts}) => {
 
   return <Fragment>
     <div className={`${nextTimePeriod ? '' : 'col-8'}`}>
-      <h5 className='text-start px-1 mt-2'>Sent:</h5>
+      <h5 className='text-start px-1 mt-2 fw-semibold'>Sent:</h5>
       <h5 className={`muted fw-semibold mt-3 ${nextTimePeriod ? 'text-center' : 'ps-3 text-start'}`}>No Shoutouts sent for this check-in period...</h5>
     </div>
     <div className='col-4' hidden={nextTimePeriod}>
@@ -33,7 +33,7 @@ const NoShoutoutReceived = ({emptyShoutouts, currentUserShoutouts, nextTimePerio
   if(emptyShoutouts) return null;
 
   return <div className='px-2'>
-    <h5 className='text-start'>Received:</h5>
+    <h5 className='text-start fw-semibold'>Received:</h5>
     <br/><h5 className={`muted fw-semibold ${isEmpty(currentUserShoutouts.sent) && !nextTimePeriod ? 'text-start ps-3' : 'text-center'}`}>Shoutouts sent to you appear here! </h5>
   </div>
 }
@@ -55,7 +55,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
     if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived emptyShoutouts={emptyShoutouts} currentUserShoutouts={currentUserShoutouts} nextTimePeriod={nextTimePeriod}/>
 
     return !isEmpty(currentUserShoutouts.received) && <div className='px-2'>
-      <h5 className='text-start'>Received:</h5>
+      <h5 className='text-start fw-semibold'>Received:</h5>
       {
         currentUserShoutouts.received.map(data => {
           const {shoutout, users} = data
@@ -70,7 +70,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
     if(isEmpty(emptyShoutouts)) return null
 
     return !isEmpty(currentUserShoutouts.sent) && <div className='px-2'>
-      <h5 className='text-start'>Sent:</h5>
+      <h5 className='text-start fw-semibold'>Sent:</h5>
       {
         currentUserShoutouts.sent.map(data => {
           const {shoutout, users} = data
