@@ -12,7 +12,7 @@ ActiveAdmin.register_page 'Dashboard' do
       panel "Average for range #{current_period&.date_range} / Average for all time periods" do
         div do
           strong 'Emotion Index: '
-          span "#{vars[:emotion_index_current_period][:emotion_index]} / #{vars[:emotion_index_all][:emotion_index]}"
+          span "#{vars[:emotion_index_current_period][0]} / #{vars[:emotion_index_all][0]}"
         end
 
         div do

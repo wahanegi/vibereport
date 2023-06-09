@@ -8,7 +8,9 @@ class EmotionIndex < AdminReport
   def generate
     responses = receive_responses
 
-    return { emotion_index: 'No emotion index present.', chart: nil } if responses.empty?
+    if responses.empty?
+      return ['No emotion index present.', nil]
+    end
 
     positive_emotion_ids = positive_emotions(responses)
     negative_emotion_ids = negative_emotions(responses)
