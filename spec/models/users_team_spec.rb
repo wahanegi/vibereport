@@ -22,11 +22,11 @@ require 'rails_helper'
 
 RSpec.describe UsersTeam, type: :model do
   let(:users_team) { create(:users_team) }
-  
+
   it 'factory works' do
     expect(users_team).to be_valid
   end
-  
+
   describe 'Associations' do
     it { should belong_to(:user) }
     it { should belong_to(:team) }

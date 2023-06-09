@@ -17,11 +17,11 @@ class CelebrationVerbatims < AdminReport
   private
 
   def receive_celebrate_comments
-    @receive_celebrate_comments ||= begin
+    @receive_celebrate_comments ||= (
       Response.joins(user: :users_teams)
               .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
               .celebrated
               .pluck(:celebrate_comment)
-    end
+    )
   end
 end

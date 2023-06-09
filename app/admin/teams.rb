@@ -106,8 +106,8 @@ ActiveAdmin.register Team do
           if responses_count == 0
             div 'No data present for this time period.'
           else
-            formatted_result = vars[:emotion_index][:emotion_index]
-            chart = vars[:emotion_index][:chart]
+            formatted_result = vars[:emotion_index][0]
+            chart = vars[:emotion_index][1]
             previous_period_emotion_index = vars[:previous_emotion_index]
 
             productivity_avg = vars[:productivity_avg]
@@ -279,10 +279,10 @@ ActiveAdmin.register Team do
 
             attributes_table_for team do
               row :Emotion_Index do
-                span vars[:emotion_index_all][:emotion_index]
+                span vars[:emotion_index_all][0]
               end
               row :Emotion_Chart do
-                vars[:emotion_index_all][:chart]
+                vars[:emotion_index_all][1]
               end
 
               row :Productivity_Average do
@@ -294,7 +294,7 @@ ActiveAdmin.register Team do
               end
 
               row :Responses_Report do
-                raw responses_data[:chart]
+                raw responses_data[0]
               end
 
               row :Celebrations_Count do

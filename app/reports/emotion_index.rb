@@ -28,7 +28,7 @@ class EmotionIndex < AdminReport
 
     chart = generate_chart(data)
 
-    { emotion_index: formatted_result, chart: chart }
+    [formatted_result, chart]
   end
 
   private

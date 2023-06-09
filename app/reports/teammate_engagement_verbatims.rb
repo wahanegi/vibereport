@@ -22,25 +22,19 @@ class TeammateEngagementVerbatims < AdminReport
   private
 
   def receive_shoutouts
-    @receive_shoutouts ||= begin
-      Shoutout.where(time_period_id: @time_periods).pluck(:rich_text)
-    end
+    Shoutout.where(time_period_id: @time_periods).pluck(:rich_text)
   end
 
   def receive_celebrate_comments
-    @receive_celebrate_comments ||= begin
-      Response.where(time_period_id: @time_periods)
-              .celebrated
-              .pluck(:celebrate_comment)
-    end
+    Response.where(time_period_id: @time_periods)
+            .where.not(celebrate_comment: nil)
+            .pluck(:celebrate_comment)
   end
 
   def receive_team_members
-    @receive_team_members ||= begin
-      User.joins(:users_teams)
-          .where(users_teams: { team_id: @team.id })
-          .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
-    end
+    User.joins(:users_teams)
+        .where(users_teams: { team_id: @team.id })
+        .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
   end
 
   def filter_comments(comments, team_member_ids, team_member_names)

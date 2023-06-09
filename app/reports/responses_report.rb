@@ -15,20 +15,18 @@ class ResponsesReport < AdminReport
     chart_id = SecureRandom.uuid
     chart = create_chart(data, chart_id)
 
-    { chart: chart, id: chart_id }
+    [chart, chart_id]
   end
 
   private
 
   def receive_response_counts
-    @receive_response_counts ||= begin
-      Response.joins(user: { teams: :users_teams })
-              .where(users_teams: { team_id: @team.id })
-              .where(time_period_id: @time_periods)
-              .distinct
-              .group('responses.time_period_id')
-              .count
-    end
+    Response.joins(user: { teams: :users_teams })
+            .where(users_teams: { team_id: @team.id })
+            .where(time_period_id: @time_periods)
+            .distinct
+            .group('responses.time_period_id')
+            .count
   end
 
   def response_data(response_counts)
