@@ -22,5 +22,5 @@ class UsersTeam < ApplicationRecord
   belongs_to :user
   belongs_to :team
 
-  validates :user_id, presence: true, uniqueness: { scope: :team_id }
+  validates :user_id, uniqueness: { scope: :team_id }
 end
