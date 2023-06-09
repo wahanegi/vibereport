@@ -17,8 +17,8 @@ RSpec.describe ResponsesReport do
     it 'generates a response report' do
       generated_data = report.generate
 
-      expect(generated_data[:chart]).to be_present
-      expect(generated_data[:id]).to be_present
+      expect(generated_data[0]).to be_present
+      expect(generated_data[1]).to be_present
     end
   end
 end

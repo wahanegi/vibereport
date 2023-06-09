@@ -20,16 +20,16 @@ RSpec.describe EmotionIndex, type: :model do
 
       it 'returns a hash with emotion index and a chart' do
         result = subject
-        expect(result[:emotion_index]).to be_a(Float)
-        expect(result[:chart]).to include('<div id="')
-        expect(result[:chart]).to include('</div>')
+        expect(result[0]).to be_a(Float)
+        expect(result[1]).to include('<div id="')
+        expect(result[1]).to include('</div>')
       end
 
       it 'calculates correct emotion index' do
         result = subject
         expected_emotion_index = ((positive_response_1.rating + positive_response_2.rating - negative_response.rating) / 3.0).round(2)
       
-        expect(result[:emotion_index]).to eq(expected_emotion_index)
+        expect(result[0]).to eq(expected_emotion_index)
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe EmotionIndex, type: :model do
         result = subject
         expected_emotion_index = ((positive_response_1.rating + positive_response_2.rating) / 2.0).round(2)
 
-        expect(result[:emotion_index]).to eq(expected_emotion_index)
+        expect(result[0]).to eq(expected_emotion_index)
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe EmotionIndex, type: :model do
         result = subject
         expected_emotion_index = -((negative_response_1.rating + negative_response_2.rating) / 2.0).round(2)
 
-        expect(result[:emotion_index]).to eq(expected_emotion_index)
+        expect(result[0]).to eq(expected_emotion_index)
       end
     end
   end
