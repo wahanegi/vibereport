@@ -26,7 +26,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
   if (emptyShoutouts) return <NoShoutouts nextTimePeriod={nextTimePeriod} setShowModal={setShowModal} />
 
   return (!isEmpty(sentShoutouts) || !isEmpty(receivedShoutouts)) && <Fragment>
-    <div className={`${nextTimePeriod || (isEmpty(currentUserShoutouts.sent) && !isEmpty(currentUserShoutouts.received)) ? 'col-2' : ''}`}></div>
+    <div className={`${nextTimePeriod || isEmpty(currentUserShoutouts.sent) ? 'col-2' : ''}`}></div>
     <div className='col-8'>
       <div className='d-flex flex-nowrap'>
         <img src={cup} alt="cup" style={{width: 76, height: 75}} />
@@ -62,7 +62,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
         <img src={cup} alt="cup" style={{width: 76, height: 75}} />
       </div>
     </div>
-    <div className='col-4' hidden={nextTimePeriod || (isEmpty(currentUserShoutouts.sent) && !isEmpty(currentUserShoutouts.received)) }>
+    <div className='col-4' hidden={nextTimePeriod || isEmpty(currentUserShoutouts.sent)}>
       <div className='d-flex justify-content-center'>
         <h6 className='mb-0 fw-semibold'>It's not too late!</h6>
         <BtnSendMoreShoutouts onClick={() => {setShowModal(true)}} />

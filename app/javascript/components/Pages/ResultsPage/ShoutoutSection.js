@@ -17,11 +17,11 @@ const NoShoutoutSent = ({nextTimePeriod, setShowModal, emptyShoutouts}) => {
 
   return <Fragment>
     <div className={`${nextTimePeriod ? '' : 'col-8'}`}>
-      <h5 className='text-start fw-semibold px-2'>Sent:</h5>
-      <h5 className='text-center muted fw-semibold mt-3'>No Shoutouts sent for this check-in period...</h5>
+      <h5 className='text-start px-1 mt-2'>Sent:</h5>
+      <h5 className={`muted fw-semibold mt-3 ${nextTimePeriod ? 'text-center' : 'ps-3 text-start'}`}>No Shoutouts sent for this check-in period...</h5>
     </div>
     <div className='col-4' hidden={nextTimePeriod}>
-      <div className='d-flex justify-content-center'>
+      <div className='d-flex justify-content-center mt-5'>
         <h6 className='mb-0 fw-semibold'>It's not too late!</h6>
         <BtnSendMoreShoutouts onClick={() => {setShowModal(true)}} />
       </div>
@@ -29,12 +29,12 @@ const NoShoutoutSent = ({nextTimePeriod, setShowModal, emptyShoutouts}) => {
   </Fragment>
 }
 
-const NoShoutoutReceived = ({emptyShoutouts}) => {
+const NoShoutoutReceived = ({emptyShoutouts, currentUserShoutouts, nextTimePeriod}) => {
   if(emptyShoutouts) return null;
 
   return <div className='px-2'>
-    <h5 className='text-start fw-semibold'>Received:</h5>
-    <br/><h5 className='text-center muted fw-semibold'>Shoutouts sent to you appear here! </h5>
+    <h5 className='text-start'>Received:</h5>
+    <br/><h5 className={`muted fw-semibold ${isEmpty(currentUserShoutouts.sent) && !nextTimePeriod ? 'text-start ps-3' : 'text-center'}`}>Shoutouts sent to you appear here! </h5>
   </div>
 }
 
@@ -52,7 +52,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   if(!nextTimePeriod && currentUserShoutouts.total_count < MIN_USERS_RESPONSES) return <PreviewShoutoutSection />
 
   const ReceivedShoutouts = () => {
-    if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived emptyShoutouts={emptyShoutouts} />
+    if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived emptyShoutouts={emptyShoutouts} currentUserShoutouts={currentUserShoutouts} nextTimePeriod={nextTimePeriod}/>
 
     return !isEmpty(currentUserShoutouts.received) && <div className='px-2'>
       <h5 className='text-start'>Received:</h5>
