@@ -20,11 +20,20 @@ const data = {
 };
 const setData = jest.fn();
 
+const icebreakerQuestionProps = {
+  data,
+  setData,
+  saveDataToDb: () => {},
+  steps: [],
+  service: mockService,
+  draft: false,
+};
+
 describe('IcebreakerQuestion', () => {
   test('checking components for crashing', () => {
     render(
       <MemoryRouter>
-        <IcebreakerQuestion data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
+        <IcebreakerQuestion {...icebreakerQuestionProps} />
       </MemoryRouter>
     );
   });
@@ -32,7 +41,7 @@ describe('IcebreakerQuestion', () => {
   it('reproduces page IcebreakerQuestion', () => {
     render(
       <MemoryRouter>
-        <IcebreakerQuestion data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
+        <IcebreakerQuestion {...icebreakerQuestionProps} />
       </MemoryRouter>
     );
     expect(screen.getByText('Thanks for answering!')).toBeInTheDocument();

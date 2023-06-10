@@ -17,12 +17,21 @@ const mockService = {
     },
   };
   const setData = jest.fn();
-  
+
+const сausesToCelebrateProps = {
+  data,
+  setData,
+  saveDataToDb: () => {},
+  steps: [],
+  service: mockService,
+  draft: false,
+};
+
   describe('CausesToCelebrate', () => {
     test('checking components for crashing', () => {
       render(
         <MemoryRouter>
-          <CausesToCelebrate data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
+          <CausesToCelebrate {...сausesToCelebrateProps} />
         </MemoryRouter>
         );
     });
@@ -30,7 +39,7 @@ const mockService = {
     it('reproduces page celebrate', () => {
       render(
         <MemoryRouter>
-            <CausesToCelebrate data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
+          <CausesToCelebrate {...сausesToCelebrateProps} />
         </MemoryRouter>
         );
       expect(screen.getByText('Are there any recent causes to celebrate?')).toBeInTheDocument();
@@ -39,7 +48,7 @@ const mockService = {
     it('should update the celebrateComment state when the comment input is changed', () => {
       const { getByPlaceholderText } = render(
         <MemoryRouter>
-          <CausesToCelebrate data={data} setData={setData} saveDataToDb={() => {}} steps={[]} service={mockService} draft={false} />
+          <CausesToCelebrate {...сausesToCelebrateProps} />
         </MemoryRouter>
       );
       const commentInput = getByPlaceholderText('Are you grateful for anything that happened at work recently?');

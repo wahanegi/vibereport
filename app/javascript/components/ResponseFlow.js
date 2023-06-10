@@ -98,31 +98,32 @@ const ResponseFlow = ({step, data, setData}) => {
     navigate(`/${ lastStep }`)
   }
 
-  switch (go) {
-    case  "emotion-selection-web" :
-      return <ListEmotions data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    case  "emotion-entry" :
-      return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    case  "meme-selection" :
-      return <MemeSelection data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} draft={draft} />
-    case  "results" :
-      return <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    case  "selected-giphy-follow" :
-      return <SelectedGIPHYFollow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} isCustomGif={isCustomGif} draft={draft} />
-    case  "emotion-intensity" :
-      return <EmotionIntensity data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    case  "productivity-check" :
-      return <ProductivityCheckLow data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft}/>
-    case  "productivity-bad-follow-up" :
-      return <ProductivityBadFollowUp data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    case  "causes-to-celebrate" :
-       return <CausesToCelebrate data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    case  "recognition" :
-      return <Recognition data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft}/>
-    case  "icebreaker-answer" :
-      return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-    case  "icebreaker-question" :
-      return <IcebreakerQuestion data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} draft={draft} />
-  }
+  const componentMap = {
+    'emotion-selection-web': <ListEmotions />,
+    'emotion-entry': <EmotionEntry />,
+    'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
+    'selected-giphy-follow': <SelectedGIPHYFollow isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
+    'emotion-intensity': <EmotionIntensity />,
+    'productivity-check': <ProductivityCheckLow />,
+    'results': <Results />,
+    'productivity-bad-follow-up': <ProductivityBadFollowUp />,
+    'causes-to-celebrate': <CausesToCelebrate />,
+    'recognition': <Recognition />,
+    'icebreaker-answer': <IcebreakerAnswer />,
+    'icebreaker-question': <IcebreakerQuestion />,
+  };
+
+  const componentProps = {
+    data,
+    setData,
+    saveDataToDb,
+    steps: stepsArr,
+    service,
+    draft,
+  };
+
+  const component = componentMap[go] || null;
+
+  return component ? React.cloneElement(component, componentProps) : null;
 }
 export default ResponseFlow;
