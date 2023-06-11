@@ -6,7 +6,7 @@ class Api::V1::ResultsPresenter
     @time_period = TimePeriod.find_by(slug: time_period_slug)
     @responses = time_period.responses.completed
     @fun_question_answers = responses.filter_map(&:fun_question_answer)
-    @fun_question = fun_question_answers&.first&.fun_question.presence
+    @fun_question = time_period.fun_question
     @users = responses.filter_map(&:user)
     @current_user = current_user
   end

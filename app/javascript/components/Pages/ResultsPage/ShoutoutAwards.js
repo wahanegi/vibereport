@@ -43,7 +43,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
               {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                 <div className='row d-inline-block' key={i}>
                   <p className='fw-semibold d-inline'>
-                    <span className='color-rose'> @</span><span className='fw-bold'>{shoutout.sender.first_name}</span> sent {shoutout.count} {Pluralize( 'Shoutout', shoutout.count )}
+                    <span className='color-rose'> @</span><span className='fw-bold'>{shoutout.sender.first_name}</span> sent {shoutout.count} {Pluralize( 'Shoutout', shoutout.count )}&nbsp;
                   </p>
                 </div>
               )}

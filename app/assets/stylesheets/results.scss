@@ -36,6 +36,16 @@
         rotate: -90deg;
       }
     }
+    &.empty-answer {
+      background-color: $white;
+      min-height: auto;
+      color: $green-700;
+      &.hover-event {
+        background-color: $green-700;
+        color: $white;
+        border: 3px solid $white;
+      }
+    }
     .expand-icon {
       width: 26.6px;
       height: 26px;

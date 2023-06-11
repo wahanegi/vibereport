@@ -136,7 +136,11 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
                          receivedShoutouts={received_shoutouts}
                          data={data} setData={setData}
                          currentUserShoutouts={current_user_shoutouts} />
-        <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={nextTimePeriod} />
+        <QuestionSection fun_question={fun_question}
+                         answers={answers}
+                         steps={steps}
+                         saveDataToDb={saveDataToDb}
+                         nextTimePeriod={nextTimePeriod} />
         <CornerElements data={ data} setData={setData} percentCompletion={100} hideBottom={true}/>
       </Wrapper>
       <Footer />
