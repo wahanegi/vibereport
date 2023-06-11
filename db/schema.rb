@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_04_075936) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_04_075936) do
     t.text "bad_follow_comment"
     t.text "celebrate_comment"
     t.text "comment"
+    t.date "completed_at"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
     t.bigint "fun_question_answer_id"

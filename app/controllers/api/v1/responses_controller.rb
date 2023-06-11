@@ -5,7 +5,7 @@ module Api
 
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices, :rating,
                       :comment, :productivity, :bad_follow_comment, :celebrate_comment, :fun_question_id,
-                      :fun_question_answer_id, { gif: %i[src height] }].freeze
+                      :fun_question_answer_id, :completed_at, { gif: %i[src height] }].freeze
 
       before_action :retrieve_response, only: %i[update]
       before_action :require_user!, only: %i[create update]
@@ -20,6 +20,7 @@ module Api
       end
 
       def update
+        complete_response
         if @response.update(response_params)
           render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
         else
@@ -58,6 +59,12 @@ module Api
 
       def sign_in_user
         sign_in user
+      end
+
+      def complete_response
+        return  if response_params['attributes']['steps'].exclude?('results') || @response.completed_at.present?
+
+        @response.update(completed_at: Date.current)
       end
     end
   end

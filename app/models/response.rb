@@ -6,6 +6,7 @@
 #  bad_follow_comment     :text
 #  celebrate_comment      :text
 #  comment                :text
+#  completed_at           :date
 #  gif                    :jsonb
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb
@@ -50,5 +51,5 @@ class Response < ApplicationRecord
                            presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
   serialize :steps, JSON
   scope :working, -> { where(not_working: false) }
-  scope :completed, -> { where("steps LIKE '%results%'") }
+  scope :completed, -> { where.not(completed_at: nil) }
 end
