@@ -4,7 +4,7 @@ class Api::V1::ResultsPresenter
 
   def initialize(time_period_slug, current_user)
     @time_period = TimePeriod.find_by(slug: time_period_slug)
-    @responses = time_period.responses.completed
+    @responses = time_period.responses.completed.working
     @fun_question_answers = responses.filter_map(&:fun_question_answer)
     @fun_question = time_period.fun_question
     @users = responses.filter_map(&:user)
@@ -20,7 +20,8 @@ class Api::V1::ResultsPresenter
       answers:,
       sent_shoutouts:,
       received_shoutouts:,
-      current_user_shoutouts:
+      current_user_shoutouts:,
+      responses_count: responses.count
     }
   end
 

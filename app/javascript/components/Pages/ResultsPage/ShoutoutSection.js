@@ -38,7 +38,7 @@ const NoShoutoutReceived = ({emptyShoutouts, currentUserShoutouts, nextTimePerio
   </div>
 }
 
-const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts, data, setData}) => {
+const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts, data, setData, isMinUsersResponses}) => {
   const [showModal, setShowModal] = useState(false)
   const emptyCurrentUserShoutouts = isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
   const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
@@ -49,7 +49,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
     }
   }, [showModal]);
 
-  if(!nextTimePeriod && currentUserShoutouts.total_count < MIN_USERS_RESPONSES) return <PreviewShoutoutSection />
+  if(!nextTimePeriod && isMinUsersResponses) return <PreviewShoutoutSection />
 
   const ReceivedShoutouts = () => {
     if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived emptyShoutouts={emptyShoutouts} currentUserShoutouts={currentUserShoutouts} nextTimePeriod={nextTimePeriod}/>

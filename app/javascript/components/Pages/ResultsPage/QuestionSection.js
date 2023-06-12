@@ -13,7 +13,7 @@ const PreviewQuestionSection = () =>
   </div>
 
 const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, collapse, setCollapse, steps, saveDataToDb}) => {
-  const [text, setText] = useState(nextTimePeriod ? 'No responses this time...' : 'No responses yet..');
+  const [text, setText] = useState('');
   const [addClass, setAddClass] = useState('')
   const handleMouseEnter = () => {
     !nextTimePeriod && setText('Answer this Icebreaker!');
@@ -30,6 +30,10 @@ const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, collapse,
     const new_steps = steps.slice(0, index + 1);
     !nextTimePeriod && saveDataToDb( new_steps )
   }
+
+  useEffect(() => {
+    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet..');
+  }, [fun_question])
 
   return <Fragment>
     <div className='results col'>
@@ -95,12 +99,12 @@ const AnswerItem = ({answer, user, collapse}) => {
   </div>
 }
 
-const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb}) => {
-  if(!nextTimePeriod && answers?.length < MIN_USERS_RESPONSES) return <PreviewQuestionSection />
+const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb, isMinUsersResponses}) => {
+  if(!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
 
   const userName = fun_question?.user?.first_name
   const [collapse, setCollapse] = useState(true);
-  if(isBlank(answers)) return <EmptyQuestionSection userName={userName}
+  if(true) return <EmptyQuestionSection userName={userName}
                                                     fun_question={fun_question}
                                                     collapse={collapse}
                                                     setCollapse={setCollapse}

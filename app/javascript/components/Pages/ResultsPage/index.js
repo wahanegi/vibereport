@@ -21,7 +21,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts} = results
+  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts, responses_count} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -54,8 +54,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
     onRemoveAlert()
   }
 
-  const isMinUsersResponses = emotions?.length < MIN_USERS_RESPONSES || gifs?.length < MIN_USERS_RESPONSES ||
-    answers?.length < MIN_USERS_RESPONSES || current_user_shoutouts?.total_count < MIN_USERS_RESPONSES
+  const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
 
   const showNextTimePeriod = () => {
     if (timePeriodIndex > 0) {
@@ -118,7 +117,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
           notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
         }
         {
-          timePeriod.id === time_periods[0].id ?
+          !nextTimePeriod ?
             isMinUsersResponses ?
               <div className='text-header-position'>
                 <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
@@ -128,18 +127,20 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
-        <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} />
-        <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} />
+        <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
+        <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <ShoutoutSection nextTimePeriod={nextTimePeriod}
                          timePeriod={timePeriod}
                          sentShoutouts={sent_shoutouts}
                          receivedShoutouts={received_shoutouts}
                          data={data} setData={setData}
+                         isMinUsersResponses={isMinUsersResponses}
                          currentUserShoutouts={current_user_shoutouts} />
         <QuestionSection fun_question={fun_question}
                          answers={answers}
                          steps={steps}
                          saveDataToDb={saveDataToDb}
+                         isMinUsersResponses={isMinUsersResponses}
                          nextTimePeriod={nextTimePeriod} />
         <CornerElements data={ data} setData={setData} percentCompletion={100} hideBottom={true}/>
       </Wrapper>

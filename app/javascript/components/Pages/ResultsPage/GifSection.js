@@ -31,8 +31,8 @@ const PreviewGifSection = () => {
   </div>
 }
 
-const GifSection = ({ gifs, nextTimePeriod }) => {
-  const showPreview = !nextTimePeriod && gifs.length < MIN_USERS_RESPONSES
+const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
+  const showPreview = !nextTimePeriod && isMinUsersResponses
   if(showPreview) return <PreviewGifSection />
 
   if(isEmpty(gifs)) return null

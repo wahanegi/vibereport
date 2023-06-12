@@ -62,7 +62,8 @@ RSpec.describe Api::V1::ResultsPresenter do
               users: [user2]
             }],
             total_count: time_period.shoutouts.size
-          }
+          },
+          responses_count: time_period.responses.count
         }
       )
     end
