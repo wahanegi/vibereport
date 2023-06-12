@@ -104,7 +104,7 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveData
 
   const userName = fun_question?.user?.first_name
   const [collapse, setCollapse] = useState(true);
-  if(true) return <EmptyQuestionSection userName={userName}
+  if(isBlank(answers)) return <EmptyQuestionSection userName={userName}
                                                     fun_question={fun_question}
                                                     collapse={collapse}
                                                     setCollapse={setCollapse}
