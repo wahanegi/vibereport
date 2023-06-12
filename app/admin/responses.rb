@@ -33,7 +33,7 @@ ActiveAdmin.register Response do
       f.input :comment
       f.input :bad_follow_comment
       f.input :celebrate_comment
-      f.input :completed_at
+      f.input :completed_at, as: :datepicker
     end
     f.actions
   end
