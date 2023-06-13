@@ -1,5 +1,3 @@
-include ActiveAdminHelpers
-
 ActiveAdmin.register Team do
   permit_params :name, user_ids: []
 
@@ -30,19 +28,14 @@ ActiveAdmin.register Team do
           user_emails = row[:user_emails].split(',')
         end
 
-        existing_user_ids = team.users.pluck(:id)
+        UsersTeam.where(team_id: team.id).destroy_all
 
         user_emails.each do |email|
           user = User.find_by(email: email.strip.downcase)
           if user
-            UsersTeam.find_or_create_by(user_id: user.id, team_id: team.id)
-            existing_user_ids.delete(user.id)
+            UsersTeam.create(user_id: user.id, team_id: team.id)
           end
         end
-
-        team.users.delete(User.where(id: existing_user_ids))
-
-        team.save
       end
 
       redirect_to admin_teams_path, notice: 'CSV imported successfully!'
@@ -89,7 +82,6 @@ ActiveAdmin.register Team do
       end
 
       time_period = TimePeriod.find_by(id: params[:time_period]) if params[:time_period].present?
-      all_time_period = TimePeriod.pluck(:id)
       earliest_start_date = TimePeriod.minimum(:start_date)
       latest_end_date = TimePeriod.maximum(:end_date)
 
@@ -97,7 +89,11 @@ ActiveAdmin.register Team do
         previous_time_period = TimePeriod.where("end_date < ?", time_period.start_date).order(end_date: :desc).first
       end
 
-      vars = time_period_vars(team, time_period, previous_time_period, all_time_period, nil)
+      vars = ActiveAdminHelpers.time_period_vars(
+        team: team, 
+        time_period: time_period, 
+        previous_time_period: previous_time_period
+      )
 
       if time_period
         panel "Time Period: <span style='color: #007bff; font-weight: bold;'>#{time_period.date_range}</span>".html_safe do
@@ -112,7 +108,6 @@ ActiveAdmin.register Team do
 
             productivity_avg = vars[:productivity_avg]
             previous_period_productivity_avg = vars[:previous_productivity_avg]
-
 
             participation_percentage = vars[:participation_percentage]
             previous_period_participation_percentage = vars[:previous_participation_percentage]
@@ -152,7 +147,7 @@ ActiveAdmin.register Team do
               row :Productivity_Average do
                 if previous_time_period && productivity_avg != 'No productivity present'
                   trend_data = trend_direction(previous_period_productivity_avg, productivity_avg, compare_as_floats: true)
-              
+
                   div do
                     span productivity_avg
                     span trend_data[0].html_safe, style: trend_data[1]
@@ -165,17 +160,13 @@ ActiveAdmin.register Team do
               end
 
               row :Participation_Percentage do
-                if previous_time_period && participation_percentage.is_a?(String)
+                if previous_time_period && participation_percentage.is_a?(String) || previous_period_participation_percentage.nil?
                   span participation_percentage
                 else
-                  if previous_period_participation_percentage.nil?
+                  trend_data = trend_direction(previous_period_participation_percentage, participation_percentage, compare_as_floats: true)
+                  div do
                     span participation_percentage
-                  else
-                    trend_data = trend_direction(previous_period_participation_percentage, participation_percentage, compare_as_floats: true)
-                    div do
-                      span participation_percentage
-                      span trend_data[0].html_safe, style: trend_data[1]
-                    end
+                    span trend_data[0].html_safe, style: trend_data[1]
                   end
                 end
               end
@@ -195,17 +186,13 @@ ActiveAdmin.register Team do
               end
 
               row :Celebrations_Count do
-                if previous_time_period && celebrate_comments_count.is_a?(String)
+                if previous_time_period && celebrate_comments_count.is_a?(String) || previous_period_celebrate_comments_count.nil?
                   span celebrate_comments_count
                 else
-                  if previous_period_celebrate_comments_count.nil?
+                  trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count, compare_as_floats: true)
+                  div do
                     span celebrate_comments_count
-                  else
-                    trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count, compare_as_floats: true)
-                    div do
-                      span celebrate_comments_count
-                      span trend_data[0].html_safe, style: trend_data[1]
-                    end
+                    span trend_data[0].html_safe, style: trend_data[1]
                   end
                 end
               end
@@ -227,17 +214,13 @@ ActiveAdmin.register Team do
               end
 
               row :Teammate_Engagement_Count do
-                if previous_time_period && teammate_engagement_count.is_a?(String)
+                if previous_time_period && teammate_engagement_count.is_a?(String) || previous_teammate_engagement_count.nil?
                   span teammate_engagement_count
                 else
-                  if previous_teammate_engagement_count.nil?
+                  trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count, compare_as_floats: true)
+                  div do
                     span teammate_engagement_count
-                  else
-                    trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count, compare_as_floats: true)
-                    div do
-                      span teammate_engagement_count
-                      span trend_data[0].html_safe, style: trend_data[1]
-                    end
+                    span trend_data[0].html_safe, style: trend_data[1]
                   end
                 end
               end
@@ -265,12 +248,14 @@ ActiveAdmin.register Team do
           'Please select a time period to view the report.'
         end
       end
+      
       if earliest_start_date.nil? || latest_end_date.nil?
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe do
         end
       else
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
-          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_period).count
+          all_time_periods = ActiveAdminHelpers.all_time_periods
+          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods).count
 
           if responses_count == 0
             div 'No data present for the all time period.'

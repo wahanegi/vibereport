@@ -6,19 +6,16 @@ class EmotionIndex < AdminReport
   end
 
   def generate
-    responses = receive_responses
 
-    return ['No emotion index present.', nil] if responses.empty?
+    return ['No emotion index present.', nil] if receive_responses.empty?
 
-    positive_emotion_ids = positive_emotions(responses)
-    negative_emotion_ids = negative_emotions(responses)
+    positive_emotion_ids = positive_emotions(receive_responses)
+    negative_emotion_ids = negative_emotions(receive_responses)
 
-    positive_ratings_sum = responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
-    negative_ratings_sum = responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
+    positive_ratings_sum = receive_responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
+    negative_ratings_sum = receive_responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
 
-    total_responses = receive_total_responses
-
-    result = (positive_ratings_sum - negative_ratings_sum) / total_responses.to_f
+    result = (positive_ratings_sum - negative_ratings_sum) / receive_total_responses.to_f
     formatted_result = result.round(2)
 
     data = {

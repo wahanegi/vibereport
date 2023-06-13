@@ -23,7 +23,9 @@ class ProductivityVerbatims < AdminReport
     Response.joins(user: :users_teams)
             .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
             .where('productivity <= ?', 2)
-            .pluck(:comment)
+            .where.not(bad_follow_comment: [""])
+            .pluck(:bad_follow_comment)
+    
   end
 
   def team_not_present
@@ -31,7 +33,7 @@ class ProductivityVerbatims < AdminReport
 
     comments.each_key do |emotion|
       comments[emotion] += receive_comments(emotion)
-      comments[emotion] = comments[emotion].empty? ? 'No comments present' : comments[emotion].join(', ')
+      comments[emotion] = comments[emotion].empty? ? 'No bad follow comment present' : comments[emotion].join(', ')
     end
     comments
   end
@@ -40,15 +42,7 @@ class ProductivityVerbatims < AdminReport
     comments = Response.joins(:emotion)
                        .where(responses: { time_period_id: @time_periods })
                        .where(emotion: { category: emotion.to_s })
-                       .pluck(:comment)
-
-    clean_comments(comments)
-  end
-
-  def clean_comments(comments)
-    comments.compact
-            .reject(&:empty?)
-            .map { |str| str.gsub(/\r\n/, '') }
-            .reject(&:empty?)
+                       .where.not(bad_follow_comment: [""])
+                       .pluck(:bad_follow_comment)
   end
 end

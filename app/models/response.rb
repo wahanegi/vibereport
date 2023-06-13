@@ -61,9 +61,8 @@ class Response < ApplicationRecord
   end
 
   def received_celebrate_comments
-    comment_user_ids = celebrate_user_ids
     Response.celebrated
             .where("? = ANY(STRING_TO_ARRAY(celebrate_comment, ' '))", user_id)
-            .where(user_id: comment_user_ids)
+            .where(user_id: celebrate_user_ids)
   end
 end

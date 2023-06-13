@@ -9,7 +9,7 @@ RSpec.describe EmotionIndex, type: :model do
 
     context 'when there are no responses' do
       it 'returns a string indicating no emotion index present' do
-        expect(subject).to eq({ emotion_index: 'No emotion index present.', chart: nil })
+        expect(subject).to eq(['No emotion index present.', nil])
       end
     end
 

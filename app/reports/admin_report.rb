@@ -6,7 +6,7 @@ class AdminReport
                            .where(users_teams: { team_id: @team.id })
                            .distinct
                  else
-                   Response.all.distinct
+                   Response.all
                  end
   end
 end

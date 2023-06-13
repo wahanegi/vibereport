@@ -5,9 +5,10 @@ ActiveAdmin.register_page 'Dashboard' do
 
   content title: proc { I18n.t("active_admin.dashboard") } do
     columns do
-      current_period = TimePeriod.current
-      all_time_period = TimePeriod.all
-      vars = time_period_vars(nil, nil, nil, all_time_period, current_period)
+      current_period = TimePeriod.current      
+      vars = ActiveAdminHelpers.time_period_vars(
+        current_period: current_period
+      )
 
       panel "Average for range #{current_period&.date_range} / Average for all time periods" do
         div do

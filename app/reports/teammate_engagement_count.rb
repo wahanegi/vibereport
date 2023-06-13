@@ -5,8 +5,7 @@ class TeammateEngagementCount < AdminReport
   end
 
   def generate
-    teammate_engagement_count = receive_teammate_engagement_count
-    teammate_engagement_count.zero? ? 'No teammate engagement count present' : teammate_engagement_count
+    receive_teammate_engagement_count.zero? ? 'No teammate engagement count present' : receive_teammate_engagement_count
   end
 
   private

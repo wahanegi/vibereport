@@ -27,7 +27,7 @@ ActiveAdmin.register User do
 
     columns do
       column do
-        panel 'Received ShoutOuts' do
+        panel 'Received Shoutouts' do
           if user.shoutout_recipients.present?
             table_for user.shoutout_recipients.order(created_at: :desc) do
               column 'From' do |shoutout_recipient|
@@ -50,8 +50,10 @@ ActiveAdmin.register User do
 
       column do
         panel 'Celebration Verbatims' do
-          if user.responses.celebrated.present?
-            table_for user.responses.celebrated.sort_by(&:created_at).reverse do
+          all_celebrations = Response.where("celebrate_comment LIKE ?", "%@[#{user.first_name}](#{user.id})%")
+
+          if all_celebrations.present?
+            table_for all_celebrations.order(created_at: :desc)do
               column 'From' do |response|
                 response.user.to_full_name
               end
