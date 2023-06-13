@@ -23,9 +23,9 @@ class ProductivityVerbatims < AdminReport
     Response.joins(user: :users_teams)
             .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
             .where('productivity <= ?', 2)
-            .where.not(bad_follow_comment: [""])
+            .where.not(bad_follow_comment: [''])
             .pluck(:bad_follow_comment)
-    
+
   end
 
   def team_not_present
@@ -42,7 +42,7 @@ class ProductivityVerbatims < AdminReport
     comments = Response.joins(:emotion)
                        .where(responses: { time_period_id: @time_periods })
                        .where(emotion: { category: emotion.to_s })
-                       .where.not(bad_follow_comment: [""])
+                       .where.not(bad_follow_comment: [''])
                        .pluck(:bad_follow_comment)
   end
 end

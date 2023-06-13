@@ -5,7 +5,7 @@ module ActiveAdminHelpers
 
   def self.time_period_vars(team: nil, time_period: nil, previous_time_period: nil, current_period: nil)
     all_time_periods = ActiveAdminHelpers.all_time_periods
-    vars = {}    
+    vars = {}
 
     vars[:emotion_index] = EmotionIndex.new(team, time_period).generate
     vars[:emotion_index_all] = EmotionIndex.new(team, all_time_periods).generate
@@ -46,7 +46,7 @@ module ActiveAdminHelpers
     end
 
     vars[:all_time_periods] = all_time_periods
-    
+
     vars
   end
 
@@ -60,9 +60,12 @@ module ActiveAdminHelpers
     if value1 == value2
       '&#x2195;'
     else
-      comparison_result = compare_as_float ? float_lesser_than?(value1, value2) : lesser_than?(value1, value2)
-      comparison_result ? '&#x2191;' : '&#x2193;'
+      trend_arrow(compare_as_float ? float_lesser_than?(value1, value2) : lesser_than?(value1, value2))
     end
+  end
+  
+  def trend_arrow(lesser)
+    lesser ? '&#x2191;' : '&#x2193;'
   end
 
   private
@@ -76,7 +79,13 @@ module ActiveAdminHelpers
   end
 
   def calculate_trend_style(trend)
-    color = trend == '&#x2191;' ? 'green' : (trend == '&#x2195;' ? 'goldenrod' : 'red')
+    if trend == '&#x2191;'
+      color = 'green'
+    elsif trend == '&#x2195;'
+      color = 'goldenrod'
+    else
+      color = 'red'
+    end
     "color: #{color}; font-size: 20px; font-weight: bold;"
   end
 end
