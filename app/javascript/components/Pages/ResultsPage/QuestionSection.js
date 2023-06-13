@@ -21,7 +21,7 @@ const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, collapse,
   };
 
   const handleMouseLeave = () => {
-    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet..');
+    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...');
     setAddClass('');
   };
 
@@ -32,7 +32,7 @@ const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, collapse,
   }
 
   useEffect(() => {
-    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet..');
+    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...');
   }, [fun_question])
 
   return <Fragment>
