@@ -60,7 +60,7 @@ module ActiveAdminHelpers
     if value1 == value2
       '&#x2195;'
     else
-      comparison_result = compare_as_float ? float_lesser_than?(value1, value2) : lesser_than?(value1, value2)
+      comparison_result = compare_as_float ? float_lesser_than?(value1, value2) : string_lesser_than?(value1, value2)
       comparison_result ? '&#x2191;' : '&#x2193;'
     end
   end
@@ -71,8 +71,8 @@ module ActiveAdminHelpers
     value1.to_f < value2.to_f
   end
 
-  def lesser_than?(value1, value2)
-    value1 << value2
+  def string_lesser_than?(value1, value2)
+    value1.to_s < value2.to_s
   end
 
   def calculate_trend_style(trend)
