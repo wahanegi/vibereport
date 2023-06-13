@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
@@ -9,6 +9,7 @@ import ShoutoutModal from "../UI/ShoutoutModal";
 const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
   const [isDraft, setIsDraft] = useState(draft)
+  const [previousNumShoutOuts, setPreviousNumShoutOuts] = useState(data.user_shoutouts?.length)
 
   const shoutOuts = data.user_shoutouts
       .filter( item => item.time_period_id === data.time_period.id)
@@ -21,7 +22,13 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
     setIsDraft(true);
   }
 
-  // Temporary placement not ready page Shoutout
+  useEffect(() => {
+    if (previousNumShoutOuts !== numShoutOuts) {
+      saveDataToDb(steps, {draft: false});
+      setIsDraft(false);
+    }
+  }, [numShoutOuts]);
+
   const handlingOnClickNext = () => {
     if (!data.fun_question){
       steps.push('causes-to-celebrate')
