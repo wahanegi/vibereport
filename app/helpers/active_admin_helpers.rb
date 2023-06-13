@@ -63,7 +63,7 @@ module ActiveAdminHelpers
       trend_arrow(compare_as_float ? float_lesser_than?(value1, value2) : lesser_than?(value1, value2))
     end
   end
-  
+
   def trend_arrow(lesser)
     lesser ? '&#x2191;' : '&#x2193;'
   end
@@ -79,13 +79,14 @@ module ActiveAdminHelpers
   end
 
   def calculate_trend_style(trend)
-    if trend == '&#x2191;'
-      color = 'green'
-    elsif trend == '&#x2195;'
-      color = 'goldenrod'
-    else
-      color = 'red'
-    end
+    color = case trend
+            when '&#x2191;'
+              'green'
+            when '&#x2195;'
+              'goldenrod'
+            else
+              'red'
+            end
     "color: #{color}; font-size: 20px; font-weight: bold;"
   end
 end
