@@ -134,7 +134,7 @@ ActiveAdmin.register Team do
 
                   div do
                     span formatted_result
-                    span trend_data[0].html_safe, style: trend_data[1]
+                    span trend_data[0].html_safe, style: trend_data[1].html_safe
                   end
                 else
                   div do
