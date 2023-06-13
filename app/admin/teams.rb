@@ -1,3 +1,5 @@
+include ActiveAdminHelpers
+
 ActiveAdmin.register Team do
   permit_params :name, user_ids: []
 
