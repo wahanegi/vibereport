@@ -145,6 +145,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_103936) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_teams", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "team_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["team_id"], name: "index_user_teams_on_team_id"
+    t.index ["user_id", "team_id"], name: "index_user_teams_on_user_id_and_team_id", unique: true
+    t.index ["user_id"], name: "index_user_teams_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -160,16 +170,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_103936) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "users_teams", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.bigint "team_id", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["team_id"], name: "index_users_teams_on_team_id"
-    t.index ["user_id", "team_id"], name: "index_users_teams_on_user_id_and_team_id", unique: true
-    t.index ["user_id"], name: "index_users_teams_on_user_id"
-  end
-
   add_foreign_key "fun_question_answers", "fun_questions"
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
@@ -183,6 +183,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_103936) do
   add_foreign_key "shoutout_recipients", "users"
   add_foreign_key "shoutouts", "time_periods"
   add_foreign_key "shoutouts", "users"
-  add_foreign_key "users_teams", "teams"
-  add_foreign_key "users_teams", "users"
+  add_foreign_key "user_teams", "teams"
+  add_foreign_key "user_teams", "users"
 end

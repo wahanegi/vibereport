@@ -21,8 +21,8 @@ RSpec.describe Team, type: :model do
   end
   
   describe 'Associations' do
-    it { should have_many(:users_teams).dependent(:destroy) }
-    it { should have_many(:users).through(:users_teams) }
+    it { should have_many(:user_teams).dependent(:destroy) }
+    it { should have_many(:users).through(:user_teams) }
   end
 
   describe 'Validations' do

@@ -47,15 +47,15 @@ RSpec.describe "Admin::Teams", type: :request do
       expect(response.body).to include('Team was successfully destroyed.')
     end
 
-    it 'removes associated users_teams' do
+    it 'removes associated user_teams' do
       user1 = create(:user)
       user2 = create(:user)
-      UsersTeam.create(user: user1, team: team)
-      UsersTeam.create(user: user2, team: team)
+      UserTeam.create(user: user1, team: team)
+      UserTeam.create(user: user2, team: team)
 
       expect {
         delete admin_team_path(team)
-      }.to change(UsersTeam, :count).by(-2)
+      }.to change(UserTeam, :count).by(-2)
     end
   end
 
@@ -88,8 +88,8 @@ RSpec.describe "Admin::Teams", type: :request do
       team = create(:team)
       user1 = create(:user)
       user2 = create(:user)
-      UsersTeam.create(user: user1, team: team)
-      UsersTeam.create(user: user2, team: team)
+      UserTeam.create(user: user1, team: team)
+      UserTeam.create(user: user2, team: team)
 
       get export_csv_admin_teams_path
 

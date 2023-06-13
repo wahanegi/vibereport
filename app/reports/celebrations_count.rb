@@ -14,6 +14,6 @@ class CelebrationsCount < AdminReport
   def celebrate_comments
     celebrate_comment = Response.where(responses: { time_period_id: @time_periods }).celebrated
 
-    @team ? celebrate_comment.joins(user: :users_teams).where(users_teams: { team_id: @team.id }) : celebrate_comment
+    @team ? celebrate_comment.joins(user: :user_teams).where(user_teams: { team_id: @team.id }) : celebrate_comment
   end
 end

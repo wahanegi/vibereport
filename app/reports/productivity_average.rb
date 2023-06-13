@@ -14,8 +14,8 @@ class ProductivityAverage < AdminReport
 
   def receive_responses
     if @team
-      Response.joins(user: { teams: :users_teams })
-              .where(users_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
+      Response.joins(user: { teams: :user_teams })
+              .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
     else
       Response.where(responses: { time_period_id: @time_periods }).distinct
     end

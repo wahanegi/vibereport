@@ -12,8 +12,8 @@
 #  index_teams_on_name  (name) UNIQUE
 #
 class Team < ApplicationRecord
-  has_many :users_teams, dependent: :destroy
-  has_many :users, through: :users_teams
+  has_many :user_teams, dependent: :destroy
+  has_many :users, through: :user_teams
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: true
 end

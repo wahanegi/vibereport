@@ -31,8 +31,8 @@ class TeammateEngagementVerbatims < AdminReport
   end
 
   def receive_team_members
-    User.joins(:users_teams)
-        .where(users_teams: { team_id: @team.id })
+    User.joins(:user_teams)
+        .where(user_teams: { team_id: @team.id })
         .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
   end
 

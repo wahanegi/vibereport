@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users_teams
+# Table name: user_teams
 #
 #  id         :bigint           not null, primary key
 #  created_at :datetime         not null
@@ -10,9 +10,8 @@
 #
 # Indexes
 #
-#  index_users_teams_on_team_id              (team_id)
-#  index_users_teams_on_user_id              (user_id)
-#  index_users_teams_on_user_id_and_team_id  (user_id,team_id) UNIQUE
+#  index_user_teams_on_team_id  (team_id)
+#  index_user_teams_on_user_id  (user_id)
 #
 # Foreign Keys
 #
@@ -21,11 +20,11 @@
 #
 require 'rails_helper'
 
-RSpec.describe UsersTeam, type: :model do
-  let(:users_team) { create(:users_team) }
+RSpec.describe UserTeam, type: :model do
+  let(:user_team) { create(:user_team) }
 
   it 'factory works' do
-    expect(users_team).to be_valid
+    expect(user_team).to be_valid
   end
 
   describe 'Associations' do
@@ -34,6 +33,6 @@ RSpec.describe UsersTeam, type: :model do
   end
 
   describe 'Validations' do
-    it { expect(users_team).to validate_uniqueness_of(:user_id).scoped_to(:team_id) }
+    it { expect(user_team).to validate_uniqueness_of(:user_id).scoped_to(:team_id) }
   end
 end

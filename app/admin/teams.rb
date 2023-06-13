@@ -28,12 +28,12 @@ ActiveAdmin.register Team do
           user_emails = row[:user_emails].split(',')
         end
 
-        UsersTeam.where(team_id: team.id).destroy_all
+        UserTeam.where(team_id: team.id).destroy_all
 
         user_emails.each do |email|
           user = User.find_by(email: email.strip.downcase)
           if user
-            UsersTeam.create(user_id: user.id, team_id: team.id)
+            UserTeam.create(user_id: user.id, team_id: team.id)
           end
         end
       end
@@ -303,7 +303,7 @@ ActiveAdmin.register Team do
 
       if @team.save
         user_ids = permitted_params[:team][:user_ids].reject(&:blank?)
-        user_ids.each { |user_id| UsersTeam.create(user_id: user_id, team_id: @team.id) }
+        user_ids.each { |user_id| UserTeam.create(user_id: user_id, team_id: @team.id) }
         redirect_to admin_team_path(@team), notice: 'Team was successfully created.'
       else
         render :new

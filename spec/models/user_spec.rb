@@ -35,12 +35,12 @@ RSpec.describe User, type: :model do
       expect(user).to have_many(:responses).dependent(:destroy)
     end
 
-    it 'has many users_teams' do
-      expect(user).to have_many(:users_teams)
+    it 'has many user_teams' do
+      expect(user).to have_many(:user_teams)
     end
   
-    it 'has many teams through users_teams' do
-      expect(user).to have_many(:teams).through(:users_teams)
+    it 'has many teams through user_teams' do
+      expect(user).to have_many(:teams).through(:user_teams)
     end
   end
 
