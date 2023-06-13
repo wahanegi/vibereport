@@ -76,7 +76,7 @@ module ActiveAdminHelpers
   end
 
   def calculate_trend_style(trend)
-    color = trend == '&#x2191;' ? 'green' : (trend == '&#x2195;' ? 'goldenrod' : 'red')
+    color = trend == '&#x2191;' ? 'green' : 'red'
     "color: #{color}; font-size: 20px; font-weight: bold;"
   end
 end
