@@ -60,12 +60,9 @@ module ActiveAdminHelpers
     if value1 == value2
       '&#x2195;'
     else
-      trend_arrow(compare_as_float ? float_lesser_than?(value1, value2) : lesser_than?(value1, value2))
+      comparison_result = compare_as_float ? float_lesser_than?(value1, value2) : lesser_than?(value1, value2)
+      comparison_result ? '&#x2191;' : '&#x2193;'
     end
-  end
-
-  def trend_arrow(lesser)
-    lesser ? '&#x2191;' : '&#x2193;'
   end
 
   private
