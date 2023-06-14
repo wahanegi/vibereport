@@ -1,5 +1,5 @@
 class ProductivityAverage < AdminReport
-  def initialize(team, time_periods)
+  def initialize(team = nil, time_periods)
     super(team)
     @time_periods = time_periods
   end
@@ -17,7 +17,7 @@ class ProductivityAverage < AdminReport
       Response.joins(user: { teams: :user_teams })
               .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
     else
-      Response.where(responses: { time_period_id: @time_periods }).distinct
+      Response.where(responses: { time_period_id: @time_periods })
     end
   end
 end

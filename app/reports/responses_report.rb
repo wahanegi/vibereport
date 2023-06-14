@@ -1,7 +1,7 @@
 class ResponsesReport < AdminReport
   include Chartkick::Helper
 
-  def initialize(team, time_periods)
+  def initialize(team = nil, time_periods)
     super(team)
     @time_periods = time_periods
   end
