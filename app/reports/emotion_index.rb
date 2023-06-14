@@ -11,15 +11,15 @@ class EmotionIndex < AdminReport
     positive_emotion_ids = positive_emotions(receive_responses)
     negative_emotion_ids = negative_emotions(receive_responses)
 
-    positive_ratings_sum = receive_responses.where(emotion_id: positive_emotion_ids).distinct.sum(:rating)
-    negative_ratings_sum = receive_responses.where(emotion_id: negative_emotion_ids).distinct.sum(:rating)
+    positive_ratings_sum = Response.where(emotion_id: positive_emotion_ids, time_period_id: @time_periods).sum(:rating)
+    negative_ratings_sum = Response.where(emotion_id: negative_emotion_ids, time_period_id: @time_periods).sum(:rating)
 
     result = (positive_ratings_sum - negative_ratings_sum) / receive_total_responses.to_f
     formatted_result = result.round(2)
 
     data = {
-      'Positive Emotions' => positive_emotion_ids.count,
-      'Negative Emotions' => negative_emotion_ids.count
+      'Positive Emotions' => positive_emotions_count(receive_responses),
+      'Negative Emotions' => negative_emotions_count(receive_responses)
     }
 
     chart = generate_chart(data)
@@ -49,15 +49,25 @@ class EmotionIndex < AdminReport
   def positive_emotions(responses)
     responses.joins(:emotion)
              .where(emotions: { category: 'positive' })
-             .distinct
              .pluck(:emotion_id)
   end
 
   def negative_emotions(responses)
     responses.joins(:emotion)
              .where(emotions: { category: 'negative' })
-             .distinct
              .pluck(:emotion_id)
+  end
+
+  def positive_emotions_count(responses)
+    responses.joins(:emotion)
+             .where(emotions: { category: 'positive' })
+             .count
+  end
+
+  def negative_emotions_count(responses)
+    responses.joins(:emotion)
+             .where(emotions: { category: 'negative' })
+             .count
   end
 
   def generate_chart(data)
