@@ -51,12 +51,12 @@ module ActiveAdminHelpers
   end
 
   def trend_direction(value1, value2, compare_as_floats: true)
-    puts "value1: #{value1}"
-    puts "value2: #{value2}"
+    puts "value1: #{value1.inspect}"
+    puts "value2: #{value2.inspect}"
     trend = calculate_trend(value1, value2, compare_as_floats)
     trend_style = calculate_trend_style(trend)
-    puts "trend: #{trend}"
-    puts "trend_style: #{trend_style}"
+    puts "trend: #{trend.inspect}"
+    puts "trend_style: #{trend_style.inspect}"
     [trend, trend_style]
   end
 

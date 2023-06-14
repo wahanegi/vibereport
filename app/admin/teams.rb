@@ -129,6 +129,7 @@ ActiveAdmin.register Team do
 
             attributes_table_for team do
               row :Emotion_Index do
+                puts previous_time_period.inspect
                 if previous_time_period
                   trend_data = trend_direction(previous_period_emotion_index, formatted_result, compare_as_floats: false)
 
@@ -149,7 +150,7 @@ ActiveAdmin.register Team do
               row :Productivity_Average do
                 if previous_time_period && productivity_avg != 'No productivity present'
                   trend_data = trend_direction(previous_period_productivity_avg, productivity_avg, compare_as_floats: true)
-                  puts trend_data
+                  puts trend_data.inspect
                   div do
                     span productivity_avg
                     span trend_data[0].html_safe, style: trend_data[1]
