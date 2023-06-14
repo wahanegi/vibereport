@@ -14,7 +14,7 @@ class EmotionIndex < AdminReport
     positive_ratings_sum = Response.where(emotion_id: positive_emotion_ids, time_period_id: @time_periods).sum(:rating)
     negative_ratings_sum = Response.where(emotion_id: negative_emotion_ids, time_period_id: @time_periods).sum(:rating)
 
-    result = (positive_ratings_sum - negative_ratings_sum) / receive_total_responses.to_f
+    result = ((positive_ratings_sum) - (negative_ratings_sum)) / receive_total_responses.to_f
     formatted_result = result.round(2)
 
     data = {
