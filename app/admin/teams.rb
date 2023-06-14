@@ -149,10 +149,11 @@ ActiveAdmin.register Team do
               row :Productivity_Average do
                 if previous_time_period && productivity_avg != 'No productivity present'
                   trend_data = trend_direction(previous_period_productivity_avg, productivity_avg, compare_as_floats: true)
-
+                  puts trend_data
                   div do
                     span productivity_avg
                     span trend_data[0].html_safe, style: trend_data[1]
+                    
                   end
                 else
                   div do
