@@ -50,17 +50,17 @@ module ActiveAdminHelpers
     vars
   end
 
-  def trend_direction(value1, value2, compare_as_floats: true)
-    trend = calculate_trend(value1, value2, compare_as_floats)
+  def trend_direction(value1, value2)
+    trend = calculate_trend(value1, value2)
     trend_style = calculate_trend_style(trend)
     [trend, trend_style]
   end
 
-  def calculate_trend(value1, value2, compare_as_float)
+  def calculate_trend(value1, value2)
     if value1 == value2
       '&#x2195;'
     else
-      trend_arrow(compare_as_float ? float_lesser_than?(value1, value2) : lesser_than?(value1, value2))
+      trend_arrow(float_lesser_than?(value1, value2))
     end
   end
 
@@ -71,11 +71,9 @@ module ActiveAdminHelpers
   private
 
   def float_lesser_than?(value1, value2)
+    value1 = value1.is_a?(Array) ? value1[0] : value1
+    value2 = value2.is_a?(Array) ? value2[0] : value2
     value1.to_f < value2.to_f
-  end
-
-  def lesser_than?(value1, value2)
-    value1 << value2
   end
 
   def calculate_trend_style(trend)

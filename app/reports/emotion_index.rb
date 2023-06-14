@@ -8,13 +8,10 @@ class EmotionIndex < AdminReport
   def generate
     return ['No emotion index present.', nil] if receive_responses.empty?
 
-    positive_emotion_ids = positive_emotions(receive_responses)
-    negative_emotion_ids = negative_emotions(receive_responses)
+    positive_ratings_sum = positive_emotions(receive_responses)
+    negative_ratings_sum = negative_emotions(receive_responses)
 
-    positive_ratings_sum = Response.where(emotion_id: positive_emotion_ids, time_period_id: @time_periods).sum(:rating)
-    negative_ratings_sum = Response.where(emotion_id: negative_emotion_ids, time_period_id: @time_periods).sum(:rating)
-
-    result = ((positive_ratings_sum) - (negative_ratings_sum)) / receive_total_responses.to_f
+    result = (positive_ratings_sum - negative_ratings_sum) / receive_total_responses.to_f
     formatted_result = result.round(2)
 
     data = {
@@ -42,20 +39,22 @@ class EmotionIndex < AdminReport
     if @team
       @team.users.includes(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
     else
-      User.joins(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
+      User.includes(:responses).where(responses: { time_period_id: @time_periods }).distinct.count
     end
   end
 
   def positive_emotions(responses)
-    responses.joins(:emotion)
-             .where(emotions: { category: 'positive' })
-             .pluck(:emotion_id)
+    positive_emotion_ids = responses.joins(:emotion)
+                                    .where(emotions: { category: 'positive' })
+                                    .pluck(:id)
+    Response.where(id: positive_emotion_ids, time_period_id: @time_periods).sum(:rating)
   end
 
   def negative_emotions(responses)
-    responses.joins(:emotion)
-             .where(emotions: { category: 'negative' })
-             .pluck(:emotion_id)
+    negative_emotion_ids = responses.joins(:emotion)
+                                    .where(emotions: { category: 'negative' })
+                                    .pluck(:id)
+    Response.where(id: negative_emotion_ids, time_period_id: @time_periods).sum(:rating)
   end
 
   def positive_emotions_count(responses)
