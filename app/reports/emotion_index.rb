@@ -1,7 +1,8 @@
 class EmotionIndex < AdminReport
   include Chartkick::Helper
-  def initialize(team = nil, time_periods)
-    super(team)
+
+  def initialize(team, time_periods)
+    super(team: team)
     @time_periods = time_periods
   end
 

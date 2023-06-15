@@ -1,5 +1,7 @@
 class AdminReport
-  def initialize(team)
+  attr_reader :team
+
+  def initialize(team: nil)
     @team = team
     @responses = if @team
                    Response.joins(user: { teams: :user_teams })
