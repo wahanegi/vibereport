@@ -32,4 +32,5 @@ class FunQuestion < ApplicationRecord
   scope :not_used, -> { where(used: false) }
 
   validates :question_body, presence: true, uniqueness: { case_sensitive: false }
+  validates :time_period, uniqueness: true, unless: -> { time_period.nil? }
 end

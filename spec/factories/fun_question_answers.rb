@@ -21,7 +21,7 @@
 #
 FactoryBot.define do
   factory :fun_question_answer do
-    answer_body { Faker::Lorem.sentences }
+    answer_body { Faker::Lorem.sentences.first }
     association :user, factory: :user
     association :fun_question, factory: :fun_question
   end

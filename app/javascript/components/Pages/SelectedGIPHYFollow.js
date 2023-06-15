@@ -6,7 +6,7 @@ import CornerElements from "../UI/CornerElements";
 
 const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCustomGif}) => {
   const {isLoading, error} = service
-  const gif_url = data.response.attributes.gif_url
+  const gif_url = data.response.attributes.gif.src
 
   const handlingOnClickNext = () => {
     steps.push('emotion-intensity')

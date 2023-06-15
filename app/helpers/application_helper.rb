@@ -20,5 +20,4 @@ module ApplicationHelper
 
     passwordless_session.expires_at <= Time.current
   end
-
 end

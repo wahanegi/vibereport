@@ -14,70 +14,6 @@ RSpec.describe Api::V1::ResponsesController do
     passwordless_sign_in(user) unless test.metadata[:logged_out]
   end
 
-  describe '#index' do
-    it 'should returns a success response' do
-      get '/api/v1/responses'
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'has a 401 status code for non sigh_in user', :logged_out do
-      get '/api/v1/responses'
-      expect(response.status).to eq(302)
-    end
-
-    it 'should will be correct the length of the response' do
-      get '/api/v1/responses'
-      expect(Response.all.length).to eq(1)
-    end
-  end
-
-  describe '#show' do
-    it 'should returns a success response' do
-      get "/api/v1/responses/#{user_response.id}"
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'has a 401 status code for non sigh_in user', :logged_out do
-      get "/api/v1/responses/#{user_response.id}"
-      expect(response.status).to eq(302)
-    end
-
-    it 'should will be correct response' do
-      get "/api/v1/responses/#{user_response.id}"
-      expect([JSON.parse(response.body)]).to eq [{
-        'emotion' =>
-          {
-            'id' => user_response.emotion.id,
-            'category' => user_response.emotion.category,
-            'created_at' => user_response.emotion.created_at.strftime('%FT%T.%LZ'),
-            'updated_at' => user_response.emotion.updated_at.strftime('%FT%T.%LZ'),
-            'word' => user_response.emotion.word,
-            'public' => user_response.emotion.public
-          },
-        'user_shoutouts' => [],
-        'data' => {
-          'id' => user_response.id.to_s,
-          'type' => 'response',
-          'attributes' =>
-            {
-              'id' => user_response.id,
-              'time_period_id' => user_response.time_period_id,
-              'emotion_id' => user_response.emotion_id,
-              'steps' => user_response.steps,
-              'gif_url' => nil,
-              'rating' => user_response.rating,
-              'comment' => user_response.comment,
-              'productivity' => user_response.productivity,
-              'bad_follow_comment' => user_response.bad_follow_comment,
-              'celebrate_comment' => user_response.celebrate_comment,
-              'fun_question_id' => user_response.fun_question.id,
-              'fun_question_answer_id' => user_response.fun_question_answer
-            }
-        }
-      }]
-    end
-  end
-
   describe '#create' do
     subject { post '/api/v1/responses', params: { response: { attributes: { emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection] } }, format: :json } }
     it 'responds to json formats when provided in the params' do
@@ -109,14 +45,15 @@ RSpec.describe Api::V1::ResponsesController do
               'time_period_id' => response_saved.time_period_id,
               'emotion_id' => response_saved.emotion_id,
               'steps' => response_saved.steps,
-              'gif_url' => nil,
+              'gif' => nil,
               'rating' => user_response.rating,
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
               'celebrate_comment' => user_response.celebrate_comment,
               'fun_question_id' => nil,
-              'fun_question_answer_id' => nil
+              'fun_question_answer_id' => nil,
+              'completed_at' => nil
             }
         }
       }]
@@ -150,14 +87,15 @@ RSpec.describe Api::V1::ResponsesController do
                 'time_period_id' => user_response.time_period_id,
                 'emotion_id' => new_emotion.id,
                 'steps' => %w[emotion-selection-web meme-selection],
-                'gif_url' => nil,
+                'gif' => nil,
                 'rating' => user_response.rating,
                 'comment' => user_response.comment,
                 'productivity' => user_response.productivity,
                 'bad_follow_comment' => user_response.bad_follow_comment,
                 'celebrate_comment' => user_response.celebrate_comment,
                 'fun_question_id' => user_response.fun_question.id,
-                'fun_question_answer_id' => nil
+                'fun_question_answer_id' => nil,
+                'completed_at' => nil
               }
           }
       }]

@@ -8,12 +8,13 @@ import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
 import {useNavigate} from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
-import Results from "./Pages/Results";
+
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
 import Recognition from "./Pages/Recognition";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
+import Results from "./Pages/ResultsPage";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -123,19 +124,6 @@ const ResponseFlow = ({step, data, setData}) => {
       return <IcebreakerAnswer data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "icebreaker-question" :
       return <IcebreakerQuestion data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "MemeWallThisWeekSoFar" :
-    //   return <MemeWallThisWeekSoFar data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "MemeWallPrevWeek" :
-    //   return <MemeWallPrevWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "MemeWallThisWeek" :
-    //   return <MemeWallThisWeek data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "MemeWallThisWeekSoFarDrop" :
-    //   return <MemeWallThisWeekSoFarDrop data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    // case  "PromptEmailResults" :
-    //   return <PromptEmailResults data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
-    default:
-      // navigate ( `/emotion-selection-web`)
-
   }
 }
 export default ResponseFlow;

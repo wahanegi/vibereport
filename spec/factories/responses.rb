@@ -6,8 +6,8 @@
 #  bad_follow_comment     :text
 #  celebrate_comment      :text
 #  comment                :text
-#  draft                  :boolean          default(FALSE), not null
-#  gif_url                :string
+#  completed_at           :date
+#  gif                    :jsonb
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb
 #  productivity           :integer

@@ -44,7 +44,12 @@ class Api::V1::EmotionsController < ApplicationController
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
       users: User.ordered.map do |user|
-        { id: user.id, display: user.first_name, first_name: user.first_name, last_name: user.last_name }
+        {
+          id: user.id,
+          display: "#{user.first_name} #{user.last_name}",
+          first_name: user.first_name,
+          last_name: user.last_name
+        }
       end,
       fun_question:,
       user_shoutouts: current_user.shoutouts
@@ -74,7 +79,11 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def fun_question
-    custom_question.presence || FunQuestion.question_public.not_used.sample
+    fun_question = custom_question.presence || FunQuestion.question_public.not_used.sample
+    return fun_question if fun_question[:time_period_id].present?
+
+    fun_question.update(time_period_id: time_period.id, used: true) if fun_question.time_period_id.blank?
+    fun_question
   end
 
   def custom_question
@@ -86,7 +95,8 @@ class Api::V1::EmotionsController < ApplicationController
       id: @fun_question.id,
       user_id: @fun_question.user&.id,
       user_name: @fun_question.user&.first_name,
-      question_body: @fun_question.question_body
+      question_body: @fun_question.question_body,
+      time_period_id: @fun_question.time_period_id
     }
   end
 
