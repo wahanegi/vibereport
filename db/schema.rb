@@ -91,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.text "comment"
     t.date "completed_at"
     t.datetime "created_at", null: false
+    t.boolean "draft", default: false, null: false
     t.bigint "emotion_id"
     t.bigint "fun_question_answer_id"
     t.bigint "fun_question_id"
