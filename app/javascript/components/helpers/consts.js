@@ -41,4 +41,4 @@ export const EMOTION_COLORS = {
   ];
 
 export const EMOTION_COL_NUMBERS = 6
-export const MIN_USERS_RESPONSES = 5
+export const MIN_USERS_RESPONSES = 4

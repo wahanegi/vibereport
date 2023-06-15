@@ -2,11 +2,11 @@ class Api::V1::ResultsPresenter
   include ApplicationHelper
   attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users
 
-  def initialize(time_period_id, current_user)
-    @time_period = TimePeriod.find(time_period_id)
-    @responses = time_period.responses.completed
+  def initialize(time_period_slug, current_user)
+    @time_period = TimePeriod.find_by(slug: time_period_slug)
+    @responses = time_period.responses.completed.working
     @fun_question_answers = responses.filter_map(&:fun_question_answer)
-    @fun_question = fun_question_answers&.first&.fun_question.presence
+    @fun_question = time_period.fun_question
     @users = responses.filter_map(&:user)
     @current_user = current_user
   end
@@ -14,13 +14,14 @@ class Api::V1::ResultsPresenter
   def json_hash
     {
       time_periods: TimePeriod.ordered || [],
-      emotions: responses.map(&:emotion).shuffle.presence || [],
+      emotions: responses.filter_map(&:emotion).sample(36).presence || [],
       gifs: responses.pluck(:gif).compact || [],
       fun_question: question,
       answers:,
       sent_shoutouts:,
       received_shoutouts:,
-      current_user_shoutouts:
+      current_user_shoutouts:,
+      responses_count: responses.count
     }
   end
 

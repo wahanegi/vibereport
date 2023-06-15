@@ -8,13 +8,13 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:emotion) { create :emotion }
   let!(:fun_question) { create :fun_question, time_period: }
   let!(:fun_question_answer) { create :fun_question_answer, fun_question:, user: }
-  let!(:user_response) { create :response, emotion:, time_period:, user:, fun_question_answer:, steps: %w[emotion-selection-web meme-selection results], gif: {src: 'https://giphy.com/gifs/mls-chicharito-chicha-savor-it-IXKJ943d0GOIV6UMFj', height: 100} }
-  let!(:user_response2) { create :response, emotion:, time_period:, user: user2, steps: %w[emotion-selection-web meme-selection results] }
+  let!(:user_response) { create :response, emotion:, time_period:, user:, fun_question_answer:, steps: %w[emotion-selection-web meme-selection results], gif: {src: 'https://giphy.com/gifs/mls-chicharito-chicha-savor-it-IXKJ943d0GOIV6UMFj', height: 100 }, completed_at: Date.current }
+  let!(:user_response2) { create :response, emotion:, time_period:, user: user2, steps: %w[emotion-selection-web meme-selection results], completed_at: Date.current }
   let!(:shoutout) { create :shoutout, time_period:, user: user2 }
   let!(:shoutout2) { create :shoutout, time_period:, user: }
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
-  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.id, user) }
+  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user) }
 
   describe '#render' do
     subject { presenter.json_hash }
@@ -62,7 +62,8 @@ RSpec.describe Api::V1::ResultsPresenter do
               users: [user2]
             }],
             total_count: time_period.shoutouts.size
-          }
+          },
+          responses_count: time_period.responses.count
         }
       )
     end

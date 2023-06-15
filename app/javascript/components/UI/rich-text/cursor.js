@@ -2,7 +2,7 @@
 
 import RichText from "./rich-text";
 export default class Cursor {
-    static getCurrentCursorPosition(parentElement) {
+    static getCurrentCursorPosition(parentElement, initCoord = {x: 0, y: 0}) {
         if(window.getSelection()) {
             const selection = window.getSelection()
             let charCount = -1
@@ -11,7 +11,7 @@ export default class Cursor {
             let focusOffset = null
             let realPos = 0
             let realFocusOffset
-            let coordinates = {x: 0, y: 0};
+            let coordinates = initCoord;
             if (selection.focusNode) {
                 if (Cursor._isChildOf(selection.focusNode, parentElement)) {
                     focusNode = selection.focusNode;

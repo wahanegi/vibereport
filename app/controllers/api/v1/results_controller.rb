@@ -4,7 +4,7 @@ class Api::V1::ResultsController < ApplicationController
 
   def show
     if @time_period.present?
-      render json: Api::V1::ResultsPresenter.new(@time_period.id, current_user).json_hash
+      render json: Api::V1::ResultsPresenter.new(@time_period.slug, current_user).json_hash
     else
       render json: { error: 'Time period not found' }, status: :not_found
     end
@@ -13,7 +13,7 @@ class Api::V1::ResultsController < ApplicationController
   def results_email
     sign_in user
     msg = results_email_error_message
-    return redirect_to "/results?id=#{params[:id]}" if msg.blank?
+    return redirect_to "/results/#{params[:slug]}" if msg.blank?
 
     render json: { error: msg }, status: :unprocessable_entity
   end
@@ -28,7 +28,7 @@ class Api::V1::ResultsController < ApplicationController
   end
 
   def time_period
-    @time_period ||= TimePeriod.find_by(id: params[:id])
+    @time_period ||= TimePeriod.find_by(slug: params[:slug])
   end
 
   def user

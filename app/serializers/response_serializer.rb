@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  bad_follow_comment     :text
 #  comment                :text
+#  completed_at           :date
 #  gif                    :jsonb
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb
@@ -43,5 +44,5 @@ class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
   attributes :id, :time_period_id, :emotion_id, :steps, :gif, :rating, :comment, :productivity,
-             :bad_follow_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id
+             :bad_follow_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id, :completed_at
 end

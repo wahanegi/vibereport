@@ -3,7 +3,7 @@ import Cursor from "../rich-text/cursor";
 import DropDownList from "./DropDownList";
 import {userFullName} from "../../helpers/library";
 import RichText from "./rich-text";
-import xClose from "../../../../assets/sys_svg/x-close.svg";
+import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 import Button from "../Button";
 import RichTextArea from "./RichTextArea";
 
@@ -13,6 +13,8 @@ const RichInputElement =({ richText = '',
                            onSubmit ,
                            onClose,
                            classAt = 'color-primary'}) =>{
+  const calculateInitX = (window.innerWidth-884)/2+69
+  const initCoordinates = {x: calculateInitX, y: 373}
   const [textHTML, setTextHTML] = useState( richText )
   const textAreaRef = useRef(richText)
   const [filteredUsers, setFilteredUsers] = useState(RichText.sortUsersByFullName(listAllUsers))
@@ -23,7 +25,7 @@ const RichInputElement =({ richText = '',
       filteredUsers.length ? filteredUsers[0].id : "")
   const [caret, setCaret] = useState(textAreaRef.current.length)
   const [copyChosenUsers, setCopyChosenUsers] = useState([])
-  const [ coordinates, setCoordinates] = useState({ x:420, y:386 })
+  const [ coordinates, setCoordinates] = useState( initCoordinates )
   const [ cursorPosition, setCursorPosition ] = useState(null)
   const [ isDisabled, setIsDisabled] = useState(true)
   const element = textAreaRef.current
@@ -42,7 +44,7 @@ const RichInputElement =({ richText = '',
     if ( Cursor.getCurrentCursorPosition(element).focusOffset === 1 )
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates)
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
-    element.innerText === undefined || element.innerText === '\x00' ? setIsDisabled(true) : setIsDisabled(false)
+    element.innerText === undefined || element.innerText === '\x0A' ? setIsDisabled(true) : setIsDisabled(false)
   }, [caret, textHTML, currentSelection])
 
   useEffect(()=>{
@@ -57,7 +59,7 @@ const RichInputElement =({ richText = '',
     event.preventDefault()
     const selectedValue = window.getSelection().toString();
     const text = element.textContent
-    const cursorPos = Cursor.getCurrentCursorPosition(element)
+    const cursorPos = Cursor.getCurrentCursorPosition(element, initCoordinates)
     const caretCur = cursorPos.charCount
     const realPos = cursorPos.realPos
     let char = event.key
@@ -154,26 +156,18 @@ const RichInputElement =({ richText = '',
 
     } else {
       if (cursorPos.isDIV && char.length === 1) {
-        switch (char) {
-          case MARKER:
-            if ((text.length === 0 || caretCur === text.length && text[caretCur - 1].match(/ |\u000A/)
-                || caretCur > 0 && caretCur < text.length && text[caretCur - 1].match(/ |\x0A/)
-                && text[caretCur].match(/ |\x00/)
-                || caretCur === 0 && text.length > 0 && text[caretCur].match(/ |\x00/))) {
-              RichText.pasteNodeToHTMLobj(
-                  MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT
-              )
-              setIsDropdownList(true)
-              if (cursorPos.coordinates.y !== 0 && cursorPos.coordinates.x !== 0) {
-                setCoordinates(cursorPos.coordinates)
-              }
-              return 0
-            } else {
-
-            }
-          default:
-            RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
+        if( char === MARKER && filteredUsers?.length ){
+          const symbolCodeAt = (pos) => text.charCodeAt(caretCur + pos)
+          const isSpecialSmb = (pos) => isNaN(symbolCodeAt(pos)) ? true : symbolCodeAt(pos) < 33
+          const isBtwSpecialSmb = isSpecialSmb(-1) && isSpecialSmb(0)
+          if (isBtwSpecialSmb) {
+            RichText.pasteNodeToHTMLobj( MARKER, textHTML, cursorPos, setTextHTML, setCaret, TAG_AT.slice(0, -1), END_TAG_AT )
+            setIsDropdownList(true)
+            setCoordinates(cursorPos.coordinates)
+            return 0
+          }
         }
+            RichText.pasteSymbolsToHTMLobj(char, textHTML, cursorPos, setTextHTML, setCaret)
       } else if (cursorPos.isSPAN && char.length === 1) {
         const nameUserToDel = RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
         if (listAllUsers.find(user => userFullName(user) === nameUserToDel) && !char.match(/[@<>]/)
@@ -220,7 +214,7 @@ const RichInputElement =({ richText = '',
         break;
       case 'End':
         setIsDropdownList(false)
-        setCaret ( text.length )
+        setCaret ( text.length - 1 )
         break;
       case 'ArrowLeft':
           if( cursorPos.isSPAN && cursorPos.focusOffset === 1 ) {
@@ -283,9 +277,12 @@ const RichInputElement =({ richText = '',
               const node = RichText.deleteNode( textHTML, cursorPos, TAG_AT, END_TAG_AT, setTextHTML, setCaret )
               const userFromNode = cursorPos.isSPAN ? node
                   : RichText.findUsersInText(TAG_AT, END_TAG_AT, RichText.decodeSpace( node ), listAllUsers)
-              const filtratedUsersByName = RichText.filtrationByName (userFullName( userFromNode[0] ), copyChosenUsers)
-              setCopyChosenUsers( filtratedUsersByName )
-              setChosenUsers( filtratedUsersByName )
+              if(userFromNode?.length) {
+                const filtratedUsersByName = RichText.filtrationByName(userFullName(userFromNode[0]), copyChosenUsers)
+                setCopyChosenUsers(filtratedUsersByName)
+                setChosenUsers(filtratedUsersByName)
+                setFilteredUsers(RichText.sortUsersByFullName([...filteredUsers, userFromNode[0]]))
+              }
             } else {
               RichText.deleteNextChar( textHTML, realPos, setTextHTML )
             }
@@ -400,7 +397,7 @@ const clickEnterTabHandling = ( i ) => {
   }
 
   return (
-    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327 mb-7 overflow-hidden'>
+    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327 mb-6 overflow-hidden'>
       <img src={xClose} className='position-absolute x-close' onClick={onClose}/>
       <div className=' d-flex flex-column align-items-center'>
         <RichTextArea      textHTML = { textHTML }
@@ -409,7 +406,7 @@ const clickEnterTabHandling = ( i ) => {
                             onClick = { clickHandling }
                           cursorPos = { Cursor.getCurrentCursorPosition(element) }
                           className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'
-                        placeholder = {` Use "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!`}/>
+                        placeholder = {`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}/>
         <Button className={`placement-shoutout-btn position-relative btn-modal system c2 p-0 ${isDisabled && 'disabled'}`}
                 onClick = { submitHandling }>
           Send Shoutout

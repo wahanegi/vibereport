@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_05_164921) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,6 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_164921) do
   create_table "responses", force: :cascade do |t|
     t.text "bad_follow_comment"
     t.text "comment"
+    t.date "completed_at"
     t.datetime "created_at", null: false
     t.bigint "emotion_id"
     t.bigint "fun_question_answer_id"
@@ -138,8 +139,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_164921) do
     t.datetime "created_at", null: false
     t.date "due_date"
     t.date "end_date"
+    t.string "slug"
     t.date "start_date"
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_time_periods_on_slug", unique: true
   end
 
   create_table "users", force: :cascade do |t|

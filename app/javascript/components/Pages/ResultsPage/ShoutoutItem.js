@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Fragment, useState} from "react";
 import {convertUsersToString} from "../../helpers/helpers";
 import parse from "html-react-parser";
 import polygon_shoutout from "../../../../assets/images/polygon-shoutout.svg";
@@ -14,9 +14,13 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
     <div className="col-9">
       <div className='h5 w-auto text-start truncated fw-semibold'>
         {prefix}
-        {convertUsersToString(users)}
-        {isCollapse && parse(shoutout.rich_text)}
+        {prefix && convertUsersToString(users)}
+        {isCollapse && !prefix && parse(shoutout.rich_text)}
+        {isCollapse && prefix && <Fragment>"{parse(shoutout.rich_text)}"</Fragment>}
       </div>
+      {
+        !isCollapse && !prefix && <div className='h5 text-start fw-semibold'>{parse(shoutout.rich_text)}</div>
+      }
     </div>
     <div className="col-3">
       <div className='d-flex flex-nowrap justify-content-end align-items-center pointer' onClick={toggle}>
@@ -25,8 +29,8 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
       </div>
     </div>
     {
-      !isCollapse && <Collapse in={!isCollapse}>
-        <div className='h5 d-flex justify-content-start fw-semibold'>{parse(shoutout.rich_text)}</div>
+      !isCollapse && prefix && <Collapse in={!isCollapse}>
+        <div className='h5 text-start fw-semibold'>"{parse(shoutout.rich_text)}"</div>
       </Collapse>
     }
   </div>

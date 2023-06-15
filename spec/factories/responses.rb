@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  bad_follow_comment     :text
 #  comment                :text
+#  completed_at           :date
 #  gif                    :jsonb
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb

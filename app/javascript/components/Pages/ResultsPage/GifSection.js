@@ -20,7 +20,7 @@ const PreviewGifSection = () => {
     </div>);
   }
 
-  return <div className='align-self-center gif-wrap result-page text-header-position mb-3'>
+  return <div className='align-self-center gif-wrap result-page mb-3'>
     <div className='border-none card'>
       <div className='card-body h-auto p-0'>
         <div className="gif-list">
@@ -31,8 +31,8 @@ const PreviewGifSection = () => {
   </div>
 }
 
-const GifSection = ({ gifs, nextTimePeriod }) => {
-  const showPreview = !nextTimePeriod && gifs.length < MIN_USERS_RESPONSES
+const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
+  const showPreview = !nextTimePeriod && isMinUsersResponses
   if(showPreview) return <PreviewGifSection />
 
   if(isEmpty(gifs)) return null
@@ -43,7 +43,7 @@ const GifSection = ({ gifs, nextTimePeriod }) => {
     </div>
   });
 
-  return <div className='align-self-center gif-wrap result-page mb-3 text-header-position'>
+  return <div className='align-self-center gif-wrap result-page mb-3'>
     <div className='border-none card'>
       <div className='card-body h-auto p-0'>
         <div className="gif-list">

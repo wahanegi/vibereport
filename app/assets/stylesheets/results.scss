@@ -33,7 +33,17 @@
         white-space: nowrap;
       }
       .rotate {
-        rotate: 90deg;
+        rotate: -90deg;
+      }
+    }
+    &.empty-answer {
+      background-color: $white;
+      min-height: auto;
+      color: $green-700;
+      &.hover-event {
+        background-color: $green-700;
+        color: $white;
+        border: 3px solid $white;
       }
     }
     .expand-icon {
@@ -46,39 +56,23 @@
 
 .header-position {
   position: relative;
-  top: -137px;
+  top: 137px;
 }
 
 .text-header-position {
   position: relative;
-  top: -100px;
+  top: 120px;
 }
 
 .hud {
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   &.help {
-    right: 20px;
+    right: 30px;
     z-index: 2;
   }
   &.shoutout {
-    left: 20px;
+    left: 30px;
     z-index: 2;
   }
-  &.recent_btn {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    justify-content: center;
-  }
-}
-
-.hud-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 110px;
-  background-color: $white;
-  z-index: 1;
 }

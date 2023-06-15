@@ -14,7 +14,7 @@ const animatedStyles = (shift, category, addBlur) => {
   }
 }
 
-const AnimatedEmotion = ({word, category, addBlur = false}) => {
+const AnimatedEmotion = ({word, category, addBlur = false, count}) => {
   const shift = Math.round(Math.random() * 10)/10
   const minOpacity = (shift - 0.3) > 0 ? (shift - 0.3) : 0.1
   const springProps = useSpring({
@@ -22,7 +22,7 @@ const AnimatedEmotion = ({word, category, addBlur = false}) => {
     to: async (next) => {
       while (true) {
         await next({ fontSize: `${shift + 0.7}rem`, opacity: 1 });
-        await next({ fontSize: '1.8rem', opacity: minOpacity });
+        await next({ fontSize: `${count < 3 ? '1.8' : '3'}rem`, opacity: minOpacity });
       }
     },
     config: { duration: 4000 },
@@ -38,7 +38,7 @@ const AnimatedEmotion = ({word, category, addBlur = false}) => {
 const PreviewEmotionSection = ({data}) => {
   const splitEmotions = splitArray(data.data, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
-  return <div className="text-header-position">
+  return <div className='mb-2' style={{marginTop: 60}}>
     <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
       <tbody>
       {
@@ -59,13 +59,22 @@ const PreviewEmotionSection = ({data}) => {
   </div>
 }
 
-const EmotionSection = ({emotions, nextTimePeriod, data}) => {
-  const splitEmotions = splitArray(emotions, EMOTION_COL_NUMBERS)
+const EmotionSection = ({emotions, nextTimePeriod, data, isMinUsersResponses}) => {
+  const filteredEmotions = emotions.reduce((acc, curr) => {
+    const foundIndex = acc.findIndex(item => item.id === curr.id);
+    if (foundIndex === -1) {
+      acc.push({ id: curr.id, category: curr.category, word: curr.word, count: 1 });
+    } else {
+      acc[foundIndex].count += 1;
+    }
+    return acc;
+  }, []);
+  const splitEmotions = splitArray(filteredEmotions, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
 
-  if(!nextTimePeriod && emotions.length < MIN_USERS_RESPONSES) return <PreviewEmotionSection data={data} />
+  if(!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data} />
 
-  return <div className="text-header-position">
+  return <div className='mb-2' style={{marginTop: 60}}>
     <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
       <tbody>
       {
@@ -74,7 +83,7 @@ const EmotionSection = ({emotions, nextTimePeriod, data}) => {
             {
               emotions.map((emotion, index) =>
                 <td key={index}>
-                  <AnimatedEmotion word={emotion.word} category={emotion.category} />
+                  <AnimatedEmotion word={emotion.word} category={emotion.category} count={emotion.count} />
                 </td>
               )
             }

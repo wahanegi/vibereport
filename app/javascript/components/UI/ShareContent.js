@@ -80,8 +80,8 @@ export const BtnBack = ({ addClass = '', hidden, onClick, disabled, text = 'Back
     {text}
   </button>
 
-export const ShoutOutIcon = ({addClass = ''}) =>
-  <div className={'m-0'}>
+export const ShoutOutIcon = ({addClass = '', onClick}) =>
+  <div className={'m-0 pointer'} onClick={onClick}>
     <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}} />
   </div>
 
@@ -93,11 +93,9 @@ export const HelpIcon = ({addClass=''}) =>
 
 export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true, }) =>
   <div className='d-flex justify-content-between m-3'>
-    <ShoutOutIcon />
     <BtnBack onClick={backHandling} addClass='m-1 align-self-center' />
     <BtnNext onClick={nextClick} disabled={disabled} hidden={hideNext} addClass='m-1 align-self-center' />
     <BtnSkip onClick={skipClick} hidden={hideSkip} addClass='m-1 align-self-center' />
-    <HelpIcon />
   </div>
 
 export const Header = ({className}) => <div className='d-flex justify-content-between m-3'>

@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  bad_follow_comment     :text
 #  comment                :text
+#  completed_at           :date
 #  gif                    :jsonb
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb
@@ -47,7 +48,7 @@ RSpec.describe Response, type: :model do
   let!(:emotion) { create :emotion }
   let!(:fun_question) { create :fun_question }
   let!(:fun_question_answer) { create :fun_question_answer }
-  let(:completed_response) { create :response, user:, time_period:, emotion:, steps: %w[emotion-selection-web results] }
+  let(:completed_response) { create :response, user:, time_period:, emotion:, steps: %w[emotion-selection-web results], completed_at: Date.current }
   let(:response) { FactoryBot.build(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let(:not_working_response) { FactoryBot.build(:response, :not_working_response, user:, time_period:, emotion: nil, steps: %w[emotion-selection-web]) }
 

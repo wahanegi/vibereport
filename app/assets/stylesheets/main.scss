@@ -64,9 +64,11 @@ a {
   text-align: center;
 }
 .central-element {
+  margin-top: 151px;
   min-height: 60vh;
 }
 .help-icon {
+  z-index: 21;
   filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 .width-block {
@@ -92,14 +94,17 @@ a {
 .gray-300 {
   color: $gray-300 !important;
 }
+.transparent {
+  color: transparent;
+}
 
 //new.html.erb
 .welcome-field {
   width: 746px;
   height: 59px;
 }
-.mt-125 {
-  margin-top: 125px;
+.mt-123 {
+  margin-top: 123px;
 }
 .mt-negative-17 {
   margin-top:-17px !important;
@@ -174,6 +179,9 @@ a {
 }
 .mt-180 {
   margin-top: 180px;
+}
+.pb-52 {
+  padding-bottom: 52px;
 }
 .pencil {
   cursor: pointer;
@@ -252,6 +260,7 @@ a {
 }
 .placement-buttons {
   top: 784px;
+  width: 800px;
 }
 .field-shout-outs {
   width: 884px !important;
@@ -334,6 +343,7 @@ a {
     line-height: 58px;
     text-align: center;
     color: $black;
+    margin-bottom: 5px;
   }
 
   .rating-label:hover {
@@ -342,11 +352,11 @@ a {
 
   .wrap-textarea{
     margin: auto;
-    border: 2px solid $black !important;
+    border: 3px solid $royal-blue;
 
     &:focus-within {
       outline: 0;
-      border: 3px solid $royal-blue !important;
+      border: 6px solid $royal-blue;
     }
   }
   //Productivity Bad Follow Up
@@ -390,7 +400,7 @@ a {
       margin-top: 12px;
       padding: 5px 15px;
       width: 530px;
-      height: 160px !important;
+      height: 155px !important;
       border: none !important;
       border-radius: 0;
     }
@@ -425,6 +435,7 @@ a {
   right: 47px;
   top: 756px;
   border-radius: 50%;
+  z-index:21;
 }
 
 //ProductivitySlider
@@ -587,6 +598,7 @@ a {
     z-index: 31;
     margin-top: -25px;
     margin-left: 414px;
+    cursor: pointer
   }
   .placement-shoutout-btn {
     z-index: 31;

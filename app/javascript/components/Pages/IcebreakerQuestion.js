@@ -1,8 +1,10 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
-import {Wrapper, BtnBack, Header, ShoutOutIcon, HelpIcon, BtnPrimary} from "../UI/ShareContent";
+import {BtnBack, BtnPrimary} from "../UI/ShareContent";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
+import CornerElements from "../UI/CornerElements";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -65,8 +67,6 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   return (
     <Fragment>
       {!isLoading && !error &&
-        <Wrapper>
-          <Header/>
           <div className='icebreaker-position'>
             <div className='d-flex justify-content-center flex-column'>
               <h4 className='mb-0'>Thanks for answering!</h4>
@@ -76,10 +76,10 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
               <div className='wrap'>
                 <p className='b3 muted'><span className='red-violet'>@</span>{userName} asks:</p>
                 {loaded &&
-                  <div className='wrap-textarea'>
+                  <div className='wrap-textarea middle'>
                     <form>
                       <div className="form-group">
-                      <textarea className='input' name='question_body'
+                      <textarea className='input middle' name='question_body'
                                 placeholder='What would you ask the team? You could be selected!'
                                 value={funQuestion?.question_body || ''}
                                 onChange={onChangQuestion} maxLength={700} />
@@ -89,15 +89,12 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
                 }
               </div>
             </div>
-            <div className='d-flex justify-content-between m-3'>
-              <ShoutOutIcon/>
-              <BtnBack addClass="answer-custom" onClick={backHandling}/>
-              <BtnPrimary addClass="answer-custom" onClick={handlingOnClickNext} text={isEmptyStr(funQuestionBody) ? 'Skip to Results' : 'Submit'} />
-              <HelpIcon/>
-            </div>
           </div>
-        </Wrapper>
       }
+      <BlockLowerBtns isSubmit={true} handlingOnClickNext={handlingOnClickNext} stringBody={funQuestionBody}/>
+      <CornerElements         data = { data }
+                              setData = { setData }
+                              percentCompletion = {0}/>
     </Fragment>
   );
 };
