@@ -4,7 +4,8 @@ require 'passwordless/test_helpers'
 NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 
 RSpec.describe Api::V1::EmotionsController do
-  FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
+  let!(:time_period) { create :time_period }
+  let!(:fun_question) { create :fun_question }
   let!(:user) { create :user }
   let!(:emotion) { create(:emotion, category: 'positive', public: true) }
   let!(:emotion_neutral) do

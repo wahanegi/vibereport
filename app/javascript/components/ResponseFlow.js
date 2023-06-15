@@ -8,12 +8,13 @@ import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
 import {useNavigate} from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
-import Results from "./Pages/Results";
+
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
 import Recognition from "./Pages/Recognition";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
+import Results from "./Pages/ResultsPage";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)

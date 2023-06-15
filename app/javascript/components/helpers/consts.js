@@ -39,3 +39,6 @@ export const EMOTION_COLORS = {
     {width: '221px', height: '271px', marginTop: '40px'},
     {width: '382px', height: '311px', marginTop: '0'},
   ];
+
+export const EMOTION_COL_NUMBERS = 6
+export const MIN_USERS_RESPONSES = 4

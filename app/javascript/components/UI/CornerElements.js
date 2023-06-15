@@ -12,24 +12,31 @@ const CornerElements = ({
                             steps,
                             draft,
                             disabled,
+                            hideBottom = false,
                             handleSaveDraft }) => {
   return (
     <Fragment>
       <div className="board position-absolute t-35">
-        <div className="convert bigger ml-41 " >
+        <div className="convert bigger ml-41" >
           <p className="position-relative color-black" >Logo/Brand</p>
           <div className="line1 offset-line1" ></div>
           <div className="line2 offset-line2"></div>
         </div>
       </div>
-      <QuestionButton />
-      <ShoutoutButton   data = { data }
-                     setData = { setData }
-                         num = { numShoutouts }
-                   className = ''
-                      isMove = { isMoveShoutout }/>
-      <Menu
-            saveDataToDb={saveDataToDb}
+      {
+        !hideBottom ?
+          <Fragment>
+            <QuestionButton />
+            <ShoutoutButton   data = { data }
+                              setData = { setData }
+                              num = { numShoutouts }
+                              className = ''
+                              isMove = { isMoveShoutout }/>
+          </Fragment> :
+        null
+      }
+
+      <Menu saveDataToDb={saveDataToDb}
             steps={steps} draft={draft}
             disabled={disabled}
             data={data}

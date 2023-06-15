@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_14_151812) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,12 +89,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_151812) do
     t.text "bad_follow_comment"
     t.text "celebrate_comment"
     t.text "comment"
+    t.date "completed_at"
     t.datetime "created_at", null: false
-    t.boolean "draft", default: false, null: false
     t.bigint "emotion_id"
     t.bigint "fun_question_answer_id"
     t.bigint "fun_question_id"
-    t.string "gif_url"
+    t.jsonb "gif"
     t.boolean "not_working", default: false
     t.jsonb "notices"
     t.integer "productivity"
@@ -135,8 +135,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_151812) do
     t.datetime "created_at", null: false
     t.date "due_date"
     t.date "end_date"
+    t.string "slug"
     t.date "start_date"
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_time_periods_on_slug", unique: true
   end
 
   create_table "users", force: :cascade do |t|

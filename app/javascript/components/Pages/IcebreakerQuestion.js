@@ -1,6 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
-import {BtnBack, BtnPrimary} from "../UI/ShareContent";
+import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
@@ -41,13 +40,11 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
-      // TODO: change to redirect to the results page when it appears
-      steps.push('icebreaker-answer')
+      steps.push('results')
       saveDataToDb( steps, {fun_question_id: fun_question.data.id})
     }
     const goToResultPage = () => {
-      // TODO: change to redirect to the results page when it appears
-      steps.push('icebreaker-answer')
+      steps.push('results')
       saveDataToDb(steps, {draft: false})
     }
     saveDataQuestion(goToResultPage, dataFromServer);

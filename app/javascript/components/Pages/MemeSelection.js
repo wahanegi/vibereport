@@ -16,7 +16,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const {emotion, api_giphy_key, response} = data
   const navigate = useNavigate()
   const {isLoading, error} = service
-  const [gifUrl, setGifUrl] = useState(response.attributes.gif_url || '')
+  const [gifUrl, setGifUrl] = useState(response.attributes.gif || {})
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
   const [isDraft, setIsDraft] = useState(draft);
 

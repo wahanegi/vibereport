@@ -8,6 +8,16 @@ ActiveAdmin.register TimePeriod do
     column :end_date
     column :created_at
     column :due_date
+    column :slug
     actions
+  end
+
+  form do |f|
+    f.inputs do
+      f.input :start_date, as: :datepicker
+      f.input :end_date, as: :datepicker
+      f.input :due_date, as: :datepicker
+    end
+    f.actions
   end
 end

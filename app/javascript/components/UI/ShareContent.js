@@ -1,11 +1,17 @@
+import React, {Fragment} from "react";
 import Menu from "./Menu";
-import React from "react";
-import {backHandling, rangeFormat} from "../helpers/helpers";
-import shout_out_large from "../../../assets/images/shoutout.svg"
+import {backHandling, isPresent} from "../helpers/helpers";
+import calendar from "../../../assets/images/calendar.svg"
+import shoutout from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
 import logo from "../../../assets/images/logo.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
 import {NavLink} from "react-router-dom";
+import polygonLeft from "../../../assets/images/polygon-left.svg"
+import polygonRight from "../../../assets/images/polygon-right.svg"
+import editResponse from "../../../assets/images/editresponse.svg"
+import line from "../../../assets/images/line.svg"
+import {MIN_USERS_RESPONSES} from "../helpers/consts";
 
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
@@ -15,6 +21,12 @@ export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = 
       <img src={edit_pencil} alt="pencil"/>
     </span>
     {emotion.word}
+  </button>
+
+export const BtnSendMoreShoutouts = ({ onClick }) =>
+  <button className={'btn-custom shoutout d-flex flex-nowrap align-items-center'} onClick={onClick}>
+    Send more Shoutouts
+    <span><img src={shoutout} alt="shoutout"/></span>
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
@@ -27,12 +39,29 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
     {text}
   </button>
 
-export const Calendar = ({ timePeriod }) =>
-  <div className="h-40">
-    <div className="calendar ml-240 mt-37">
-      <div className="data mx-auto my-0 ">
-        21 Jan
+export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, prevTimePeriod, emotions}) =>
+  isPresent(date) && !hidden && <div className="position-relative">
+    { prevTimePeriod && positionLeft ?
+      emotions.length < MIN_USERS_RESPONSES ?
+        <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See last week’s results</p>:
+        <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See previous results</p>:
+      null
+    }
+    { positionRight && <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See next results</p> }
+    <div className="position-relative pointer w-82 mt-1" onClick={onClick}>
+      <img src={calendar} alt="calendar" />
+      <div className="position-absolute top-0 w-82" >
+        {date.includes(' - ') ?
+          <div className='mt-3 d-flex'>
+            {date.split(' - ')[0]}
+            <img src={line} alt="line" />
+            {date.split(' - ')[1]}
+          </div>:
+          <div className='mt-5 d-flex'>{date}</div>
+        }
       </div>
+      { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
+      { positionRight && <img className="position-absolute" style={{right: -26, top: 29}} src={polygonRight} alt="polygon right"/> }
     </div>
   </div>
 
@@ -46,16 +75,19 @@ export const BtnSkip = ({ addClass = '', hidden = true, onClick, disabled }) =>
     Skip
   </button>
 
-export const BtnBack = ({ addClass = '', hidden, onClick, disabled }) =>
+export const BtnBack = ({ addClass = '', hidden, onClick, disabled, text = 'Back' }) =>
   <button onClick={onClick} className={`btn btn-regular c1 back ${addClass}`} hidden={hidden} disabled={disabled}>
-    Back
+    {text}
   </button>
 
-export const ShoutOutIcon = () =>
-  <img src={shout_out_large} alt="shout out" style={{width: 100, height: 100}} />
+export const ShoutOutIcon = ({addClass = '', onClick}) =>
+  <div className={'m-0 pointer'} onClick={onClick}>
+    <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}} />
+  </div>
 
-export const HelpIcon = () =>
-  <NavLink to="mailto: support@vibereport.app" className='d-flex align-self-center'>
+
+export const HelpIcon = ({addClass=''}) =>
+  <NavLink to="mailto: support@vibereport.app" className={`${addClass} d-flex align-self-center`}>
     <img src={help_icon} alt="shout out" className='help-icon' />
   </NavLink>
 
@@ -76,3 +108,9 @@ export const Wrapper = ({children}) => <div className="wrapper">
     {children}
   </div>
 </div>
+
+export const EditResponse = ({ hidden = false, onClick }) =>
+  !hidden && <div style={{width: 135}}>
+    <p className='mb-0 text-start'>Edit responses</p>
+    <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
+  </div>
