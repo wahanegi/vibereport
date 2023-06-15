@@ -32,7 +32,7 @@ class ProductivityVerbatims < AdminReport
 
     comments.each_key do |emotion|
       comments[emotion] += receive_comments(emotion)
-      comments[emotion] = comments[emotion].empty? ? 'No bad follow comment present' : comments[emotion].join(', ')
+      comments[emotion] = comments[emotion].empty? ? 'No bad follow comment present' : comments[emotion].join('||')
     end
     comments
   end
