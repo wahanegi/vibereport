@@ -11,6 +11,9 @@ ActiveAdmin.register Team do
     f.actions
   end
 
+  filter :name, as: :string, label: 'Team name'
+  filter :user_teams_user_id, as: :select, collection: User.all.map { |user| [user.email, user.id] }, label: 'User'
+
   action_item :import_csv, only: :index do
     link_to 'Import CSV', import_csv_admin_teams_path
   end
