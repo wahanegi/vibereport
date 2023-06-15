@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Dropdown} from "react-bootstrap";
 import Button from "./Button";
 import {signOutUser} from "../requests/axios_requests";
@@ -29,13 +29,28 @@ import complete100_act from '../../../assets/images/complete100_act.svg'
 const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)){
+        setActiveImg(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+  }, []);
 
   const handleSignOut = () => {
     setShowModal(true);
   }
+  const btnElement = document.getElementsByClassName("dropdown")
 
   const handleChangeImg =() =>{
-    setActiveImg(!activeImg)
+    if(btnElement[0]?.classList.contains('show')){
+      setActiveImg(false)
+    }else{
+      setActiveImg(true)
+    }
   };
 
   const location = window.location.href;
@@ -70,7 +85,7 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
 
   return (
     <div className={ `${className}` }>
-      <Dropdown onClick={handleChangeImg}>
+      <Dropdown onClick={handleChangeImg} ref={dropdownRef}>
         <Dropdown.Toggle  id='dropdown-stick'>
           <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' />
         </Dropdown.Toggle>
