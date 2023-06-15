@@ -1,6 +1,6 @@
 class ProductivityVerbatims < AdminReport
   def initialize(team, time_periods)
-    super(team: team)
+    super(team)
     @time_periods = time_periods
   end
 

@@ -2,7 +2,7 @@ class ResponsesReport < AdminReport
   include Chartkick::Helper
 
   def initialize(team, time_periods)
-    super(team: team)
+    super(team)
     @time_periods = time_periods
   end
 
