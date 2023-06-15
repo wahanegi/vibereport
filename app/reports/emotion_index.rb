@@ -30,7 +30,8 @@ class EmotionIndex < AdminReport
   def receive_responses
     if @team
       Response.joins(user: { teams: :user_teams })
-              .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods, not_working: false }).distinct
+              .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods, not_working: false })
+              .distinct
     else
       Response.where(responses: { time_period_id: @time_periods, not_working: false }).distinct
     end
