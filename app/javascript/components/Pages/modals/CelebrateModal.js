@@ -3,22 +3,21 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import {apiRequest} from "../../requests/axios_requests";
 
-const CelebrateModal = ({ show, setShow, steps, goToRecognitionPage, celebrateShoutout, setCelebrateShoutout }) => {
+const CelebrateModal = ({ show, setShow, steps, celebrateShoutout, setCelebrateShoutout, saveDataToDb, goToRecognitionPage }) => {
   const handleClick = (e) => {
     setCelebrateShoutout(Object.assign({}, celebrateShoutout, {not_ask: e.target.checked}));
   };
   const handleMakeVisible = () => {
-    const dataSend = { shoutout: {visible: false} }
+    const dataSend = { shoutout: {visible: true, not_ask: celebrateShoutout.not_ask} }
     const dataFromServer = (shoutout) => {
-      steps.push('recognition')
       saveDataToDb(steps, {shoutout_id: shoutout.id})
     }
     const url = '/api/v1/shoutouts/'
     const id = celebrateShoutout?.id
-    apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then(goToRecognitionPage);
+    apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then();
+    goToRecognitionPage()
   };
 
-  console.log('celebrateShoutout', celebrateShoutout)
   return <Modal show={show} onHide={() => {setShow(false)}} animation={true}>
     <Modal.Body>
       <Form>

@@ -38,11 +38,15 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const [show, setShow] = useState(false);
 
   const goToRecognitionPage = () => {
-    if (!celebrateShoutout.not_ask && celebrateShoutout.visible) {
+    steps.push('recognition')
+    saveDataToDb(steps)
+  }
+
+  const showModal = () => {
+    if (!celebrateShoutout?.not_ask) {
       setShow(true)
     } else {
-      steps.push('recognition')
-      saveDataToDb(steps)
+      goToRecognitionPage()
     }
   }
 
@@ -64,7 +68,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
     const id = celebrateShoutout?.id
     if(isNotEmptyStr(prevCelebrateComment)) {
       if(isEdited && isNotEmptyStr(celebrateComment)) {
-        apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then(goToRecognitionPage);
+        apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then(showModal);
       } else if(isEmptyStr(celebrateComment)) {
         apiRequest("DESTROY", dataSend, dataFromServer, () => {}, `${url}${id}`).then(goToRecognitionPage);
       } else {
@@ -73,7 +77,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
     } else if (isEmptyStr(celebrateComment)) {
       goToRecognitionPage()
     } else {
-      apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then(goToRecognitionPage);
+      apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then(showModal);
     }
   }
 
@@ -87,7 +91,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
         setCelebrateComment(richTextToMention(res.data.data?.attributes))
         setLoaded(true)
       })
-  }, [])
+  }, [response.attributes.shoutout_id])
 
   const onCommentChange = (e) => {
     setCelebrateComment(e.target.value)
@@ -97,7 +101,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
 
   return loaded && !isLoading && <Fragment>
     <Wrapper>
-      <h1>Are there any recent <br/> causes to celebrate?</h1>
+      <h1 className='mt-151'>Are there any recent <br/> causes to celebrate?</h1>
       <div className='d-flex justify-content-center'>
         <MentionsInput value={celebrateComment}
                        onChange={onCommentChange}
@@ -113,17 +117,18 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
         </MentionsInput>
       </div>
 
-      <BlockLowerBtns nextHandling={ onClickNext } skipHandling={ onClickSkip } isNext={ celebrateComment !== '' } />
+      <BlockLowerBtns nextHandling={onClickNext} skipHandling={onClickNext} isNext={ celebrateComment !== '' } />
       <CornerElements data = { data }
                       setData = { setData }
                       percentCompletion = { 40 } />
+      <CelebrateModal show={show}
+                      steps={steps}
+                      setShow={setShow}
+                      saveDataToDb={saveDataToDb}
+                      celebrateShoutout={celebrateShoutout}
+                      setCelebrateShoutout={setCelebrateShoutout}
+                      goToRecognitionPage={goToRecognitionPage}/>
     </Wrapper>
-    <CelebrateModal show={show}
-                    steps={steps}
-                    setShow={setShow}
-                    goToRecognitionPage={goToRecognitionPage}
-                    celebrateShoutout={celebrateShoutout}
-                    setCelebrateShoutout={setCelebrateShoutout} />
   </Fragment>
 }
 

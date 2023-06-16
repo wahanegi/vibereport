@@ -50,7 +50,7 @@ class Api::V1::ShoutoutsController < ApplicationController
   end
 
   def create_shoutout_recipients
-    return if params['recipients'].empty?
+    return if params['recipients'].blank?
 
     params['recipients'].each do |recipient_id|
       ShoutoutRecipient.create(user_id: recipient_id, shoutout_id: @shoutout.id)
