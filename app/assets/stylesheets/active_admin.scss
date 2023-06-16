@@ -29,14 +29,8 @@
   margin-top: 5px;
 }
 
-.bubble-list .bubble:nth-child(odd) {
-  background-color: green; 
-  color: white;
-  font-weight: bold;
-}
-
-.bubble-list .bubble:nth-child(even) {
-  background-color: red;
-  color: white;
+.bubble-list .bubble {
+  background-color: rgb(143, 201, 255);
+  color: black;
   font-weight: bold;
 }
