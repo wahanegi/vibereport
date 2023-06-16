@@ -6,7 +6,7 @@ ActiveAdmin.register Team do
   form do |f|
     f.inputs 'Team Details' do
       f.input :name
-      f.input :users, as: :check_boxes, collection: User.all.map { |user| [user.email, user.id] }
+      f.input :users, as: :check_boxes, collection: User.all.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
     end
     f.actions
   end
