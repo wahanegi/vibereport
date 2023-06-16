@@ -23,6 +23,9 @@ ActiveAdmin.register User do
       row :opt_out
       row :created_at
       row :updated_at
+      row :team do |user|
+        user.user_teams.map(&:team).map(&:name).join(', ')
+      end
     end
 
     columns do
