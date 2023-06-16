@@ -41,7 +41,7 @@ class EmotionIndex < AdminReport
     if @team
       @team.users.includes(:responses).where(responses: { time_period_id: @time_periods, not_working: false }).distinct.count
     else
-      User.includes(:responses).where(responses: { time_period_id: @time_periods, not_working: false }).distinct.count
+      Response.where(time_period_id: @time_periods, not_working: false).count
     end
   end
 
