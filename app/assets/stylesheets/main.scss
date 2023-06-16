@@ -586,6 +586,16 @@ a {
   z-index: 20;
   background: #A6A1A1;
   filter: blur(50px);
+  &.celebrate-modal {
+    height: 140vh;
+  }
+}
+.modal-dialog-celebrate {
+  z-index: 30;
+  padding-top: 25vh;
+}
+.modal-backdrop.show {
+  opacity: 0 !important;
 }
 
 .shoutout-input-block {

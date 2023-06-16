@@ -5,6 +5,7 @@ import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
+import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
 const FULL_PRIMARY_HEIGHT = 401
 const MARGIN_BOTTOM = 17
@@ -107,7 +108,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
                                 placeholder="Tell us what you think!"
                                 value={answerFunQuestion?.answer_body || ''}
                                 onChange={onChangAnswer}
-                                maxLength={700}
+                                maxLength={MAX_CHAR_LIMIT}
                       />
                     </div>
                   </form>

@@ -56,6 +56,7 @@ export default {
       color: '#666666',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+      textAlign: 'left',
       whiteSpace: 'nowrap',
       '&focused': {
         color: '#000000',

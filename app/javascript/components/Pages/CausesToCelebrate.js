@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react"
+import React, {Fragment, useEffect, useRef, useState} from "react"
 import {
   Wrapper
 } from "../UI/ShareContent";
@@ -10,6 +10,7 @@ import axios from "axios";
 import CelebrateModal from "./modals/CelebrateModal";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
+import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
 const mentionToRichText = (mention) => {
   const regExpStart = /@\[/g
@@ -93,9 +94,22 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
       })
   }, [response.attributes.shoutout_id])
 
-  const onCommentChange = (e) => {
-    setCelebrateComment(e.target.value)
+  const onCommentChange = (e, newValue) => {
+    if (newValue.length <= MAX_CHAR_LIMIT) {
+      setCelebrateComment(e.target.value)
+    }
   }
+
+  const inputRef = useRef(null);
+  const handleFocus = () => {
+    inputRef.current.style.border = '6px solid #5689EB';
+    inputRef.current.style.padding = '6px';
+  };
+
+  const handleBlur = () => {
+    inputRef.current.style.border = '3px solid #5689EB';
+    inputRef.current.style.padding = '9px';
+  };
 
   if (!!error) return <p>{error.message}</p>
 
@@ -104,6 +118,9 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
       <h1 className='mt-151'>Are there any recent <br/> causes to celebrate?</h1>
       <div className='d-flex justify-content-center'>
         <MentionsInput value={celebrateComment}
+                       onFocus={handleFocus}
+                       onBlur={handleBlur}
+                       inputRef={inputRef}
                        onChange={onCommentChange}
                        placeholder={placeholder}
                        style={mentionsInputStyles}
@@ -112,7 +129,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
             className={'mentions-mention'}
             trigger="@"
             displayTransform={(id, display) => `@${display}`}
-            data={users}
+            data={users.filter(user => user.id !== data.current_user.id)}
           />
         </MentionsInput>
       </div>

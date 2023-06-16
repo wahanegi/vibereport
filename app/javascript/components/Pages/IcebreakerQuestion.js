@@ -5,6 +5,7 @@ import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
+import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const {isLoading, error} = service
@@ -82,7 +83,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
                       <textarea className='input middle' name='question_body'
                                 placeholder='What would you ask the team? You could be selected!'
                                 value={funQuestion?.question_body || ''}
-                                onChange={onChangQuestion} maxLength={700} />
+                                onChange={onChangQuestion} maxLength={MAX_CHAR_LIMIT} />
                       </div>
                     </form>
                   </div>

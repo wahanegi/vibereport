@@ -3,7 +3,7 @@ import {Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
 import PoweredBy from '../../../assets/images/PoweredBy.svg';
-import { EMOTION_COLORS } from '../helpers/consts';
+import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 
@@ -47,7 +47,7 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
                 placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
                 defaultValue={comment}
                 onChange={handleCommentClick}
-                maxLength={700}
+                maxLength={MAX_CHAR_LIMIT}
                 onFocus={handleCommentFocus}
               />
             </label>
