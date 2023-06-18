@@ -35,8 +35,12 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
           redirect()
         })
       break
-    case "DESTROY":
-      await axios.delete(url).then(redirect())
+    case "DELETE":
+      await axios.delete(url)
+          .then(response => {
+              setData(response.data)
+              redirect()
+          })
       break
     default:
   }
