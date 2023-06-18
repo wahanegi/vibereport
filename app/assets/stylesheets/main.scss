@@ -691,4 +691,10 @@ a {
   left: calc((100vw - 595px)/2);
   top: calc((100vh - 282px)/2);
   font-size: 40px;
+  div, .text-block {
+    display: block;
+    overflow: scroll;
+    max-height: 11rem;
+  }
 }
+

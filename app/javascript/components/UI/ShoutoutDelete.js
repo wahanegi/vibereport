@@ -1,11 +1,10 @@
 import React, {Fragment} from 'react';
 import ReactDOM from "react-dom";
 import {apiRequest} from "../requests/axios_requests";
+import Portal from "./modal/Portal";
+import MessageYesNoOk from "./modal/MessageYesNoOk";
 
 const ShoutoutDelete = ({ onClose, data, setData: setDataInDB, idShoutout}) => {
-  const Backdrop = (props) => {
-    return <div className='backdrop' onClick={ props.onClose }/>
-  }
 
   const handlingDeleting = () => {
     const dataFromServer = ( deletedShoutOut ) =>{
@@ -14,7 +13,6 @@ const ShoutoutDelete = ({ onClose, data, setData: setDataInDB, idShoutout}) => {
       })
       onClose()
     }
-
     apiRequest("DELETE", "", dataFromServer, ()=>{}, `/api/v1/shoutouts/${idShoutout}`)
         .catch( handlingErrors )
   }
@@ -23,24 +21,11 @@ const ShoutoutDelete = ({ onClose, data, setData: setDataInDB, idShoutout}) => {
         if (errors.response.data.error?.length) alert( errors.response.data.error)
     }
 
-  const MessageContent = () =>{
-    return <div className = 'placement-modal-message'>
-      <div className='mt-8 fs-2' >Delete this Shoutout?</div>
-      <div className='mt-6 d-flex justify-content-around'>
-        <button className='btn btn-modal c1 back' onClick = { onClose }>No, go back</button>
-        <button className='btn btn-modal c1 delete' onClick = { handlingDeleting } >Yes, delete</button>
-      </div>
-    </div>
-  }
 
-  const portalElement = document.getElementById('overlays')
-
-  return (
-    <Fragment>
-      {ReactDOM.createPortal(<Backdrop onClose = { onClose }/>, portalElement)}
-      {ReactDOM.createPortal(<MessageContent/>, portalElement)}
-    </Fragment>
-  );
+  return <Portal onClose={ onClose }
+                 modalOverlay={<MessageYesNoOk content="Delete this Shoutout?"
+                                               onClick={ handlingDeleting }
+                                               onClose = { onClose }/>} />
 };
 
 export default ShoutoutDelete;
