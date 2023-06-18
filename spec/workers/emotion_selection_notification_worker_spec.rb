@@ -32,25 +32,4 @@ describe EmotionSelectionNotificationWorker do
       expect(mail_recipients).to be_empty
     end
   end
-
-  describe '#send_results_email' do
-    let(:user) { create(:user) }
-    let(:time_period) { create(:time_period) }
-
-    context 'when sending the results_email' do
-      it 'sends an email with the correct data' do
-        allow(worker).to receive(:time_period_has_ended?).and_return(true)
-        allow(worker).to receive(:user_has_response?).and_return(true)
-
-        expect(UserEmailMailer).to receive(:results_email).with(user, time_period, an_instance_of(Array)).and_call_original
-
-        expect do
-          worker.send(:send_results_email, user, time_period)
-        end.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-        email = ActionMailer::Base.deliveries.last
-        expect(email.to).to include(user.email)
-      end
-    end
-  end
 end

@@ -3,7 +3,7 @@ import React, {Fragment} from "react"
 const GifItem = ({ gif, index, selectedGifIndex, setSelectedGifIndex, setGifUrl, category }) => {
 
   const onGifSelect = () => {
-    setGifUrl(gif.src)
+    setGifUrl(gif)
     setSelectedGifIndex(index)
   }
 

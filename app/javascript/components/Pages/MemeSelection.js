@@ -16,7 +16,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const {emotion, api_giphy_key, response} = data
   const navigate = useNavigate()
   const {isLoading, error} = service
-  const [gifUrl, setGifUrl] = useState(response.attributes.gif_url || '')
+  const [gifUrl, setGifUrl] = useState(response.attributes.gif || {})
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
 
   const handlingOnClickSkip = () =>{
@@ -25,7 +25,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('emotion-intensity')
     }
-    saveDataToDb( steps , { gif_url: null })
+    saveDataToDb( steps , { gif: null })
   }
 
   const chooseGIPHYHandling = () => {
@@ -34,7 +34,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('selected-giphy-follow');
     }
-    saveDataToDb(steps, { gif_url: gifUrl });
+    saveDataToDb(steps, { gif: gifUrl });
   }
   
   const uploadGIPHYHandling = () => {

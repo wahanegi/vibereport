@@ -53,7 +53,6 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
   const onClose = () => setIsModal(false)
 
   const output = (shoutOuts) =>{
-
     return (
       <ul>
       {shoutOuts.map( shoutOut => (
@@ -93,19 +92,19 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
         }
 
       {!!numShoutOuts && <div><h2 className='color-black mb-1'>You've mentioned:</h2></div>}
-        {!!numShoutOuts &&
-            <div>
-              {shoutOutForm.status &&
-                  <ShoutoutModal onClose = { closeHandling }
-                                 data = { data }
-                                 setData = { setData }
-                                 editObj = { shoutOutForm.editObj } />}
-              <div className='d-flex justify-content-center field-shout-outs mx-auto'>
-                {output(shoutOuts)}
-              </div>
-              <p className='b3 mt-4 lh-base'>Any more shoutouts to give?</p>
-              { cornerElements( numShoutOuts ) }
+        {
+          !!numShoutOuts && <div>
+            {shoutOutForm.status &&
+              <ShoutoutModal onClose = { closeHandling }
+                             data = { data }
+                             setData = { setData }
+                             editObj = { shoutOutForm.editObj } />}
+            <div className='d-flex justify-content-center field-shout-outs mx-auto'>
+              {output(shoutOuts)}
             </div>
+            <p className='b3 mt-4 lh-base'>Any more shoutouts to give?</p>
+            { cornerElements( numShoutOuts ) }
+          </div>
         }
       {isModal && <ShoutoutDelete onClose={ onClose } data={ data } setData={ setData } idShoutout={ idShoutout }/>}
       <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext = { !!numShoutOuts } />

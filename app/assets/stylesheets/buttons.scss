@@ -183,6 +183,26 @@
     }
   }
 
+  &.shoutout {
+    position: relative;
+    padding: 5px;
+    min-height: 59px;
+    border: 4px solid $red-violet;
+    color: $red-violet;
+    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    background-color: $white;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    img {
+      width: 36px;
+      height: 36px;
+      margin-left: 5px
+    }
+  }
+
   .edit-icon {
     position: absolute;
     bottom: 41px;

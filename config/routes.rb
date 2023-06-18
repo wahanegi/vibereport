@@ -10,13 +10,16 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :emotions, only: %i[index create]
-      resources :responses, param: :id
+      resources :responses, only: %i[create update], param: :id
       resources :shoutouts, only: %i[create update destroy]
       resources :fun_question_answers, only: %i[show create update destroy]
       resources :fun_questions, only: %i[show create update destroy]
+      resources :results, only: %i[show results_email], param: :slug
+      resources :shoutouts, only: %i[create update]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
-      get '/see_results', to: 'responses#see_results'
+      get '/results_email', to: 'results#results_email'
+      get '/result', to: 'results#show'
     end
   end
   get '*path', to: 'home#app'

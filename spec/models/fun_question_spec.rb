@@ -25,6 +25,9 @@
 require 'rails_helper'
 
 RSpec.describe FunQuestion, type: :model do
+  let(:time_period) { create :time_period }
+  let(:fun_question) { create :fun_question, time_period: }
+
   describe 'associations' do
     it { should belong_to(:user).optional }
     it { should belong_to(:time_period).optional }
@@ -50,11 +53,30 @@ RSpec.describe FunQuestion, type: :model do
   end
 
   describe 'validations' do
-    let(:fun_question) { build(:fun_question) }
     it { should validate_presence_of(:question_body) }
+    it 'valid when time period is absent' do
+      fun_question = FactoryBot.build(:fun_question, time_period_id: nil)
+      expect(fun_question).to be_valid
+    end
+    it 'fail when time period is not uniq' do
+      new_fun_question = FactoryBot.build(:fun_question, time_period_id: fun_question.time_period.id)
+      expect(new_fun_question).to_not be_valid
+    end
     it 'is invalid when question_body is not unique' do
       fun_question.save
       expect(build(:fun_question, question_body: fun_question.question_body)).to_not be_valid
+    end
+  end
+
+  describe 'scopes' do
+    describe '.question_public' do
+      let!(:public_fun_question) { create(:fun_question, public: true, used: false) }
+      let!(:private_fun_question) { create(:fun_question, public: false, used: false) }
+      let!(:used_fun_question) { create(:fun_question, public: true, used: true) }
+
+      it 'returns public and unused questions' do
+        expect(FunQuestion.question_public.not_used.to_a).to eq([public_fun_question])
+      end
     end
   end
 end
