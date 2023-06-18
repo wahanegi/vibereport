@@ -15,6 +15,7 @@ import Recognition from "./Pages/Recognition";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
 import Results from "./Pages/ResultsPage";
+import RatherNotSay from "./Pages/RatherNotSay";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -102,6 +103,8 @@ const ResponseFlow = ({step, data, setData}) => {
   switch (go) {
     case  "emotion-selection-web" :
       return <ListEmotions data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
+    case  "rather-not-say" :
+      return <RatherNotSay data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "emotion-entry" :
       return <EmotionEntry data={data} setData={setData} saveDataToDb={saveDataToDb} steps={stepsArr} service={service} />
     case  "meme-selection" :

@@ -3,6 +3,7 @@ import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 import CornerElements from "../UI/CornerElements";
+import Button from "../UI/Button";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -52,10 +53,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     return month + ' ' + `${dueDate.getDate()}`.padStart(2, '0')
   }
 
-  //*** **transformation of table** to the view:
-  //*** 6+6(positive columns) 6+6(neutral columns) and 6+6(negative columns)
-  const mixUp = (index) => ( index - 6 * (Math.ceil( index / 6 ) - 1 )) * 6 - (Math.ceil ( index / 6 ) - 1 ) - 1
-
+  const notSayHandling = () => {
+    steps.push('rather-not-say')
+    saveDataToDb( steps )
+  }
   return (
     <Fragment>
       { !!error && <p>{error.message}</p>}
@@ -79,17 +80,20 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                 {emotions.map((emotion, index) =>
                   <div className='width-block' key={emotion.id}>
                    <ButtonEmotion key={emotion.id}
-                                  category={emotions[mixUp(index+1)].attributes.category}
+                                  category={emotions[index].attributes.category}
                                   onClick={() =>
                                     clickHandling(
-                                      emotions[mixUp(index+1)].attributes.word,
-                                      emotions[mixUp(index+1)].id
-                                  )}>{emotions[mixUp(index+1)].attributes.word}
+                                      emotions[index].attributes.word,
+                                      emotions[index].id
+                                  )}>{emotions[index].attributes.word}
                      
                    </ButtonEmotion>
                   </div>
                 )}
               </div>
+          <div className='neutral-area'>
+            <Button className='btn btn-bubbles neutral wb1 not-standart' onClick={notSayHandling}>I'd rather not say...</Button>
+          </div>
           <div className="big-btn-tooltip correct">Share it in your own words!</div>
           <div className="big-btn">
           <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>

@@ -164,9 +164,9 @@ text-align: center;
     margin-top: 0;
     margin-bottom: 0
 }
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 720px) {
     .emotions {
-        width: 1080px;
+        width: 720px;
     }
 }
 .d-flex{
@@ -220,8 +220,10 @@ text-align: center;
 }
 .emotions{
     margin:  0 auto;
-    width: 1080px;
-    min-width: 1080px;
+    width: 720px;
+    min-width: 720px;
+    padding-bottom: 6px;
+    border-bottom: 3px solid #D2D2D2;
 }
 .data {
     padding-top: 55px;
@@ -278,10 +280,17 @@ text-align: center;
     font-size: 24px;
     line-height: 24px;
     color: rgba(0, 0, 0, 0.7);
-    margin: 41px auto 14px auto;
+    margin: 18px auto 14px auto;
 }
 .correct{
     height: 31px;
+}
+.neutral-area {
+    margin: 0 auto;
+    padding: 5px 0;
+    width: 540px;
+    height: 55px;
+    border-bottom: 3px solid #D2D2D2;
 }
 .big-btn{
     box-sizing: border-box;

@@ -53,6 +53,24 @@
     color:            $white      ;
     background-color: $royal-blue;
     box-shadow:       $btn-box-shadow;
+    &.active {
+      box-shadow: 4px 2px 2px $gray-100;
+    }
+    &.back, &.delete, &.ok, &.btn-yes, &.btn-no {
+      border-width: 0;
+    }
+    &.btn-yes {
+      width: 300px;
+    }
+    &.btn-no{
+      width: 196px;
+    }
+    &.back {
+      background-color: $gray-200!important;
+    }
+    &.delete {
+      background-color: $red;
+    }
     &.system{
       background-color: $primary;
       &:hover{
@@ -68,6 +86,9 @@
   &.btn-bubbles{
     border:           1px solid $black;
     &.wb1{
+      &.not-standart {
+        min-width: 220px;
+      }
       padding:        0 5px;
       height:         2rem;
       border-radius:  15px;

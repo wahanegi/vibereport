@@ -667,3 +667,20 @@ a {
   padding-inline-start: 1.375rem !important;
   padding-inline-end:   1.375rem !important;
 }
+
+//RatherNotSay
+.rather-not-say-first-row {
+  margin-top: 240px;
+  div.row2 {
+    margin-top:-1rem;
+    max-width: 500px;
+    height: 75px;
+    white-space: break-spaces;
+  }
+  div.row3 {
+    margin-top: 75px;
+  }
+  div.row4 {
+    margin-top: 94px;
+  }
+}
