@@ -14,13 +14,13 @@ class TeammateEngagementCount < AdminReport
     teammate_ids = @team ? @team.users.ids : User.ids
     shoutout_count(teammate_ids) + celebrate_comments_count(teammate_ids)
   end
-  
+
   private
-  
+
   def shoutout_count(teammate_ids)
     Shoutout.where(user_id: teammate_ids, time_period_id: @time_periods).count
   end
-  
+
   def celebrate_comments_count(teammate_ids)
     Response.joins(:user)
             .where(users: { id: teammate_ids })
