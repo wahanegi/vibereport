@@ -47,10 +47,14 @@ module ActiveAdminHelpers
     vars
   end
 
-  def trend_direction(value1, value2)
-    trend = calculate_trend(value1, value2)
-    trend_style = calculate_trend_style(trend)
-    [trend, trend_style]
+  def trend_direction(value1, value2, previous_time_period)
+    if previous_time_period && Response.joins(user: :teams).where(teams: { id: team.id }, time_period: previous_time_period).count > 0
+      trend = calculate_trend(value1, value2)
+      trend_style = calculate_trend_style(trend)
+      [trend, trend_style]
+    else
+      ["", ""]
+    end
   end
 
   def calculate_trend(value1, value2)

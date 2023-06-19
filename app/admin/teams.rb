@@ -133,7 +133,7 @@ ActiveAdmin.register Team do
             attributes_table_for team do
               row :Emotion_Index do
                 if previous_time_period
-                  trend_data = trend_direction(previous_period_emotion_index, formatted_result)
+                  trend_data = trend_direction(previous_period_emotion_index, formatted_result, previous_time_period)
 
                   div do
                     span formatted_result
@@ -151,7 +151,7 @@ ActiveAdmin.register Team do
 
               row :Productivity_Average do
                 if previous_time_period && productivity_avg != 'No productivity present'
-                  trend_data = trend_direction(previous_period_productivity_avg, productivity_avg)
+                  trend_data = trend_direction(previous_period_productivity_avg, productivity_avg, previous_time_period)
 
                   div do
                     span productivity_avg
@@ -169,7 +169,7 @@ ActiveAdmin.register Team do
                 if previous_time_period && participation_percentage.is_a?(String) || previous_period_participation_percentage.nil?
                   span participation_percentage
                 else
-                  trend_data = trend_direction(previous_period_participation_percentage, participation_percentage)
+                  trend_data = trend_direction(previous_period_participation_percentage, participation_percentage, previous_time_period)
                   div do
                     span participation_percentage
                     span trend_data[0].html_safe, style: trend_data[1]
@@ -195,7 +195,7 @@ ActiveAdmin.register Team do
                 if previous_time_period && celebrate_comments_count.is_a?(String) || previous_period_celebrate_comments_count.nil?
                   span celebrate_comments_count
                 else
-                  trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count)
+                  trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count, previous_time_period)
                   div do
                     span celebrate_comments_count
                     span trend_data[0].html_safe, style: trend_data[1]
@@ -223,7 +223,7 @@ ActiveAdmin.register Team do
                 if previous_time_period && teammate_engagement_count.is_a?(String) || previous_teammate_engagement_count.nil?
                   span teammate_engagement_count
                 else
-                  trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count)
+                  trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count, previous_time_period)
                   div do
                     span teammate_engagement_count
                     span trend_data[0].html_safe, style: trend_data[1]
