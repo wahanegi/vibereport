@@ -20,15 +20,18 @@ ActiveAdmin.register_page 'Dashboard' do
           strong 'Productivity Average: '
           span "#{vars[:productivity_average_current_period]} / #{vars[:productivity_avg_all]}"
         end
+      end
+
+      panel "Celebrations and Teammate Engagement for range #{current_period&.date_range}" do
 
         div do
           strong 'Celebrations Count: '
-          span "#{vars[:celebrations_count_current_period]} / #{vars[:celebrate_comments_count_all]}"
+          span "#{vars[:celebrations_count_current_period]} "
         end
 
         div do
           strong 'Teammate Engagement Count: '
-          span "#{vars[:teammate_engagement_count_current_period]} / #{vars[:teammate_engagement_count_all]}"
+          span "#{vars[:teammate_engagement_count_current_period]}"
         end
       end
 
