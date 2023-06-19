@@ -15,8 +15,6 @@ class TeammateEngagementCount < AdminReport
     shoutout_count(teammate_ids) + celebrate_comments_count(teammate_ids)
   end
 
-  private
-
   def shoutout_count(teammate_ids)
     Shoutout.where(user_id: teammate_ids, time_period_id: @time_periods).count
   end
