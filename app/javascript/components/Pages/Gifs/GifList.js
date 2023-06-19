@@ -4,15 +4,15 @@ import {sortImagesByHeight} from "../../helpers/helpers";
 
 const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif }) => {
 
-  const gifItems = sortImagesByHeight(gifs).map(image => {
-    return <GifItem key={image.id}
+  const gifItems = sortImagesByHeight(gifs).map((image, index) => {
+    return <GifItem key={index}
                     gif={image}
                     selectedGifIndex={selectedGifIndex}
                     setSelectedGifIndex={setSelectedGifIndex}
                     setGifUrl={setGifUrl}
                     category={category}
                     isCustomGif={isCustomGif}
-                    index={image.id} />
+                    index={index} />
   });
 
   return <div className='card-body card-scroll'>

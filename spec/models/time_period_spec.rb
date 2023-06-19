@@ -5,9 +5,14 @@
 #  id         :bigint           not null, primary key
 #  due_date   :date
 #  end_date   :date
+#  slug       :string
 #  start_date :date
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_time_periods_on_slug  (slug) UNIQUE
 #
 require 'rails_helper'
 
@@ -25,6 +30,10 @@ RSpec.describe TimePeriod, type: :model do
   context 'associations' do
     it 'has many responses' do
       expect(time_period1).to have_many(:responses).dependent(:destroy)
+    end
+
+    it 'has many emotions trough responses' do
+      expect(time_period1).to have_many(:emotions)
     end
   end
 

@@ -36,7 +36,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
       }
     }
     const goToResultPage = () => {
-      steps.push('productivity-bad-follow-up')
+      steps.push('results')
       saveDataToDb(steps)
     }
     const url = '/api/v1/fun_question_answers/'
@@ -52,7 +52,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
         saveDataToDb(steps)
       }
     } else if (isEmptyStr(answerBody)) {
-      steps.push('productivity-bad-follow-up')
+      steps.push('results')
       saveDataToDb(steps)
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();

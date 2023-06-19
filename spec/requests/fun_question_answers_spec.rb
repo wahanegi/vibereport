@@ -4,7 +4,7 @@ require 'passwordless/test_helpers'
 RSpec.describe Api::V1::FunQuestionAnswersController do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
-  let!(:fun_question) { create :fun_question }
+  let!(:fun_question) { create :fun_question, time_period: }
   let!(:fun_question_answer) { create :fun_question_answer, user:, fun_question: }
 
   let!(:valid_attributes) do

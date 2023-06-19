@@ -4,6 +4,9 @@
   margin: 0.5%;
   position: relative;
   width: 19%;
+  &.result-page {
+    width: 24%;
+  }
 }
 
 .gif-clicked-positive {
@@ -53,6 +56,9 @@
   width: 75%;
   @media (max-width: 1920px) {
     max-width: 1169px;
+  }
+  &.result-page {
+    max-width: 100%
   }
 }
 
@@ -113,6 +119,10 @@
     background: #77CCFC;
     border-radius: 8px;
   }
+}
+
+.border-none {
+  border: none !important;
 }
 
 .gif img {
