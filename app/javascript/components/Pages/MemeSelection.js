@@ -21,13 +21,13 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
-    const dataDraft = {gif_url: gifUrl, draft: true}
+    const dataDraft = {gif: gifUrl, draft: true}
     saveDataToDb(steps, dataDraft);
     setIsDraft(true)
   }
 
   useEffect(() => {
-    if (gifUrl !== response.attributes.gif_url && isDraft) {
+    if (gifUrl !== response.attributes.gif && isDraft) {
       setIsDraft(false);
     }
   }, [gifUrl]);
@@ -38,7 +38,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('emotion-intensity')
     }
-    saveDataToDb( steps , { gif_url: null, draft: false })
+    saveDataToDb( steps , { gif: null, draft: false })
   }
 
   const chooseGIPHYHandling = () => {
@@ -47,7 +47,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('selected-giphy-follow');
     }
-    saveDataToDb(steps, { gif_url: gifUrl, draft: false });
+    saveDataToDb(steps, { gif: gifUrl, draft: false });
   }
   
   const uploadGIPHYHandling = () => {
