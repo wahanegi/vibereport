@@ -693,7 +693,7 @@ a {
   font-size: 40px;
   div, .text-block {
     display: block;
-    overflow: scroll;
+    overflow: hidden;
     max-height: 11rem;
   }
 }
