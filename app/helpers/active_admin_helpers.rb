@@ -64,7 +64,7 @@ module ActiveAdminHelpers
 
   def calculate_trend(value1, value2)
     if value1 == value2
-      '&#x2195;'
+      ''
     else
       trend_arrow(float_lesser_than?(value1, value2))
     end
@@ -86,7 +86,7 @@ module ActiveAdminHelpers
     color = case trend
             when '&#x2191;'
               'green'
-            when '&#x2195;'
+            when ''
               'goldenrod'
             else
               'red'
