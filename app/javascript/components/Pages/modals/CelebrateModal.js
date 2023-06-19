@@ -2,6 +2,7 @@ import React, {Fragment} from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import {apiRequest} from "../../requests/axios_requests";
+import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 
 const CelebrateModal = ({ show, setShow, steps, celebrateShoutout, setCelebrateShoutout, saveDataToDb, goToRecognitionPage }) => {
   const handleClick = (e) => {
@@ -20,7 +21,8 @@ const CelebrateModal = ({ show, setShow, steps, celebrateShoutout, setCelebrateS
 
   return <Fragment>
     {show && <div className='backdrop celebrate-modal' /> }
-    <Modal show={show} onHide={() => {setShow(false)}} animation={true} className='modal-dialog-celebrate' >
+    <Modal show={show} onHide={() => {setShow(false)}} animation={true} className='modal-dialog-celebrate'>
+      <img src={xClose} className='position-absolute x-close' onClick={() => {setShow(false)}}/>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">

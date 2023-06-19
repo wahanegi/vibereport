@@ -34,7 +34,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const [prevCelebrateComment, setPrevCelebrateComment] = useState('')
   const [celebrateComment, setCelebrateComment] = useState('')
   const isEdited = prevCelebrateComment?.trim() !== celebrateComment?.trim()
-  const placeholder ='Are you grateful for anything that happened at work recently? \n \n' +
+  const placeholder = 'Are you grateful for anything that happened at work recently? \n \n' +
   'Use "@" to include Shoutouts to members of the team!'
   const [show, setShow] = useState(false);
 
@@ -73,7 +73,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
       } else if(isEmptyStr(celebrateComment)) {
         apiRequest("DESTROY", dataSend, dataFromServer, () => {}, `${url}${id}`).then(goToRecognitionPage);
       } else {
-        goToRecognitionPage()
+        showModal()
       }
     } else if (isEmptyStr(celebrateComment)) {
       goToRecognitionPage()
@@ -103,6 +103,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const inputRef = useRef(null);
   const handleFocus = () => {
     inputRef.current.style.border = '6px solid #5689EB';
+    inputRef.current.style.outline = 'none';
     inputRef.current.style.padding = '6px';
   };
 
@@ -118,6 +119,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
       <h1 className='mt-151'>Are there any recent <br/> causes to celebrate?</h1>
       <div className='d-flex justify-content-center'>
         <MentionsInput value={celebrateComment}
+                       className={`celebrate ${celebrateComment ? '' : 'celebrate-placeholder'}`}
                        onFocus={handleFocus}
                        onBlur={handleBlur}
                        inputRef={inputRef}

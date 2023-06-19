@@ -14,7 +14,7 @@ const animatedStyles = (shift, category, addBlur) => {
   }
 }
 
-const AnimatedEmotion = ({word, category, addBlur = false, count}) => {
+const AnimatedEmotion = ({word, category, addBlur = false, count = 1}) => {
   const shift = Math.round(Math.random() * 10)/10
   const minOpacity = (shift - 0.3) > 0 ? (shift - 0.3) : 0.1
   const springProps = useSpring({

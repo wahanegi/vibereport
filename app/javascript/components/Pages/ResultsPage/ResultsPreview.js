@@ -49,7 +49,6 @@ const ResultsPreview = () => {
         <div className='mb-5'>
           <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         </div>
-
         <EmotionSection emotions={emotions} nextTimePeriod={true} />
         <GifSection gifs={gifs} nextTimePeriod={true} />
         <ShoutoutSection nextTimePeriod={true}
