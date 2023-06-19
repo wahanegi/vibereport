@@ -49,10 +49,10 @@ module ActiveAdminHelpers
 
   def trend_direction(value1, value2, previous_time_period)
     if previous_time_period &&
-      Response.joins(user: :teams)
-              .where(teams: { id: team.id }, time_period: previous_time_period)
-              .count
-              .positive?
+       Response.joins(user: :teams)
+               .where(teams: { id: team.id }, time_period: previous_time_period)
+               .count
+               .positive?
 
       trend = calculate_trend(value1, value2)
       trend_style = calculate_trend_style(trend)

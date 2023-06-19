@@ -11,21 +11,21 @@ class TeammateEngagementCount < AdminReport
   private
 
   def receive_teammate_engagement_count
-    if @team
-      teammate_ids = @team.users.ids
-    else
-      teammate_ids = User.ids
-    end
+    teammate_ids = @team ? @team.users.ids : User.ids
+    shoutout_count(teammate_ids) + celebrate_comments_count(teammate_ids)
+  end
   
-    shoutout_count = Shoutout.where(user_id: teammate_ids, time_period_id: @time_periods).count
+  private
   
-    celebrate_comments_count = Response
-                                 .joins(:user)
-                                 .where(users: { id: teammate_ids })
-                                 .where.not(celebrate_comment: nil)
-                                 .where(time_period_id: @time_periods)
-                                 .count
+  def shoutout_count(teammate_ids)
+    Shoutout.where(user_id: teammate_ids, time_period_id: @time_periods).count
+  end
   
-    shoutout_count + celebrate_comments_count
+  def celebrate_comments_count(teammate_ids)
+    Response.joins(:user)
+            .where(users: { id: teammate_ids })
+            .where.not(celebrate_comment: nil)
+            .where(time_period_id: @time_periods)
+            .count
   end
 end
