@@ -91,6 +91,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
                   </div>
                 )}
               </div>
+          <div className="underline_list"></div>
           <div className='neutral-area'>
             <Button className='btn btn-bubbles neutral wb1 not-standart' onClick={notSayHandling}>I'd rather not say...</Button>
           </div>

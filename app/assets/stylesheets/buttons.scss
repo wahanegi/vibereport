@@ -56,10 +56,10 @@
     &.active {
       box-shadow: 4px 2px 2px $gray-100;
     }
-    &.back, &.delete, &.ok, &.btn-yes, &.btn-no {
+    &.back, &.delete, &.ok, &.btn-wide, &.btn-no {
       border-width: 0;
     }
-    &.btn-yes {
+    &.btn-wide {
       width: 300px;
     }
     &.btn-no{

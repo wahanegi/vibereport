@@ -223,6 +223,10 @@ text-align: center;
     width: 720px;
     min-width: 720px;
     padding-bottom: 6px;
+}
+.underline_list {
+    margin:  0 auto;
+    width: 720px;
     border-bottom: 3px solid #D2D2D2;
 }
 .data {
