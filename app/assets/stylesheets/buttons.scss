@@ -53,6 +53,18 @@
     color:            $white      ;
     background-color: $royal-blue;
     box-shadow:       $btn-box-shadow;
+    &.active {
+      box-shadow: 4px 2px 2px $gray-100;
+    }
+    &.back, &.delete, &.ok {
+      border-width: 0;
+    }
+    &.back {
+      background-color: $gray-200!important;
+    }
+    &.delete {
+      background-color: $red;
+    }
     &.system{
       background-color: $primary;
       &:hover{

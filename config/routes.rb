@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :emotions, only: %i[index create]
       resources :responses, only: %i[create update], param: :id
+      resources :shoutouts, only: %i[create update destroy]
       resources :fun_question_answers, only: %i[show create update destroy]
       resources :fun_questions, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug

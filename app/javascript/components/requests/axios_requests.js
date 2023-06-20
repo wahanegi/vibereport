@@ -13,30 +13,35 @@ export const createCsrfToken = () => {
 //*** url - route. By default '/api/v1/responses'
 export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url = '/api/v1/responses')  =>{
   createCsrfToken()
+
+    const saveDate = (response) => {
+        setData(response.data)
+        redirect()
+    }
   switch (method) {
     case "POST":
       await axios.post(url, data)
         .then(response => {
-          setData(response.data)
-          redirect()
+            saveDate(response)
         })
       break
     case "PATCH":
       await axios.patch(url, data) //"1"-??? need to make a little rectify in controller
         .then(response => {
-          setData(response.data)
-          redirect()
+            saveDate(response)
         })
       break
     case "GET":
       await axios.get(url)
         .then(response => {
-          setData(response.data)
-          redirect()
+            saveDate(response)
         })
       break
-    case "DESTROY":
-      await axios.delete(url).then(redirect())
+    case "DELETE":
+      await axios.delete(url)
+          .then(response => {
+              saveDate(response)
+          })
       break
     default:
   }
