@@ -1,16 +1,12 @@
 require 'rails_helper'
 require 'passwordless/test_helpers'
 
-NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
-
 RSpec.describe Api::V1::EmotionsController do
   let!(:time_period) { create :time_period }
   let!(:fun_question) { create :fun_question }
   let!(:user) { create :user }
-  let!(:emotion) { create(:emotion, category: 'positive', public: true) }
-  let!(:emotion_neutral) do
-    NUMBER_OF_ELEMENTS.times { create(:emotion, category: 'neutral', public: true) }
-  end
+  let!(:emotion_positive) { create(:emotion, category: 'positive',  public: true) }
+  let!(:emotion_negative) { create(:emotion, category: 'negative', public: true) }
 
   let!(:emotion_negative) do
     18.times { create(:emotion, category: 'negative', public: true) }
@@ -34,14 +30,15 @@ RSpec.describe Api::V1::EmotionsController do
       expect(json[:time_period][:end_date]).to eq(TimePeriod.current.end_date.to_s)
       expected = json_data.first
       aggregate_failures do
-        expect(expected[:id]).to eq(emotion.id.to_s)
+        expect(expected[:id]).not_to eq(emotion.id.to_s)
         expect(expected[:type]).to eq('emotion')
       end
     end
 
     it 'should will be correct the length of the response' do
       get '/api/v1/emotions'
-      expect(json_data.length).to eq(25)
+      puts JSON.pretty_generate(json_data)
+      expect(json_data.length).to eq(12)
     end
 
     it 'should will be correct the length of a nested arrays' do

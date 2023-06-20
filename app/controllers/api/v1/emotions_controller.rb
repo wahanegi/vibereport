@@ -3,8 +3,6 @@ class Api::V1::EmotionsController < ApplicationController
   include UserEmailMailerHelper
   before_action :require_user!
   before_action :current_response, only: [:index]
-
-  NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
   def index
     if current_user.present?
       render json: EmotionSerializer.new(emotions_table).serializable_hash.merge(additional_params), status: :ok
