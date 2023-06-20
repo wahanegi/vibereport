@@ -41,11 +41,11 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
       steps.push('results')
-      saveDataToDb( steps, {fun_question_id: fun_question.data.id})
+      saveDataToDb( steps, {fun_question_id: fun_question.data.id, draft: true})
     }
     const goToResultPage = () => {
       steps.push('results')
-      saveDataToDb(steps, {draft: false})
+      saveDataToDb(steps, {draft: true})
     }
     saveDataQuestion(goToResultPage, dataFromServer);
   };

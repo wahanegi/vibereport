@@ -30,6 +30,7 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
   const dropdownRef = useRef(null);
+  const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -102,7 +103,7 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
       <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
       {showModal && (
         <SweetAlert
-          alertTitle={"Are you sure you <br/>  want to log out?"}
+          alertTitle={alertTitleLogout}
           cancelButtonText="No, go back"
           confirmButtonText="Yes, log out"
           onConfirmAction={() => {
@@ -111,7 +112,8 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
           onDeclineAction={() => {
             setShowModal(false);
           }}
-          cancelButtonClass='btn-logout-modal'
+          cancelButtonClass='btn-logout-no'
+          confirmButtonClass='btn-logout-yes'
         />
       )}
     </div>

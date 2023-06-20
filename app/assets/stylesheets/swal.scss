@@ -2,7 +2,8 @@
 
 body.swal2-shown > [aria-hidden="true"] {
   transition: 0.1s filter;
-  filter: blur(10px);
+  background: white;
+  filter: blur(50px);
 }
 
 .swal2-close-button {
@@ -22,9 +23,16 @@ body.swal2-shown > [aria-hidden="true"] {
   border-radius: 15px;
 }
 
-.btn.btn-logout-modal{
+.btn.btn-logout-no{
+  height: 40px;
   background-color: $gray-200;
+  border: none;
   &:hover {
     background-color: shift-color($gray-200, 30%);
   }
+}
+
+.btn.btn-logout-yes{
+  height: 40px;
+  border: none;
 }

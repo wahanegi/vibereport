@@ -187,6 +187,7 @@ textarea {
   }
 }
 .placement-menu{
+  z-index: 1;
   position:         fixed;
   right:            30px;
   top:              62px;
