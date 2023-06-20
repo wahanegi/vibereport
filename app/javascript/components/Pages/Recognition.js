@@ -62,8 +62,8 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
         </span>
         <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" className='pencil' onClick={editHandling}/>
         <span className="expand-link" >
-          <img  src={trash} alt="trash" className='trash' onClick={trashHandling}/>
-          <img  id={ 'trashRed'+shoutOut.id  }src={trashRed} alt="trash" className='trashRed' onClick={trashHandling}/>
+          <img  src={ trash } alt="trash" className='trash' onClick={trashHandling}/>
+          <img  id={ 'trashRed'+shoutOut.id } src={trashRed} alt="trash" className='trashRed' onClick={trashHandling}/>
         </span>
       </li>
       ))}
