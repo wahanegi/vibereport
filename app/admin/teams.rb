@@ -133,7 +133,7 @@ ActiveAdmin.register Team do
 
             attributes_table_for team do
               row :Emotion_Index do
-                if previous_time_period
+                if previous_time_period.present?
                   trend_data = trend_direction(previous_period_emotion_index, formatted_result)
 
                   div do
@@ -151,7 +151,7 @@ ActiveAdmin.register Team do
               end
 
               row :Productivity_Average do
-                if previous_time_period && productivity_avg != 'No productivity present'
+                if previous_time_period.present? && productivity_avg != 'No productivity present'
                   trend_data = trend_direction(previous_period_productivity_avg, productivity_avg)
 
                   div do
@@ -167,7 +167,7 @@ ActiveAdmin.register Team do
               end
 
               row :Participation_Percentage do
-                if previous_time_period && participation_percentage.is_a?(String) || previous_period_participation_percentage.nil?
+                if previous_time_period.present? && participation_percentage.is_a?(String) || previous_period_participation_percentage.nil?
                   span participation_percentage
                 else
                   trend_data = trend_direction(previous_period_participation_percentage, participation_percentage)
@@ -193,7 +193,7 @@ ActiveAdmin.register Team do
               end
 
               row :Celebrations_Count do
-                if previous_time_period && celebrate_comments_count.is_a?(String) || previous_period_celebrate_comments_count.nil?
+                if previous_time_period.present? && celebrate_comments_count.is_a?(String) || previous_period_celebrate_comments_count.nil?
                   span celebrate_comments_count
                 else
                   trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count)
@@ -221,7 +221,7 @@ ActiveAdmin.register Team do
               end
 
               row :Teammate_Engagement_Count do
-                if previous_time_period && teammate_engagement_count.is_a?(String) || previous_teammate_engagement_count.nil?
+                if previous_time_period.present? && teammate_engagement_count.is_a?(String) || previous_teammate_engagement_count.nil?
                   span teammate_engagement_count
                 else
                   trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count)
