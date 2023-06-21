@@ -42,7 +42,7 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
   }
 }
 
-export const signOutUser = async () =>{
+export const signOutUser = async (id) =>{
   createCsrfToken()
-  await axios.get('/api/v1/sign_out_user').then()
+  await axios.get(`/api/v1/sign_out_user?id=${id}` ).then()
 }

@@ -26,11 +26,12 @@ import complete90_act from '../../../assets/images/complete90_act.svg'
 import complete100 from '../../../assets/images/complete100.svg'
 import complete100_act from '../../../assets/images/complete100_act.svg'
 
-const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) => {
+const Menu = ({ className = '', data, steps, draft, handleSaveDraft }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
+  const id = data.response.id
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -107,7 +108,7 @@ const Menu = ({ className = '', saveDataToDb, steps, draft, handleSaveDraft }) =
           cancelButtonText="No, go back"
           confirmButtonText="Yes, log out"
           onConfirmAction={() => {
-            signOutUser().then(() => window.location.href = `/sign_in`);
+            signOutUser(id).then(() => window.location.href = `/sign_in`);
           }}
           onDeclineAction={() => {
             setShowModal(false);

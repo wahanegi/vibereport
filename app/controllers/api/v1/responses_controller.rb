@@ -37,7 +37,8 @@ module Api
       end
 
       def sign_out_user
-        ReminderEmailWorker.new(current_user, @response, TimePeriod.current).run_notification
+        retrieve_response
+        ReminderEmailWorker.new(current_user, @response, TimePeriod.current).run_notification if @response&.completed_at.nil?
         redirect_to auth.sign_in_path if sign_out User
       end
 
