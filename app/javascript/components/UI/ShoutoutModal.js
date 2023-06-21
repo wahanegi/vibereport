@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom'
 import RichInputElement from "./rich-text/RichInputElement";
 import {apiRequest} from "../requests/axios_requests";
 import {isEmpty} from "../helpers/helpers";
+import Portal from "./modal/Portal";
+import Alert from "./modal/Alert";
 
 const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) => {
-
-  const BackDrop = () => {
-    return <div className='backdrop' onClick={ onClose }/>
-  }
+  const [isNotAlert, setIsNotAlert] = useState(true)
+  const [errorMessage, setErrorMessage] = useState("")
+  const [richText, setRichText] = useState(isEmpty(editObj) ? '' : editObj.rich_text)
 
   const ModalOverlay = () =>{
-    const  richText  =  isEmpty(editObj) ? '' : editObj.rich_text
     const  idEditText =  isEmpty(editObj) ? null : editObj.id
     const submitHandling = ({richText, chosenUsers}) => {
       const dataSend = {
@@ -35,6 +35,8 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
         onClose()
       }
 
+      setRichText(richText)
+
       idEditText === null
           ? apiRequest("POST", dataSend, dataFromServer, ()=>{}, "/api/v1/shoutouts")
               .catch( handlingErrors )
@@ -42,25 +44,29 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
               .catch( handlingErrors )
     }
     const handlingErrors = (errors) => {
-      if (errors.response.data.error.rich_text?.length) alert( errors.response.data.error.rich_text[0] )
+      if ( errors.response.data.error.rich_text?.length ) {
+        setErrorMessage( errors.response.data.error.rich_text[0] )
+        setIsNotAlert(false)
+      }
     }
 
-    return <RichInputElement
+    const closeAlert = () => {
+      setIsNotAlert(true)
+    }
+
+    return <div>
+      <RichInputElement
             richText = { richText }
            listUsers = { data.users.filter(user => user.id !== data.current_user.id) }
              onClose = { onClose }
             onSubmit = { submitHandling }
     />
+      {!isNotAlert && <Alert onClose={ closeAlert } errorMessage={ errorMessage }/>}
+    </div>
   }
 
-  const portalElement = document.getElementById('overlays')
 
-  return (
-    <Fragment>
-      {ReactDOM.createPortal(<BackDrop onClose={ onClose }/>, portalElement)}
-      {ReactDOM.createPortal(<ModalOverlay />, portalElement)}
-    </Fragment>
-  );
+  return <Portal onClose={ onClose } modalOverlay={ <ModalOverlay/> } />
 };
 
 export default ShoutoutModal;

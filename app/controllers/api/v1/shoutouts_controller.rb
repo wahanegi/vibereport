@@ -15,16 +15,29 @@ class Api::V1::ShoutoutsController < ApplicationController
 end
 
   def update
-    @shoutout = Shoutout.find_by(id: params[:id])
-    if @shoutout.update(shoutout_params)
+    if shoutout.update(shoutout_params)
       update_shoutout_recipients
-      render json: @shoutout, status: :ok
+      render json: shoutout, status: :ok
     else
-      render json: { error: @shoutout.errors.messages }, status: :unprocessable_entity
+      render json: { error: shoutout.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    return if shoutout.nil?
+
+    if shoutout.destroy
+      render json: shoutout, status: :ok
+    else
+      render json: { error: shoutout.errors }, status: :unprocessable_entity
     end
   end
 
   private
+
+  def shoutout
+    @shoutout ||= Shoutout.find_by(id: params[:id])
+  end
 
   def shoutout_params
     params.require(:shoutout).permit(:time_period_id, :rich_text)
