@@ -19,9 +19,9 @@ class ParticipationPercentage < AdminReport
 
   def count_responding_users
     User.joins(:teams, :responses)
-        .where(teams: { id: @team.id }, responses: { time_period_id: @time_periods })
+        .where(teams: { id: @team.id }, responses: { time_period_id: @time_periods, not_working: false })
         .distinct
-        .count
+        .count('users.id')
   end
 
   def calculate_percentage(responding_users, total_users)
