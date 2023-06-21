@@ -17,7 +17,7 @@ import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
 
-const Results = ({data, setData, saveDataToDb, steps, service}) => {
+const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
@@ -142,7 +142,7 @@ const Results = ({data, setData, saveDataToDb, steps, service}) => {
                          saveDataToDb={saveDataToDb}
                          isMinUsersResponses={isMinUsersResponses}
                          nextTimePeriod={nextTimePeriod} />
-        <CornerElements data={ data} setData={setData} percentCompletion={100} hideBottom={true}/>
+        <CornerElements data={ data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
       </Wrapper>
       <Footer />
     </div>

@@ -46,3 +46,8 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
     default:
   }
 }
+
+export const signOutUser = async (id) =>{
+  createCsrfToken()
+  await axios.get(`/api/v1/sign_out_user?id=${id}` ).then()
+}

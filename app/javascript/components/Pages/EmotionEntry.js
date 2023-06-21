@@ -10,8 +10,7 @@ import {CSSTransition} from 'react-transition-group';
 import {backHandling} from "../helpers/helpers";
 import CornerElements from "../UI/CornerElements";
 
-const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
-
+const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [emotion, setEmotion] = useState({ word: data.emotion?.word || '', category: data.emotion?.category || '' });
   const [emotions, setEmotions] = useState([]);
@@ -42,17 +41,22 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     setHoveredEmoji("");
   };
 
+  const dataRequest = {
+    emotion: {word: emotion.word, category: emotion.category}
+  }
+
   const handlingOnClickNext = () => {
     const dataFromServer = (word) =>{
       steps.push('meme-selection')
-      saveDataToDb( steps, {emotion_id: word.data.id} )
+      saveDataToDb( steps, {emotion_id: word.data.id, draft: false} )
     }
-    const dataRequest = {
-      emotion: {word: emotion.word, category: emotion.category}
-    }
+    saveDataEmotion(dataFromServer)
+  };
+
+  const saveDataEmotion = (dataFromServer) => {
     apiRequest("POST", dataRequest, dataFromServer, ()=>{}, "/api/v1/emotions").then(response => {
     });
-  };
+  }
 
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const getEmojiClass = (category, name) => {
@@ -114,7 +118,6 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
     { !!error && <p>{error.message}</p>}
     {!isLoading && !error &&
       <Wrapper className='position-relative'>
-
         <div className='central-element'>
           <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
           <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>
@@ -132,7 +135,9 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service}) => {
         </div>
         <CornerElements data = { data }
                         setData = { setData }
-                        percentCompletion = { 0 } />
+                        saveDataToDb={saveDataToDb}
+                        steps={steps}
+                        draft={draft}/>
       </Wrapper>
 
     }

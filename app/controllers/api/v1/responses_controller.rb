@@ -5,7 +5,7 @@ module Api
 
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices, :rating,
                       :comment, :productivity, :bad_follow_comment, :celebrate_comment, :fun_question_id,
-                      :fun_question_answer_id, :completed_at, { gif: %i[src height] }].freeze
+                      :fun_question_answer_id, :completed_at, { gif: %i[src height] }, :draft].freeze
 
       before_action :retrieve_response, only: %i[update]
       before_action :require_user!, only: %i[create update]
@@ -36,10 +36,22 @@ module Api
         render json: { error: result[:error] }, status: :unprocessable_entity
       end
 
+      def sign_out_user
+        retrieve_response
+        ReminderEmailWorker.new(current_user, @response, TimePeriod.current).run_notification if @response&.completed_at.nil?
+        redirect_to auth.sign_in_path if sign_out User
+      end
+
+      def sign_in_from_email
+        user
+        sign_in_user
+        redirect_to root_path
+      end
+
       private
 
       def retrieve_response
-        @response = Response.find_by(id: params[:id])
+        @response ||= Response.find_by(id: params[:id])
       end
 
       def response_params

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       resources :shoutouts, only: %i[create update]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
+      get '/sign_out_user', to: 'responses#sign_out_user'
+      get '/sign_in_from_email', to: 'responses#sign_in_from_email'
       get '/results_email', to: 'results#results_email'
       get '/result', to: 'results#show'
     end

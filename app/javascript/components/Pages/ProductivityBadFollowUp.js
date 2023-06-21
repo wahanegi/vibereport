@@ -1,16 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
 
-const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) => {
+const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const { bad_follow_comment } = data.response.attributes
   const [comment, setComment] = useState(bad_follow_comment || '');
+  const [isDraft, setIsDraft] = useState(draft);
+
+  const handleSaveDraft = () => {
+    const dataDraft = { bad_follow_comment: comment, draft: true };
+    saveDataToDb(steps, dataDraft);
+    setIsDraft(true);
+  }
+
+  useEffect(() => {
+   if (bad_follow_comment !== comment && isDraft) {
+      setIsDraft(false);
+    }
+  }, [comment]);
 
   const handlingOnClickNext = () => {
     steps.push('causes-to-celebrate')
-    saveDataToDb( steps, {bad_follow_comment: comment})
+    saveDataToDb( steps, {bad_follow_comment: comment, draft: false})
   }
 
   if (!!error) return <p>{error.message}</p>
@@ -40,7 +53,10 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service}) 
     <BlockLowerBtns nextHandling={ handlingOnClickNext } />
     <CornerElements data = { data }
                     setData = { setData }
-                    percentCompletion = { 30 } />
+                    saveDataToDb={saveDataToDb}
+                    steps={steps}
+                    draft={isDraft}
+                    handleSaveDraft={handleSaveDraft} />
   </Wrapper>
 };
 
