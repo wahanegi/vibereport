@@ -89,10 +89,15 @@ ActiveAdmin.register Team do
       time_period = TimePeriod.find_by(id: params[:time_period]) if params[:time_period].present?
       earliest_start_date = TimePeriod.minimum(:start_date)
       latest_end_date = TimePeriod.maximum(:end_date)
-      time_period_with_responses_and_working = Response.where(not_working: false).pluck(:time_period_id).uniq
 
       if time_period
-        previous_time_period = TimePeriod.where("end_date < ? AND id IN (?)", time_period.start_date, time_period_with_responses_and_working).order(end_date: :desc).first
+        previous_time_period = TimePeriod
+          .joins(responses: {user: :teams})
+          .where("end_date < ?", time_period.start_date)
+          .where("teams.id = ?", team.id)
+          .where("responses.not_working = ?", false)
+          .order(end_date: :desc)
+          .first
       end
 
       vars = ActiveAdminHelpers.time_period_vars(
