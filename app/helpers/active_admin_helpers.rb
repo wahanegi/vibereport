@@ -1,5 +1,5 @@
 module ActiveAdminHelpers
-  def self.time_period_vars(team: nil, time_period: nil, previous_time_period: nil, current_period: nil)
+  def self.time_period_vars(team: nil, time_period: nil, previous_time_period: nil, current_period: nil, for_all_periods: nil)
     all_time_periods = TimePeriod.all
     vars = {}
 
@@ -12,7 +12,7 @@ module ActiveAdminHelpers
     vars[:productivity_average_current_period] = ProductivityAverage.new(team, current_period).generate
 
     vars[:participation_percentage] = ParticipationPercentage.new(team, time_period).generate
-    vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate
+    vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate(for_all_periods: true)
 
     if team.nil?
       vars[:positive_verbatims] = ProductivityVerbatims.new(team, current_period).generate[:positive]
@@ -57,8 +57,6 @@ module ActiveAdminHelpers
   end
 
   def calculate_trend(value1, value2)
-
-    puts "Value1: #{value1}, Value2: #{value2}"
     if value1 == value2
       ''
     else

@@ -103,7 +103,8 @@ ActiveAdmin.register Team do
       vars = ActiveAdminHelpers.time_period_vars(
         team: team, 
         time_period: time_period, 
-        previous_time_period: previous_time_period
+        previous_time_period: previous_time_period,
+        for_all_periods: false
       )
 
       if time_period
@@ -260,7 +261,7 @@ ActiveAdmin.register Team do
           'Please select a time period to view the report.'
         end
       end
-      
+
       if earliest_start_date.nil? || latest_end_date.nil?
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe do
         end

@@ -11,8 +11,6 @@ class TeammateEngagementCount < AdminReport
   private
 
   def receive_teammate_engagement_count
-    return 0 unless @team
-
     team_member_ids = receive_team_members.map { |member| member[0] }
     team_member_names = receive_team_members.map { |member| member[1] }
 
@@ -33,9 +31,13 @@ class TeammateEngagementCount < AdminReport
   end
 
   def receive_team_members
-    User.joins(:user_teams)
-        .where(user_teams: { team_id: @team.id })
-        .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
+    if @team.nil?
+      User.pluck(:id, Arel.sql("first_name || ' ' || last_name"))
+    else
+      User.joins(:user_teams)
+          .where(user_teams: { team_id: @team.id })
+          .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
+    end
   end
 
   def filter_comments(comments, team_member_ids, team_member_names)
