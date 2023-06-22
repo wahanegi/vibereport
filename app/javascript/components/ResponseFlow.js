@@ -15,6 +15,7 @@ import Recognition from "./Pages/Recognition";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
 import Results from "./Pages/ResultsPage";
+import EmotionType from "./Pages/EmotionType";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -102,6 +103,7 @@ const ResponseFlow = ({step, data, setData}) => {
   const componentMap = {
     'emotion-selection-web': <ListEmotions />,
     'emotion-entry': <EmotionEntry />,
+    'emotion-type': <EmotionType />,
     'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'selected-giphy-follow': <SelectedGIPHYFollow isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'emotion-intensity': <EmotionIntensity />,
