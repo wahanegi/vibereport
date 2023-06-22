@@ -22,7 +22,7 @@ class ResponsesReport < AdminReport
   def receive_response_counts
     Response.joins(user: { teams: :user_teams })
             .where(user_teams: { team_id: @team.id })
-            .where(time_period_id: @time_periods, not_working: false)
+            .where(time_period_id: @time_periods)
             .distinct
             .group('responses.time_period_id')
             .count
