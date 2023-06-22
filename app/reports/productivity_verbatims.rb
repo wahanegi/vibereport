@@ -21,7 +21,7 @@ class ProductivityVerbatims < AdminReport
     return team_not_present if @team.nil?
 
     Response.joins(user: :user_teams)
-            .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
+            .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods, not_working: false })
             .where('productivity <= ?', 2)
             .where.not(bad_follow_comment: [''])
             .pluck(:bad_follow_comment)
