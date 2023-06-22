@@ -3,8 +3,7 @@ module ActiveAdminHelpers
     team: nil,
     time_period: nil,
     previous_time_period: nil,
-    current_period: nil,
-    for_all_periods: nil
+    current_period: nil
   )
     all_time_periods = TimePeriod.all
     vars = {}

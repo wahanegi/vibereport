@@ -103,8 +103,7 @@ ActiveAdmin.register Team do
       vars = ActiveAdminHelpers.time_period_vars(
         team: team, 
         time_period: time_period, 
-        previous_time_period: previous_time_period,
-        for_all_periods: false
+        previous_time_period: previous_time_period
       )
 
       if time_period
