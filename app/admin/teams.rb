@@ -108,7 +108,7 @@ ActiveAdmin.register Team do
 
       if time_period
         panel "Time Period: <span style='color: #007bff; font-weight: bold;'>#{time_period.date_range}</span>".html_safe do
-          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period).count
+          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period, not_working: false).count
 
           if responses_count == 0
             div 'No data present for this time period.'
