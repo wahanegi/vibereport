@@ -267,7 +267,7 @@ ActiveAdmin.register Team do
       else
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
           all_time_periods = TimePeriod.all
-          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods).count
+          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods, not_working: false).count
 
           if responses_count == 0
             div 'No data present for the all time period.'
