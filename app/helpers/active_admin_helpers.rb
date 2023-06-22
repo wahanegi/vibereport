@@ -1,9 +1,9 @@
 module ActiveAdminHelpers
   def self.time_period_vars(
-    team: nil, 
-    time_period: nil, 
-    previous_time_period: nil, 
-    current_period: nil, 
+    team: nil,
+    time_period: nil,
+    previous_time_period: nil,
+    current_period: nil,
     for_all_periods: nil
   )
     all_time_periods = TimePeriod.all
@@ -56,7 +56,7 @@ module ActiveAdminHelpers
   def trend_direction(value1, value2)
     value1 = value1.is_a?(Array) ? value1[0] : value1
     value2 = value2.is_a?(Array) ? value2[0] : value2
-  
+
     trend = calculate_trend(value1.to_f, value2.to_f)
     trend_style = calculate_trend_style(trend)
     [trend, trend_style]
