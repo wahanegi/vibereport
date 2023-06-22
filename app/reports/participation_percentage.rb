@@ -10,17 +10,21 @@ class ParticipationPercentage < AdminReport
     total_users = @team.users.count
     return 'No users present' unless total_users.positive?
 
-    total_possible_responses, responding_users =
-    if for_all_periods
-      all_periods_values(total_users)
-    else
-      specific_period_values(total_users)
-    end
+    total_possible_responses, responding_users = calculate_values(for_all_periods)
 
     calculate_percentage(responding_users, total_possible_responses)
   end
 
   private
+
+  def calculate_values(for_all_periods)
+    total_users = @team.users.count
+    if for_all_periods
+      all_periods_values(total_users)
+    else
+      specific_period_values(total_users)
+    end
+  end
 
   def all_periods_values(total_users)
     total_possible_responses = total_users * TimePeriod.count
