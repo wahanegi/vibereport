@@ -6,34 +6,33 @@ class ParticipationPercentage < AdminReport
 
   def generate(for_all_periods: false)
     return 'No team provided' unless @team
-
     total_users = @team.users.count
     return 'No users present' unless total_users.positive?
 
-    if for_all_periods
-      total_possible_responses = total_users * TimePeriod.count
-      responding_users = User.joins(:teams, :responses)
-                             .where(teams: { id: @team.id }, responses: { time_period_id: TimePeriod.pluck(:id) })
-                             .distinct
-                             .count
-    else
-      total_possible_responses = total_users
-      responding_users = User.joins(:teams, :responses)
-                             .where(teams: { id: @team.id }, responses: { time_period_id: @time_periods })
-                             .distinct
-                             .count
-    end
+    total_possible_responses, responding_users = for_all_periods ? all_periods_values(total_users) : specific_period_values(total_users)
 
     calculate_percentage(responding_users, total_possible_responses)
   end
 
   private
 
-  def count_actual_responses
+  def all_periods_values(total_users)
+    total_possible_responses = total_users * TimePeriod.count
+    responding_users = responding_users_count(TimePeriod.pluck(:id))
+    [total_possible_responses, responding_users]
+  end
+
+  def specific_period_values(total_users)
+    total_possible_responses = total_users
+    responding_users = responding_users_count(@time_periods)
+    [total_possible_responses, responding_users]
+  end
+
+  def responding_users_count(time_period_ids)
     User.joins(:teams, :responses)
-        .where(teams: { id: @team.id }, responses: {time_period_id: TimePeriod.pluck(:id), not_working: false })
+        .where(teams: { id: @team.id }, responses: { time_period_id: time_period_ids })
         .distinct
-        .count('responses.id')
+        .count
   end
 
   def calculate_percentage(actual_responses, total_possible_responses)

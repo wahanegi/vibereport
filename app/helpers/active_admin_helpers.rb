@@ -1,5 +1,11 @@
 module ActiveAdminHelpers
-  def self.time_period_vars(team: nil, time_period: nil, previous_time_period: nil, current_period: nil, for_all_periods: nil)
+  def self.time_period_vars(
+    team: nil, 
+    time_period: nil, 
+    previous_time_period: nil, 
+    current_period: nil, 
+    for_all_periods: nil
+  )
     all_time_periods = TimePeriod.all
     vars = {}
 
