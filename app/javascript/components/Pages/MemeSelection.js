@@ -12,12 +12,25 @@ import {backHandling, isBlank, isPresent} from "../helpers/helpers";
 import {GIPHY_UPLOAD_URL} from "../helpers/consts";
 import CornerElements from "../UI/CornerElements";
 
-const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif}) => {
+const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif, draft}) => {
   const {emotion, api_giphy_key, response} = data
   const navigate = useNavigate()
   const {isLoading, error} = service
   const [gifUrl, setGifUrl] = useState(response.attributes.gif || {})
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
+  const [isDraft, setIsDraft] = useState(draft);
+
+  const handleSaveDraft = () => {
+    const dataDraft = {gif: gifUrl, draft: true}
+    saveDataToDb(steps, dataDraft);
+    setIsDraft(true)
+  }
+
+  useEffect(() => {
+    if (gifUrl !== response.attributes.gif && isDraft) {
+      setIsDraft(false);
+    }
+  }, [gifUrl]);
 
   const handlingOnClickSkip = () =>{
     if (emotion.category === "neutral") {
@@ -25,7 +38,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('emotion-intensity')
     }
-    saveDataToDb( steps , { gif: null })
+    saveDataToDb( steps , { gif: null, draft: false })
   }
 
   const chooseGIPHYHandling = () => {
@@ -34,7 +47,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     } else {
       steps.push('selected-giphy-follow');
     }
-    saveDataToDb(steps, { gif: gifUrl });
+    saveDataToDb(steps, { gif: gifUrl, draft: false });
   }
   
   const uploadGIPHYHandling = () => {
@@ -75,7 +88,10 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     </div>
     <CornerElements data = { data }
                     setData = { setData }
-                    percentCompletion = { 10 } />
+                    saveDataToDb={saveDataToDb}
+                    steps={steps}
+                    draft={isDraft}
+                    handleSaveDraft={handleSaveDraft} />
   </Wrapper>
 }
 

@@ -17,12 +17,21 @@ const mockService = {
     },
   };
   const setData = jest.fn();
+
+  const productivityCheckLowProps = {
+    data,
+    setData,
+    saveDataToDb: () => {},
+    steps: [],
+    service: mockService,
+    draft: false,
+  };
   
   describe('ProductivityCheckLow', () => {
     test('checking components for crashing', () => {
       render(
         <MemoryRouter>
-            <ProductivityCheckLow data={data} setData={setData} service={mockService} />
+          <ProductivityCheckLow {...productivityCheckLowProps} />
         </MemoryRouter>
         );
     });
@@ -30,7 +39,7 @@ const mockService = {
     test('reproduces  page productivity', () => {
       render(
         <MemoryRouter>
-            <ProductivityCheckLow data={data} setData={setData} service={mockService} />
+          <ProductivityCheckLow {...productivityCheckLowProps} />
         </MemoryRouter>
         );
       expect(screen.getByText('How productive have you been feeling recently?')).toBeInTheDocument();
@@ -40,7 +49,7 @@ const mockService = {
     test('productivity value changes on input', () => {
       render(
         <MemoryRouter>
-            <ProductivityCheckLow data={data} setData={setData} service={mockService} />
+          <ProductivityCheckLow {...productivityCheckLowProps} />
         </MemoryRouter>
         );
       const productivity = screen.getByRole('slider');

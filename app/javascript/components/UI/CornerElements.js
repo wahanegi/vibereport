@@ -6,10 +6,14 @@ import Menu from "./Menu";
 const CornerElements = ({
                             data,
                             setData,
-                            percentCompletion,
                             numShoutouts = 0,
+                            isMoveShoutout,
+                            saveDataToDb,
+                            steps,
+                            draft,
+                            disabled,
                             hideBottom = false,
-                            isMoveShoutout }) => {
+                            handleSaveDraft }) => {
   return (
     <Fragment>
       <div className="board position-absolute t-35">
@@ -32,7 +36,12 @@ const CornerElements = ({
         null
       }
 
-     <Menu percentCompletion = {percentCompletion} className='placement-menu'/>
+      <Menu saveDataToDb={saveDataToDb}
+            steps={steps} draft={draft}
+            disabled={disabled}
+            data={data}
+            handleSaveDraft={handleSaveDraft}
+            className='placement-menu'/>
     </Fragment>
   );
 };

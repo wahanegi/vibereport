@@ -13,8 +13,4 @@ export const ALL_STEPS = [
     {id:"7v2", step:"icebreaker-answer"},
     {id:"7v3", step:"icebreaker-question"},
     {id:"7", step:"results"},
-    {id:"7.1.", step:"MemeWallPrevWeek"},
-    {id:"7.3.", step:"MemeWallThisWeek"},
-    {id:"7.X.1.", step:"MemeWallThisWeekSoFarDrop"},
-    {id:"8", step:"PromptEmailResults"},
   ];

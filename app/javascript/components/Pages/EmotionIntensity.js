@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
@@ -59,17 +59,32 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
   );
   };
   
-const EmotionIntensity = ({data, setData, saveDataToDb, steps, service}) => {
+const EmotionIntensity = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const { word, category } = data.emotion
   const gif_url = data.response.attributes.gif?.src
   const [rating, setRating] = useState(data.response.attributes.rating || null);
   const [comment, setComment] = useState(data.response.attributes.comment || '');
   const isBlankGif = isBlank(gif_url)
-  
+  const [isDraft, setIsDraft] = useState(draft);
+
+  const handleSaveDraft = () => {
+    const dataDraft = {rating, comment, draft: true}
+    saveDataToDb(steps, dataDraft);
+    setIsDraft(true)
+  }
+
+  useEffect(() => {
+    const dataComment = data.response.attributes.comment;
+    const dataRating = data.response.attributes.rating;
+    if ((comment !== dataComment || rating !== dataRating) && isDraft) {
+      setIsDraft(false);
+    }
+  }, [comment, rating]);
+
   const handlingOnClickNext = () => {
     steps.push('productivity-check')
-    saveDataToDb( steps, {rating, comment})
+    saveDataToDb( steps, {rating, comment, draft: false})
   }
 
   const EmotionGif = () => <div className='d-flex flex-column align-items-center'>
@@ -145,7 +160,10 @@ const generateStyles = (value, selected, category) => {
     <BlockLowerBtns nextHandling={ handlingOnClickNext } disabled={isBlank(rating)} />
     <CornerElements data = { data }
                     setData = { setData }
-                    percentCompletion = { 20 } />
+                    saveDataToDb={saveDataToDb}
+                    steps={steps}
+                    draft={isDraft}
+                    handleSaveDraft={handleSaveDraft}/>
   </Wrapper>
 };
 

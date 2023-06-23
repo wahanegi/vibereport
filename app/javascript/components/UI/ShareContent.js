@@ -98,9 +98,9 @@ export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false
     <BtnSkip onClick={skipClick} hidden={hideSkip} addClass='m-1 align-self-center' />
   </div>
 
-export const Header = ({className}) => <div className='d-flex justify-content-between m-3'>
+export const Header = ({saveDataToDb, steps, draft, disabled, data, handleSaveDraft}) => <div className='d-flex justify-content-between m-3'>
   <Logo />
-  <Menu className={className}>X% complete</Menu>
+  <Menu saveDataToDb={saveDataToDb} steps={steps} draft={draft} disabled={disabled} data={data} handleSaveDraft={handleSaveDraft}>X% complete</Menu>
 </div>
 
 export const Wrapper = ({children}) => <div className="wrapper">

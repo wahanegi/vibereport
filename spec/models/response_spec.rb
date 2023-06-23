@@ -6,6 +6,7 @@
 #  bad_follow_comment     :text
 #  comment                :text
 #  completed_at           :date
+#  draft                  :boolean          default(FALSE), not null
 #  gif                    :jsonb
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb

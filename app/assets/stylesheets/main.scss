@@ -186,6 +186,18 @@ a {
 .pencil {
   cursor: pointer;
 }
+.expand-link .trashRed {
+  display: none;
+  cursor: pointer;
+}
+.expand-link:hover .trash,
+.expand-link:active .trash {
+    display: none;
+}
+.expand-link:hover .trashRed,
+.expand-link:active .trashRed {
+    display: block;
+}
 .left-bottom-corner {
   position: absolute;
   left: 45px;
@@ -294,7 +306,7 @@ a {
       &.cut-text {
         text-overflow: ellipsis;
         overflow: hidden;
-        width: 740px;
+        width: 695px;
         white-space: nowrap;
       }
     }
@@ -684,6 +696,7 @@ a {
   padding-inline-start: 1.375rem !important;
   padding-inline-end:   1.375rem !important;
 }
+
 .celebrate textarea {
   &::-webkit-scrollbar-track {
     margin-top: 10px;
@@ -702,4 +715,33 @@ a {
   content: "@";
   font-size: 22px;
   background-color: $white;
+}
+
+.placement-modal-message {
+  z-index: 22;
+  position: fixed;
+  background-color: $white;
+  width: 595px;
+  height: 282px;
+  border: 4px solid $royal-blue;
+  border-radius: 20px;
+  left: calc((100vw - 595px)/2);
+  top: calc((100vh - 282px)/2);
+  font-size: 40px;
+  div, .text-block {
+    display: block;
+    overflow: hidden;
+    max-height: 11rem;
+  }
+}
+
+// Menu
+.disabled-btn-draft{
+  pointer-events: none;
+  cursor: none;
+  overflow: hidden;
+  opacity: 0.6;
+}
+.text-complete{
+  margin: 19px 0 0 0;
 }

@@ -33,7 +33,7 @@ class Api::V1::ShoutoutsController < ApplicationController
 
   def destroy
     if shoutout.destroy
-      head :no_content, notice: 'Shoutout was successfully destroyed.'
+      render json: { message: 'success' }, status: :ok
     else
       render json: { error: shoutout.errors }, status: :unprocessable_entity
     end

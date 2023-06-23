@@ -1,13 +1,12 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {backHandling, isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
-import {BtnBack, BtnPrimary} from "../UI/ShareContent";
+import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
-const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
+const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [prevStateQuestion, setPrevStateQuestion] = useState({})
@@ -15,29 +14,51 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
   const prevQuestionBody = prevStateQuestion?.question_body
   const funQuestionBody = funQuestion?.question_body
   const userName = data.current_user.first_name
+  const [isDraft, setIsDraft] = useState(draft)
+
+  const dataRequest = {
+    fun_question: {
+      question_body: funQuestionBody,
+      user_id: data.current_user.id
+    }
+  }
+
+  useEffect(() => {
+    if (funQuestionBody !== prevQuestionBody && isDraft) {
+      setIsDraft(false);
+    }
+  }, [funQuestionBody]);
+
+  const handleSaveDraft = () => {
+    const dataFromServer = (fun_question) =>{
+      saveDataToDb( steps, {fun_question_id: fun_question.data.id})
+    }
+    const dataDraft = {dataRequest, draft: true};
+    saveDataToDb(steps, dataDraft)
+    setIsDraft(true)
+    saveDataQuestion(()=>{}, dataFromServer);
+  }
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question) =>{
       steps.push('results')
-      saveDataToDb( steps, {fun_question_id: fun_question.data.id})
-    }
-    const dataRequest = {
-      fun_question: {
-        question_body: funQuestionBody,
-        user_id: data.current_user.id
-      }
+      saveDataToDb( steps, {fun_question_id: fun_question.data.id, draft: true})
     }
     const goToResultPage = () => {
       steps.push('results')
-      saveDataToDb(steps)
+      saveDataToDb(steps, {draft: true})
     }
+    saveDataQuestion(goToResultPage, dataFromServer);
+  };
+
+  const saveDataQuestion = (goToResultPage, dataFromServer) =>{
     const url = '/api/v1/fun_questions/'
     const id = prevStateQuestion?.id
     if(isPresent(prevQuestionBody)) {
       if(prevQuestionBody !== funQuestionBody && isNotEmptyStr(funQuestionBody)) {
         apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
       } else if(isEmptyStr(funQuestionBody)) {
-        apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
+        apiRequest("DELETE", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
         goToResultPage()
       }
@@ -46,7 +67,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }
-  };
+  }
 
   const onChangQuestion = (e) => {
     setFunQuestion(Object.assign({}, funQuestion, {[e.target.name]: e.target.value}))
@@ -95,7 +116,10 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service}) => {
       <BlockLowerBtns isSubmit={true} handlingOnClickNext={handlingOnClickNext} stringBody={funQuestionBody}/>
       <CornerElements         data = { data }
                               setData = { setData }
-                              percentCompletion = {0}/>
+                              saveDataToDb={saveDataToDb}
+                              steps={steps}
+                              draft={isDraft}
+                              handleSaveDraft={handleSaveDraft}/>
     </Fragment>
   );
 };

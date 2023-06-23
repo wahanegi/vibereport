@@ -26,7 +26,7 @@ const richTextToMention = (celebrate_shoutout) => {
   return celebrate_shoutout.rich_text?.replace(regExpStart, '@[').replace(regExpEnd, `](${celebrate_shoutout.id})`)
 }
 
-const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
+const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {users, response} = data
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
@@ -37,10 +37,38 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
   const placeholder = 'Are you grateful for anything that happened at work recently? \n \n' +
   'Use "@" to include Shoutouts to members of the team!'
   const [show, setShow] = useState(false);
+  const [isDraft, setIsDraft] = useState(draft);
+
+  const dataSend = {
+    shoutout: {
+      user_id: data.current_user.id,
+      time_period_id: data.time_period.id,
+      rich_text: mentionToRichText(celebrateComment) || [],
+    },
+    is_celebrate: true,
+    recipients: celebrateComment.match(/[^(]+(?=\))/g) || []
+  }
+
+  const handleSaveDraft = () => {
+    const dataFromServer = (shoutout) =>{
+      saveDataToDb( steps, {shoutout_id: shoutout.id} )
+    }
+
+    const dataDraft = {dataSend, draft: true};
+    saveDataToDb(steps, dataDraft)
+    setIsDraft(true)
+    saveDataCelebrate(dataFromServer, ()=>{}, true);
+  }
+
+  useEffect(() => {
+    if (isEdited && isDraft) {
+      setIsDraft(false);
+    }
+  }, [celebrateComment]);
 
   const goToRecognitionPage = () => {
     steps.push('recognition')
-    saveDataToDb(steps)
+    saveDataToDb(steps, {draft: false})
   }
 
   const showModal = () => {
@@ -51,34 +79,32 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
     }
   }
 
-  const onClickNext = () => {
-    const dataSend = {
-      shoutout: {
-        user_id: data.current_user.id,
-        time_period_id: data.time_period.id,
-        rich_text: mentionToRichText(celebrateComment) || [],
-      },
-      is_celebrate: true,
-      recipients: celebrateComment.match(/[^(]+(?=\))/g) || []
-    }
+  const handlingOnClickNext = () => {
     const dataFromServer = (shoutout) => {
-      saveDataToDb(steps, {shoutout_id: shoutout.id})
+      saveDataToDb(steps, {shoutout_id: shoutout.id, draft: false})
     }
+    const goToRecognitionPage = () => {
+      steps.push('recognition')
+      saveDataToDb(steps, {draft: false} )
+    }
+    saveDataCelebrate(dataFromServer, goToRecognitionPage)
+  };
 
+  const saveDataCelebrate = (dataFromServer, goToRecognitionPage, isDraft= false) => {
     const url = '/api/v1/shoutouts/'
     const id = celebrateShoutout?.id
     if(isNotEmptyStr(prevCelebrateComment)) {
       if(isEdited && isNotEmptyStr(celebrateComment)) {
-        apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then(showModal);
+        apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then(!isDraft && showModal);
       } else if(isEmptyStr(celebrateComment)) {
-        apiRequest("DESTROY", dataSend, dataFromServer, () => {}, `${url}${id}`).then(goToRecognitionPage);
+        apiRequest("DELETE", dataSend, dataFromServer, () => {}, `${url}${id}`).then(goToRecognitionPage);
       } else {
-        showModal()
+        !isDraft && showModal()
       }
     } else if (isEmptyStr(celebrateComment)) {
-      goToRecognitionPage()
+      !isDraft && goToRecognitionPage()
     } else {
-      apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then(showModal);
+      apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then(!isDraft && showModal);
     }
   }
 
@@ -136,10 +162,13 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
         </MentionsInput>
       </div>
 
-      <BlockLowerBtns nextHandling={onClickNext} skipHandling={onClickNext} isNext={ celebrateComment !== '' } />
+      <BlockLowerBtns nextHandling={handlingOnClickNext} skipHandling={handlingOnClickNext} isNext={ celebrateComment !== '' } />
       <CornerElements data = { data }
                       setData = { setData }
-                      percentCompletion = { 40 } />
+                      saveDataToDb={saveDataToDb}
+                      steps={steps}
+                      draft={isDraft}
+                      handleSaveDraft={handleSaveDraft} />
       <CelebrateModal show={show}
                       steps={steps}
                       setShow={setShow}

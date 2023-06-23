@@ -1,12 +1,12 @@
 import React from 'react';
 import Swal from "sweetalert2";
 
-const SweetAlert = ({onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}) => {
+const SweetAlert = ({onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText, cancelButtonClass, confirmButtonClass}) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
-      confirmButton: 'btn btn-primary ms-5 fs-5',
-      cancelButton: 'btn btn-danger fs-5',
-      closeButton: 'swal2-close-button'
+      confirmButton: `btn ${confirmButtonClass || 'btn-primary'}  ms-5 fs-5`,
+      cancelButton: `btn fs-5 ${cancelButtonClass || 'btn-danger'}`,
+      closeButton: 'swal2-close-button',
     },
     buttonsStyling: false
   })
@@ -18,7 +18,7 @@ const SweetAlert = ({onConfirmAction, onDeclineAction, alertTitle, alertHtml, ca
     showCloseButton: true,
     cancelButtonText: cancelButtonText,
     confirmButtonText: confirmButtonText,
-    reverseButtons: true
+    reverseButtons: true,
   }).then((result) => {
     if (result.isConfirmed) {
       return onConfirmAction()

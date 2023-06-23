@@ -1,6 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {backHandling, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
-import { BtnBack, BtnPrimary} from "../UI/ShareContent";
+import {isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
@@ -12,7 +11,7 @@ const MARGIN_BOTTOM = 17
 const HEIGHT_ROW_USER = 40
 const SUM_EDGE_DOWN_UP = 26
 
-const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
+const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [prevStateAnswer, setPrevStateAnswer] = useState( {})
@@ -23,23 +22,46 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
   const {user_name, question_body} = data.fun_question
   const user = user_name
   const current_user_id = data.current_user.id
+  const [isDraft, setIsDraft] = useState(draft)
+  const dataRequest = {
+    fun_question_answer: {
+      answer_body: answerBody  || '',
+      user_id: current_user_id,
+      fun_question_id: data.fun_question.id
+    }
+  }
+
+  useEffect(() => {
+    if (answerBody !== prevAnswerBody && isDraft) {
+      setIsDraft(false);
+    }
+  }, [answerBody]);
+
+  const handleSaveDraft = () => {
+    const dataFromServer = (fun_question_answer) =>{
+      saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id} )
+    }
+
+    const dataDraft = {dataRequest, draft: true};
+    saveDataToDb(steps, dataDraft)
+    setIsDraft(true)
+    saveDataAnswer(dataFromServer, ()=>{}, true);
+  }
 
   const handlingOnClickNext = () => {
     const dataFromServer = (fun_question_answer) =>{
       steps.push('icebreaker-question')
-      saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id} )
+      saveDataToDb( steps, {fun_question_answer_id: fun_question_answer.data.id, draft: false} )
     }
-    const dataRequest = {
-      fun_question_answer: {
-        answer_body: answerBody,
-        user_id: current_user_id,
-        fun_question_id: data.fun_question.id
-      }
-    }
+
     const goToResultPage = () => {
       steps.push('results')
-      saveDataToDb(steps)
+      saveDataToDb(steps, {draft: true} )
     }
+    saveDataAnswer(dataFromServer, goToResultPage)
+  };
+
+  const saveDataAnswer = (dataFromServer, goToResultPage, isDraft= false) =>{
     const url = '/api/v1/fun_question_answers/'
     const id = prevStateAnswer?.id
 
@@ -47,18 +69,22 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
       if(prevAnswerBody !== answerBody && isNotEmptyStr(answerBody)) {
         apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
       } else if(isEmptyStr(answerBody)) {
-        apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
+        apiRequest("DELETE", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
-        steps.push('icebreaker-question')
-        saveDataToDb(steps)
+        !isDraft && steps.push('icebreaker-question')
+        saveDataToDb(steps, {draft: false})
       }
     } else if (isEmptyStr(answerBody)) {
-      steps.push('results')
-      saveDataToDb(steps)
+      if (isDraft){
+        steps.push('icebreaker-answer')
+      }else {
+        steps.push('results')
+      }
+      saveDataToDb(steps, {draft: true})
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }
-  };
+  }
 
   const onChangAnswer = (e) => {
     setAnswerFunQuestion(Object.assign({}, answerFunQuestion, {[e.target.name]: e.target.value}))
@@ -120,7 +146,10 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service}) => {
       <BlockLowerBtns isSubmit={true} handlingOnClickNext={handlingOnClickNext} stringBody={answerBody}/>
       <CornerElements         data = { data }
                               setData = { setData }
-                              percentCompletion = {0}/>
+                              saveDataToDb={saveDataToDb}
+                              steps={steps}
+                              draft={isDraft}
+                              handleSaveDraft={handleSaveDraft}/>
     </Fragment>
   );
 };

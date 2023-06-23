@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Email letter</title>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+          font-style: normal;
+          font-weight:700;
+          text-align: center;
+          line-height: 0;
+      }
+      .board{
+          min-width:1080px;
+      }
+      .lnk-unsubscribe{
+          text-align: left;
+      }
+  </style>
+  <%= stylesheet_link_tag 'email_page' , media: 'all' %>
+</head>
+<body>
+<div class="board mx-auto">
+  <div class="first-row">
+    <div class="calendar mt-10 ml-55">
+      <div class="data"><%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+    </div>
+  </div>
+  <div>
+    <div class="second-row-reminder mt-182">
+      <div class="mx-auto envelope">
+        <p class="logo-magic">Logo/Brand</p>
+      </div>
+    </div>
+    <div class="mx-auto third-row-magic mt-40">
+      <div class="mx-auto greeting">Your check-in progress is saved</div>
+    </div>
+    <div class="mx-auto fourth-row-magic">
+      <div class="submit-annotation text-reminder mx-auto">Come on back when you’re ready to complete your check-in</div>
+    </div>
+    <div class="big-btn mx-auto mt-40">
+      <div class="big-btn-text mx-auto">
+        <%= link_to "Back to check-in", { controller: 'api/v1/responses',
+                                          action: 'sign_in_from_email',
+                                          id: @time_period.id,
+                                          user_id: @user.id }%>
+      </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

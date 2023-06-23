@@ -202,6 +202,9 @@ text-align: center;
 .ml-55{
     margin-left: 55px;
 }
+.mt-10{
+    margin-top: 10px;
+}
 .calendar {
     text-align: left;
     width: 102px;
@@ -462,4 +465,19 @@ html {
     color: rgba(0, 0, 0, 0.7);
     white-space: nowrap;
     text-transform: capitalize;
+}
+
+/* reminder_email */
+.second-row-reminder{
+    height: 3.7rem;
+    margin-top: 145px;
+}
+
+.mt-40{
+    margin-top: 40px;
+}
+
+.text-reminder{
+    width: 453px;
+    color: rgba(0, 0, 0, 0.7);
 }
