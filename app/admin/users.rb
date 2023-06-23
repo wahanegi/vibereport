@@ -52,7 +52,7 @@ ActiveAdmin.register User do
       end
 
       column do
-        panel 'Celebration Verbatims' do
+        panel 'Received Celebration Verbatims' do
           all_celebrations = Response.where("celebrate_comment LIKE ?", "%@[#{user.first_name}](#{user.id})%")
 
           if all_celebrations.present?
