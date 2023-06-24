@@ -716,9 +716,9 @@ a {
   margin-top: 240px;
   div.row2 {
     space: 'margin-top:-1rem';
-    max-width: 500px;
+    max-width: 600px;
     height: 75px;
-    white-space: break-spaces;
+    white-space: pre-wrap;
   }
   div.row3 {
     margin-top: 75px;

@@ -8,6 +8,8 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
   const xCloseData = data.time_period.end_date
 
   const logoutHandling = () =>{
+      steps.push('emotion-selection-web')
+      saveDataToDb(steps, { draft: false })
       signOutUser(data.response.id).then(() => window.location.href = `/sign_in`);
   }
   const skipHandling = () => {
@@ -30,7 +32,7 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
           <div className='rather-not-say-first-row'>
             <h1>{nextView ?  "We'll be here..." : "That's okay."}</h1>
             <div className='row2 mx-auto'>
-              <h2>{nextView ? `Feel free to return to this check-in before it closes on ${xCloseData}`:
+              <h2>{nextView ? `Feel free to return to this check-in\n before it closes on ${xCloseData}`:
                 "Would you like to continue with your check-in?"}</h2>
             </div>
               <div className='row3'>
