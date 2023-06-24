@@ -8,12 +8,11 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
   const xCloseData = data.time_period.end_date
     const skipHandling = () => {
     if (nextView) {
-            signOutUser(data.response.id).then(() => window.location.href = `/sign_in`);
+           return  signOutUser(data.response.id).then(() => window.location.href = `/sign_in`);
     }
-    else{
         steps.push('productivity-check')
-        saveDataToDb(steps, { draft: false })}
-    }
+        saveDataToDb(steps, { draft: false })
+  }
 
     const noHandling = () => {
       if (nextView) {
