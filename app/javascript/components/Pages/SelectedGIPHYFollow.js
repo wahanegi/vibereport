@@ -4,15 +4,18 @@ import PoweredBy from '../../../assets/images/PoweredBy.svg';
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
 
-const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCustomGif}) => {
+const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCustomGif, draft}) => {
   const {isLoading, error} = service
   const gif_url = data.response.attributes.gif.src
 
-  const handlingOnClickNext = () => {
-    steps.push('emotion-intensity')
-    saveDataToDb( steps, {})
+  const handleSaveDraft = () => {
+    saveDataToDb(steps, {draft: true});
   }
 
+  const handlingOnClickNext = () => {
+    steps.push('emotion-intensity')
+    saveDataToDb( steps, {draft: false})
+  }
 
   if (!!error) return <p>{error.message}</p>
 
@@ -37,7 +40,10 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
       <BlockLowerBtns nextHandling={ handlingOnClickNext } />
       <CornerElements data = { data }
                       setData = { setData }
-                      percentCompletion = { 20 } />
+                      saveDataToDb={saveDataToDb}
+                      steps={steps}
+                      draft={draft}
+                      handleSaveDraft={handleSaveDraft}/>
     </Wrapper>
 };
 

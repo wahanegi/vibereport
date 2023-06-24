@@ -10,7 +10,7 @@ import Button from "../UI/Button";
 //***               response:{attributes: {steps: "[\"ListEmotions\"]", word:""}},
 //***               current_user_id: ...,
 //***               time_period:{...}
-function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
+function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
@@ -23,6 +23,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
       comment: '',
       rating: '',
       productivity: '0',
+      draft: false,
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -32,6 +33,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
     const dataRequest = {
       time_period_id: data.time_period.id,
       user_id: data.current_user.id,
+      draft:true,
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -102,9 +104,11 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service}) {
           <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
             I was not working recently
           </NavLink>
-          <CornerElements         data = { data }
-                               setData = { setData }
-                     percentCompletion = {0}/>
+          <CornerElements data = { data }
+                          setData = { setData }
+                          saveDataToDb = {saveDataToDb}
+                          steps = {steps}
+                          draft = {draft}/>
         </div>
       }
     </Fragment>

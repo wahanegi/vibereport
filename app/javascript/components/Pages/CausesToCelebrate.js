@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Wrapper
 } from "../UI/ShareContent";
@@ -7,10 +7,24 @@ import mentionsInputStyles from "../UI/mention/mentionsInputStyles";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
 
-const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
+const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {response, users} = data
   const {isLoading, error} = service
   const [celebrateComment, setCelebrateComment] = useState(response.attributes.celebrate_comment || '')
+  const [isDraft, setIsDraft] = useState(draft);
+
+  const handleSaveDraft = () => {
+    const dataDraft = { celebrate_comment: celebrateComment || null, draft: true };
+    saveDataToDb(steps, dataDraft);
+    setIsDraft(true);
+  }
+
+  useEffect(() => {
+    const comment = response.attributes.celebrate_comment
+    if (celebrateComment !== comment && isDraft) {
+      setIsDraft(false);
+    }
+  }, [celebrateComment]);
 
   const onClickSkip = () =>{
     steps.push('recognition')
@@ -19,7 +33,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
 
   const onClickNext = () => {
     steps.push('recognition')
-    saveDataToDb( steps, {celebrate_comment: celebrateComment})
+    saveDataToDb( steps, {celebrate_comment: celebrateComment, draft: false})
   }
 
   const onCommentChange = (e) => {
@@ -47,7 +61,10 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service}) => {
     <BlockLowerBtns nextHandling={ onClickNext } skipHandling={ onClickSkip } isNext={ celebrateComment !== '' } />
     <CornerElements data = { data }
                     setData = { setData }
-                    percentCompletion = { 40 } />
+                    saveDataToDb={saveDataToDb}
+                    steps={steps}
+                    draft={isDraft}
+                    handleSaveDraft={handleSaveDraft} />
   </Wrapper>
 }
 

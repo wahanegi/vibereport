@@ -1,27 +1,46 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
 import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
 import ShoutoutModal from "../UI/ShoutoutModal";
+import trashRed from "../../../assets/images/sys_svg/frame-440.png"
+import trash from "../../../assets/images/sys_svg/frame-439.png"
+import ShoutoutDelete from "../UI/ShoutoutDelete";
 
-const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
+const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
+  const [ isModal, setIsModal ] = useState(false)
+  const [idShoutout, setIdShoutout] = useState()
+  const [isDraft, setIsDraft] = useState(draft)
+  const [previousNumShoutOuts, setPreviousNumShoutOuts] = useState(data.user_shoutouts?.length)
 
   const shoutOuts = data.user_shoutouts
       .filter( item => item.time_period_id === data.time_period.id)
       .sort( (a,b) =>  a.updated_at < b.updated_at ? 1 : -1 )
 
   const numShoutOuts = shoutOuts.length
-  // Temporary placement not ready page Shoutout
+
+  const handleSaveDraft = () => {
+    saveDataToDb(steps, {draft: true});
+    setIsDraft(true);
+  }
+
+  useEffect(() => {
+    if (previousNumShoutOuts !== numShoutOuts) {
+      saveDataToDb(steps, {draft: false});
+      setIsDraft(false);
+    }
+  }, [numShoutOuts]);
+
   const handlingOnClickNext = () => {
     if (!data.fun_question){
       steps.push('causes-to-celebrate')
-      saveDataToDb( steps )
+      saveDataToDb( steps, {draft: false} )
     }else
       steps.push('icebreaker-answer')
-    saveDataToDb( steps )
+    saveDataToDb( steps, {draft: false} )
   }
   const skipHandling = () =>{
     handlingOnClickNext()
@@ -32,15 +51,22 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
   }
   const editHandling = (e) =>{
     e.preventDefault()
-
+    setIsDraft(false)
     const editObj = data.user_shoutouts.find(item => item.id === Number(e.target.attributes.id.value))
 
-    setShoutOutForm( { status: true, editObj: editObj } )
+    setShoutOutForm( { status: true, editObj: editObj} )
   }
 
-  const closeHandling = () => {
+  const closeHandling = (draft) => {
     setShoutOutForm( { status: false, editObj: {} } )
+    setIsDraft(draft)
   }
+  const trashHandling = (e) => {
+    setIsModal(true)
+    setIdShoutout( e.target.attributes.id.value.slice("trashRed".length) )
+  }
+
+  const onClose = () => setIsModal(false)
 
   const output = (shoutOuts) =>{
     return (
@@ -51,6 +77,10 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
           <p className='fw-semibold mb-0  pt-1 pb-1 cut-text'>{parse(shoutOut.rich_text)}</p>
         </span>
         <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" className='pencil' onClick={editHandling}/>
+        <span className="expand-link" >
+          <img  src={ trash } alt="trash" className='trash' onClick={trashHandling}/>
+          <img  id={ 'trashRed'+shoutOut.id } src={trashRed} alt="trash" className='trashRed' onClick={trashHandling}/>
+        </span>
       </li>
       ))}
       </ul>
@@ -59,10 +89,13 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
 
   const cornerElements = (num) => {
     return <CornerElements data = { data }
-                        setData = { setData }
-              percentCompletion = { 80 }
-                   numShoutouts = { num }
-                 isMoveShoutout = { true }/>
+                           setData = { setData }
+                           numShoutouts = { num }
+                           isMoveShoutout = { true }
+                           saveDataToDb = {saveDataToDb}
+                           steps = {steps}
+                           draft = {isDraft}
+                           handleSaveDraft={handleSaveDraft}/>
   }
 
   return (
@@ -92,6 +125,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service}) => {
             { cornerElements( numShoutOuts ) }
           </div>
         }
+      {isModal && <ShoutoutDelete onClose={ onClose } data={ data } setData={ setData } idShoutout={ idShoutout }/>}
       <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext = { !!numShoutOuts } />
       {!numShoutOuts && cornerElements( numShoutOuts )}
     </Wrapper>

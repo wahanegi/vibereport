@@ -28,7 +28,6 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
       setIsCustomGif(true)
       setGifUrl(term)
     } else if (!keyDown) {
-      setGifUrl(null)
       setIsCustomGif(false)
       fetch(url)
         .then(response => response.json())

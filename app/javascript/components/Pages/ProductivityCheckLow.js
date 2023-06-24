@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import flame2 from '../../../assets/images/flame2.svg';
 import flame3 from '../../../assets/images/flame3.svg';
@@ -47,18 +47,31 @@ const ProductivitySlider = ({productivity, handleSliderChange, flameImages, gene
       </form>
     </div>
   </Fragment>
-const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => {
+const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
-  const [productivity, setProductivity] = useState(data.response.attributes.productivity || 0); 
-  
-  
+  const [productivity, setProductivity] = useState(data.response.attributes.productivity || 0);
+  const [isDraft, setIsDraft] = useState(draft);
+
+  const handleSaveDraft = () => {
+    const dataDraft = { productivity, draft: true };
+    saveDataToDb(steps, dataDraft);
+    setIsDraft(true);
+  }
+
+  useEffect(() => {
+    const dataProductivity = data.response.attributes.productivity || 0
+    if (productivity !== dataProductivity && isDraft) {
+      setIsDraft(false);
+    }
+  }, [productivity]);
+
   const handlingOnClickNext = () => {
     if (productivity < 3) {
       steps.push('productivity-bad-follow-up');
     } else {
       steps.push('causes-to-celebrate')
     }
-    saveDataToDb(steps, { productivity });
+    saveDataToDb(steps, { productivity, draft: false });
   };
 
   const handleSliderChange = (event) => {
@@ -90,7 +103,10 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service}) => 
       <BlockLowerBtns nextHandling={ handlingOnClickNext } disabled={isBlank(productivity) || productivity === 0} />
       <CornerElements data = { data }
                       setData = { setData }
-                      percentCompletion = { 30 } />
+                      saveDataToDb={saveDataToDb}
+                      steps={steps}
+                      draft={isDraft}
+                      handleSaveDraft={handleSaveDraft} />
     </Wrapper>
 };
 

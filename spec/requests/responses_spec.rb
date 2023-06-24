@@ -53,6 +53,7 @@ RSpec.describe Api::V1::ResponsesController do
               'celebrate_comment' => user_response.celebrate_comment,
               'fun_question_id' => nil,
               'fun_question_answer_id' => nil,
+              'draft' => user_response.draft,
               'completed_at' => nil
             }
         }
@@ -95,6 +96,7 @@ RSpec.describe Api::V1::ResponsesController do
                 'celebrate_comment' => user_response.celebrate_comment,
                 'fun_question_id' => user_response.fun_question.id,
                 'fun_question_answer_id' => nil,
+                'draft' => user_response.draft,
                 'completed_at' => nil
               }
           }
