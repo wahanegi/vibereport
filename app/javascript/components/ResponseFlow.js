@@ -102,7 +102,7 @@ const ResponseFlow = ({step, data, setData}) => {
 
   const componentMap = {
     'emotion-selection-web': <ListEmotions />,
-    'RatherNotSay': <RatherNotSay/>,
+    'rather-not-say': <RatherNotSay/>,
     'emotion-entry': <EmotionEntry />,
     'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'selected-giphy-follow': <SelectedGIPHYFollow isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,

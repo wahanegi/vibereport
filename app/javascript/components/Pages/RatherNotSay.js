@@ -1,21 +1,28 @@
 import React, {Fragment, useState} from 'react';
 import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
+import {signOutUser} from "../requests/axios_requests";
 
-const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service}) => {
+const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) => {
+    console.log('draft', draft)
   const[nextView, setNextView] = useState(false)
-  const xCloseData = "2023-06-25"
+  const xCloseData = data.time_period.end_date
     const skipHandling = () => {
     if (nextView) {
-      // LOG OUT
+            signOutUser(data.response.id).then(() => window.location.href = `/sign_in`);
     }
     else{
         steps.push('productivity-check')
-        saveDataToDb(steps)}
+        saveDataToDb(steps, { draft: false })}
     }
 
     const noHandling = () => {
-    nextView ?   setNextView(false) : setNextView(true)
+      if (nextView) {
+          setNextView(false)
+          steps.push('emotion-selection-web')
+          saveDataToDb(steps, { draft: false })}
+      else
+          setNextView(true)
     }
     return (
         <Fragment>
@@ -39,7 +46,9 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service}) => {
 
             <CornerElements         data = { data }
                                     setData = { setData }
-                                    percentCompletion = {0}/>
+                                    saveDataToDb = {saveDataToDb}
+                                    steps = {steps}
+                                    draft = {draft}/>
         </Fragment>
     );
 };
