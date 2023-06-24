@@ -7,12 +7,12 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
   const[nextView, setNextView] = useState(false)
   const xCloseData = data.time_period.end_date
 
-    const logoutHandling = () =>{
-        signOutUser(data.response.id).then(() => window.location.href = `/sign_in`);
-    }
-    const skipHandling = () => {
-        steps.push('productivity-check')
-        saveDataToDb(steps, { draft: false })
+  const logoutHandling = () =>{
+      signOutUser(data.response.id).then(() => window.location.href = `/sign_in`);
+  }
+  const skipHandling = () => {
+      steps.push('productivity-check')
+      saveDataToDb(steps, { draft: false })
   }
 
   const backHandling = () => {
@@ -21,38 +21,37 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
       saveDataToDb(steps, { draft: false })
   }
 
-    const noHandling = () => {
+  const noHandling = () => {
       setNextView(true)
-    }
+  }
 
-    return (
-        <Fragment>
-            <div className='rather-not-say-first-row'>
-              <h1>{nextView ?  "We'll be here..." : "That's okay."}</h1>
-              <div className='row2 mx-auto'>
-                <h2>{nextView ? `Feel free to return to this check-in before it closes on ${xCloseData}`:
-                  "Would you like to continue with your check-in?"}</h2>
-              </div>
-                <div className='row3'>
-                    <Button className='btn-modal c1 btn-wide' onClick={ nextView ? logoutHandling : skipHandling }>
-                      {nextView ? "Ok, log out" :"Yes, skip ahead"}
-                        </Button>
-                </div>
-                <div className='row4'>
-                    <Button className={`btn-modal c1 back ${nextView ?'btn-wide':'btn-no'}`}
-                            onClick={ nextView ? backHandling : noHandling }>
-                      {nextView ? "Back to check-in" :"No"}
-                    </Button>
-                </div>
+  return (
+      <Fragment>
+          <div className='rather-not-say-first-row'>
+            <h1>{nextView ?  "We'll be here..." : "That's okay."}</h1>
+            <div className='row2 mx-auto'>
+              <h2>{nextView ? `Feel free to return to this check-in before it closes on ${xCloseData}`:
+                "Would you like to continue with your check-in?"}</h2>
             </div>
-
-            <CornerElements         data = { data }
-                                    setData = { setData }
-                                    saveDataToDb = {saveDataToDb}
-                                    steps = {steps}
-                                    draft = {draft}/>
-        </Fragment>
-    );
+              <div className='row3'>
+                  <Button className='btn-modal c1 btn-wide' onClick={ nextView ? logoutHandling : skipHandling }>
+                    {nextView ? "Ok, log out" :"Yes, skip ahead"}
+                      </Button>
+              </div>
+              <div className='row4'>
+                  <Button className={`btn-modal c1 back ${nextView ?'btn-wide':'btn-no'}`}
+                          onClick={ nextView ? backHandling : noHandling }>
+                    {nextView ? "Back to check-in" :"No"}
+                  </Button>
+              </div>
+          </div>
+         <CornerElements         data = { data }
+                                  setData = { setData }
+                                  saveDataToDb = {saveDataToDb}
+                                  steps = {steps}
+                                  draft = {draft}/>
+      </Fragment>
+  );
 };
 
 export default RatherNotSay;
