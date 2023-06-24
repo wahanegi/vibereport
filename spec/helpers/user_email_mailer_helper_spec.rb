@@ -33,6 +33,7 @@ describe UserEmailMailerHelper, type: :helper do
 
   describe '#emotions_table' do
     it 'returns a flattened table of emotions' do
+
       positive_emotions = create_list(:emotion, NUMBER_OF_ELEMENTS, :positive)
       negative_emotions = create_list(:emotion, NUMBER_OF_ELEMENTS, :negative)
       emotions = positive_emotions + negative_emotions
