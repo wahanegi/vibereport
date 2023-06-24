@@ -4,7 +4,6 @@ import Button from "../UI/Button";
 import {signOutUser} from "../requests/axios_requests";
 
 const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) => {
-    console.log('draft', draft)
   const[nextView, setNextView] = useState(false)
   const xCloseData = data.time_period.end_date
     const skipHandling = () => {
