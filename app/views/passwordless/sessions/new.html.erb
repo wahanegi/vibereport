@@ -25,10 +25,12 @@
       <%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
     </div>
     <div class="placement-size-link position-absolute w-100 d-flex justify-content-end px-5 h-0">
-      <%= link_to image_tag("help.svg"), "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: 'help-icon' %>
+      <%= link_to image_tag("help.svg"), '#', class: 'help-icon',  data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
     </div>
+    <%= render 'layouts/help_modal' %>
   </div>
 <% end %>
+
 <script type="text/javascript">
   window.onload = function() {
     $(document).ready(function() {
