@@ -101,18 +101,40 @@ ActiveAdmin.register Team do
       end
 
       vars = ActiveAdminHelpers.time_period_vars(
-        team: team, 
-        time_period: time_period, 
+        team: team,
+        time_period: time_period,
         previous_time_period: previous_time_period
       )
 
       if time_period
         panel "Time Period: <span style='color: #007bff; font-weight: bold;'>#{time_period.date_range}</span>".html_safe do
           responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period, not_working: false).count
+          verbatim_list = vars[:verbatim_list]
+          teammate_engagement_count = vars[:teammate_engagement_count]
 
           if responses_count == 0
-            div 'No data present for this time period.'
-          else
+            if verbatim_list.present? && verbatim_list != "No teammate engagement verbatims present" 
+              attributes_table_for team do
+                row :Teammate_Engagement_Verbatims do
+                  if verbatim_list.is_a?(Array)
+                    ul class: 'bubble-list' do
+                      verbatim_list.each do |comment|
+                        unless comment.blank?
+                          li class: 'bubble' do
+                            span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+                          end
+                        end
+                      end
+                    end
+                  else
+                    div verbatim_list
+                  end
+                end
+              end
+            else
+              div 'No data present for this time period.'
+            end
+          elsif responses_count > 0
             formatted_result = vars[:emotion_index][0]
             chart = vars[:emotion_index][1]
             previous_period_emotion_index = vars[:previous_emotion_index]
@@ -129,12 +151,8 @@ ActiveAdmin.register Team do
             previous_period_celebrate_comments_count = vars[:previous_celebrate_comments_count]
 
             celebrate_verbatims = vars[:celebrate_verbatims]
-            
-            teammate_engagement_count = vars[:teammate_engagement_count]
 
             previous_teammate_engagement_count = vars[:previous_teammate_engagement_count]
-            
-            verbatim_list = vars[:verbatim_list]
 
             attributes_table_for team do
               row :Emotion_Index do
@@ -253,6 +271,8 @@ ActiveAdmin.register Team do
                 end
               end
             end
+          else
+            div 'No data present for this time period.'
           end
         end
       else
