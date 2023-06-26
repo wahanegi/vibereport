@@ -136,6 +136,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.index ["user_id"], name: "index_shoutouts_on_user_id"
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", limit: 100, null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_teams_on_name", unique: true
+  end
+
   create_table "time_periods", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "due_date"
@@ -144,6 +151,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.date "start_date"
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_time_periods_on_slug", unique: true
+  end
+
+  create_table "user_teams", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "team_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["team_id"], name: "index_user_teams_on_team_id"
+    t.index ["user_id", "team_id"], name: "index_user_teams_on_user_id_and_team_id", unique: true
+    t.index ["user_id"], name: "index_user_teams_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -175,4 +192,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
   add_foreign_key "shoutout_recipients", "users"
   add_foreign_key "shoutouts", "time_periods"
   add_foreign_key "shoutouts", "users"
+  add_foreign_key "user_teams", "teams"
+  add_foreign_key "user_teams", "users"
 end

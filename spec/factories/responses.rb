@@ -46,6 +46,7 @@ FactoryBot.define do
     association :user, factory: :user
     association :time_period, factory: :time_period
     association :emotion, factory: :emotion
+    steps { 'Some steps' }
     association :fun_question, factory: :fun_question
   end
 
