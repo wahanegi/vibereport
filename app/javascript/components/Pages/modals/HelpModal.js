@@ -4,15 +4,26 @@ import Modal from "react-bootstrap/Modal";
 import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 import {isBlank} from "../../helpers/helpers";
 import {Link} from "react-router-dom";
+import {apiRequest} from "../../requests/axios_requests";
 
-const HelpModal = ({ show, setShow, current_user }) => {
+const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowConfirmationModal }) => {
   if (isBlank(current_user)) return;
-  const [detailsText, setDetailsText] = useState('')
+  const [details, setDetailsText] = useState('')
+  const createNotification = () => {
+    const dataSend = { details }
+    const dataFromServer = ({callback}) => {
+      if (callback === 'success') {
+        handleShowConfirmationModal()
+      }
+    }
+    const url = '/api/v1/notifications/'
+    apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then();
+  };
 
   return <Fragment>
-    {show && <div className='backdrop' /> }
-    <Modal size='lg' show={show} onHide={() => {setShow(false)}} className='modal modal-help lg'>
-      <img src={xClose} className='position-absolute x-close lg' onClick={() => {setShow(false)}}/>
+    {showHelpModal && <div className='backdrop' /> }
+    <Modal size='lg' show={showHelpModal} onHide={handleShowConfirmationModal} className='modal modal-help lg'>
+      <img src={xClose} className='position-absolute x-close lg' onClick={() => {setShowHelpModal(false)}}/>
       <Modal.Body>
         <div className="mb-2 px-3">
           <div className='fs-5'>
@@ -36,12 +47,12 @@ const HelpModal = ({ show, setShow, current_user }) => {
             <Form.Control as="textarea" style={{minHeight: 150, borderRadius: 15}}
                           autoFocus
                           size='lg'
-                          value={detailsText}
+                          value={details}
                           placeholder='We will do our best to address your concern(s)'
                           onChange={(e) => setDetailsText(e.target.value)} />
           </Form.Group>
           <div className='text-center mb-1'>
-            <button className='btn btn-regular c1' disabled={!detailsText?.trim()}>
+            <button className='btn btn-regular c1' disabled={!details?.trim()} onClick={createNotification}>
              Send
             </button>
           </div>
@@ -53,7 +64,6 @@ const HelpModal = ({ show, setShow, current_user }) => {
       </Modal.Body>
     </Modal>
   </Fragment>
-
 }
 
 export default HelpModal

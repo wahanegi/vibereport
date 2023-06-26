@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_25_183516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,6 +69,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.index ["question_body"], name: "index_fun_questions_on_question_body", unique: true
     t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "details"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "passwordless_sessions", force: :cascade do |t|
@@ -165,6 +173,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"
