@@ -21,7 +21,8 @@ class Api::V1::ResultsPresenter
       sent_shoutouts:,
       received_shoutouts:,
       current_user_shoutouts:,
-      responses_count: responses.count
+      responses_count: responses.count,
+      response_id: @responses.find_by(user_id: current_user.id)&.id
     }
   end
 
