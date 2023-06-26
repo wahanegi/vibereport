@@ -51,6 +51,22 @@ class Response < ApplicationRecord
   validates :productivity, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9 },
                            presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
   serialize :steps, JSON
+
   scope :working, -> { where(not_working: false) }
   scope :completed, -> { where.not(completed_at: nil) }
+  scope :celebrated, -> { where.not(celebrate_comment: [nil, '']) }
+
+  def celebrate_user_ids
+    Response.celebrate_user_ids_from_comment(celebrate_comment)
+  end
+
+  def self.celebrate_user_ids_from_comment(comment)
+    comment.scan(/@\[.*?\]\((\d+)\)/).flatten.map(&:to_i)
+  end
+
+  def received_celebrate_comments
+    Response.celebrated
+            .where("? = ANY(STRING_TO_ARRAY(celebrate_comment, ' '))", user_id)
+            .where(user_id: celebrate_user_ids)
+  end
 end
