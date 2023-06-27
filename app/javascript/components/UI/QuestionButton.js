@@ -1,24 +1,24 @@
-import React, {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import questionMark from "../../../assets/images/help.svg"
 import HelpModal from "../Pages/modals/HelpModal";
-import HelpModalConfirmation from "../Pages/modals/HelpModalConfirmation";
+import SweetAlertHelp from "../Pages/modals/SweetAlertHelp";
 
-const QuestionButton = ({data}) => {
+const QuestionButton = ({data, addClass = null}) => {
   const {current_user} = data
   const [showHelpModal, setShowHelpModal] = useState(false)
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false)
+  const [showConfirmationAlert, setShowConfirmationAlert] = useState(false)
 
-  const handleShowConfirmationModal = () => {
+  const handleShowAlert = () => {
     setShowHelpModal(false);
-    setShowConfirmationModal(true);
+    setTimeout(() => {setShowConfirmationAlert(true)}, 300);
   };
 
   return <Fragment>
-    <span onClick={() => setShowHelpModal(true)} className='placement-question-btn help-icon'>
+    <span onClick={() => setShowHelpModal(true)} className={`${addClass || 'placement-question-btn help-icon pointer'}`}>
       <img  src={questionMark} alt="Question" />
     </span>
-    <HelpModal showHelpModal={showHelpModal} setShowHelpModal={setShowHelpModal} current_user={current_user} handleShowConfirmationModal={handleShowConfirmationModal} />
-    <HelpModalConfirmation showConfirmationModal={showConfirmationModal} setShowConfirmationModal={setShowConfirmationModal} />
+    {showConfirmationAlert && <SweetAlertHelp setShowConfirmationAlert={setShowConfirmationAlert}/>}
+    <HelpModal showHelpModal={showHelpModal} setShowHelpModal={setShowHelpModal} current_user={current_user} handleShowAlert={handleShowAlert} />
   </Fragment>
 };
 

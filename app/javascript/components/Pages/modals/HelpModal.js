@@ -5,15 +5,16 @@ import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 import {isBlank} from "../../helpers/helpers";
 import {Link} from "react-router-dom";
 import {apiRequest} from "../../requests/axios_requests";
+import Backdrop from "../../UI/modal/Backdrop";
 
-const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowConfirmationModal }) => {
+const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAlert }) => {
   if (isBlank(current_user)) return;
   const [details, setDetailsText] = useState('')
   const createNotification = () => {
     const dataSend = { details }
     const dataFromServer = ({callback}) => {
       if (callback === 'success') {
-        handleShowConfirmationModal()
+        handleShowAlert()
       }
     }
     const url = '/api/v1/notifications/'
@@ -21,8 +22,8 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowCo
   };
 
   return <Fragment>
-    {showHelpModal && <div className='backdrop' /> }
-    <Modal size='lg' show={showHelpModal} onHide={handleShowConfirmationModal} className='modal modal-help lg'>
+    {showHelpModal && <Backdrop /> }
+    <Modal size='lg' show={showHelpModal} onHide={() => {setShowHelpModal(false)}} className='modal modal-help lg'>
       <img src={xClose} className='position-absolute x-close lg' onClick={() => {setShowHelpModal(false)}}/>
       <Modal.Body>
         <div className="mb-2 px-3">
