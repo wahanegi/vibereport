@@ -27,7 +27,7 @@ const richTextToMention = (celebrate_shoutout) => {
 }
 
 const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft}) => {
-  const {users, response} = data
+  const {users, response, current_user} = data
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [celebrateShoutout, setCelebrateShoutout] = useState({})
@@ -38,6 +38,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   'Use "@" to include Shoutouts to members of the team!'
   const [show, setShow] = useState(false);
   const [isDraft, setIsDraft] = useState(draft);
+  const [notAskVisibility, setNotAskVisibility] = useState(current_user.not_ask_visibility);
 
   const dataSend = {
     shoutout: {
@@ -72,7 +73,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   }
 
   const showModal = () => {
-    if (!celebrateShoutout?.not_ask && celebrateComment.includes('@[')) {
+    if (!current_user.not_ask_visibility && celebrateComment.includes('@[')) {
       setShow(true)
     } else {
       goToRecognitionPage()
@@ -173,8 +174,9 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
                       steps={steps}
                       setShow={setShow}
                       saveDataToDb={saveDataToDb}
-                      celebrateShoutout={celebrateShoutout}
-                      setCelebrateShoutout={setCelebrateShoutout}
+                      current_user={current_user}
+                      notAskVisibility={notAskVisibility}
+                      setNotAskVisibility={setNotAskVisibility}
                       goToRecognitionPage={goToRecognitionPage}/>
     </Wrapper>
   </Fragment>
