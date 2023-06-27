@@ -47,11 +47,12 @@ RSpec.describe Response, type: :model do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
+  let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let!(:fun_question) { create :fun_question }
   let!(:fun_question_answer) { create :fun_question_answer }
-  let(:completed_response) { create :response, user:, time_period:, emotion:, steps: %w[emotion-selection-web results], completed_at: Date.current }
-  let(:response) { FactoryBot.build(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
+  let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let(:not_working_response) { FactoryBot.build(:response, :not_working_response, user:, time_period:, emotion: nil, steps: %w[emotion-selection-web]) }
+  let(:completed_response) { create(:response, not_working: false, completed_at: Time.now) }
 
   context 'associations' do
     it 'belongs to user' do
