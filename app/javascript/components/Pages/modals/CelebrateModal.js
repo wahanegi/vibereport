@@ -25,21 +25,23 @@ const CelebrateModal = ({ show, setShow, steps, celebrateShoutout, setCelebrateS
       <img src={xClose} className='position-absolute x-close' onClick={() => {setShow(false)}}/>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3">
-            <div className='fs-5 fw-bold'>
+          <Form.Group>
+            <div className='fs-4 fw-bold'>
               Including <span className='red-violet'>@</span>Shoutouts will<br/>allow other team member(s)<br/>to see your response.<br/><br/>
-              <div className='fs-6 muted'>Are you ok with it?</div>
+              <div className='fs-6 muted'>Are you ok with that?</div>
             </div>
-            <div className='d-flex justify-content-between m-3'>
-              <button className='btn btn-danger b3' >
+            <div className='d-flex justify-content-between mx-3 my-2'>
+              <button className='btn btn-danger b3 border-0 shadow' >
                 No, go back
               </button>
-              <button className='btn btn-primary b3' onClick={handleMakeVisible}>
+              <button className='btn btn-primary b3 border-0 shadow' onClick={handleMakeVisible}>
                 Yes, share it
               </button>
             </div>
             <div className='d-flex justify-content-center'>
-              <Form.Check label='Do not ask again' defaultChecked={celebrateShoutout.not_ask} onChange={e => handleClick(e)} />
+              <Form.Check label='Do not ask again' className={'muted'}
+                          defaultChecked={celebrateShoutout.not_ask}
+                          onChange={e => handleClick(e)} />
             </div>
           </Form.Group>
         </Form>

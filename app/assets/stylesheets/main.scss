@@ -704,6 +704,7 @@ a {
   }
 }
 .modal-content {
+  border-radius: 15px !important;
   border: 3px solid $royal-blue !important;
 }
 .celebrate-placeholder::before {
@@ -744,4 +745,11 @@ a {
 }
 .text-complete{
   margin: 19px 0 0 0;
+}
+
+.form-check-input[type=checkbox] {
+  background-color: $light-grey;
+  border: none;
+  box-shadow: none;
+  color: $royal-blue;
 }

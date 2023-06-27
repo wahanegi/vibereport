@@ -72,7 +72,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   }
 
   const showModal = () => {
-    if (!celebrateShoutout?.not_ask) {
+    if (!celebrateShoutout?.not_ask && celebrateComment.includes('@[')) {
       setShow(true)
     } else {
       goToRecognitionPage()
