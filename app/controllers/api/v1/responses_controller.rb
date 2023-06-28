@@ -61,7 +61,7 @@ module Api
       def additional_data
         {
           emotion: @response.emotion,
-          user_shoutouts: current_user.shoutouts,
+          user_shoutouts: current_user.shoutouts.not_celebrate,
           current_user:
         }
       end
