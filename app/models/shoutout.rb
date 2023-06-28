@@ -3,10 +3,8 @@
 # Table name: shoutouts
 #
 #  id             :bigint           not null, primary key
-#  not_ask        :boolean          default(FALSE), not null
 #  rich_text      :text             not null
 #  type           :string
-#  visible        :boolean          default(TRUE), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  time_period_id :bigint           not null
@@ -31,6 +29,8 @@ class Shoutout < ApplicationRecord
   has_many :recipients, through: :shoutout_recipients, source: :user
 
   validates :rich_text, presence: true, uniqueness: { scope: %i[user_id time_period_id] }
+
+  scope :not_celebrate, -> { where(type: nil) }
 
   def to_text
     rich_text.gsub(%r{<span class="color-primary">|</span>}, '')

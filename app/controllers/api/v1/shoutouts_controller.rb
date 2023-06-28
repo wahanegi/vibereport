@@ -46,7 +46,7 @@ class Api::V1::ShoutoutsController < ApplicationController
   end
 
   def shoutout_params
-    params.require(:shoutout).permit(:time_period_id, :rich_text, :visible, :not_ask)
+    params.require(:shoutout).permit(:time_period_id, :rich_text)
   end
 
   def create_shoutout_recipients

@@ -3,10 +3,8 @@
 # Table name: shoutouts
 #
 #  id             :bigint           not null, primary key
-#  not_ask        :boolean          default(FALSE), not null
 #  rich_text      :text             not null
 #  type           :string
-#  visible        :boolean          default(TRUE), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  time_period_id :bigint           not null

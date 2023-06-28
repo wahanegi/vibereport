@@ -12,22 +12,14 @@ import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
 import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
-const mentionToRichText = (mention) => {
+export const mentionToRichText = (mention) => {
   const regExpStart = /@\[/g
   const regExpEnd = /]\(\d+\)/g
   return mention.replace(regExpStart, '<span class="color-primary">@').replace(regExpEnd, '</span>')
 }
 
-const richTextToMention = (celebrate_shoutout) => {
-  if (isBlank(celebrate_shoutout) || isBlank(celebrate_shoutout.id)) return null
-
-  const regExpStart = /<span class="color-primary">@/g
-  const regExpEnd = /<\/span>/g
-  return celebrate_shoutout.rich_text?.replace(regExpStart, '@[').replace(regExpEnd, `](${celebrate_shoutout.id})`)
-}
-
 const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft}) => {
-  const {users, response} = data
+  const {users, response, current_user} = data
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [celebrateShoutout, setCelebrateShoutout] = useState({})
@@ -38,12 +30,13 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   'Use "@" to include Shoutouts to members of the team!'
   const [show, setShow] = useState(false);
   const [isDraft, setIsDraft] = useState(draft);
+  const [notAskVisibility, setNotAskVisibility] = useState(current_user.not_ask_visibility);
 
   const dataSend = {
     shoutout: {
       user_id: data.current_user.id,
       time_period_id: data.time_period.id,
-      rich_text: mentionToRichText(celebrateComment) || [],
+      rich_text: celebrateComment || [],
     },
     is_celebrate: true,
     recipients: celebrateComment.match(/[^(]+(?=\))/g) || []
@@ -72,7 +65,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   }
 
   const showModal = () => {
-    if (!celebrateShoutout?.not_ask) {
+    if (!current_user.not_ask_visibility && celebrateComment.includes('@[')) {
       setShow(true)
     } else {
       goToRecognitionPage()
@@ -114,8 +107,8 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
     shoutout_id && axios.get(`/api/v1/shoutouts/${shoutout_id}`)
       .then(res => {
         setCelebrateShoutout(res.data.data?.attributes)
-        setPrevCelebrateComment(richTextToMention(res.data.data?.attributes))
-        setCelebrateComment(richTextToMention(res.data.data?.attributes))
+        setPrevCelebrateComment(res.data.data?.attributes.rich_text)
+        setCelebrateComment(res.data.data?.attributes.rich_text)
         setLoaded(true)
       })
   }, [response.attributes.shoutout_id])
@@ -173,8 +166,9 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
                       steps={steps}
                       setShow={setShow}
                       saveDataToDb={saveDataToDb}
-                      celebrateShoutout={celebrateShoutout}
-                      setCelebrateShoutout={setCelebrateShoutout}
+                      current_user={current_user}
+                      notAskVisibility={notAskVisibility}
+                      setNotAskVisibility={setNotAskVisibility}
                       goToRecognitionPage={goToRecognitionPage}/>
     </Wrapper>
   </Fragment>

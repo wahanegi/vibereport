@@ -777,12 +777,18 @@ a {
 .text-complete{
   margin: 19px 0 0 0;
 }
-
 .badge-secondary {
   background: $light-grey;
   border: 4px solid $light-grey;
   border-radius: 15px;
+
   a {
     text-decoration: none;
   }
+}
+.form-check-input[type=checkbox] {
+  background-color: $light-grey;
+  border: none;
+  box-shadow: none;
+  color: $royal-blue;
 }

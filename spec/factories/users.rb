@@ -7,6 +7,7 @@
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
 #  last_name              :string
+#  not_ask_visibility     :boolean          default(FALSE), not null
 #  opt_out                :boolean          default(FALSE)
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -26,5 +27,6 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     opt_out { false }
+    not_ask_visibility { false }
   end
 end

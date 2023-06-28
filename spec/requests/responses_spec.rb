@@ -56,6 +56,16 @@ RSpec.describe Api::V1::ResponsesController do
               'draft' => user_response.draft,
               'completed_at' => nil
             }
+        },
+        'current_user' => {
+          'id' => user.id,
+          'email' => user.email,
+          'first_name' => user.first_name,
+          'last_name' => user.last_name,
+          'not_ask_visibility' => user.not_ask_visibility,
+          'opt_out' => user.opt_out,
+          'created_at' => user.created_at.strftime('%FT%T.%LZ'),
+          'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
         }
       }]
     end
@@ -99,7 +109,17 @@ RSpec.describe Api::V1::ResponsesController do
                 'draft' => user_response.draft,
                 'completed_at' => nil
               }
-          }
+          },
+        'current_user' => {
+          'id' => user.id,
+          'email' => user.email,
+          'first_name' => user.first_name,
+          'last_name' => user.last_name,
+          'not_ask_visibility' => user.not_ask_visibility,
+          'opt_out' => user.opt_out,
+          'created_at' => user.created_at.strftime('%FT%T.%LZ'),
+          'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
+        }
       }]
     end
   end

@@ -4,17 +4,17 @@ import Modal from "react-bootstrap/Modal";
 import {apiRequest} from "../../requests/axios_requests";
 import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 
-const CelebrateModal = ({ show, setShow, steps, celebrateShoutout, setCelebrateShoutout, saveDataToDb, goToRecognitionPage }) => {
+const CelebrateModal = ({ show, setShow, steps, current_user, notAskVisibility, setNotAskVisibility, saveDataToDb, goToRecognitionPage }) => {
   const handleClick = (e) => {
-    setCelebrateShoutout(Object.assign({}, celebrateShoutout, {not_ask: e.target.checked}));
+    setNotAskVisibility(e.target.checked);
   };
   const handleMakeVisible = () => {
-    const dataSend = { shoutout: {visible: true, not_ask: celebrateShoutout.not_ask} }
-    const dataFromServer = (shoutout) => {
-      saveDataToDb(steps, {shoutout_id: shoutout.id})
+    const dataSend = { not_ask_visibility: notAskVisibility }
+    const dataFromServer = (current_user) => {
+      saveDataToDb(steps, {current_user})
     }
-    const url = '/api/v1/shoutouts/'
-    const id = celebrateShoutout?.id
+    const url = '/api/v1/users/'
+    const id = current_user.id
     apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then();
     goToRecognitionPage()
   };
@@ -23,23 +23,25 @@ const CelebrateModal = ({ show, setShow, steps, celebrateShoutout, setCelebrateS
     {show && <div className='backdrop celebrate-modal' /> }
     <Modal show={show} onHide={() => {setShow(false)}} animation={true} className='modal-dialog-celebrate'>
       <img src={xClose} className='position-absolute x-close' onClick={() => {setShow(false)}}/>
-      <Modal.Body>
+      <Modal.Body className={'px-0 pt-3'}>
         <Form>
-          <Form.Group className="mb-3">
-            <div className='fs-5 fw-bold'>
+          <Form.Group>
+            <div className='fs-4 fw-bold'>
               Including <span className='red-violet'>@</span>Shoutouts will<br/>allow other team member(s)<br/>to see your response.<br/><br/>
-              <div className='fs-6 muted'>Are you ok with it?</div>
+              <div className='fs-5 fw-bold muted'>Are you ok with that?</div>
             </div>
-            <div className='d-flex justify-content-between m-3'>
-              <button className='btn btn-danger b3' >
+            <div className='d-flex justify-content-between mx-3 my-2'>
+              <button className='btn btn-danger b3 border-0 shadow padding10-20' >
                 No, go back
               </button>
-              <button className='btn btn-primary b3' onClick={handleMakeVisible}>
+              <button className='btn btn-primary b3 border-0 shadow padding10-20'  onClick={handleMakeVisible}>
                 Yes, share it
               </button>
             </div>
             <div className='d-flex justify-content-center'>
-              <Form.Check label='Do not ask again' defaultChecked={celebrateShoutout.not_ask} onChange={e => handleClick(e)} />
+              <Form.Check label='Do not ask again' className={'muted'}
+                          defaultChecked={notAskVisibility}
+                          onChange={e => handleClick(e)} />
             </div>
           </Form.Group>
         </Form>

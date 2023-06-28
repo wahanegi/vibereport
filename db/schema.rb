@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_25_183516) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -132,13 +132,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_183516) do
 
   create_table "shoutouts", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.boolean "not_ask", default: false, null: false
     t.text "rich_text", null: false
     t.bigint "time_period_id", null: false
     t.string "type"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.boolean "visible", default: true, null: false
     t.index ["rich_text", "user_id", "time_period_id"], name: "index_shoutouts_on_rich_text_and_user_id_and_time_period_id", unique: true
     t.index ["time_period_id"], name: "index_shoutouts_on_time_period_id"
     t.index ["user_id"], name: "index_shoutouts_on_user_id"
@@ -177,6 +175,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_183516) do
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "last_name"
+    t.boolean "not_ask_visibility", default: false, null: false
     t.boolean "opt_out", default: false
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"

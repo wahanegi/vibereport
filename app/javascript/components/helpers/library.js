@@ -10,7 +10,9 @@ export  const mergeData = (receivedData, data, setData) =>{
       ...receivedData.emotion},
     user_shoutouts: [
       ...receivedData.user_shoutouts
-    ]
+    ],
+    current_user: {
+      ...receivedData.current_user},
   })
 }
 
