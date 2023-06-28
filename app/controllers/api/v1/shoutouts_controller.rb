@@ -9,11 +9,9 @@ class Api::V1::ShoutoutsController < ApplicationController
   end
 
   def create
-    @shoutout = if params[:is_celebrate]
-                  current_user.celebrate_shoutouts.new(shoutout_params)
-                else
-                  current_user.shoutouts.new(shoutout_params)
-                end
+    @shoutout = current_user.celebrate_shoutouts.new(shoutout_params) if params[:is_celebrate]
+    @shoutout ||= current_user.shoutouts.new(shoutout_params)
+
     if @shoutout.save
       create_shoutout_recipients
       render json: @shoutout, status: :ok
