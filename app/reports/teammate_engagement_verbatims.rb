@@ -21,13 +21,11 @@ class TeammateEngagementVerbatims < AdminReport
   private
 
   def receive_shoutouts
-    Shoutout.where(time_period_id: @time_periods).pluck(:rich_text)
+    Shoutout.where(time_period_id: @time_periods, type: nil).pluck(:rich_text)
   end
 
   def receive_celebrate_comments
-    Response.where(time_period_id: @time_periods)
-            .where.not(celebrate_comment: nil)
-            .pluck(:celebrate_comment)
+    Shoutout.where(time_period_id: @time_periods, type: 'CelebrateShoutout').pluck(:rich_text)
   end
 
   def receive_team_members

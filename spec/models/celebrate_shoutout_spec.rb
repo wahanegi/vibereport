@@ -26,32 +26,32 @@ require 'rails_helper'
 RSpec.describe Shoutout, type: :model do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
-  let!(:shoutout) { build :shoutout }
+  let!(:celebrate_shoutout) { build :celebrate_shoutout, user:, time_period: }
 
   describe 'validations' do
     it 'should be valid with valid attributes' do
-      expect(shoutout).to be_valid
+      expect(celebrate_shoutout).to be_valid
     end
 
     it 'should be invalid without rich_text' do
-      shoutout.rich_text = nil
-      expect(shoutout).to be_invalid
+      celebrate_shoutout.rich_text = nil
+      expect(celebrate_shoutout).to be_invalid
     end
 
     it 'should be invalid without user' do
-      shoutout.user = nil
-      expect(shoutout).to be_invalid
+      celebrate_shoutout.user = nil
+      expect(celebrate_shoutout).to be_invalid
     end
 
     it 'should be invalid without time_period' do
-      shoutout.time_period = nil
-      expect(shoutout).to be_invalid
+      celebrate_shoutout.time_period = nil
+      expect(celebrate_shoutout).to be_invalid
     end
 
     it 'should be invalid with duplicate shoutouts' do
-      Shoutout.create(shoutout.as_json)
-      shoutout = Shoutout.new(shoutout.as_json)
-      expect(shoutout).to be_invalid
+      CelebrateShoutout.create(celebrate_shoutout.as_json)
+      celebrate_shoutout = CelebrateShoutout.new(celebrate_shoutout.as_json)
+      expect(celebrate_shoutout).to be_invalid
     end
   end
 
@@ -59,15 +59,5 @@ RSpec.describe Shoutout, type: :model do
     it { should belong_to(:user) }
     it { should belong_to(:time_period) }
     it { should have_many(:shoutout_recipients) }
-  end
-
-  describe 'scopes' do
-    describe '.not_celebrate' do
-      let(:shoutout) { create :shoutout, time_period:, user: }
-      let(:celebrate_shoutout) { create :celebrate_shoutout, time_period:, user: }
-      it 'returns Shoutouts without Celebrate Shoutouts' do
-        expect(Shoutout.not_celebrate.to_a).to eq([shoutout])
-      end
-    end
   end
 end
