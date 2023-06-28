@@ -22,7 +22,6 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
   };
 
   return <Fragment>
-    {showHelpModal && <Backdrop /> }
     <Modal size='lg' show={showHelpModal} onHide={() => {setShowHelpModal(false)}} className='modal modal-help lg'>
       <img src={xClose} className='position-absolute x-close lg' onClick={() => {setShowHelpModal(false)}}/>
       <Modal.Body>
