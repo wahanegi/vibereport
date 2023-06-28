@@ -65,7 +65,7 @@ RSpec.describe Shoutout, type: :model do
     describe '.not_celebrate' do
       let(:shoutout) { create :shoutout, time_period:, user: }
       let(:celebrate_shoutout) { create :celebrate_shoutout, time_period:, user: }
-      it 'returns Celebrate Shoutouts' do
+      it 'returns Shoutouts without Celebrate Shoutouts' do
         expect(Shoutout.not_celebrate.to_a).to eq([shoutout])
       end
     end
