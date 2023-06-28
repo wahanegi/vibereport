@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  details    :text
+#  viewed     :boolean          default(FALSE), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
@@ -18,6 +19,7 @@
 #
 FactoryBot.define do
   factory :notification do
-    
+    user
+    details { Faker::Lorem.sentences }
   end
 end

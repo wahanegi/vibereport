@@ -71,6 +71,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "details"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.boolean "viewed", default: false, null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "passwordless_sessions", force: :cascade do |t|
     t.bigint "authenticatable_id"
     t.string "authenticatable_type"
@@ -181,6 +190,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"
