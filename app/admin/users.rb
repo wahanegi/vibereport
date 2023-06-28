@@ -32,7 +32,7 @@ ActiveAdmin.register User do
       column do
         panel 'Received Shoutouts' do
           if user.shoutout_recipients.present?
-            table_for user.shoutout_recipients.order(created_at: :desc) do
+            table_for user.shoutout_recipients.joins(:shoutout).where(shoutouts: { type: nil }).order(created_at: :desc) do
               column 'From' do |shoutout_recipient|
                 shoutout_recipient.shoutout.user.to_full_name
               end
@@ -53,19 +53,17 @@ ActiveAdmin.register User do
 
       column do
         panel 'Received Celebration Verbatims' do
-          all_celebrations = Response.where("celebrate_comment LIKE ?", "%@[#{user.first_name}](#{user.id})%")
-
-          if all_celebrations.present?
-            table_for all_celebrations.order(created_at: :desc)do
-              column 'From' do |response|
-                response.user.to_full_name
+          if user.shoutout_recipients.present?
+            table_for user.shoutout_recipients.joins(:shoutout).where(shoutouts: { type: 'CelebrateShoutout' }).order(created_at: :desc) do
+              column 'From' do |shoutout_recipient|
+                shoutout_recipient.shoutout.user.to_full_name
               end
-              column 'Message' do |response|
-                response.celebrate_comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+              column 'Message' do |shoutout_recipient|
+                strip_tags(shoutout_recipient.shoutout.rich_text)
               end
-              column 'Time Period' do |response|
-                start_date = response.time_period.start_date.to_s
-                end_date = response.time_period.end_date.to_s
+              column 'Time Period' do |shoutout_recipient|
+                start_date = shoutout_recipient.shoutout.time_period.start_date.to_s
+                end_date = shoutout_recipient.shoutout.time_period.end_date.to_s
                 content_tag :span, "#{start_date} - #{end_date}", class: 'highlight-date'
               end
             end

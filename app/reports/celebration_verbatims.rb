@@ -17,9 +17,8 @@ class CelebrationVerbatims < AdminReport
   private
 
   def receive_celebrate_comments
-    Response.joins(user: :user_teams)
-            .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
-            .celebrated
-            .pluck(:celebrate_comment)
+    Shoutout.joins(user: :user_teams)
+            .where(user_teams: { team_id: @team.id }, shoutouts: { time_period_id: @time_periods, type: 'CelebrateShoutout' })
+            .pluck(:rich_text)
   end
 end
