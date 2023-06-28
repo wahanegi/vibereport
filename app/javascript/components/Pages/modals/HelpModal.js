@@ -48,7 +48,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
                           autoFocus
                           size='lg'
                           value={details}
-                          placeholder='We will do our best to address your concern(s)'
+                          placeholder='We will do our best to address your concern(s).'
                           onChange={(e) => setDetailsText(e.target.value)} />
           </Form.Group>
           <div className='text-center mb-1'>
@@ -58,7 +58,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
           </div>
         </Form>
         <div className="badge-secondary">
-          <h6>Additional information about Vbe Report can be found at:</h6>
+          <h6>Additional information about Vibe Report can be found at:</h6>
           <Link to={"#"} className='h6'>https://samplenamerealsourcehere.com</Link>
         </div>
       </Modal.Body>
