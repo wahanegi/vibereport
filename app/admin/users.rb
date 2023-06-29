@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :password, :opt_out
+  permit_params :first_name, :last_name, :email, :password, :opt_out, :not_ask_visibility
 
   index do
     selectable_column
@@ -9,6 +9,7 @@ ActiveAdmin.register User do
     column :email
     column :created_at
     column :opt_out
+    column :not_ask_visibility
     column 'Passwordless Sessions' do |user|
       user.passwordless_sessions.size
     end
@@ -21,6 +22,7 @@ ActiveAdmin.register User do
       row :first_name
       row :last_name
       row :opt_out
+      row :not_ask_visibility
       row :created_at
       row :updated_at
       row :team do |user|
@@ -85,6 +87,7 @@ ActiveAdmin.register User do
       f.input :last_name
       f.input :email
       f.input :opt_out
+      f.input :not_ask_visibility
     end
     f.actions
   end
