@@ -60,18 +60,22 @@ const PreviewEmotionSection = ({data}) => {
   </div>
 }
 
-const EmotionSection = ({emotions, nextTimePeriod, data, isMinUsersResponses}) => {
-  const filteredEmotions = emotions.reduce((acc, curr) => {
+const filterEmotions = (emotions) => {
+  return emotions.reduce((acc, curr) => {
     if (curr.category === "positive" || curr.category === "negative") {
-      const foundIndex = acc.findIndex(item => item.id === curr.id);
+      const foundIndex = acc.findIndex(item => item.id === curr.id)
       if (foundIndex === -1) {
-        acc.push({ id: curr.id, category: curr.category, word: curr.word, count: 1 });
+        acc.push({ id: curr.id, category: curr.category, word: curr.word, count: 1 })
       } else {
         acc[foundIndex].count += 1;
       }
     }
     return acc;
-  }, []);
+  }, [])
+}
+
+const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses }) => {
+  const filteredEmotions = filterEmotions(emotions)
   const splitEmotions = splitArray(filteredEmotions, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
 
