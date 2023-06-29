@@ -11,13 +11,13 @@ export default {
       width: 660
     },
     highlighter: {
-      padding: 9,
+      padding: 22,
       border: '3px solid transparent',
       borderRadius: 15,
       maxHeight: 350,
     },
     input: {
-      padding: 9,
+      padding: 22,
       border: '3px solid #5689EB',
       borderRadius: 15,
       textAlign: 'left',
