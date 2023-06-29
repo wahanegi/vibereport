@@ -60,19 +60,26 @@ const PreviewEmotionSection = ({data}) => {
   </div>
 }
 
+const isValidEmotion = (emotion) => emotion.category === "positive" || emotion.category === "negative";
+
+const updateEmotionsCount = (emotions, emotion) => {
+  const foundIndex = emotions.findIndex(item => item.id === emotion.id);
+  if (foundIndex === -1) {
+    emotions.push({ id: emotion.id, category: emotion.category, word: emotion.word, count: 1 });
+  } else {
+    emotions[foundIndex].count += 1;
+  }
+  return emotions;
+};
+
 const filterEmotions = (emotions) => {
   return emotions.reduce((acc, curr) => {
-    if (curr.category === "positive" || curr.category === "negative") {
-      const foundIndex = acc.findIndex(item => item.id === curr.id)
-      if (foundIndex === -1) {
-        acc.push({ id: curr.id, category: curr.category, word: curr.word, count: 1 })
-      } else {
-        acc[foundIndex].count += 1;
-      }
+    if (isValidEmotion(curr)) {
+      acc = updateEmotionsCount(acc, curr);
     }
     return acc;
-  }, [])
-}
+  }, []);
+};
 
 const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses }) => {
   const filteredEmotions = filterEmotions(emotions)
