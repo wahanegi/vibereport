@@ -123,12 +123,12 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
   const handleFocus = () => {
     inputRef.current.style.border = '6px solid #5689EB';
     inputRef.current.style.outline = 'none';
-    inputRef.current.style.padding = '6px';
+    inputRef.current.style.padding = '19px';
   };
 
   const handleBlur = () => {
     inputRef.current.style.border = '3px solid #5689EB';
-    inputRef.current.style.padding = '9px';
+    inputRef.current.style.padding = '22px';
   };
 
   if (!!error) return <p>{error.message}</p>

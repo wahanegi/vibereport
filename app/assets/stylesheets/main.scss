@@ -737,9 +737,9 @@ a {
 }
 .celebrate-placeholder::before {
   position: absolute;
-  top: 96px;
-  left: 69px;
-  z-index: 1;
+  top: 108px;
+  left: 82px;
+  z-index: 30;
   color: $red-violet;;
   content: "@";
   font-size: 22px;
