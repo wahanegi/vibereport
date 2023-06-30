@@ -596,7 +596,7 @@ a {
   width: 100%;
   height: 100vh;
   z-index: 20;
-  background: #A6A1A1;
+  background: $medium-grey;
   filter: blur(50px);
   &.celebrate-modal {
     height: 140vh;
@@ -617,6 +617,9 @@ a {
 .modal-help {
   z-index: 30;
   top:0;
+  .padding-placement {
+    padding-top: 25vh;
+  }
   &.lg {
     border-radius: 15px;
     textarea {
@@ -791,7 +794,7 @@ a {
 }
 .modal-backdrop {
   z-index: 20 !important;
-  background: #A6A1A1 !important;
+  background: $medium-grey !important;
   filter: blur(50px) !important;
   opacity: 1 !important;
 }
