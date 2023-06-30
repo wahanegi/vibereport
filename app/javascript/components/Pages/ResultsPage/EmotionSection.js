@@ -36,7 +36,8 @@ const AnimatedEmotion = ({word, category, addBlur = false, count = 1}) => {
 };
 
 const PreviewEmotionSection = ({data}) => {
-  const splitEmotions = splitArray(data.data, EMOTION_COL_NUMBERS)
+  const filteredData = data.data.filter(item => item.attributes.category === "positive" || item.attributes.category === "negative");
+  const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
   return <div className='mb-2' style={{marginTop: 60}}>
     <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
@@ -59,16 +60,29 @@ const PreviewEmotionSection = ({data}) => {
   </div>
 }
 
-const EmotionSection = ({emotions, nextTimePeriod, data, isMinUsersResponses}) => {
-  const filteredEmotions = emotions.reduce((acc, curr) => {
-    const foundIndex = acc.findIndex(item => item.id === curr.id);
-    if (foundIndex === -1) {
-      acc.push({ id: curr.id, category: curr.category, word: curr.word, count: 1 });
-    } else {
-      acc[foundIndex].count += 1;
+const isValidEmotion = (emotion) => emotion.category === "positive" || emotion.category === "negative";
+
+const updateEmotionsCount = (emotions, emotion) => {
+  const foundIndex = emotions.findIndex(item => item.id === emotion.id);
+  if (foundIndex === -1) {
+    emotions.push({ id: emotion.id, category: emotion.category, word: emotion.word, count: 1 });
+  } else {
+    emotions[foundIndex].count += 1;
+  }
+  return emotions;
+};
+
+const filterEmotions = (emotions) => {
+  return emotions.reduce((acc, curr) => {
+    if (isValidEmotion(curr)) {
+      acc = updateEmotionsCount(acc, curr);
     }
     return acc;
   }, []);
+};
+
+const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses }) => {
+  const filteredEmotions = filterEmotions(emotions)
   const splitEmotions = splitArray(filteredEmotions, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
 
