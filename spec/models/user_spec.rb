@@ -7,6 +7,7 @@
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
 #  last_name              :string
+#  not_ask_visibility     :boolean          default(FALSE), not null
 #  opt_out                :boolean          default(FALSE)
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -45,17 +46,40 @@ RSpec.describe User, type: :model do
   end
 
   context 'Validations' do
-    subject { FactoryBot.create(:user) }
+    subject { FactoryBot.build(:user) }
 
     it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to validate_presence_of(:password) }
     it { is_expected.to validate_presence_of(:first_name) }
     it { is_expected.to validate_presence_of(:last_name) }
 
+    context 'when password is required' do
+      before do
+        allow(user).to receive(:password_required?).and_return(true)
+      end
+    
+      it 'validates presence of password' do
+        user.password = nil
+        expect(user).to be_invalid
+        expect(user.errors[:password]).to include("can't be blank")
+      end
+    end
+    
+    context 'when password is not required' do
+      before do
+        allow(user).to receive(:password_required?).and_return(false)
+      end
+    
+      it 'does not validate presence of password' do
+        user.password = nil
+        expect(user).to be_valid
+      end
+    end
+  
     it 'password passes more then 6 characters' do
       user.password = Faker::Internet.password(min_length: 6, max_length: 128)
       expect(user.valid?).to be_truthy
     end
+    
     it 'is valid email' do
       expect(user.valid?).to be_truthy
     end

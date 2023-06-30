@@ -22,7 +22,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
-  factory :shoutout do
+  factory :celebrate_shoutout do
     user
     time_period
     rich_text { Faker::Lorem.sentences }

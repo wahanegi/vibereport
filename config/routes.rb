@@ -11,10 +11,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :emotions, only: %i[index create]
       resources :responses, only: %i[create update], param: :id
-      resources :shoutouts, only: %i[create update destroy]
       resources :fun_question_answers, only: %i[show create update destroy]
       resources :fun_questions, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug
+      resources :shoutouts, only: %i[show create update destroy]
+      resources :users, only: %i[update]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'

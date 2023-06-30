@@ -21,10 +21,6 @@
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
-FactoryBot.define do
-  factory :shoutout do
-    user
-    time_period
-    rich_text { Faker::Lorem.sentences }
-  end
+class CelebrateShoutout < Shoutout
+  has_one :response, dependent: :nullify, foreign_key: 'shoutout_id'
 end

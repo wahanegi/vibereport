@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :password, :opt_out
+  permit_params :first_name, :last_name, :email, :password, :opt_out, :not_ask_visibility
 
   index do
     selectable_column
@@ -9,6 +9,7 @@ ActiveAdmin.register User do
     column :email
     column :created_at
     column :opt_out
+    column :not_ask_visibility
     column 'Passwordless Sessions' do |user|
       user.passwordless_sessions.size
     end
@@ -21,6 +22,7 @@ ActiveAdmin.register User do
       row :first_name
       row :last_name
       row :opt_out
+      row :not_ask_visibility
       row :created_at
       row :updated_at
       row :team do |user|
@@ -32,7 +34,7 @@ ActiveAdmin.register User do
       column do
         panel 'Received Shoutouts' do
           if user.shoutout_recipients.present?
-            table_for user.shoutout_recipients.order(created_at: :desc) do
+            table_for user.shoutout_recipients.joins(:shoutout).where(shoutouts: { type: nil }).order(created_at: :desc) do
               column 'From' do |shoutout_recipient|
                 shoutout_recipient.shoutout.user.to_full_name
               end
@@ -53,19 +55,17 @@ ActiveAdmin.register User do
 
       column do
         panel 'Received Celebration Verbatims' do
-          all_celebrations = Response.where("celebrate_comment LIKE ?", "%@[#{user.first_name}](#{user.id})%")
-
-          if all_celebrations.present?
-            table_for all_celebrations.order(created_at: :desc)do
-              column 'From' do |response|
-                response.user.to_full_name
+          if user.shoutout_recipients.present?
+            table_for user.shoutout_recipients.joins(:shoutout).where(shoutouts: { type: 'CelebrateShoutout' }).order(created_at: :desc) do
+              column 'From' do |shoutout_recipient|
+                shoutout_recipient.shoutout.user.to_full_name
               end
-              column 'Message' do |response|
-                response.celebrate_comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+              column 'Message' do |shoutout_recipient|
+                strip_tags(shoutout_recipient.shoutout.rich_text)
               end
-              column 'Time Period' do |response|
-                start_date = response.time_period.start_date.to_s
-                end_date = response.time_period.end_date.to_s
+              column 'Time Period' do |shoutout_recipient|
+                start_date = shoutout_recipient.shoutout.time_period.start_date.to_s
+                end_date = shoutout_recipient.shoutout.time_period.end_date.to_s
                 content_tag :span, "#{start_date} - #{end_date}", class: 'highlight-date'
               end
             end
@@ -87,6 +87,7 @@ ActiveAdmin.register User do
       f.input :last_name
       f.input :email
       f.input :opt_out
+      f.input :not_ask_visibility
     end
     f.actions
   end

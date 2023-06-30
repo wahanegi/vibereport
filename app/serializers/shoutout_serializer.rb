@@ -21,10 +21,8 @@
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
-FactoryBot.define do
-  factory :shoutout do
-    user
-    time_period
-    rich_text { Faker::Lorem.sentences }
-  end
+class ShoutoutSerializer
+  include JSONAPI::Serializer
+
+  attributes :id, :rich_text, :user_id, :time_period_id
 end

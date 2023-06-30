@@ -121,7 +121,7 @@ ActiveAdmin.register Team do
                       verbatim_list.each do |comment|
                         unless comment.blank?
                           li class: 'bubble' do
-                            span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+                            span strip_tags(comment)
                           end
                         end
                       end
@@ -233,7 +233,7 @@ ActiveAdmin.register Team do
                     celebrate_verbatims.each do |comment|
                       unless comment.blank?
                         li class: 'bubble' do
-                          span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+                          span strip_tags(comment)
                         end
                       end
                     end
@@ -261,7 +261,7 @@ ActiveAdmin.register Team do
                     verbatim_list.each do |comment|
                       unless comment.blank?
                         li class: 'bubble' do
-                          span comment.gsub(/\[(.*?)\]\(\d+\)/, '\1')
+                          span strip_tags(comment)
                         end
                       end
                     end
