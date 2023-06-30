@@ -20,9 +20,8 @@
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
-  let!(:user) { create :user }
-  let!(:notification) { create :notification, user: }
-  let!(:viewed_notification) { create :notification, user:, viewed: true}
+  let!(:notification) { create :notification }
+  let!(:viewed_notification) { create :notification, viewed: true }
 
   describe 'factory' do
     it 'should be valid' do

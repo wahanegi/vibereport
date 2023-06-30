@@ -2,7 +2,6 @@ ActiveAdmin.register Notification do
   permit_params :user, :details, :viewed
 
   index sortable: :viewed_asc do
-    column :id
     column 'Sender', sortable: :user_id do |notification|
       link_to(notification.user.email, admin_user_path(notification.user)) + "  (#{notification.user.to_full_name})"
     end
@@ -20,6 +19,6 @@ ActiveAdmin.register Notification do
     f.actions
   end
 
-  filter :user, as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }, label: 'Sender'
+  filter :user, as: :select, collection: User.all.map { |item| [item.email, item.id] }, label: 'Sender'
   filter :viewed, as: :boolean
 end
