@@ -43,7 +43,7 @@ class Shoutout < ApplicationRecord
     end
   end
 
-  def to_full_name
+  def full_name
     "#{user.first_name} #{user.last_name}"
   end
 
