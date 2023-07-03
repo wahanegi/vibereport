@@ -8,7 +8,7 @@ const SweetAlert = ({onConfirmAction = () => {}, onDeclineAction = () => {}, ale
     customClass: {
       confirmButton: `btn ${confirmButtonClass || 'btn-primary'}  ms-5 fs-5`,
       cancelButton: `btn fs-5 ${cancelButtonClass || 'btn-danger'}`,
-      denyButton: `btn btn-regular c1 back`,
+      denyButton: `btn btn-regular c1 back border-0 mb-2`,
       closeButton: 'swal2-close-button',
     },
     buttonsStyling: false
