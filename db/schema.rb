@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,7 +87,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
 
   create_table "responses", force: :cascade do |t|
     t.text "bad_follow_comment"
-    t.text "celebrate_comment"
     t.text "comment"
     t.date "completed_at"
     t.datetime "created_at", null: false
@@ -100,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.jsonb "notices"
     t.integer "productivity"
     t.integer "rating"
+    t.bigint "shoutout_id"
     t.string "steps"
     t.bigint "time_period_id", null: false
     t.datetime "updated_at", null: false
@@ -107,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
     t.index ["fun_question_answer_id"], name: "index_responses_on_fun_question_answer_id"
     t.index ["fun_question_id"], name: "index_responses_on_fun_question_id"
+    t.index ["shoutout_id"], name: "index_responses_on_shoutout_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
     t.index ["user_id", "time_period_id"], name: "index_responses_on_user_id_and_time_period_id", unique: true
     t.index ["user_id"], name: "index_responses_on_user_id"
@@ -125,11 +126,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.datetime "created_at", null: false
     t.text "rich_text", null: false
     t.bigint "time_period_id", null: false
+    t.string "type"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["rich_text", "user_id", "time_period_id"], name: "index_shoutouts_on_rich_text_and_user_id_and_time_period_id", unique: true
     t.index ["time_period_id"], name: "index_shoutouts_on_time_period_id"
     t.index ["user_id"], name: "index_shoutouts_on_user_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", limit: 100, null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_teams_on_name", unique: true
   end
 
   create_table "time_periods", force: :cascade do |t|
@@ -142,12 +151,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
     t.index ["slug"], name: "index_time_periods_on_slug", unique: true
   end
 
+  create_table "user_teams", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "team_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["team_id"], name: "index_user_teams_on_team_id"
+    t.index ["user_id", "team_id"], name: "index_user_teams_on_user_id_and_team_id", unique: true
+    t.index ["user_id"], name: "index_user_teams_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "last_name"
+    t.boolean "not_ask_visibility", default: false, null: false
     t.boolean "opt_out", default: false
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
@@ -164,10 +184,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_165621) do
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"
+  add_foreign_key "responses", "shoutouts"
   add_foreign_key "responses", "time_periods"
   add_foreign_key "responses", "users"
   add_foreign_key "shoutout_recipients", "shoutouts"
   add_foreign_key "shoutout_recipients", "users"
   add_foreign_key "shoutouts", "time_periods"
   add_foreign_key "shoutouts", "users"
+  add_foreign_key "user_teams", "teams"
+  add_foreign_key "user_teams", "users"
 end

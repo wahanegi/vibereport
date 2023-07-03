@@ -599,6 +599,23 @@ a {
   z-index: 20;
   background: #A6A1A1;
   filter: blur(50px);
+  &.celebrate-modal {
+    height: 140vh;
+  }
+}
+.modal-dialog-celebrate {
+  z-index: 30;
+  margin-top: 25vh;
+  top:0;
+  .x-close {
+    z-index: 31;
+    margin-top: -25px;
+    margin-left: 470px;
+    cursor: pointer
+  }
+}
+.modal-backdrop.show {
+  opacity: 0 !important;
 }
 
 .shoutout-input-block {
@@ -681,6 +698,27 @@ a {
   padding-inline-end:   1.375rem !important;
 }
 
+.celebrate textarea {
+  &::-webkit-scrollbar-track {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+.modal-content {
+  border-radius: 15px !important;
+  border: 3px solid $royal-blue !important;
+}
+.celebrate-placeholder::before {
+  position: absolute;
+  top: 108px;
+  left: 82px;
+  z-index: 30;
+  color: $red-violet;;
+  content: "@";
+  font-size: 22px;
+  background-color: $white;
+}
+
 .placement-modal-message {
   z-index: 22;
   position: fixed;
@@ -708,6 +746,13 @@ a {
 }
 .text-complete{
   margin: 19px 0 0 0;
+}
+
+.form-check-input[type=checkbox] {
+  background-color: $light-grey;
+  border: none;
+  box-shadow: none;
+  color: $royal-blue;
 }
 
 

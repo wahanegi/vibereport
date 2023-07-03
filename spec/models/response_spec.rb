@@ -4,7 +4,6 @@
 #
 #  id                     :bigint           not null, primary key
 #  bad_follow_comment     :text
-#  celebrate_comment      :text
 #  comment                :text
 #  completed_at           :date
 #  draft                  :boolean          default(FALSE), not null
@@ -19,6 +18,7 @@
 #  emotion_id             :bigint
 #  fun_question_answer_id :bigint
 #  fun_question_id        :bigint
+#  shoutout_id            :bigint
 #  time_period_id         :bigint           not null
 #  user_id                :bigint           not null
 #
@@ -27,6 +27,7 @@
 #  index_responses_on_emotion_id                  (emotion_id)
 #  index_responses_on_fun_question_answer_id      (fun_question_answer_id)
 #  index_responses_on_fun_question_id             (fun_question_id)
+#  index_responses_on_shoutout_id                 (shoutout_id)
 #  index_responses_on_time_period_id              (time_period_id)
 #  index_responses_on_user_id                     (user_id)
 #  index_responses_on_user_id_and_time_period_id  (user_id,time_period_id) UNIQUE
@@ -36,6 +37,7 @@
 #  fk_rails_...  (emotion_id => emotions.id)
 #  fk_rails_...  (fun_question_answer_id => fun_question_answers.id)
 #  fk_rails_...  (fun_question_id => fun_questions.id)
+#  fk_rails_...  (shoutout_id => shoutouts.id)
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
@@ -45,11 +47,12 @@ RSpec.describe Response, type: :model do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
+  let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let!(:fun_question) { create :fun_question }
   let!(:fun_question_answer) { create :fun_question_answer }
-  let(:completed_response) { create :response, user:, time_period:, emotion:, steps: %w[emotion-selection-web results], completed_at: Date.current }
-  let(:response) { FactoryBot.build(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
+  let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let(:not_working_response) { FactoryBot.build(:response, :not_working_response, user:, time_period:, emotion: nil, steps: %w[emotion-selection-web]) }
+  let(:completed_response) { create(:response, not_working: false, completed_at: Time.now) }
 
   context 'associations' do
     it 'belongs to user' do

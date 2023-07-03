@@ -4,15 +4,21 @@ class Api::V1::ShoutoutsController < ApplicationController
   include ApplicationHelper
   before_action :require_user!
 
+  def show
+    render json: ShoutoutSerializer.new(shoutout).serializable_hash
+  end
+
   def create
-    @shoutout = current_user.shoutouts.new(shoutout_params)
+    @shoutout = current_user.celebrate_shoutouts.new(shoutout_params) if params[:is_celebrate]
+    @shoutout ||= current_user.shoutouts.new(shoutout_params)
+
     if @shoutout.save
       create_shoutout_recipients
       render json: @shoutout, status: :ok
     else
       render json: { error: @shoutout.errors.messages }, status: :unprocessable_entity
     end
-end
+  end
 
   def update
     if shoutout.update(shoutout_params)
@@ -24,10 +30,8 @@ end
   end
 
   def destroy
-    return if shoutout.nil?
-
     if shoutout.destroy
-      render json: shoutout, status: :ok
+      render json: { message: 'success' }, status: :ok
     else
       render json: { error: shoutout.errors }, status: :unprocessable_entity
     end
@@ -44,7 +48,7 @@ end
   end
 
   def create_shoutout_recipients
-    return if params['recipients'].empty?
+    return if params['recipients'].blank?
 
     params['recipients'].each do |recipient_id|
       ShoutoutRecipient.create(user_id: recipient_id, shoutout_id: @shoutout.id)

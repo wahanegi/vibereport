@@ -142,7 +142,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
                          saveDataToDb={saveDataToDb}
                          isMinUsersResponses={isMinUsersResponses}
                          nextTimePeriod={nextTimePeriod} />
-        <CornerElements data={ data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
+        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
       </Wrapper>
       <Footer />
     </div>

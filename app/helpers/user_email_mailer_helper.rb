@@ -20,7 +20,6 @@ module UserEmailMailerHelper
   def random_position_and_style(category, word_count)
     colors = {
       'positive' => '#4F9B64',
-      'neutral' => '#4C77CB',
       'negative' => '#D1794E'
     }
 

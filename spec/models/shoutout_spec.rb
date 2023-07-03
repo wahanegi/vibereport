@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  rich_text      :text             not null
+#  type           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  time_period_id :bigint           not null
@@ -60,4 +61,13 @@ RSpec.describe Shoutout, type: :model do
     it { should have_many(:shoutout_recipients) }
   end
 
+  describe 'scopes' do
+    describe '.not_celebrate' do
+      let(:shoutout) { create :shoutout, time_period:, user: }
+      let(:celebrate_shoutout) { create :celebrate_shoutout, time_period:, user: }
+      it 'returns Shoutouts without Celebrate Shoutouts' do
+        expect(Shoutout.not_celebrate.to_a).to eq([shoutout])
+      end
+    end
+  end
 end

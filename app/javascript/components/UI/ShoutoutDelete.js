@@ -7,14 +7,16 @@ import MessageYesNoOk from "./modal/MessageYesNoOk";
 const ShoutoutDelete = ({ onClose, data, setData: setDataInDB, idShoutout}) => {
 
   const handlingDeleting = () => {
-    const dataFromServer = ( deletedShoutOut ) =>{
-      setDataInDB({...data,
-        user_shoutouts: data.user_shoutouts.filter( item => item.id !== deletedShoutOut.id)
-      })
+    const dataFromServer = (callback) =>{
+      if (callback.message === 'success') {
+        setDataInDB({...data,
+          user_shoutouts: data.user_shoutouts.filter( item => item.id !== parseInt(idShoutout))
+        })
+      }
       onClose()
     }
     apiRequest("DELETE", "", dataFromServer, ()=>{}, `/api/v1/shoutouts/${idShoutout}`)
-        .catch( handlingErrors )
+      .catch( handlingErrors )
   }
   
     const handlingErrors = (errors) => {

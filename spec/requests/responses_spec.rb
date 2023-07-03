@@ -50,12 +50,22 @@ RSpec.describe Api::V1::ResponsesController do
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
               'bad_follow_comment' => user_response.bad_follow_comment,
-              'celebrate_comment' => user_response.celebrate_comment,
               'fun_question_id' => nil,
               'fun_question_answer_id' => nil,
+              'shoutout_id' => nil,
               'draft' => user_response.draft,
               'completed_at' => nil
             }
+        },
+        'current_user' => {
+          'id' => user.id,
+          'email' => user.email,
+          'first_name' => user.first_name,
+          'last_name' => user.last_name,
+          'not_ask_visibility' => user.not_ask_visibility,
+          'opt_out' => user.opt_out,
+          'created_at' => user.created_at.strftime('%FT%T.%LZ'),
+          'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
         }
       }]
     end
@@ -93,13 +103,23 @@ RSpec.describe Api::V1::ResponsesController do
                 'comment' => user_response.comment,
                 'productivity' => user_response.productivity,
                 'bad_follow_comment' => user_response.bad_follow_comment,
-                'celebrate_comment' => user_response.celebrate_comment,
+                'shoutout_id' => nil,
                 'fun_question_id' => user_response.fun_question.id,
                 'fun_question_answer_id' => nil,
                 'draft' => user_response.draft,
                 'completed_at' => nil
               }
-          }
+          },
+        'current_user' => {
+          'id' => user.id,
+          'email' => user.email,
+          'first_name' => user.first_name,
+          'last_name' => user.last_name,
+          'not_ask_visibility' => user.not_ask_visibility,
+          'opt_out' => user.opt_out,
+          'created_at' => user.created_at.strftime('%FT%T.%LZ'),
+          'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
+        }
       }]
     end
   end

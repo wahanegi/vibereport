@@ -3,6 +3,7 @@ import {convertUsersToString} from "../../helpers/helpers";
 import parse from "html-react-parser";
 import polygon_shoutout from "../../../../assets/images/polygon-shoutout.svg";
 import Collapse from "react-bootstrap/Collapse";
+import {mentionToRichText} from "../CausesToCelebrate";
 
 const ShoutoutItem = ({shoutout, prefix, users = []}) => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -15,11 +16,11 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
       <div className='h5 w-auto text-start truncated fw-semibold'>
         {prefix}
         {prefix && convertUsersToString(users)}
-        {isCollapse && !prefix && parse(shoutout.rich_text)}
-        {isCollapse && prefix && <Fragment>"{parse(shoutout.rich_text)}"</Fragment>}
+        {isCollapse && !prefix && parse(mentionToRichText(shoutout.rich_text))}
+        {isCollapse && prefix && <Fragment>"{parse(mentionToRichText(shoutout.rich_text))}"</Fragment>}
       </div>
       {
-        !isCollapse && !prefix && <div className='h5 text-start fw-semibold'>{parse(shoutout.rich_text)}</div>
+        !isCollapse && !prefix && <div className='h5 text-start fw-semibold'>{parse(mentionToRichText(shoutout.rich_text))}</div>
       }
     </div>
     <div className="col-3">
@@ -30,7 +31,7 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
     </div>
     {
       !isCollapse && prefix && <Collapse in={!isCollapse}>
-        <div className='h5 text-start fw-semibold'>"{parse(shoutout.rich_text)}"</div>
+        <div className='h5 text-start fw-semibold'>"{parse(mentionToRichText(shoutout.rich_text))}"</div>
       </Collapse>
     }
   </div>

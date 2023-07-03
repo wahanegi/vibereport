@@ -50,7 +50,7 @@ class Api::V1::EmotionsController < ApplicationController
         }
       end,
       fun_question:,
-      user_shoutouts: current_user.shoutouts
+      user_shoutouts: current_user.shoutouts.not_celebrate
     }
   end
 

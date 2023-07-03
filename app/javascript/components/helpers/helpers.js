@@ -4,11 +4,11 @@ import parse from 'html-react-parser'
 export const isEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
 
 export function isBlank(obj) {
-  return typeof obj === 'undefined' || obj === null;
+  return typeof obj === 'undefined' || obj === null || (typeof obj === 'object' && Object.keys(obj).length === 0);
 }
 
 export function isPresent(obj) {
-  return typeof obj !== 'undefined' && obj !== null;
+  return typeof obj !== 'undefined' && obj !== null && !(typeof obj === 'object' && Object.keys(obj).length === 0);
 }
 
 export const backHandling = () => {

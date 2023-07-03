@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Wrapper} from "../UI/ShareContent";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
+import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
 const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -42,7 +43,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
                   placeholder="Is there anything that we can do to help?"
                   defaultValue={bad_follow_comment}
                   onChange={(e) => {setComment(e.target.value)} }
-                  maxLength={700}
+                  maxLength={MAX_CHAR_LIMIT}
                 />
               </label>
             </div>
