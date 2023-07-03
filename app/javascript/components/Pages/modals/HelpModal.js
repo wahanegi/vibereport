@@ -1,15 +1,15 @@
-import React, {Fragment, useState} from "react";
-import Form from "react-bootstrap/Form";
+import React, {Fragment, useEffect, useRef, useState} from "react";
 import Modal from "react-bootstrap/Modal";
 import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 import {isBlank} from "../../helpers/helpers";
 import {Link} from "react-router-dom";
 import {apiRequest} from "../../requests/axios_requests";
-import Backdrop from "../../UI/modal/Backdrop";
+import {MAX_CHAR_LIMIT} from "../../helpers/consts";
 
 const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAlert }) => {
   if (isBlank(current_user)) return;
   const [details, setDetailsText] = useState('')
+  const ref = useRef(null)
   const createNotification = () => {
     const dataSend = { details }
     const dataFromServer = ({callback}) => {
@@ -21,13 +21,17 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
     apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then();
   };
 
+  useEffect(() => {
+    ref.current && ref.current.focus()
+  }, [showHelpModal])
+
   return <Fragment>
     <Modal size='lg' show={showHelpModal} onHide={() => {setShowHelpModal(false)}} className='modal modal-help lg'>
       <img src={xClose} className='position-absolute x-close lg' onClick={() => {setShowHelpModal(false)}}/>
       <Modal.Body>
         <div className="mb-2 px-3">
           <div className='fs-5'>
-            <h3 className="modal-title">Questions or issues? Let us know!</h3>
+            <h4 className="modal-title">Questions or issues? Let us know!</h4>
             <h6 className="muted mb-1">Your questions and insights help make Vibe report better!</h6>
             {
               current_user?.first_name ?
@@ -41,22 +45,28 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
             <h5 className='text-start muted ps-1'>{current_user.email}</h5>
           </div>
         </div>
-        <Form>
-          <Form.Group className="text-start mb-3 px-3">
-            <Form.Label className="h6">Details:</Form.Label>
-            <Form.Control as="textarea" style={{minHeight: 150, borderRadius: 15}}
-                          autoFocus
-                          size='lg'
-                          value={details}
-                          placeholder='We will do our best to address your concern(s).'
-                          onChange={(e) => setDetailsText(e.target.value)} />
-          </Form.Group>
-          <div className='text-center mb-1'>
-            <button className='btn btn-regular c1' disabled={!details?.trim()} onClick={createNotification}>
+        <div className="help-modal-input-container mb-2 px-2">
+          <form>
+            <div className="form-group">
+              <div className='wrap-textarea wrap-textarea-help'>
+                <label className="comment-label">
+                  <textarea
+                    ref={ref}
+                    className="form-control form-control-help"
+                    value={details}
+                    placeholder='We will do our best to address your concern(s).'
+                    onChange={(e) => setDetailsText(e.target.value)}
+                    maxLength={MAX_CHAR_LIMIT} />
+                </label>
+              </div>
+            </div>
+          </form>
+          <div className='text-center mb-1 mt-2'>
+            <button className='btn btn-regular c1 border-0' disabled={!details?.trim()} onClick={createNotification}>
              Send
             </button>
           </div>
-        </Form>
+        </div>
         <div className="badge-secondary">
           <h6>Additional information about Vibe Report can be found at:</h6>
           <Link to={"#"} className='h6'>https://samplenamerealsourcehere.com</Link>
