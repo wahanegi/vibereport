@@ -18,9 +18,9 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
   return (
       <Fragment>
           <div className='rather-not-say-first-row'>
-            <h1> "That's okay.</h1>
+            <h1> That's okay.</h1>
             <div className='row2 mx-auto'>
-              <h2>Would you like to continue with your check-in?</h2>
+              <h2>Would you like to continue <br/> with your check-in?</h2>
             </div>
               <div className='row3'>
                   <Button className='btn-modal c1 btn-wide' onClick={ skipHandling }>Yes, skip ahead</Button>
