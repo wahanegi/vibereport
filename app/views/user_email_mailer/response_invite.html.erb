@@ -42,7 +42,7 @@
       <% (0..5).each do |row|%>
         <div class="emotions d-flex">
         <% (0..3).each do |col|%>
-        <% cell = @table[(row*4 + col)] %>@
+        <% cell = @table[(row*4 + col)] %>
           <div class="<%= "btn-emotion #{cell.category}" %>"
              style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
             <% @link_for_emotion[:emotion_id] = cell.id %>
