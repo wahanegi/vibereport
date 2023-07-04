@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :fun_questions, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug
       resources :shoutouts, only: %i[show create update destroy]
+      resources :notifications, only: %i[create]
       resources :users, only: %i[update]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'

@@ -11,8 +11,7 @@ import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import CornerElements from "../../UI/CornerElements";
-import {Link, NavLink, useParams} from "react-router-dom";
-import Menu from "../../UI/Menu";
+import {Link, useParams} from "react-router-dom";
 
 const ResultsPreview = () => {
   const [loaded, setLoaded] = useState(false)

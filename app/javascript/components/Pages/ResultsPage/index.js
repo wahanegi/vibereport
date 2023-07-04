@@ -3,7 +3,6 @@ import SweetAlert from "../../UI/SweetAlert";
 import {isPresent, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
-  HelpIcon,
   ShoutOutIcon,
   Wrapper
 } from "../../UI/ShareContent";
@@ -16,6 +15,7 @@ import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
+import QuestionButton from "../../UI/QuestionButton";
 
 const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -69,7 +69,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }
 
   const Footer = () => <Fragment>
-    <HelpIcon addClass='hud help' />
+    <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
       nextTimePeriod ?

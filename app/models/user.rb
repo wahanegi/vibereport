@@ -32,6 +32,7 @@ class User < ApplicationRecord
   has_many :fun_questions, dependent: :destroy
   has_many :fun_question_answers, dependent: :destroy
   has_many :mentions, through: :shoutout_recipients, source: :shoutout
+  has_many :notifications, dependent: :destroy
   has_many :user_teams, dependent: :destroy
   has_many :teams, through: :user_teams
 
@@ -44,7 +45,7 @@ class User < ApplicationRecord
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
 
-  def to_full_name
+  def full_name
     "#{first_name} #{last_name}"
   end
 
