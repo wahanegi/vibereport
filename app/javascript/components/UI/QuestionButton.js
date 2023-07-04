@@ -15,7 +15,7 @@ const QuestionButton = ({data}) => {
 
   return <Fragment>
     <span onClick={() => setShowHelpModal(true)} className={'hud help pointer'}>
-      <img  src={questionMark} alt="Question" />
+      <img className='help-icon' src={questionMark} alt="Question" />
     </span>
     {showConfirmationAlert && <SweetAlertHelp setShowConfirmationAlert={setShowConfirmationAlert}/>}
     <HelpModal showHelpModal={showHelpModal} setShowHelpModal={setShowHelpModal} current_user={current_user} handleShowAlert={handleShowAlert} />
