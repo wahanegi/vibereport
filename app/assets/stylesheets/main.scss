@@ -549,7 +549,6 @@ a {
   }
 
   .form-range.level-9::-webkit-slider-runnable-track {
-
     background: linear-gradient(247deg, $color-white 0%, #EB4848 0%);
   }
 
@@ -583,6 +582,85 @@ a {
   position: relative;
   color: $red-violet;
 }
+
+/* ProductivitySlider to Firefox */
+.productivity-container input[type=range]::-moz-range-thumb {
+  height: 35px;
+  width: 35px;
+}
+
+.productivity-container input[type=range]::-moz-range-track {
+  height: 3px;
+  background: $black;
+}
+
+.productivity-container input[type=range].level-0::-moz-range-thumb {
+  background: $gray-100;
+}
+
+.productivity-container input[type=range].level-1::-moz-range-thumb {
+  background: #D7C2B8;
+}
+.productivity-container input[type=range].level-1::-moz-range-track {
+  background: linear-gradient(247deg, $color-white 85%, #D7C2B8 85%);
+}
+
+.productivity-container input[type=range].level-2::-moz-range-thumb {
+  background: #E7AF92;
+}
+.productivity-container input[type=range].level-2::-moz-range-track {
+  background: linear-gradient(247deg, $color-white 75%, #D7C2B8 75%);
+}
+
+.productivity-container input[type=range].level-3::-moz-range-thumb {
+  background: #E49770;
+}
+.productivity-container input[type=range].level-3::-moz-range-track {
+ background: linear-gradient(247deg, $color-white 65%, #E7AF92 65%);
+}
+
+.productivity-container input[type=range].level-4::-moz-range-thumb {
+  background: #E8956C;
+}
+.productivity-container input[type=range].level-4::-moz-range-track {
+ background: linear-gradient(247deg, $color-white 55%, #E49770 55%);
+}
+
+.productivity-container input[type=range].level-5::-moz-range-thumb {
+  background: #ED7B45;
+}
+.productivity-container input[type=range].level-5::-moz-range-track {
+  background: linear-gradient(247deg, $color-white 45%, #E8956C 45%);
+}
+
+.productivity-container input[type=range].level-6::-moz-range-thumb {
+  background: #FF5300;
+}
+.productivity-container input[type=range].level-6::-moz-range-track {
+  background: linear-gradient(247deg, $color-white 35%, #ED7B45 35%);
+}
+
+.productivity-container input[type=range].level-7::-moz-range-thumb {
+  background: #E26D6D;
+}
+.productivity-container input[type=range].level-7::-moz-range-track {
+  background: linear-gradient(247deg, $color-white 25%, #FF5300 25%);
+}
+
+.productivity-container input[type=range].level-8::-moz-range-thumb {
+  background: #EB4848;
+}
+.productivity-container input[type=range].level-8::-moz-range-track {
+  background: linear-gradient(247deg, $color-white 15%, #E26D6D 15%);
+}
+
+.productivity-container input[type=range].level-9::-moz-range-thumb {
+  background: #FF0000;
+}
+.productivity-container input[type=range].level-9::-moz-range-track {
+  background: linear-gradient(247deg, $color-white 0%, #EB4848 0%);
+}
+
 //ShoutoutModal
 #overlays {
   position: absolute;
