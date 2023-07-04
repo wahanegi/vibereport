@@ -69,7 +69,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }
 
   const Footer = () => <Fragment>
-    <QuestionButton data={data} addClass='hud help pointer' />
+    <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
       nextTimePeriod ?

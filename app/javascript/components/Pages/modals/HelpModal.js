@@ -32,7 +32,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
         <div className="mb-2 px-3">
           <div className='fs-5'>
             <h4 className="modal-title">Questions or issues? Let us know!</h4>
-            <h6 className="muted mb-1">Your questions and insights help make Vibe report better!</h6>
+            <h6 className="muted mb-1">Your questions and insights help make Vibe Report better!</h6>
             {
               current_user?.first_name ?
                 <div>

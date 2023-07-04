@@ -3,7 +3,7 @@ import questionMark from "../../../assets/images/help.svg"
 import HelpModal from "../Pages/modals/HelpModal";
 import SweetAlertHelp from "../Pages/modals/SweetAlertHelp";
 
-const QuestionButton = ({data, addClass = null}) => {
+const QuestionButton = ({data}) => {
   const {current_user} = data
   const [showHelpModal, setShowHelpModal] = useState(false)
   const [showConfirmationAlert, setShowConfirmationAlert] = useState(false)
@@ -14,7 +14,7 @@ const QuestionButton = ({data, addClass = null}) => {
   };
 
   return <Fragment>
-    <span onClick={() => setShowHelpModal(true)} className={`${addClass || 'placement-question-btn help-icon pointer'}`}>
+    <span onClick={() => setShowHelpModal(true)} className={'hud help pointer'}>
       <img  src={questionMark} alt="Question" />
     </span>
     {showConfirmationAlert && <SweetAlertHelp setShowConfirmationAlert={setShowConfirmationAlert}/>}
