@@ -6,6 +6,12 @@ import {signOutUser} from "../../requests/axios_requests";
 const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) => {
   const xCloseData = data.time_period.end_date
 
+    const reformatData = (date) => {
+      let dt = new Date(date)
+      let options = { day: '2-digit', month: 'short', year: 'numeric' }
+      return new Intl.DateTimeFormat('en-GB', options).format(dt)
+    }
+
   const logoutHandling = () =>{
       steps.push('emotion-selection-web')
       saveDataToDb(steps, { draft: false })
@@ -22,7 +28,7 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
           <div className='rather-not-say-first-row'>
             <h1>We'll be here...</h1>
             <div className='row2 mx-auto'>
-              <h2>{`Feel free to return to this check-in\n before it closes on ${xCloseData}`}</h2>
+              <h2>{`Feel free to return to this check-in\n before it closes on ${reformatData(xCloseData)}`}</h2>
             </div>
               <div className='row3'>
                   <Button className='btn-modal c1 btn-wide' onClick={ logoutHandling }>Ok, log out</Button>
