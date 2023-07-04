@@ -2,6 +2,7 @@ import React, {Fragment, useState} from 'react';
 import CornerElements from "../../UI/CornerElements";
 import Button from "../../UI/Button";
 import {signOutUser} from "../../requests/axios_requests";
+import {redirect} from "react-router-dom";
 
 const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) => {
   const xCloseData = data.time_period.end_date
@@ -15,7 +16,7 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
   const logoutHandling = () =>{
       steps.push('emotion-selection-web')
       saveDataToDb(steps, { draft: false })
-      signOutUser(data.response.id).then(() => window.location.href = `/sign_in`);
+      redirect( window.location.href = `/sign_in`);
   }
 
   const backHandling = () => {
