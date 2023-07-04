@@ -57,7 +57,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
 
   const notSayHandling = () => {
     steps.push('rather-not-say')
-    saveDataToDb( steps, { emotion_id: '' } )
+    saveDataToDb(steps, {
+      emotion_id: '',
+      time_period_id: timePeriod.id,
+      user_id: data.current_user.id })
   }
   return (
     <Fragment>
