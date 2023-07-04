@@ -32,7 +32,6 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
     const dataRequest = {
       time_period_id: data.time_period.id,
       user_id: data.current_user.id,
-      draft:true,
     }
     saveDataToDb( steps, dataRequest )
   }

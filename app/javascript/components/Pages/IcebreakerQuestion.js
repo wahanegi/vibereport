@@ -45,7 +45,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
     }
     const goToResultPage = () => {
       steps.push('results')
-      saveDataToDb(steps, {draft: true})
+      saveDataToDb(steps)
     }
     saveDataQuestion(goToResultPage, dataFromServer);
   };

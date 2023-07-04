@@ -18,7 +18,6 @@ h4.emotion-entry {
   &::placeholder{
     font-size: 36px;
     font-weight: 700;
-    color: $color-muted;
   }
 }
 
@@ -27,114 +26,18 @@ h4.emotion-entry {
     background-color: $gray-tea-green;
     color: $green-700;
     border-color: $dark-blue !important;
-  }
 
+    &::placeholder{
+      color: $green-700;
+    }
+  }
   &.input-negative {
     background-color: $light-red;
     color: $orange-700;
     border-color: $dark-blue !important;
+
+    &::placeholder{
+      color: $orange-700;
+    }
   }
-
-  &.input-neutral {
-    background-color: $light-blue-input;
-    color: $dark-blue;
-    border-color: $dark-blue !important;
-  }
-}
-
-h4.emotion-entry-feel{
-  margin-top: 77px;
-  color: $gray-800;
-}
-
-.wrap-emoji {
-  margin-top: 21px;
-  min-height: 100px;
-  column-gap: 38px;
-  overflow: hidden;
-}
-
-.fade-text-enter {
-  opacity: 0.01;
-}
-
-.fade-text-enter.fade-text-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.fade-text-exit {
-  opacity: 1;
-}
-
-.fade-text-exit-active {
-  opacity: 0.01;
-  transition: opacity 500ms ease-out;
-}
-
-.fade-icon-enter {
-  transform: translateY(-500%);
-}
-
-.fade-icon-enter-active {
-  transform: translateY(0%);
-  transition: transform 500ms ease-in;
-}
-
-.fade-icon-exit {
-  transform: translateY(0%);
-}
-
-.fade-icon-exit-active {
-  transform: translateY(500%);
-  transition: transform 500ms ease-out;
-  bottom: 0;
-}
-
-.wrap-icon{
-  gap: 11px;
-  cursor: pointer;
-}
-
-.wrap-icon img {
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
-  margin-bottom: 5px;
-  border: 2px solid transparent;
-}
-
-.wrap-icon span {
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.wrap-icon.positive-icon:hover img,
-.wrap-icon.positive-icon.active img {
-  border-color: #02A32F;
-}
-
-.wrap-icon.positive-icon:hover span,
-.wrap-icon.positive-icon.active span {
-  color: #02A32F;
-}
-
-.wrap-icon.negative-icon:hover img,
-.wrap-icon.negative-icon.active img {
-  border-color: #F45C12;
-}
-
-.wrap-icon.negative-icon:hover span,
-.wrap-icon.negative-icon.active span {
-  color: #F45C12;
-}
-
-.wrap-icon.neutral-icon:hover img,
-.wrap-icon.neutral-icon.active img {
-  border-color: #105DF1;
-}
-
-.wrap-icon.neutral-icon:hover span,
-.wrap-icon.neutral-icon.active span {
-  color: #105DF1;
 }

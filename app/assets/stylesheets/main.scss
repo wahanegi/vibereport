@@ -763,10 +763,6 @@ a {
   background-color: transparent;
 }
 .btn-check.toggle-negative-check:checked + .toggle-negative,
-//:not(.toggle-negative-check) + .toggle-negative:active,
-//.toggle-negative:first-child:active,
-//.toggle-negative.active,
-//.toggle-negative.show
 {
   background-color: $light-red;
   border: 3px solid $color-orange;

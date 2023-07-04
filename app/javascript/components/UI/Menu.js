@@ -30,8 +30,10 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
   const dropdownRef = useRef(null);
-  const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
-  const id = data.response.id
+  const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>";
+  const id = data.response.id;
+  const lastStep = steps[steps.length - 1];
+  const isLastStepDisabled = lastStep === 'emotion-entry' || lastStep === 'emotion-selection-web' || lastStep === 'result';
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -94,8 +96,8 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft }) => {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item href="#" >
-            <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || steps.length === 1 ? ' disabled-btn-draft' : ''}`}
-                    disabled={draft || steps.length === 1} onClick={handleSaveDraft}>
+            <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || isLastStepDisabled ? ' disabled-btn-draft' : ''}`}
+                    disabled={draft || isLastStepDisabled} onClick={handleSaveDraft}>
               Save Draft
             </Button>
           </Dropdown.Item>
