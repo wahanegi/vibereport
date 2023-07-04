@@ -33,6 +33,19 @@
     }
   }
 
+  &.btn-danger{
+    color: $white;
+    background-color: $red;
+  }
+
+  &.shadow {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25)
+  }
+
+  &.padding10-20 {
+    padding: 10px 20px;
+  }
+
   // use with C2 or C3 text
   &.btn-feature{
     width:            26.25rem;

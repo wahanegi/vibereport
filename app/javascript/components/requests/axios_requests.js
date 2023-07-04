@@ -15,8 +15,8 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
   createCsrfToken()
 
     const saveDate = (response) => {
-        setData(response.data)
-        redirect()
+      setData(response.data)
+      redirect()
     }
   switch (method) {
     case "POST":
@@ -39,9 +39,9 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
       break
     case "DELETE":
       await axios.delete(url)
-          .then(response => {
-              saveDate(response)
-          })
+        .then(response => {
+            saveDate(response)
+        })
       break
     default:
   }

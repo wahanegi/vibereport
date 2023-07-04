@@ -4,6 +4,7 @@ import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
+import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
 const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
@@ -57,7 +58,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
       if(prevQuestionBody !== funQuestionBody && isNotEmptyStr(funQuestionBody)) {
         apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
       } else if(isEmptyStr(funQuestionBody)) {
-        apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
+        apiRequest("DELETE", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
         goToResultPage()
       }
@@ -103,7 +104,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
                       <textarea className='input middle' name='question_body'
                                 placeholder='What would you ask the team? You could be selected!'
                                 value={funQuestion?.question_body || ''}
-                                onChange={onChangQuestion} maxLength={700} />
+                                onChange={onChangQuestion} maxLength={MAX_CHAR_LIMIT} />
                       </div>
                     </form>
                   </div>

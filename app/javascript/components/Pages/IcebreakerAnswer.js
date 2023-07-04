@@ -4,6 +4,7 @@ import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
+import {MAX_CHAR_LIMIT} from "../helpers/consts";
 
 const FULL_PRIMARY_HEIGHT = 401
 const MARGIN_BOTTOM = 17
@@ -60,7 +61,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
     saveDataAnswer(dataFromServer, goToResultPage)
   };
 
-  const saveDataAnswer = (dataFromServer, goToResultPage, isDraft=false) =>{
+  const saveDataAnswer = (dataFromServer, goToResultPage, isDraft= false) =>{
     const url = '/api/v1/fun_question_answers/'
     const id = prevStateAnswer?.id
 
@@ -68,7 +69,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
       if(prevAnswerBody !== answerBody && isNotEmptyStr(answerBody)) {
         apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
       } else if(isEmptyStr(answerBody)) {
-        apiRequest("DESTROY", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
+        apiRequest("DELETE", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
         !isDraft && steps.push('icebreaker-question')
         saveDataToDb(steps, {draft: false})
@@ -133,7 +134,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
                                 placeholder="Tell us what you think!"
                                 value={answerFunQuestion?.answer_body || ''}
                                 onChange={onChangAnswer}
-                                maxLength={700}
+                                maxLength={MAX_CHAR_LIMIT}
                       />
                     </div>
                   </form>

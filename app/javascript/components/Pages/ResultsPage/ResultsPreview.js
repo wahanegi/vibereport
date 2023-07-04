@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
-  HelpIcon,
+  HelpIcon, Logo,
   Wrapper
 } from "../../UI/ShareContent";
 import axios from "axios";
@@ -12,6 +12,7 @@ import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import CornerElements from "../../UI/CornerElements";
 import {Link, NavLink, useParams} from "react-router-dom";
+import Menu from "../../UI/Menu";
 
 const ResultsPreview = () => {
   const [loaded, setLoaded] = useState(false)
@@ -49,7 +50,6 @@ const ResultsPreview = () => {
         <div className='mb-5'>
           <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         </div>
-
         <EmotionSection emotions={emotions} nextTimePeriod={true} />
         <GifSection gifs={gifs} nextTimePeriod={true} />
         <ShoutoutSection nextTimePeriod={true}
@@ -58,7 +58,7 @@ const ResultsPreview = () => {
                          receivedShoutouts={received_shoutouts}
                          currentUserShoutouts={current_user_shoutouts} />
         <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={true} />
-        <CornerElements percentCompletion={100} hideBottom={true}/>
+        <CornerElements prevId={results?.response_id} draft={true} hideBottom={true} />
       </Wrapper>
       <Footer />
     </div>
