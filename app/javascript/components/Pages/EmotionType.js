@@ -9,7 +9,7 @@ const EmotionType = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const {category} = data.emotion
   const [selectedType, setSelectedType] = useState(category);
-  const [emotion, setEmotion] = useState({ word: data.emotion.word, category: data.emotion.category });
+  const [emotion, setEmotion] = useState({word: data.emotion.word, category: data.emotion.category});
   const [emotions, setEmotions] = useState([]);
   const [isDraft, setIsDraft] = useState(draft);
 
@@ -31,7 +31,7 @@ const EmotionType = ({data, setData, saveDataToDb, steps, service, draft}) => {
       saveDataToDb(steps, {emotion_id: existingEmotion.id, draft: true});
     }else {
       saveDataEmotion(dataRequest, (word) => {
-        saveDataToDb(steps, { emotion_id: word.data.id, draft: true });
+        saveDataToDb(steps, {emotion_id: word.data.id, draft: true});
       });
     }
     setIsDraft(true);
@@ -61,9 +61,9 @@ const EmotionType = ({data, setData, saveDataToDb, steps, service, draft}) => {
         </div>
         <ToggleEmotionType selectedType={selectedType} handleEmotionType={handleEmotionType}/>
       </div>
-      <BlockLowerBtns nextHandling={ handlingOnClickNext } />
-      <CornerElements data = { data }
-                      setData = { setData }
+      <BlockLowerBtns nextHandling={handlingOnClickNext}/>
+      <CornerElements data={data}
+                      setData={setData}
                       saveDataToDb={saveDataToDb}
                       steps={steps}
                       draft={isDraft}

@@ -10,7 +10,7 @@ import {handleOnClickNext, fetchEmotions} from "../helpers/emotionTypeUtils";
 const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [selectedType, setSelectedType] = useState(data.emotion?.category || 'positive');
-  const [emotion, setEmotion] = useState({ word: data.emotion?.word || '', category: data.emotion?.category || 'positive'});
+  const [emotion, setEmotion] = useState({word: data.emotion?.word || '', category: data.emotion?.category || 'positive'});
   const [emotions, setEmotions] = useState([]);
 
   const dataRequest = {
@@ -54,9 +54,9 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
         />
         <ToggleEmotionType selectedType={selectedType} handleEmotionType={handleEmotionType}/>
       </div>
-      <BlockLowerBtns nextHandling={ handlingOnClickNext } disabled={emotion.word.length < 2}/>
-      <CornerElements data = { data }
-                      setData = { setData }
+      <BlockLowerBtns nextHandling={handlingOnClickNext} disabled={emotion.word.length < 2}/>
+      <CornerElements data={data}
+                      setData={setData}
                       saveDataToDb={saveDataToDb}
                       steps={steps}
                       draft={draft}/>
