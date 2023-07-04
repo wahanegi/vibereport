@@ -13,7 +13,7 @@ class UserEmailMailer < ApplicationMailer
     @link_for_emotion  = general_link.merge({ emotion_id: nil, last_step: 'meme-selection' })
     @view_complete_by  = time_period.due_date.strftime('%b %d').to_s
     @table = []
-    emotions = Emotion.positive.sample(NUMBER) + Emotion.neutral.sample(NUMBER) + Emotion.negative.sample(NUMBER)
+    emotions = Emotion.where(public: true).positive.sample(NUMBER) + Emotion.where(public: true).neutral.sample(NUMBER) + Emotion.where(public: true).negative.sample(NUMBER)
     emotions.each_slice(6) { |sliced_emotions| @table << sliced_emotions }
     @table = @table.transpose.flatten
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
