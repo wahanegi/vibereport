@@ -78,8 +78,13 @@ ActiveAdmin.register_page 'Dashboard' do
     helper_method :alert_questions_needed?
 
     def index
+      not_viewed = Notification.not_viewed
       if alert_questions_needed?
         flash[:alert] = 'Alert: No unused questions left for upcoming check-in. Please add more questions.'
+      end
+      if not_viewed.present?
+        flash[:alert] = "NOTICE: #{not_viewed.count} new #{'notification'.pluralize(not_viewed.count)}" \
+                        " from #{'user'.pluralize(not_viewed.pluck(:user_id).uniq.count)}"
       end
       super
     end
