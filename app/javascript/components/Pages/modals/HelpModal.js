@@ -29,7 +29,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
     <Modal size='lg' show={showHelpModal} onHide={() => {setShowHelpModal(false)}} className='modal modal-help lg'>
       <img src={xClose} className='position-absolute x-close lg' onClick={() => {setShowHelpModal(false)}}/>
       <Modal.Body>
-        <div className="mb-2 px-3">
+        <div className="mb-1 px-2">
           <div className='fs-5'>
             <h4 className="modal-title">Questions or issues? Let us know!</h4>
             <h6 className="muted mb-1">Your questions and insights help make Vibe Report better!</h6>
@@ -41,11 +41,12 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
                 </div> :
                 null
             }
-            <h6 className='text-start mb-1'>Your email address:</h6>
+            <h6 className='text-start'>Your email address:</h6>
             <h5 className='text-start muted ps-1'>{current_user.email}</h5>
           </div>
         </div>
-        <div className="help-modal-input-container mb-2 px-2">
+        <div className="help-modal-input-container mb-1 px-2">
+          <h6 className='text-start mb-1'>Details:</h6>
           <form>
             <div className="form-group">
               <div className='wrap-textarea wrap-textarea-help'>
@@ -55,8 +56,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
                     className="form-control form-control-help"
                     value={details}
                     placeholder='We will do our best to address your concern(s).'
-                    onChange={(e) => setDetailsText(e.target.value)}
-                    maxLength={MAX_CHAR_LIMIT} />
+                    onChange={(e) => setDetailsText(e.target.value)} />
                 </label>
               </div>
             </div>
