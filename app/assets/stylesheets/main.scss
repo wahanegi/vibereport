@@ -864,9 +864,11 @@ a {
 // Menu
 .disabled-btn-draft{
   pointer-events: none;
-  cursor: none;
   overflow: hidden;
   opacity: 0.6;
+}
+a.dropdown-item{
+  cursor: initial;
 }
 .text-complete{
   margin: 19px 0 0 0;
