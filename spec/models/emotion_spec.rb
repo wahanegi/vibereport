@@ -60,11 +60,12 @@ RSpec.describe Emotion, type: :model do
         new_emotion = FactoryBot.build(:emotion, word: existing_emotion.word, category: :negative)
         expect(new_emotion).to be_valid
       end
-    end
 
-    it 'the capitalized emotion word should not be used' do
-      new_word = FactoryBot.build(:emotion, word: Faker::Emotion.unique.adjective)
-      expect(new_word).to be_valid
+      it 'the capitalized emotion word should not be used' do
+        uppercase_word = existing_emotion.word.upcase!
+        new_word = FactoryBot.build(:emotion, word: uppercase_word, category: existing_emotion.category)
+        expect(new_word).to_not be_valid
+      end
     end
   end
 
@@ -90,7 +91,7 @@ RSpec.describe Emotion, type: :model do
         expect { Emotion.create(word: 'happy', category: 'negative', public: false) }.to change(Emotion, :count)
       end
 
-      it 'creates with existing emotion word and category' do
+      it 'does not create with existing emotion word and category' do
         expect { Emotion.create(word: 'happy', category: 'positive', public: false) }.not_to change(Emotion, :count)
       end
     end
