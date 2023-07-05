@@ -468,6 +468,10 @@ html {
 }
 
 /* reminder_email */
+.first-row-reminder{
+    height:8px;
+    text-align: left;
+}
 .second-row-reminder{
     height: 3.7rem;
     margin-top: 145px;
