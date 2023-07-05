@@ -27,7 +27,7 @@ const CornerElements = ({
       {
         !hideBottom ?
           <Fragment>
-            <QuestionButton />
+            <QuestionButton data={data} />
             <ShoutoutButton   data = { data }
                               setData = { setData }
                               num = { numShoutouts }

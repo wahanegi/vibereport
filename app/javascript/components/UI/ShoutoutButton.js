@@ -1,20 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import ShoutoutIcon from '../../../assets/images/sys_svg/shoutout-new.svg'
-import {NavLink} from "react-router-dom";
+import React, {useState} from 'react';
 import ShoutoutModal from "./ShoutoutModal";
+import {ShoutOutIcon} from "./ShareContent";
 
-const ShoutoutButton = ({ data, setData,  num = 0, className = '', isMove = false}) => {
-
+const ShoutoutButton = ({ data, setData }) => {
     const [ shoutOutForm, setShoutOutForm ] = useState(false)
-    const [ blink, setBlink ] = useState('')
-
-    useEffect(()=>{
-        if ( !num && isMove ){
-            setTimeout(()=>{
-                setBlink('blink')
-            },2000)
-        }
-    },[])
 
     const clickHandling = () => {
         setShoutOutForm(true)
@@ -24,18 +13,13 @@ const ShoutoutButton = ({ data, setData,  num = 0, className = '', isMove = fals
         setShoutOutForm(false)
     }
 
-    const style = className ? className : `left-bottom-corner ${ isMove && ('into-centerX' + (!num ? '2_5' : '')) } ${blink}`
     return (
         <div>
             {shoutOutForm &&
                 <ShoutoutModal onClose = { closeHandling }
                                   data = { data }
                                setData = { setData } />}
-            <div>
-                <NavLink className ={style}  to = {'#'}>
-                    <img src={ShoutoutIcon} alt = 'Shoutout' onClick={clickHandling}/>
-                </NavLink>
-            </div>
+            <ShoutOutIcon addClass={'hud shoutout'} onClick={clickHandling} />
         </div>
     );
 }

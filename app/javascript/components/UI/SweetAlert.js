@@ -1,11 +1,14 @@
 import React from 'react';
 import Swal from "sweetalert2";
 
-const SweetAlert = ({onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText, cancelButtonClass, confirmButtonClass}) => {
+const SweetAlert = ({onConfirmAction = () => {}, onDeclineAction = () => {}, alertTitle, alertHtml, cancelButtonText, confirmButtonText,
+                      cancelButtonClass, confirmButtonClass, denyButtonText, showCloseButton = true,
+                      showDenyButton = false, showCancelButton = true, showConfirmButton = true}) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: `btn ${confirmButtonClass || 'btn-primary'}  ms-5 fs-5`,
       cancelButton: `btn fs-5 ${cancelButtonClass || 'btn-danger'}`,
+      denyButton: `btn btn-regular c1 back border-0 mb-2`,
       closeButton: 'swal2-close-button',
     },
     buttonsStyling: false
@@ -14,10 +17,13 @@ const SweetAlert = ({onConfirmAction, onDeclineAction, alertTitle, alertHtml, ca
   swalWithBootstrapButtons.fire({
     title: alertTitle,
     html: alertHtml,
-    showCancelButton: true,
-    showCloseButton: true,
+    showCancelButton: showCancelButton,
+    showCloseButton: showCloseButton,
+    showDenyButton: showDenyButton,
+    showConfirmButton: showConfirmButton,
     cancelButtonText: cancelButtonText,
     confirmButtonText: confirmButtonText,
+    denyButtonText: denyButtonText,
     reverseButtons: true,
   }).then((result) => {
     if (result.isConfirmed) {
