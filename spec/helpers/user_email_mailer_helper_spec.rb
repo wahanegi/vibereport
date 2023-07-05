@@ -30,4 +30,18 @@ describe UserEmailMailerHelper, type: :helper do
       expect(helper.btn_special(word, :padding)).to eq('wrong attribute')
     end
   end
+
+  describe '#emotions_table' do
+    it 'returns a flattened table of emotions' do
+
+      positive_emotions = create_list(:emotion, NUMBER_OF_ELEMENTS, :positive)
+      negative_emotions = create_list(:emotion, NUMBER_OF_ELEMENTS, :negative)
+      emotions = positive_emotions + negative_emotions
+
+      result = emotions_table
+
+      expect(result).to be_an(Array)
+      expect(result.size).to eq(NUMBER_OF_ELEMENTS * 2)
+    end
+  end
 end
