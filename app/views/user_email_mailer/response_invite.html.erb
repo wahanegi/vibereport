@@ -39,10 +39,10 @@
   <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
   <div class="mx-auto my-0 question">Which word best describes how you’ve recently felt about work?</div>
   <div>
-      <% (0..@table.length/6-1).each do |row|%>
+      <% (0..5).each do |row|%>
         <div class="emotions d-flex">
-        <% (0..@table.length/6-1).each do |col|%>
-        <% cell = @table[(row*6 + col)] %>
+        <% (0..3).each do |col|%>
+        <% cell = @table[(row*4 + col)] %>
           <div class="<%= "btn-emotion #{cell.category}" %>"
              style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
             <% @link_for_emotion[:emotion_id] = cell.id %>
@@ -52,6 +52,12 @@
         </div>
       <% end %>
     </div>
+  <div class="underline_list"></div>
+  <div class='neutral-area' style="padding: 10px 0;">
+      <div class="<%= "btn-emotion neutral" %>" style="width: 215px; margin:0 auto; padding: 5px 0; line-height:1;">
+        <%= link_to "I'd rather not say...", @link_for_not_say , class: "neutral-a" %>
+    </div>
+  </div>
   <div class="big-btn-tooltip mx-auto">Share it in your own words!</div>
   <div class="big-btn mx-auto">
     <div class="big-btn-text">
@@ -59,7 +65,7 @@
     </div>
   </div>
   <div class="row-over-links">
-    <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
+    <div class="lnk-was-not" style="width: max-content">
       <%= link_to "I was not working recently", @link_for_was_not %>
     </div>
   </div>
