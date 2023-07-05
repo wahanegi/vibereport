@@ -57,7 +57,7 @@ const ResultsPreview = () => {
                          receivedShoutouts={received_shoutouts}
                          currentUserShoutouts={current_user_shoutouts} />
         <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={true} />
-        <CornerElements prevId={results?.response_id} draft={true} hideBottom={true} />
+        <CornerElements prevId={'results'} draft={true} hideBottom={true} />
       </Wrapper>
       <Footer />
     </div>
