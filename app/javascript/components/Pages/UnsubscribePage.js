@@ -5,9 +5,8 @@ import {apiRequest} from "../requests/axios_requests";
 import {Link} from "react-router-dom";
 import {isPresent} from "../helpers/helpers";
   
-const UnsubscribePage = ({data, setData}) => {
-  const {users, current_user, response, time_period} = data
-  const steps = response.attributes.steps || []
+const UnsubscribePage = ({data}) => {
+  const {current_user, time_period} = data
   const [unsubscribed, setUnsubscribed] = useState(current_user.opt_out)
 
   const onUnsubscribe = () => {
@@ -21,29 +20,6 @@ const UnsubscribePage = ({data, setData}) => {
     const id = current_user.id
     apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then();
   }
-
-  const onClickRecentResults = () => {
-    const dataSend = {
-      response: {
-        attributes: {
-          emotion_id: '',
-          not_working: true,
-          time_period_id: time_period.id,
-          user_id: current_user.id,
-          steps: ['results']
-        }
-      }
-    }
-    const dataFromServer = (response) => {
-      if (isPresent(response.data)) {
-        console.log('response server', response.data)
-        setData(Object.assign({}, data, {response: response.data}))
-      }
-    }
-    const url = '/api/v1/responses/'
-    apiRequest("POST", dataSend, dataFromServer, ()=>{}, `${url}`).then();
-  }
-  console.log('data', data)
 
   const Unsubscribe = () => <Fragment>
     <div className='mb-5 mt-4'>
@@ -77,8 +53,8 @@ const UnsubscribePage = ({data, setData}) => {
       </Link>
     </div>
     <div className='text-center mb-1 mt-5'>
-      <Link to={'/results'} target="_self" rel="noopener noreferrer">
-        <button className='btn btn-regular back c1 border-0' onClick={onClickRecentResults}>
+      <Link to={`/results/${time_period.slug}`} target="_self" rel="noopener noreferrer">
+        <button className='btn btn-regular back c1 border-0'>
           Recent results
         </button>
       </Link>

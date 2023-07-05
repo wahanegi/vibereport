@@ -23,7 +23,7 @@ const App = () => {
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
   const [step, setStep] = useState(mainPage)
 
-    useEffect(()=>{
+  useEffect(()=>{
     const setData = ( dataFromServer ) => {
       let steps = dataFromServer.response.attributes.steps
       if (!Array.isArray(steps)) {
@@ -67,7 +67,7 @@ const App = () => {
             />
           ))}
           <Route path="results/:slug" element={<ResultsPreview />} />
-          <Route path="/unsubscribe" element={<UnsubscribePage data={frontDatabase} setData={setFrontDatabase} />} />
+          <Route path="/unsubscribe" element={<UnsubscribePage data={frontDatabase} />} />
         </Routes>}
       </BrowserRouter>
     </Fragment>
