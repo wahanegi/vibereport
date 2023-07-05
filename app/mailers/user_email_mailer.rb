@@ -7,6 +7,7 @@ class UserEmailMailer < ApplicationMailer
   URL = { controller: 'api/v1/responses', action: 'response_flow_from_email' }.freeze
 
   def response_invite(user, time_period)
+    @user = user
     set_links(user, time_period)
     set_table_of_emotions
     send_invite_email(user)

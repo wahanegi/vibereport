@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       get '/sign_in_from_email', to: 'responses#sign_in_from_email'
       get '/results_email', to: 'results#results_email'
       get '/result', to: 'results#show'
+      get '/unsubscribe', to: 'users#unsubscribe'
     end
   end
   get '*path', to: 'home#app'
