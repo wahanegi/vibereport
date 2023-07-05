@@ -16,6 +16,8 @@ import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
 import Results from "./Pages/ResultsPage";
 import EmotionType from "./Pages/EmotionType";
+import RatherNotSay from "./Pages/RatherNotSay/RatherNotSay";
+import SkipAhead from "./Pages/RatherNotSay/SkipAhead";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -102,6 +104,8 @@ const ResponseFlow = ({step, data, setData}) => {
 
   const componentMap = {
     'emotion-selection-web': <ListEmotions />,
+    'rather-not-say': <RatherNotSay/>,
+    'skip-ahead': <SkipAhead/>,
     'emotion-entry': <EmotionEntry />,
     'emotion-type': <EmotionType />,
     'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,

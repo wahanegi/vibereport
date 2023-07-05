@@ -70,8 +70,8 @@ RSpec.describe Emotion, type: :model do
 
   describe 'Before actions' do
     it 'during creates and saves it downcases the emotion.word' do
-      feeling = create(:emotion, word: 'HAPPY')
-      expect(feeling.reload.word).to eq('happy')
+      feeling = create(:emotion, word: 'SO SO')
+      expect(feeling.reload.word).to eq('so so')
       emotion.update(word: 'Enthusiastic')
       expect(emotion.reload.word).to eq('enthusiastic')
     end

@@ -1,13 +1,11 @@
 class Api::V1::EmotionsController < ApplicationController
   include ApplicationHelper
+  include UserEmailMailerHelper
   before_action :require_user!
   before_action :current_response, only: [:index]
-
-  NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
   def index
-    three_set = build_three_set
     if current_user.present?
-      render json: EmotionSerializer.new(three_set).serializable_hash.merge(additional_params), status: :ok
+      render json: EmotionSerializer.new(emotions_table).serializable_hash.merge(additional_params), status: :ok
     else
       render json: {}, status: :unauthorized
     end
@@ -66,12 +64,6 @@ class Api::V1::EmotionsController < ApplicationController
       type: 'response',
       attributes: @current_response
     }
-  end
-
-  def build_three_set
-    Emotion.emotion_public.positive.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.emotion_public.neutral.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.emotion_public.negative.sample(NUMBER_OF_ELEMENTS)
   end
 
   def emotion_params
