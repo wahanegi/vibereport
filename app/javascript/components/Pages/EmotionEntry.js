@@ -47,6 +47,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
         <Form.Control
           className ={`input-${selectedType} email_field input-new-word mb-80`}
           type="text" maxLength={15}
+          autocomplete="off"
           placeholder="Add a new word"
           name="word"
           value = {emotion.word || ''}
