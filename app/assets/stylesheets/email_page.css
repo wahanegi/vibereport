@@ -256,7 +256,9 @@ text-align: center;
     text-decoration-line: underline;
     line-height: normal;
     color: #0007A3;
-    margin: 0 83%;
+}
+.lint-to-right {
+    float: right;
 }
 .row-over-links{
     height: 7px;
