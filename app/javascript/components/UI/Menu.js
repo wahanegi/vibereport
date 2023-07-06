@@ -60,12 +60,12 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
 
   const segmentsMap = {
     'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
-    'rather-not-say': { src: complete0, activeSrc: complete0_act, percent: 0 },
-    'skip-ahead': { src: complete0, activeSrc: complete0_act, percent: 0 },
     'emotion-entry': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
     'meme-selection': { src: complete5_10, activeSrc: complete5_10_act, percent: 10 },
     'selected-giphy-follow': { src: complete15, activeSrc: complete15_act, percent: 15 },
     'emotion-intensity': { src: complete20, activeSrc: complete20_act, percent: 20 },
+    'rather-not-say': { src: complete20, activeSrc: complete20_act, percent: 20 },
+    'skip-ahead': { src: complete20, activeSrc: complete20_act, percent: 20 },
     'productivity-check': { src: complete25, activeSrc: complete25_act, percent: 25 },
     'productivity-bad-follow-up': { src: complete35, activeSrc: complete35_act, percent: 35 },
     'causes-to-celebrate': { src: complete45, activeSrc: complete45_act, percent: 45 },
