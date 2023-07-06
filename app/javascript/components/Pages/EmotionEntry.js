@@ -21,7 +21,8 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const onChangeEmotion = (e) => {
     e.preventDefault()
     const { name, value } = e.target;
-    setEmotion({ ...emotion, [name]: value });
+    const trimStartValue = value.trimStart();
+    setEmotion({ ...emotion, [name]: trimStartValue });
   };
 
   const handlingOnClickNext = () => {
