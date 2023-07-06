@@ -13,10 +13,6 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [emotion, setEmotion] = useState({word: data.emotion?.word || '', category: data.emotion?.category || 'positive'});
   const [emotions, setEmotions] = useState([]);
 
-  const dataRequest = {
-    emotion: {word: emotion.word, category: emotion.category}
-  }
-
   const handleEmotionType = (type) =>{
     setSelectedType(type)
     setEmotion(prevState => ({...prevState, category: type}));
@@ -25,12 +21,16 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const onChangeEmotion = (e) => {
     e.preventDefault()
     const { name, value } = e.target;
-    const trimmedValue = value.toLowerCase().trim();
-    setEmotion({ ...emotion, [name]: trimmedValue });
+    setEmotion({ ...emotion, [name]: value });
   };
 
   const handlingOnClickNext = () => {
-    handleOnClickNext(emotion, emotions, steps, saveDataToDb, dataRequest);
+    const trimmedWord = emotion.word.toLowerCase().trim();
+    const updatedEmotion = { ...emotion, word: trimmedWord };
+    const dataRequest = {
+      emotion: {word: updatedEmotion.word, category: updatedEmotion.category}
+    }
+    handleOnClickNext(updatedEmotion, emotions, steps, saveDataToDb, dataRequest);
   };
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
         <Form.Control
           className ={`input-${selectedType} email_field input-new-word mb-80`}
           type="text" maxLength={15}
-          autocomplete="off"
+          autoComplete="off"
           placeholder="Add a new word"
           name="word"
           value = {emotion.word || ''}
