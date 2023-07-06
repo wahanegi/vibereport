@@ -3,7 +3,9 @@ import ShoutoutModal from "./ShoutoutModal";
 import ShoutoutIcon from '../../../assets/images/sys_svg/shoutout-new.svg'
 import {NavLink} from "react-router-dom";
 
-const ShoutoutButton = ({ data, setData,  num = 0, isMove = false}) => {
+const ShoutoutButton = ({ data, setData,  num = 0, isMove = false, hideShoutout}) => {
+    if (hideShoutout) return null;
+
     const [ shoutOutForm, setShoutOutForm ] = useState(false)
     const [ blink, setBlink ] = useState('')
 

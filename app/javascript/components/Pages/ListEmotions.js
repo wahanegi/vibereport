@@ -45,6 +45,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       not_working: true,
       time_period_id: timePeriod.id,
       user_id: data.current_user.id,
+      completed_at: new Date()
     }
     saveDataToDb( steps, dataRequest )
   }

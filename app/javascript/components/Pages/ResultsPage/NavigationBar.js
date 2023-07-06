@@ -2,10 +2,12 @@ import React from "react";
 import {Calendar, EditResponse} from "../../UI/ShareContent";
 import {datePrepare, isBlank, isEmpty, isPresent, rangeFormat} from "../../helpers/helpers";
 
-const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}) => {
+const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions, current_response}) => {
   if(isEmpty(time_periods)) return null
 
   const handlingBack = () => {
+    if (isBlank(current_response)) return null;
+
     const index = steps.indexOf('productivity-check');
     const new_steps = steps.slice(0, index + 1);
     saveDataToDb( new_steps )

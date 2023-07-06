@@ -26,12 +26,12 @@ import complete90_act from '../../../assets/images/complete90_act.svg'
 import complete100 from '../../../assets/images/complete100.svg'
 import complete100_act from '../../../assets/images/complete100_act.svg'
 
-const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = null }) => {
+const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = null }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
-  const id = data?.response?.id || prevId
+  const id = data?.response?.id || preview
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -56,7 +56,7 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
   };
 
   const location = window.location.href;
-  const lastSegment = prevId ? 'results' : location.substring(location.lastIndexOf("/") + 1);
+  const lastSegment = preview ? 'results' : location.substring(location.lastIndexOf("/") + 1);
 
   const segmentsMap = {
     'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
