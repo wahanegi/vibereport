@@ -3,6 +3,7 @@
 # methods for UserEmailMailer
 
 require_relative 'text_style'
+NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
 
 module UserEmailMailerHelper
   def btn_special(word, attr)
@@ -37,5 +38,13 @@ module UserEmailMailerHelper
     top_shift = rand(-max_shift..max_shift)
 
     "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; left: #{left_shift}px; top: #{top_shift}px;"
+  end
+
+  def emotions_table
+    table = []
+    emotions = Emotion.emotion_public.positive.sample(NUMBER_OF_ELEMENTS) +
+               Emotion.emotion_public.negative.sample(NUMBER_OF_ELEMENTS)
+    emotions.each_slice(6) { |sliced_emotions| table << sliced_emotions }
+    table = table.transpose.flatten
   end
 end
