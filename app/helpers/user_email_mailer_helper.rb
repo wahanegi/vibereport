@@ -22,22 +22,31 @@ module UserEmailMailerHelper
       'positive' => '#4F9B64',
       'negative' => '#D1794E'
     }
-
+  
     color = colors[category]
     text_style = TextStyle.new(word_count)
     font_size = text_style.font_size
-
+  
     font_families = [
       'Josefin Sans', 'Arial'
     ]
     font_family = font_families.sample
-
+  
     max_shift = text_style.max_shift
-
-    left_shift = rand(-max_shift..max_shift)
-    top_shift = rand(-max_shift..max_shift)
-
-    "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; left: #{left_shift}px; top: #{top_shift}px;"
+  
+    left_shift = rand(0..max_shift)
+    top_shift = rand(0..max_shift)
+  
+    scale_factor_width = 1.5
+    scale_factor_height = 0.5
+    cell_width = font_size * scale_factor_width
+    cell_height = font_size * scale_factor_height
+  
+    {
+      style: "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; left: #{left_shift}px; top: #{top_shift}px;",
+      cell_width: cell_width,
+      cell_height: cell_height
+    }
   end
 
   def emotions_table
