@@ -32,6 +32,8 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
   const id = data?.response?.id || prevId
+  const lastStep = steps[steps.length - 1];
+  const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'result', 'rather-not-say', 'skip-ahead'].includes(lastStep);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -60,12 +62,12 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
 
   const segmentsMap = {
     'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
-    'rather-not-say': { src: complete0, activeSrc: complete0_act, percent: 0 },
-    'skip-ahead': { src: complete0, activeSrc: complete0_act, percent: 0 },
     'emotion-entry': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
     'meme-selection': { src: complete5_10, activeSrc: complete5_10_act, percent: 10 },
     'selected-giphy-follow': { src: complete15, activeSrc: complete15_act, percent: 15 },
     'emotion-intensity': { src: complete20, activeSrc: complete20_act, percent: 20 },
+    'rather-not-say': { src: complete20, activeSrc: complete20_act, percent: 20 },
+    'skip-ahead': { src: complete20, activeSrc: complete20_act, percent: 20 },
     'productivity-check': { src: complete25, activeSrc: complete25_act, percent: 25 },
     'productivity-bad-follow-up': { src: complete35, activeSrc: complete35_act, percent: 35 },
     'causes-to-celebrate': { src: complete45, activeSrc: complete45_act, percent: 45 },
@@ -95,8 +97,8 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item href="#" >
-            <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || steps.length === 1 ? ' disabled-btn-draft' : ''}`}
-                    disabled={draft || steps.length === 1} onClick={handleSaveDraft}>
+            <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || isLastStepDisabled ? ' disabled-btn-draft' : ''}`}
+                    disabled={draft || isLastStepDisabled} onClick={handleSaveDraft}>
               Save Draft
             </Button>
           </Dropdown.Item>
