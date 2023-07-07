@@ -37,7 +37,7 @@ module UserEmailMailerHelper
     left_shift = rand(-max_shift..max_shift)
     top_shift = rand(-max_shift..max_shift)
 
-    "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; margin-left: #{left_shift}px; margin-top: #{top_shift}px;"
+    "position: relative; color: #{color}; font-size: #{font_size}px; font-family: #{font_family}; left: #{left_shift}px; top: #{top_shift}px;"
   end
 
   def emotions_table
