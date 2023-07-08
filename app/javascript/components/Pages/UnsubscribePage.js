@@ -26,14 +26,14 @@ const UnsubscribePage = ({data}) => {
       <h1>You will be unsubscribed from <br/> future check-in reminders.</h1>
       <h4 className='muted mt-2 mb-2'>You can always resubscribe by <br/> contacting your admin.</h4>
     </div>
-    <div className='text-center mt-2 mb-115'>
-      <Button className='btn-modal c1 btn-wide' onClick={onUnsubscribe}>
+    <div className='text-center mb-2'>
+      <Button className='btn-modal c1 w-auto border-0 px-3 mb-3' onClick={onUnsubscribe}>
         Unsubscribe
       </Button>
     </div>
-    <div className='text-center mb-1 mt-5'>
+    <div className='text-center'>
       <Link to={'/'} target="_self" rel="noopener noreferrer">
-        <Button className='btn-modal c1 back btn-wide'>
+        <Button className='btn-modal c1 back w-auto px-3 mt-3'>
           Cancel
         </Button>
       </Link>
@@ -42,19 +42,19 @@ const UnsubscribePage = ({data}) => {
 
   const Unsubscribed = () => <Fragment>
     <div className='mb-5 mt-4'>
-      <h1>You have been unsubscribed <br/> from check-in reminders.</h1>
-      <h4 className='muted mt-2 mb-2'>You can close this window, or continue below.</h4>
+      <h1>You have been unsubscribed from <br/> check-in reminders.</h1>
+      <h4 className='muted mt-2 mb-3'>You can close this window, or continue below.</h4>
     </div>
-    <div className='text-center mt-2 mb-115'>
+    <div className='text-center mb-2'>
       <Link to={'/'} target="_self" rel="noopener noreferrer">
-        <Button className='btn-modal c1 btn-wide'>
+        <Button className='btn-modal c1 w-auto border-0 px-2 mb-3 mt-1'>
           Start a check-in
         </Button>
       </Link>
     </div>
-    <div className='text-center mb-1 mt-5'>
+    <div className='text-center'>
       <Link to={`/results/${time_period.slug}`} target="_self" rel="noopener noreferrer">
-        <Button className='btn-modal c1 back btn-wide'>
+        <Button className='btn-modal c1 back w-auto px-3 mt-3'>
           Recent results
         </Button>
       </Link>
