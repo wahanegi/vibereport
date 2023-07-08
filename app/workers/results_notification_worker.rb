@@ -7,7 +7,7 @@ class ResultsNotificationWorker
   end
 
   def run_notification
-    return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_RESULTS_EMAIL'))
+    # return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_RESULTS_EMAIL'))
 
     run_results_email!
   end
