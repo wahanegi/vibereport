@@ -709,7 +709,7 @@ a {
 .modal-help {
   z-index: 30;
   top:0;
-  .padding-placement {
+  &.padding-placement {
     padding-top: 25vh;
   }
   &.lg {

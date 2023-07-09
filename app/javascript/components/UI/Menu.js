@@ -32,7 +32,7 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
   const id = data?.response?.id || prevId
-  const lastStep = steps[steps.length - 1];
+  const lastStep = prevId ? 'results' : steps[steps.length - 1];
   const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'result', 'rather-not-say', 'skip-ahead'].includes(lastStep);
 
   useEffect(() => {

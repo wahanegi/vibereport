@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
+import NotWorkingModal from "./modals/NotWorkingModal";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -14,6 +15,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
+  const [showNotWorkingModal, setShowNotWorkingModal] = useState(false)
   const clickHandling = (emotion_word, emotion_id) => {
     steps.push('meme-selection')
     const dataRequest = {
@@ -39,14 +41,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   }
 
   const onClickNotWorking = () => {
-    steps.push('results')
-    const dataRequest = {
-      emotion_id: '',
-      not_working: true,
-      time_period_id: timePeriod.id,
-      user_id: data.current_user.id,
-    }
-    saveDataToDb( steps, dataRequest )
+    setShowNotWorkingModal(true)
   }
 
   const rangeFormat = (tp) => {
@@ -62,6 +57,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       time_period_id: timePeriod.id,
       user_id: data.current_user.id })
   }
+
   return (
     <Fragment>
       { !!error && <p>{error.message}</p>}
@@ -104,7 +100,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
           <div className="big-btn">
           <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
           </div>
-          <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
+          <NavLink className="lnk-was-not mx-auto my-0" onClick={onClickNotWorking} to={''}>
             I was not working recently
           </NavLink>
           <CornerElements data = { data }
@@ -114,6 +110,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
                           draft = {draft}/>
         </div>
       }
+      <NotWorkingModal data={data}
+                       setData={setData}
+                       show={showNotWorkingModal}
+                       setShow={setShowNotWorkingModal} />
     </Fragment>
   );
 }
