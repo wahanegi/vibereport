@@ -4,6 +4,7 @@ import ResponseFlow from "./ResponseFlow";
 import { ALL_STEPS } from "./helpers/routes";
 import {apiRequest} from "./requests/axios_requests";
 import ResultsPreview from "./Pages/ResultsPage/ResultsPreview";
+import CheckInClosed from "./Pages/CheckInClosed";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
@@ -66,6 +67,7 @@ const App = () => {
             />
           ))}
           <Route path="results/:slug" element={<ResultsPreview />} />
+          <Route path="check-in-closed" element={<CheckInClosed data={frontDatabase}/>} />
         </Routes>}
       </BrowserRouter>
     </Fragment>
