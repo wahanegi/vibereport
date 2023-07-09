@@ -55,7 +55,7 @@ RSpec.describe TimePeriod, type: :model do
 
     context '#create_time_period' do
       it 'should create new time period record' do
-        last_sunday = Date.current.beginning_of_week(:sunday)
+        last_sunday = Date.current.beginning_of_week(:monday)
         new_time_period = TimePeriod.create_time_period
         expect(new_time_period.start_date).to eq(last_sunday)
         expect(new_time_period.end_date).to eq(last_sunday + 6.days)
