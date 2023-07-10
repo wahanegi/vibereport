@@ -22,9 +22,9 @@ const UnsubscribePage = ({data}) => {
   }
 
   const Unsubscribe = () => <Fragment>
-    <div className='mb-5 mt-4'>
-      <h1>You will be unsubscribed from <br/> future check-in reminders.</h1>
-      <h4 className='muted mt-2 mb-2'>You can always resubscribe by <br/> contacting your admin.</h4>
+    <div className='mt-5'>
+      <h1 className='mb-1'>You will be unsubscribed from <br/> future check-in reminders.</h1>
+      <h4 className='muted mb-2'>You can always resubscribe by <br/> contacting your admin.</h4>
     </div>
     <div className='text-center mb-2'>
       <Button className='btn-modal c1 w-auto border-0 px-3 mb-3' onClick={onUnsubscribe}>
@@ -33,7 +33,7 @@ const UnsubscribePage = ({data}) => {
     </div>
     <div className='text-center'>
       <Link to={'/'} target="_self" rel="noopener noreferrer">
-        <Button className='btn-modal c1 back w-auto px-3 mt-3'>
+        <Button className='btn-modal c1 back w-auto px-3 mt-1'>
           Cancel
         </Button>
       </Link>
@@ -41,11 +41,11 @@ const UnsubscribePage = ({data}) => {
   </Fragment>
 
   const Unsubscribed = () => <Fragment>
-    <div className='mb-5 mt-4'>
-      <h1>You have been unsubscribed from <br/> check-in reminders.</h1>
-      <h4 className='muted mt-2 mb-3'>You can close this window, or continue below.</h4>
+    <div className='mt-5'>
+      <h1 className='mb-1'>You have been unsubscribed from <br/> check-in reminders.</h1>
+      <h4 className='muted mb-3'>You can close this window, or continue below.</h4>
     </div>
-    <div className='text-center mb-2'>
+    <div className='text-center'>
       <Link to={'/'} target="_self" rel="noopener noreferrer">
         <Button className='btn-modal c1 w-auto border-0 px-2 mb-3 mt-1'>
           Start a check-in
