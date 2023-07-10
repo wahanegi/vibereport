@@ -8,6 +8,7 @@ class UserEmailMailer < ApplicationMailer
   URL = { controller: 'api/v1/responses', action: 'response_flow_from_email' }.freeze
 
   def response_invite(user, time_period)
+    @user = user
     general_link = URL.merge({ time_period_id: TimePeriod.current, not_working: false, user_id: user.id })
     @link_for_own_word = general_link.merge({ last_step: 'emotion-entry' })
     @link_for_was_not  = general_link.merge({ last_step: 'results' })

@@ -33,7 +33,7 @@ const CelebrateModal = ({ show, setShow, steps, current_user, notAskVisibility, 
               <button className='btn btn-danger b3 border-0 shadow padding10-20' >
                 No, go back
               </button>
-              <button className='btn btn-primary b3 border-0 shadow padding10-20'  onClick={handleMakeVisible}>
+              <button className='btn btn-primary b3 border-0 shadow padding10-20' onClick={handleMakeVisible}>
                 Yes, share it
               </button>
             </div>
