@@ -45,5 +45,6 @@ class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
   attributes :id, :time_period_id, :emotion_id, :steps, :gif, :rating, :comment, :productivity,
-             :bad_follow_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id, :completed_at, :draft
+             :bad_follow_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id, :completed_at, :draft,
+             :not_working
 end

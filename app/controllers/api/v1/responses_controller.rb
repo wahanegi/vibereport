@@ -7,8 +7,8 @@ module Api
                       :comment, :productivity, :bad_follow_comment, :fun_question_id, :shoutout_id,
                       :fun_question_answer_id, :completed_at, :draft, { gif: %i[src height] }].freeze
 
-      before_action :retrieve_response, only: %i[update destroy]
-      before_action :require_user!, only: %i[create update destroy]
+      before_action :retrieve_response, only: %i[update]
+      before_action :require_user!, only: %i[create update]
 
       def create
         @response = current_user.responses.build(response_params)
@@ -21,16 +21,9 @@ module Api
 
       def update
         complete_response
+        remove_related_data
         if @response.update!(response_params)
           render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
-        else
-          render json: { error: @response.errors }, status: :unprocessable_entity
-        end
-      end
-
-      def destroy
-        if @response.destroy
-          render json: { callback: 'success' }, status: :ok
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
         end
@@ -86,6 +79,13 @@ module Api
         return  if response_params['attributes']['steps'].exclude?('results') || @response.completed_at.present?
 
         @response.update(completed_at: Date.current)
+      end
+
+      def remove_related_data
+        return unless params.dig('response', 'attributes', 'not_working')
+
+        Shoutout.where(user_id: current_user.id, time_period_id: TimePeriod.current.id).destroy_all
+        @response.fun_question_answer&.destroy
       end
     end
   end

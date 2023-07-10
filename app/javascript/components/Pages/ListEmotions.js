@@ -5,6 +5,7 @@ import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
 import NotWorkingModal from "./modals/NotWorkingModal";
+import {isPresent} from "../helpers/helpers";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -41,7 +42,27 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   }
 
   const onClickNotWorking = () => {
-    setShowNotWorkingModal(true)
+    if (isPresent(data.response.attributes.id) && !data.response.attributes.not_working) {
+      setShowNotWorkingModal(true)
+    } else {
+      makeNotWorking()
+    }
+  }
+
+  const makeNotWorking = () => {
+    steps.push('results')
+    const dataRequest = {
+      emotion_id: null,
+      not_working: true,
+      time_period_id: timePeriod.id,
+      user_id: data.current_user.id,
+      rating: null,
+      comment: null,
+      productivity: null,
+      gif: {},
+      fun_question_id: null
+    }
+    saveDataToDb( steps, dataRequest )
   }
 
   const rangeFormat = (tp) => {
@@ -111,7 +132,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
         </div>
       }
       <NotWorkingModal data={data}
-                       setData={setData}
+                       makeNotWorking={makeNotWorking}
                        show={showNotWorkingModal}
                        setShow={setShowNotWorkingModal} />
     </Fragment>
