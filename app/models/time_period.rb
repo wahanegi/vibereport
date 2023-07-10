@@ -53,7 +53,7 @@ class TimePeriod < ApplicationRecord
     def create_time_period
       return if current_time_period.present?
 
-      start_date = Date.current.beginning_of_week(:monday)
+      start_date = Date.current.beginning_of_week(ENV['START_WEEK_DAY']&.to_sym || :monday)
       end_date = start_date + 6.days
       TimePeriod.create(start_date: start_date, end_date: end_date)
     end

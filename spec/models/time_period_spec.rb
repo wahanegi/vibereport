@@ -51,9 +51,14 @@ RSpec.describe TimePeriod, type: :model do
   describe 'model methods' do
     before(:each) do
       TimePeriod.destroy_all
+      allow(ENV).to receive(:[]).with('START_WEEK_DAY').and_return('monday')
     end
 
     context '#create_time_period' do
+      it 'uses a mocked environment variable' do
+        start_week = ENV['START_WEEK_DAY']
+        expect(start_week).to eq('monday')
+      end
       it 'should create new time period record' do
         last_monday = Date.current.beginning_of_week(:monday)
         new_time_period = TimePeriod.create_time_period
