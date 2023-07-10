@@ -84,7 +84,7 @@ module Api
       def remove_related_data
         return unless params.dig('response', 'attributes', 'not_working')
 
-        Shoutout.where(user_id: current_user.id, time_period_id: TimePeriod.current.id).destroy_all
+        current_user.shoutouts.where(time_period_id: TimePeriod.current.id).destroy_all
         @response.fun_question_answer&.destroy
       end
     end

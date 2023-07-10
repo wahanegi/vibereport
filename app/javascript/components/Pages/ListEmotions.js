@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {Fragment, useState} from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
