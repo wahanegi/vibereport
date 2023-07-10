@@ -33,7 +33,7 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
   const id = data?.response?.id
   const lastStep = preview ? 'results' : steps[steps.length - 1];
-  const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'result', 'rather-not-say', 'skip-ahead'].includes(lastStep);
+  const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'results', 'rather-not-say', 'skip-ahead'].includes(lastStep);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
