@@ -5,6 +5,7 @@ import { ALL_STEPS } from "./helpers/routes";
 import {apiRequest} from "./requests/axios_requests";
 import ResultsPreview from "./Pages/ResultsPage/ResultsPreview";
 import CheckInClosed from "./Pages/CheckInClosed";
+import UnsubscribePage from "./Pages/UnsubscribePage";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
@@ -23,7 +24,7 @@ const App = () => {
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
   const [step, setStep] = useState(mainPage)
 
-    useEffect(()=>{
+  useEffect(()=>{
     const setData = ( dataFromServer ) => {
       let steps = dataFromServer.response.attributes.steps
       if (!Array.isArray(steps)) {
@@ -68,6 +69,7 @@ const App = () => {
           ))}
           <Route path="results/:slug" element={<ResultsPreview />} />
           <Route path="check-in-closed" element={<CheckInClosed data={frontDatabase}/>} />
+          <Route path="unsubscribe" element={<UnsubscribePage data={frontDatabase} />} />
         </Routes>}
       </BrowserRouter>
     </Fragment>

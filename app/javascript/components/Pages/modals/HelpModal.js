@@ -4,7 +4,6 @@ import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 import {isBlank} from "../../helpers/helpers";
 import {Link} from "react-router-dom";
 import {apiRequest} from "../../requests/axios_requests";
-import {MAX_CHAR_LIMIT} from "../../helpers/consts";
 
 const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAlert }) => {
   if (isBlank(current_user)) return;

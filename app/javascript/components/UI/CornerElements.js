@@ -14,7 +14,8 @@ const CornerElements = ({
                             draft,
                             disabled,
                             hideBottom = false,
-                            prevId = null,
+                            preview = null,
+                            hideShoutout = false,
                             handleSaveDraft }) => {
   return (
     <Fragment>
@@ -23,10 +24,11 @@ const CornerElements = ({
         !hideBottom ?
           <Fragment>
             <QuestionButton data={data} />
-            <ShoutoutButton   data = { data }
-                              setData = { setData }
-                              num = { numShoutouts }
-                              isMove = { isMoveShoutout }/>
+            <ShoutoutButton data={data}
+                            setData={setData}
+                            num={numShoutouts}
+                            isMove={isMoveShoutout}
+                            hideShoutout={hideShoutout} />
           </Fragment> :
         null
       }
@@ -36,7 +38,7 @@ const CornerElements = ({
             disabled={disabled}
             data={data}
             handleSaveDraft={handleSaveDraft}
-            prevId={prevId}
+            preview={preview}
             className='placement-menu'/>
     </Fragment>
   );
