@@ -12,8 +12,6 @@ export const ALL_STEPS = [
     {id:"4.25", step:"productivity-bad-follow-up"},
     {id:"5", step:"causes-to-celebrate"},
     {id:"6", step:"recognition"},
-    {id:"6.X", step:"ShoutoutModalExample"},
-    {id:"6.XX", step:"ShoutoutModal_FlexUse"},
     {id:"7v2", step:"icebreaker-answer"},
     {id:"7v3", step:"icebreaker-question"},
     {id:"7", step:"results"},

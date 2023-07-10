@@ -22,7 +22,7 @@ class Api::V1::ResultsPresenter
       received_shoutouts:,
       current_user_shoutouts:,
       responses_count: responses.count,
-      response_id: @responses.find_by(user_id: current_user.id)&.id
+      current_response: current_user.responses.working.find_by(time_period_id: time_period.id)
     }
   end
 
