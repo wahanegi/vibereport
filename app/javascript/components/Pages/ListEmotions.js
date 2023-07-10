@@ -60,7 +60,8 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       comment: null,
       productivity: null,
       gif: {},
-      fun_question_id: null
+      fun_question_id: null,
+      completed_at: new Date()
     }
     saveDataToDb( steps, dataRequest )
   }
