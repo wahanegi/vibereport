@@ -72,7 +72,9 @@
     </div>
   </div>
   <div class="lnk-unsubscribe" style="text-align: left">
-    <%= link_to "Unsubscribe from future check-ins", "#"  %>
+    <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
+                                                       action: "unsubscribe",
+                                                       user_id: @user.id } %>
   </div>
 </div>
 </body>
