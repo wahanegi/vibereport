@@ -27,6 +27,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       rating: '',
       productivity: '0',
       draft: false,
+      not_working: false
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -36,7 +37,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
     const dataRequest = {
       time_period_id: data.time_period.id,
       user_id: data.current_user.id,
-      draft:true,
+      draft: true,
     }
     saveDataToDb( steps, dataRequest )
   }
