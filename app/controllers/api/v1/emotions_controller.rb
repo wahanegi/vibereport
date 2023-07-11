@@ -13,7 +13,7 @@ class Api::V1::EmotionsController < ApplicationController
 
   def create
     emotion = Emotion.new(emotion_params)
-    emotion_existed = Emotion.find_by(word: params.dig('emotion', 'word'))
+    emotion_existed = Emotion.matching_emotions(emotion_params)
 
     if emotion_existed.present?
       render json: EmotionSerializer.new(emotion_existed).serializable_hash

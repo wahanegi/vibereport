@@ -15,13 +15,17 @@ import {MIN_USERS_RESPONSES} from "../helpers/consts";
 
 export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
 
-export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
-  <button className={`${addClass} btn-custom emotion ${emotion.category}`}>
+export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
+const categoryClass = selectedType ? selectedType : emotion.category;
+return(
+  <button className={`${addClass} btn-custom emotion ${categoryClass}`}>
     <span hidden={!showPencil} onClick={onClick} className="edit-icon">
       <img src={edit_pencil} alt="pencil"/>
     </span>
     {emotion.word}
   </button>
+  )
+}
 
 export const BtnSendMoreShoutouts = ({ onClick }) =>
   <button className={'btn-custom shoutout d-flex flex-nowrap align-items-center'} onClick={onClick}>
