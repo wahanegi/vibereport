@@ -59,6 +59,7 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
 
   const location = window.location.href;
   const lastSegment = preview ? 'results' : location.substring(location.lastIndexOf("/") + 1);
+  const isStepUnsubscribe = location.substring(location.lastIndexOf("/") + 1) === 'unsubscribe'
 
   const segmentsMap = {
     'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
@@ -79,7 +80,11 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
   };
 
   const getSrcMenu = (lastSegment, activeImg) => {
-    if (segmentsMap[lastSegment]) {
+    if(isStepUnsubscribe){
+      return {
+        src: activeImg ? complete0_act : complete0,
+      };
+    }else if (segmentsMap[lastSegment]) {
       const { src, activeSrc, percent } = segmentsMap[lastSegment];
       return {
         src: activeImg ? activeSrc : src,
@@ -106,7 +111,9 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
           <Dropdown.Item href="#" ><Button className='btn-item-menu wb1  mx-auto my-auto' onClick={handleSignOut}>Log Out</Button></Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
+      {!isStepUnsubscribe && (
+        <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
+      )}
       {showModal && (
         <SweetAlert
           alertTitle={alertTitleLogout}
