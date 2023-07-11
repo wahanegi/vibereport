@@ -18,14 +18,14 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   const timePeriod = data.time_period
   const [showNotWorkingModal, setShowNotWorkingModal] = useState(false)
   const clickHandling = (emotion_word, emotion_id) => {
-    steps.push('meme-selection')
+    steps.push('emotion-type')
     const dataRequest = {
       emotion_id: emotion_id,
       time_period_id: timePeriod.id,
       user_id: data.current_user.id,
       comment: '',
       rating: '',
-      productivity: '0',
+      productivity: null,
       draft: false,
       not_working: false
     }
@@ -36,8 +36,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
     steps.push('emotion-entry')
     const dataRequest = {
       time_period_id: data.time_period.id,
-      user_id: data.current_user.id,
-      draft: true,
+      user_id: data.current_user.id
     }
     saveDataToDb( steps, dataRequest )
   }
