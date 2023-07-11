@@ -1,9 +1,11 @@
-import React, { Fragment } from 'react'
+import React, {Fragment, useState} from 'react'
 import ButtonEmotion from "../UI/ButtonEmotion"
 import { NavLink } from 'react-router-dom'
 import BtnAddYourOwnWord from "../UI/BtnAddYourOwnWord";
 import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
+import NotWorkingModal from "./modals/NotWorkingModal";
+import {isPresent} from "../helpers/helpers";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -14,6 +16,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
+  const [showNotWorkingModal, setShowNotWorkingModal] = useState(false)
   const clickHandling = (emotion_word, emotion_id) => {
     steps.push('emotion-type')
     const dataRequest = {
@@ -24,6 +27,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       rating: '',
       productivity: null,
       draft: false,
+      not_working: false
     }
     saveDataToDb( steps, dataRequest )
   }
@@ -32,18 +36,31 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
     steps.push('emotion-entry')
     const dataRequest = {
       time_period_id: data.time_period.id,
-      user_id: data.current_user.id,
+      user_id: data.current_user.id
     }
     saveDataToDb( steps, dataRequest )
   }
 
   const onClickNotWorking = () => {
+    if (isPresent(data.response.attributes.id) && !data.response.attributes.not_working) {
+      setShowNotWorkingModal(true)
+    } else {
+      makeNotWorking()
+    }
+  }
+
+  const makeNotWorking = () => {
     steps.push('results')
     const dataRequest = {
-      emotion_id: '',
+      emotion_id: null,
       not_working: true,
       time_period_id: timePeriod.id,
       user_id: data.current_user.id,
+      rating: null,
+      comment: null,
+      productivity: null,
+      gif: {},
+      fun_question_id: null,
       completed_at: new Date()
     }
     saveDataToDb( steps, dataRequest )
@@ -62,6 +79,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       time_period_id: timePeriod.id,
       user_id: data.current_user.id })
   }
+
   return (
     <Fragment>
       { !!error && <p>{error.message}</p>}
@@ -104,7 +122,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
           <div className="big-btn">
           <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
           </div>
-          <NavLink className="lnk-was-not  mx-auto my-0" onClick={onClickNotWorking} to={''}>
+          <NavLink className="lnk-was-not mx-auto my-0" onClick={onClickNotWorking} to={''}>
             I was not working recently
           </NavLink>
           <CornerElements data = { data }
@@ -114,6 +132,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
                           draft = {draft}/>
         </div>
       }
+      <NotWorkingModal data={data}
+                       makeNotWorking={makeNotWorking}
+                       show={showNotWorkingModal}
+                       setShow={setShowNotWorkingModal} />
     </Fragment>
   );
 }
