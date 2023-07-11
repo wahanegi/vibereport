@@ -32,7 +32,7 @@ module Api
         sign_in_user
         return redirect_to root_path if params[:time_period_id] == TimePeriod.current.id
 
-        current_user.update!(check_in_time_period_id: params[:time_period_id])
+        session[:check_in_time_period_id] = params[:time_period_id]
         redirect_to '/check-in-closed'
       end
 

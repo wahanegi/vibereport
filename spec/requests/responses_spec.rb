@@ -64,7 +64,6 @@ RSpec.describe Api::V1::ResponsesController do
           'last_name' => user.last_name,
           'not_ask_visibility' => user.not_ask_visibility,
           'opt_out' => user.opt_out,
-          'check_in_time_period_id' => nil,
           'created_at' => user.created_at.strftime('%FT%T.%LZ'),
           'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
         }
@@ -118,7 +117,6 @@ RSpec.describe Api::V1::ResponsesController do
           'last_name' => user.last_name,
           'not_ask_visibility' => user.not_ask_visibility,
           'opt_out' => user.opt_out,
-          'check_in_time_period_id' => nil,
           'created_at' => user.created_at.strftime('%FT%T.%LZ'),
           'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
         }

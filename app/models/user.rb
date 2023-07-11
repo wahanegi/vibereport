@@ -2,19 +2,18 @@
 #
 # Table name: users
 #
-#  id                      :bigint           not null, primary key
-#  email                   :string           default(""), not null
-#  encrypted_password      :string           default(""), not null
-#  first_name              :string
-#  last_name               :string
-#  not_ask_visibility      :boolean          default(FALSE), not null
-#  opt_out                 :boolean          default(FALSE)
-#  remember_created_at     :datetime
-#  reset_password_sent_at  :datetime
-#  reset_password_token    :string
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  check_in_time_period_id :integer
+#  id                     :bigint           not null, primary key
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  first_name             :string
+#  last_name              :string
+#  not_ask_visibility     :boolean          default(FALSE), not null
+#  opt_out                :boolean          default(FALSE)
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 # Indexes
 #

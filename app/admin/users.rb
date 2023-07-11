@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :password, :opt_out, :not_ask_visibility, :check_in_time_period_id
+  permit_params :first_name, :last_name, :email, :password, :opt_out, :not_ask_visibility
 
   index do
     selectable_column
@@ -28,7 +28,6 @@ ActiveAdmin.register User do
       row :team do |user|
         user.user_teams.map(&:team).map(&:name).join(', ')
       end
-      row :check_in_time_period_id
     end
 
     columns do
@@ -89,7 +88,6 @@ ActiveAdmin.register User do
       f.input :email
       f.input :opt_out
       f.input :not_ask_visibility
-      f.input :check_in_time_period_id
     end
     f.actions
   end
