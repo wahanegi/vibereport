@@ -113,6 +113,9 @@ a {
 .mb-115 {
   margin-bottom: 115px;
 }
+.mb-80 {
+  margin-bottom: 80px;
+}
 .input-label {
   width:588px;
   height:59px;
@@ -907,20 +910,105 @@ a.dropdown-item{
   }
 }
 
-
 //RatherNotSay
 .rather-not-say-first-row {
   margin-top: 240px;
+
   div.row2 {
     margin-top: -1rem;
     max-width: 600px;
     height: 75px;
     white-space: pre-wrap;
   }
+
   div.row3 {
     margin-top: 75px;
   }
+
   div.row4 {
     margin-top: 94px;
   }
+}
+
+// Toggle emotion type
+.toggle-category {
+  position: relative;
+  z-index: 3;
+}
+.btn-group.wrap-toggle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 99.75%;
+  height: 100%;
+  border: 1px solid;
+  border-radius: 100px;
+  z-index: 1;
+}
+.wrap-icon{
+  cursor: pointer;
+}
+.wrap-icon img {
+  max-width: 75px;
+  max-height: 75px;
+  border-radius: 50%;
+  margin-bottom: 3px;
+  border: 3px solid transparent;
+}
+.btn-group.wrap-toggle{
+  height: 130px;
+  width: 370px;
+  background-color: $color-grey;
+  border-radius: 100px;
+  box-shadow: 0 4px 4px 0 $gray-250;
+}
+.btn.toggle-category{
+  max-width: 185px;
+  font-size: 16px;
+  color: $black;
+  border: none;
+  --bs-btn-border-color: none;
+  background-color: transparent;
+  border-radius: 100px !important;
+}
+.btn-check.toggle-negative-check + .toggle-negative:hover{
+  color: $color-orange;
+  background-color: transparent;
+}
+.btn-check.toggle-negative-check:checked + .toggle-negative,
+{
+  background-color: $light-red;
+  border: 3px solid $color-orange;
+  box-shadow: 4px 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+.toggle-negative:hover .icon-negative,
+.toggle-negative:focus .icon-negative,
+.btn-check.toggle-negative-check:checked + .toggle-negative .icon-negative{
+  border: 3px solid $color-orange;
+}
+.toggle-negative:hover span,
+.btn-check.toggle-negative-check:checked + .toggle-negative{
+  font-size: 20px;
+  color: $color-orange;
+}
+.btn-check.toggle-positive-check + .toggle-positive:hover{
+  color: $color-green;
+  background-color: transparent;
+}
+.btn-check.toggle-positive-check:checked + .toggle-positive{
+  z-index: 100;
+  background-color: $gray-tea-green;
+  border: 3px solid $color-green;
+  box-shadow: -4px 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+.toggle-positive:hover .icon-positive,
+.toggle-positive:focus .icon-positive,
+.btn-check.toggle-positive-check:checked + .toggle-positive .icon-positive{
+  border: 3px solid $color-green;
+}
+.toggle-positive:hover span,
+.btn-check.toggle-positive-check:checked + .toggle-positive {
+  font-size: 20px;
+  color: $color-green;
 }

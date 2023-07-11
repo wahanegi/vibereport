@@ -15,7 +15,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
   const emotions = data.data
   const timePeriod = data.time_period
   const clickHandling = (emotion_word, emotion_id) => {
-    steps.push('meme-selection')
+    steps.push('emotion-type')
     const dataRequest = {
       emotion_id: emotion_id,
       time_period_id: timePeriod.id,
@@ -33,7 +33,6 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
     const dataRequest = {
       time_period_id: data.time_period.id,
       user_id: data.current_user.id,
-      draft:true,
     }
     saveDataToDb( steps, dataRequest )
   }

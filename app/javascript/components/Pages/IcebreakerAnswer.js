@@ -56,7 +56,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
 
     const goToResultPage = () => {
       steps.push('results')
-      saveDataToDb(steps, {draft: true} )
+      saveDataToDb(steps)
     }
     saveDataAnswer(dataFromServer, goToResultPage)
   };
@@ -80,7 +80,7 @@ const IcebreakerAnswer = ({data, setData, saveDataToDb, steps, service, draft}) 
       }else {
         steps.push('results')
       }
-      saveDataToDb(steps, {draft: true})
+      saveDataToDb(steps)
     } else {
       apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
     }
