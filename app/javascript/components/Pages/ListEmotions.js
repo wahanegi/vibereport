@@ -22,7 +22,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       user_id: data.current_user.id,
       comment: '',
       rating: '',
-      productivity: '0',
+      productivity: null,
       draft: false,
     }
     saveDataToDb( steps, dataRequest )
