@@ -11,10 +11,18 @@ const mockService = {
   
   const data = {
     response: {
-      attributes: {
-        celebrate_comment: "",
-      },
+      attributes: {},
     },
+    current_user: {
+      id: 1,
+      first_name: 'Serhii',
+      last_name: 'Petrov',
+      not_ask_visibility: false
+    },
+    time_period: {
+      id: 1
+    },
+    users: []
   };
   const setData = jest.fn();
 
@@ -43,16 +51,5 @@ const сausesToCelebrateProps = {
         </MemoryRouter>
         );
       expect(screen.getByText('Are there any recent causes to celebrate?')).toBeInTheDocument();
-    });
-
-    it('should update the celebrateComment state when the comment input is changed', () => {
-      const { getByPlaceholderText } = render(
-        <MemoryRouter>
-          <CausesToCelebrate {...сausesToCelebrateProps} />
-        </MemoryRouter>
-      );
-      const commentInput = getByPlaceholderText('Are you grateful for anything that happened at work recently?');
-      fireEvent.change(commentInput, { target: { value: 'Test comment' } });
-      expect(commentInput.value).toBe('Test comment');
     });
   });

@@ -46,7 +46,6 @@ RSpec.describe Api::V1::EmotionsController do
       get '/api/v1/emotions'
       expect(json_data.first[:attributes].length).to eq(2)
       expect(count_word_in_obj('positive', json)).to eq(12)
-      expect(count_word_in_obj('neutral', json)).to eq(0)
       expect(count_word_in_obj('negative', json)).to eq(12)
     end
   end

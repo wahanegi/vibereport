@@ -3,7 +3,7 @@
 # Table name: emotions
 #
 #  id         :bigint           not null, primary key
-#  category   :integer          default("neutral")
+#  category   :integer          default("positive")
 #  public     :boolean          default(FALSE)
 #  word       :string
 #  created_at :datetime         not null
@@ -14,7 +14,6 @@ require 'rails_helper'
 RSpec.describe Emotion, type: :model do
   let!(:emotion) { create :emotion }
   let!(:emotion_positive) { create(:emotion, category: 'positive') }
-  let!(:emotion_neutral) { create(:emotion, category: 'neutral') }
   let!(:emotion_negative) { create(:emotion, category: 'negative') }
   before do
     Faker::UniqueGenerator.clear
@@ -32,9 +31,6 @@ RSpec.describe Emotion, type: :model do
   describe 'Scopes' do
     it 'positive scope' do
       expect(Emotion.emotion_public.positive).to include(emotion_positive)
-    end
-    it 'neutral scope' do
-      expect(Emotion.emotion_public.neutral).to include(emotion_neutral)
     end
     it 'negative scope' do
       expect(Emotion.emotion_public.negative).to include(emotion_negative)

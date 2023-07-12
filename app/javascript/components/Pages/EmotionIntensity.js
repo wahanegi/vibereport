@@ -122,10 +122,6 @@ const generateStyles = (value, selected, category) => {
       backgroundColor = EMOTION_COLORS.negative[value] || 'transparent';
       borderColor = '#5689EB';
       break;
-    case "neutral":
-      backgroundColor = EMOTION_COLORS.neutral[value] || 'transparent';
-      borderColor = '#F18C59';
-      break;
     case "positive":
       backgroundColor = EMOTION_COLORS.positive[value] || 'transparent';
       borderColor = '#5689EB';

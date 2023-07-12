@@ -33,20 +33,12 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   }, [gifUrl]);
 
   const handlingOnClickSkip = () =>{
-    if (emotion.category === "neutral") {
-      steps.push('productivity-check');
-    } else {
-      steps.push('emotion-intensity')
-    }
+    steps.push('emotion-intensity')
     saveDataToDb( steps , { gif: null, draft: false })
   }
 
   const chooseGIPHYHandling = () => {
-    if (emotion.category === "neutral") {
-      steps.push('productivity-check');
-    } else {
-      steps.push('selected-giphy-follow');
-    }
+    steps.push('selected-giphy-follow');
     saveDataToDb(steps, { gif: gifUrl, draft: false });
   }
   
