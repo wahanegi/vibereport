@@ -6,7 +6,7 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   if(isEmpty(time_periods)) return null
 
   const handlingBack = () => {
-    const index = steps.indexOf('productivity-check');
+    const index = steps.indexOf('emotion-intensity');
     const new_steps = index !== -1 ? steps.slice(0, index + 1) : [steps[0]];
     saveDataToDb( new_steps, {not_working: false, draft: false} )
   }
