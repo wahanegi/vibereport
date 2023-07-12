@@ -48,17 +48,6 @@ ActiveAdmin.register_page 'Dashboard' do
         end
 
         div do
-          strong 'Neutral: '
-          ul do
-            Array(vars[:neutral_verbatims]).each do |verbatim|
-              verbatim.split('||').each do |comment|
-                li comment.strip
-              end
-            end
-          end
-        end
-
-        div do
           strong 'Negative: '
           ul do
             Array(vars[:negative_verbatims]).each do |verbatim|

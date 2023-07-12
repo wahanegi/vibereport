@@ -21,7 +21,6 @@ module ActiveAdminHelpers
 
     if team.nil?
       vars[:positive_verbatims] = ProductivityVerbatims.new(team, current_period).generate[:positive]
-      vars[:neutral_verbatims] = ProductivityVerbatims.new(team, current_period).generate[:neutral]
       vars[:negative_verbatims] = ProductivityVerbatims.new(team, current_period).generate[:negative]
     else
       vars[:productivity_verbatims] = ProductivityVerbatims.new(team, time_period).generate
