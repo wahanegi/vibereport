@@ -55,7 +55,7 @@ class User < ApplicationRecord
   end
 
   def strip_first_name_last_name
-    self.first_name = first_name.strip unless first_name.nil?
-    self.last_name = last_name.strip unless last_name.nil?
+    first_name&.strip!
+    last_name&.strip!
   end
 end

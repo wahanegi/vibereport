@@ -21,6 +21,6 @@ class Team < ApplicationRecord
   private
 
   def strip_name
-    self.name = name.strip unless name.nil?
+    name&.strip!
   end
 end
