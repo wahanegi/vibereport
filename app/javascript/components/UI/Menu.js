@@ -31,10 +31,9 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
   const [activeImg, setActiveImg] = useState(false);
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
-
   const id = data?.response?.id
   const lastStep = preview ? 'results' : steps[steps.length - 1];
-  const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'result', 'rather-not-say', 'skip-ahead'].includes(lastStep);
+  const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'results', 'rather-not-say', 'skip-ahead'].includes(lastStep);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -60,10 +59,12 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
 
   const location = window.location.href;
   const lastSegment = preview ? 'results' : location.substring(location.lastIndexOf("/") + 1);
+  const isStepUnsubscribe = location.substring(location.lastIndexOf("/") + 1) === 'unsubscribe'
 
   const segmentsMap = {
     'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
     'emotion-entry': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
+    'emotion-type': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
     'meme-selection': { src: complete5_10, activeSrc: complete5_10_act, percent: 10 },
     'selected-giphy-follow': { src: complete15, activeSrc: complete15_act, percent: 15 },
     'emotion-intensity': { src: complete20, activeSrc: complete20_act, percent: 20 },
@@ -79,7 +80,11 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
   };
 
   const getSrcMenu = (lastSegment, activeImg) => {
-    if (segmentsMap[lastSegment]) {
+    if(isStepUnsubscribe){
+      return {
+        src: activeImg ? complete0_act : complete0,
+      };
+    }else if (segmentsMap[lastSegment]) {
       const { src, activeSrc, percent } = segmentsMap[lastSegment];
       return {
         src: activeImg ? activeSrc : src,
@@ -106,7 +111,9 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
           <Dropdown.Item href="#" ><Button className='btn-item-menu wb1  mx-auto my-auto' onClick={handleSignOut}>Log Out</Button></Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
+      {!isStepUnsubscribe && (
+        <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
+      )}
       {showModal && (
         <SweetAlert
           alertTitle={alertTitleLogout}

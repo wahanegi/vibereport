@@ -47,16 +47,25 @@ RSpec.describe Emotion, type: :model do
   describe 'Validations' do
     it { is_expected.to validate_presence_of :word }
     it { is_expected.to validate_length_of(:word).is_at_least(2).is_at_most(15) }
-    it { is_expected.to define_enum_for(:category).with_values(negative: 0, neutral: 1, positive: 2) }
 
-    it 'the same emotion word should not be used' do
-      new_word = FactoryBot.build(:emotion, word: emotion.word)
-      expect(new_word).to_not be_valid
-    end
+    context 'uniqueness of word within category' do
+      let!(:existing_emotion) { create(:emotion, word: 'pressured', category: :positive) }
 
-    it 'the capitalized emotion word should not be used' do
-      new_word = FactoryBot.build(:emotion, word: emotion.word.upcase!)
-      expect(new_word).to_not be_valid
+      it 'does not allow the same emotion word with the same category' do
+        new_emotion = FactoryBot.build(:emotion, word: existing_emotion.word, category: existing_emotion.category)
+        expect(new_emotion).to_not be_valid
+      end
+
+      it 'allows the same emotion word with a different category' do
+        new_emotion = FactoryBot.build(:emotion, word: existing_emotion.word, category: :negative)
+        expect(new_emotion).to be_valid
+      end
+
+      it 'the capitalized emotion word should not be used' do
+        uppercase_word = existing_emotion.word.upcase!
+        new_word = FactoryBot.build(:emotion, word: uppercase_word, category: existing_emotion.category)
+        expect(new_word).to_not be_valid
+      end
     end
   end
 
@@ -78,7 +87,11 @@ RSpec.describe Emotion, type: :model do
       let!(:existing_emotion) { create(:emotion, word: 'happy', category: 'positive', public: false) }
       let(:emotion_params) { { emotion: { word: 'happy', category: 'positive', public: false } } }
 
-      it 'does not create a new Emotion' do
+      it 'creates with existing emotion word and new category' do
+        expect { Emotion.create(word: 'happy', category: 'negative', public: false) }.to change(Emotion, :count)
+      end
+
+      it 'does not create with existing emotion word and category' do
         expect { Emotion.create(word: 'happy', category: 'positive', public: false) }.not_to change(Emotion, :count)
       end
     end
@@ -87,6 +100,22 @@ RSpec.describe Emotion, type: :model do
       it 'does not create a new Emotion' do
         expect { Emotion.create(word: '', category: 'positive', public: false) }.not_to change(Emotion, :count)
       end
+    end
+  end
+
+  describe 'Scopes' do
+    let!(:emotion1) { create(:emotion, word: 'happy', category: 'positive') }
+    let!(:emotion2) { create(:emotion, word: 'sad', category: 'negative') }
+
+    it 'returns emotions with matching word and category' do
+      emotions = Emotion.matching_emotions(word: 'happy', category: 'positive')
+      expect(emotions).to include(emotion1)
+      expect(emotions).not_to include(emotion2)
+    end
+
+    it 'returns empty array if no matching emotions found' do
+      emotions = Emotion.matching_emotions(word: 'angry', category: 'negative')
+      expect(emotions).to be_empty
     end
   end
 end

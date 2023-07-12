@@ -21,6 +21,7 @@ module Api
 
       def update
         complete_response
+        remove_related_data
         if @response.update!(response_params)
           render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
         else
@@ -78,6 +79,13 @@ module Api
         return  if response_params['attributes']['steps'].exclude?('results') || @response.completed_at.present?
 
         @response.update(completed_at: Date.current)
+      end
+
+      def remove_related_data
+        return unless params.dig('response', 'attributes', 'not_working')
+
+        current_user.shoutouts.where(time_period_id: TimePeriod.current.id).destroy_all
+        @response.fun_question_answer&.destroy
       end
     end
   end

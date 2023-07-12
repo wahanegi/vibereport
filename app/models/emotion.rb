@@ -15,7 +15,9 @@ class Emotion < ApplicationRecord
   SHOW_NUMBER_PER_CATEGORY = 12
   enum category: [:negative, :neutral, :positive]
   scope :emotion_public, -> { where(public: true) }
-  validates :word, presence: true, length: { in: 2..15 }, uniqueness: { case_sensitive: false }
+  validates :word, presence: true, length: { in: 2..15 }, uniqueness: { scope: :category, case_sensitive: false }
   validates :category, inclusion: { in: Emotion::categories }
   before_save { self.word&.downcase! }
+
+  scope :matching_emotions, ->(emotion_params) { where(word: emotion_params[:word], category: emotion_params[:category]) }
 end
