@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :user_teams, dependent: :destroy
   has_many :teams, through: :user_teams
+  before_validation :strip_first_name_last_name
 
   MAX_NAME_LENGTH = 15
 
@@ -51,5 +52,10 @@ class User < ApplicationRecord
 
   def password_required?
     new_record? || password.present?
+  end
+
+  def strip_first_name_last_name
+    first_name&.strip!
+    last_name&.strip!
   end
 end
