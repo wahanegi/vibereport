@@ -13,7 +13,7 @@ class Emotion < ApplicationRecord
   has_many :responses, dependent: :destroy
 
   SHOW_NUMBER_PER_CATEGORY = 12
-  enum category: [:negative, :positive]
+  enum category: { negative: 0, positive: 1 }
   scope :emotion_public, -> { where(public: true) }
   validates :word, presence: true, length: { in: 2..15 }, uniqueness: { scope: :category, case_sensitive: false }
   validates :category, inclusion: { in: Emotion::categories }
