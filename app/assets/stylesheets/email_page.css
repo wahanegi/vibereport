@@ -449,15 +449,6 @@ html {
     background-size: contain;
     margin-bottom: 30px;
 }
-  
-.random-word {
-    position: absolute;
-    white-space: nowrap;
-    font-size: 1rem;
-    transition: transform 0.2s ease-in-out;
-    min-width: 16.6666%; /* 100% / 6 columns */
-    min-height: 16.6666%; /* 100% / 6 rows */
-}
 
 .link-text-results{
     display: block;
