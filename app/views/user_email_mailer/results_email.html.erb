@@ -32,21 +32,14 @@
     </div>
   </div>
   <div class="second-row">
-    <div class="calendar-days ml-55">
-       <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
-    </div>
+  <div class="calendar-days ml-55">
+      <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+  </div>
   </div>
   <div class="mx-auto my-0 title">Submissions are in!</div>
     <div class="mx-auto my-0 text-invitation">See how the team has been doing:</div>
   <div class="container">
     <div class="responses-words">
-      <% @words.shuffle.each_slice(6) do |row| %>
-        <% row.each do |word| %>
-          <div class="random-word" style="<%= random_position_and_style(word[:category], word[:count]) %>">
-            <%= word[:word] || "No word found" %>
-          </div>
-        <% end %>
-      <% end %>
     </div>
   </div>
   <div class="big-btn mx-auto">

@@ -31,10 +31,10 @@ module Api
 
       def response_flow_from_email
         sign_in_user
-        result = ResponseFlowFromEmail.new(params, @user).call
-        return redirect_to root_path if result[:success]
+        return redirect_to root_path if params[:time_period_id] == TimePeriod.current.id.to_s
 
-        render json: { error: result[:error] }, status: :unprocessable_entity
+        session[:check_in_time_period_id] = params[:time_period_id]
+        redirect_to '/check-in-closed'
       end
 
       def sign_out_user

@@ -112,4 +112,11 @@ Rails.application.configure do
   end
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   config.asset_host = "https://#{ENV['DOMAIN_URL']}"
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins "https://#{ENV['DOMAIN_URL']}"
+      resource '/fonts/*', headers: :any, methods: %i[get options head]
+      resource '/assets/*', headers: :any, methods: %i[get options head]
+    end
+  end
 end

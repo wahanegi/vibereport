@@ -87,6 +87,7 @@
   .card-header input {
     font-size: $h1-font-size;
     background-color: $light-grey !important;
+    border: 3px solid $royal-blue !important;
     text-align: start;
     box-shadow: none;
     &.positive-input {

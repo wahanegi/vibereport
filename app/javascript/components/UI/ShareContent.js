@@ -13,7 +13,13 @@ import editResponse from "../../../assets/images/editresponse.svg"
 import line from "../../../assets/images/line.svg"
 import {MIN_USERS_RESPONSES} from "../helpers/consts";
 
-export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
+export const Logo = () => <div className="board position-absolute t-35">
+  <div className="convert bigger ml-41" >
+    <p className="position-relative color-black" >Logo/Brand</p>
+    <div className="line1 offset-line1" ></div>
+    <div className="line2 offset-line2"></div>
+  </div>
+</div>
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
 const categoryClass = selectedType ? selectedType : emotion.category;
