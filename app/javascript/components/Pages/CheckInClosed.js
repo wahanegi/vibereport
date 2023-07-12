@@ -16,7 +16,7 @@ const CheckInClosed = ({ data }) => {
             {rangeFormat(check_in_time_period)}<br/>
             has closed.
           </h1>
-          <div className='row2 mx-auto'>
+          <div className='row mb-0'>
             <h4>But, good news!<br/><br/>There’s a new check-in available.</h4>
           </div>
         </div>
