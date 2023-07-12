@@ -33,4 +33,15 @@ RSpec.describe Team, type: :model do
       expect(team).not_to be_valid
     end
   end
+
+  context 'Callbacks' do
+    describe '#strip_name' do
+      let(:team) { build(:team, name: " Test Team ") }
+  
+      it 'strips leading and trailing whitespace from name before validation' do
+        team.validate
+        expect(team.name).to eq('Test Team')
+      end
+    end
+  end
 end
