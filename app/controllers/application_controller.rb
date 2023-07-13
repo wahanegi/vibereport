@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   private
 
   def ensure_proper_subdomain
-    if ENV['DOMAIN_URL'].present? && request.host_with_port != ENV['DOMAIN_URL']
-      redirect_to [request.protocol, ENV['DOMAIN_URL'], request.fullpath].join
-    end
+    domain_url = ENV.fetch('DOMAIN_URL', nil)
+    return unless domain_url.present? && request.host_with_port != domain_url
+
+    redirect_to [request.protocol, domain_url, request.fullpath].join
   end
 end
