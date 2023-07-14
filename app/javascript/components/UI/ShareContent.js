@@ -49,10 +49,11 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
     {text}
   </button>
 
-export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, prevTimePeriod, emotions}) =>
+export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
+                           positionRight = false, prevTimePeriod, emotions, nextTimePeriod}) =>
   isPresent(date) && !hidden && <div className="position-relative">
     { prevTimePeriod && positionLeft ?
-      emotions.length < MIN_USERS_RESPONSES ?
+      emotions.length < MIN_USERS_RESPONSES && !nextTimePeriod ?
         <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See last week’s results</p>:
         <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See previous results</p>:
       null
@@ -62,7 +63,7 @@ export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, 
       <img src={calendar} alt="calendar" />
       <div className="position-absolute top-0 w-82" >
         {date.includes(' - ') ?
-          <div className='mt-3 d-flex'>
+          <div className='mt-3 d-flex flex-column'>
             {date.split(' - ')[0]}
             <img src={line} alt="line" />
             {date.split(' - ')[1]}

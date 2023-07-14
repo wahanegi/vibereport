@@ -12,7 +12,8 @@ const PreviewQuestionSection = () =>
     <div className='row wrap question preview mb-3' />
   </div>
 
-const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, collapse, setCollapse, steps, saveDataToDb}) => {
+const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, collapse, setCollapse, steps,
+                               saveDataToDb, setShowWorkingModal}) => {
   const [text, setText] = useState('');
   const [addClass, setAddClass] = useState('')
   const handleMouseEnter = () => {
@@ -27,8 +28,12 @@ const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, collapse,
 
   const handlingBack = () => {
     const index = steps.indexOf('icebreaker-answer');
-    const new_steps = steps.slice(0, index + 1);
-    !nextTimePeriod && saveDataToDb( new_steps )
+    if (index === -1) {
+      !nextTimePeriod && setShowWorkingModal(true)
+    } else {
+      const new_steps = steps.slice(0, index + 1);
+      !nextTimePeriod && saveDataToDb( new_steps )
+    }
   }
 
   useEffect(() => {
@@ -99,7 +104,7 @@ const AnswerItem = ({answer, user, collapse}) => {
   </div>
 }
 
-const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb, isMinUsersResponses}) => {
+const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb, isMinUsersResponses, setShowWorkingModal}) => {
   if(!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
 
   const userName = fun_question?.user?.first_name
@@ -110,7 +115,8 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveData
                                                     setCollapse={setCollapse}
                                                     nextTimePeriod={nextTimePeriod}
                                                     steps={steps}
-                                                    saveDataToDb={saveDataToDb} />
+                                                    saveDataToDb={saveDataToDb}
+                                                    setShowWorkingModal={setShowWorkingModal}/>
 
   return <div className='results col'>
     <Question {...{userName, fun_question, collapse, setCollapse}} />

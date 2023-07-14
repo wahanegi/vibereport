@@ -83,11 +83,19 @@ class Api::V1::ResultsPresenter
   end
 
   def received
+    return [] unless current_user_has_response?
+
     current_user.mentions.where(time_period_id: time_period.id).filter_map { |shoutout| shoutout_block(shoutout) }
   end
 
   def sent
+    return [] unless current_user_has_response?
+
     current_user.shoutouts.where(time_period_id: time_period.id).filter_map { |shoutout| recipients_block(shoutout) }
+  end
+
+  def current_user_has_response?
+    users.include?(current_user)
   end
 
   def shoutout_block(shoutout)
