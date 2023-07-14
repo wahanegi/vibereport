@@ -38,6 +38,7 @@ const RichInputElement =({ richText = '',
   const LIMIT_CHARS = 700
   const highlightSmbATUnknownUser = false
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
+  const [isNotActive, setIsNotActive] = useState(false)
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
@@ -338,7 +339,11 @@ const clickEnterTabHandling = ( i ) => {
   const clickHandling = event => {
     const element = textAreaRef.current
     const cursor = Cursor.getCurrentCursorPosition(element)
-
+    if (element.textContent.includes(`Use "@"  to include Shoutouts to members of the team!`)){
+      setIsNotActive(true)
+      Cursor.setCurrentCursorPosition(0, element)
+      return
+    }
     if (cursor.isSPAN && cursor.focusOffset - 1 !== cursor.focusNode.textContent.length){
       filteredUsers.map((user, index) => {
         if (userFullName(user) === cursor.focusNode.textContent.slice(1)){
