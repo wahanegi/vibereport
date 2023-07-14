@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
     domain_url = ENV['DOMAIN_URL']
     return if domain_url.blank? || request.host_with_port == domain_url
 
-    redirect_to [request.protocol, domain_url, request.fullpath].join
+    redirect_to [request.protocol, domain_url, request.fullpath].join, allow_other_host: true
   end
 end
