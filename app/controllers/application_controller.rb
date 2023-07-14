@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_proper_subdomain
     domain_url = ENV['DOMAIN_URL']
-    return unless domain_url.present? && request.host_with_port != domain_url
+    return if domain_url.blank? || request.host_with_port == domain_url
 
     redirect_to [request.protocol, domain_url, request.fullpath].join
   end
