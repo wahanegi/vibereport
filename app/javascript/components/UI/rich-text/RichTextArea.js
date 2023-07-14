@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import parse from "html-react-parser";
 
-const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursorPos, placeholder }) => {
+const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursorPos, placeholder}) => {
     const [isNotActive, setIsNotActive] = useState(true)
   useEffect(() => {
     const rect = refs.current.getBoundingClientRect();
@@ -9,7 +9,6 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
     if( process.env.NODE_ENV !== 'test' && !isCaretWithinBounds ) {
       refs.current.scrollBy({ top: cursorPos.coordinates.y - rect.y })
     }
-
   }, [cursorPos]);
 
     const handleOnKeyUp= (e) =>{
@@ -24,7 +23,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
       setIsNotActive(false)
     }
 
-    const isPlaceholder = !textHTML.length && isNotActive
+    const isPlaceholder = !textHTML.length
 
     return (
         <div className = {` ${className} overflow-hidden`}>
