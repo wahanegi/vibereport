@@ -19,9 +19,9 @@
     <% end %>
     <div class="b1">
       <% email_field_name = :"passwordless[#{@email_field}]" %>
-      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input", class:"mt-2 w-660 email-input"%>
+      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input", class:"mt-2 w-660 email-input email-input-new"%>
     </div>
-    <div class="d-flex align-items-center mt-162 pb-52">
+    <div class="d-flex align-items-center mt-123 pb-52">
       <%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
     </div>
     <div class="hud help pointer d-flex justify-content-end h-0 pb-52 mb-3">

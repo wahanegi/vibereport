@@ -132,10 +132,12 @@ a {
 .w-82 {
   width: 82px;
 }
-
+input.email-input-new:focus-visible{
+  outline: none;
+}
 //create.html.erb
 .placement-area {
-  margin-top: 261px;
+  margin-top: 200px;
   min-width:750px;
 }
 .mb-negative-17 {
