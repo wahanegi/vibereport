@@ -1,5 +1,5 @@
 <%= form_with model: @session, url: send(Passwordless.mounted_as).sign_in_path, data: { turbo: 'false'} do |f| %>
-  <div class="mx-auto mt-123 minW-675">
+  <div class="mx-auto mt-85 minW-675">
     <div class="welcome-field mx-auto mb-115">
       <h1 class="color-black">
         Oh, hi there!
@@ -21,7 +21,7 @@
       <% email_field_name = :"passwordless[#{@email_field}]" %>
       <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input", class:"mt-2 w-660 email-input email-input-new"%>
     </div>
-    <div class="d-flex align-items-center mt-123 pb-52">
+    <div class="d-flex align-items-center mt-85 pb-52">
       <%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
     </div>
     <div class="hud help pointer d-flex justify-content-end h-0 pb-52 mb-3">
