@@ -52,7 +52,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
 
   const Navigation = () =>
-    <div className='d-flex justify-content-between gap-3'>
+    <div className='d-flex justify-content-between gap-3 pb-52'>
       <div>
         <h5 className='mt-2 mb-0 text-muted'>Share it in your way!</h5>
         <BtnOutline text='Upload your own meme!' onClick={uploadGIPHYHandling} />
