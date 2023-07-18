@@ -16,6 +16,12 @@ ActiveAdmin.register User do
     actions
   end
 
+  filter :email, as: :string
+  filter :first_name, as: :string
+  filter :last_name, as: :string
+  filter :not_ask_visibility, as: :boolean
+  filter :opt_out, as: :boolean
+
   show do
     attributes_table do
       row :email

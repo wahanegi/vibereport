@@ -19,7 +19,7 @@ ActiveAdmin.register FunQuestion do
 
   form do |f|
     f.inputs 'Fun questions' do
-      f.input :user, collection: User.all.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
+      f.input :user, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
       f.input :time_period, collection: TimePeriod.order(start_date: :desc).map { |t| ["#{t.date_range}", t.id] }
       f.input :question_body
       f.input :public
