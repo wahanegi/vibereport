@@ -15,12 +15,6 @@ ActiveAdmin.register TimePeriod do
   filter :start_date, as: :date_range
   filter :end_date, as: :date_range
   filter :due_date, as: :date_range
-  filter :fun_question, as: :select, collection: proc { FunQuestion.all.map { |fq| [fq.question_body, fq.id] } }
-  filter :emotions, as: :select, collection: proc { Emotion.all.map { |e| [e.word, e.id] } }
-  filter :shoutouts, as: :select, collection: proc { Shoutout.where(type: nil).map { |s| [s.user.full_name, s.id] } }
-  filter :celebrate_shoutouts, as: :select, collection: proc { CelebrateShoutout.all.map { |cs| [cs.user.full_name, cs.id] } }
-  filter :created_at, as: :date_range
-  filter :updated_at, as: :date_range
   filter :slug, as: :string
 
   form do |f|

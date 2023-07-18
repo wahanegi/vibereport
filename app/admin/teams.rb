@@ -12,7 +12,7 @@ ActiveAdmin.register Team do
   end
 
   filter :name, as: :string, label: 'Team name'
-  filter :user_teams_user_id, as: :select, collection: User.all.order(:email).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }, label: 'User'
+  filter :user_teams_user_id, as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }, label: 'User'
 
   action_item :import_csv, only: :index do
     link_to 'Import CSV', import_csv_admin_teams_path
