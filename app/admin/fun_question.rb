@@ -12,10 +12,15 @@ ActiveAdmin.register FunQuestion do
     actions
   end
 
+  filter :user, as: :select, collection: User.all.order(:email).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }
+  filter :time_period, as: :select, collection: TimePeriod.all.order(start_date: :desc).map { |t| [t.date_range, t.id] }
+  filter :public, as: :boolean
+  filter :used, as: :boolean
+
   form do |f|
     f.inputs 'Fun questions' do
-      f.input :user, collection: User.all.map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
-      f.input :time_period, collection: TimePeriod.all.map { |t| ["#{t.date_range}", t.id] }
+      f.input :user, collection: User.all.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
+      f.input :time_period, collection: TimePeriod.all.order(start_date: :desc).map { |t| ["#{t.date_range}", t.id] }
       f.input :question_body
       f.input :public
       f.input :used

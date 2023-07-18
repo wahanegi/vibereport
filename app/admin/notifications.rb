@@ -12,13 +12,13 @@ ActiveAdmin.register Notification do
 
   form do |f|
     f.inputs 'Notifications' do
-      f.input :user, collection: User.all.map { |u| ["#{u.email} (#{u.full_name})", u.id] }
+      f.input :user, collection: User.all.order(:email).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }
       f.input :details
       f.input :viewed
     end
     f.actions
   end
 
-  filter :user, as: :select, collection: User.all.map { |item| [item.email, item.id] }, label: 'Sender'
+  filter :user, as: :select, collection: User.all.order(:email).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }, label: 'Sender'
   filter :viewed, as: :boolean
 end
