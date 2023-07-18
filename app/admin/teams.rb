@@ -6,13 +6,13 @@ ActiveAdmin.register Team do
   form do |f|
     f.inputs 'Team Details' do
       f.input :name
-      f.input :users, as: :check_boxes, collection: User.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
+      f.input :users, as: :check_boxes, collection: User.all.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
     end
     f.actions
   end
 
   filter :name, as: :string, label: 'Team name'
-  filter :user_teams_user_id, as: :select, collection: User.order(:email).map { |u| ["#{u.full_name}", u.id] }, label: 'User'
+  filter :user_teams_user_id, as: :select, collection: User.all.order(:email).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }, label: 'User'
 
   action_item :import_csv, only: :index do
     link_to 'Import CSV', import_csv_admin_teams_path
@@ -80,7 +80,7 @@ ActiveAdmin.register Team do
       panel 'Select Time Period' do
         form action: admin_team_path(team), method: :get do
           select_tag :time_period, 
-                     options_from_collection_for_select(TimePeriod.order(end_date: :desc), :id, :date_range, params[:time_period]),
+                     options_from_collection_for_select(TimePeriod.all.order(end_date: :desc), :id, :date_range, params[:time_period]),
                      include_blank: 'Select Time Period',
                      onchange: "this.form.submit();"
         end

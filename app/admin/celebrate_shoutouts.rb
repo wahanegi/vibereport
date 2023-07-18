@@ -11,7 +11,7 @@ ActiveAdmin.register CelebrateShoutout do
     actions
   end
 
-  filter :user, as: :select, collection: User.order(:email).map { |u| ["#{u.full_name}", u.id] }, label: 'Sender'
-  filter :time_period, as: :select, collection: TimePeriod.order(start_date: :desc).map { |t| [t.date_range, t.id] }
+  filter :user, as: :select, collection: User.all.order(:email).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }, label: 'Sender'
+  filter :time_period, as: :select, collection: TimePeriod.all.order(start_date: :desc).map { |t| [t.date_range, t.id] }
   filter :recipients,  as: :select, collection: User.order(:email).map { |r| [r.full_name, r.id] }
 end

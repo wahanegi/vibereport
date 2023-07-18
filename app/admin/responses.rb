@@ -22,15 +22,15 @@ ActiveAdmin.register Response do
     actions
   end
 
-  filter :user, as: :select, collection: User.order(:email).map { |u| ["#{u.full_name}", u.id] }
-  filter :time_period, as: :select, collection: TimePeriod.order(start_date: :desc).map { |t| [t.date_range, t.id] }
+  filter :user, as: :select, collection: User.all.order(:email).map { |u| ["#{u.first_name} #{u.last_name}", u.id] }
+  filter :time_period, as: :select, collection: TimePeriod.all.order(start_date: :desc).map { |t| [t.date_range, t.id] }
   filter :emotion, as: :select, collection: proc { Emotion.pluck(:word, :id) }, label: 'Word'
   filter :not_working, as: :boolean, label: 'Not working'
 
   form do |f|
     f.inputs 'Response Details' do
       f.input :emotion, collection: Emotion.emotion_public.map { |e| [e.word, e.id] }
-      f.input :user, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
+      f.input :user, collection: User.all.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
       f.input :time_period, collection: TimePeriod.all.map { |t| ["#{t.date_range}", t.id] }
       f.input :not_working
       f.input :rating, input_html: { min: 1, max: 5 }
