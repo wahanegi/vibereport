@@ -39,7 +39,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
             }
           </h6>
           <h6 className='text-center fw-semibold row'>
-            <div className='col p-0' hidden={isEmpty(receivedShoutouts)}>
+            <div className='col p-0 minW-280' hidden={isEmpty(receivedShoutouts)}>
               {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                 <div className='row d-inline-block' key={i}>
                   <p className='fw-semibold d-inline'>
@@ -48,7 +48,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
                 </div>
               )}
             </div>
-            <div className='col p-0' hidden={isEmpty(sentShoutouts)}>
+            <div className='col p-0 minW-280' hidden={isEmpty(sentShoutouts)}>
               {sentShoutouts.slice(0, 2).map((shoutout, i) =>
                 <div className='row d-inline-block'  key={i}>
                   <p className='fw-semibold d-inline'>
