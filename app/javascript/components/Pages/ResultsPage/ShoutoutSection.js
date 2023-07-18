@@ -12,8 +12,8 @@ const PreviewShoutoutSection = () =>
     <div className='row wrap shoutout preview mb-3' />
   </div>
 
-const NoShoutoutSent = ({nextTimePeriod, setShowModal, emptyShoutouts}) => {
-  if(emptyShoutouts) return null;
+const NoShoutoutSent = ({nextTimePeriod, setShowModal, emptyCurrentUserShoutouts}) => {
+  if(emptyCurrentUserShoutouts && nextTimePeriod) return null;
 
   return <Fragment>
     <div className={`${nextTimePeriod ? '' : 'col-8'}`}>
@@ -29,8 +29,8 @@ const NoShoutoutSent = ({nextTimePeriod, setShowModal, emptyShoutouts}) => {
   </Fragment>
 }
 
-const NoShoutoutReceived = ({emptyShoutouts, currentUserShoutouts, nextTimePeriod}) => {
-  if(emptyShoutouts) return null;
+const NoShoutoutReceived = ({emptyCurrentUserShoutouts, currentUserShoutouts, nextTimePeriod}) => {
+  if(emptyCurrentUserShoutouts && nextTimePeriod) return null;
 
   return <div className='px-2'>
     <h5 className='text-start fw-semibold'>Received:</h5>
@@ -52,7 +52,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   if(!nextTimePeriod && isMinUsersResponses) return <PreviewShoutoutSection />
 
   const ReceivedShoutouts = () => {
-    if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived emptyShoutouts={emptyShoutouts} currentUserShoutouts={currentUserShoutouts} nextTimePeriod={nextTimePeriod}/>
+    if(isEmpty(currentUserShoutouts.received)) return <NoShoutoutReceived emptyCurrentUserShoutouts={emptyCurrentUserShoutouts} currentUserShoutouts={currentUserShoutouts} nextTimePeriod={nextTimePeriod}/>
 
     return !isEmpty(currentUserShoutouts.received) && <div className='px-2'>
       <h5 className='text-start fw-semibold'>Received:</h5>
@@ -66,7 +66,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   }
 
   const SentShoutouts = () => {
-    if(isEmpty(currentUserShoutouts.sent)) return <NoShoutoutSent {...{nextTimePeriod, setShowModal, emptyShoutouts}} />
+    if(isEmpty(currentUserShoutouts.sent)) return <NoShoutoutSent {...{nextTimePeriod, setShowModal, emptyCurrentUserShoutouts}} />
     if(isEmpty(emptyShoutouts)) return null
 
     return !isEmpty(currentUserShoutouts.sent) && <div className='px-2'>
@@ -85,7 +85,7 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
       <div className='row wrap shoutout mb-1'>
         <ShoutoutAwards {...{timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, showModal, setShowModal, currentUserShoutouts, emptyShoutouts}} />
         <div className='d-flex justify-content-start ps-2 mb-1'>
-          {!emptyShoutouts && <Fragment>
+          {!emptyCurrentUserShoutouts && <Fragment>
             <h5 className='fw-semibold'>{Pluralize( 'Shoutout', currentUserShoutouts.received.length )} received: {currentUserShoutouts.received.length};</h5>&nbsp;&nbsp;
             <h5 className='fw-semibold'> {Pluralize( 'Shoutout', currentUserShoutouts.sent.length )} sent: {currentUserShoutouts.sent.length}</h5>
           </Fragment>}
