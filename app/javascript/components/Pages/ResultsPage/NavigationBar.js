@@ -19,7 +19,7 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
 
   return <Fragment>
-    <div className='d-flex justify-content-between position-relative' style={{marginLeft: 140, marginRight: 140, top: 50}}>
+    <div className='d-flex justify-content-between position-relative' style={{marginLeft: 170, marginRight: 170, top: 50}}>
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
                 positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}

@@ -68,11 +68,12 @@
   position: fixed;
   bottom: 30px;
   &.help {
-    right: 30px;
+    right: 39px;
+    bottom: 45px;
     z-index: 30;
   }
   &.shoutout {
-    left: 30px;
+    left: 40px;
     z-index: 2;
   }
 }
