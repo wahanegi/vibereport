@@ -12,6 +12,11 @@ ActiveAdmin.register TimePeriod do
     actions
   end
 
+  filter :start_date, as: :date_range
+  filter :end_date, as: :date_range
+  filter :due_date, as: :date_range
+  filter :slug, as: :string
+
   form do |f|
     f.inputs do
       f.input :start_date, as: :datepicker
