@@ -27,6 +27,8 @@ The Vibe Report App is built on:
 
 [OpenSSL::Cipher::CipherError](#opensslcipherciphererror)
 
+[How to Add Your Own Logo and Favicon to the Vibe Report App using ActiveAdmin](#how-to-add-your-own-logo-and-favicon-to-the-vibe-report-app-using-activeadmin)
+
 [License](#license)
 
 
@@ -191,6 +193,42 @@ To address the `OpenSSL::Cipher::CipherError` error in Rails application, you ca
 - Save the file and exit the editor.
 
 Test the application to make sure the error no longer occurs.
+
+## How to Add Your Own Logo and Favicon to the Vibe Report App using ActiveAdmin
+
+1. **Accessing the Admin Dashboard**
+
+   - Open your web browser and navigate to the admin dashboard of your Vibe Report App. Typically, it should be available at `http://your-vibe-report-app-url/admin`.
+
+2. **Log in to the Admin Dashboard**
+
+   - If you are an admin user, log in using your admin credentials. If you don't have admin access, please contact the administrator or someone with admin privileges to add the logo and favicon for you.
+
+3. **Locate the Logos Section**
+
+   - Once logged in, look for a section named "Logos" in the sidebar menu of the admin dashboard.
+
+4. **Add Your Logo and Favicon**
+
+   - Click on the "Logos" section to view the existing logos (if any) and click on the "Add New" or "New Logo" button to start adding your own logo and favicon.
+
+   - A form will appear where you can input the logo and favicon details.
+
+   - **Logo Type**: Choose a type: 'Logo' or 'Favicon'.
+
+   - **Upload Logo Image**: Click on the "Choose File" or "Browse" button, and select the logo image file from your computer. Supported image formats typically include JPEG, PNG, or GIF.
+
+   - **Favicon**: In the same form, you can also upload a favicon for your Vibe Report App (type: 'Favicon'). A favicon is a small icon that appears in the browser's tab or address bar. Click on the "Choose File" or "Browse" button, and select the favicon image file from your computer. The favicon image is usually a square image in JPEG, PNG, or GIF format.
+
+5. **Save Your Changes**
+
+   - After adding the logo and favicon details and uploading the images, click the "Save" or "Create" button to save your logo and favicon.
+
+6. **View Your Logo and Favicon on the Vibe Report App**
+
+   - Once your logo and favicon are saved, they will be displayed on your Vibe Report App's frontend. The logo will typically appear in the header section or wherever the developer has placed it, and the favicon will be visible in the browser's tab and address bar.
+
+   - To see your logo and favicon in action, visit the main page of the Vibe Report App or navigate to different pages to observe them in the header area and browser tab.
 
 ## License
 

@@ -1,10 +1,9 @@
-import React, {Fragment} from "react";
+import React from "react";
 import Menu from "./Menu";
 import {backHandling, isPresent} from "../helpers/helpers";
 import calendar from "../../../assets/images/calendar.svg"
 import shoutout from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
-import logo from "../../../assets/images/logo.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
 import {NavLink} from "react-router-dom";
 import polygonLeft from "../../../assets/images/polygon-left.svg"
@@ -12,14 +11,7 @@ import polygonRight from "../../../assets/images/polygon-right.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
 import line from "../../../assets/images/line.svg"
 import {MIN_USERS_RESPONSES} from "../helpers/consts";
-
-export const Logo = () => <div className="board position-absolute t-35">
-  <div className="convert bigger ml-41" >
-    <p className="position-relative color-black" >Logo/Brand</p>
-    <div className="line1 offset-line1" ></div>
-    <div className="line2 offset-line2"></div>
-  </div>
-</div>
+import Logo from "./Logo";
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
 const categoryClass = selectedType ? selectedType : emotion.category;

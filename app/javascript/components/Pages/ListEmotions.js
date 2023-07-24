@@ -6,6 +6,7 @@ import CornerElements from "../UI/CornerElements";
 import Button from "../UI/Button";
 import NotWorkingModal from "./modals/NotWorkingModal";
 import {isPresent} from "../helpers/helpers";
+import Logo from "../UI/Logo";
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -85,13 +86,9 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
         <div className="board  mt-35">
-          <div className="convert bigger ml-41">
-            <p>Logo/Brand</p>
-            <div className="line1 offset-line1"></div>
-            <div className="line2 offset-line2"></div>
-          </div>
+          <Logo />
           <div className="h-40">
-             <div className="calendar ml-240 mt-37">
+             <div className="calendar ml-240 mt-123">
                <div className="data mx-auto my-0 ">
                  {rangeFormat(timePeriod)}
                </div>
@@ -120,7 +117,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
           </div>
           <div className="big-btn-tooltip correct">Share it in your own words!</div>
           <div className="big-btn">
-          <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
+            <BtnAddYourOwnWord className="link-text c3" content="Add your own word" onClick={ownWordHandling}/>
           </div>
           <NavLink className="lnk-was-not mx-auto my-0" onClick={onClickNotWorking} to={''}>
             I was not working recently

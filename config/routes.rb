@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :shoutouts, only: %i[show create update destroy]
       resources :notifications, only: %i[create]
       resources :users, only: %i[update]
+      resources :logo, only: %i[index]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'
@@ -26,8 +27,9 @@ Rails.application.routes.draw do
       get '/unsubscribe', to: 'users#unsubscribe'
     end
   end
-  get '*path', to: 'home#app'
-  get '/*undefined', to: redirect('/')
+  get '*path', to: 'home#app', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 
   root to: 'home#index'
 end
