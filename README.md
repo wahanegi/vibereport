@@ -27,7 +27,7 @@ The Vibe Report App is built on:
 
 [OpenSSL::Cipher::CipherError](#opensslcipherciphererror)
 
-[How to Add Your Own Logo and Favicon to the Vibe Report App using ActiveAdmin](#how-to-add-your-own-logo-and-favicon-to-the-vibe-report-app-using-activeadmin)
+[How to Add Your Own Logo and Favicon to the Vibe Report App](#how-to-add-your-own-logo-and-favicon-to-the-vibe-report-app)
 
 [License](#license)
 
@@ -194,41 +194,31 @@ To address the `OpenSSL::Cipher::CipherError` error in Rails application, you ca
 
 Test the application to make sure the error no longer occurs.
 
-## How to Add Your Own Logo and Favicon to the Vibe Report App using ActiveAdmin
+## How to Add Your Own Logo and Favicon to the Vibe Report App
 
-1. **Accessing the Admin Dashboard**
+### Locate the Assets Folder
 
-   - Open your web browser and navigate to the admin dashboard of your Vibe Report App. Typically, it should be available at `http://your-vibe-report-app-url/admin`.
+In your application's source code, navigate to the assets folder. This folder should contain all the visual assets used by your app, including the current logo and favicon files.
 
-2. **Log in to the Admin Dashboard**
+### Replace the Logo
 
-   - If you are an admin user, log in using your admin credentials. If you don't have admin access, please contact the administrator or someone with admin privileges to add the logo and favicon for you.
+Find the current logo file in the assets folder. It is usually named something like logo.svg. Remove the existing logo file from the assets folder and replace it with your new logo file, making sure to give it the same name as the original file.
 
-3. **Locate the Logos Section**
+For example, if the original logo is logo.svg, your new logo should also be named logo.svg and replace the existing file.
 
-   - Once logged in, look for a section named "Logos" in the sidebar menu of the admin dashboard.
+### Replace the Favicon
 
-4. **Add Your Logo and Favicon**
+Similarly, find the current favicon file in the assets folder. The favicon is the small icon that appears on the browser tab. It is commonly named favicon.svg.
 
-   - Click on the "Logos" section to view the existing logos (if any) and click on the "Add New" or "New Logo" button to start adding your own logo and favicon.
+Remove the existing favicon file from the assets folder and replace it with your new favicon file, again making sure to name it favicon.svg.
 
-   - A form will appear where you can input the logo and favicon details.
+### Save Changes
 
-   - **Logo Type**: Choose a type: 'Logo' or 'Favicon'.
+Once you've replaced the logo and favicon files, save your changes to the assets folder.
 
-   - **Upload Logo Image**: Click on the "Choose File" or "Browse" button, and select the logo image file from your computer. Supported image formats typically include JPEG, PNG, or GIF.
+### Build and Deploy
 
-   - **Favicon**: In the same form, you can also upload a favicon for your Vibe Report App (type: 'Favicon'). A favicon is a small icon that appears in the browser's tab or address bar. Click on the "Choose File" or "Browse" button, and select the favicon image file from your computer. The favicon image is usually a square image in JPEG, PNG, or GIF format.
-
-5. **Save Your Changes**
-
-   - After adding the logo and favicon details and uploading the images, click the "Save" or "Create" button to save your logo and favicon.
-
-6. **View Your Logo and Favicon on the Vibe Report App**
-
-   - Once your logo and favicon are saved, they will be displayed on your Vibe Report App's frontend. The logo will typically appear in the header section or wherever the developer has placed it, and the favicon will be visible in the browser's tab and address bar.
-
-   - To see your logo and favicon in action, visit the main page of the Vibe Report App or navigate to different pages to observe them in the header area and browser tab.
+Depending on the technology stack of your application, you might need to build or compile your project to incorporate the new logo and favicon. Once the build is successful, deploy your application to see the updated visuals.
 
 ## License
 
