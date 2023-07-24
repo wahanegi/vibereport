@@ -202,23 +202,15 @@ In your application's source code, navigate to the assets folder. This folder sh
 
 ### Replace the Logo
 
-Find the current logo file in the assets folder. It is usually named something like logo.svg. Remove the existing logo file from the assets folder and replace it with your new logo file, making sure to give it the same name as the original file.
-
-For example, if the original logo is logo.svg, your new logo should also be named logo.svg and replace the existing file.
+Save your company logo as logo.svg, and then copy over the current image in app/assets/images/logo.svg. The maximum height to width ratio of your logo should be set to 1:4.
 
 ### Replace the Favicon
 
-Similarly, find the current favicon file in the assets folder. The favicon is the small icon that appears on the browser tab. It is commonly named favicon.svg.
-
-Remove the existing favicon file from the assets folder and replace it with your new favicon file, again making sure to name it favicon.svg.
+Copy your company's favicon (in SVG format) to app/assets/images/favicon.svg. It should be a square image (1:1 ratio).
 
 ### Save Changes
 
 Once you've replaced the logo and favicon files, save your changes to the assets folder.
-
-### Build and Deploy
-
-Depending on the technology stack of your application, you might need to build or compile your project to incorporate the new logo and favicon. Once the build is successful, deploy your application to see the updated visuals.
 
 ## License
 
