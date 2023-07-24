@@ -15,7 +15,7 @@ class Api::V1::ResultsPresenter
     {
       time_periods: TimePeriod.ordered || [],
       emotions: responses.filter_map(&:emotion).sample(36).presence || [],
-      gifs: responses.pluck(:gif).compact || [],
+      gifs: responses.pluck(:gif).compact.reject(&:empty?) || [],
       fun_question: question,
       answers:,
       sent_shoutouts:,
