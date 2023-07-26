@@ -88,7 +88,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
         <div className="board  mt-35">
           <Logo />
           <div className="h-40">
-             <div className="calendar ml-240 mt-123">
+             <div className="calendar ml-200 mt-151">
                <div className="data mx-auto my-0 ">
                  {rangeFormat(timePeriod)}
                </div>
