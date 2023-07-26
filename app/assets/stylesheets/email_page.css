@@ -184,7 +184,7 @@ text-align: center;
 .envelope {
     width: 130px;
     height: 61px;
-    background-image: url("envelope.png");
+    background-image: -webkit-image-set(url("envelope.png") 1x);
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -209,7 +209,7 @@ text-align: center;
     text-align: left;
     width: 102px;
     height: 115px;
-    background-image: url("complete-by.png");
+    background-image: -webkit-image-set(url("complete-by.png") 1x);
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -436,7 +436,7 @@ html {
     text-align: left;
     width: 102px;
     height: 115px;
-    background-image: url("calendar_days.png");
+    background-image: -webkit-image-set(url("calendar_days.png") 1x);
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -446,7 +446,7 @@ html {
     width: 850px;
     height: 325px;
     overflow: inherit;
-    background-image: url("cloud_words.png");
+    background-image: -webkit-image-set(url("cloud_words.png") 1x);
     background-repeat: no-repeat;
     background-size: contain;
     margin-bottom: 30px;
