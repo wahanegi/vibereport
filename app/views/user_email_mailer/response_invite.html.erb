@@ -33,7 +33,14 @@
   </div>
   <div class="second-row">
     <div class="calendar ml-55">
-      <div class="data"><%= @view_complete_by %></div>
+      <%= image_tag("complete-by.png", class: 'position-relative calendar')  %>
+      <div class="text-calendar">
+        <div class='mt-3 column'>
+          <div class="row my-8 pt-20">
+            <%= @view_complete_by %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>

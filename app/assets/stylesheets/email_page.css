@@ -184,7 +184,7 @@ text-align: center;
 .envelope {
     width: 130px;
     height: 61px;
-    background-image: -webkit-image-set(url("envelope.png") 1x);
+    background-image: url("envelope.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -205,13 +205,17 @@ text-align: center;
 .mt-10{
     margin-top: 10px;
 }
+.pt-20{
+    padding-top: 20px;
+}
+.my-8{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
 .calendar {
     text-align: left;
     width: 102px;
     height: 115px;
-    background-image: -webkit-image-set(url("complete-by.png") 1x);
-    background-repeat: no-repeat;
-    background-size: contain;
 }
 .invitation {
     width: 453px;
@@ -432,13 +436,11 @@ html {
     width: 735px;
 }
 
-.calendar-days {
-    text-align: left;
-    width: 102px;
-    height: 115px;
-    background-image: -webkit-image-set(url("calendar_days.png") 1x);
-    background-repeat: no-repeat;
-    background-size: contain;
+.text-calendar {
+    position: absolute;
+    top: 47px !important;
+    width: 82px;
+    padding-left: 20px;
 }
 
 .responses-words {
@@ -446,9 +448,6 @@ html {
     width: 850px;
     height: 325px;
     overflow: inherit;
-    background-image: -webkit-image-set(url("cloud_words.png") 1x);
-    background-repeat: no-repeat;
-    background-size: contain;
     margin-bottom: 30px;
 }
 

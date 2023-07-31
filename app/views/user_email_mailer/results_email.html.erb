@@ -32,15 +32,27 @@
     </div>
   </div>
   <div class="second-row">
-  <div class="calendar-days ml-55">
-      <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
-  </div>
+    <div class="calendar ml-55">
+      <%= image_tag("calendar_days.png", class: 'position-relative')  %>
+      <div class="text-calendar">
+        <div class='mt-3 column'>
+          <div class="row my-8">
+            <%= @time_period.start_date.strftime('%d %b') %>
+          </div>
+          <div class="row">
+            <%= image_tag("line.svg") %>
+          </div>
+          <div class="row my-8">
+            <%=@time_period.end_date.strftime('%d %b') %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="mx-auto my-0 title">Submissions are in!</div>
     <div class="mx-auto my-0 text-invitation">See how the team has been doing:</div>
   <div class="container">
-    <div class="responses-words">
-    </div>
+    <%= image_tag("cloud_words.png", class: 'responses-words')  %>
   </div>
   <div class="big-btn mx-auto">
     <div class="big-btn-text">
