@@ -27,6 +27,8 @@ The Vibe Report App is built on:
 
 [OpenSSL::Cipher::CipherError](#opensslcipherciphererror)
 
+[How to Add Your Own Logo and Favicon to the Vibe Report App](#how-to-add-your-own-logo-and-favicon-to-the-vibe-report-app)
+
 [License](#license)
 
 
@@ -191,6 +193,24 @@ To address the `OpenSSL::Cipher::CipherError` error in Rails application, you ca
 - Save the file and exit the editor.
 
 Test the application to make sure the error no longer occurs.
+
+## How to Add Your Own Logo and Favicon to the Vibe Report App
+
+### Locate the Assets Folder
+
+In your application's source code, navigate to the assets folder. This folder should contain all the visual assets used by your app, including the current logo and favicon files.
+
+### Replace the Logo
+
+Save your company logo as logo.svg, and then copy over the current image in app/assets/images/logo.svg. The maximum height to width ratio of your logo should be set to 1:4.
+
+### Replace the Favicon
+
+Copy your company's favicon (in SVG format) to app/assets/images/favicon.svg. It should be a square image (1:1 ratio).
+
+### Save Changes
+
+Once you've replaced the logo and favicon files, save your changes to the assets folder.
 
 ## License
 

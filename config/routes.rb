@@ -26,8 +26,9 @@ Rails.application.routes.draw do
       get '/unsubscribe', to: 'users#unsubscribe'
     end
   end
-  get '*path', to: 'home#app'
-  get '/*undefined', to: redirect('/')
+  get '*path', to: 'home#app', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 
   root to: 'home#index'
 end

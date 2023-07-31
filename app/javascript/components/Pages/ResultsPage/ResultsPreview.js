@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
-  HelpIcon, Logo,
+  HelpIcon,
   Wrapper
 } from "../../UI/ShareContent";
 import axios from "axios";

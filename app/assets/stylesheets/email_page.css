@@ -58,6 +58,9 @@ Here styles for:
     width: 190px;
     height: 87px;
 }
+.ml-200{
+    margin-left: 200px;
+}
 .ml-240{
     margin-left: 240px;
 }
@@ -248,7 +251,7 @@ text-align: center;
     color: #000000;
     white-space: pre-line;
     width: 735px;
-    min-height: 114px;
+    min-height: 100px;
 }
 .lnk-was-not a{
     font-size: 23px;
@@ -307,7 +310,7 @@ text-align: center;
     width: 385px;
     height: 70px;
     background: #FFFFFF;
-    margin: 0 auto 54px auto;
+    margin: 0 auto 24px auto;
 }
 .big-btn-text a{
     padding: 13px 23px 13px 23px;
