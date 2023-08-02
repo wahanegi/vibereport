@@ -172,7 +172,7 @@ text-align: center;
         width: 720px;
     }
 }
-.d-flex{
+.d-flex, .center-text{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -180,6 +180,7 @@ text-align: center;
 .first-row{
     height:8px;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 .second-row{
     height:50px;
@@ -209,13 +210,20 @@ text-align: center;
 .mt-10{
     margin-top: 10px;
 }
+.pt-20{
+    padding-top: 20px;
+}
+.pl-15{
+    padding-left: 15px;
+}
+.my-8{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
 .calendar {
     text-align: left;
     width: 102px;
     height: 115px;
-    background-image: url("complete-by.png");
-    background-repeat: no-repeat;
-    background-size: contain;
 }
 .invitation {
     width: 453px;
@@ -436,13 +444,17 @@ html {
     width: 735px;
 }
 
-.calendar-days {
-    text-align: left;
-    width: 102px;
-    height: 115px;
-    background-image: url("calendar_days.png");
-    background-repeat: no-repeat;
-    background-size: contain;
+.text-calendar {
+    position: absolute;
+    width: 82px;
+}
+
+.top-72 {
+    top: 72px !important;
+}
+
+.top-56 {
+    top: 56px !important;
 }
 
 .responses-words {
@@ -450,9 +462,6 @@ html {
     width: 850px;
     height: 325px;
     overflow: inherit;
-    background-image: url("cloud_words.png");
-    background-repeat: no-repeat;
-    background-size: contain;
     margin-bottom: 30px;
 }
 
