@@ -1,8 +1,9 @@
-import React, {Fragment, useState} from 'react';
-import {BtnOutline, Logo, Wrapper} from "../UI/ShareContent";
+import React, {Fragment} from 'react';
+import {BtnOutline, Wrapper} from "../UI/ShareContent";
 import QuestionButton from "../UI/QuestionButton";
 import {rangeFormat} from "../helpers/helpers";
 import {Link} from "react-router-dom";
+import Logo from "../UI/Logo";
 
 const CheckInClosed = ({ data }) => {
   const {check_in_time_period} = data
