@@ -1,5 +1,5 @@
 import React from "react";
-import default_logo from "../../../assets/images/logo.svg"
+import default_logo from "../../../assets/images/logo.png"
 
 const Logo = () => <div className="board position-absolute t-35">
   <div className="bigger ml-41">
