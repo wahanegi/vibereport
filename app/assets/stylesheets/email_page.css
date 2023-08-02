@@ -172,7 +172,7 @@ text-align: center;
         width: 720px;
     }
 }
-.d-flex{
+.d-flex, .center-text{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -180,6 +180,7 @@ text-align: center;
 .first-row{
     height:8px;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 .second-row{
     height:50px;
@@ -211,6 +212,9 @@ text-align: center;
 }
 .pt-20{
     padding-top: 20px;
+}
+.pl-15{
+    padding-left: 15px;
 }
 .my-8{
     margin-top: 8px;
@@ -442,9 +446,15 @@ html {
 
 .text-calendar {
     position: absolute;
-    top: 47px !important;
     width: 82px;
-    padding-left: 20px;
+}
+
+.top-72 {
+    top: 72px !important;
+}
+
+.top-56 {
+    top: 56px !important;
 }
 
 .responses-words {
