@@ -225,6 +225,14 @@ text-align: center;
     width: 102px;
     height: 115px;
 }
+.calendar-complete-by {
+    text-align: left;
+    width: 102px;
+    height: 115px;
+    background-image: -webkit-image-set(url("complete-by.png") 1x);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
 .invitation {
     width: 453px;
     height: 55px;
