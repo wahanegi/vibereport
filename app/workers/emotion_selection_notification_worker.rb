@@ -9,7 +9,6 @@ class EmotionSelectionNotificationWorker
   def run_notification
     return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_INVITES'))
 
-    time_period.update(due_date: Date.current)
     run_notification!
   end
 

@@ -53,10 +53,18 @@ class TimePeriod < ApplicationRecord
     def create_time_period
       return if current_time_period.present?
 
-      start_week = ENV['START_WEEK_DAY']&.to_sym || :monday
-      start_date = Date.current.beginning_of_week(start_week)
+      start_date = Date.current.beginning_of_week(day_that_week_starts)
       end_date = start_date + 6.days
-      TimePeriod.create(start_date: start_date, end_date: end_date)
+      due_date = (start_date..end_date).find { |date| date.strftime('%A').downcase.to_sym == day_to_send_invites }
+      TimePeriod.create!(start_date:, end_date:, due_date:)
+    end
+
+    def day_that_week_starts
+      ENV['START_WEEK_DAY']&.to_sym || :monday
+    end
+
+    def day_to_send_invites
+      ENV['DAY_TO_SEND_INVITES']&.to_sym || :friday
     end
   end
 
