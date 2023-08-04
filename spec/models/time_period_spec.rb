@@ -67,7 +67,7 @@ RSpec.describe TimePeriod, type: :model do
         new_time_period = TimePeriod.create_time_period
         expect(new_time_period.start_date).to eq(last_monday)
         expect(new_time_period.end_date).to eq(last_monday + 6.days)
-        expect(new_time_period.due_date).to eq(last_monday + 3.days)
+        expect(new_time_period.due_date).to eq(last_monday + 4.days)
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe TimePeriod, type: :model do
         expect { subject }.to change { TimePeriod.count }.by(1)
       end
       it 'should return current time period' do
-        current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days, due_date: Date.current + 3.days)
+        current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days, due_date: Date.current + 4.days)
         expect(subject).to eq(current_time_period)
       end
     end
