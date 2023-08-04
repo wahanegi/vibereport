@@ -13,7 +13,7 @@ class UserEmailMailer < ApplicationMailer
     @link_for_own_word = general_link.merge({ last_step: 'emotion-entry' })
     @link_for_was_not  = general_link.merge({ last_step: 'results' })
     @link_for_not_say  = general_link.merge({ last_step: 'rather-not-say' })
-    @link_for_emotion  = general_link.merge({ emotion_id: nil, last_step: 'meme-selection' })
+    @link_for_emotion  = general_link.merge({ emotion_id: nil, last_step: 'emotion-type' })
     @view_complete_by  = time_period.due_date.strftime('%b %d').to_s
     @table = emotions_table
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
