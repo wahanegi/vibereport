@@ -19,11 +19,7 @@ module ActiveAdminHelpers
     vars[:participation_percentage] = ParticipationPercentage.new(team, time_period).generate
     vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate(for_all_periods: true)
 
-    if team.nil?
-      vars[:productivity_verbatims] = ProductivityVerbatims.new(team, current_period).generate
-    else
-      vars[:productivity_verbatims] = ProductivityVerbatims.new(team, time_period).generate
-    end
+    vars[:productivity_verbatims] = ProductivityVerbatims.new(team, team.nil? ? current_period : time_period).generate
 
     vars[:celebrate_comments_count] = CelebrationsCount.new(team, time_period).generate
     vars[:celebrate_comments_count_all] = CelebrationsCount.new(team, all_time_periods).generate
