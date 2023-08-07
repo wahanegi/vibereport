@@ -47,7 +47,7 @@ describe('ListEmotions component', () => {
       ],
       response: {
         attributes: {
-          bad_follow_comment: "",
+          productivity_comment: "",
         },
       }
    }

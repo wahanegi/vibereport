@@ -20,8 +20,7 @@ module ActiveAdminHelpers
     vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate(for_all_periods: true)
 
     if team.nil?
-      vars[:positive_verbatims] = ProductivityVerbatims.new(team, current_period).generate[:positive]
-      vars[:negative_verbatims] = ProductivityVerbatims.new(team, current_period).generate[:negative]
+      vars[:productivity_verbatims] = ProductivityVerbatims.new(team, current_period).generate
     else
       vars[:productivity_verbatims] = ProductivityVerbatims.new(team, time_period).generate
     end

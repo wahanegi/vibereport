@@ -10,9 +10,8 @@ class ProductivityVerbatims < AdminReport
     low_productivity_comments.empty? ? 'No comments present' : low_productivity_comments
   end
 
-  def receive_comments(emotion)
-    @comments ||= {}
-    @comments[emotion] ||= fetch_comments(emotion)
+  def receive_comments
+    @receive_comments ||= fetch_comments
   end
 
   private
@@ -23,25 +22,19 @@ class ProductivityVerbatims < AdminReport
     Response.joins(user: :user_teams)
             .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
             .where('productivity <= ?', 2)
-            .where.not(bad_follow_comment: [''])
-            .pluck(:bad_follow_comment)
+            .where.not(productivity_comment: [''])
+            .pluck(:productivity_comment)
   end
 
   def team_not_present
-    comments = { positive: [], neutral: [], negative: [] }
-
-    comments.each_key do |emotion|
-      comments[emotion] += receive_comments(emotion)
-      comments[emotion] = comments[emotion].empty? ? 'No bad follow comment present' : comments[emotion].join('||')
-    end
-    comments
+    combined_comments = receive_comments
+    combined_comments.empty? ? 'No bad follow comment present' : combined_comments.join('||')
   end
 
-  def fetch_comments(emotion)
+  def fetch_comments
     Response.joins(:emotion)
             .where(responses: { time_period_id: @time_periods })
-            .where(emotion: { category: emotion.to_s })
-            .where.not(bad_follow_comment: [''])
-            .pluck(:bad_follow_comment)
+            .where.not(productivity_comment: [''])
+            .pluck(:productivity_comment)
   end
 end
