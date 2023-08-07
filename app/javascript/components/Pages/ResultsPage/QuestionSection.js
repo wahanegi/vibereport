@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState, useRef} from "react";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import {isBlank} from "../../helpers/helpers";
 import Collapse from 'react-bootstrap/Collapse';
@@ -78,21 +78,31 @@ const Question = ({userName, fun_question, collapse, setCollapse, disabledCollap
 
 const AnswerItem = ({answer, user, collapse}) => {
   const [isCollapse, setIsCollapse] = useState(collapse);
+  const containerRef = useRef(null);
+  const [isTruncated, setIsTruncated] = useState(false);
   const toggle = () => {
     setIsCollapse(!isCollapse);
   };
 
   useEffect(() => {
-    setIsCollapse(collapse);
+    const container = containerRef.current;
+    if (container) {
+      const isTextTruncated = container.scrollWidth > container.clientWidth;
+      setIsTruncated(isTextTruncated);
+    }
+  }, [answer.answer_body]);
+
+  useEffect(() => {
+    isTruncated && setIsCollapse(collapse);
   }, [collapse]);
 
   return <div className='row wrap question answer mb-1'>
     <div className="col-9">
-      <div className='h5 w-auto text-start truncated fw-semibold'>
+      <div ref={containerRef} className='h5 w-auto text-start truncated fw-semibold'>
         <span className='color-rose'>@</span>{user.first_name} said: {isCollapse && answer.answer_body}
       </div>
     </div>
-    <div className="col-3">
+    <div className={`${isTruncated ? '' : 'd-none'} col-3`}>
       <div className='d-flex flex-nowrap justify-content-end align-items-center pointer' onClick={toggle}>
         <span className='me-1 mb-0 muted h6'>{isCollapse ? 'See more ' : 'See less '}</span>
         <img src={polygon_answer} alt="answer" className={isCollapse ? '' : 'rotate'} />
