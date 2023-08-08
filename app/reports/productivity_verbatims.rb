@@ -7,7 +7,7 @@ class ProductivityVerbatims < AdminReport
   def generate
     low_productivity_comments = receive_low_productivity_comments
 
-    low_productivity_comments.empty? ? 'No comments present' : low_productivity_comments
+    low_productivity_comments.empty? ? 'No productivity comment present' : low_productivity_comments
   end
 
   def receive_comments
@@ -28,12 +28,13 @@ class ProductivityVerbatims < AdminReport
 
   def team_not_present
     combined_comments = receive_comments
-    combined_comments.empty? ? 'No bad follow comment present' : combined_comments.join('||')
+    receive_comments.empty? ? 'No productivity comment present' : combined_comments.join('||')
   end
 
   def fetch_comments
     Response.joins(:emotion)
             .where(responses: { time_period_id: @time_periods })
+            .where('productivity <= ?', 2)
             .where.not(productivity_comment: [''])
             .pluck(:productivity_comment)
   end

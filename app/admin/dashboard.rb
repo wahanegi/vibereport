@@ -35,12 +35,14 @@ ActiveAdmin.register_page 'Dashboard' do
         end
       end
 
-      panel 'Recent Productivity Comments' do
-        div do
-          ul do
-            Array(vars[:productivity_verbatims]).each do |verbatim|
-              verbatim.split('||').each do |comment|
-                li comment.strip
+      unless vars[:productivity_verbatims] == "No productivity comment present"
+        panel 'Recent Productivity Comments' do
+          div do
+            ul do
+              Array(vars[:productivity_verbatims]).each do |verbatim|
+                verbatim.split('||').each do |comment|
+                  li comment.strip
+                end
               end
             end
           end
