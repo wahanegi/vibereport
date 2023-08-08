@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import { render, screen } from '@testing-library/react';
 import ListEmotions from "../Pages/ListEmotions";
 import {MemoryRouter, useNavigate} from 'react-router-dom';
-import '@testing-library/jest-dom'
-
+import '@testing-library/jest-dom';
+jest.mock('../../../assets/images/logo.png', () => 'mocked-logo-path');
 
 describe('ListEmotions component', () => {
   it('data from server should be in this format when user doing first entry on ',()=>{
@@ -57,6 +57,6 @@ describe('ListEmotions component', () => {
         <ListEmotions service={mockService} data={data} setData={() => {}} saveDataToDb={() => {}} steps={{}}/>
       </MemoryRouter>
     );
-    expect(screen.getByText("Which word best describes how you’ve recently felt about work?")).toBeInTheDocument();
+    expect(screen.getByText("What word best describes how you feel about work?")).toBeInTheDocument();
   });
 });

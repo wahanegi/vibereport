@@ -95,7 +95,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
              </div>
           </div>
           <div className="invitation mx-auto p-0">Time for your latest check-in!</div>
-          <div className="mx-auto my-0 question">Which word best describes how you’ve recently felt about work?</div>
+          <div className="mx-auto my-0 question">What word best describes how you feel about work?</div>
             <div className='d-flex mx-auto emotions'>
                 {emotions.map((emotion, index) =>
                   <div className='width-block' key={emotion.id}>
