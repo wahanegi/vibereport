@@ -15,7 +15,7 @@ class Api::V1::ResultsPresenter
     {
       time_periods: TimePeriod.ordered || [],
       emotions: responses.filter_map(&:emotion).sample(36).presence || [],
-      gifs: responses.pluck(:gif).compact.reject(&:empty?) || [],
+      gifs:,
       fun_question: question,
       answers:,
       sent_shoutouts:,
@@ -27,6 +27,19 @@ class Api::V1::ResultsPresenter
   end
 
   private
+
+  def gifs
+    responses.filter_map { |response| gif_block(response) }
+  end
+
+  def gif_block(response)
+    return nil if response.gif.blank?
+
+    {
+      image: response.gif,
+      user: response.user
+    }
+  end
 
   def question
     return nil if fun_question.blank?
