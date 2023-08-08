@@ -12,7 +12,7 @@ const mockService = {
 const data = {
   response: {
     attributes: {
-      bad_follow_comment: "",
+      productivity_comment: "",
     },
   },
 };

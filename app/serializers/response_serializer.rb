@@ -3,7 +3,6 @@
 # Table name: responses
 #
 #  id                     :bigint           not null, primary key
-#  bad_follow_comment     :text
 #  comment                :text
 #  completed_at           :date
 #  draft                  :boolean          default(FALSE), not null
@@ -11,6 +10,7 @@
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb
 #  productivity           :integer
+#  productivity_comment   :text
 #  rating                 :integer
 #  steps                  :string
 #  created_at             :datetime         not null
@@ -45,6 +45,6 @@ class ResponseSerializer
   include FastJsonapi::ObjectSerializer
 
   attributes :id, :time_period_id, :emotion_id, :steps, :gif, :rating, :comment, :productivity,
-             :bad_follow_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id, :completed_at, :draft,
+             :productivity_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id, :completed_at, :draft,
              :not_working
 end

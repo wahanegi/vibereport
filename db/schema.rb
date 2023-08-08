@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_07_151155) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,7 +95,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
   end
 
   create_table "responses", force: :cascade do |t|
-    t.text "bad_follow_comment"
     t.text "comment"
     t.date "completed_at"
     t.datetime "created_at", null: false
@@ -107,6 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
     t.boolean "not_working", default: false
     t.jsonb "notices"
     t.integer "productivity"
+    t.text "productivity_comment"
     t.integer "rating"
     t.bigint "shoutout_id"
     t.string "steps"
