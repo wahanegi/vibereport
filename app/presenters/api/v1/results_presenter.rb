@@ -37,7 +37,7 @@ class Api::V1::ResultsPresenter
 
     {
       image: response.gif,
-      user: response.user
+      emotion: response.emotion
     }
   end
 

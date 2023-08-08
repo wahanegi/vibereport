@@ -25,7 +25,7 @@ RSpec.describe Api::V1::ResultsPresenter do
           emotions: time_period.emotions,
           gifs: [
             image: user_response.gif,
-            user: user_response.user
+            emotion: user_response.emotion
           ],
           fun_question: {
             question_body: fun_question.question_body,
