@@ -10,8 +10,8 @@
 }
 .tippy {
   position: absolute;
-  top: 100px;
-  left: -60px;
+  top: 110px;
+  transform: translate(-50%, -50%); /* Center the element */
 }
 
 .gif-clicked-positive {
