@@ -23,7 +23,7 @@ RSpec.describe ProductivityVerbatims do
     it 'returns "No bad_follow_comment present" if no low productivity responses are found' do
       Response.where('productivity <= ?', 2).destroy_all
       productivity_comment = report.generate
-      expect(productivity_comment).to eq('No comments present')
+      expect(productivity_comment).to eq('No productivity comment present')
     end
   end
 end
