@@ -27,14 +27,7 @@
     &.answer {
       background-color: $white;
       min-height: auto;
-      .truncated {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .rotate {
-        rotate: -90deg;
-      }
+      word-break: break-word;
     }
     &.empty-answer {
       background-color: $white;
