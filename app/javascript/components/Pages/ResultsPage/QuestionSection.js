@@ -128,7 +128,7 @@ const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, a
       </div>
       {edit && <div className='d-flex justify-content-end'>
         <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
-        <Link to={''} className='text-primary h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
+        <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
     </div>
   </div>
