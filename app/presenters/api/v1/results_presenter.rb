@@ -22,7 +22,8 @@ class Api::V1::ResultsPresenter
       received_shoutouts:,
       current_user_shoutouts:,
       responses_count: responses.count,
-      current_response: current_user.responses.working.find_by(time_period_id: time_period.id)
+      current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
+      current_user:
     }
   end
 
@@ -32,6 +33,7 @@ class Api::V1::ResultsPresenter
     return nil if fun_question.blank?
 
     {
+      id: fun_question.id,
       question_body: fun_question.question_body,
       user: fun_question.user
     }

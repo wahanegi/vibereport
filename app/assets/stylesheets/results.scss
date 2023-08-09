@@ -45,6 +45,12 @@
       padding: 0
     }
   }
+  .edit-question {
+    .form-control {
+      box-shadow: none !important;
+      border:1px solid $gray-100 !important;
+    }
+  }
 }
 
 .header-position {

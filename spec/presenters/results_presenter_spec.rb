@@ -25,6 +25,7 @@ RSpec.describe Api::V1::ResultsPresenter do
           emotions: time_period.emotions,
           gifs: [user_response.gif],
           fun_question: {
+            id: fun_question.id,
             question_body: fun_question.question_body,
             user: fun_question.user
           },
@@ -64,7 +65,8 @@ RSpec.describe Api::V1::ResultsPresenter do
             total_count: time_period.shoutouts.size
           },
           responses_count: time_period.responses.count,
-          current_response: user_response
+          current_response: user_response,
+          current_user: user
         }
       )
     end
