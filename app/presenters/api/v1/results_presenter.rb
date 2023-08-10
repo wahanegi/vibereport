@@ -42,7 +42,13 @@ class Api::V1::ResultsPresenter
   def answers
     return nil if fun_question_answers.blank?
 
-    fun_question_answers.map { |answer| answer_block(answer) }
+    sort_answers_with_current_user_first(fun_question_answers, current_user).map { |answer| answer_block(answer) }
+  end
+
+  def sort_answers_with_current_user_first(answers, current_user)
+    current_user_answer, other_answers = answers.partition { |answer| answer.user == current_user }
+    sorted_other_answers = other_answers.sort_by(&:created_at)
+    [current_user_answer, sorted_other_answers].flatten.compact
   end
 
   def answer_block(answer)
