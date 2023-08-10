@@ -39,8 +39,8 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
 
   const gifItems = sortImagesByHeight(gifs).map((gif, index) => {
     return <div className='gif-item result-page' key={index}>
-      <Tippy content={<div className={`btn btn-bubbles wb1 not-shadow ${gif.emotion.category}`}>{gif.emotion.word}</div>}>
-        <img src={gif.image.src} alt={`gif ${index}`} />
+      <Tippy content={<div className={`btn btn-bubbles wb1 not-shadow tippy ${gif.emotion.category}`}>{gif.emotion.word}</div>}>
+        <img className='position-relative' src={gif.image.src} alt={`gif ${index}`} />
       </Tippy>
     </div>
   });
