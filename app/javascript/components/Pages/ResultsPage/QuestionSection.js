@@ -70,36 +70,39 @@ const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, a
     setEdit(false)
     setAnswerBody(answer.answer_body)
   }
+
+  const dataRequest = {
+    fun_question_answer: {
+      answer_body: answerBody  || '',
+      fun_question_id: fun_question.id
+    }
+  }
+
+  const dataFromServer = (fun_question_answer) => {
+    const updatedAnswerBody = fun_question_answer.data.attributes.answer_body
+    const updatedData = answersArray.map(item => {
+      if (item.answer.id === answer.id) {
+        const updatedAnswer = Object.assign({}, item.answer, {
+          answer_body: updatedAnswerBody,
+        });
+        return { ...item, answer: updatedAnswer };
+      }
+      return item;
+    });
+    setAnswersArray(updatedData)
+    setEdit(false)
+  }
+  const updateAnswersArray = (callback) =>{
+    if (callback.message === 'success') {
+      const newAnswersArray = answersArray.filter(item => item.answer.id !== answer.id)
+      setAnswersArray(newAnswersArray)
+    }
+    setEdit(false)
+  }
+
   const updateAnswer = () => {
     const url = '/api/v1/fun_question_answers/'
     const id = answer.id
-    const dataRequest = {
-      fun_question_answer: {
-        answer_body: answerBody  || '',
-        fun_question_id: fun_question.id
-      }
-    }
-    const dataFromServer = (fun_question_answer) => {
-      const updatedAnswerBody = fun_question_answer.data.attributes.answer_body
-      const updatedData = answersArray.map(item => {
-        if (item.answer.id === id) {
-          const updatedAnswer = Object.assign({}, item.answer, {
-            answer_body: updatedAnswerBody,
-          });
-          return { ...item, answer: updatedAnswer };
-        }
-        return item;
-      });
-      setAnswersArray(updatedData)
-      setEdit(false)
-    }
-    const updateAnswersArray = (callback) =>{
-      if (callback.message === 'success') {
-        const newAnswersArray = answersArray.filter(answer => answer.answer.id !== id)
-        setAnswersArray(newAnswersArray)
-      }
-      setEdit(false)
-    }
     if(answer.answer_body !== answerBody && isNotEmptyStr(answerBody)) {
       apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
     } else if(isEmptyStr(answerBody)) {
