@@ -8,6 +8,12 @@
     width: 24%;
   }
 }
+.tippy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the element */
+}
 
 .gif-clicked-positive {
   box-sizing: border-box;

@@ -23,7 +23,10 @@ RSpec.describe Api::V1::ResultsPresenter do
         {
           time_periods: TimePeriod.ordered,
           emotions: time_period.emotions,
-          gifs: [user_response.gif],
+          gifs: [
+            image: user_response.gif,
+            emotion: user_response.emotion
+          ],
           fun_question: {
             id: fun_question.id,
             question_body: fun_question.question_body,
