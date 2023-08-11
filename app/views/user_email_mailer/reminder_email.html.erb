@@ -28,20 +28,24 @@
 <div class="board mx-auto">
   <div class="first-row-reminder">
     <div class="calendar mt-10 ml-55">
-      <table border="0" cellpadding="0" cellspacing="0" width="auto">
+      <!--[if mso]>
+      <table role="presentation" width="100%">
         <tr>
-          <td align="center" valign="center">
-            <%= image_tag("calendar_days.png", class: 'position-relative')  %>
-            <div class="text-calendar top-56">
-              <div class='column'>
-                <div class="row my-8">
-                  <%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %>
-                </div>
+          <td style="width: 102px; height: 115px; text-align: left;">
+            <div class="calendar-days ml-55" style="background-image: url('calendar_days.png'); background-repeat: no-repeat; background-size: contain;">
+              <div class="date" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+                <%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %>
               </div>
             </div>
           </td>
         </tr>
       </table>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <div class="calendar-days ml-55">
+        <div class="date"><%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+      </div>
+      <!--<![endif]-->     
     </div>
   </div>
   <div>

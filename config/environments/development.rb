@@ -85,8 +85,8 @@ ENV['ADMIN_USER'] = 'admin@example.com'
 ENV['ADMIN_PASSWORD'] = 'password'
 
 # General use
-ENV['DAY_TO_SEND_INVITES'] = 'friday'
-ENV['DAY_TO_SEND_RESULTS_EMAIL'] = 'tuesday'
+ENV['DAY_TO_SEND_INVITES'] = 'monday'
+ENV['DAY_TO_SEND_RESULTS_EMAIL'] = 'monday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
 ENV['DEFAULT_FROM_ADDRESS'] = 'hello'
 ENV['GIPHY_API_KEY'] = 'v6xr0UlohPqB69kIH5HlnmIIGxc34EaS'
