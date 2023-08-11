@@ -22,7 +22,8 @@ class Api::V1::ResultsPresenter
       received_shoutouts:,
       current_user_shoutouts:,
       responses_count: responses.count,
-      current_response: current_user.responses.working.find_by(time_period_id: time_period.id)
+      current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
+      current_user:
     }
   end
 
@@ -45,6 +46,7 @@ class Api::V1::ResultsPresenter
     return nil if fun_question.blank?
 
     {
+      id: fun_question.id,
       question_body: fun_question.question_body,
       user: fun_question.user
     }
@@ -53,7 +55,13 @@ class Api::V1::ResultsPresenter
   def answers
     return nil if fun_question_answers.blank?
 
-    fun_question_answers.map { |answer| answer_block(answer) }
+    sort_answers_with_current_user_first(fun_question_answers, current_user).map { |answer| answer_block(answer) }
+  end
+
+  def sort_answers_with_current_user_first(answers, current_user)
+    current_user_answer, other_answers = answers.partition { |answer| answer.user == current_user }
+    sorted_other_answers = other_answers.sort_by(&:created_at)
+    [current_user_answer, sorted_other_answers].flatten.compact
   end
 
   def answer_block(answer)

@@ -22,7 +22,8 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts, responses_count} = results
+  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
+        current_user_shoutouts, responses_count, current_user} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -139,6 +140,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
                          isMinUsersResponses={isMinUsersResponses}
                          currentUserShoutouts={current_user_shoutouts} />
         <QuestionSection fun_question={fun_question}
+                         current_user={current_user}
                          answers={answers}
                          steps={steps}
                          saveDataToDb={saveDataToDb}
