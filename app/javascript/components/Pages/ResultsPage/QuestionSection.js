@@ -1,6 +1,6 @@
-import React, {Fragment, useEffect, useState, useRef} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {isBlank, isEmptyStr, isNotEmptyStr} from "../../helpers/helpers";
-import Button from "../../UI/Button";
+import isEmpty from "ramda/src/isEmpty";
 import Form from "react-bootstrap/Form";
 import {apiRequest} from "../../requests/axios_requests";
 import {Link} from "react-router-dom";
@@ -144,7 +144,11 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveData
   const userName = fun_question?.user?.first_name
   const [answersArray, setAnswersArray] = useState(answers || [])
 
-  if(isBlank(answers)) return <EmptyQuestionSection userName={userName}
+  useEffect(() => {
+    setAnswersArray(answers)
+  }, [answers])
+
+  if(isBlank(answersArray)) return <EmptyQuestionSection userName={userName}
                                                     fun_question={fun_question}
                                                     nextTimePeriod={nextTimePeriod}
                                                     steps={steps}
