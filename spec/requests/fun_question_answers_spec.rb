@@ -111,16 +111,9 @@ RSpec.describe Api::V1::FunQuestionAnswersController do
         expect { subject }.to change(FunQuestionAnswer, :count).by(-1)
       end
 
-      it 'returns a 204 No Content status' do
+      it 'returns a Success status' do
         subject
-        expect(response).to have_http_status(:no_content)
-      end
-    end
-
-    context 'when the answer fun question does not exist' do
-      it 'returns a 404 Not Found status' do
-        delete "/api/v1/fun_question_answers/#{fun_question_answer.id}", params: { id: 'invalid-id' }
-        expect(response).to have_http_status(:no_content)
+        expect(response).to have_http_status(:success)
       end
     end
   end

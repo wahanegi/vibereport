@@ -1,5 +1,9 @@
-import React, {Fragment, useEffect, useState, useRef} from "react";
-import {isBlank} from "../../helpers/helpers";
+import React, {Fragment, useEffect, useState} from "react";
+import {isBlank, isEmptyStr, isNotEmptyStr} from "../../helpers/helpers";
+import isEmpty from "ramda/src/isEmpty";
+import Form from "react-bootstrap/Form";
+import {apiRequest} from "../../requests/axios_requests";
+import {Link} from "react-router-dom";
 
 const PreviewQuestionSection = () =>
   <div className='results col'>
@@ -57,22 +61,94 @@ const Question = ({userName, fun_question}) => {
   </div>
 }
 
-const AnswerItem = ({answer, user}) => {
+const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, answersArray, setAnswersArray}) => {
+  const isCurrentUser = !nextTimePeriod && current_user.email === user.email
+  const [edit, setEdit] = useState(false)
+  const [answerBody, setAnswerBody] = useState(answer.answer_body || '')
+
+  const onCancel = () => {
+    setEdit(false)
+    setAnswerBody(answer.answer_body)
+  }
+
+  const dataRequest = {
+    fun_question_answer: {
+      answer_body: answerBody  || '',
+      fun_question_id: fun_question.id
+    }
+  }
+
+  const dataFromServer = (fun_question_answer) => {
+    const updatedAnswerBody = fun_question_answer.data.attributes.answer_body
+    const updatedData = answersArray.map(item => {
+      if (item.answer.id === answer.id) {
+        const updatedAnswer = Object.assign({}, item.answer, {
+          answer_body: updatedAnswerBody,
+        });
+        return { ...item, answer: updatedAnswer };
+      }
+      return item;
+    });
+    setAnswersArray(updatedData)
+    setEdit(false)
+  }
+  const updateAnswersArray = (callback) =>{
+    if (callback.message === 'success') {
+      const newAnswersArray = answersArray.filter(item => item.answer.id !== answer.id)
+      setAnswersArray(newAnswersArray)
+    }
+    setEdit(false)
+  }
+
+  const updateAnswer = () => {
+    const url = '/api/v1/fun_question_answers/'
+    const id = answer.id
+    if(answer.answer_body !== answerBody && isNotEmptyStr(answerBody)) {
+      apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
+    } else if(isEmptyStr(answerBody)) {
+      apiRequest("DELETE", () => {}, updateAnswersArray, () => {}, `${url}${id}`).then();
+    } else {
+      setEdit(false)
+    }
+  }
+
   return <div className='row wrap question answer mb-1'>
     <div className="col-xl-12">
-      <div className='h5 w-auto text-start fw-semibold'>
-        <span className='color-rose'>@</span>{user.first_name} said: {answer.answer_body}
+      <div className='edit-question h5 w-auto text-start fw-semibold'>
+        <span className='color-rose'>@</span>{user.first_name} said:&nbsp;
+        {
+          edit ?
+            <Form.Control as="textarea" rows={4}
+                          size="lg"
+                          autoFocus={true}
+                          onChange={e => setAnswerBody(e.target.value)}
+                          value={answerBody} />:
+            answer.answer_body
+        }
       </div>
+      <div className='d-flex justify-content-end'>
+        {isCurrentUser && !edit && <Link to={''} className='text-muted h6 fw-semibold' onClick={()=>setEdit(true)}>Edit</Link>}
+      </div>
+      {edit && <div className='d-flex justify-content-end'>
+        <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
+        <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
+      </div>}
     </div>
   </div>
 }
 
-const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb, isMinUsersResponses, setShowWorkingModal}) => {
+const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb, isMinUsersResponses,
+                           setShowWorkingModal, current_user}) => {
   if(!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
 
   const userName = fun_question?.user?.first_name
+  const [answersArray, setAnswersArray] = useState(answers || [])
 
-  if(isBlank(answers)) return <EmptyQuestionSection userName={userName}
+  useEffect(() => {
+    setAnswersArray(answers)
+  }, [answers])
+
+  if(isBlank(answersArray)) return <EmptyQuestionSection userName={userName}
                                                     fun_question={fun_question}
                                                     nextTimePeriod={nextTimePeriod}
                                                     steps={steps}
@@ -82,9 +158,10 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveData
   return <div className='results col'>
     <Question {...{userName, fun_question}} />
     {
-      answers.map(data => {
+      answersArray.map(data => {
         const {answer, user} = data
-        return <AnswerItem key={answer.id} {...{answer, user}} />
+        return <AnswerItem key={answer.id} {...{answer, fun_question, user, current_user, nextTimePeriod,
+                                                answersArray, setAnswersArray}} />
       })
     }
   </div>

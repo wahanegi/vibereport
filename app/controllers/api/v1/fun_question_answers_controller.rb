@@ -28,7 +28,7 @@ class Api::V1::FunQuestionAnswersController < ApplicationController
 
   def destroy
     if @answer.destroy
-      head :no_content, notice: 'Answer fun question was successfully destroyed.'
+      render json: { message: 'success' }, status: :ok
     else
       render json: { error: @answer.errors }, status: :unprocessable_entity
     end
