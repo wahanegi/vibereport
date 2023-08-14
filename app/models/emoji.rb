@@ -3,7 +3,8 @@
 # Table name: emojis
 #
 #  id             :bigint           not null, primary key
-#  emoji          :string
+#  emoji_code     :string
+#  emoji_name     :string
 #  emojiable_type :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -19,7 +20,7 @@ class Emoji < ApplicationRecord
   belongs_to :emojiable, polymorphic: true
   belongs_to :user
 
-  validates :emoji, presence: true, uniqueness: { scope: %i[user_id emojiable_type emojiable_id] }
+  validates :emoji_code, presence: true, uniqueness: { scope: %i[user_id emojiable_type emojiable_id] }
 
   scope :ordered, -> { order(created_at: :desc) }
 end

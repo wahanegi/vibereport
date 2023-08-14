@@ -7,7 +7,7 @@ import Right from '../../../../assets/images/chevron-right.svg'
 import {onChangeEmojis} from "./EmojiPicker";
 import {EMOJIS_PER_PAGE} from "../../helpers/consts";
 
-const ShowEmojis = ({emojiObject, setSelectedEmoji, emojisArr, setEmojisArr, current_user, setEmojiObject}) => {
+const ShowEmojis = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user, setEmojiObject}) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(emojisArr.length / EMOJIS_PER_PAGE);
@@ -16,7 +16,8 @@ const ShowEmojis = ({emojiObject, setSelectedEmoji, emojisArr, setEmojisArr, cur
   const currentEmojis = emojisArr.slice(indexOfFirstEmoji, indexOfLastEmoji);
   const onClickEmoji = (item) => {
     setEmojiObject(Object.assign({}, emojiObject, {id: item.current_user_emoji?.id}))
-    setSelectedEmoji(item.emoji);
+    setSelectedEmoji(item.emoji_code);
+    setSelectedEmojiName(item.emoji_name)
   }
 
   const handlePrevPage = () => {
@@ -28,10 +29,10 @@ const ShowEmojis = ({emojiObject, setSelectedEmoji, emojisArr, setEmojisArr, cur
   };
 
   useEffect(() => {
-    if (isEmptyStr(emojiObject.emoji)) return;
+    if (isEmptyStr(emojiObject.emoji_code)) return;
 
     onChangeEmojis(emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user, setEmojiObject)
-  }, [emojiObject.emoji])
+  }, [emojiObject.emoji_code])
 
   return <Fragment>
     {currentEmojis.map((item, index) => (
@@ -39,17 +40,17 @@ const ShowEmojis = ({emojiObject, setSelectedEmoji, emojisArr, setEmojisArr, cur
         <Tippy content={
           <div className='emoji-tooltip'>
             <Emoji
-              unified={item.emoji}
-              emojiStyle={EmojiStyle.APPLE}
+              unified={item.emoji_code}
+              emojiStyle={EmojiStyle.NATIVE}
               size={40}
             /><br/>
-            {usersEmoji(item.users, current_user)}
+            {usersEmoji(item.users, current_user, item)}
           </div>
         }>
-          <div style={{fontSize: 48}}>
+          <div className='pointer'>
             <Emoji
-              unified={item.emoji}
-              emojiStyle={EmojiStyle.APPLE}
+              unified={item.emoji_code}
+              emojiStyle={EmojiStyle.NATIVE}
               size={22}
             />
             <span className='h6 text-muted text-'>{item.count}</span>
@@ -60,10 +61,10 @@ const ShowEmojis = ({emojiObject, setSelectedEmoji, emojisArr, setEmojisArr, cur
     {emojisArr.length > EMOJIS_PER_PAGE && (
       <div>
         {currentPage > 1 && <Tippy content={<div className='emoji-tooltip'>Previous emojis</div>}>
-          <img className='padding-x2' alt='left' src={Left} onClick={handlePrevPage} />
+          <img className='padding-x2 pointer' alt='left' src={Left} onClick={handlePrevPage} />
         </Tippy>}
         {currentPage < totalPages && <Tippy content={<div className='emoji-tooltip'>Next emojis</div>}>
-         <img className='padding-x2' alt='right' src={Right} onClick={handleNextPage}/>
+         <img className='padding-x2 pointer' alt='right' src={Right} onClick={handleNextPage}/>
         </Tippy>}
       </div>
     )}

@@ -4,7 +4,6 @@ class Api::V1::EmojisController < ApplicationController
 
   def create
     emoji = current_user.emojis.new(emoji_params)
-
     if emoji.save!
       render json: { data: emoji_object(emoji) }, status: :ok
     else
@@ -30,7 +29,7 @@ class Api::V1::EmojisController < ApplicationController
   end
 
   def emoji_params
-    params.require(:emoji_object).permit(:id, :emoji, :emojiable_type, :emojiable_id)
+    params.require(:emoji_object).permit(:id, :emoji_code, :emoji_name, :emojiable_type, :emojiable_id)
   end
 
   def emoji

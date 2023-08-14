@@ -14,7 +14,7 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:shoutout2) { create :shoutout, time_period:, user: }
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
-  let!(:emoji) { create(:emoji, emoji: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
+  let!(:emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
   let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user) }
 
   describe '#render' do
@@ -37,7 +37,8 @@ RSpec.describe Api::V1::ResultsPresenter do
             answer: fun_question_answer,
             user:,
             emojis: [
-              emoji: emoji.emoji,
+              emoji_code: emoji.emoji_code,
+              emoji_name: emoji.emoji_name,
               users: [user],
               count: 1,
               current_user_emoji: emoji

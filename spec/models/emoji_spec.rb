@@ -3,7 +3,8 @@
 # Table name: emojis
 #
 #  id             :bigint           not null, primary key
-#  emoji          :string
+#  emoji_code     :string
+#  emoji_name     :string
 #  emojiable_type :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -15,7 +16,6 @@
 #  index_emojis_on_emojiable  (emojiable_type,emojiable_id)
 #  index_emojis_on_user_id    (user_id)
 #
-# spec/models/emoji_spec.rb
 
 require 'rails_helper'
 
@@ -25,10 +25,10 @@ RSpec.describe Emoji, type: :model do
   let!(:fun_question_answer) { create :fun_question_answer }
 
   describe 'validations' do
-    it { should validate_presence_of(:emoji) }
+    it { should validate_presence_of(:emoji_code) }
     it 'should be invalid with duplicated emoji' do
-      FactoryBot.create(:emoji, emoji: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer)
-      new_emoji = FactoryBot.build(:emoji, emoji: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer)
+      FactoryBot.create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer)
+      new_emoji = FactoryBot.build(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer)
       expect(new_emoji).to be_invalid
     end
   end

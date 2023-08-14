@@ -11,6 +11,7 @@ import ShowEmojis from "./ShowEmojis";
 const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState("");
+  const [selectedEmojiName, setSelectedEmojiName] = useState("");
   const [emojisArr, setEmojisArr] = useState(emojis || []);
   const modalRef = useRef(null);
   const [emojiObject, setEmojiObject] = useState({});
@@ -19,7 +20,8 @@ const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
     if (selectedEmoji) {
       setShowEmojiPicker(false)
       setEmojiObject(Object.assign({}, emojiObject, {
-        emoji: selectedEmoji,
+        emoji_code: selectedEmoji,
+        emoji_name: selectedEmojiName,
         emojiable_id: shoutout.id,
         emojiable_type: 'Shoutout'})
       )
@@ -40,15 +42,15 @@ const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
         {!prefix && parse(mentionToRichText(shoutout.rich_text))}
         {prefix && <Fragment>"{parse(mentionToRichText(shoutout.rich_text))}"</Fragment>}
       </div>
-      <div className="d-flex align-self-center justify-content-end position-relative">
-        <ShowEmojis {...{emojiObject, setSelectedEmoji, emojisArr, setEmojisArr, current_user, setEmojiObject}} />
+      <div className="emoji-container d-flex justify-content-end position-relative">
+        <ShowEmojis {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user, setEmojiObject}} />
         <div className='pointer d-flex align-items-center' onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ fontSize: 20 }}>
           {!isEmpty(emojisArr) && <span>|</span>}
           <Tippy content={<div className='emoji-tooltip'>Add reaction...</div>} >
             <div className='emoji-button' />
           </Tippy>
         </div>
-        {showEmojiPicker && <EmojiPickerComponent ref={modalRef} {...{emojiObject, setSelectedEmoji, emojisArr, setEmojisArr, setEmojiObject, current_user}} />}
+        {showEmojiPicker && <EmojiPickerComponent ref={modalRef} {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, setEmojiObject, current_user}} />}
       </div>
     </div>
   </div>

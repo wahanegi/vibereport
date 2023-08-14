@@ -73,11 +73,12 @@ class Api::V1::ResultsPresenter
   end
 
   def emojis_data(data)
-    grouped_data = data.ordered.group_by { |entry| entry[:emoji] }
+    grouped_data = data.ordered.group_by { |entry| entry[:emoji_code] }
 
-    grouped_data.map do |emoji, entries_with_emoji|
+    grouped_data.map do |emoji_code, entries_with_emoji|
       {
-        emoji:,
+        emoji_code:,
+        emoji_name: entries_with_emoji.first.emoji_name,
         users: entries_with_emoji.map(&:user),
         count: entries_with_emoji.size,
         current_user_emoji: entries_with_emoji.find { |entry| entry[:user_id] == current_user.id }

@@ -42,7 +42,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_175143) do
 
   create_table "emojis", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "emoji"
+    t.string "emoji_code"
+    t.string "emoji_name"
     t.bigint "emojiable_id"
     t.string "emojiable_type"
     t.datetime "updated_at", null: false

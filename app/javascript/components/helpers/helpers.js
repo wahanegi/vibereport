@@ -97,7 +97,7 @@ export function convertUsersToString(users) {
   }
 }
 
-export function usersEmoji(users, current_user) {
+export function usersEmoji(users, current_user, emojiObject) {
   const modifiedUsers = users.map(user => ({
     ...user,
     first_name: user.id === current_user.id ? 'you' : user.first_name
@@ -109,14 +109,14 @@ export function usersEmoji(users, current_user) {
     return (
       <Fragment>
         {capitalizeFirstLetter(modifiedUsers[0].first_name)}
-        &nbsp;<span className='gray-200'>reacted.</span>
+        &nbsp;<span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
       </Fragment>
     );
   } else if (modifiedUsers.length === 2) {
     return (
       <Fragment>
         {capitalizeFirstLetter(modifiedUsers.map(user => user.first_name).join(' and '))}
-        &nbsp;<span className='gray-200'>reacted.</span>
+        &nbsp;<span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
       </Fragment>
     );
   } else {
@@ -125,7 +125,7 @@ export function usersEmoji(users, current_user) {
     const totalText = otherUsers.map(user => user.first_name).join(', ') + ', and ' + lastUser.first_name
     return (
       <Fragment>
-        {capitalizeFirstLetter(totalText)}&nbsp;<span className='gray-200'>reacted.</span>
+        {capitalizeFirstLetter(totalText)}&nbsp;<span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
       </Fragment>
     );
   }

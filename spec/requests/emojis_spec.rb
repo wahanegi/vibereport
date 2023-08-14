@@ -6,11 +6,12 @@ RSpec.describe Api::V1::FunQuestionAnswersController do
   let!(:time_period) { create :time_period }
   let!(:fun_question) { create :fun_question, time_period: }
   let!(:fun_question_answer) { create :fun_question_answer, user:, fun_question: }
-  let!(:answer_emoji) { create(:emoji, emoji: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
+  let!(:answer_emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
   let!(:params) do
     {
       emoji_object: {
-        emoji: :smile_face,
+        emoji_code: :smile_face,
+        emoji_name: 'smile',
         emojiable_id: fun_question_answer.id,
         emojiable_type: 'FunQuestionAnswer'
       }
@@ -34,7 +35,8 @@ RSpec.describe Api::V1::FunQuestionAnswersController do
         expect([response.parsed_body]).to eq [{ 'data' => {
           'emoji_data' => {
             'id' => emoji.id,
-            'emoji' => emoji.emoji,
+            'emoji_code' => emoji.emoji_code,
+            'emoji_name' => emoji.emoji_name,
             'emojiable_id' => fun_question_answer.id,
             'emojiable_type' => 'FunQuestionAnswer',
             'user_id' => user.id,
