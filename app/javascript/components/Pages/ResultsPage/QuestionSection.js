@@ -17,19 +17,17 @@ export const closePickerCallback = (modalRef, showEmojiPicker, setShowEmojiPicke
   useEffect(() => {
     function handleClickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setShowEmojiPicker(false)
+        setShowEmojiPicker(false);
       }
     }
     if (showEmojiPicker) {
       document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
     }
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showEmojiPicker]);
-}
+};
 
 const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, steps,
                                saveDataToDb, setShowWorkingModal}) => {

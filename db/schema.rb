@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_175143) do
     t.string "emojiable_type"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.index ["emoji_code", "user_id", "emojiable_type", "emojiable_id"], name: "index_unique_emojis", unique: true
     t.index ["emojiable_type", "emojiable_id"], name: "index_emojis_on_emojiable"
     t.index ["user_id"], name: "index_emojis_on_user_id"
   end

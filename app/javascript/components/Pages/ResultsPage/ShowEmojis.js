@@ -53,7 +53,7 @@ const ShowEmojis = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojis
               emojiStyle={EmojiStyle.NATIVE}
               size={22}
             />
-            <span className='h6 text-muted text-'>{item.count}</span>
+            <span className='h6 text-muted' style={{marginLeft: 2}}>{item.count}</span>
           </div>
         </Tippy>
       </div>

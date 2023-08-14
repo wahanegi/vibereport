@@ -99,34 +99,24 @@ export function convertUsersToString(users) {
 
 export function usersEmoji(users, current_user, emojiObject) {
   const modifiedUsers = users.map(user => ({
-    ...user,
-    first_name: user.id === current_user.id ? 'you' : user.first_name
+    ...user, display_name: user.id === current_user.id ? 'you' : user.first_name
   }));
-
-  if (modifiedUsers.length === 0) {
+  const userCount = modifiedUsers.length;
+  if (userCount === 0) {
     return '';
-  } else if (modifiedUsers.length === 1) {
-    return (
-      <Fragment>
-        {capitalizeFirstLetter(modifiedUsers[0].first_name)}
-        &nbsp;<span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
-      </Fragment>
-    );
-  } else if (modifiedUsers.length === 2) {
-    return (
-      <Fragment>
-        {capitalizeFirstLetter(modifiedUsers.map(user => user.first_name).join(' and '))}
-        &nbsp;<span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
-      </Fragment>
-    );
-  } else {
-    const lastUser = modifiedUsers[modifiedUsers.length - 1];
-    const otherUsers = modifiedUsers.slice(0, -1);
-    const totalText = otherUsers.map(user => user.first_name).join(', ') + ', and ' + lastUser.first_name
-    return (
-      <Fragment>
-        {capitalizeFirstLetter(totalText)}&nbsp;<span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
-      </Fragment>
-    );
   }
+  const formatUsers = (usersList) => {
+    const userNames = usersList.map(user => user.display_name);
+    const lastUser = userNames.pop();
+    return userNames.length > 0
+      ? `${userNames.join(', ')} and ${lastUser}`
+      : lastUser;
+  };
+  const usersText = formatUsers(modifiedUsers);
+  return (
+    <Fragment>
+      {capitalizeFirstLetter(usersText)}&nbsp;
+      <span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
+    </Fragment>
+  );
 }

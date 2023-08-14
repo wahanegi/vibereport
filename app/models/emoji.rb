@@ -15,6 +15,7 @@
 #
 #  index_emojis_on_emojiable  (emojiable_type,emojiable_id)
 #  index_emojis_on_user_id    (user_id)
+#  index_unique_emojis        (emoji_code,user_id,emojiable_type,emojiable_id) UNIQUE
 #
 class Emoji < ApplicationRecord
   belongs_to :emojiable, polymorphic: true

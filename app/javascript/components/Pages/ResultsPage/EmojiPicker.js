@@ -37,26 +37,25 @@ const createEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, set
 const removeEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user, setEmojiObject) => {
   axios.delete(`/api/v1/emojis/${emojiObject.id}`)
     .then(res => {
-      if (res.data.message === 'success') {
-        const updatedData = emojisArr.map(item => {
-          if (item.emoji_code === emojiObject.emoji_code) {
-            const newUsers = item.users.filter(user => user.id !== current_user.id)
-            if (item.count < 2) return {};
+      if (res.data.message !== 'success') return;
 
-            return Object.assign({}, item, {
-              emoji_code: item.emoji_code,
-              emoji_name: item.emoji_name,
-              count: item.count - 1,
-              users: newUsers
-            });
-          }  else {
-            return item;
-          }
-        });
-        setEmojisArr(updatedData.filter(item => item.emoji_code))
-        setSelectedEmoji('')
-        setEmojiObject({})
-      }
+      const updatedData = emojisArr.map(item => {
+        if (item.emoji_code === emojiObject.emoji_code) {
+          const newUsers = item.users.filter(user => user.id !== current_user.id)
+          return Object.assign({}, item, {
+            emoji_code: item.count > 1 ? item.emoji_code : null,
+            emoji_name: item.emoji_name,
+            count: item.count - 1,
+            users: newUsers
+          });
+        }  else {
+          return item;
+        }
+      });
+
+      setEmojisArr(updatedData.filter(item => item.emoji_code))
+      setSelectedEmoji('')
+      setEmojiObject({})
     })
 }
 export const onChangeEmojis = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user = {}, setEmojiObject) => {

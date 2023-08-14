@@ -8,5 +8,7 @@ class CreateEmojiTable < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :emojis, %i[emoji_code user_id emojiable_type emojiable_id], unique: true, name: 'index_unique_emojis'
   end
 end
