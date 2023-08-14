@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState, useRef} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {isBlank, isEmptyStr, isNotEmptyStr} from "../../helpers/helpers";
 import Form from "react-bootstrap/Form";
 import {apiRequest} from "../../requests/axios_requests";
@@ -197,6 +197,7 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveData
 
   const userName = fun_question?.user?.first_name
   const [answersArray, setAnswersArray] = useState(answers || [])
+
   useEffect(() => {
     setAnswersArray(answers)
   }, [answers])
