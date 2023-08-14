@@ -54,15 +54,12 @@
   <div class="mx-auto my-0 title">Submissions are in!</div>
     <div class="mx-auto my-0 text-invitation">See how the team has been doing:</div>
   <div class="container">
-    <%= image_tag("cloud_words.png", class: 'responses-words')  %>
-  </div>
-  <div class="big-btn mx-auto">
-    <div class="big-btn-text">
-      <%= link_to "See the Results", { controller: "api/v1/results",
-                                       action: "results_email",
-                                       slug: @time_period.slug,
-                                       user_id: @user.id }, class: "link-text-results" %>
-    </div>
+    <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
+                { controller: "api/v1/results",
+                  action: "results_email",
+                  slug: @time_period.slug,
+                  user_id: @user.id }
+    %>
   </div>
   <div class="row-over-links">
     <div class="mx-auto my-0 lnk-was-not" style="width: max-content">

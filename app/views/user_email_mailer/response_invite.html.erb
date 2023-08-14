@@ -31,30 +31,28 @@
       <%= render 'layouts/logo', height: 61 %>
     </div>
   </div>
+  <!--[if mso]>
+  <table role="presentation" width="100%">
+    <tr>
+      <td class="second-row" style="height: 50px; text-align: left;">
+        <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 102px; height: 115px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+          <tr>
+            <td class="data" style="padding-top: 55px; width: 102px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+              <%= @view_complete_by %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <![endif]-->
+  <!--[if !mso]><!-->
   <div class="second-row">
-    <!--[if mso]>
-    <table role="presentation" width="100%">
-      <tr>
-        <td class="second-row" style="height: 50px; text-align: left;">
-          <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 102px; height: 115px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
-            <tr>
-              <td class="data" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-                <%= @view_complete_by %>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <![endif]-->
-    <!--[if !mso]><!-->
-    <div class="second-row">
-      <div class="calendar ml-55">
-        <div class="data"><%= @view_complete_by %></div>
-      </div>
+    <div class="calendar ml-55">
+      <div class="data"><%= @view_complete_by %></div>
     </div>
-    <!--<![endif]-->
   </div>
+  <!--<![endif]-->
   <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
   <div class="mx-auto my-0 question">What word best describes how you feel about work?</div>
   <div>
