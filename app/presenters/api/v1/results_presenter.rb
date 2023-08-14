@@ -67,8 +67,22 @@ class Api::V1::ResultsPresenter
   def answer_block(answer)
     {
       answer:,
-      user: answer.user
+      user: answer.user,
+      emojis: emojis_data(answer.emojis)
     }
+  end
+
+  def emojis_data(data)
+    grouped_data = data.ordered.group_by { |entry| entry[:emoji] }
+
+    grouped_data.map do |emoji, entries_with_emoji|
+      {
+        emoji:,
+        users: entries_with_emoji.map(&:user),
+        count: entries_with_emoji.size,
+        current_user_emoji: entries_with_emoji.find { |entry| entry[:user_id] == current_user.id }
+      }
+    end
   end
 
   def sent_shoutouts
@@ -124,14 +138,16 @@ class Api::V1::ResultsPresenter
 
     {
       shoutout:,
-      users: [shoutout.user]
+      users: [shoutout.user],
+      emojis: emojis_data(shoutout.emojis)
     }
   end
 
   def recipients_block(shoutout)
     {
       shoutout:,
-      users: shoutout.shoutout_recipients.map(&:user)
+      users: shoutout.shoutout_recipients.map(&:user),
+      emojis: emojis_data(shoutout.emojis)
     }
   end
 end

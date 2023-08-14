@@ -96,3 +96,37 @@ export function convertUsersToString(users) {
     </Fragment>
   }
 }
+
+export function usersEmoji(users, current_user) {
+  const modifiedUsers = users.map(user => ({
+    ...user,
+    first_name: user.id === current_user.id ? 'you' : user.first_name
+  }));
+
+  if (modifiedUsers.length === 0) {
+    return '';
+  } else if (modifiedUsers.length === 1) {
+    return (
+      <Fragment>
+        {capitalizeFirstLetter(modifiedUsers[0].first_name)}
+        &nbsp;<span className='gray-200'>reacted.</span>
+      </Fragment>
+    );
+  } else if (modifiedUsers.length === 2) {
+    return (
+      <Fragment>
+        {capitalizeFirstLetter(modifiedUsers.map(user => user.first_name).join(' and '))}
+        &nbsp;<span className='gray-200'>reacted.</span>
+      </Fragment>
+    );
+  } else {
+    const lastUser = modifiedUsers[modifiedUsers.length - 1];
+    const otherUsers = modifiedUsers.slice(0, -1);
+    const totalText = otherUsers.map(user => user.first_name).join(', ') + ', and ' + lastUser.first_name
+    return (
+      <Fragment>
+        {capitalizeFirstLetter(totalText)}&nbsp;<span className='gray-200'>reacted.</span>
+      </Fragment>
+    );
+  }
+}

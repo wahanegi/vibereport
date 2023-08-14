@@ -76,3 +76,37 @@
     z-index: 2;
   }
 }
+.emoji-tooltip {
+  background-color: $black;
+  color: $white;
+  padding: 10px;
+  border: 1px solid $black;
+  border-radius: .75rem;
+  min-width: 100px;
+  max-width: 180px;
+  white-space: normal;
+}
+.emoji-button {
+  height: 22px;
+  width: 22px;
+  margin-left: 4px;
+  background-image: url("reshot-icon-smile.svg");
+  &:hover {
+    background-image: url("reshot-icon-grinning.svg");
+  }
+}
+.emoji-picker {
+  font-size: 14px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 100
+}
+.padding-x4 {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.padding-x2 {
+  padding-left: 2px;
+  padding-right: 2px;
+}
