@@ -27,26 +27,24 @@
 <body>
 <div class="board mx-auto">
   <div class="first-row-reminder">
-    <div class="calendar mt-10 ml-55">
-      <!--[if mso]>
-      <table role="presentation" width="100%">
-        <tr>
-          <td style="width: 102px; height: 115px; text-align: left;">
-            <div class="calendar-days ml-55" style="background-image: url('calendar_days.png'); background-repeat: no-repeat; background-size: contain;">
-              <div class="date" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-                <%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %>
-              </div>
+    <!--[if mso]>
+    <table role="presentation" width="100%">
+      <tr>
+        <td style="width: 102px; height: 115px; text-align: left;">
+          <div class="calendar-days ml-55" style="background-image: url('calendar_days.png'); background-repeat: no-repeat; background-size: contain;">
+            <div class="date" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+              <%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %>
             </div>
-          </td>
-        </tr>
-      </table>
-      <![endif]-->
-      <!--[if !mso]><!-->
-      <div class="calendar-days ml-55">
-        <div class="date"><%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
-      </div>
-      <!--<![endif]-->     
+          </div>
+        </td>
+      </tr>
+    </table>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <div class="calendar-days ml-55">
+      <div class="date"><%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
     </div>
+    <!--<![endif]-->
   </div>
   <div>
     <div class="second-row-reminder mt-182">
