@@ -102,9 +102,8 @@ export function usersEmoji(users, current_user, emojiObject) {
     ...user, display_name: user.id === current_user.id ? 'you' : user.first_name
   }));
   const userCount = modifiedUsers.length;
-  if (userCount === 0) {
-    return '';
-  }
+  if (userCount === 0) return '';
+
   const formatUsers = (usersList) => {
     const userNames = usersList.map(user => user.display_name);
     const lastUser = userNames.pop();

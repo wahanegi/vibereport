@@ -40,17 +40,15 @@ const removeEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, cur
       if (res.data.message !== 'success') return;
 
       const updatedData = emojisArr.map(item => {
-        if (item.emoji_code === emojiObject.emoji_code) {
-          const newUsers = item.users.filter(user => user.id !== current_user.id)
-          return Object.assign({}, item, {
-            emoji_code: item.count > 1 ? item.emoji_code : null,
-            emoji_name: item.emoji_name,
-            count: item.count - 1,
-            users: newUsers
-          });
-        }  else {
-          return item;
-        }
+        if (item.emoji_code !== emojiObject.emoji_code) return item;
+
+        const newUsers = item.users.filter(user => user.id !== current_user.id)
+        return Object.assign({}, item, {
+          emoji_code: item.count > 1 ? item.emoji_code : null,
+          emoji_name: item.emoji_name,
+          count: item.count - 1,
+          users: newUsers
+        });
       });
 
       setEmojisArr(updatedData.filter(item => item.emoji_code))
