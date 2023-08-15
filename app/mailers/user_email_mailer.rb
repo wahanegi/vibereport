@@ -36,6 +36,6 @@ class UserEmailMailer < ApplicationMailer
   def send_reminder(user, custom_message)
     @user = user
     @custom_message = custom_message
-    mail(to: @user.email, subject: "Your Reminder")
+    mail(to: @user.email, subject: 'Your Reminder')
   end
 end

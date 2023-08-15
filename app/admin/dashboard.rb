@@ -50,7 +50,7 @@ ActiveAdmin.register_page 'Dashboard' do
       end
 
       panel "Nag Emails for Current Time Period (ending #{current_period&.end_date} )" do
-        users_without_responses = User.where.not(id: Response.where(time_period_id: current_period.id).select(:user_id))
+        users_without_responses = User.where.not(id: Response.where(time_period_id: current_period&.id).select(:user_id))
 
         table_for users_without_responses do
           column :name do |user|

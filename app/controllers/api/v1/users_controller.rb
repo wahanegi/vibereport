@@ -22,9 +22,7 @@ class Api::V1::UsersController < ApplicationController
     general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: @user.id }))
     link_text = "<a href='#{general_link}'>Link here</a>"
 
-    if params["reminder_message"].present?
-      custom_message = params["reminder_message"][@user.id.to_s]
-    end 
+    params["reminder_message"].present? && custom_message = params["reminder_message"][@user.id.to_s]
 
     custom_message ||= "Hi 👋 #{@user.first_name}, please enter your Vibereport check-in 📝 for last week: #{link_text}. Thanks! 😊".html_safe
 
@@ -32,7 +30,6 @@ class Api::V1::UsersController < ApplicationController
 
     redirect_to admin_dashboard_path, notice: "Reminder sent to #{@user.full_name}"
   end
-  
 
   private
 
