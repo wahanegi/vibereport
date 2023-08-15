@@ -65,7 +65,7 @@ const EmojiRow = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisAr
       <EmojiPickerComponent
         ref={modalRef}
         {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr,
-          setEmojisArr, setEmojiObject, current_user, pickerPosition}} />
+          setEmojisArr, setEmojiObject, current_user, pickerPosition, setPickerPosition}} />
     }
   </div>
 }

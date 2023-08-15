@@ -64,7 +64,8 @@ export const onChangeEmojis = (emojiObject, emojisArr, setEmojisArr, setSelected
 
 const EmojiPickerComponent = React.forwardRef(({
                         emojiObject, setSelectedEmoji, current_user, pickerPosition,
-                        emojisArr, setEmojisArr, setEmojiObject, setSelectedEmojiName
+                        emojisArr, setEmojisArr, setEmojiObject, setSelectedEmojiName,
+                        setPickerPosition
                       }, ref) => {
   const onClick = (emojiData) => {
     const repeatEmoji = emojisArr.filter(item => item.emoji_code === emojiData.unified)
@@ -72,6 +73,7 @@ const EmojiPickerComponent = React.forwardRef(({
     setEmojiObject(Object.assign({}, emojiObject, {id: reactedUser?.current_user_emoji?.id}))
     setSelectedEmoji(emojiData.unified);
     setSelectedEmojiName(emojiData.names[0])
+    setPickerPosition({})
   }
 
   useEffect(() => {
