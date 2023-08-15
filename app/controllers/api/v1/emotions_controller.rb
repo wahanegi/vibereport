@@ -73,14 +73,24 @@ class Api::V1::EmotionsController < ApplicationController
 
   def fun_question
     fun_question = custom_question.presence || FunQuestion.question_public.not_used.sample
-    return fun_question if fun_question.time_period_id.present?
+    return prepared_question(fun_question) if fun_question.time_period_id.present?
 
     fun_question.update(time_period_id: time_period.id, used: true) if fun_question.time_period_id.blank?
-    fun_question
+    prepared_question(fun_question)
   end
 
   def custom_question
     time_period.fun_question || FunQuestion.question_public.not_used.where.not(user_id: nil).first
+  end
+
+  def prepared_question(fun_question)
+    {
+      id: fun_question.id,
+      user_id: fun_question.user&.id,
+      user_name: fun_question.user&.first_name,
+      question_body: fun_question.question_body,
+      time_period_id: fun_question.time_period_id
+    }
   end
 
   def time_period
