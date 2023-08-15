@@ -1,7 +1,6 @@
 import React, {Fragment} from "react";
 import {convertUsersToString} from "../../helpers/helpers";
 import parse from "html-react-parser";
-import {mentionToRichText} from "../CausesToCelebrate";
 
 const ShoutoutItem = ({shoutout, prefix, users = []}) => {
 
@@ -10,8 +9,8 @@ const ShoutoutItem = ({shoutout, prefix, users = []}) => {
       <div className='h5 w-auto text-start truncated fw-semibold'>
         {prefix}
         {prefix && convertUsersToString(users)}
-        {!prefix && parse(mentionToRichText(shoutout.rich_text))}
-        {prefix && <Fragment>"{parse(mentionToRichText(shoutout.rich_text))}"</Fragment>}
+        {!prefix && parse(shoutout.rich_text)}
+        {prefix && <Fragment>"{parse(shoutout.rich_text)}"</Fragment>}
       </div>
     </div>
   </div>

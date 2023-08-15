@@ -1,6 +1,6 @@
 ActiveAdmin.register Response do
   permit_params %i[time_period_id emotion_id user_id not_working steps rating productivity productivity_comment
-                   comment completed_at gif]
+                   celebrate_comment comment completed_at gif]
 
   index do
     selectable_column
@@ -17,6 +17,7 @@ ActiveAdmin.register Response do
     column :not_working
     column :user
     column :productivity
+    column :celebrate_comment
     column :rating
     column :completed_at
     actions
@@ -35,6 +36,7 @@ ActiveAdmin.register Response do
       f.input :not_working
       f.input :rating, input_html: { min: 1, max: 5 }
       f.input :productivity, input_html: { min: 1, max: 9 }
+      f.input :celebrate_comment
       f.input :comment
       f.input :productivity_comment
       f.input :gif

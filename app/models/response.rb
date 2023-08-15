@@ -47,7 +47,6 @@ class Response < ApplicationRecord
   belongs_to :user
   belongs_to :fun_question, optional: true
   belongs_to :fun_question_answer, optional: true
-  belongs_to :celebrate_shoutout, optional: true, class_name: 'CelebrateShoutout'
 
   validates :user_id, uniqueness: { scope: :time_period_id }
   validates :steps, presence: true
