@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import EmojiPicker, {EmojiStyle} from "emoji-picker-react";
 import axios from "axios";
-import {isEmptyStr, isPresent} from "../../helpers/helpers";
+import {isEmptyStr, isPresent} from "../../../helpers/helpers";
 
 const createEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, setEmojiObject) => {
   axios.post(`/api/v1/emojis`, {emoji_object: emojiObject})
@@ -63,7 +63,7 @@ export const onChangeEmojis = (emojiObject, emojisArr, setEmojisArr, setSelected
 }
 
 const EmojiPickerComponent = React.forwardRef(({
-                        emojiObject, setSelectedEmoji, current_user,
+                        emojiObject, setSelectedEmoji, current_user, pickerPosition,
                         emojisArr, setEmojisArr, setEmojiObject, setSelectedEmojiName
                       }, ref) => {
   const onClick = (emojiData) => {
@@ -80,7 +80,7 @@ const EmojiPickerComponent = React.forwardRef(({
     onChangeEmojis(emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user, setEmojiObject)
   }, [emojiObject.emoji_code])
 
-  return <div ref={ref} className='emoji-picker'>
+  return <div ref={ref} className='emoji-picker' style={pickerPosition}>
     <EmojiPicker
       onEmojiClick={onClick}
       autoFocusSearch={false}

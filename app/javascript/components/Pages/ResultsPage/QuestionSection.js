@@ -3,31 +3,12 @@ import {isBlank, isEmptyStr, isNotEmptyStr} from "../../helpers/helpers";
 import Form from "react-bootstrap/Form";
 import {apiRequest} from "../../requests/axios_requests";
 import {Link} from "react-router-dom";
-import EmojiPickerComponent from "./EmojiPicker";
-import isEmpty from "ramda/src/isEmpty";
-import Tippy from "@tippyjs/react";
-import ShowEmojis from "./ShowEmojis";
+import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
   <div className='results col'>
     <div className='row wrap question preview mb-3' />
   </div>
-
-export const closePickerCallback = (modalRef, showEmojiPicker, setShowEmojiPicker) => {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setShowEmojiPicker(false);
-      }
-    }
-    if (showEmojiPicker) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showEmojiPicker]);
-};
 
 const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, steps,
                                saveDataToDb, setShowWorkingModal}) => {
@@ -152,8 +133,6 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
     }
   }
 
-  closePickerCallback(modalRef, showEmojiPicker, setShowEmojiPicker)
-
   return <div className='row wrap question answer mb-1'>
     <div className="col-xl-12">
       <div className='d-flex justify-content-end'>
@@ -175,16 +154,8 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
             answer.answer_body
         }
       </div>
-      <div className="emoji-container d-flex justify-content-end position-relative">
-        <ShowEmojis {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user, setEmojiObject}} />
-        <div className='pointer d-flex align-items-center' onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ fontSize: 20 }}>
-          {!isEmpty(emojisArr) && <span>|</span>}
-          <Tippy content={<div className='emoji-tooltip'>Add reaction...</div>} >
-            <div className='emoji-button' />
-          </Tippy>
-        </div>
-        {showEmojiPicker && <EmojiPickerComponent ref={modalRef} {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, setEmojiObject, current_user}} />}
-      </div>
+      <EmojiRow {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
+                     setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef}} />
     </div>
   </div>
 }

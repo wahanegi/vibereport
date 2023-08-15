@@ -1,11 +1,11 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {isEmptyStr, usersEmoji} from "../../helpers/helpers";
+import {isEmptyStr, usersEmoji} from "../../../helpers/helpers";
 import Tippy from "@tippyjs/react";
 import {Emoji, EmojiStyle} from "emoji-picker-react";
-import Left from '../../../../assets/images/chevron-left.svg'
-import Right from '../../../../assets/images/chevron-right.svg'
+import Left from '../../../../../assets/images/chevron-left.svg'
+import Right from '../../../../../assets/images/chevron-right.svg'
 import {onChangeEmojis} from "./EmojiPicker";
-import {EMOJIS_PER_PAGE} from "../../helpers/consts";
+import {EMOJIS_PER_PAGE} from "../../../helpers/consts";
 
 const ShowEmojis = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user, setEmojiObject}) => {
   const [currentPage, setCurrentPage] = useState(1);
