@@ -8,17 +8,15 @@ const createEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, set
     .then(res => {
       const emoji_code = res.data.data.emoji_data.emoji_code
       const updatedData = emojisArr.map(item => {
-        if (item.emoji_code === emoji_code) {
-          return Object.assign({}, item, {
-            emoji_code: item.emoji_code,
-            emoji_name: item.emoji_name,
-            count: item.count + 1,
-            current_user_emoji: res.data.data.emoji_data,
-            users: [...item.users, res.data.data.user]
-          });
-        }  else {
-          return item;
-        }
+        if (item.emoji_code !== emojiObject.emoji_code) return item;
+
+        return Object.assign({}, item, {
+          emoji_code: item.emoji_code,
+          emoji_name: item.emoji_name,
+          count: item.count + 1,
+          current_user_emoji: res.data.data.emoji_data,
+          users: [...item.users, res.data.data.user]
+        });
       });
       const addedEmoji = {
         emoji_code: emoji_code,
