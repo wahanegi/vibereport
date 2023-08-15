@@ -55,7 +55,7 @@ const Question = ({userName, fun_question}) => {
 
   return <div className='row wrap question mb-1'>
     {
-      userName && <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asked:<br/></p>
+      userName && <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
     <h5 className='w-auto text-start fw-semibold'> {fun_question.question_body}</h5>
   </div>
@@ -139,7 +139,7 @@ const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, a
 
 const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb, isMinUsersResponses,
                            setShowWorkingModal, current_user}) => {
-  // if(!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
+  if(!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
 
   const userName = fun_question?.user?.first_name
   const [answersArray, setAnswersArray] = useState(answers || [])
