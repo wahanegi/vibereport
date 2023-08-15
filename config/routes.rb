@@ -6,6 +6,16 @@ Rails.application.routes.draw do
   passwordless_for :users, at: '/', as: :auth
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
+  namespace :api do
+    namespace :v1 do
+      resources :users do
+        member do
+          post :send_reminder
+        end
+      end
+    end
+  end
+
   get '/app', to: 'home#app'
   namespace :api do
     namespace :v1 do

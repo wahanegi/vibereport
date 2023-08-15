@@ -48,6 +48,32 @@ ActiveAdmin.register_page 'Dashboard' do
           end
         end
       end
+
+      panel "Nag Emails for Current Time Period (ending #{current_period&.end_date} )" do
+        users_without_responses = User.where.not(id: Response.where(time_period_id: current_period.id).select(:user_id))
+
+        table_for users_without_responses do
+          column :name do |user|
+            "#{user.full_name} (#{user.email})"
+          end
+
+          column :reminder_message do |user|
+            general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: user.id }))
+            
+            div class: "custom-textarea-style" do
+              text_node "Hi 👋 #{user.first_name}, please enter your Vibereport check-in 📝 for last week: "
+              a "🔗 Link here", href: general_link
+              text_node "Thanks! 😊"
+            end
+          end
+
+          column :send_reminder do |user|
+            form_tag send_reminder_api_v1_user_path(user), method: :post do
+              submit_tag 'Send Reminder'
+            end
+          end
+        end
+      end
     end
   end
 
