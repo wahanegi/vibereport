@@ -33,9 +33,9 @@ class UserEmailMailer < ApplicationMailer
     mail(to: user.email, subject: "#{user.first_name}, your check-in was saved.")
   end
 
-  def send_reminder(user, custom_message)
+  def send_reminder(user, message)
     @user = user
-    @custom_message = custom_message
-    mail(to: @user.email, subject: 'Your Reminder')
+    @message = message
+    mail(to: @user.email, subject: '🔔 Reminder: Share Your Vibes from Last Week')
   end
 end
