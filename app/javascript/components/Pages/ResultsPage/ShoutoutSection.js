@@ -12,7 +12,8 @@ const PreviewShoutoutSection = () =>
     <div className='row wrap shoutout preview mb-3' />
   </div>
 
-const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts, data, setData, isMinUsersResponses}) => {
+const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts, data,
+                           setData, isMinUsersResponses, current_user}) => {
   const [showModal, setShowModal] = useState(false)
   const emptyCurrentUserShoutouts = isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
   const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
@@ -30,8 +31,8 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
       <h5 className='text-start fw-semibold'>Received:</h5>
       {
         currentUserShoutouts.received.map(data => {
-          const {shoutout, users} = data
-          return <ShoutoutItem key={shoutout.id} {...{shoutout, users}} prefix={'From '} />
+          const {shoutout, users, emojis = []} = data
+          return <ShoutoutItem key={shoutout.id} {...{shoutout, users, emojis, current_user}} prefix={'From '} />
         })
       }
     </div>
@@ -42,8 +43,8 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
       <h5 className='text-start fw-semibold'>Sent:</h5>
       {
         currentUserShoutouts.sent.map(data => {
-          const {shoutout, users} = data
-          return <ShoutoutItem key={shoutout.id} {...{shoutout, users}} />
+          const {shoutout, users, emojis = []} = data
+          return <ShoutoutItem key={shoutout.id} {...{shoutout, users, emojis, current_user}} />
         })
       }
     </div>
