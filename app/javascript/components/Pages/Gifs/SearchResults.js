@@ -6,6 +6,11 @@ import GifList from "./GifList";
 import {isBlank, isEmptyStr, isNotEmptyStr} from "../../helpers/helpers";
 import ProgressBar from "../../UI/ProgressBar";
 
+const WrapGifMessage = ({children}) =>
+  <div className='card-body d-flex align-items-center justify-content-center'>
+    {children}
+  </div>
+
 const SearchResults = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, uploading, uploadingError,
                          setSelectedGifIndex, category, isCustomGif, apiGiphyKey, }) => {
 
@@ -16,17 +21,17 @@ const SearchResults = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, uploading, u
     &nbsp;and add the received token to Heroku Config Vars.
   </h1>
 
-  if (isEmpty(gifs) && isEmptyStr(uploadingError)) return <div className='card-body d-flex align-items-center justify-content-center'>
+  if (isEmpty(gifs) && isEmptyStr(uploadingError)) return <WrapGifMessage>
     <div className='text-white h1'>No results</div>
-  </div>
+  </WrapGifMessage>
 
-  if (uploading) return <div className='card-body d-flex align-items-center justify-content-center'>
+  if (uploading) return <WrapGifMessage>
     <ProgressBar text='Uploading...' />
-  </div>
+  </WrapGifMessage>
 
-  if (isNotEmptyStr(uploadingError)) return <div className='card-body d-flex align-items-center justify-content-center'>
+  if (isNotEmptyStr(uploadingError)) return <WrapGifMessage>
     <div className='text-white h4'>Error: {uploadingError}</div>
-  </div>
+  </WrapGifMessage>
 
   return <Fragment>
     <GifList {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif}} />
