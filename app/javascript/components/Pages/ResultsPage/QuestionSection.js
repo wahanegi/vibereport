@@ -1,9 +1,9 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useEffect, useRef, useState} from "react";
 import {isBlank, isEmptyStr, isNotEmptyStr} from "../../helpers/helpers";
-import isEmpty from "ramda/src/isEmpty";
 import Form from "react-bootstrap/Form";
 import {apiRequest} from "../../requests/axios_requests";
 import {Link} from "react-router-dom";
+import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
   <div className='results col'>
@@ -61,11 +61,16 @@ const Question = ({userName, fun_question}) => {
   </div>
 }
 
-const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, answersArray, setAnswersArray}) => {
+const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_question, answersArray, setAnswersArray}) => {
   const isCurrentUser = !nextTimePeriod && current_user.email === user.email
   const [edit, setEdit] = useState(false)
   const [answerBody, setAnswerBody] = useState(answer.answer_body || '')
-
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
+  const [selectedEmojiName, setSelectedEmojiName] = useState("");
+  const [emojisArr, setEmojisArr] = useState(emojis || []);
+  const modalRef = useRef(null);
+  const [emojiObject, setEmojiObject] = useState({});
   const onCancel = () => {
     setEdit(false)
     setAnswerBody(answer.answer_body)
@@ -77,6 +82,22 @@ const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, a
       fun_question_id: fun_question.id
     }
   }
+
+  useEffect(() => {
+    if (selectedEmoji) {
+      setShowEmojiPicker(false)
+      setEmojiObject(Object.assign({}, emojiObject, {
+        emoji_code: selectedEmoji,
+        emoji_name: selectedEmojiName,
+        emojiable_id: answer.id,
+        emojiable_type: 'FunQuestionAnswer'})
+      )
+    }
+  }, [selectedEmoji])
+
+  useEffect(() => {
+    setEmojisArr(emojis)
+  }, [emojis])
 
   const dataFromServer = (fun_question_answer) => {
     const updatedAnswerBody = fun_question_answer.data.attributes.answer_body
@@ -114,6 +135,13 @@ const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, a
 
   return <div className='row wrap question answer mb-1'>
     <div className="col-xl-12">
+      <div className='d-flex justify-content-end'>
+        {isCurrentUser && !edit && <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={()=>setEdit(true)}>Edit</Link>}
+      </div>
+      {edit && <div className='d-flex justify-content-end'>
+        <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
+        <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
+      </div>}
       <div className='edit-question h5 w-auto text-start fw-semibold'>
         <span className='color-rose'>@</span>{user.first_name} said:&nbsp;
         {
@@ -126,13 +154,8 @@ const AnswerItem = ({answer, user, current_user, nextTimePeriod, fun_question, a
             answer.answer_body
         }
       </div>
-      <div className='d-flex justify-content-end'>
-        {isCurrentUser && !edit && <Link to={''} className='text-muted h6 fw-semibold' onClick={()=>setEdit(true)}>Edit</Link>}
-      </div>
-      {edit && <div className='d-flex justify-content-end'>
-        <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
-        <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
-      </div>}
+      <EmojiRow {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
+                     setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef}} />
     </div>
   </div>
 }
@@ -159,8 +182,8 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveData
     <Question {...{userName, fun_question}} />
     {
       answersArray.map(data => {
-        const {answer, user} = data
-        return <AnswerItem key={answer.id} {...{answer, fun_question, user, current_user, nextTimePeriod,
+        const {answer, user, emojis} = data
+        return <AnswerItem key={answer.id} {...{answer, emojis, fun_question, user, current_user, nextTimePeriod,
                                                 answersArray, setAnswersArray}} />
       })
     }

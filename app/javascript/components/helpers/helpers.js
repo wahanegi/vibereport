@@ -96,3 +96,26 @@ export function convertUsersToString(users) {
     </Fragment>
   }
 }
+
+export function usersEmoji(users, current_user, emojiObject) {
+  const modifiedUsers = users.map(user => ({
+    ...user, display_name: user.id === current_user.id ? 'you' : user.first_name
+  }));
+  const userCount = modifiedUsers.length;
+  if (userCount === 0) return '';
+
+  const formatUsers = (usersList) => {
+    const userNames = usersList.map(user => user.display_name);
+    const lastUser = userNames.pop();
+    return userNames.length > 0
+      ? `${userNames.join(', ')} and ${lastUser}`
+      : lastUser;
+  };
+  const usersText = formatUsers(modifiedUsers);
+  return (
+    <Fragment>
+      {capitalizeFirstLetter(usersText)}&nbsp;
+      <span className='gray-200'>reacted with :{emojiObject.emoji_name}:</span>
+    </Fragment>
+  );
+}
