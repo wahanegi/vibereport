@@ -4,7 +4,8 @@ import {GIPHY_SEARCH_URL} from "../../helpers/consts";
 import SearchResults from "./SearchResults";
 import PoweredBy from '../../../../assets/images/PoweredBy.svg';
 
-const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, isCustomGif, setIsCustomGif }) => {
+const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex,
+               isCustomGif, setIsCustomGif, uploading }) => {
   const [term, setTerm] = useState(emotion.word)
   const {category, word} = emotion
   const [gifs, setGifs] = useState([])
@@ -26,7 +27,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
     const isGiphyLink = /https:\/\/media\.giphy\.com\/media\/\w+\/giphy\.gif/.test(String(term));
     if (isGiphyLink) {
       setIsCustomGif(true)
-      setGifUrl(term)
+      setGifUrl({src: term})
     } else if (!keyDown) {
       setIsCustomGif(false)
       fetch(url)
@@ -50,7 +51,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
    <div className='gif-card' >
      <div className='gif-card card' onKeyDown={handleKeyDown}>
        <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-       <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif, apiGiphyKey}} />
+       <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif, apiGiphyKey, uploading}} />
      </div>
    </div>
   </Fragment>
