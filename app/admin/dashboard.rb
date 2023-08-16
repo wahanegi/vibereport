@@ -69,7 +69,7 @@ ActiveAdmin.register_page 'Dashboard' do
 
           column :send_reminder do |user|
             form_tag send_reminder_api_v1_user_path(user), method: :post do
-              submit_tag 'Send Reminder'
+              submit_tag 'Send via email'
             end
           end
         end

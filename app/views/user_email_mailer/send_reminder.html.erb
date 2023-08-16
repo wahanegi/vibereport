@@ -1,6 +1,6 @@
-<p>
+<h3>
   <!--[if mso]>
-    <%= @custom_message %>
+    <%= sanitize(@custom_message) %>
   <![endif]-->
-  <%= @custom_message %>
-</p>
+  <%= sanitize(@custom_message) %>
+</h3>
