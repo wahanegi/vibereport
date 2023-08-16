@@ -5,7 +5,7 @@ import SearchResults from "./SearchResults";
 import PoweredBy from '../../../../assets/images/PoweredBy.svg';
 
 const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex,
-               isCustomGif, setIsCustomGif, uploading }) => {
+               isCustomGif, setIsCustomGif, uploading, uploadingError }) => {
   const [term, setTerm] = useState(emotion.word)
   const {category, word} = emotion
   const [gifs, setGifs] = useState([])
@@ -51,7 +51,8 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
    <div className='gif-card' >
      <div className='gif-card card' onKeyDown={handleKeyDown}>
        <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-       <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category, isCustomGif, apiGiphyKey, uploading}} />
+       <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category,
+                           isCustomGif, apiGiphyKey, uploading, uploadingError}} />
      </div>
    </div>
   </Fragment>

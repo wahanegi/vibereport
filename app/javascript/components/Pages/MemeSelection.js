@@ -8,8 +8,7 @@ import {
   Header,
   Wrapper
 } from "../UI/ShareContent";
-import {backHandling, isBlank, isPresent} from "../helpers/helpers";
-import {GIPHY_UPLOAD_URL} from "../helpers/consts";
+import {backHandling, gifUrlWithId, isBlank, isPresent} from "../helpers/helpers";
 import CornerElements from "../UI/CornerElements";
 
 const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif, draft}) => {
@@ -19,6 +18,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const [gifUrl, setGifUrl] = useState(response.attributes.gif || {})
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadingError, setUploadingError] = useState('');
   const [isDraft, setIsDraft] = useState(draft);
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -54,10 +54,10 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     steps.push('selected-giphy-follow');
     saveDataToDb(steps, { gif: gifUrl, draft: false });
   }
-  console.log('selectedFile', selectedFile)
-  console.log('gifUrl', gifUrl)
+
   const uploadGIPHYHandling = async () => {
     setUploading(true)
+    setUploadingError('')
     const formData = new FormData();
     formData.append('file', selectedFile);
     formData.append('api_key', api_giphy_key);
@@ -68,18 +68,17 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
         body: formData,
       });
       const responseData = await response.json();
-      const uploadedGifUrl = 'https://media.giphy.com/media/' + responseData.data.id + '/giphy.gif'
-      setGifUrl({src: uploadedGifUrl})
+      setGifUrl({src: gifUrlWithId(responseData.data.id)})
       setIsCustomGif(true)
-      console.log('Upload response:', responseData);
       setSelectedFile(null)
       setUploading(false)
     } catch (error) {
+      setSelectedFile(null)
       setUploading(false)
-      console.error('Upload error:', error);
+      setUploadingError(error.message)
     }
   };
-  console.log('Uploading', uploading);
+
   useEffect(()=> {
     navigate(`/${data.response.attributes.steps.slice(-1).toString()}`);
   },[])
@@ -122,7 +121,8 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     <Header />
     <div className='align-self-center gif-wrap'>
         <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex,
-                  setSelectedGifIndex, isCustomGif, setIsCustomGif, uploading}} />
+                  setSelectedGifIndex, isCustomGif, setIsCustomGif, uploading,
+                  uploadingError}} />
       <Navigation />
     </div>
     <CornerElements data = { data }

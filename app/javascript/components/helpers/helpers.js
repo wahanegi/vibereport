@@ -119,3 +119,7 @@ export function usersEmoji(users, current_user, emojiObject) {
     </Fragment>
   );
 }
+
+export function gifUrlWithId(id) {
+  return 'https://media.giphy.com/media/' + id + '/giphy.gif'
+}
