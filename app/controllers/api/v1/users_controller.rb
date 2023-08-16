@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find(params[:id])
 
     custom_message = build_custom_message
-    
+
     UserEmailMailer.send_reminder(@user, custom_message).deliver_now
 
     redirect_to admin_dashboard_path, notice: "Reminder sent to #{@user.full_name}"
