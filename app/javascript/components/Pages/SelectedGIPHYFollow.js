@@ -24,7 +24,7 @@ const SelectedGiphyFollow = ({data, setData, saveDataToDb, steps, service, isCus
       <div className='central-element'>
         {
           isCustomGif ?
-            <h1 className='mt-151' >A new one... Nice!</h1> :
+            <h1>A new one... Nice!</h1>:
             <h1>Excellent choice!</h1>
         }
         <h2 className='muted mt-2 mb-2'>You uploaded:</h2>

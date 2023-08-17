@@ -61,6 +61,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
     const formData = new FormData();
     formData.append('file', selectedFile);
     formData.append('api_key', api_giphy_key);
+    // formData.append('username', 'Vibereport');
 
     try {
       const response = await fetch('https://upload.giphy.com/v1/gifs', {
