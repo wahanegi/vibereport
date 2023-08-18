@@ -32,7 +32,6 @@ class Shoutout < ApplicationRecord
   validates :rich_text, presence: true, uniqueness: { scope: %i[user_id time_period_id] }
 
   scope :not_celebrate, -> { where(type: nil) }
-  scope :shoutout_public, -> { where(public: true) }
 
   def to_text
     rich_text.gsub(%r{<span class="color-primary">|</span>}, '')

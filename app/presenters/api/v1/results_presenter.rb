@@ -23,7 +23,8 @@ class Api::V1::ResultsPresenter
       current_user_shoutouts:,
       responses_count: responses.count,
       current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
-      current_user:
+      current_user:,
+      combined_shoutouts:
     }
   end
 
@@ -113,6 +114,19 @@ class Api::V1::ResultsPresenter
     return [] unless current_user_has_response?
 
     current_user.shoutouts.where(time_period_id: time_period.id).filter_map { |shoutout| recipients_block(shoutout) }
+  end
+
+  def public_shoutouts
+    shoutouts = Shoutout.where(time_period_id: time_period.id, public: true)
+    shoutouts.reject { |shoutout| current_user.shoutouts.include?(shoutout) }
+             .map { |shoutout| shoutout_block(shoutout) }
+  end
+
+  def combined_shoutouts
+    combined = received + public_shoutouts
+    return nil if combined.empty?
+
+    combined.uniq
   end
 
   def current_user_has_response?
