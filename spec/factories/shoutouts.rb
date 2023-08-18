@@ -27,5 +27,6 @@ FactoryBot.define do
     user
     time_period
     rich_text { Faker::Lorem.sentences }
+    public { false }
   end
 end
