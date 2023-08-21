@@ -17,7 +17,6 @@ ActiveAdmin.register Response do
     column :not_working
     column :user
     column :productivity
-    column :celebrate_comment
     column :rating
     column :completed_at
     actions
