@@ -8,13 +8,15 @@ import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
 import {useNavigate} from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
-
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
 import Recognition from "./Pages/Recognition";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
 import Results from "./Pages/ResultsPage";
+import EmotionType from "./Pages/EmotionType";
+import RatherNotSay from "./Pages/RatherNotSay/RatherNotSay";
+import SkipAhead from "./Pages/RatherNotSay/SkipAhead";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -101,7 +103,10 @@ const ResponseFlow = ({step, data, setData}) => {
 
   const componentMap = {
     'emotion-selection-web': <ListEmotions />,
+    'rather-not-say': <RatherNotSay/>,
+    'skip-ahead': <SkipAhead/>,
     'emotion-entry': <EmotionEntry />,
+    'emotion-type': <EmotionType />,
     'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'selected-giphy-follow': <SelectedGIPHYFollow isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'emotion-intensity': <EmotionIntensity />,

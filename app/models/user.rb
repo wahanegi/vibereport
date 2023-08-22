@@ -32,8 +32,11 @@ class User < ApplicationRecord
   has_many :fun_questions, dependent: :destroy
   has_many :fun_question_answers, dependent: :destroy
   has_many :mentions, through: :shoutout_recipients, source: :shoutout
+  has_many :notifications, dependent: :destroy
   has_many :user_teams, dependent: :destroy
   has_many :teams, through: :user_teams
+  has_many :emojis, dependent: :destroy
+  before_validation :strip_first_name_last_name
 
   MAX_NAME_LENGTH = 15
 
@@ -44,11 +47,16 @@ class User < ApplicationRecord
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
 
-  def to_full_name
+  def full_name
     "#{first_name} #{last_name}"
   end
 
   def password_required?
     new_record? || password.present?
+  end
+
+  def strip_first_name_last_name
+    first_name&.strip!
+    last_name&.strip!
   end
 end

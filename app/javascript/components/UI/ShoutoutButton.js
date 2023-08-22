@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import ShoutoutModal from "./ShoutoutModal";
 import ShoutoutIcon from '../../../assets/images/sys_svg/shoutout-new.svg'
 import {NavLink} from "react-router-dom";
-import ShoutoutModal from "./ShoutoutModal";
 
-const ShoutoutButton = ({ data, setData,  num = 0, className = '', isMove = false}) => {
+const ShoutoutButton = ({ data, setData,  num = 0, isMove = false, hideShoutout}) => {
+    if (hideShoutout) return null;
 
     const [ shoutOutForm, setShoutOutForm ] = useState(false)
     const [ blink, setBlink ] = useState('')
@@ -19,12 +20,11 @@ const ShoutoutButton = ({ data, setData,  num = 0, className = '', isMove = fals
     const clickHandling = () => {
         setShoutOutForm(true)
     }
-
     const closeHandling = () => {
         setShoutOutForm(false)
     }
+    const style = isMove ? `left-bottom-corner ${ isMove && ('into-centerX' + (!num ? '2_5' : '')) } ${blink}` : 'hud shoutout'
 
-    const style = className ? className : `left-bottom-corner ${ isMove && ('into-centerX' + (!num ? '2_5' : '')) } ${blink}`
     return (
         <div>
             {shoutOutForm &&

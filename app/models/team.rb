@@ -14,6 +14,13 @@
 class Team < ApplicationRecord
   has_many :user_teams, dependent: :destroy
   has_many :users, through: :user_teams
+  before_validation :strip_name
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: true
+
+  private
+
+  def strip_name
+    name&.strip!
+  end
 end

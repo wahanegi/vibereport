@@ -3,9 +3,15 @@ require 'rails_helper'
 describe EmotionSelectionNotificationWorker do
   let!(:user1) { create :user }
   let!(:user2) { create :user }
-  let!(:time_period) { create :time_period, start_date: Date.current, end_date: Date.current + 6.days }
+  let!(:time_period) { create :time_period }
   let(:worker) { EmotionSelectionNotificationWorker.new }
   let(:run_worker) { worker.run_notification }
+  let!(:emotion_positive) do
+    12.times { create(:emotion, category: 'positive', public: true) }
+  end
+  let!(:emotion_negative) do
+    12.times { create(:emotion, category: 'negative', public: true) }
+  end
 
   describe '.initialize' do
     it 'fetches all users' do

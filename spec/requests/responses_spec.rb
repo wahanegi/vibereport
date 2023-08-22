@@ -49,12 +49,13 @@ RSpec.describe Api::V1::ResponsesController do
               'rating' => user_response.rating,
               'comment' => user_response.comment,
               'productivity' => user_response.productivity,
-              'bad_follow_comment' => user_response.bad_follow_comment,
+              'productivity_comment' => user_response.productivity_comment,
               'fun_question_id' => nil,
               'fun_question_answer_id' => nil,
               'shoutout_id' => nil,
               'draft' => user_response.draft,
-              'completed_at' => nil
+              'completed_at' => nil,
+              'not_working' => false
             }
         },
         'current_user' => {
@@ -102,12 +103,13 @@ RSpec.describe Api::V1::ResponsesController do
                 'rating' => user_response.rating,
                 'comment' => user_response.comment,
                 'productivity' => user_response.productivity,
-                'bad_follow_comment' => user_response.bad_follow_comment,
+                'productivity_comment' => user_response.productivity_comment,
                 'shoutout_id' => nil,
                 'fun_question_id' => user_response.fun_question.id,
                 'fun_question_answer_id' => nil,
                 'draft' => user_response.draft,
-                'completed_at' => nil
+                'completed_at' => nil,
+                'not_working' => false
               }
           },
         'current_user' => {

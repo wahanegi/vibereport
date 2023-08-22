@@ -1,13 +1,12 @@
 <%= form_with model: @session, url: send(Passwordless.mounted_as).sign_in_path, data: { turbo: 'false'} do |f| %>
-  <div class="mx-auto mt-123 minW-675">
+  <div class="mx-auto mt-85 minW-675">
     <div class="welcome-field mx-auto mb-115">
       <h1 class="color-black">
         Oh, hi there!
       </h1>
       <p class="b2 gray-600 mt-negative-17">Welcome to</p>
     </div>
-    <div class="mb-negative-17 position-relative fs-7">Logo/Brand</div>
-    <%= image_tag("envelope.png", width: 190, height: 87) %>
+    <%= render 'layouts/logo', height: 87 %>
     <% if flash.to_h["error"] == 'Expired!' %>
       <h3 class="gray-600 my-4">Your login link may have expired. Click here to get a new one</h3>
     <% else %>
@@ -19,16 +18,18 @@
     <% end %>
     <div class="b1">
       <% email_field_name = :"passwordless[#{@email_field}]" %>
-      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input", class:"mt-2 w-660 email-input"%>
+      <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), placeholder: "Enter email here", id: "email-input", class:"mt-2 w-660 email-input email-input-new"%>
     </div>
-    <div class="d-flex align-items-center mt-162 pb-52">
+    <div class="d-flex align-items-center mt-85 pb-52">
       <%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
     </div>
-    <div class="placement-size-link position-absolute w-100 d-flex justify-content-end px-5 h-0">
-      <%= link_to image_tag("help.svg"), "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: 'help-icon' %>
+    <div class="hud help pointer d-flex justify-content-end h-0 pb-52 mb-3">
+      <%= link_to image_tag("help.svg"), '#', class: 'help-icon',  data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
     </div>
+    <%= render 'layouts/help_modal' %>
   </div>
 <% end %>
+
 <script type="text/javascript">
   window.onload = function() {
     $(document).ready(function() {

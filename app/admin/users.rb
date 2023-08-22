@@ -16,6 +16,12 @@ ActiveAdmin.register User do
     actions
   end
 
+  filter :email, as: :string
+  filter :first_name, as: :string
+  filter :last_name, as: :string
+  filter :not_ask_visibility, as: :boolean
+  filter :opt_out, as: :boolean
+
   show do
     attributes_table do
       row :email
@@ -36,7 +42,7 @@ ActiveAdmin.register User do
           if user.shoutout_recipients.present?
             table_for user.shoutout_recipients.joins(:shoutout).where(shoutouts: { type: nil }).order(created_at: :desc) do
               column 'From' do |shoutout_recipient|
-                shoutout_recipient.shoutout.user.to_full_name
+                shoutout_recipient.shoutout.user.full_name
               end
               column 'Message' do |shoutout_recipient|
                 strip_tags(shoutout_recipient.shoutout.rich_text)
@@ -58,7 +64,7 @@ ActiveAdmin.register User do
           if user.shoutout_recipients.present?
             table_for user.shoutout_recipients.joins(:shoutout).where(shoutouts: { type: 'CelebrateShoutout' }).order(created_at: :desc) do
               column 'From' do |shoutout_recipient|
-                shoutout_recipient.shoutout.user.to_full_name
+                shoutout_recipient.shoutout.user.full_name
               end
               column 'Message' do |shoutout_recipient|
                 strip_tags(shoutout_recipient.shoutout.rich_text)

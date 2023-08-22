@@ -1,9 +1,8 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {isPresent, rangeFormat} from "../../helpers/helpers";
+import {rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
-  HelpIcon,
   ShoutOutIcon,
   Wrapper
 } from "../../UI/ShareContent";
@@ -16,12 +15,15 @@ import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
+import QuestionButton from "../../UI/QuestionButton";
+import WorkingModal from "../modals/WorkingModal";
 
 const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts, responses_count} = results
+  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
+        current_user_shoutouts, responses_count, current_user} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -33,6 +35,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const cancelButtonText = 'Skip check-in'
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
+  const [showWorkingModal, setShowWorkingModal] = useState(false)
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
@@ -69,7 +72,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }
 
   const Footer = () => <Fragment>
-    <HelpIcon addClass='hud help' />
+    <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
       nextTimePeriod ?
@@ -126,10 +129,11 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
               <h1 className='text-header-position'><br/>The team is feeling...</h1>:
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
-        <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions}} />
+        <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions, data, setShowWorkingModal }} />
         <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
         <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <ShoutoutSection nextTimePeriod={nextTimePeriod}
+                         current_user={current_user}
                          timePeriod={timePeriod}
                          sentShoutouts={sent_shoutouts}
                          receivedShoutouts={received_shoutouts}
@@ -137,11 +141,13 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
                          isMinUsersResponses={isMinUsersResponses}
                          currentUserShoutouts={current_user_shoutouts} />
         <QuestionSection fun_question={fun_question}
+                         current_user={current_user}
                          answers={answers}
                          steps={steps}
                          saveDataToDb={saveDataToDb}
                          isMinUsersResponses={isMinUsersResponses}
-                         nextTimePeriod={nextTimePeriod} />
+                         nextTimePeriod={nextTimePeriod}
+                         setShowWorkingModal={setShowWorkingModal}/>
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
       </Wrapper>
       <Footer />
@@ -151,6 +157,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
                                   data={data} setData={setData} />
 
     }
+    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal} saveDataToDb={saveDataToDb} steps={steps} />
   </Fragment>
 }
 export default Results;

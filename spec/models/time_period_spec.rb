@@ -51,14 +51,23 @@ RSpec.describe TimePeriod, type: :model do
   describe 'model methods' do
     before(:each) do
       TimePeriod.destroy_all
+      allow(ENV).to receive(:[]).with('START_WEEK_DAY').and_return('monday')
+      allow(ENV).to receive(:[]).with('DAY_TO_SEND_INVITES').and_return('friday')
     end
 
     context '#create_time_period' do
+      it 'uses a mocked environment variable' do
+        start_week = ENV['START_WEEK_DAY']
+        due_date_week = ENV['DAY_TO_SEND_INVITES']
+        expect(start_week).to eq('monday')
+        expect(due_date_week).to eq('friday')
+      end
       it 'should create new time period record' do
-        last_sunday = Date.current.beginning_of_week(:sunday)
+        last_monday = Date.current.beginning_of_week(:monday)
         new_time_period = TimePeriod.create_time_period
-        expect(new_time_period.start_date).to eq(last_sunday)
-        expect(new_time_period.end_date).to eq(last_sunday + 6.days)
+        expect(new_time_period.start_date).to eq(last_monday)
+        expect(new_time_period.end_date).to eq(last_monday + 6.days)
+        expect(new_time_period.due_date).to eq(last_monday + 4.days)
       end
     end
 
@@ -82,7 +91,7 @@ RSpec.describe TimePeriod, type: :model do
         expect { subject }.to change { TimePeriod.count }.by(1)
       end
       it 'should return current time period' do
-        current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
+        current_time_period = FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days, due_date: Date.current + 4.days)
         expect(subject).to eq(current_time_period)
       end
     end

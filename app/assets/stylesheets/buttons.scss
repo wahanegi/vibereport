@@ -69,11 +69,17 @@
     &.active {
       box-shadow: 4px 2px 2px $gray-100;
     }
-    &.back, &.delete, &.ok {
+    &.back, &.delete, &.ok, &.btn-wide, &.btn-no {
       border-width: 0;
     }
+    &.btn-wide {
+      width: 300px;
+    }
+    &.btn-no{
+      width: 196px;
+    }
     &.back {
-      background-color: $gray-200!important;
+      background-color: $gray-200 !important;
     }
     &.delete {
       background-color: $red;
@@ -93,6 +99,12 @@
   &.btn-bubbles{
     border:           1px solid $black;
     &.wb1{
+      &.not-standart {
+        min-width: 220px;
+      }
+      &.not-shadow {
+        box-shadow: none;
+      }
       padding:        0 5px;
       height:         2rem;
       border-radius:  15px;

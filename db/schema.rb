@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_175143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "emojis", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "emoji_code"
+    t.string "emoji_name"
+    t.bigint "emojiable_id"
+    t.string "emojiable_type"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["emoji_code", "user_id", "emojiable_type", "emojiable_id"], name: "index_unique_emojis", unique: true
+    t.index ["emojiable_type", "emojiable_id"], name: "index_emojis_on_emojiable"
+    t.index ["user_id"], name: "index_emojis_on_user_id"
   end
 
   create_table "emotions", force: :cascade do |t|
@@ -71,6 +84,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "details"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.boolean "viewed", default: false, null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "passwordless_sessions", force: :cascade do |t|
     t.bigint "authenticatable_id"
     t.string "authenticatable_type"
@@ -86,7 +108,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
   end
 
   create_table "responses", force: :cascade do |t|
-    t.text "bad_follow_comment"
     t.text "comment"
     t.date "completed_at"
     t.datetime "created_at", null: false
@@ -98,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
     t.boolean "not_working", default: false
     t.jsonb "notices"
     t.integer "productivity"
+    t.text "productivity_comment"
     t.integer "rating"
     t.bigint "shoutout_id"
     t.string "steps"
@@ -181,6 +203,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_142627) do
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"

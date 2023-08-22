@@ -6,6 +6,16 @@ Rails.application.routes.draw do
   passwordless_for :users, at: '/', as: :auth
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
+  namespace :api do
+    namespace :v1 do
+      resources :users do
+        member do
+          post :send_reminder
+        end
+      end
+    end
+  end
+
   get '/app', to: 'home#app'
   namespace :api do
     namespace :v1 do
@@ -15,17 +25,21 @@ Rails.application.routes.draw do
       resources :fun_questions, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug
       resources :shoutouts, only: %i[show create update destroy]
+      resources :notifications, only: %i[create]
       resources :users, only: %i[update]
+      resources :emojis, only: %i[create destroy]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'
       get '/sign_in_from_email', to: 'responses#sign_in_from_email'
       get '/results_email', to: 'results#results_email'
       get '/result', to: 'results#show'
+      get '/unsubscribe', to: 'users#unsubscribe'
     end
   end
-  get '*path', to: 'home#app'
-  get '/*undefined', to: redirect('/')
+  get '*path', to: 'home#app', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 
   root to: 'home#index'
 end

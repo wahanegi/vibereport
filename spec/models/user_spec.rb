@@ -126,4 +126,20 @@ RSpec.describe User, type: :model do
       expect(User.ordered).to match_array [alica, bob, robert]
     end
   end
+
+  context 'Callbacks' do
+    describe '#strip_first_name_last_name' do
+      let(:user) { build(:user, first_name: " John ", last_name: " Doe ") }
+
+      it 'strips leading and trailing whitespace from first_name before validation' do
+        user.validate
+        expect(user.first_name).to eq('John')
+      end
+
+      it 'strips leading and trailing whitespace from last_name before validation' do
+        user.validate
+        expect(user.last_name).to eq('Doe')
+      end
+    end
+  end
 end

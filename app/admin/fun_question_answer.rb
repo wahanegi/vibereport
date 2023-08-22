@@ -12,6 +12,9 @@ ActiveAdmin.register FunQuestionAnswer do
     actions
   end
 
+  filter :user, as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
+  filter :fun_question, as: :select, collection: proc { FunQuestion.pluck(:question_body, :id) }, label: 'Question Body'
+
   show do |fun_question|
     answer = FunQuestionAnswer.find_by(id: fun_question.id)
     columns do
@@ -27,7 +30,7 @@ ActiveAdmin.register FunQuestionAnswer do
 
   form do |f|
     f.inputs 'Answers' do
-      f.input :user, collection: User.all.map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
+      f.input :user, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
       f.input :answer_body
     end
     f.actions

@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
-  HelpIcon, Logo,
+  HelpIcon,
   Wrapper
 } from "../../UI/ShareContent";
 import axios from "axios";
@@ -11,13 +11,13 @@ import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import CornerElements from "../../UI/CornerElements";
-import {Link, NavLink, useParams} from "react-router-dom";
-import Menu from "../../UI/Menu";
+import {Link, useParams} from "react-router-dom";
 
 const ResultsPreview = () => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( [])
-  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts} = results
+  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
+         current_user_shoutouts, current_user} = results
   const [timePeriod, setTimePeriod] = useState({})
   const params = useParams();
 
@@ -56,9 +56,13 @@ const ResultsPreview = () => {
                          timePeriod={timePeriod}
                          sentShoutouts={sent_shoutouts}
                          receivedShoutouts={received_shoutouts}
+                         current_user={current_user}
                          currentUserShoutouts={current_user_shoutouts} />
-        <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={true} />
-        <CornerElements prevId={results?.response_id} draft={true} hideBottom={true} />
+        <QuestionSection fun_question={fun_question}
+                         answers={answers}
+                         current_user={current_user}
+                         nextTimePeriod={true} />
+        <CornerElements preview={'results'} draft={true} hideBottom={true} />
       </Wrapper>
       <Footer />
     </div>

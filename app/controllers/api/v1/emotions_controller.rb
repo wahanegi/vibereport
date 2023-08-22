@@ -1,13 +1,11 @@
 class Api::V1::EmotionsController < ApplicationController
   include ApplicationHelper
+  include UserEmailMailerHelper
   before_action :require_user!
   before_action :current_response, only: [:index]
-
-  NUMBER_OF_ELEMENTS = Emotion::SHOW_NUMBER_PER_CATEGORY
   def index
-    three_set = build_three_set
     if current_user.present?
-      render json: EmotionSerializer.new(three_set).serializable_hash.merge(additional_params), status: :ok
+      render json: EmotionSerializer.new(emotions_table).serializable_hash.merge(additional_params), status: :ok
     else
       render json: {}, status: :unauthorized
     end
@@ -15,7 +13,7 @@ class Api::V1::EmotionsController < ApplicationController
 
   def create
     emotion = Emotion.new(emotion_params)
-    emotion_existed = Emotion.find_by(word: params.dig('emotion', 'word'))
+    emotion_existed = Emotion.matching_emotions(emotion_params)
 
     if emotion_existed.present?
       render json: EmotionSerializer.new(emotion_existed).serializable_hash
@@ -52,7 +50,8 @@ class Api::V1::EmotionsController < ApplicationController
         }
       end,
       fun_question:,
-      user_shoutouts: current_user.shoutouts.not_celebrate
+      user_shoutouts: current_user.shoutouts.not_celebrate,
+      check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id])
     }
   end
 
@@ -68,35 +67,29 @@ class Api::V1::EmotionsController < ApplicationController
     }
   end
 
-  def build_three_set
-    Emotion.emotion_public.positive.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.emotion_public.neutral.sample(NUMBER_OF_ELEMENTS) +
-      Emotion.emotion_public.negative.sample(NUMBER_OF_ELEMENTS)
-  end
-
   def emotion_params
     params.require(:emotion).permit(:word, :category)
   end
 
   def fun_question
     fun_question = custom_question.presence || FunQuestion.question_public.not_used.sample
-    return fun_question if fun_question[:time_period_id].present?
+    return prepared_question(fun_question) if fun_question.time_period_id.present?
 
     fun_question.update(time_period_id: time_period.id, used: true) if fun_question.time_period_id.blank?
-    fun_question
+    prepared_question(fun_question)
   end
 
   def custom_question
-    current_fun_question = FunQuestion.find_by(time_period_id: TimePeriod.current.id)
-    @fun_question ||= current_fun_question || FunQuestion.question_public.not_used.where.not(user_id: nil).first
-    return nil if @fun_question.blank?
+    time_period.fun_question || FunQuestion.question_public.not_used.where.not(user_id: nil).first
+  end
 
+  def prepared_question(fun_question)
     {
-      id: @fun_question.id,
-      user_id: @fun_question.user&.id,
-      user_name: @fun_question.user&.first_name,
-      question_body: @fun_question.question_body,
-      time_period_id: @fun_question.time_period_id
+      id: fun_question.id,
+      user_id: fun_question.user&.id,
+      user_name: fun_question.user&.first_name,
+      question_body: fun_question.question_body,
+      time_period_id: fun_question.time_period_id
     }
   end
 

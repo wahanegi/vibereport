@@ -20,7 +20,6 @@ const CelebrateModal = ({ show, setShow, steps, current_user, notAskVisibility, 
   };
 
   return <Fragment>
-    {show && <div className='backdrop celebrate-modal' /> }
     <Modal show={show} onHide={() => {setShow(false)}} animation={true} className='modal-dialog-celebrate'>
       <img src={xClose} className='position-absolute x-close' onClick={() => {setShow(false)}}/>
       <Modal.Body className={'px-0 pt-3'}>
@@ -34,7 +33,7 @@ const CelebrateModal = ({ show, setShow, steps, current_user, notAskVisibility, 
               <button className='btn btn-danger b3 border-0 shadow padding10-20' >
                 No, go back
               </button>
-              <button className='btn btn-primary b3 border-0 shadow padding10-20'  onClick={handleMakeVisible}>
+              <button className='btn btn-primary b3 border-0 shadow padding10-20' onClick={handleMakeVisible}>
                 Yes, share it
               </button>
             </div>
@@ -48,7 +47,6 @@ const CelebrateModal = ({ show, setShow, steps, current_user, notAskVisibility, 
       </Modal.Body>
     </Modal>
   </Fragment>
-
 }
 
 export default CelebrateModal

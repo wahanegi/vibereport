@@ -14,10 +14,10 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [ isModal, setIsModal ] = useState(false)
   const [idShoutout, setIdShoutout] = useState()
   const [isDraft, setIsDraft] = useState(draft)
-  const [previousNumShoutOuts, setPreviousNumShoutOuts] = useState(data.user_shoutouts?.length)
+  const sumShoutOuts = data.user_shoutouts.filter( item => item.time_period_id === data.time_period.id)
+  const [previousNumShoutOuts, setPreviousNumShoutOuts] = useState(sumShoutOuts)
 
-  const shoutOuts = data.user_shoutouts
-      .filter( item => item.time_period_id === data.time_period.id)
+  const shoutOuts = sumShoutOuts
       .sort( (a,b) =>  a.updated_at < b.updated_at ? 1 : -1 )
 
   const numShoutOuts = shoutOuts.length
@@ -28,7 +28,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }
 
   useEffect(() => {
-    if (previousNumShoutOuts !== numShoutOuts) {
+    if (previousNumShoutOuts.length !== numShoutOuts) {
       saveDataToDb(steps, {draft: false});
       setIsDraft(false);
     }

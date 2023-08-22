@@ -58,6 +58,9 @@ Here styles for:
     width: 190px;
     height: 87px;
 }
+.ml-200{
+    margin-left: 200px;
+}
 .ml-240{
     margin-left: 240px;
 }
@@ -164,52 +167,56 @@ text-align: center;
     margin-top: 0;
     margin-bottom: 0
 }
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 720px) {
     .emotions {
-        width: 1080px;
+        width: 720px;
     }
 }
-.d-flex{
+.d-flex, .center-text{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 .first-row{
     height:8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 .second-row{
     height:50px;
     text-align: left;
 }
-.envelope {
-    width: 130px;
-    height: 61px;
-    background-image: url("envelope.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-.logo{
-    color: rgba(0, 0, 0, 0.7);
-}
-.envelope p {
-    margin-top: 4px;
-    font-size: 12px;
-    line-height: 12px;
-    font-weight: 600;
-    padding-top: 3px;
-    padding-left: 5px;
-}
+
 .ml-55{
     margin-left: 55px;
 }
 .mt-10{
     margin-top: 10px;
 }
+.pt-20{
+    padding-top: 20px;
+}
+.pl-15{
+    padding-left: 15px;
+}
+.my-8{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
 .calendar {
     text-align: left;
     width: 102px;
     height: 115px;
     background-image: url("complete-by.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.calendar-complete-by {
+    text-align: left;
+    width: 102px;
+    height: 115px;
+    background-image: -webkit-image-set(url("complete-by.png") 1x);
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -223,8 +230,14 @@ text-align: center;
 }
 .emotions{
     margin:  0 auto;
-    width: 1080px;
-    min-width: 1080px;
+    width: 720px;
+    min-width: 720px;
+    padding-bottom: 6px;
+}
+.underline_list {
+    margin:  0 auto;
+    width: 720px;
+    border-bottom: 3px solid #D2D2D2;
 }
 .data {
     padding-top: 55px;
@@ -242,7 +255,7 @@ text-align: center;
     color: #000000;
     white-space: pre-line;
     width: 735px;
-    min-height: 114px;
+    min-height: 100px;
 }
 .lnk-was-not a{
     font-size: 23px;
@@ -250,6 +263,9 @@ text-align: center;
     text-decoration-line: underline;
     line-height: normal;
     color: #0007A3;
+}
+.lint-to-right {
+    float: right;
 }
 .row-over-links{
     height: 7px;
@@ -281,17 +297,24 @@ text-align: center;
     font-size: 24px;
     line-height: 24px;
     color: rgba(0, 0, 0, 0.7);
-    margin: 41px auto 14px auto;
+    margin: 18px auto 14px auto;
 }
 .correct{
     height: 31px;
+}
+.neutral-area {
+    margin: 0 auto;
+    padding: 5px 0;
+    width: 540px;
+    height: 55px;
+    border-bottom: 3px solid #D2D2D2;
 }
 .big-btn{
     box-sizing: border-box;
     width: 385px;
     height: 70px;
     background: #FFFFFF;
-    margin: 0 auto 54px auto;
+    margin: 0 auto 24px auto;
 }
 .big-btn-text a{
     padding: 13px 23px 13px 23px;
@@ -385,12 +408,11 @@ text-align: center;
 
 /* send_results_email */
 .container {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     height: 325px;
     padding: 0;
-    margin: 31px;
 }
   
 .random-word:hover {
@@ -431,18 +453,7 @@ html {
     width: 850px;
     height: 325px;
     overflow: inherit;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-}
-  
-.random-word {
-    position: absolute;
-    white-space: nowrap;
-    font-size: 1rem;
-    transition: transform 0.2s ease-in-out;
-    min-width: 16.6666%; /* 100% / 6 columns */
-    min-height: 16.6666%; /* 100% / 6 rows */
+    margin-bottom: 30px;
 }
 
 .link-text-results{
@@ -468,6 +479,10 @@ html {
 }
 
 /* reminder_email */
+.first-row-reminder{
+    height:8px;
+    text-align: left;
+}
 .second-row-reminder{
     height: 3.7rem;
     margin-top: 145px;

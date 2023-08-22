@@ -26,12 +26,14 @@ import complete90_act from '../../../assets/images/complete90_act.svg'
 import complete100 from '../../../assets/images/complete100.svg'
 import complete100_act from '../../../assets/images/complete100_act.svg'
 
-const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = null }) => {
+const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = null }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
-  const id = data?.response?.id || prevId
+  const id = data?.response?.id
+  const lastStep = preview ? 'results' : steps[steps.length - 1];
+  const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'results', 'rather-not-say', 'skip-ahead'].includes(lastStep);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -56,14 +58,18 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
   };
 
   const location = window.location.href;
-  const lastSegment = prevId ? 'results' : location.substring(location.lastIndexOf("/") + 1);
+  const lastSegment = preview ? 'results' : location.substring(location.lastIndexOf("/") + 1);
+  const isStepUnsubscribe = location.substring(location.lastIndexOf("/") + 1) === 'unsubscribe'
 
   const segmentsMap = {
     'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
     'emotion-entry': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
+    'emotion-type': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
     'meme-selection': { src: complete5_10, activeSrc: complete5_10_act, percent: 10 },
     'selected-giphy-follow': { src: complete15, activeSrc: complete15_act, percent: 15 },
     'emotion-intensity': { src: complete20, activeSrc: complete20_act, percent: 20 },
+    'rather-not-say': { src: complete20, activeSrc: complete20_act, percent: 20 },
+    'skip-ahead': { src: complete20, activeSrc: complete20_act, percent: 20 },
     'productivity-check': { src: complete25, activeSrc: complete25_act, percent: 25 },
     'productivity-bad-follow-up': { src: complete35, activeSrc: complete35_act, percent: 35 },
     'causes-to-celebrate': { src: complete45, activeSrc: complete45_act, percent: 45 },
@@ -74,7 +80,11 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
   };
 
   const getSrcMenu = (lastSegment, activeImg) => {
-    if (segmentsMap[lastSegment]) {
+    if(isStepUnsubscribe){
+      return {
+        src: activeImg ? complete0_act : complete0,
+      };
+    }else if (segmentsMap[lastSegment]) {
       const { src, activeSrc, percent } = segmentsMap[lastSegment];
       return {
         src: activeImg ? activeSrc : src,
@@ -93,15 +103,17 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, prevId = nu
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item href="#" >
-            <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || steps.length === 1 ? ' disabled-btn-draft' : ''}`}
-                    disabled={draft || steps.length === 1} onClick={handleSaveDraft}>
+            <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || isLastStepDisabled ? ' disabled-btn-draft' : ''}`}
+                    disabled={draft || isLastStepDisabled} onClick={handleSaveDraft}>
               Save Draft
             </Button>
           </Dropdown.Item>
           <Dropdown.Item href="#" ><Button className='btn-item-menu wb1  mx-auto my-auto' onClick={handleSignOut}>Log Out</Button></Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
+      {!isStepUnsubscribe && (
+        <div className='fs-6 text-primary text-complete' >{getSrcMenu(lastSegment).percent }% complete</div>
+      )}
       {showModal && (
         <SweetAlert
           alertTitle={alertTitleLogout}

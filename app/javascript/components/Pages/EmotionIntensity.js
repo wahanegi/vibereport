@@ -8,18 +8,11 @@ import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, category, isBlankGif}) => {
-  const [isTextareaActive, setIsTextareaActive] = useState(false);
   const handleRatingClick = (value) => setRating(value);
   const handleCommentClick = (event) => {
     setComment(event.target.value);
-    setIsTextareaActive(true);
   };
-  const handleCommentFocus = (event) => {
-    if (!isTextareaActive) {
-      event.target.placeholder = '';
-      setIsTextareaActive(true);
-    }
-  };
+
   return (
   <div className="rating-comment-container">
     <form>
@@ -48,7 +41,6 @@ const IntenseLine = ({rating, setRating, comment, setComment, generateStyles, ca
                 defaultValue={comment}
                 onChange={handleCommentClick}
                 maxLength={MAX_CHAR_LIMIT}
-                onFocus={handleCommentFocus}
               />
             </label>
           </div>
@@ -121,10 +113,6 @@ const generateStyles = (value, selected, category) => {
     case "negative":
       backgroundColor = EMOTION_COLORS.negative[value] || 'transparent';
       borderColor = '#5689EB';
-      break;
-    case "neutral":
-      backgroundColor = EMOTION_COLORS.neutral[value] || 'transparent';
-      borderColor = '#F18C59';
       break;
     case "positive":
       backgroundColor = EMOTION_COLORS.positive[value] || 'transparent';

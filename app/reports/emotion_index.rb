@@ -27,24 +27,24 @@ class EmotionIndex < AdminReport
 
   private
 
+  def team_responses(team)
+    Response.joins(user: { teams: :user_teams })
+            .where(user_teams: { team_id: team.id })
+            .where(responses: { time_period_id: @time_periods, not_working: false })
+            .where.not(emotion_id: nil)
+  end
+
+  def non_team_responses
+    Response.where(time_period_id: @time_periods, not_working: false)
+            .where.not(emotion_id: nil)
+  end
+
   def receive_responses
-    if @team
-      Response.joins(user: { teams: :user_teams })
-              .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods, not_working: false })
-              .distinct
-    else
-      Response.where(responses: { time_period_id: @time_periods, not_working: false }).distinct
-    end
+    @team ? team_responses(@team).distinct : non_team_responses.distinct
   end
 
   def receive_total_responses
-    if @team
-      Response.joins(user: { teams: :user_teams })
-              .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods, not_working: false })
-              .distinct.count
-    else
-      Response.where(time_period_id: @time_periods, not_working: false).count
-    end
+    @team ? team_responses(@team).distinct.count : non_team_responses.count
   end
 
   def positive_emotions(responses)

@@ -12,13 +12,6 @@ export const EMOTION_COLORS = {
       2: '#F7CDB8',
       1: '#FADFD1',
     },
-    neutral: {
-      5: '#5689EB',
-      4: '#78A1EF',
-      3: '#9AB8F3',
-      2: '#5689eb73',
-      1: '#5689eb40',
-    },
     positive: {
       5: '#80D197',
       4: '#A6DFB6',
@@ -43,3 +36,5 @@ export const EMOTION_COLORS = {
 export const EMOTION_COL_NUMBERS = 6
 export const MIN_USERS_RESPONSES = 4
 export const MAX_CHAR_LIMIT = 700
+
+export const EMOJIS_PER_PAGE = 5;

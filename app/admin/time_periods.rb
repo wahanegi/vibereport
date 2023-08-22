@@ -12,6 +12,11 @@ ActiveAdmin.register TimePeriod do
     actions
   end
 
+  filter :start_date, as: :date_range
+  filter :end_date, as: :date_range
+  filter :due_date, as: :date_range
+  filter :slug, as: :string
+
   form do |f|
     f.inputs do
       f.input :start_date, as: :datepicker
@@ -26,11 +31,11 @@ ActiveAdmin.register TimePeriod do
       column do
         panel 'Productivity Verbatims' do
           responses_with_comment = time_period.responses.select { |response| response.comment.present? }
-          
+
           if responses_with_comment.any?
             table_for responses_with_comment do
               column 'Author' do |response|
-                response.user.to_full_name
+                response.user.full_name
               end
               column 'Message' do |response|
                 response.comment
@@ -45,11 +50,11 @@ ActiveAdmin.register TimePeriod do
       column do
         panel 'Celebration Verbatims' do
           shoutouts_with_message = time_period.shoutouts.select { |shoutout| shoutout.type == "CelebrateShoutout" }
-          
+
           if shoutouts_with_message.any?
             table_for shoutouts_with_message do
               column 'Author' do |shoutout|
-                shoutout.user.to_full_name
+                shoutout.user.full_name
               end
               column 'Message' do |shoutout|
                 strip_tags(shoutout.rich_text)
@@ -68,7 +73,7 @@ ActiveAdmin.register TimePeriod do
           if shoutouts_with_message.any?
             table_for shoutouts_with_message do
               column 'Author' do |shoutout|
-                shoutout.user.to_full_name
+                shoutout.user.full_name
               end
               column 'Message' do |shoutout|
                 strip_tags(shoutout.rich_text)

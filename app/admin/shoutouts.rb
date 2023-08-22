@@ -1,19 +1,19 @@
 ActiveAdmin.register Shoutout do
-  permit_params :user, :to_text, :to_full_name, :recipient, :time_period_range
+  permit_params :user, :to_text, :full_name, :recipient, :time_period_range
   actions :index, :destroy
 
   index do
     column :id
     column 'Shoutout', :to_text
-    column 'Sender', :to_full_name
+    column 'Sender', :full_name
     column 'Recipients', :recipient
     column :time_period_range
     actions
   end
 
-  filter :user, as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }, label: 'Sender'
-  filter :time_period, as: :select, collection: TimePeriod.all.map { |item| [item.date_range, item.id] }
-  filter :recipients,  as: :select, collection: User.all.map { |item| [item.to_full_name, item.id] }
+  filter :user, as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }, label: 'Sender'
+  filter :time_period, as: :select, collection: TimePeriod.order(start_date: :desc).map { |t| [t.date_range, t.id] }
+  filter :recipients,  as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
 
   controller do
     def scoped_collection

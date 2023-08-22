@@ -1,10 +1,9 @@
-import React, {Fragment} from "react";
+import React from "react";
 import Menu from "./Menu";
 import {backHandling, isPresent} from "../helpers/helpers";
 import calendar from "../../../assets/images/calendar.svg"
 import shoutout from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
-import logo from "../../../assets/images/logo.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
 import {NavLink} from "react-router-dom";
 import polygonLeft from "../../../assets/images/polygon-left.svg"
@@ -12,16 +11,19 @@ import polygonRight from "../../../assets/images/polygon-right.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
 import line from "../../../assets/images/line.svg"
 import {MIN_USERS_RESPONSES} from "../helpers/consts";
+import Logo from "./Logo";
 
-export const Logo = () => <img src={logo} alt="logo" style={{width: 190, height: 87}} />
-
-export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '' }) =>
-  <button className={`${addClass} btn-custom emotion ${emotion.category}`}>
+export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
+const categoryClass = selectedType ? selectedType : emotion.category;
+return(
+  <button className={`${addClass} btn-custom emotion ${categoryClass}`}>
     <span hidden={!showPencil} onClick={onClick} className="edit-icon">
       <img src={edit_pencil} alt="pencil"/>
     </span>
     {emotion.word}
   </button>
+  )
+}
 
 export const BtnSendMoreShoutouts = ({ onClick }) =>
   <button className={'btn-custom shoutout d-flex flex-nowrap align-items-center'} onClick={onClick}>
@@ -39,10 +41,11 @@ export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =
     {text}
   </button>
 
-export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, positionRight = false, prevTimePeriod, emotions}) =>
+export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
+                           positionRight = false, prevTimePeriod, emotions, nextTimePeriod}) =>
   isPresent(date) && !hidden && <div className="position-relative">
     { prevTimePeriod && positionLeft ?
-      emotions.length < MIN_USERS_RESPONSES ?
+      emotions.length < MIN_USERS_RESPONSES && !nextTimePeriod ?
         <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See last week’s results</p>:
         <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See previous results</p>:
       null
@@ -52,7 +55,7 @@ export const Calendar = ({ date, onClick, hidden = false, positionLeft = false, 
       <img src={calendar} alt="calendar" />
       <div className="position-absolute top-0 w-82" >
         {date.includes(' - ') ?
-          <div className='mt-3 d-flex'>
+          <div className='mt-3 d-flex flex-column'>
             {date.split(' - ')[0]}
             <img src={line} alt="line" />
             {date.split(' - ')[1]}

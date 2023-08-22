@@ -5,26 +5,7 @@ import Pluralize from "pluralize";
 import {BtnSendMoreShoutouts} from "../../UI/ShareContent";
 import isEmpty from "ramda/src/isEmpty";
 
-const NoShoutouts = ({nextTimePeriod, setShowModal}) =>
-  <Fragment>
-    <div className={`${nextTimePeriod ? '' : 'col-8'}`}>
-      {
-        nextTimePeriod ?
-          <h5 className='text-center muted fw-semibold mt-3'>No Shoutouts sent during this check-in.</h5>:
-          <h5 className='text-center muted fw-semibold mt-3'>No Shoutouts yet for this check-in...</h5>
-      }
-    </div>
-    <div className='col-4' hidden={nextTimePeriod}>
-      <div className='d-flex justify-content-center'>
-        <h6 className='mb-0 fw-semibold'>It's not too late!</h6>
-        <BtnSendMoreShoutouts onClick={() => {setShowModal(true)}} />
-      </div>
-    </div>
-  </Fragment>
-
 const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, setShowModal, currentUserShoutouts, emptyShoutouts}) => {
-  if (emptyShoutouts) return <NoShoutouts nextTimePeriod={nextTimePeriod} setShowModal={setShowModal} />
-
   return (!isEmpty(sentShoutouts) || !isEmpty(receivedShoutouts)) && <Fragment>
     <div className={`${nextTimePeriod || isEmpty(currentUserShoutouts.sent) ? 'col-2' : ''}`}></div>
     <div className='col-8'>
@@ -39,7 +20,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
             }
           </h6>
           <h6 className='text-center fw-semibold row'>
-            <div className='col p-0' hidden={isEmpty(receivedShoutouts)}>
+            <div className='col p-0 minW-280' hidden={isEmpty(receivedShoutouts)}>
               {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                 <div className='row d-inline-block' key={i}>
                   <p className='fw-semibold d-inline'>
@@ -48,7 +29,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
                 </div>
               )}
             </div>
-            <div className='col p-0' hidden={isEmpty(sentShoutouts)}>
+            <div className='col p-0 minW-280' hidden={isEmpty(sentShoutouts)}>
               {sentShoutouts.slice(0, 2).map((shoutout, i) =>
                 <div className='row d-inline-block'  key={i}>
                   <p className='fw-semibold d-inline'>

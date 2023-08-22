@@ -1,7 +1,7 @@
-import React, {Fragment} from "react"
+import React from "react"
 import isEmpty from "ramda/src/isEmpty";
 import {sortImagesByHeight} from "../../helpers/helpers";
-import {MIN_USERS_RESPONSES} from "../../helpers/consts";
+import Tippy from '@tippyjs/react';
 import PoweredBy from "../../../../assets/images/PoweredBy.svg";
 
 const PreviewGifSection = () => {
@@ -39,7 +39,9 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
 
   const gifItems = sortImagesByHeight(gifs).map((gif, index) => {
     return <div className='gif-item result-page' key={index}>
-      <img src={gif.src} alt={`gif ${index}`} />
+      <Tippy content={<div className={`btn btn-bubbles wb1 not-shadow tippy ${gif.emotion.category}`}>{gif.emotion.word}</div>}>
+        <img className='position-relative' src={gif.image.src} alt={`gif ${index}`} />
+      </Tippy>
     </div>
   });
 

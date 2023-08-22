@@ -44,10 +44,12 @@ class Api::V1::ResponseFlowFromEmail
     case last_step
     when 'emotion-entry'
       steps << 'emotion-entry'
-    when 'meme-selection'
-      steps << 'meme-selection'
     when 'results'
       steps << 'results'
+    when 'rather-not-say'
+      steps << 'rather-not-say'
+    when 'emotion-type'
+      steps << 'emotion-type'
     else
       steps
     end
