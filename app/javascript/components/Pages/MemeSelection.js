@@ -24,7 +24,20 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (file.size <= 100 * 1024 * 1024) { // 100 MB in bytes
+      if (file.type === 'image/gif' || file.type.startsWith('video/')) {
+        setSelectedFile(file);
+      } else {
+        setSelectedFile(null);
+        alert('Please select a GIF or Video file.');
+      }
+    } else {
+      setSelectedFile(null);
+      alert('File size exceeds the limit of 100 MB.');
+    }
   };
 
   const handleButtonClick = () => {
@@ -97,6 +110,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
           <BtnOutline text='Upload your own meme!' onClick={handleButtonClick} />
           <input
             type="file"
+            accept="image/gif, video/*" // Accepts GIF and any video format
             ref={fileInputRef}
             style={{ display: 'none' }}
             onChange={handleFileChange}
