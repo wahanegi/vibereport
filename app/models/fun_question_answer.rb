@@ -23,6 +23,7 @@ class FunQuestionAnswer < ApplicationRecord
   has_one :response, dependent: :nullify
   belongs_to :user
   belongs_to :fun_question
+  has_many :emojis, as: :emojiable, dependent: :destroy
 
   validates :answer_body, presence: true
 

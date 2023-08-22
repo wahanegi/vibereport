@@ -186,24 +186,7 @@ text-align: center;
     height:50px;
     text-align: left;
 }
-.envelope {
-    width: 130px;
-    height: 61px;
-    background-image: url("envelope.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-.logo{
-    color: rgba(0, 0, 0, 0.7);
-}
-.envelope p {
-    margin-top: 4px;
-    font-size: 12px;
-    line-height: 12px;
-    font-weight: 600;
-    padding-top: 3px;
-    padding-left: 5px;
-}
+
 .ml-55{
     margin-left: 55px;
 }
@@ -224,7 +207,11 @@ text-align: center;
     text-align: left;
     width: 102px;
     height: 115px;
+    background-image: url("complete-by.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
+
 .calendar-complete-by {
     text-align: left;
     width: 102px;
@@ -452,17 +439,13 @@ html {
     width: 735px;
 }
 
-.text-calendar {
-    position: absolute;
-    width: 82px;
-}
-
-.top-72 {
-    top: 72px !important;
-}
-
-.top-56 {
-    top: 56px !important;
+.calendar-days {
+    text-align: left;
+    width: 102px;
+    height: 115px;
+    background-image: url("calendar_days.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .responses-words {

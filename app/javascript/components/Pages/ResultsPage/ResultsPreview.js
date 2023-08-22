@@ -16,7 +16,8 @@ import {Link, useParams} from "react-router-dom";
 const ResultsPreview = () => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( [])
-  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts, current_user_shoutouts} = results
+  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
+         current_user_shoutouts, current_user} = results
   const [timePeriod, setTimePeriod] = useState({})
   const params = useParams();
 
@@ -55,8 +56,12 @@ const ResultsPreview = () => {
                          timePeriod={timePeriod}
                          sentShoutouts={sent_shoutouts}
                          receivedShoutouts={received_shoutouts}
+                         current_user={current_user}
                          currentUserShoutouts={current_user_shoutouts} />
-        <QuestionSection fun_question={fun_question} answers={answers} nextTimePeriod={true} />
+        <QuestionSection fun_question={fun_question}
+                         answers={answers}
+                         current_user={current_user}
+                         nextTimePeriod={true} />
         <CornerElements preview={'results'} draft={true} hideBottom={true} />
       </Wrapper>
       <Footer />

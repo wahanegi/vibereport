@@ -32,4 +32,10 @@ class UserEmailMailer < ApplicationMailer
     @time_period = time_period
     mail(to: user.email, subject: "#{user.first_name}, your check-in was saved.")
   end
+
+  def send_reminder(user, message)
+    @user = user
+    @message = message
+    mail(to: @user.email, subject: '🔔 Reminder: Share Your Vibes from Last Week')
+  end
 end

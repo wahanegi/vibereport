@@ -3,7 +3,6 @@
 # Table name: responses
 #
 #  id                     :bigint           not null, primary key
-#  bad_follow_comment     :text
 #  comment                :text
 #  completed_at           :date
 #  draft                  :boolean          default(FALSE), not null
@@ -11,6 +10,7 @@
 #  not_working            :boolean          default(FALSE)
 #  notices                :jsonb
 #  productivity           :integer
+#  productivity_comment   :text
 #  rating                 :integer
 #  steps                  :string
 #  created_at             :datetime         not null

@@ -6,6 +6,16 @@ Rails.application.routes.draw do
   passwordless_for :users, at: '/', as: :auth
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
+  namespace :api do
+    namespace :v1 do
+      resources :users do
+        member do
+          post :send_reminder
+        end
+      end
+    end
+  end
+
   get '/app', to: 'home#app'
   namespace :api do
     namespace :v1 do
@@ -17,6 +27,7 @@ Rails.application.routes.draw do
       resources :shoutouts, only: %i[show create update destroy]
       resources :notifications, only: %i[create]
       resources :users, only: %i[update]
+      resources :emojis, only: %i[create destroy]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'
