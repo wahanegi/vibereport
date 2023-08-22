@@ -34,3 +34,13 @@
   color: black;
   font-weight: bold;
 }
+
+.custom-textarea-style {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  display: block;
+  width: 650px;
+  overflow-wrap: break-word;
+}
