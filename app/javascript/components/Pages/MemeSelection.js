@@ -11,6 +11,15 @@ import {
 import {backHandling, gifUrlWithId, isBlank, isPresent} from "../helpers/helpers";
 import CornerElements from "../UI/CornerElements";
 
+export const getAndSetImageHeight = (file, setImageHeight, callback) => {
+  const img = new Image();
+  img.src = URL.createObjectURL(file);
+  img.onload = () => {
+    setImageHeight(img.naturalHeight);
+    callback(true)
+  };
+};
+
 const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif, setIsCustomGif, draft}) => {
   const {emotion, api_giphy_key, response} = data
   const navigate = useNavigate()
@@ -22,6 +31,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   const [isDraft, setIsDraft] = useState(draft);
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
+  const [imageHeight, setImageHeight] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -29,7 +39,10 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
     if (file.size <= 100 * 1024 * 1024) { // 100 MB in bytes
       if (file.type === 'image/gif' || file.type.startsWith('video/')) {
-        setSelectedFile(file);
+        const callback = (success) => {
+          if (success) setSelectedFile(file)
+        }
+        getAndSetImageHeight(file, setImageHeight, callback)
       } else {
         setSelectedFile(null);
         alert('Please select a GIF or Video file.');
@@ -82,7 +95,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
         body: formData,
       });
       const responseData = await response.json();
-      setGifUrl({src: gifUrlWithId(responseData.data.id)})
+      setGifUrl({src: gifUrlWithId(responseData.data.id), height: imageHeight})
       setIsCustomGif(true)
       setSelectedFile(null)
       setUploading(false)
@@ -99,7 +112,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   useEffect(()=> {
     selectedFile && uploadGIPHYHandling();
-  },[selectedFile])
+  },[selectedFile, imageHeight])
 
 
   const Navigation = () =>

@@ -1,8 +1,23 @@
 import React, {useEffect, useState, Fragment} from "react"
 import SearchBar from "./SearchBar";
-import {GIPHY_SEARCH_URL} from "../../helpers/consts";
+import {GIPHY_URL} from "../../helpers/consts";
 import SearchResults from "./SearchResults";
 import PoweredBy from '../../../../assets/images/PoweredBy.svg';
+
+function extractGiphyId(url) {
+  // Regular expression pattern to match the ID between slashes
+  const regex = /\/([^/]+)\/giphy\.gif$/;
+
+  // Use the regex pattern to extract the ID
+  const match = url.match(regex);
+
+  // Check if a match was found
+  if (match && match[1]) {
+    return match[1]; // Return the extracted ID
+  } else {
+    return null; // Return null if no match was found
+  }
+}
 
 const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex,
                isCustomGif, setIsCustomGif, uploading, uploadingError }) => {
@@ -23,11 +38,10 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
   };
 
   useEffect(()=> {
-    const url = `${GIPHY_SEARCH_URL}=${term?.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
+    const url = `${GIPHY_URL}search?q=${term?.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
     const isGiphyLink = /https:\/\/media\.giphy\.com\/media\/\w+\/giphy\.gif/.test(String(term));
     if (isGiphyLink) {
-      setIsCustomGif(true)
-      setGifUrl({src: term})
+      loadAndSetGif(term)
     } else if (!keyDown) {
       setIsCustomGif(false)
       fetch(url)
@@ -44,17 +58,28 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
     }
   }, [term])
 
+  const loadAndSetGif = (term) => {
+    const id = extractGiphyId(term)
+    fetch(`${GIPHY_URL}${id}?api_key=${apiGiphyKey}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setIsCustomGif(true)
+        setGifUrl({src: term, height: parseInt(data.data.images.fixed_width.height)})
+      })
+      .catch((error) => console.error('Error fetching image data:', error));
+  }
+
   const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className={`mt-1 big image-powered-by`}/>
 
- return  loaded && <Fragment>
-   <GiphyLogo />
-   <div className='gif-card' >
-     <div className='gif-card card' onKeyDown={handleKeyDown}>
-       <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-       <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category,
-                           isCustomGif, apiGiphyKey, uploading, uploadingError}} />
-     </div>
-   </div>
+  return  loaded && <Fragment>
+    <GiphyLogo />
+    <div className='gif-card' >
+      <div className='gif-card card' onKeyDown={handleKeyDown}>
+        <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
+        <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category,
+                            isCustomGif, apiGiphyKey, uploading, uploadingError}} />
+      </div>
+    </div>
   </Fragment>
 }
 
