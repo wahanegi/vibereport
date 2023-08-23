@@ -16,6 +16,10 @@ const listUsers = [
   { id: 9, first_name: 'roger', last_name: ''}
   // other users...
 ]
+const editObj = {
+  id: 1,
+  public: true
+}
 
 const nonAllowedChars =  [',', '@', '`', '<', '>', ';', ':', '/', '\\']
 const highlightAT = '<span class="color-primary">@'
@@ -26,6 +30,7 @@ const highlightAT = '<span class="color-primary">@'
           <RichInputElement
               richText='Hi Team!'
               listUsers={listUsers}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -39,6 +44,7 @@ const highlightAT = '<span class="color-primary">@'
           <RichInputElement
               richText='Hi Team!'
               listUsers={listUsers}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -64,6 +70,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -89,6 +96,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -132,6 +140,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -161,6 +170,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -195,6 +205,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div')
@@ -220,6 +231,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div')
@@ -249,6 +261,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -278,6 +291,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -346,6 +360,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -381,6 +396,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -419,6 +435,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -453,6 +470,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -502,6 +520,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -594,6 +613,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -646,6 +666,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -694,6 +715,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -721,6 +743,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
@@ -778,6 +801,7 @@ const highlightAT = '<span class="color-primary">@'
               }}
               onSubmit={() => {
               }}
+              editObj={editObj}
           />
       );
       const divElement = getByTestId('editable-div');
