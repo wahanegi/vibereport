@@ -112,7 +112,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   useEffect(()=> {
     selectedFile && uploadGIPHYHandling();
-  },[selectedFile, imageHeight])
+  },[selectedFile])
 
 
   const Navigation = () =>
