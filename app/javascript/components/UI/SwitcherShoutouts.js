@@ -1,13 +1,8 @@
 import iconPublic from "../../../assets/images/icon_public.svg";
-import iconPrivate from "../../../assets/images/icon_private.svg"
+import iconPrivate from "../../../assets/images/icon_private.svg";
 import React from "react";
 
-const SwitcherShoutouts = ({ isChecked, onCheckedChange }) => {
-
-  const handleCheckboxChange = () => {
-    const newChecked = !isChecked;
-    onCheckedChange(newChecked);
-  };
+const SwitcherShoutouts = ({ isChecked, handleCheckboxChange }) => {
 
   return(
     <div>

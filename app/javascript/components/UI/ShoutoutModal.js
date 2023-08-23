@@ -1,5 +1,4 @@
-import React, {Fragment,  useState} from 'react'
-import ReactDOM from 'react-dom'
+import React, {useState} from 'react'
 import RichInputElement from "./rich-text/RichInputElement";
 import {apiRequest} from "../requests/axios_requests";
 import {isEmpty} from "../helpers/helpers";
@@ -13,12 +12,14 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
 
   const ModalOverlay = () =>{
     const  idEditText =  isEmpty(editObj) ? null : editObj.id
-    const submitHandling = ({richText, chosenUsers}) => {
+
+    const submitHandling = ({richText, chosenUsers, isPublic}) => {
       const dataSend = {
         shoutout:{
           user_id: data.current_user_id,
           time_period_id: data.time_period.id,
-          rich_text: richText
+          rich_text: richText,
+          public: isPublic
         },
         recipients: chosenUsers.map(user => user.id)}
       const dataFromServer = ( createdUpdatedShoutOut ) =>{
@@ -60,11 +61,11 @@ const ShoutoutModal = ({ onClose, data, setData: setDataInDB, editObj = {} }) =>
            listUsers = { data.users.filter(user => user.id !== data.current_user.id) }
              onClose = { onClose }
             onSubmit = { submitHandling }
-    />
+             editObj = { editObj }
+      />
       {!isNotAlert && <Alert onClose={ closeAlert } errorMessage={ errorMessage }/>}
     </div>
   }
-
 
   return <Portal onClose={ onClose } modalOverlay={ <ModalOverlay/> } />
 };
