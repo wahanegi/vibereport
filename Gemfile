@@ -15,7 +15,7 @@ gem 'jsbundling-rails', '~> 1.1', '>= 1.1.1'                  # Bundle and trans
 gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
 gem 'passwordless', '~> 0.11.0'                               # A passwordless a.k.a. "magic link" login strategy
 gem 'pg', '~> 1.1'                                            # Postgres gem
-gem 'puma', '~> 5.0'                                          # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
+gem 'puma', '~> 5.6', '>= 5.6.7'                              # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 gem 'rack-cors', '~> 2.0', '>= 2.0.1'                         # Middleware that will make Rack-based apps CORS compatible. Fork the project here: https://github.com/cyu/rack-cors
 gem 'rails', '~> 7.0.4', '>= 7.0.4.2'                         # Ruby on Rails is a full-stack web framework.
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
