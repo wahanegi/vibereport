@@ -101,6 +101,9 @@ a {
 .gray-300 {
   color: $gray-300 !important;
 }
+.gray-200 {
+  color: $gray-200 !important;
+}
 .transparent {
   color: transparent;
 }
@@ -789,7 +792,7 @@ input.email-input-new:focus-visible{
       height:390px;
       z-index:31;
       overflow: auto;
-      borderColor: transparent;
+      border-color: transparent;
       &.form-control{
         border-color: transparent !important;
         &:focus {

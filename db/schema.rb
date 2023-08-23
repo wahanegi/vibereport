@@ -40,6 +40,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_075429) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "emojis", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "emoji_code"
+    t.string "emoji_name"
+    t.bigint "emojiable_id"
+    t.string "emojiable_type"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["emoji_code", "user_id", "emojiable_type", "emojiable_id"], name: "index_unique_emojis", unique: true
+    t.index ["emojiable_type", "emojiable_id"], name: "index_emojis_on_emojiable"
+    t.index ["user_id"], name: "index_emojis_on_user_id"
+  end
+
   create_table "emotions", force: :cascade do |t|
     t.integer "category", default: 1
     t.datetime "created_at", null: false

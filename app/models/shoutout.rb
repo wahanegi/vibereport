@@ -28,6 +28,7 @@ class Shoutout < ApplicationRecord
 
   has_many :shoutout_recipients, dependent: :destroy
   has_many :recipients, through: :shoutout_recipients, source: :user
+  has_many :emojis, as: :emojiable, dependent: :destroy
 
   validates :rich_text, presence: true, uniqueness: { scope: %i[user_id time_period_id] }
 

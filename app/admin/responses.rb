@@ -22,9 +22,10 @@ ActiveAdmin.register Response do
     actions
   end
 
-  filter :user, as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
+  filter :user, as: :select, collection: proc { User.joins(:responses).distinct.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] } }
   filter :time_period, as: :select, collection: TimePeriod.order(start_date: :desc).map { |t| [t.date_range, t.id] }
   filter :emotion, as: :select, collection: proc { Emotion.pluck(:word, :id) }, label: 'Word'
+  filter :emotion_category, as: :select, collection: Emotion.categories, label: 'Emotion Category'
   filter :not_working, as: :boolean, label: 'Not working'
 
   form do |f|

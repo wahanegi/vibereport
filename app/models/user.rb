@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :user_teams, dependent: :destroy
   has_many :teams, through: :user_teams
+  has_many :emojis, dependent: :destroy
   before_validation :strip_first_name_last_name
 
   MAX_NAME_LENGTH = 15

@@ -133,6 +133,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
         <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
         <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <ShoutoutSection nextTimePeriod={nextTimePeriod}
+                         current_user={current_user}
                          timePeriod={timePeriod}
                          sentShoutouts={sent_shoutouts}
                          receivedShoutouts={received_shoutouts}
