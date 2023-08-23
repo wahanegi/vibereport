@@ -84,11 +84,13 @@ RSpec.describe Api::V1::ResultsPresenter do
           combined_shoutouts: [
             {
               shoutout:,
-              users: [user2]
+              users: [user2],
+              emojis: []
             },
             {
               shoutout: shoutout3,
-              users: [user2]
+              users: [user2],
+              emojis: []
             }
           ]
         }
