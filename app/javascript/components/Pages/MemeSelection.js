@@ -38,7 +38,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
   }
 
   const chooseGIPHYHandling = () => {
-    steps.push('selected-giphy-follow');
+    steps.push('emotion-intensity');
     saveDataToDb(steps, { gif: gifUrl, draft: false });
   }
   

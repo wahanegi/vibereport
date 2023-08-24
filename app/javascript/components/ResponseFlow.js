@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
 import EmotionEntry from "./Pages/EmotionEntry";
-import SelectedGIPHYFollow from "./Pages/SelectedGIPHYFollow";
 import EmotionIntensity from "./Pages/EmotionIntensity";
 import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
@@ -108,7 +107,6 @@ const ResponseFlow = ({step, data, setData}) => {
     'emotion-entry': <EmotionEntry />,
     'emotion-type': <EmotionType />,
     'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
-    'selected-giphy-follow': <SelectedGIPHYFollow isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'emotion-intensity': <EmotionIntensity />,
     'productivity-check': <ProductivityCheckLow />,
     'results': <Results />,
