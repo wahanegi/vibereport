@@ -24,7 +24,7 @@ class Api::V1::ResultsPresenter
       responses_count: responses.count,
       current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
       current_user:,
-      combined_shoutouts:
+      received_and_public_shoutouts:
     }
   end
 
@@ -137,7 +137,7 @@ class Api::V1::ResultsPresenter
              .map { |shoutout| shoutout_block(shoutout) }
   end
 
-  def combined_shoutouts
+  def received_and_public_shoutouts
     combined = received + public_shoutouts
     return nil if combined.empty?
 

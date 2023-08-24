@@ -146,7 +146,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_075429) do
 
   create_table "shoutouts", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.boolean "public", default: false, null: false
+    t.boolean "public", default: true, null: false
     t.text "rich_text", null: false
     t.bigint "time_period_id", null: false
     t.string "type"

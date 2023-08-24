@@ -81,7 +81,7 @@ RSpec.describe Api::V1::ResultsPresenter do
           responses_count: time_period.responses.count,
           current_response: user_response,
           current_user: user,
-          combined_shoutouts: [
+          received_and_public_shoutouts: [
             {
               shoutout:,
               users: [user2],
