@@ -61,11 +61,10 @@ ActiveAdmin.register User do
 
       column do
         panel 'Sent Celebration Verbatims' do
-          if user.responses.present?
-            table_for user.responses.where.not(celebrate_comment: nil).order(created_at: :desc) do
-              column 'From' do |response|
-                response.user.full_name
-              end
+          responses_with_celebrate = user.responses.select { |response| response.celebrate_comment.present? }
+
+          if responses_with_celebrate.present?
+            table_for responses_with_celebrate do
               column 'Message' do |response|
                 response.celebrate_comment
               end

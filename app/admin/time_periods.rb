@@ -49,7 +49,7 @@ ActiveAdmin.register TimePeriod do
 
       column do
         panel 'Celebration Verbatims' do
-          responses_with_message = time_period.responses.select { |response| response.celebrate_comment }
+          responses_with_message = time_period.responses.select { |response| response.celebrate_comment.present? }
 
           if responses_with_message.any?
             table_for responses_with_message do
