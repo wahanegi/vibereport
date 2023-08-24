@@ -60,18 +60,18 @@ ActiveAdmin.register User do
       end
 
       column do
-        panel 'Received Celebration Verbatims' do
-          if user.shoutout_recipients.present?
-            table_for user.shoutout_recipients.joins(:shoutout).where(shoutouts: { type: 'CelebrateShoutout' }).order(created_at: :desc) do
-              column 'From' do |shoutout_recipient|
-                shoutout_recipient.shoutout.user.full_name
+        panel 'Sent Celebration Verbatims' do
+          if user.responses.present?
+            table_for user.responses.where.not(celebrate_comment: nil).order(created_at: :desc) do
+              column 'From' do |response|
+                response.user.full_name
               end
-              column 'Message' do |shoutout_recipient|
-                strip_tags(shoutout_recipient.shoutout.rich_text)
+              column 'Message' do |response|
+                response.celebrate_comment
               end
-              column 'Time Period' do |shoutout_recipient|
-                start_date = shoutout_recipient.shoutout.time_period.start_date.to_s
-                end_date = shoutout_recipient.shoutout.time_period.end_date.to_s
+              column 'Time Period' do |response|
+                start_date = response.time_period.start_date.to_s
+                end_date = response.time_period.end_date.to_s
                 content_tag :span, "#{start_date} - #{end_date}", class: 'highlight-date'
               end
             end

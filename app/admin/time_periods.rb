@@ -49,15 +49,15 @@ ActiveAdmin.register TimePeriod do
 
       column do
         panel 'Celebration Verbatims' do
-          shoutouts_with_message = time_period.shoutouts.select { |shoutout| shoutout.type == "CelebrateShoutout" }
+          responses_with_message = time_period.responses.select { |response| response.celebrate_comment }
 
-          if shoutouts_with_message.any?
-            table_for shoutouts_with_message do
-              column 'Author' do |shoutout|
-                shoutout.user.full_name
+          if responses_with_message.any?
+            table_for responses_with_message do
+              column 'Author' do |response|
+                response.user.full_name
               end
-              column 'Message' do |shoutout|
-                strip_tags(shoutout.rich_text)
+              column 'Message' do |response|
+                response.celebrate_comment
               end
             end
           else
