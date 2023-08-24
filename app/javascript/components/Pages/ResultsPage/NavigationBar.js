@@ -1,10 +1,11 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment} from "react";
 import {Calendar, EditResponse} from "../../UI/ShareContent";
-import {datePrepare, isBlank, isEmpty, isPresent, rangeFormat} from "../../helpers/helpers";
+import {datePrepare, isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
+import isEmpty from "ramda/src/isEmpty";
 
 const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod,
                         nextTimePeriod, steps, saveDataToDb, emotions, data, setShowWorkingModal}) => {
-  if(isEmpty(time_periods)) return null
+  if(isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working
   const handlingBack = () => {
@@ -13,7 +14,8 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
       return setShowWorkingModal(true)
     } else {
       const new_steps = steps.slice(0, index + 1);
-      saveDataToDb( new_steps, {not_working: false, draft: false} )
+      const steps_arr = isEmpty(new_steps) ? ['emotion-selection-web', 'productivity-check'] : new_steps
+      saveDataToDb(steps_arr, {not_working: false, draft: false, completed_at: null} )
     }
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
