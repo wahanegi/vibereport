@@ -132,10 +132,11 @@ class Api::V1::ResultsPresenter
   end
 
   def public_shoutout_blocks
-    @public_shoutouts_blocks ||= begin
-                            return_blocks = Shoutout.where(time_period_id: time_period.id, public: true) - current_user.shoutouts
-                            return_blocks.map{ |shoutout| shoutout_block(shoutout) }
-                          end
+    @public_shoutout_blocks ||=
+      begin
+        return_blocks = Shoutout.where(time_period_id: time_period.id, public: true) - current_user.shoutouts
+        return_blocks.map{ |shoutout| shoutout_block(shoutout) }
+      end
   end
 
   def received_and_public_shoutouts
