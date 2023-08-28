@@ -95,7 +95,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
         body: formData,
       });
       const responseData = await response.json();
-      setGifUrl({src: gifUrlWithId(responseData.data.id), height: imageHeight})
+      setGifUrl({src: gifUrlWithId(responseData.data.id), height: imageHeight * 0.22})
       setIsCustomGif(true)
       setSelectedFile(null)
       setUploading(false)
