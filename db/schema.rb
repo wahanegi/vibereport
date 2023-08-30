@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.string "celebrate_comment"
     t.text "comment"
     t.date "completed_at"
     t.datetime "created_at", null: false

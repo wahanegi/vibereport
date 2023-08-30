@@ -1,7 +1,6 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import {convertUsersToString} from "../../helpers/helpers";
 import parse from "html-react-parser";
-import {mentionToRichText} from "../CausesToCelebrate";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
@@ -33,8 +32,8 @@ const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
       <div className='h5 w-auto text-start truncated fw-semibold'>
         {prefix}
         {prefix && convertUsersToString(users)}
-        {!prefix && parse(mentionToRichText(shoutout.rich_text))}
-        {prefix && <Fragment>"{parse(mentionToRichText(shoutout.rich_text))}"</Fragment>}
+        {!prefix && parse(shoutout.rich_text)}
+        {prefix && <Fragment>"{parse(shoutout.rich_text)}"</Fragment>}
       </div>
       <EmojiRow {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
                      setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef}} />
