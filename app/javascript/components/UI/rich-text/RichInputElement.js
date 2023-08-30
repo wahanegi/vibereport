@@ -6,13 +6,16 @@ import RichText from "./rich-text";
 import xClose from "../../../../assets/images/sys_svg/x-close.svg";
 import Button from "../Button";
 import RichTextArea from "./RichTextArea";
+import SwitcherShoutouts from "../SwitcherShoutouts";
 
-const RichInputElement =({ richText = '',
+const RichInputElement = ({ richText = '',
                            listUsers: listAllUsers,
                            setChosenUsers = ()=>{},
                            onSubmit ,
                            onClose,
-                           classAt = 'color-primary'}) =>{
+                           classAt = 'color-primary',
+                           editObj}) =>{
+
   const calculateInitX = (window.innerWidth-884)/2+69
   const initCoordinates = {x: calculateInitX, y: 373}
   const [textHTML, setTextHTML] = useState( richText )
@@ -39,6 +42,7 @@ const RichInputElement =({ richText = '',
   const highlightSmbATUnknownUser = false
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER
   const [isNotActive, setIsNotActive] = useState(false)
+  const [isChecked, setIsChecked] = useState(editObj.public === undefined ? true : editObj.public);
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea)
@@ -47,6 +51,19 @@ const RichInputElement =({ richText = '',
     setCursorPosition(Cursor.getCurrentCursorPosition(element))
     element.innerText === undefined || element.innerText === '\x0A' ? setIsDisabled(true) : setIsDisabled(false)
   }, [caret, textHTML, currentSelection])
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  useEffect( () =>{
+    if (!editObj.id) {
+      return;
+    }
+    editObj.public !== isChecked ? setIsDisabled(false) : setIsDisabled(true);
+  }, [isChecked])
+
+
 
   useEffect(()=>{
     if(richText.includes(TAG_AT)){
@@ -360,7 +377,8 @@ const clickEnterTabHandling = ( i ) => {
   const submitHandling = () => {
     onSubmit({
       richText: textHTML,
-      chosenUsers: copyChosenUsers
+      chosenUsers: copyChosenUsers,
+      isPublic: isChecked
     })
   }
 
@@ -416,6 +434,7 @@ const clickEnterTabHandling = ( i ) => {
                 onClick = { submitHandling }>
           Send Shoutout
         </Button>
+        <SwitcherShoutouts isChecked = {isChecked} handleCheckboxChange = {handleCheckboxChange} />
       </div>
       {isDropdownList && filteredUsers.length && indexOfSelection !== undefined &&
           <DropDownList       dataList = { filteredUsers }

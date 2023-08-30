@@ -16,18 +16,38 @@ const listUsers = [
   { id: 9, first_name: 'roger', last_name: ''}
   // other users...
 ]
+const editObj = {
+  id: 1,
+  public: true
+}
+
+const setupRichInputElement = (richText, setChosenUsers) => {
+  return render(
+    <RichInputElement
+      richText={richText}
+      listUsers={listUsers}
+      setChosenUsers={setChosenUsers}
+      setRichText={() => {}}
+      onSubmit={() => {}}
+      editObj={editObj}
+    />
+  );
+};
 
 const nonAllowedChars =  [',', '@', '`', '<', '>', ';', ':', '/', '\\']
 const highlightAT = '<span class="color-primary">@'
 
   describe('RichInputElement', ()=> {
+    let setChosenUsersMock;
+
+    beforeEach(() => {
+      setChosenUsersMock = jest.fn();
+      jest.clearAllMocks();
+    });
+
     it('should input entire words "Hi Team!" and setup the cursor at the end of the string"', () => {
-      const {getByTestId} = render(
-          <RichInputElement
-              richText='Hi Team!'
-              listUsers={listUsers}
-          />
-      );
+      const { getByTestId } = setupRichInputElement('Hi Team!');
+
       const divElement = getByTestId('editable-div');
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('Hi Team!\x0A');
       const cursorPos = Cursor.getCurrentCursorPosition(divElement)
@@ -35,12 +55,8 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should input symbol "@" after, BTW and before non-space symbols', () => {
-      const {getByTestId} = render(
-          <RichInputElement
-              richText='Hi Team!'
-              listUsers={listUsers}
-          />
-      );
+      const { getByTestId } = setupRichInputElement('Hi Team!');
+
       const divElement = getByTestId('editable-div');
       fireEvent.keyDown(divElement, {key: '@'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('Hi Team!@\x0A')
@@ -54,18 +70,8 @@ const highlightAT = '<span class="color-primary">@'
 
     it('input entire rich words "@roger and @Mike say Hi Team!" and add symbols "s@" before "!"', () => {
       const richText = highlightAT + 'roger</span> and ' + highlightAT + 'Mike Snider</span> say Hi Team!'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={() => {
-              }}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText);
+
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(35, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
@@ -76,23 +82,13 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should change "@George Washington" on the "@s", delete him chosenUsers, open DropDownList', () => {
-      const setChosenUsers = jest.fn();
       const richText = 'Hey ' + highlightAT + RichText.userFullName(listUsers[0]) + '</span> , ' +
           highlightAT + RichText.userFullName(listUsers[1]) + '</span> and ' +
           highlightAT + RichText.userFullName(listUsers[2]) + '</span> , thanks for non-stop renew))'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}, {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       Cursor.setCurrentCursorPosition(5, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
@@ -101,7 +97,7 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.keyDown(divElement, {key: 'ArrowRight'});
       fireEvent.keyDown(divElement, {key: 's'});
       expect(divElement.innerHTML).toContain(RichText.encodeSpace('Hey <span class=\"color-primary\">@s</span> , <span class=\"color-primary\">@'));
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       const listItems = screen.getAllByRole('listitem');
       const expectedUsers = [
@@ -120,22 +116,12 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should add space after char when cursor before @', () => {
-      const setChosenUsers = jest.fn();
       const richText = 'Hey ' + highlightAT + RichText.userFullName(listUsers[0]) + '</span> and ' +
           highlightAT + RichText.userFullName(listUsers[1]) + '</span>, thanks for non-stop renew))'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}])
       Cursor.setCurrentCursorPosition(4, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
@@ -148,35 +134,26 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should change "@George Washington" on the "@Mike Snider" in the textarea and in the chosenUsers', () => {
-      const setChosenUsers = jest.fn();
       const richText = 'Hey ' + highlightAT + RichText.userFullName(listUsers[0]) + '</span>, ' +
           highlightAT + RichText.userFullName(listUsers[1]) + '</span> and ' +
           highlightAT + RichText.userFullName(listUsers[2]) + '</span> , thanks for non-stop renew))'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}, {id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       Cursor.setCurrentCursorPosition(5, divElement);
       fireEvent.keyDown(divElement, {key: 'm'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('Hey @m, @Jackie Chan and @Janice Wednesday , thanks for non-stop renew))\x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}]);
       ['i', 'k', 'e', ' ', 's', 'n', 'i', 'd', 'e', 'r'].forEach(char => {
         fireEvent.keyDown(divElement, {key: char});
       })
       expect(RichText.decodeSpace160(divElement.textContent)).toBe(
           'Hey @Mike Snider, @Jackie Chan and @Janice Wednesday , thanks for non-stop renew))\x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 2, first_name: 'Jackie', last_name: 'Chan'},
         {id: 3, first_name: 'Janice', last_name: 'Wednesday'}, {id: 6, first_name: 'Mike', last_name: 'Snider'}])
       fireEvent.keyDown(divElement, {key: '!'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe(
@@ -184,44 +161,25 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should check the non allowed characters for user searches ', () => {
-      const setChosenUsers = jest.fn();
       const richText = 'Hey ' + highlightAT + RichText.userFullName(listUsers[0]) + '</span> , thanks for non-stop renew))'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div')
       Cursor.setCurrentCursorPosition(5, divElement)
       nonAllowedChars.forEach((char) => {
         fireEvent.keyDown(divElement, {key: char});
         expect(RichText.decodeSpace160(divElement.textContent)).toBe('Hey @George Washington , thanks for non-stop renew))\x0A');
       });
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'}])
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'}])
     })
 
     it('should make imitation input sentence  with names of users ', () => {
       const sentence = [".", "T", "H", "A", "N", "K", " ", "Y", "O", "U", " ", "@"]
       const continueSentence = ["r", "o", "g", "e", "r", " ", "!",]
-      const setChosenUsers = jest.fn();
       const richText = 'Hey ' + highlightAT + RichText.userFullName(listUsers[0]) + '</span>, thanks for non-stop renew))'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div')
       Cursor.setCurrentCursorPosition(51, divElement)
       sentence.forEach((char) => {
@@ -232,27 +190,18 @@ const highlightAT = '<span class="color-primary">@'
         fireEvent.keyDown(divElement, {key: char});
       });
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('Hey @George Washington, thanks for non-stop renew)).THANK YOU @roger !\x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 1, first_name: 'George', last_name: 'Washington'},
         {id: 9, first_name: 'roger', last_name: ''}])
     })
 
     it('should add userName from DropDownList by press Enter or Space button', () => {
-      const setChosenUsers = jest.fn();
       const richText = 'Hey ' + highlightAT + RichText.userFullName(listUsers[2]) + '</span>, ' +
           highlightAT + RichText.userFullName(listUsers[1]) + '</span> and '
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 3, first_name: 'Janice', last_name: 'Wednesday'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 3, first_name: 'Janice', last_name: 'Wednesday'},
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}])
       Cursor.setCurrentCursorPosition(40, divElement)
       const pos = Cursor.getCurrentCursorPosition(divElement)
@@ -262,24 +211,14 @@ const highlightAT = '<span class="color-primary">@'
       expect(listItems).toHaveLength(listUsers.length - 2);
       fireEvent.keyDown(divElement, {key: 'Tab'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('Hey @Janice Wednesday, @Jackie Chan and @George Washington\x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 3, first_name: 'Janice', last_name: 'Wednesday'},
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 3, first_name: 'Janice', last_name: 'Wednesday'},
         {id: 2, first_name: 'Jackie', last_name: 'Chan'}, {id: 1, first_name: 'George', last_name: 'Washington'}])
     })
 
     it('should add four users from DropDownList by press Enter or Space button', () => {
-      const setChosenUsers = jest.fn();
       const richText = ''
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(0, divElement)
       fireEvent.keyDown(divElement, {key: '@'});
@@ -320,7 +259,7 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.keyDown(divElement, {key: 'ArrowUp'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('@George Washington, @Jackie Chan @Janice Wednesday @Kieran Roomie @Vitalii Shevchenko\x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith(
+      expect(setChosenUsersMock).toHaveBeenCalledWith(
           [{id: 1, first_name: 'George', last_name: 'Washington'},
             {id: 2, first_name: 'Jackie', last_name: 'Chan'},
             {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
@@ -331,23 +270,13 @@ const highlightAT = '<span class="color-primary">@'
 
     it('should open drop-down list when cursor move on the user position and' +
         ' change user from DropDownList by press Enter or Tab button', () => {
-      const setChosenUsers = jest.fn();
       const richText = '<span class="color-primary">@George Washington</span>, ' +
           '<span class="color-primary">@Jackie Chan</span> ' +
           '<span class="color-primary">@Janice Wednesday</span> ' +
           '<span class="color-primary">@Kieran Roomie</span> ' +
           '<span class="color-primary">@roger</span> '
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(52, divElement)
       fireEvent.click(divElement);
@@ -356,7 +285,7 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.keyDown(divElement, {key: 'ArrowUp'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('@George Washington, @Jackie Chan @Janice Wednesday @Mike Snider @roger \x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith(
+      expect(setChosenUsersMock).toHaveBeenCalledWith(
           [{id: 1, first_name: 'George', last_name: 'Washington'},
             {id: 2, first_name: 'Jackie', last_name: 'Chan'},
             {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
@@ -367,22 +296,13 @@ const highlightAT = '<span class="color-primary">@'
 
     it('should open drop-down list when cursor move on the user position and' +
         ' sorting users by press button "k" from DropDownList and chose by press Enter or Space button', () => {
-      const setChosenUsers = jest.fn();
       const richText = '<span class="color-primary">@George Washington</span>, ' +
           '<span class="color-primary">@Jackie Chan</span> ' +
           '<span class="color-primary">@Janice Wednesday</span> ' +
           '<span class="color-primary">@Kieran Roomie</span> <span class="color-primary">@roger</span> '
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(52, divElement)
       fireEvent.click(divElement);
@@ -391,7 +311,7 @@ const highlightAT = '<span class="color-primary">@'
       expect(listItems).toHaveLength(4);
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('@George Washington, @Jackie Chan @Janice Wednesday @Kara Friday @roger \x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith(
+      expect(setChosenUsersMock).toHaveBeenCalledWith(
           [{id: 1, first_name: 'George', last_name: 'Washington'},
             {id: 2, first_name: 'Jackie', last_name: 'Chan'},
             {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
@@ -404,23 +324,13 @@ const highlightAT = '<span class="color-primary">@'
         ' sorting users on the DropDownList by input "jan"  and non available  choosing ' +
         'this user by way press Enter or Space button, ' +
         'because user with name "Janice Wednesday" is have in the text', () => {
-      const setChosenUsers = jest.fn();
       const richText = '<span class="color-primary">@George Washington</span>, ' +
           '<span class="color-primary">@Jackie Chan</span> ' +
           '<span class="color-primary">@Janice Wednesday</span> ' +
           '<span class="color-primary">@Kieran Roomie</span> ' +
           '<span class="color-primary">@roger</span>'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(52, divElement)
       fireEvent.click(divElement);
@@ -431,7 +341,7 @@ const highlightAT = '<span class="color-primary">@'
       expect(listItems).toHaveLength(4);
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('@George Washington, @Jackie Chan @Janice Wednesday @Kara Friday @roger\x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith(
+      expect(setChosenUsersMock).toHaveBeenCalledWith(
           [{id: 1, first_name: 'George', last_name: 'Washington'},
             {id: 2, first_name: 'Jackie', last_name: 'Chan'},
             {id: 3, first_name: 'Janice', last_name: 'Wednesday'},
@@ -441,20 +351,11 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should check correct work a special buttons of keyboard', () => {
-      const setChosenUsers = jest.fn();
       // const richText = '<span class="color-primary">@George Washington</span>, '
       const richText = "Hello world!"
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
       // mouse click
       Cursor.setCurrentCursorPosition(7, divElement)
@@ -485,25 +386,15 @@ const highlightAT = '<span class="color-primary">@'
       expect(listItems).toHaveLength(1);
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe('Hello world @Janice Wednesday\x0A');
-      expect(setChosenUsers).toHaveBeenCalledWith([{id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
+      expect(setChosenUsersMock).toHaveBeenCalledWith([{id: 3, first_name: 'Janice', last_name: 'Wednesday'}])
       fireEvent.keyDown(divElement, {key: 'ArrowLeft'});
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(28)
     })
 
     it('check correct work of button Backspace in different place of the text', () => {
-      const setChosenUsers = jest.fn();
       const richText = '<span class="color-primary">@George Washington</span>  say Hello world!'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText);
+
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(7, divElement)
       fireEvent.click(divElement);
@@ -583,19 +474,10 @@ const highlightAT = '<span class="color-primary">@'
 
 
     it('check correct work of button Delete in different place of the text', () => {
-      const setChosenUsers = jest.fn();
       const richText = '<span class="color-primary">@George Washington</span>  say Hello world!'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText);
+
       const divElement = getByTestId('editable-div');
       Cursor.setCurrentCursorPosition(0, divElement)
       fireEvent.click(divElement);
@@ -631,23 +513,14 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should cancel hightlight text', () => {
-      const setChosenUsers = jest.fn();
       const richText = "Hey <span class=\"color-primary\">@George Washington</span>   . How do you do? " +
           '<span class="color-primary">@Jackie Chan</span> ' +
           '<span class="color-primary">@Janice Wednesday</span> ' +
           '<span class="color-primary">@Kieran Roomie</span> +' +
           '<span class="color-primary">@roger</span> !'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText);
+
       const divElement = getByTestId('editable-div');
       // mouse click
       Cursor.setCurrentCursorPosition(7, divElement)
@@ -680,22 +553,13 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should open dropdown list and chose other user by any position of text cursor', ()=>{
-      const setChosenUsers = jest.fn();
       const richText = "Hey <span class=\"color-primary\">@George Washington</span>   . How do you do? " +
           '<span class="color-primary">@Jackie Chan</span> ' +
           '<span class="color-primary">@Janice Wednesday</span> ' +
           '<span class="color-primary">@Kieran Roomie</span> <span class="color-primary">@roger</span> !'
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+
+      const { getByTestId } = setupRichInputElement(richText);
+
       const divElement = getByTestId('editable-div');
       // mouse click
       Cursor.setCurrentCursorPosition(7,divElement )
@@ -710,19 +574,9 @@ const highlightAT = '<span class="color-primary">@'
   })
 
     it('should allow to edit user in the string and change them in the chosenUser', ()=>{
-      const setChosenUsers = jest.fn();
       const richText = "Hey "
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
       fireEvent.keyDown(divElement, {key: '@'});
       let listItems = screen.queryAllByRole('listitem');
@@ -737,24 +591,24 @@ const highlightAT = '<span class="color-primary">@'
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toBe((('Hey @Jackie Chan\x0A')))
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(16)
-      expect(setChosenUsers).toHaveBeenCalledWith([ { id: 2, first_name: 'Jackie', last_name: 'Chan' }, ])
+      expect(setChosenUsersMock).toHaveBeenCalledWith([ { id: 2, first_name: 'Jackie', last_name: 'Chan' }, ])
       fireEvent.keyDown(divElement, {key: 'ArrowLeft'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       // fireEvent.keyDown(divElement, {key: 'ArrowDown'});
       fireEvent.keyDown(divElement, {key: 'Enter'});
       expect(RichText.decodeSpace160(divElement.textContent)).toContain((('Hey @George Washington')))
-      expect(setChosenUsers).toHaveBeenCalledWith([ { id: 1, first_name: 'George', last_name: 'Washington' } ])
+      expect(setChosenUsersMock).toHaveBeenCalledWith([ { id: 1, first_name: 'George', last_name: 'Washington' } ])
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(22)
       Cursor.setCurrentCursorPosition( 4,divElement)
       fireEvent.keyDown(divElement, {key: 'Delete'});//in real no delete-???
-      expect(setChosenUsers.mock.calls[8][0]).toEqual(  [])
+      expect(setChosenUsersMock.mock.calls[8][0]).toEqual(  [])
       fireEvent.keyDown(divElement, {key: '@'})
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(5)
       fireEvent.keyDown(divElement, {key: 'Enter'});
-      expect(setChosenUsers.mock.calls[9]).toHaveLength( 1)
-      expect(setChosenUsers.mock.calls[9][0]).toEqual(  [{"first_name": "George", "id": 1, "last_name": "Washington"}])
+      expect(setChosenUsersMock.mock.calls[9]).toHaveLength( 1)
+      expect(setChosenUsersMock.mock.calls[9][0]).toEqual(  [{"first_name": "George", "id": 1, "last_name": "Washington"}])
       fireEvent.keyDown(divElement, {key: 'Backspace'})
-      expect(setChosenUsers.mock.calls[10][0]).toHaveLength( 0)
+      expect(setChosenUsersMock.mock.calls[10][0]).toHaveLength( 0)
       expect(Cursor.getCurrentCursorPosition(divElement).charCount).toBe(4)
       listItems = screen.queryAllByRole('listitem');
       expect(listItems).toHaveLength(0);
@@ -767,30 +621,20 @@ const highlightAT = '<span class="color-primary">@'
     })
 
     it('should allow to choose all users from dropdown list', ()=> {
-      const setChosenUsers = jest.fn();
       const richText = "Hey "
-      const {getByTestId} = render(
-          <RichInputElement
-              richText={richText}
-              listUsers={listUsers}
-              setChosenUsers={setChosenUsers}
-              setRichText={() => {
-              }}
-              onSubmit={() => {
-              }}
-          />
-      );
+      const { getByTestId } = setupRichInputElement(richText, setChosenUsersMock);
+
       const divElement = getByTestId('editable-div');
       listUsers.forEach((listItem, index) => {
         fireEvent.keyDown(divElement, {key: ' '});
         fireEvent.keyDown(divElement, {key: '@'});
         fireEvent.keyDown(divElement, {key: 'Enter'});
       });
-      expect(setChosenUsers.mock.calls).toHaveLength( 9)
+      expect(setChosenUsersMock.mock.calls).toHaveLength( 9)
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       fireEvent.keyDown(divElement, {key: 'Backspace'});
       fireEvent.keyDown(divElement, {key: 'Backspace'});
-      expect(setChosenUsers.mock.calls[9][0]).toHaveLength( 8)
+      expect(setChosenUsersMock.mock.calls[9][0]).toHaveLength( 8)
       fireEvent.keyDown(divElement, {key: '@'});
       const listItems = screen.queryAllByRole('listitem');
       expect(listItems).toHaveLength(2);
