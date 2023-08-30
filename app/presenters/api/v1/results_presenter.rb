@@ -141,7 +141,7 @@ class Api::V1::ResultsPresenter
 
   def received_and_public_shoutouts
     combined = received_shoutout_blocks + public_shoutout_blocks
-    return nil if combined.empty?
+    return [] if combined.empty?
 
     combined.uniq
   end
