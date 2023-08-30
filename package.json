@@ -23,7 +23,6 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.3.4",
-    "react-mentions": "^4.4.7",
     "react-router-dom": "^6.8.2",
     "react-transition-group": "^4.4.5",
     "sass": "^1.58.0",

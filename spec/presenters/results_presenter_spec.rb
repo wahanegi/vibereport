@@ -12,6 +12,7 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:user_response2) { create :response, emotion:, time_period:, user: user2, steps: %w[emotion-selection-web meme-selection results], completed_at: Date.current }
   let!(:shoutout) { create :shoutout, time_period:, user: user2 }
   let!(:shoutout2) { create :shoutout, time_period:, user: }
+  let!(:shoutout3) { create :shoutout, time_period:, user: user2, public: true }
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
   let!(:emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
@@ -56,11 +57,11 @@ RSpec.describe Api::V1::ResultsPresenter do
           ],
           received_shoutouts: [
             {
-              sender: shoutout2.user,
-              count: 1
+              sender: shoutout3.user,
+              count: 2
             },
             {
-              sender: shoutout.user,
+              sender: shoutout2.user,
               count: 1
             }
           ],
@@ -79,7 +80,19 @@ RSpec.describe Api::V1::ResultsPresenter do
           },
           responses_count: time_period.responses.count,
           current_response: user_response,
-          current_user: user
+          current_user: user,
+          received_and_public_shoutouts: [
+            {
+              shoutout:,
+              users: [user2],
+              emojis: []
+            },
+            {
+              shoutout: shoutout3,
+              users: [user2],
+              emojis: []
+            }
+          ]
         }
       )
     end
