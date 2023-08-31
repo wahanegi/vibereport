@@ -10,22 +10,17 @@ import axios from "axios";
 import NavigationBar from "./NavigationBar";
 import EmotionSection from "./EmotionSection";
 import GifSection from "./GifSection";
-import QuestionSection from "./QuestionSection";
-import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
-import ShoutoutModal from "../../UI/ShoutoutModal";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
-import ResultsPageManager from "../ResultsPageManager/index";
 import LeaderVector from '../../../../assets/images/LeaderVector.svg';
 
-const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
+const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
-        current_user_shoutouts, responses_count, current_user} = results
+  const {emotions, gifs, time_periods, responses_count, current_user} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -38,17 +33,6 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
-  const [showResultsManager, setShowResultsManager] = useState(false);
-  const handlingOnClickImage = () => {
-    const isManager = data.current_user.manager;
-
-    if (isManager) {
-        steps.push('result-managers');
-        saveDataToDb(steps);
-    } else {
-        setShowResultsManager(true);
-    }
-}
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
@@ -105,7 +89,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }, [timePeriodIndex, time_periods?.length])
 
   useEffect(() => {
-    axios.get(`/api/v1/results/${timePeriod.slug}`)
+    axios.get(`/api/v1/result_managers/${timePeriod.slug}`)
       .then(res => {
         setResults(res.data)
         setLoaded(true)
@@ -143,35 +127,19 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
-                            saveDataToDb, emotions, data, setShowWorkingModal, setData, service, draft }} />
-        <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
+                            saveDataToDb, emotions, data, setShowWorkingModal }} />
+        <div className="folder-shape">
+          <div className="b3 position">Leader Panel
+            <img className="image-container ms-1" src={LeaderVector} />
+          </div>
+          <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
+        </div>
         <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
-        <ShoutoutSection nextTimePeriod={nextTimePeriod}
-                         current_user={current_user}
-                         timePeriod={timePeriod}
-                         sentShoutouts={sent_shoutouts}
-                         receivedShoutouts={received_shoutouts}
-                         data={data} setData={setData}
-                         isMinUsersResponses={isMinUsersResponses}
-                         currentUserShoutouts={current_user_shoutouts} />
-        <QuestionSection fun_question={fun_question}
-                         current_user={current_user}
-                         answers={answers}
-                         steps={steps}
-                         saveDataToDb={saveDataToDb}
-                         isMinUsersResponses={isMinUsersResponses}
-                         nextTimePeriod={nextTimePeriod}
-                         setShowWorkingModal={setShowWorkingModal}/>
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
       </Wrapper>
       <Footer />
     </div>
-    {
-      showModal && <ShoutoutModal onClose = {() => {setShowModal(false)} }
-                                  data={data} setData={setData} />
-
-    }
     <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal} saveDataToDb={saveDataToDb} steps={steps} />
   </Fragment>
 }
-export default Results;
+export default ResultsManager;

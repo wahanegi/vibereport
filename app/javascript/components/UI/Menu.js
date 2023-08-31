@@ -77,6 +77,7 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
     'icebreaker-answer': { src: complete85, activeSrc: complete85_act, percent: 85 },
     'icebreaker-question': { src: complete90, activeSrc: complete90_act, percent: 90 },
     'results': { src: complete100, activeSrc: complete100_act, percent: 100 },
+    'result-managers': { src: complete100, activeSrc: complete100_act, percent: 100 },
   };
 
   const getSrcMenu = (lastSegment, activeImg) => {

@@ -17,6 +17,7 @@ import Results from "./Pages/ResultsPage";
 import EmotionType from "./Pages/EmotionType";
 import RatherNotSay from "./Pages/RatherNotSay/RatherNotSay";
 import SkipAhead from "./Pages/RatherNotSay/SkipAhead";
+import ResultsManager from "./Pages/ResultsPageManager";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -117,6 +118,7 @@ const ResponseFlow = ({step, data, setData}) => {
     'recognition': <Recognition />,
     'icebreaker-answer': <IcebreakerAnswer />,
     'icebreaker-question': <IcebreakerQuestion />,
+    'result-managers': <ResultsManager />,
   };
 
   const componentProps = {

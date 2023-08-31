@@ -4,6 +4,7 @@ import ResponseFlow from "./ResponseFlow";
 import { ALL_STEPS } from "./helpers/routes";
 import {apiRequest} from "./requests/axios_requests";
 import ResultsPreview from "./Pages/ResultsPage/ResultsPreview";
+import ResultsPageManager from "./Pages/ResultsPageManager/ResultsPreview";
 import CheckInClosed from "./Pages/CheckInClosed";
 import UnsubscribePage from "./Pages/UnsubscribePage";
 
@@ -70,6 +71,7 @@ const App = () => {
           <Route path="results/:slug" element={<ResultsPreview />} />
           <Route path="check-in-closed" element={<CheckInClosed data={frontDatabase}/>} />
           <Route path="unsubscribe" element={<UnsubscribePage data={frontDatabase} />} />
+          <Route path="result-managers/:slug" element={<ResultsPageManager />} />
         </Routes>}
       </BrowserRouter>
     </Fragment>

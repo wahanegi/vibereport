@@ -81,8 +81,8 @@ module Api
       end
 
       def complete_response
-        return  if response_params['attributes']['steps'].exclude?('results') || @response.completed_at.present?
-
+        return if !['results', 'result-managers'].any? { |step| response_params['attributes']['steps'].include?(step) } || @response.completed_at.present?
+      
         @response.update(completed_at: Date.current)
       end
 
