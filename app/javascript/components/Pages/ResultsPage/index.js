@@ -25,7 +25,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
   const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
-        current_user_shoutouts, responses_count, current_user} = results
+        current_user_shoutouts, responses_count, current_user, received_and_public_shoutouts} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -153,7 +153,8 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
                          receivedShoutouts={received_shoutouts}
                          data={data} setData={setData}
                          isMinUsersResponses={isMinUsersResponses}
-                         currentUserShoutouts={current_user_shoutouts} />
+                         currentUserShoutouts={current_user_shoutouts}
+                         recivedPublicShoutouts={received_and_public_shoutouts} />
         <QuestionSection fun_question={fun_question}
                          current_user={current_user}
                          answers={answers}

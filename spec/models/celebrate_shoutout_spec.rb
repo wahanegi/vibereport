@@ -3,6 +3,7 @@
 # Table name: shoutouts
 #
 #  id             :bigint           not null, primary key
+#  public         :boolean          default(TRUE), not null
 #  rich_text      :text             not null
 #  type           :string
 #  created_at     :datetime         not null

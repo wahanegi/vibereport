@@ -26,10 +26,10 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         allow(controller).to receive(:current_user).and_return(user1)
         expect do
           post :create, params: { shoutout: { time_period_id: time_period.id,
-                                              rich_text: 'Similar message' },
+                                              rich_text: 'Similar message', public: true },
                                   recipients: [user2.id, user3.id, user4.id] }
           post :create, params: { shoutout: { time_period_id: time_period.id,
-                                              rich_text: 'Similar message' },
+                                              rich_text: 'Similar message', public: false },
                                   recipients: [user2.id, user3.id, user4.id] }
         end.to change(Shoutout, :count).by(1)
         expect(ShoutoutRecipient.all.length).to be(3)
@@ -140,6 +140,38 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
                                  recipients: [user2.id, user3.id, user4.id] }
         shoutout.reload
         expect(shoutout.rich_text).to eq('<br>')
+      end
+      it 'should not update when we have the similar record and public ' do
+        allow(controller).to receive(:current_user).and_return(user)
+        post :create, params: { shoutout: { time_period_id: time_period.id,
+                                            rich_text: '@Person1 thanks',
+                                            public: true },
+                                recipients: [user2.id, user3.id, user4.id] }
+        expect(shoutout.shoutout_recipients.length).to be(3)
+        patch :update, params: { id: shoutout.id,
+                                 shoutout: { time_period_id: time_period.id,
+                                             rich_text: '@Person1 thanks',
+                                             public: true },
+                                 recipients: [user2.id, user3.id, user4.id] }
+        shoutout.reload
+        expect(shoutout.rich_text).to eq('<br>')
+      end
+      it 'should update when we have the similar record, but another public ' do
+        allow(controller).to receive(:current_user).and_return(user)
+        post :create, params: { shoutout: { time_period_id: time_period.id,
+                                            rich_text: '@Person1 thanks',
+                                            public: true },
+                                recipients: [user2.id, user3.id, user4.id] }
+        expect(shoutout.shoutout_recipients.length).to be(3)
+        patch :update, params: { id: shoutout.id,
+                                 shoutout: { time_period_id: time_period.id,
+                                             rich_text: '@Person1 thanks',
+                                             public: false },
+                                 recipients: [user2.id, user3.id, user4.id] }
+        shoutout.reload
+        expect(shoutout.rich_text).to eq('<br>')
+        expect(shoutout.public).to eq(false)
+        expect(shoutout.shoutout_recipients.length).to eq(3)
       end
       it 'should update shoutouts ' do
         allow(controller).to receive(:current_user).and_return(user1)

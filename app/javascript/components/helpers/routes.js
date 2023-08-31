@@ -6,7 +6,6 @@ export const ALL_STEPS = [
     {id:"1.3", step:"skip-ahead"},
     {id:"1.4", step:"emotion-type"},
     {id:"2.0", step: "meme-selection"},
-    {id:"2.25", step:"selected-giphy-follow"},
     {id:"3.1", step:"emotion-intensity"},
     {id:"4.1", step:"productivity-check"},
     {id:"4.25", step:"productivity-bad-follow-up"},

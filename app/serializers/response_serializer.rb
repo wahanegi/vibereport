@@ -47,5 +47,5 @@ class ResponseSerializer
 
   attributes :id, :time_period_id, :emotion_id, :steps, :gif, :rating, :comment, :productivity,
              :productivity_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id, :completed_at, :draft,
-             :not_working
+             :not_working, :celebrate_comment
 end

@@ -23,7 +23,8 @@ class Api::V1::ResultsPresenter
       current_user_shoutouts:,
       responses_count: responses.count,
       current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
-      current_user:
+      current_user:,
+      received_and_public_shoutouts:
     }
   end
 
@@ -112,22 +113,37 @@ class Api::V1::ResultsPresenter
 
   def current_user_shoutouts
     {
-      received:,
-      sent:,
+      received: received_shoutout_blocks,
+      sent: sent_shoutout_blocks,
       total_count: time_period.shoutouts.size
     }
   end
 
-  def received
+  def received_shoutout_blocks
     return [] unless current_user_has_response?
 
     current_user.mentions.where(time_period_id: time_period.id).filter_map { |shoutout| shoutout_block(shoutout) }
   end
 
-  def sent
+  def sent_shoutout_blocks
     return [] unless current_user_has_response?
 
     current_user.shoutouts.where(time_period_id: time_period.id).filter_map { |shoutout| recipients_block(shoutout) }
+  end
+
+  def public_shoutout_blocks
+    @public_shoutout_blocks ||=
+      begin
+        return_blocks = Shoutout.where(time_period_id: time_period.id, public: true) - current_user.shoutouts
+        return_blocks.map { |shoutout| shoutout_block(shoutout) }
+      end
+  end
+
+  def received_and_public_shoutouts
+    combined = received_shoutout_blocks + public_shoutout_blocks
+    return [] if combined.empty?
+
+    combined.uniq
   end
 
   def current_user_has_response?
