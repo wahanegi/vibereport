@@ -17,7 +17,7 @@ const ResultsPreview = () => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( [])
   const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
-         current_user_shoutouts, current_user} = results
+         current_user_shoutouts, current_user, received_and_public_shoutouts} = results
   const [timePeriod, setTimePeriod] = useState({})
   const params = useParams();
 
@@ -57,7 +57,8 @@ const ResultsPreview = () => {
                          sentShoutouts={sent_shoutouts}
                          receivedShoutouts={received_shoutouts}
                          current_user={current_user}
-                         currentUserShoutouts={current_user_shoutouts} />
+                         currentUserShoutouts={current_user_shoutouts}
+                         recivedPublicShoutouts={received_and_public_shoutouts}/>
         <QuestionSection fun_question={fun_question}
                          answers={answers}
                          current_user={current_user}
