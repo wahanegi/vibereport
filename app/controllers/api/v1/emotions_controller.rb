@@ -1,7 +1,6 @@
 class Api::V1::EmotionsController < ApplicationController
-  include ApplicationHelper
   include UserEmailMailerHelper
-  before_action :require_user!
+  before_action :authenticate_user!
   before_action :current_response, only: [:index]
   def index
     if current_user.present?

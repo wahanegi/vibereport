@@ -1,8 +1,7 @@
 class Api::V1::UsersController < ApplicationController
-  include ApplicationHelper
   include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::OutputSafetyHelper
-  before_action :require_user!, only: %i[update]
+  before_action :authenticate_user!, only: %i[update]
 
   def update
     if current_user.update!(user_params)

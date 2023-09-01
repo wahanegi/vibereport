@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::ResultsPresenter do
   let!(:user) { create :user }

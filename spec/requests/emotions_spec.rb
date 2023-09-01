@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::EmotionsController do
   let!(:time_period) { create :time_period }
@@ -14,7 +13,7 @@ RSpec.describe Api::V1::EmotionsController do
   end
 
   before(:each) do
-    passwordless_sign_in(user)
+    sign_in(user)
   end
 
   describe '#index' do

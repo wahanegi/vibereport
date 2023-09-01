@@ -14,7 +14,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '6b865edc969fb2ba63d2ed7e2a9731f5ed00a4d7e3c7a16f51494a29845ee55d96667489a20d95519baa8db3d0e5a721eda30ece51784cf563a434d5e2c968b6'
+  # config.secret_key = '34523494910d032d2392c582d3855d3ac3a7418afcaf7c887da90d13de5530c06c55c576400096bcd6e4a2c014d5ff412776fab498f2c2881314b066cb29aa73'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -24,7 +24,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = "#{ENV.fetch('DEFAULT_FROM_ADDRESS')}@#{ENV.fetch('EMAIL_DOMAIN')}"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -126,7 +126,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '168dde1da45c2b7c3a507590dbc02db62f5eb630ea2e6b81cb1d7a804d01ead09300dd353ffe30fc774bc458ad2b8bb146c548a0a63be921468f9485d7f5c6c4'
+  # config.pepper = '1b0fe065e02faf7780a224c3113708adec13748489e3efeef7df29fba87bcaf240d4fc494f5f95e9becb02c174422140c8744cb3b687fa12dee983381f913fe5'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -164,7 +164,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 2.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -256,14 +256,14 @@ Devise.setup do |config|
 
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like
-  # :html, should redirect to the sign in page when the user does not have
+  # :html should redirect to the sign in page when the user does not have
   # access, but formats like :xml or :json, should return 401.
   #
   # If you have any extra navigational formats, like :iphone or :mobile, you
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html]
+  # config.navigational_formats = ['*/*', :html, :turbo_stream]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -296,16 +296,39 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  # ==> Turbolinks configuration
-  # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
-  #
-  # ActiveSupport.on_load(:devise_failure_app) do
-  #   include Turbolinks::Controller
-  # end
+  # ==> Hotwire/Turbo configuration
+  # When using Devise with Hotwire/Turbo, the http status for error responses
+  # and some redirects must match the following. The default in Devise for existing
+  # apps is `200 OK` and `302 Found respectively`, but new apps are generated with
+  # these new defaults that match Hotwire/Turbo behavior.
+  # Note: These might become the new default in future versions of Devise.
+  config.responder.error_status = :unprocessable_entity
+  config.responder.redirect_status = :see_other
 
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+
+  # ==> Configuration for :magic_link_authenticatable
+
+  # Need to use a custom Devise mailer in order to send magic links
+  require 'devise/passwordless/mailer'
+  config.mailer = 'Devise::Passwordless::Mailer'
+
+  # Time period after a magic login link is sent out that it will be valid for.
+  config.passwordless_login_within = 1.week
+
+  # The secret key used to generate passwordless login tokens. The default value
+  # is nil, which means defer to Devise's `secret_key` config value. Changing this
+  # key will render invalid all existing passwordless login tokens. You can
+  # generate your own secret value with e.g. `rake secret`
+  # config.passwordless_secret_key = nil
+
+  # When using the :trackable module, set to true to consider magic link tokens
+  # generated before the user's current sign in time to be expired. In other words,
+  # each time you sign in, all existing magic links will be considered invalid.
+  # config.passwordless_expire_old_tokens_on_sign_in = false
+  config.clean_up_csrf_token_on_authentication = false
 end

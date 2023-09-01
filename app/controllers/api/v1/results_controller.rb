@@ -1,6 +1,5 @@
 class Api::V1::ResultsController < ApplicationController
-  include ApplicationHelper
-  before_action :require_user!, :time_period, only: %i[show]
+  before_action :authenticate_user!, :time_period, only: %i[show]
 
   def show
     if @time_period.present?

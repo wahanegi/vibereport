@@ -45,7 +45,7 @@
   <div class="fourth-row-magic">
     <div class="mx-auto btn-magic">
       <div class="btn-text-magic">
-        <a target="_blank" href="<%= @magic_link %>">Access Site</a>
+        <%= link_to "Access Site", send("#{@scope_name.to_s.pluralize}_magic_link_url", Hash[@scope_name, {email: @resource.email, token: @token, remember_me: @remember_me}]), target: '_blank' %>
       </div>
     </div>
   </div>
