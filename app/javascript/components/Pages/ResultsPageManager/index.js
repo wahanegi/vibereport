@@ -15,12 +15,13 @@ import CornerElements from "../../UI/CornerElements";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import LeaderVector from '../../../../assets/images/LeaderVector.svg';
+import EmotionIndex from "../ResultsPageManager/EmotionIndex"
 
 const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {emotions, gifs, time_periods, responses_count, current_user} = results
+  const {emotions, gifs, time_periods, responses_count, current_user, teams} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -133,6 +134,7 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
             <img className="image-container ms-1" src={LeaderVector} />
           </div>
           <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
+          <EmotionIndex data={data} setData={setData} teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         </div>
         <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>

@@ -13,9 +13,9 @@ import line from "../../../assets/images/line.svg"
 import {MIN_USERS_RESPONSES} from "../helpers/consts";
 import Logo from "./Logo";
 import ResultsPageManager from "../Pages/ResultsPageManager";
-import LeaderVector from '../../../assets/images/LeaderVector.svg';
+import LeaderVector from '../../../assets/images/OpenLeaderPanelButton.svg';
 import ResultsPage from "../Pages/ResultsPage";
-import BackRevert from '../../../assets/images/back_revert.svg';
+import BackRevert from '../../../assets/images/BackToResultsButton.svg';
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
 const categoryClass = selectedType ? selectedType : emotion.category;
@@ -142,7 +142,6 @@ export const ResultsManager = ({ data, setData, saveDataToDb, steps, draft, serv
         className="b4 position-result pointer" 
         onClick={handlingOnClickImage} 
       >
-        Leader Panel
         <img
             className='ms-1'
             src={LeaderVector}
@@ -185,8 +184,7 @@ export const Results = ({ data, setData, saveDataToDb, steps, draft, service, hi
         onClick={handlingOnClickImage} 
       >
         <img
-            className='ms-1'
-            style={{width: 60}}
+            className='ms-1'            
             src={BackRevert}
             alt="Back Revert"
         />

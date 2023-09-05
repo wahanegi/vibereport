@@ -1,6 +1,6 @@
 import React from "react";
 import {animated, useSpring} from "@react-spring/web";
-import {EMOTION_COL_NUMBERS, EMOTION_COLORS, MIN_USERS_RESPONSES} from "../../helpers/consts";
+import {EMOTION_COL_NUMBERS, MIN_USERS_RESPONSES} from "../../helpers/consts";
 import {splitArray} from "../../helpers/helpers";
 
 const animatedStyles = (shift, category, addBlur) => {
@@ -8,7 +8,7 @@ const animatedStyles = (shift, category, addBlur) => {
     fontSize: '1.5rem',
     fontWeight: 'bold',
     willChange: 'transform, opacity',
-    color: EMOTION_COLORS[`${category}`][5],
+    color: '#4C77CB',
     marginTop: `${shift * 40}px`,
     filter: `${addBlur? 'blur(8px)' : ''}`
   }
@@ -39,7 +39,7 @@ const PreviewEmotionSection = ({data}) => {
   const filteredData = data.data.filter(item => item.attributes.category === "positive" || item.attributes.category === "negative");
   const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
-  return <div className='mb-2' style={{marginTop: 60}}>
+  return <div className='mb-2' style={{marginTop: 20}}>
     <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
       <tbody>
       {
@@ -88,7 +88,7 @@ const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses })
 
   if(!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data} />
 
-  return <div className='mb-2' style={{marginTop: 60}}>
+  return <div className='mb-2' style={{marginTop: 20}}>
     <table className="table table-borderless d-flex justify-content-center" style={{height: `${rowsNumber * 80}px`}}>
       <tbody>
       {
