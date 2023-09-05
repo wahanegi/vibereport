@@ -32,23 +32,6 @@ class Api::V1::ResultsPresenter
     }
   end
 
-  private
-
-  def teams_with_emotion_index
-    @teams.map do |team|
-      {
-        id: team.id,
-        name: team.name,
-        emotion_index_all: emotion_index_all(team),
-        productivity_average_all: productivity_average_all(team),
-        emotion_index_current_period: emotion_index_current_period(team),
-        productivity_average_current_period: productivity_average_current_period(team),
-        previous_emotion_index: previous_emotion_index(team),
-        previous_productivity_average: previous_productivity_average(team)
-      }
-    end
-  end
-
   def emotion_index_all(team)
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
@@ -113,6 +96,23 @@ class Api::V1::ResultsPresenter
       previous_time_period: previous_time_period
     )
     vars[:previous_productivity_avg]
+  end
+
+  private
+
+  def teams_with_emotion_index
+    @teams.map do |team|
+      {
+        id: team.id,
+        name: team.name,
+        emotion_index_all: emotion_index_all(team),
+        productivity_average_all: productivity_average_all(team),
+        emotion_index_current_period: emotion_index_current_period(team),
+        productivity_average_current_period: productivity_average_current_period(team),
+        previous_emotion_index: previous_emotion_index(team),
+        previous_productivity_average: previous_productivity_average(team)
+      }
+    end
   end
 
   def gifs

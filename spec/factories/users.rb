@@ -29,5 +29,6 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     opt_out { false }
     not_ask_visibility { false }
+    manager { false }
   end
 end
