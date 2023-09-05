@@ -28,7 +28,6 @@ class Api::V1::ResultsPresenter
       current_user:,
       received_and_public_shoutouts:,
       teams: teams_with_emotion_index
-      
     }
   end
 
@@ -49,7 +48,7 @@ class Api::V1::ResultsPresenter
   end
 
   def emotion_index_current_period(team)
-    current_period = TimePeriod.current 
+    current_period = TimePeriod.current
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
       current_period: current_period
@@ -67,30 +66,26 @@ class Api::V1::ResultsPresenter
   end
 
   def previous_emotion_index(team)
-    previous_time_period = TimePeriod
-      .joins(responses: {user: :teams})
-      .where("end_date < ?", time_period.start_date)
-      .where("teams.id = ?", team.id)
-      .where("responses.not_working = ?", false)
-      .order(end_date: :desc)
-      .first
+    previous_time_period = TimePeriod.joins(responses: {user: :teams})
+                                     .where('end_date < ?', time_period.start_date)
+                                     .where('teams.id = ?', team.id)
+                                     .where('responses.not_working = ?', false)
+                                     .order(end_date: :desc)
+                                     .first
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
       previous_time_period: previous_time_period
     )
-    if vars[:previous_emotion_index].present?
-      vars[:previous_emotion_index][0]
-    end
+    vars[:previous_emotion_index][0] if vars[:previous_emotion_index].present?
   end
 
   def previous_productivity_average(team)
-    previous_time_period = TimePeriod
-      .joins(responses: {user: :teams})
-      .where("end_date < ?", time_period.start_date)
-      .where("teams.id = ?", team.id)
-      .where("responses.not_working = ?", false)
-      .order(end_date: :desc)
-      .first 
+    previous_time_period = TimePeriod.joins(responses: {user: :teams})
+                                     .where('end_date < ?', time_period.start_date)
+                                     .where('teams.id = ?', team.id)
+                                     .where('responses.not_working = ?', false)
+                                     .order(end_date: :desc)
+                                     .first 
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
       previous_time_period: previous_time_period

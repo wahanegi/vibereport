@@ -1213,7 +1213,7 @@ input:checked + .slider-shoutout img {
   text-align: left;
 }
 
-@media (max-width: 1920px) {
+@media (max-width: 1440px) {
   .folder-shape {
       width: 75%;
   }
@@ -1286,4 +1286,11 @@ input:checked + .slider-shoutout img {
 .charts-wrapper {
   display: inline-flex;
   justify-content: space-between;
+}
+
+.no-responses {
+  font-size: 24px;
+  color: $soft-blue;
+  margin: 10px 0;
+  text-align: center;
 }

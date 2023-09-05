@@ -26,51 +26,44 @@ const EmotionIndex = ({ data, setData, teams, nextTimePeriod, isMinUsersResponse
     return { emotionData, productivityData };
   }
 
-  function truncateText(text, maxLength = 5) {
-    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+  function comparisonDescription(current, previous, positiveWord, negativeWord) {
+    if (current > previous) {
+      return positiveWord;
+    } else if (current < previous) {
+      return negativeWord;
+    } else {
+      return "about the same";
+    }
   }
-
+  
   function happinessDescription(emotionIndex, currentEmotionIndex) {
-    if (currentEmotionIndex < emotionIndex) {
-      return "less happy";
-    } else if (currentEmotionIndex > emotionIndex) {
-      return "happier";
-    } else {
-      return "about the same";
-    }
+    return comparisonDescription(currentEmotionIndex, emotionIndex, "happier", " less happy");
   }
-
+  
   function productivityDescription(productivity, currentProductivity) {
-    if (currentProductivity < productivity) {
-        return "less";
-    } else if (currentProductivity > productivity) {
-        return "more";
-    } else {
-      return "about the same";
-    }
-}
-
-function happinessChangeDescription(currentEmotionIndex, previousEmotionIndex) {
-  if (currentEmotionIndex > previousEmotionIndex) {
-    return "happier";
-  } else if (currentEmotionIndex < previousEmotionIndex) {
-    return "less happy";
-  } else {
-    return "about the same";
+    return comparisonDescription(currentProductivity, productivity, "more", "less");
   }
-}
-
-function productivityChangeDescription(currentProductivity, previousProductivity) {
-  if (currentProductivity > previousProductivity) {
-    return "more";
-  } else if (currentProductivity < previousProductivity) {
-    return "less";
-  } else {
-    return "about the same";
+  
+  function happinessChangeDescription(currentEmotionIndex, previousEmotionIndex) {
+    return comparisonDescription(currentEmotionIndex, previousEmotionIndex, "happier", "less happy");
   }
-}
+  
+  function productivityChangeDescription(currentProductivity, previousProductivity) {
+    return comparisonDescription(currentProductivity, previousProductivity, "more", "less");
+  }
 
 if(!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionIndex />
+
+if (isMinUsersResponses) {
+  return (
+    <div className='results col'>
+      <div className='row calculate mb-3 no-responses'>
+        <p>No responses this time...</p>
+      </div>
+    </div>
+  );
+}
+
 return (
   <div>
     {teams.map(team => {
@@ -80,10 +73,10 @@ return (
             {Number(team.previous_emotion_index) >= 0 && (
                 <>
                   <div className='h5 w-auto text-start truncated fw-semibold calculate'>
-                      <p className='grey'>The <span className="team-name">{team.name}</span> is feeling a <span className="team-name">{happinessChangeDescription(team.emotion_index_current_period || 0, team.previous_emotion_index || 0)}</span> than last week and <span className="team-name">{happinessDescription(team.emotion_index_all || 0, team.emotion_index_current_period || 0)}</span> than its average.</p>
+                      <p className='grey'>The <span className="team-name">{team.name}</span> is feeling <span className="team-name">{happinessChangeDescription(team.emotion_index_current_period || 0, team.previous_emotion_index || 0)}</span> than last week and <span className="team-name">{happinessDescription(team.emotion_index_all || 0, team.emotion_index_current_period || 0)}</span> than its average.</p>
                   </div>
                   <div className='h5 w-auto text-start truncated fw-semibold calculate'>
-                      <p className='grey'> The <span className="team-name">{team.name}</span> is feeling a <span className="team-name">{productivityChangeDescription(team.productivity_average_current_period || 0, team.previous_productivity_average || 0)} </span> productive than last week and significantly <span className="team-name">{productivityDescription(team.productivity_average_all || 0, team.productivity_average_current_period || 0)}</span> than its average.</p>
+                      <p className='grey'> The <span className="team-name">{team.name}</span> is feeling <span className="team-name">{productivityChangeDescription(team.productivity_average_current_period || 0, team.previous_productivity_average || 0)} </span> productive than last week and significantly <span className="team-name">{productivityDescription(team.productivity_average_all || 0, team.productivity_average_current_period || 0)}</span> than its average.</p>
                   </div>
                 </>
             )}
@@ -93,9 +86,9 @@ return (
                 <CartesianGrid strokeDasharray="3 3" stroke="#6593EB" />
                 <XAxis dataKey="name" tick={false} stroke="#6593EB" />
                 <YAxis stroke="#6593EB" domain={[0, 8]}/>
-                <Tooltip />
-                <Bar dataKey="Current" fill="#8884d8" />
+                <Tooltip />                
                 <Bar dataKey="Previous" fill="#82ca9d" />
+                <Bar dataKey="Current" fill="#8884d8" />
                 <Line type="monotone" dataKey="Average" stroke="#ffc658" dot={false} isAnimationActive={false} />
                 <ReferenceLine y={emotionData.Average} stroke="#ffc658" ifOverflow="extendDomain" strokeWidth={5}/>
                 <text x={230} y={25} textAnchor="middle" fill="#000" stroke="#6593EB" fontSize="16">{team.name} Happiness</text>
@@ -107,8 +100,8 @@ return (
                 <XAxis dataKey="name" tick={false} stroke="#6593EB" />
                 <YAxis tickFormatter={(value) => `${value}%`} domain={[0, 100]} stroke="#6593EB"/>
                 <Tooltip />
-                <Bar dataKey="Current" fill="#d884cd" />
                 <Bar dataKey="Previous" fill="#9dca82" />
+                <Bar dataKey="Current" fill="#d884cd" />                
                 <Line type="monotone" dataKey="Average" stroke="#ffc658" dot={false} isAnimationActive={false} />
                 <ReferenceLine y={productivityData.Average} stroke="#ffc658" ifOverflow="extendDomain" strokeWidth={5}/>
                 <text x={230} y={25} textAnchor="middle" fill="#000" stroke="#6593EB" fontSize="16">{team.name} Productivity</text>

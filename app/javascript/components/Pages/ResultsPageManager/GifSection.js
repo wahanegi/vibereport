@@ -20,7 +20,7 @@ const PreviewGifSection = () => {
     </div>);
   }
 
-  return <div className='align-self-center gif-wrap result-page mt-1'>
+  return <div className='align-self-center gif-wrap manager-result-page mt-1'>
     <div className='border-none card'>
       <div className='card-body h-auto p-0'>
         <div className="gif-list">
@@ -45,9 +45,9 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
     </div>
   });
 
-  return <div className='align-self-center gif-wrap result-page mt-1'>
-    <div className='border-none card'>
-      <div className='card-body h-auto p-0'>
+  return <div className='align-self-center gif-wrap manager-result-page mt-1'>
+    <div className='border-none card card-colors'>
+      <div className='card-body h-auto p-0 '>
         <div className="gif-list">
           {gifItems}
         </div>

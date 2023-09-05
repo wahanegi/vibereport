@@ -135,8 +135,8 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
           </div>
           <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
           <EmotionIndex data={data} setData={setData} teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
+          <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         </div>
-        <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
       </Wrapper>
       <Footer />
