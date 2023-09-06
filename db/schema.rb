@@ -133,7 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
 
   create_table "shoutouts", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.boolean "public", default: false, null: false
+    t.boolean "public", default: true, null: false
     t.text "rich_text", null: false
     t.bigint "time_period_id", null: false
     t.string "type"
@@ -180,7 +180,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
     t.boolean "not_ask_visibility", default: false, null: false
     t.boolean "opt_out", default: false
     t.datetime "remember_created_at"
-    t.string "remember_token", limit: 20
+    t.string "remember_token"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.datetime "updated_at", null: false

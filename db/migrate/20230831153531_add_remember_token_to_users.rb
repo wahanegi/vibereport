@@ -1,5 +1,5 @@
 class AddRememberTokenToUsers < ActiveRecord::Migration[7.0]
-  change_table :users do |t|
-    t.string :remember_token, limit: 20
+  def change
+    add_column :users, :remember_token, :string
   end
 end
