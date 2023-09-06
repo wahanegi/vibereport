@@ -23,7 +23,7 @@ RSpec.describe Api::V1::ResultsPresenter do
       is_expected.to eq(
         {
           time_periods: TimePeriod.ordered,
-          emotions: time_period.emotions,
+          emotions: time_period.emotions.to_a,
           gifs: [
             image: user_response.gif,
             emotion: user_response.emotion
@@ -92,7 +92,7 @@ RSpec.describe Api::V1::ResultsPresenter do
               emojis: []
             }
           ],
-          prev_results_path: nil
+          prev_results_path: "/results/"
         }
       )
     end
