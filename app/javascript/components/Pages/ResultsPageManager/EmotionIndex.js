@@ -27,13 +27,10 @@ const EmotionIndex = ({ data, setData, teams, nextTimePeriod, isMinUsersResponse
   }
 
   function comparisonDescription(current, previous, positiveWord, negativeWord) {
-    if (current > previous) {
-      return positiveWord;
-    } else if (current < previous) {
-      return negativeWord;
-    } else {
-      return "about the same";
-    }
+    if (current > previous) return positiveWord;
+    if (current < previous) return negativeWord;
+    
+    return "about the same";
   }
   
   function happinessDescription(emotionIndex, currentEmotionIndex) {
