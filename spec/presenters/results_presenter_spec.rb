@@ -19,6 +19,13 @@ RSpec.describe Api::V1::ResultsPresenter do
 
   describe '#render' do
     subject { presenter.json_hash }
+
+    before do
+      allow(ENV).to receive(:[]).with('START_WEEK_DAY').and_return('tuesday')
+      allow(ENV).to receive(:[]).with('DAY_TO_SEND_INVITES').and_return('friday')
+      allow(Date.current).to receive(:wday).and_return(6)
+    end
+
     it 'renders a JSON response with the results data' do
       is_expected.to eq(
         {
@@ -92,7 +99,7 @@ RSpec.describe Api::V1::ResultsPresenter do
               emojis: []
             }
           ],
-          prev_results_path: "/results/"
+          prev_results_path: nil
         }
       )
     end
