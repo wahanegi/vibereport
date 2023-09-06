@@ -57,7 +57,7 @@ class Api::V1::ResultsPresenter
   end
 
   def productivity_average_current_period(team)
-    current_period = TimePeriod.current 
+    current_period = TimePeriod.current
     vars = ActiveAdminHelpers.time_period_vars(
       team:,
       current_period:

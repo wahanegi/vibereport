@@ -6,8 +6,6 @@ import {
   Wrapper
 } from "../../UI/ShareContent";
 import axios from "axios";
-import EmotionSection from "./EmotionSection";
-import GifSection from "./GifSection";
 import CornerElements from "../../UI/CornerElements";
 import {Link, useParams} from "react-router-dom";
 
@@ -50,10 +48,8 @@ const ResultsPreview = () => {
         <div className="folder-shape">
           <div className="b3 position">Leader Panel
             <img className="image-container ms-1" src={LeaderVector} />
-          </div>
-          <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
+          </div>          
         </div>
-        <GifSection gifs={gifs} nextTimePeriod={true} />
         <CornerElements preview={'results'} draft={true} hideBottom={true} />
       </Wrapper>
       <Footer />

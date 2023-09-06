@@ -36,17 +36,6 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
-  const [showResultsManager, setShowResultsManager] = useState(false);
-  const handlingOnClickImage = () => {
-    const isManager = data.current_user.manager;
-
-    if (isManager) {
-        steps.push('result-managers');
-        saveDataToDb(steps);
-    } else {
-        setShowResultsManager(true);
-    }
-}
 
   const onRemoveAlert = () => {
     saveDataToDb( steps, { notices: null } )
