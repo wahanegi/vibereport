@@ -14,7 +14,7 @@ const CornerElements = ({
                             draft,
                             disabled,
                             hideBottom = false,
-                            preview = null,
+                            isResult = false,
                             hideShoutout = false,
                             handleSaveDraft }) => {
   return (
@@ -38,7 +38,7 @@ const CornerElements = ({
             disabled={disabled}
             data={data}
             handleSaveDraft={handleSaveDraft}
-            preview={preview}
+            isResult={isResult}
             className='placement-menu'/>
     </Fragment>
   );

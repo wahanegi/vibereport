@@ -1,6 +1,6 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {rangeFormat} from "../../helpers/helpers";
+import {isPresent, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   ShoutOutIcon,
@@ -17,9 +17,10 @@ import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
+import {useParams} from "react-router-dom";
+import {updateResponse} from "../../requests/axios_requests";
 
-const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
-  const {isLoading, error} = service
+const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
   const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
@@ -36,18 +37,26 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
+  const params = useParams();
 
   const onRemoveAlert = () => {
-    saveDataToDb( steps, { notices: null } )
-  }
+    const dataRequest = {
+      response: {attributes: {notices: null}}
+    }
+    updateResponse(data, setData, dataRequest).then()
+   }
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
     const dataRequest = {
-      not_working: false,
-      emotion_id: notice['emotion_id']
+      response: {
+        attributes: {
+          not_working: false,
+          emotion_id: notice['emotion_id']
+        }
+      }
     }
-    saveDataToDb( steps, dataRequest )
+    updateResponse(data, setData, dataRequest).then()
     setNotice(null)
     onRemoveAlert()
   }
@@ -99,7 +108,15 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
       })
   }, [timePeriod, data])
 
-  if (error) return <p>{error.message}</p>
+  useEffect(() => {
+    if (time_periods && isPresent(params)) {
+      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === params.slug);
+      if (foundTimePeriod) {
+        const index = time_periods.indexOf(foundTimePeriod);
+        setTimePeriodIndex(index);
+      }
+    }
+  }, [loaded]);
 
   useEffect(() => {
     if (!nextTimePeriod) {
@@ -113,7 +130,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
     }
   }, [showModal]);
 
-  return loaded && !isLoading && <Fragment>
+  return loaded && <Fragment>
     <div className='position-relative'>
       <Wrapper>
         {
@@ -129,7 +146,8 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
               <h1 className='text-header-position'><br/>The team is feeling...</h1>:
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
-        <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps, saveDataToDb, emotions, data, setShowWorkingModal }} />
+        <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
+                            emotions, data, setShowWorkingModal, setData }} />
         <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
         <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <ShoutoutSection nextTimePeriod={nextTimePeriod}
@@ -144,12 +162,12 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
         <QuestionSection fun_question={fun_question}
                          current_user={current_user}
                          answers={answers}
-                         steps={steps}
-                         saveDataToDb={saveDataToDb}
                          isMinUsersResponses={isMinUsersResponses}
                          nextTimePeriod={nextTimePeriod}
+                         data={data}
+                         setData={setData}
                          setShowWorkingModal={setShowWorkingModal}/>
-        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
+        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}/>
       </Wrapper>
       <Footer />
     </div>
@@ -158,7 +176,8 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
                                   data={data} setData={setData} />
 
     }
-    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal} saveDataToDb={saveDataToDb} steps={steps} />
+    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
+                  data={data} setData={setData} steps={steps} />
   </Fragment>
 }
 export default Results;

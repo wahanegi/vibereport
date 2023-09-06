@@ -1,5 +1,6 @@
 class Api::V1::EmotionsController < ApplicationController
   include UserEmailMailerHelper
+  include ApplicationHelper
   before_action :authenticate_user!
   before_action :current_response, only: [:index]
   def index
@@ -49,7 +50,8 @@ class Api::V1::EmotionsController < ApplicationController
       end,
       fun_question:,
       user_shoutouts: current_user.shoutouts.not_celebrate,
-      check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id])
+      check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id]),
+      prev_results_path:
     }
   end
 

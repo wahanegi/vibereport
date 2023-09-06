@@ -28,7 +28,7 @@ module Api
       end
 
       def response_flow_from_email
-        sign_in_user
+        sign_in user
         result = ResponseFlowFromEmail.new(params, @user).call
         if params[:time_period_id] == TimePeriod.current.id.to_s
           return redirect_to root_path if result[:success]
@@ -44,12 +44,12 @@ module Api
         retrieve_response
         ReminderEmailWorker.new(current_user, @response, TimePeriod.current).run_notification if @response&.completed_at.nil?
         sign_out(current_user) if user_signed_in?
-        redirect_to root_path
+        redirect_to new_user_session_path
       end
 
       def sign_in_from_email
         user
-        sign_in_user
+        sign_in user
         redirect_to root_path
       end
 
@@ -75,12 +75,8 @@ module Api
         @user ||= User.find_by(id: params[:user_id])
       end
 
-      def sign_in_user
-        sign_in user
-      end
-
       def complete_response
-        return  if response_params['attributes']['steps'].exclude?('results') || @response.completed_at.present?
+        return if response_params.dig('attributes', 'steps')&.exclude?('results') || @response.completed_at.present?
 
         @response.update(completed_at: Date.current)
       end

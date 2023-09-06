@@ -24,7 +24,8 @@ class Api::V1::ResultsPresenter
       responses_count: responses.count,
       current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
       current_user:,
-      received_and_public_shoutouts:
+      received_and_public_shoutouts:,
+      prev_results_path:
     }
   end
 
@@ -135,7 +136,7 @@ class Api::V1::ResultsPresenter
     @public_shoutout_blocks ||=
       begin
         return_blocks = Shoutout.where(time_period_id: time_period.id, public: true) - current_user.shoutouts
-        return_blocks.map { |shoutout| shoutout_block(shoutout) }
+        return_blocks.filter_map { |shoutout| shoutout_block(shoutout) }
       end
   end
 

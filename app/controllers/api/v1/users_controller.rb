@@ -19,11 +19,8 @@ class Api::V1::UsersController < ApplicationController
 
   def send_reminder
     @user = User.find(params[:id])
-
     message = build_message
-
     UserEmailMailer.send_reminder(@user, message).deliver_now
-
     redirect_to admin_dashboard_path, notice: "Reminder sent to #{@user.full_name}"
   end
 

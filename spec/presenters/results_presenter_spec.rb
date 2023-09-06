@@ -91,7 +91,8 @@ RSpec.describe Api::V1::ResultsPresenter do
               users: [user2],
               emojis: []
             }
-          ]
+          ],
+          prev_results_path: nil
         }
       )
     end

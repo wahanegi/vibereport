@@ -12,7 +12,7 @@ class UserEmailMailer < ApplicationMailer
     general_link = URL.merge({ time_period_id: TimePeriod.current, user_id: user.id })
     @link_for_own_word = general_link.merge({ last_step: 'emotion-entry', not_working: false })
     @link_for_was_not  = general_link.merge({ last_step: 'results', not_working: true })
-    @link_for_not_say  = general_link.merge({ last_step: 'rather-not-say', not_working: false })
+    @link_for_not_say  = general_link.merge({ last_step: 'rather-not-say', not_working: false, completed_at: nil })
     @link_for_emotion  = general_link.merge({ emotion_id: nil, last_step: 'emotion-type', not_working: false })
     @view_complete_by  = time_period.due_date.strftime('%b %d').to_s
     @table = emotions_table

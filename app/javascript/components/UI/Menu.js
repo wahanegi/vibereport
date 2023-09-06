@@ -26,13 +26,13 @@ import complete90_act from '../../../assets/images/complete90_act.svg'
 import complete100 from '../../../assets/images/complete100.svg'
 import complete100_act from '../../../assets/images/complete100_act.svg'
 
-const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = null }) => {
+const Menu = ({ className = '', data, steps, draft, handleSaveDraft, isResult = false }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeImg, setActiveImg] = useState(false);
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='color-black'>Are you sure you <br/>  want to log out?</div>"
   const id = data?.response?.id
-  const lastStep = preview ? 'results' : steps[steps.length - 1];
+  const lastStep = isResult ? 'results' : steps[steps.length - 1];
   const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'results', 'rather-not-say', 'skip-ahead'].includes(lastStep);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, preview = n
   };
 
   const location = window.location.href;
-  const lastSegment = preview ? 'results' : location.substring(location.lastIndexOf("/") + 1);
+  const lastSegment = isResult ? 'results' : location.substring(location.lastIndexOf("/") + 1);
   const isStepUnsubscribe = location.substring(location.lastIndexOf("/") + 1) === 'unsubscribe'
 
   const segmentsMap = {
