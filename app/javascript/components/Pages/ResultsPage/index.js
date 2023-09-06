@@ -17,8 +17,6 @@ import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
-import ResultsPageManager from "../ResultsPageManager/index";
-import LeaderVector from '../../../../assets/images/LeaderVector.svg';
 
 const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const {isLoading, error} = service

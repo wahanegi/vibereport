@@ -8,8 +8,6 @@ import {
 } from "../../UI/ShareContent";
 import axios from "axios";
 import NavigationBar from "./NavigationBar";
-import EmotionSection from "./EmotionSection";
-import GifSection from "./GifSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
 import QuestionButton from "../../UI/QuestionButton";
@@ -129,13 +127,14 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
                             saveDataToDb, emotions, data, setShowWorkingModal }} />
-        <div className="folder-shape">
-          <div className="b3 position">Leader Panel
-            <img className="image-container ms-1" src={LeaderVector} />
-          </div>
-          <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
+        <div className="folder-shape left-cut">
+          <div class="right-cut">
+            <div className='folder-line'></div>
+            <div className="b3 position">Leader Panel
+              <img className="image-container ms-1" src={LeaderVector} />
+            </div>
+          </div>     
           <EmotionIndex data={data} setData={setData} teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
-          <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         </div>
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
       </Wrapper>

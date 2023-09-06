@@ -33,16 +33,16 @@ class Api::V1::ResultsPresenter
 
   def emotion_index_all(team)
     vars = ActiveAdminHelpers.time_period_vars(
-      team: team,
-      time_period: time_period
+      team:,
+      time_period:
     )
     vars[:emotion_index_all][0]
   end
 
   def productivity_average_all(team)
     vars = ActiveAdminHelpers.time_period_vars(
-      team: team,
-      time_period: time_period
+      team:,
+      time_period:
     )
     vars[:productivity_avg_all]
   end
@@ -50,8 +50,8 @@ class Api::V1::ResultsPresenter
   def emotion_index_current_period(team)
     current_period = TimePeriod.current
     vars = ActiveAdminHelpers.time_period_vars(
-      team: team,
-      current_period: current_period
+      team:,
+      current_period:
     )
     vars[:emotion_index_current_period][0]
   end
@@ -59,36 +59,36 @@ class Api::V1::ResultsPresenter
   def productivity_average_current_period(team)
     current_period = TimePeriod.current 
     vars = ActiveAdminHelpers.time_period_vars(
-      team: team,
-      current_period: current_period
+      team:,
+      current_period:
     )
     vars[:productivity_average_current_period]
   end
 
   def previous_emotion_index(team)
-    previous_time_period = TimePeriod.joins(responses: {user: :teams})
+    previous_time_period = TimePeriod.joins(responses: { user: :teams })
                                      .where('end_date < ?', time_period.start_date)
-                                     .where('teams.id = ?', team.id)
-                                     .where('responses.not_working = ?', false)
+                                     .where(teams: { id: team.id })
+                                     .where(responses: { not_working: false })
                                      .order(end_date: :desc)
                                      .first
     vars = ActiveAdminHelpers.time_period_vars(
-      team: team,
-      previous_time_period: previous_time_period
+      team:,
+      previous_time_period:
     )
     vars[:previous_emotion_index][0] if vars[:previous_emotion_index].present?
   end
 
   def previous_productivity_average(team)
-    previous_time_period = TimePeriod.joins(responses: {user: :teams})
+    previous_time_period = TimePeriod.joins(responses: { user: :teams })
                                      .where('end_date < ?', time_period.start_date)
-                                     .where('teams.id = ?', team.id)
-                                     .where('responses.not_working = ?', false)
+                                     .where(teams: { id: team.id })
+                                     .where(responses: { not_working: false })
                                      .order(end_date: :desc)
-                                     .first 
+                                     .first
     vars = ActiveAdminHelpers.time_period_vars(
-      team: team,
-      previous_time_period: previous_time_period
+      team:,
+      previous_time_period:
     )
     vars[:previous_productivity_avg]
   end

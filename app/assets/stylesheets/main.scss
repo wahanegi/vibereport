@@ -1228,7 +1228,7 @@ input:checked + .slider-shoutout img {
   background: linear-gradient(180deg, #FFFFFF 0%, #cdd8ea 40%, #CDD8EA 100%);
   border-radius: 20px;
   position: relative;
-  padding: 20px;
+  padding: 50px;
   margin: 100px auto 0;
   border: 3px solid $soft-blue;  
 }
@@ -1237,7 +1237,7 @@ input:checked + .slider-shoutout img {
   content: "";
   z-index: 1;
   width: 20%;
-  height: 60px;
+  height: 30px;
   background: linear-gradient(180deg, #cdd8ea 0%, #FFFFFF 0%, #FFFFFF 100%);
   position: absolute;
   top: -60px;
@@ -1245,8 +1245,63 @@ input:checked + .slider-shoutout img {
   border-radius: 20px 20px 0 0;
   transform: translateX(-50%);
   border-top: 3px solid $soft-blue;
+  overflow: hidden;
   border-left: 3px solid $soft-blue;
   border-right: 3px solid $soft-blue;
+}
+
+.folder-shape::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 50%;
+  z-index: 2;
+}
+
+.folder-shape::nth-last-child(-n+2):after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 50%;
+  z-index: 2;
+}
+.folder-shape.left-cut::after,
+.right-cut::after {
+    content: "";
+    z-index: 2;
+    width: 10%;
+    height: 47px;
+    position: absolute;
+    top: -47px;
+}
+
+.folder-shape.left-cut::after {
+  left: 30%;
+  z-index: 3;
+  border-radius: 0 0 20px 0;
+  border-right: 3px solid $soft-blue;
+  border-bottom: 3px solid $soft-blue;
+  margin: 5px 0 0 3px;
+  height: 42px;
+}
+
+.right-cut::after {
+  left: 60%;
+  z-index: 4;
+  border-radius: 0 0 0 20px;
+  border-left: 3px solid $soft-blue;
+  border-bottom: 3px solid $soft-blue;
+  margin: 5px 0 0 -3px;
+  height: 42px;
+}
+
+.folder-line {
+  margin: -54px 35% 50px 35%;
+  border-bottom: 4px solid white;
 }
 
 .position {
