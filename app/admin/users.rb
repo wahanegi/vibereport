@@ -30,6 +30,7 @@ ActiveAdmin.register User do
       row :last_name
       row :opt_out
       row :not_ask_visibility
+      row :manager
       row :created_at
       row :updated_at
       row :team do |user|
