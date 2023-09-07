@@ -44,7 +44,7 @@ group :development do
   gem 'fix-db-schema-conflicts'       # Ensures consistent output of db/schema.rb despite local differences in the database
   gem 'git-smart'                     # Installs some additional 'smart' git commands, like `git smart-pull`.
   gem 'letter_opener_web'             # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
-  gem 'web-console'                   # Access an IRB console on exceptions page/console
+  gem 'web-console'                   , '>= 4.2.1' # Access an IRB console on exceptions page/console
 end
 
 group :test do
