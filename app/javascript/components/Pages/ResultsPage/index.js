@@ -69,6 +69,8 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
 
   const showNextTimePeriod = () => {
+    if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return;
+
     if (timePeriodIndex > 0) {
       setTimePeriodIndex(index => (index - 1));
     }
