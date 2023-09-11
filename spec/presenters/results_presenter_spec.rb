@@ -108,7 +108,8 @@ RSpec.describe Api::V1::ResultsPresenter do
               emotion_index_current_period: presenter.emotion_index_current_period(team1),
               productivity_average_current_period: presenter.productivity_average_current_period(team1),
               previous_emotion_index: presenter.previous_emotion_index(team1),
-              previous_productivity_average: presenter.previous_productivity_average(team1)
+              previous_productivity_average: presenter.previous_productivity_average(team1),
+              no_data_present: false
             },
             {
               id: team2.id,
@@ -118,7 +119,8 @@ RSpec.describe Api::V1::ResultsPresenter do
               emotion_index_current_period: presenter.emotion_index_current_period(team2),
               productivity_average_current_period: presenter.productivity_average_current_period(team2),
               previous_emotion_index: presenter.previous_emotion_index(team2),
-              previous_productivity_average: presenter.previous_productivity_average(team2)
+              previous_productivity_average: presenter.previous_productivity_average(team2),
+              no_data_present: false
             }
           ]
         }

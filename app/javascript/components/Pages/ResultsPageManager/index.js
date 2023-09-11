@@ -8,7 +8,6 @@ import {
 } from "../../UI/ShareContent";
 import axios from "axios";
 import NavigationBar from "./NavigationBar";
-import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
@@ -52,6 +51,8 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
     setNotice(null)
     onRemoveAlert()
   }
+
+  const MIN_USERS_RESPONSES = 1
 
   const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
 
@@ -128,12 +129,12 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
                             saveDataToDb, emotions, data, setShowWorkingModal }} />
         <div className="folder-shape left-cut">
-          <div class="right-cut">
+          <div className="right-cut">
             <div className='folder-line'></div>
             <div className="b3 position">Leader Panel
               <img className="image-container ms-1" src={LeaderVector} />
             </div>
-          </div>     
+          </div>
           <EmotionIndex data={data} setData={setData} teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         </div>
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>

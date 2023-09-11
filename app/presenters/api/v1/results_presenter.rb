@@ -31,6 +31,11 @@ class Api::V1::ResultsPresenter
     }
   end
 
+  def no_data_present_for_period?(team)
+    responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period, not_working: false).count
+    responses_count == 0
+  end
+
   def emotion_index_all(team)
     vars = ActiveAdminHelpers.time_period_vars(
       team:,
@@ -48,19 +53,19 @@ class Api::V1::ResultsPresenter
   end
 
   def emotion_index_current_period(team)
-    current_period = TimePeriod.current
+    return 0 if no_data_present_for_period?(team)
     vars = ActiveAdminHelpers.time_period_vars(
-      team:,
-      current_period:
+      team: team,
+      current_period: time_period
     )
     vars[:emotion_index_current_period][0]
   end
 
   def productivity_average_current_period(team)
-    current_period = TimePeriod.current
+    return 0 if no_data_present_for_period?(team)
     vars = ActiveAdminHelpers.time_period_vars(
       team:,
-      current_period:
+      current_period: time_period
     )
     vars[:productivity_average_current_period]
   end
@@ -72,11 +77,13 @@ class Api::V1::ResultsPresenter
                                      .where(responses: { not_working: false })
                                      .order(end_date: :desc)
                                      .first
+    return 0 unless previous_time_period
+
     vars = ActiveAdminHelpers.time_period_vars(
-      team:,
-      previous_time_period:
+      team: team,
+      previous_time_period: previous_time_period
     )
-    vars[:previous_emotion_index][0] if vars[:previous_emotion_index].present?
+    vars[:previous_emotion_index]&.first || 0
   end
 
   def previous_productivity_average(team)
@@ -87,8 +94,8 @@ class Api::V1::ResultsPresenter
                                      .order(end_date: :desc)
                                      .first
     vars = ActiveAdminHelpers.time_period_vars(
-      team:,
-      previous_time_period:
+      team: team,
+      previous_time_period: previous_time_period
     )
     vars[:previous_productivity_avg]
   end
@@ -105,7 +112,8 @@ class Api::V1::ResultsPresenter
         emotion_index_current_period: emotion_index_current_period(team),
         productivity_average_current_period: productivity_average_current_period(team),
         previous_emotion_index: previous_emotion_index(team),
-        previous_productivity_average: previous_productivity_average(team)
+        previous_productivity_average: previous_productivity_average(team),
+        no_data_present: no_data_present_for_period?(team)
       }
     end
   end
