@@ -17,6 +17,12 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
   let!(:emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
   let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user) }
+  let!(:team1) { create :team }
+  let!(:team2) { create :team }
+
+  before do
+    user.teams << [team1, team2]
+  end
 
   describe '#render' do
     subject { presenter.json_hash }
@@ -91,6 +97,30 @@ RSpec.describe Api::V1::ResultsPresenter do
               shoutout: shoutout3,
               users: [user2],
               emojis: []
+            }
+          ],
+          teams: [
+            {
+              id: team1.id,
+              name: team1.name,
+              emotion_index_all: presenter.emotion_index_all(team1),
+              productivity_average_all: presenter.productivity_average_all(team1),
+              emotion_index_current_period: presenter.emotion_index_current_period(team1),
+              productivity_average_current_period: presenter.productivity_average_current_period(team1),
+              previous_emotion_index: presenter.previous_emotion_index(team1),
+              previous_productivity_average: presenter.previous_productivity_average(team1),
+              no_data_present: false
+            },
+            {
+              id: team2.id,
+              name: team2.name,
+              emotion_index_all: presenter.emotion_index_all(team2),
+              productivity_average_all: presenter.productivity_average_all(team2),
+              emotion_index_current_period: presenter.emotion_index_current_period(team2),
+              productivity_average_current_period: presenter.productivity_average_current_period(team2),
+              previous_emotion_index: presenter.previous_emotion_index(team2),
+              previous_productivity_average: presenter.previous_productivity_average(team2),
+              no_data_present: false
             }
           ]
         }

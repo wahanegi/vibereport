@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import {Calendar, EditResponse, ResultsManager} from "../../UI/ShareContent";
+import {Calendar, EditResponse, Results} from "../../UI/ShareContent";
 import {datePrepare, isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
 import isEmpty from "ramda/src/isEmpty";
 
@@ -8,7 +8,6 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   if(isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working
-  const isManager = data.current_user.manager;
   const handlingBack = () => {
     const index = steps.indexOf('emotion-intensity');
     if (notWorking) {
@@ -27,7 +26,7 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
                 positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
                 positionRight={true} hidden={isBlank(nextTimePeriod)} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
-      {isManager && <ResultsManager data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} draft={draft} service={service} hidden={nextTimePeriod} />}
+      <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} draft={draft} service={service} hidden={nextTimePeriod}/>
       <EditResponse onClick={handlingBack} hidden={nextTimePeriod} />
     </div>
   </Fragment>

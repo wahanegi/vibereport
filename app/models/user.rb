@@ -7,6 +7,7 @@
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
 #  last_name              :string
+#  manager                :boolean          default(FALSE)
 #  not_ask_visibility     :boolean          default(FALSE), not null
 #  opt_out                :boolean          default(FALSE)
 #  remember_created_at    :datetime
@@ -46,6 +47,7 @@ class User < ApplicationRecord
   passwordless_with :email
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
+  scope :manager, -> { where(manager: false) }
 
   def full_name
     "#{first_name} #{last_name}"

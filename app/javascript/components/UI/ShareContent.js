@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import Menu from "./Menu";
 import {backHandling, isPresent} from "../helpers/helpers";
 import calendar from "../../../assets/images/calendar.svg"
@@ -12,6 +12,10 @@ import editResponse from "../../../assets/images/editresponse.svg"
 import line from "../../../assets/images/line.svg"
 import {MIN_USERS_RESPONSES} from "../helpers/consts";
 import Logo from "./Logo";
+import ResultsPageManager from "../Pages/ResultsPageManager";
+import LeaderVector from '../../../assets/images/OpenLeaderPanelButton.svg';
+import ResultsPage from "../Pages/ResultsPage";
+import BackRevert from '../../../assets/images/BackToResultsButton.svg';
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
 const categoryClass = selectedType ? selectedType : emotion.category;
@@ -117,3 +121,85 @@ export const EditResponse = ({ hidden = false, onClick }) =>
     <p className='mb-0 text-start'>Edit responses</p>
     <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
   </div>
+
+export const ResultsManager = ({ data, setData, saveDataToDb, steps, draft, service, hidden = false}) => {
+  const [showResultsManager, setShowResultsManager] = useState(false);
+
+  const handlingOnClickImage = () => {
+      const isManager = data.current_user.manager;
+
+      if (isManager) {
+          steps.push('result-managers');
+          saveDataToDb(steps);
+      } else {
+          setShowResultsManager(true);
+      }
+  };
+
+  return (
+    !hidden && <div className='ms-auto'>
+      <div 
+        className="b4 position-result pointer" 
+        onClick={handlingOnClickImage} 
+      >
+        <img
+            className='ms-1'
+            src={LeaderVector}
+            alt="Leader Vector"
+        />
+      </div>
+
+        {showResultsManager && 
+            <ResultsPageManager 
+                data={data} 
+                setData={setData}
+                saveDataToDb={saveDataToDb}
+                steps={steps} 
+                draft={draft} 
+                service={service}
+            />
+        }
+    </div>
+  );
+}
+
+export const Results = ({ data, setData, saveDataToDb, steps, draft, service, hidden = false }) => {
+  const [showResults, setShowResults] = useState(false);
+
+  const handlingOnClickImage = () => {
+      const isManager = data.current_user.manager;
+
+      if (isManager) {
+          steps.push('results');
+          saveDataToDb(steps);
+      } else {
+          setShowResults(true);
+      }
+  };
+
+  return (
+    !hidden && <div className='ms-auto'>
+      <div 
+        className="b4 position-result pointer" 
+        onClick={handlingOnClickImage} 
+      >
+        <img
+            className='ms-1'            
+            src={BackRevert}
+            alt="Back Revert"
+        />
+      </div>
+
+        {showResults && 
+            <ResultsPage 
+                data={data} 
+                setData={setData}
+                saveDataToDb={saveDataToDb}
+                steps={steps} 
+                draft={draft} 
+                service={service}
+            />
+        }
+    </div>
+  );
+}

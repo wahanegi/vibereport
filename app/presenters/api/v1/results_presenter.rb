@@ -1,6 +1,7 @@
 class Api::V1::ResultsPresenter
   include ApplicationHelper
-  attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users
+  include ActiveAdminHelpers
+  attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users, :teams
 
   def initialize(time_period_slug, current_user)
     @time_period = TimePeriod.find_by(slug: time_period_slug)
@@ -9,6 +10,7 @@ class Api::V1::ResultsPresenter
     @fun_question = time_period.fun_question
     @users = responses.filter_map(&:user)
     @current_user = current_user
+    @teams = current_user.teams
   end
 
   def json_hash
@@ -24,11 +26,97 @@ class Api::V1::ResultsPresenter
       responses_count: responses.count,
       current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
       current_user:,
-      received_and_public_shoutouts:
+      received_and_public_shoutouts:,
+      teams: teams_with_emotion_index
     }
   end
 
+  def no_data_present_for_period?(team)
+    responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period, not_working: false).count
+    responses_count == 0
+  end
+
+  def emotion_index_all(team)
+    vars = ActiveAdminHelpers.time_period_vars(
+      team:,
+      time_period:
+    )
+    vars[:emotion_index_all][0]
+  end
+
+  def productivity_average_all(team)
+    vars = ActiveAdminHelpers.time_period_vars(
+      team:,
+      time_period:
+    )
+    vars[:productivity_avg_all]
+  end
+
+  def emotion_index_current_period(team)
+    return 0 if no_data_present_for_period?(team)
+    vars = ActiveAdminHelpers.time_period_vars(
+      team: team,
+      current_period: time_period
+    )
+    vars[:emotion_index_current_period][0]
+  end
+
+  def productivity_average_current_period(team)
+    return 0 if no_data_present_for_period?(team)
+    vars = ActiveAdminHelpers.time_period_vars(
+      team:,
+      current_period: time_period
+    )
+    vars[:productivity_average_current_period]
+  end
+
+  def previous_emotion_index(team)
+    previous_time_period = TimePeriod.joins(responses: { user: :teams })
+                                     .where('end_date < ?', time_period.start_date)
+                                     .where(teams: { id: team.id })
+                                     .where(responses: { not_working: false })
+                                     .order(end_date: :desc)
+                                     .first
+    return 0 unless previous_time_period
+
+    vars = ActiveAdminHelpers.time_period_vars(
+      team: team,
+      previous_time_period: previous_time_period
+    )
+    vars[:previous_emotion_index]&.first || 0
+  end
+
+  def previous_productivity_average(team)
+    previous_time_period = TimePeriod.joins(responses: { user: :teams })
+                                     .where('end_date < ?', time_period.start_date)
+                                     .where(teams: { id: team.id })
+                                     .where(responses: { not_working: false })
+                                     .order(end_date: :desc)
+                                     .first
+    vars = ActiveAdminHelpers.time_period_vars(
+      team: team,
+      previous_time_period: previous_time_period
+    )
+    vars[:previous_productivity_avg]
+  end
+
   private
+
+  def teams_with_emotion_index
+    @teams.map do |team|
+      {
+        id: team.id,
+        name: team.name,
+        emotion_index_all: emotion_index_all(team),
+        productivity_average_all: productivity_average_all(team),
+        emotion_index_current_period: emotion_index_current_period(team),
+        productivity_average_current_period: productivity_average_current_period(team),
+        previous_emotion_index: previous_emotion_index(team),
+        previous_productivity_average: previous_productivity_average(team),
+        no_data_present: no_data_present_for_period?(team)
+      }
+    end
+  end
 
   def gifs
     responses.filter_map { |response| gif_block(response) }

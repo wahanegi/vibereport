@@ -14,4 +14,5 @@ export const ALL_STEPS = [
     {id:"7v2", step:"icebreaker-answer"},
     {id:"7v3", step:"icebreaker-question"},
     {id:"7", step:"results"},
+    {id:"8", step:"result-managers"}
   ];
