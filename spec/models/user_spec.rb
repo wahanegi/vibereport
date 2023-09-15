@@ -7,6 +7,7 @@
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
 #  last_name              :string
+#  manager                :boolean          default(FALSE)
 #  not_ask_visibility     :boolean          default(FALSE), not null
 #  opt_out                :boolean          default(FALSE)
 #  remember_created_at    :datetime

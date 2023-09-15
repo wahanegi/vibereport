@@ -177,6 +177,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "last_name"
+    t.boolean "manager", default: false
     t.boolean "not_ask_visibility", default: false, null: false
     t.boolean "opt_out", default: false
     t.datetime "remember_created_at"

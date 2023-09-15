@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resources :notifications, only: %i[create]
       resources :users, only: %i[update]
       resources :emojis, only: %i[create destroy]
+      resources :result_managers, controller: 'results', only: %i[show results_email], param: :slug
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'
@@ -41,6 +42,7 @@ Rails.application.routes.draw do
       get '/results_email', to: 'results#results_email'
       get '/result', to: 'results#show'
       get '/unsubscribe', to: 'users#unsubscribe'
+      get '/result_manager', to: 'results#show'
     end
   end
   get '*path', to: 'home#app', constraints: lambda { |req|

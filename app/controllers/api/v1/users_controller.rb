@@ -27,7 +27,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:not_ask_visibility, :opt_out)
+    params.require(:user).permit(:not_ask_visibility, :opt_out, :manager)
   end
 
   def user

@@ -1,15 +1,15 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :password, :opt_out, :not_ask_visibility
+  permit_params :first_name, :last_name, :email, :password, :opt_out, :not_ask_visibility, :manager
 
   index do
     selectable_column
-    id_column
     column :first_name
     column :last_name
     column :email
     column :created_at
     column :opt_out
     column :not_ask_visibility
+    column :manager
     actions
   end
 
@@ -18,6 +18,7 @@ ActiveAdmin.register User do
   filter :last_name, as: :string
   filter :not_ask_visibility, as: :boolean
   filter :opt_out, as: :boolean
+  filter :manager, as: :boolean
 
   show do
     attributes_table do
@@ -26,6 +27,7 @@ ActiveAdmin.register User do
       row :last_name
       row :opt_out
       row :not_ask_visibility
+      row :manager
       row :created_at
       row :updated_at
       row :team do |user|
@@ -86,6 +88,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :opt_out
       f.input :not_ask_visibility
+      f.input :manager, as: :boolean
     end
     f.actions
   end

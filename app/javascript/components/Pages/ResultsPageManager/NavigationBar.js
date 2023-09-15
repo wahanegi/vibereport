@@ -1,9 +1,9 @@
 import React, {Fragment} from "react";
-import {Calendar, EditResponse, ResultsManager} from "../../UI/ShareContent";
+import {Calendar, EditResponse, Results} from "../../UI/ShareContent";
 import {datePrepare, isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
 import isEmpty from "ramda/src/isEmpty";
-import {useNavigate} from "react-router-dom";
 import {updateResponse} from "../../requests/axios_requests";
+import {useNavigate} from "react-router-dom";
 
 const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod,
                         nextTimePeriod, steps, emotions, data, setShowWorkingModal, setData}) => {
@@ -11,10 +11,7 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
 
   const notWorking = data.response.attributes.not_working
   const navigate = useNavigate()
-  const isManager = data.current_user.manager;
   const handlingBack = () => {
-    if (isPresent(data.prev_results_path)) return;
-
     const index = steps.indexOf('emotion-intensity');
     if (notWorking) {
       return setShowWorkingModal(true)
@@ -41,8 +38,8 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
                 positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
-                positionRight={true} hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
-      {isManager && <ResultsManager data={data} setData={setData} steps={steps} hidden={nextTimePeriod} />}
+                positionRight={true} hidden={isBlank(nextTimePeriod)} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
+      <Results data={data} setData={setData} steps={steps} hidden={nextTimePeriod}/>
       <EditResponse onClick={handlingBack} hidden={nextTimePeriod} />
     </div>
   </Fragment>
