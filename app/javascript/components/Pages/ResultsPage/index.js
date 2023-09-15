@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {isPresent, rangeFormat} from "../../helpers/helpers";
+import {isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   ShoutOutIcon,
@@ -19,6 +19,7 @@ import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import {useParams} from "react-router-dom";
 import {updateResponse} from "../../requests/axios_requests";
+import Loader from "../../UI/Loader";
 
 const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
@@ -37,7 +38,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
-  const params = useParams();
+  const [slug, setSlug] = useState(useParams().slug)
 
   const onRemoveAlert = () => {
     const dataRequest = {
@@ -72,12 +73,14 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return;
 
     if (timePeriodIndex > 0) {
+      setSlug(null)
       setTimePeriodIndex(index => (index - 1));
     }
   }
 
   const showPrevTimePeriod = () => {
     if (timePeriodIndex < (time_periods.length - 1)) {
+      setSlug(null)
       setTimePeriodIndex(index => (index + 1));
     }
   }
@@ -86,7 +89,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
-      nextTimePeriod ?
+      nextTimePeriod && isBlank(data.prev_results_path) ?
         <div className='mt-5'>
           <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
         </div>:
@@ -103,6 +106,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   }, [timePeriodIndex, time_periods?.length])
 
   useEffect(() => {
+    setLoaded(false)
     axios.get(`/api/v1/results/${timePeriod.slug}`)
       .then(res => {
         setResults(res.data)
@@ -111,8 +115,8 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   }, [timePeriod, data])
 
   useEffect(() => {
-    if (time_periods && isPresent(params)) {
-      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === params.slug);
+    if (time_periods && slug) {
+      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === slug);
       if (foundTimePeriod) {
         const index = time_periods.indexOf(foundTimePeriod);
         setTimePeriodIndex(index);
@@ -131,6 +135,8 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
       window.scrollTo({top: 200, behavior: 'smooth'})
     }
   }, [showModal]);
+
+  if(!loaded) return <Loader />
 
   return loaded && <Fragment>
     <div className='position-relative'>

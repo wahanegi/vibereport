@@ -14,6 +14,7 @@ import WorkingModal from "../modals/WorkingModal";
 import LeaderVector from '../../../../assets/images/LeaderVector.svg';
 import EmotionIndex from "../ResultsPageManager/EmotionIndex"
 import {updateResponse} from "../../requests/axios_requests";
+import Loader from "../../UI/Loader";
 
 const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
@@ -96,6 +97,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
   }, [timePeriodIndex, time_periods?.length])
 
   useEffect(() => {
+    setLoaded(false)
     axios.get(`/api/v1/result_managers/${timePeriod.slug}`)
       .then(res => {
         setResults(res.data)
@@ -114,6 +116,8 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
       window.scrollTo({top: 200, behavior: 'smooth'})
     }
   }, [showModal]);
+
+  if(!loaded) return <Loader />
 
   return loaded && <Fragment>
     <div className='position-relative'>
