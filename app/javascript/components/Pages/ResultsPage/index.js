@@ -98,6 +98,16 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   </Fragment>
 
   useEffect(() => {
+    if (time_periods && slug) {
+      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === slug);
+      if (foundTimePeriod) {
+        const index = time_periods.indexOf(foundTimePeriod);
+        setTimePeriodIndex(index);
+      }
+    }
+  }, [time_periods]);
+
+  useEffect(() => {
     if (time_periods) {
       setTimePeriod(time_periods[timePeriodIndex])
       setPrevTimePeriod(time_periods[timePeriodIndex + 1])
@@ -112,17 +122,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
         setResults(res.data)
         setLoaded(true)
       })
-  }, [timePeriod, data])
-
-  useEffect(() => {
-    if (time_periods && slug) {
-      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === slug);
-      if (foundTimePeriod) {
-        const index = time_periods.indexOf(foundTimePeriod);
-        setTimePeriodIndex(index);
-      }
-    }
-  }, [loaded]);
+  }, [timePeriod.id, data])
 
   useEffect(() => {
     if (!nextTimePeriod) {
