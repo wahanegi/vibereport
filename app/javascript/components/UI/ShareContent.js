@@ -126,7 +126,7 @@ export const ResultsManager = ({ data, setData, saveDataToDb, steps, draft, serv
   const [showResultsManager, setShowResultsManager] = useState(false);
 
   const handlingOnClickImage = () => {
-      const isManager = data.current_user.manager;
+      const isManager = data.is_manager;
 
       if (isManager) {
           steps.push('result-managers');
@@ -167,7 +167,7 @@ export const Results = ({ data, setData, saveDataToDb, steps, draft, service, hi
   const [showResults, setShowResults] = useState(false);
 
   const handlingOnClickImage = () => {
-      const isManager = data.current_user.manager;
+      const isManager = data.is_manager;
 
       if (isManager) {
           steps.push('results');

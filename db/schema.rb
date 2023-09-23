@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_134452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,13 +96,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
   create_table "passwordless_sessions", force: :cascade do |t|
     t.bigint "authenticatable_id"
     t.string "authenticatable_type"
-    t.datetime "claimed_at", precision: nil
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "expires_at", precision: nil, null: false
+    t.datetime "claimed_at"
+    t.datetime "created_at", null: false
+    t.datetime "expires_at", null: false
     t.string "remote_addr", null: false
-    t.datetime "timeout_at", precision: nil, null: false
+    t.datetime "timeout_at", null: false
     t.string "token", null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "updated_at", null: false
     t.text "user_agent", null: false
     t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
   end
@@ -177,6 +177,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
 
   create_table "user_teams", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.boolean "manager", default: false, null: false
     t.bigint "team_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -191,7 +192,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "last_name"
-    t.boolean "manager", default: false
     t.boolean "not_ask_visibility", default: false, null: false
     t.boolean "opt_out", default: false
     t.datetime "remember_created_at"

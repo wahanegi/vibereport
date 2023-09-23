@@ -8,7 +8,7 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   if(isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working
-  const isManager = data.current_user.manager;
+  const isManager = data.is_manager;
   const handlingBack = () => {
     const index = steps.indexOf('emotion-intensity');
     if (notWorking) {
