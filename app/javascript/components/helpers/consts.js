@@ -34,6 +34,7 @@ export const EMOTION_COLORS = {
 
 export const EMOTION_COL_NUMBERS = 6
 export const MIN_USERS_RESPONSES = 4
+export const MIN_MANAGER_USERS_RESPONSES = 1
 export const MAX_CHAR_LIMIT = 700
 
 export const EMOJIS_PER_PAGE = 5;

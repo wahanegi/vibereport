@@ -15,7 +15,7 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
   let!(:emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
-  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user) }
+  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user, 'api/v1/result_managers') }
   let!(:team1) { create :team }
   let!(:team2) { create :team }
 

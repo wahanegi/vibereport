@@ -21,6 +21,43 @@ import {useParams} from "react-router-dom";
 import {updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 
+export const loadResultsCallback = (timePeriod, setLoaded, setResults, url = '/api/v1/results/' ) => {
+  useEffect(() => {
+    setLoaded(false)
+    axios.get(`${url}${timePeriod.slug}`)
+      .then(res => {
+        setResults(res.data)
+        setLoaded(true)
+      })
+  }, [timePeriod.id])
+}
+
+export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
+  useEffect(() => {
+    if (!nextTimePeriod) {
+      window.scrollTo({top: 0, behavior: 'smooth'})
+    }
+  }, [nextTimePeriod]);
+}
+
+export const scrollTopModalCallback = (showModal) => {
+  useEffect(() => {
+    if (showModal) {
+      window.scrollTo({top: 200, behavior: 'smooth'})
+    }
+  }, [showModal])
+};
+
+export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex) => {
+  useEffect(() => {
+    if (time_periods) {
+      setTimePeriod(time_periods[timePeriodIndex])
+      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
+      setNextTimePeriod(time_periods[timePeriodIndex - 1])
+    }
+  }, [timePeriodIndex, time_periods?.length])
+};
+
 const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
@@ -39,13 +76,6 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
   const [slug, setSlug] = useState(useParams().slug)
-
-  const onRemoveAlert = () => {
-    const dataRequest = {
-      response: {attributes: {notices: null}}
-    }
-    updateResponse(data, setData, dataRequest).then()
-   }
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
@@ -85,17 +115,10 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     }
   }
 
-  const Footer = () => <Fragment>
-    <QuestionButton data={data} />
-    <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
-    {
-      nextTimePeriod && isBlank(data.prev_results_path) ?
-        <div className='mt-5'>
-          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
-        </div>:
-        <div style={{height: 120}}></div>
-    }
-  </Fragment>
+  loadResultsCallback(timePeriod, setLoaded, setResults)
+  scrollTopTimePeriodCallback(nextTimePeriod)
+  scrollTopModalCallback(showModal)
+  changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
 
   useEffect(() => {
     if (time_periods && slug) {
@@ -107,34 +130,17 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     }
   }, [time_periods]);
 
-  useEffect(() => {
-    if (time_periods) {
-      setTimePeriod(time_periods[timePeriodIndex])
-      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
-      setNextTimePeriod(time_periods[timePeriodIndex - 1])
+  const Footer = () => <Fragment>
+    <QuestionButton data={data} />
+    <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
+    {
+      nextTimePeriod && isBlank(data.prev_results_path) ?
+        <div className='mt-5'>
+          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
+        </div>:
+        <div style={{height: 120}}></div>
     }
-  }, [timePeriodIndex, time_periods?.length])
-
-  useEffect(() => {
-    setLoaded(false)
-    axios.get(`/api/v1/results/${timePeriod.slug}`)
-      .then(res => {
-        setResults(res.data)
-        setLoaded(true)
-      })
-  }, [timePeriod.id, data])
-
-  useEffect(() => {
-    if (!nextTimePeriod) {
-      window.scrollTo({top: 0, behavior: 'smooth'})
-    }
-  }, [nextTimePeriod]);
-
-  useEffect(() => {
-    if (showModal) {
-      window.scrollTo({top: 200, behavior: 'smooth'})
-    }
-  }, [showModal]);
+  </Fragment>
 
   if(!loaded) return <Loader />
 

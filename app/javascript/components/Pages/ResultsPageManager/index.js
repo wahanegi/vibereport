@@ -6,7 +6,6 @@ import {
   ShoutOutIcon,
   Wrapper
 } from "../../UI/ShareContent";
-import axios from "axios";
 import NavigationBar from "./NavigationBar";
 import CornerElements from "../../UI/CornerElements";
 import QuestionButton from "../../UI/QuestionButton";
@@ -15,11 +14,13 @@ import LeaderVector from '../../../../assets/images/LeaderVector.svg';
 import EmotionIndex from "../ResultsPageManager/EmotionIndex"
 import {updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
+import {MIN_MANAGER_USERS_RESPONSES} from "../../helpers/consts";
+import {changeTimePeriodCallback, loadResultsCallback, scrollTopModalCallback, scrollTopTimePeriodCallback} from "../ResultsPage";
 
 const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {emotions, gifs, time_periods, responses_count, current_user, teams} = results
+  const {emotions, time_periods, responses_count, teams} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -60,9 +61,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
     onRemoveAlert()
   }
 
-  const MIN_USERS_RESPONSES = 1
-
-  const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
+  const isMinUsersResponses = responses_count < MIN_MANAGER_USERS_RESPONSES
 
   const showNextTimePeriod = () => {
     if (timePeriodIndex > 0) {
@@ -76,6 +75,11 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
     }
   }
 
+  loadResultsCallback(timePeriod, setLoaded, setResults, '/api/v1/result_managers/')
+  changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
+  scrollTopTimePeriodCallback(nextTimePeriod)
+  scrollTopModalCallback(showModal)
+
   const Footer = () => <Fragment>
     <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
@@ -87,35 +91,6 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
         <div style={{height: 120}}></div>
     }
   </Fragment>
-
-  useEffect(() => {
-    if (time_periods) {
-      setTimePeriod(time_periods[timePeriodIndex])
-      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
-      setNextTimePeriod(time_periods[timePeriodIndex - 1])
-    }
-  }, [timePeriodIndex, time_periods?.length])
-
-  useEffect(() => {
-    setLoaded(false)
-    axios.get(`/api/v1/result_managers/${timePeriod.slug}`)
-      .then(res => {
-        setResults(res.data)
-        setLoaded(true)
-      })
-  }, [timePeriod, data])
-
-  useEffect(() => {
-    if (!nextTimePeriod) {
-      window.scrollTo({top: 0, behavior: 'smooth'})
-    }
-  }, [nextTimePeriod]);
-
-  useEffect(() => {
-    if (showModal) {
-      window.scrollTo({top: 200, behavior: 'smooth'})
-    }
-  }, [showModal]);
 
   if(!loaded) return <Loader />
 
