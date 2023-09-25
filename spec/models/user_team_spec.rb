@@ -23,7 +23,12 @@
 require 'rails_helper'
 
 RSpec.describe UserTeam, type: :model do
+  let(:team) { create(:team) }
+  let(:manager_user) { create(:user) }
+  let(:non_manager_user) { create(:user) }
   let(:user_team) { create(:user_team) }
+  let(:manager_user_team) { create(:user_team, user: manager_user, team:, manager: true) }
+  let(:non_manager_user_team) { create(:user_team, user: non_manager_user, team:, manager: false) }
 
   it 'factory works' do
     expect(user_team).to be_valid
@@ -36,5 +41,15 @@ RSpec.describe UserTeam, type: :model do
 
   describe 'Validations' do
     it { expect(user_team).to validate_uniqueness_of(:user_id).scoped_to(:team_id) }
+  end
+
+  describe 'scopes' do
+    describe 'managers' do
+      it 'returns user teams with managers' do
+        managers = UserTeam.managers
+        expect(managers).to include(manager_user_team)
+        expect(managers).not_to include(non_manager_user_team)
+      end
+    end
   end
 end

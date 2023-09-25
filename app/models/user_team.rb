@@ -26,5 +26,5 @@ class UserTeam < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :team_id }
 
-  scope :manager, -> { where(manager: true) }
+  scope :managers, -> { where(manager: true) }
 end
