@@ -73,7 +73,7 @@ ActiveAdmin.register Team do
       row 'Managers' do
         managers = team.user_teams.managers.map { |ut| ut.user.email }
         if managers.empty?
-          'No managers<br><br>'.html_safe + link_to('Add team managers', admin_team_user_teams_path(team))
+          'No managers present<br><br>'.html_safe + link_to('Add team managers', admin_team_user_teams_path(team))
         else
           managers_list = managers.sort.join('<br>').html_safe
           managers_list + '<br><br>'.html_safe + link_to('Edit team managers', admin_team_user_teams_path(team))
