@@ -1,12 +1,11 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::ResultsController do
   let!(:user) { create :user }
   let(:time_period) { create :time_period }
 
   before(:each) do
-    passwordless_sign_in(user)
+    sign_in(user)
   end
 
   describe 'GET #show' do

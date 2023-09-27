@@ -1,24 +1,16 @@
 module ApplicationHelper
-  include Passwordless::ControllerHelpers
   URL = { controller: 'api/v1/responses', action: 'response_flow_from_email' }.freeze
 
   private
 
-  def current_user
-    @current_user ||= authenticate_by_session(User)
+  def prev_results_path
+    check_period? && TimePeriod.previous_time_period ? "/results/#{TimePeriod.previous_time_period&.slug}" : nil
   end
 
-  def require_user!
-    return if current_user
-
-    redirect_to root_path, flash: { error: 'Sorry, you should try logging in again!' }
-  end
-
-  def session_expired?
-    passwordless_session_id = session.to_h['passwordless_session_id--user']
-    passwordless_session = Passwordless::Session.find_by(id: passwordless_session_id)
-    return false if passwordless_session.blank?
-
-    passwordless_session.expires_at <= Time.current
+  def check_period?
+    start_day = (ENV['START_WEEK_DAY'] || 'tuesday').capitalize
+    end_day = (ENV['DAY_TO_SEND_INVITES'] || 'friday').capitalize
+    current_day = Date.current.wday
+    current_day >= Date::DAYNAMES.index(start_day) && current_day < Date::DAYNAMES.index(end_day)
   end
 end

@@ -5,7 +5,7 @@ import calendar from "../../../assets/images/calendar.svg"
 import shoutout from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import polygonLeft from "../../../assets/images/polygon-left.svg"
 import polygonRight from "../../../assets/images/polygon-right.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
@@ -16,6 +16,7 @@ import ResultsPageManager from "../Pages/ResultsPageManager";
 import LeaderVector from '../../../assets/images/OpenLeaderPanelButton.svg';
 import ResultsPage from "../Pages/ResultsPage";
 import BackRevert from '../../../assets/images/BackToResultsButton.svg';
+import {updateResponse} from "../requests/axios_requests";
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
 const categoryClass = selectedType ? selectedType : emotion.category;
@@ -122,25 +123,28 @@ export const EditResponse = ({ hidden = false, onClick }) =>
     <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
   </div>
 
-export const ResultsManager = ({ data, setData, saveDataToDb, steps, draft, service, hidden = false}) => {
+export const ResultsManager = ({ data, setData, steps, draft, service, hidden = false}) => {
   const [showResultsManager, setShowResultsManager] = useState(false);
+  const navigate = useNavigate()
 
   const handlingOnClickImage = () => {
-      const isManager = data.current_user.manager;
-
-      if (isManager) {
-          steps.push('result-managers');
-          saveDataToDb(steps);
-      } else {
-          setShowResultsManager(true);
-      }
+    const isManager = data.current_user.manager;
+    steps.push('result-managers')
+    const dataRequest = {
+      response: {attributes: {steps: steps}}
+    }
+    if (isManager) {
+      updateResponse(data, setData, dataRequest, navigate(`/${steps.slice(-1).toString()}`)).then()
+    } else {
+      setShowResultsManager(true);
+    }
   };
 
   return (
     !hidden && <div className='ms-auto'>
-      <div 
-        className="b4 position-result pointer" 
-        onClick={handlingOnClickImage} 
+      <div
+        className="b4 position-result pointer"
+        onClick={handlingOnClickImage}
       >
         <img
             className='ms-1'
@@ -153,7 +157,6 @@ export const ResultsManager = ({ data, setData, saveDataToDb, steps, draft, serv
             <ResultsPageManager 
                 data={data} 
                 setData={setData}
-                saveDataToDb={saveDataToDb}
                 steps={steps} 
                 draft={draft} 
                 service={service}
@@ -163,18 +166,26 @@ export const ResultsManager = ({ data, setData, saveDataToDb, steps, draft, serv
   );
 }
 
-export const Results = ({ data, setData, saveDataToDb, steps, draft, service, hidden = false }) => {
+export const Results = ({ data, setData, steps, hidden = false }) => {
   const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate()
 
   const handlingOnClickImage = () => {
-      const isManager = data.current_user.manager;
-
-      if (isManager) {
-          steps.push('results');
-          saveDataToDb(steps);
-      } else {
-          setShowResults(true);
+    const isManager = data.current_user.manager;
+    const dataRequest = {
+      response: {
+        attributes: {
+          steps: steps
+        }
       }
+    }
+
+    if (isManager) {
+      steps.push('results');
+      updateResponse(data, setData, dataRequest, navigate(`/${steps.slice(-1).toString()}`)).then();
+    } else {
+      setShowResults(true);
+    }
   };
 
   return (
@@ -191,14 +202,11 @@ export const Results = ({ data, setData, saveDataToDb, steps, draft, service, hi
       </div>
 
         {showResults && 
-            <ResultsPage 
-                data={data} 
-                setData={setData}
-                saveDataToDb={saveDataToDb}
-                steps={steps} 
-                draft={draft} 
-                service={service}
-            />
+          <ResultsPage
+            data={data}
+            setData={setData}
+            steps={steps}
+          />
         }
     </div>
   );

@@ -49,5 +49,15 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
 
 export const signOutUser = async (id) =>{
   createCsrfToken()
-  await axios.get(`/api/v1/sign_out_user?id=${id}` ).then()
+  await axios.get(`/api/v1/sign_out_user?id=${id}`).then()
+}
+
+export const updateResponse = async (data, setData, dataRequest, redirect = () => {}) => {
+  createCsrfToken()
+  const url = '/api/v1/responses/' + data.response.id
+  await axios.patch(url, dataRequest)
+    .then(resp => {
+      setData(Object.assign({}, data, {response: resp.data.data}))
+      redirect()
+    })
 }

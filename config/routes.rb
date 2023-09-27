@@ -2,8 +2,13 @@ Rails.application.routes.draw do
   get 'responses/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
-  devise_for :users
-  passwordless_for :users, at: '/', as: :auth
+  devise_for :users, controllers: { sessions: 'devise/passwordless/sessions' }
+  devise_scope :user do
+    get '/users/magic_link',
+        to: 'devise/passwordless/magic_links#show',
+        as: 'users_magic_link'
+  end
+
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   namespace :api do
@@ -17,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   get '/app', to: 'home#app'
+  get '/sent', to: 'home#sent'
   namespace :api do
     namespace :v1 do
       resources :emotions, only: %i[index create]

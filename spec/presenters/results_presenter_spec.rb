@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::ResultsPresenter do
   let!(:user) { create :user }
@@ -16,7 +15,7 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
   let!(:emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
-  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user) }
+  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user, 'api/v1/result_managers') }
   let!(:team1) { create :team }
   let!(:team2) { create :team }
 
@@ -26,11 +25,18 @@ RSpec.describe Api::V1::ResultsPresenter do
 
   describe '#render' do
     subject { presenter.json_hash }
+
+    before do
+      allow(ENV).to receive(:[]).with('START_WEEK_DAY').and_return('tuesday')
+      allow(ENV).to receive(:[]).with('DAY_TO_SEND_INVITES').and_return('friday')
+      allow(Date.current).to receive(:wday).and_return(6)
+    end
+
     it 'renders a JSON response with the results data' do
       is_expected.to eq(
         {
           time_periods: TimePeriod.ordered,
-          emotions: time_period.emotions,
+          emotions: time_period.emotions.to_a,
           gifs: [
             image: user_response.gif,
             emotion: user_response.emotion
@@ -99,6 +105,7 @@ RSpec.describe Api::V1::ResultsPresenter do
               emojis: []
             }
           ],
+          prev_results_path: nil,
           teams: [
             {
               id: team1.id,

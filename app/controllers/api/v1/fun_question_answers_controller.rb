@@ -1,7 +1,6 @@
 class Api::V1::FunQuestionAnswersController < ApplicationController
-  include ApplicationHelper
   before_action :retrieve_answer, only: %i[show update destroy]
-  before_action :require_user!
+  before_action :authenticate_user!
 
   def show
     render json: FunQuestionAnswerSerializer.new(@answer).serializable_hash

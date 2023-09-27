@@ -2,12 +2,15 @@ import React, {Fragment} from "react";
 import {Calendar, EditResponse, Results} from "../../UI/ShareContent";
 import {datePrepare, isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
 import isEmpty from "ramda/src/isEmpty";
+import {updateResponse} from "../../requests/axios_requests";
+import {useNavigate} from "react-router-dom";
 
 const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod,
-                        nextTimePeriod, steps, saveDataToDb, emotions, data, setShowWorkingModal, setData, service, draft}) => {
+                        nextTimePeriod, steps, emotions, data, setShowWorkingModal, setData}) => {
   if(isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working
+  const navigate = useNavigate()
   const handlingBack = () => {
     const index = steps.indexOf('emotion-intensity');
     if (notWorking) {
@@ -15,7 +18,17 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
     } else {
       const new_steps = steps.slice(0, index + 1);
       const steps_arr = isEmpty(new_steps) ? ['emotion-selection-web', 'productivity-check'] : new_steps
-      saveDataToDb(steps_arr, {not_working: false, draft: false, completed_at: null} )
+      const dataRequest = {
+        response: {
+          attributes: {
+            not_working: false,
+            draft: false,
+            completed_at: null,
+            steps: steps_arr
+          }
+        }
+      }
+      updateResponse(data, setData, dataRequest, navigate(`/${steps_arr.slice(-1).toString()}`)).then()
     }
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
@@ -25,8 +38,9 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
                 positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
-                positionRight={true} hidden={isBlank(nextTimePeriod)} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
-      <Results data={data} setData={setData} saveDataToDb={saveDataToDb} steps={steps} draft={draft} service={service} hidden={nextTimePeriod}/>
+                positionRight={true} hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))}
+                prevTimePeriod={prevTimePeriod} emotions={emotions}/>
+      <Results data={data} setData={setData} steps={steps} hidden={nextTimePeriod}/>
       <EditResponse onClick={handlingBack} hidden={nextTimePeriod} />
     </div>
   </Fragment>

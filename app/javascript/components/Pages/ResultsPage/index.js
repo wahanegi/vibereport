@@ -1,6 +1,6 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {rangeFormat} from "../../helpers/helpers";
+import {isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   ShoutOutIcon,
@@ -17,9 +17,48 @@ import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
+import {useParams} from "react-router-dom";
+import {updateResponse} from "../../requests/axios_requests";
+import Loader from "../../UI/Loader";
 
-const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
-  const {isLoading, error} = service
+export const loadResultsCallback = (timePeriod, setLoaded, setResults, url = '/api/v1/results/' ) => {
+  useEffect(() => {
+    setLoaded(false)
+    axios.get(`${url}${timePeriod.slug}`)
+      .then(res => {
+        setResults(res.data)
+        setLoaded(true)
+      })
+  }, [timePeriod.id])
+}
+
+export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
+  useEffect(() => {
+    if (!nextTimePeriod) {
+      window.scrollTo({top: 0, behavior: 'smooth'})
+    }
+  }, [nextTimePeriod]);
+}
+
+export const scrollTopModalCallback = (showModal) => {
+  useEffect(() => {
+    if (showModal) {
+      window.scrollTo({top: 200, behavior: 'smooth'})
+    }
+  }, [showModal])
+};
+
+export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex) => {
+  useEffect(() => {
+    if (time_periods) {
+      setTimePeriod(time_periods[timePeriodIndex])
+      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
+      setNextTimePeriod(time_periods[timePeriodIndex - 1])
+    }
+  }, [timePeriodIndex, time_periods?.length])
+};
+
+const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
   const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
@@ -36,18 +75,19 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
-
-  const onRemoveAlert = () => {
-    saveDataToDb( steps, { notices: null } )
-  }
+  const [slug, setSlug] = useState(useParams().slug)
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
     const dataRequest = {
-      not_working: false,
-      emotion_id: notice['emotion_id']
+      response: {
+        attributes: {
+          not_working: false,
+          emotion_id: notice['emotion_id']
+        }
+      }
     }
-    saveDataToDb( steps, dataRequest )
+    updateResponse(data, setData, dataRequest).then()
     setNotice(null)
     onRemoveAlert()
   }
@@ -60,22 +100,41 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
 
   const showNextTimePeriod = () => {
+    if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return;
+
     if (timePeriodIndex > 0) {
+      setSlug(null)
       setTimePeriodIndex(index => (index - 1));
     }
   }
 
   const showPrevTimePeriod = () => {
     if (timePeriodIndex < (time_periods.length - 1)) {
+      setSlug(null)
       setTimePeriodIndex(index => (index + 1));
     }
   }
+
+  loadResultsCallback(timePeriod, setLoaded, setResults)
+  scrollTopTimePeriodCallback(nextTimePeriod)
+  scrollTopModalCallback(showModal)
+  changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
+
+  useEffect(() => {
+    if (time_periods && slug) {
+      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === slug);
+      if (foundTimePeriod) {
+        const index = time_periods.indexOf(foundTimePeriod);
+        setTimePeriodIndex(index);
+      }
+    }
+  }, [time_periods]);
 
   const Footer = () => <Fragment>
     <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
-      nextTimePeriod ?
+      nextTimePeriod && isBlank(data.prev_results_path) ?
         <div className='mt-5'>
           <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
         </div>:
@@ -83,37 +142,9 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
     }
   </Fragment>
 
-  useEffect(() => {
-    if (time_periods) {
-      setTimePeriod(time_periods[timePeriodIndex])
-      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
-      setNextTimePeriod(time_periods[timePeriodIndex - 1])
-    }
-  }, [timePeriodIndex, time_periods?.length])
+  if(!loaded) return <Loader />
 
-  useEffect(() => {
-    axios.get(`/api/v1/results/${timePeriod.slug}`)
-      .then(res => {
-        setResults(res.data)
-        setLoaded(true)
-      })
-  }, [timePeriod, data])
-
-  if (error) return <p>{error.message}</p>
-
-  useEffect(() => {
-    if (!nextTimePeriod) {
-      window.scrollTo({top: 0, behavior: 'smooth'})
-    }
-  }, [nextTimePeriod]);
-
-  useEffect(() => {
-    if (showModal) {
-      window.scrollTo({top: 200, behavior: 'smooth'})
-    }
-  }, [showModal]);
-
-  return loaded && !isLoading && <Fragment>
+  return loaded && <Fragment>
     <div className='position-relative'>
       <Wrapper>
         {
@@ -130,7 +161,7 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
-                            saveDataToDb, emotions, data, setShowWorkingModal, setData, service, draft }} />
+                            emotions, data, setShowWorkingModal, setData }} />
         <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
         <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <ShoutoutSection nextTimePeriod={nextTimePeriod}
@@ -145,12 +176,12 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
         <QuestionSection fun_question={fun_question}
                          current_user={current_user}
                          answers={answers}
-                         steps={steps}
-                         saveDataToDb={saveDataToDb}
                          isMinUsersResponses={isMinUsersResponses}
                          nextTimePeriod={nextTimePeriod}
+                         data={data}
+                         setData={setData}
                          setShowWorkingModal={setShowWorkingModal}/>
-        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
+        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}/>
       </Wrapper>
       <Footer />
     </div>
@@ -159,7 +190,8 @@ const Results = ({data, setData, saveDataToDb, steps, service, draft}) => {
                                   data={data} setData={setData} />
 
     }
-    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal} saveDataToDb={saveDataToDb} steps={steps} />
+    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
+                  data={data} setData={setData} steps={steps} />
   </Fragment>
 }
 export default Results;

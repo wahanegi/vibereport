@@ -1,10 +1,9 @@
 class Api::V1::ResultsController < ApplicationController
-  include ApplicationHelper
-  before_action :require_user!, :time_period, only: %i[show]
+  before_action :authenticate_user!, :time_period, only: %i[show]
 
   def show
     if @time_period.present?
-      render json: Api::V1::ResultsPresenter.new(@time_period.slug, current_user).json_hash
+      render json: Api::V1::ResultsPresenter.new(@time_period.slug, current_user, request.original_url).json_hash
     else
       render json: { error: 'Time period not found' }, status: :not_found
     end
