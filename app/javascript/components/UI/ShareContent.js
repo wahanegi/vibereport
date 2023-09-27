@@ -5,7 +5,7 @@ import calendar from "../../../assets/images/calendar.svg"
 import shoutout from "../../../assets/images/shoutout.svg"
 import help_icon from "../../../assets/images/help.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
 import polygonLeft from "../../../assets/images/polygon-left.svg"
 import polygonRight from "../../../assets/images/polygon-right.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
@@ -123,12 +123,15 @@ export const EditResponse = ({ hidden = false, onClick }) =>
     <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
   </div>
 
-export const ResultsManager = ({ data, setData, steps, draft, service, hidden = false}) => {
+export const ResultsManager = ({ data, setData, steps, draft, service, nextTimePeriod}) => {
   const [showResultsManager, setShowResultsManager] = useState(false);
   const navigate = useNavigate()
+  const slug = useParams().slug
 
   const handlingOnClickImage = () => {
     const isManager = data.current_user.manager;
+    if (slug && isManager) return navigate(`/result-managers/${slug}`)
+
     steps.push('result-managers')
     const dataRequest = {
       response: {attributes: {steps: steps}}
@@ -141,7 +144,7 @@ export const ResultsManager = ({ data, setData, steps, draft, service, hidden = 
   };
 
   return (
-    !hidden && <div className='ms-auto'>
+    <div className={`ms-auto ${nextTimePeriod ? 'me-2' : ''}`}>
       <div
         className="b4 position-result pointer"
         onClick={handlingOnClickImage}
@@ -181,8 +184,12 @@ export const Results = ({ data, setData, steps, hidden = false }) => {
     }
 
     if (isManager) {
-      steps.push('results');
-      updateResponse(data, setData, dataRequest, navigate(`/${steps.slice(-1).toString()}`)).then();
+      if (data.response.attributes.id) {
+        steps.push('results');
+        updateResponse(data, setData, dataRequest, navigate(`/${steps.slice(-1).toString()}`)).then();
+      } else {
+        navigate(`/${steps.slice(-1).toString()}`)
+      }
     } else {
       setShowResults(true);
     }
@@ -192,7 +199,7 @@ export const Results = ({ data, setData, steps, hidden = false }) => {
     !hidden && <div className='ms-auto'>
       <div 
         className="b4 position-result pointer" 
-        onClick={handlingOnClickImage} 
+        onClick={handlingOnClickImage}
       >
         <img
             className='ms-1'            

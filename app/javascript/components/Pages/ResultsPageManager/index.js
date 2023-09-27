@@ -20,7 +20,7 @@ import {changeTimePeriodCallback, loadResultsCallback, scrollTopModalCallback, s
 const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {emotions, time_periods, responses_count, teams} = results
+  const {emotions, time_periods, responses_count, teams, prev_results_path} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -111,7 +111,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
-                            emotions, data, setShowWorkingModal, setData }} />
+                            emotions, data, setShowWorkingModal, setData, prev_results_path }} />
         <div className="folder-shape left-cut">
           <div className="right-cut">
             <div className='folder-line'></div>

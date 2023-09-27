@@ -62,7 +62,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
   const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
-        current_user_shoutouts, responses_count, current_user, received_and_public_shoutouts} = results
+        current_user_shoutouts, responses_count, current_user, received_and_public_shoutouts, prev_results_path} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -161,7 +161,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
-                            emotions, data, setShowWorkingModal, setData }} />
+                            emotions, data, setShowWorkingModal, setData, prev_results_path }} />
         <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
         <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         <ShoutoutSection nextTimePeriod={nextTimePeriod}
