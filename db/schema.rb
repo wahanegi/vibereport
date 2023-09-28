@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2023_09_19_134452) do
-=======
-ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
->>>>>>> master
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,23 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-<<<<<<< HEAD
-  create_table "passwordless_sessions", force: :cascade do |t|
-    t.bigint "authenticatable_id"
-    t.string "authenticatable_type"
-    t.datetime "claimed_at"
-    t.datetime "created_at", null: false
-    t.datetime "expires_at", null: false
-    t.string "remote_addr", null: false
-    t.datetime "timeout_at", null: false
-    t.string "token", null: false
-    t.datetime "updated_at", null: false
-    t.text "user_agent", null: false
-    t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
-  end
-
-=======
->>>>>>> master
   create_table "responses", force: :cascade do |t|
     t.string "celebrate_comment"
     t.text "comment"
