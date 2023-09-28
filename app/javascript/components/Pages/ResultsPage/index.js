@@ -58,11 +58,31 @@ export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTim
   }, [timePeriodIndex, time_periods?.length])
 };
 
+export const onRemoveAlert = (updateResponse, data, setData) => {
+  const dataRequest = {
+    response: {attributes: {notices: null}}
+  }
+  updateResponse(data, setData, dataRequest).then()
+}
+
+export const findTimePeriodCallback = (time_periods, slug, setTimePeriodIndex) => {
+  useEffect(() => {
+    if (time_periods && slug) {
+      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === slug);
+      if (foundTimePeriod) {
+        const index = time_periods.indexOf(foundTimePeriod);
+        setTimePeriodIndex(index);
+      }
+    }
+  }, [time_periods]);
+};
+
 const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gifs, time_periods, sent_shoutouts, received_shoutouts,
+  const {answers, emotions, fun_question, gifs, sent_shoutouts, received_shoutouts,
         current_user_shoutouts, responses_count, current_user, received_and_public_shoutouts, prev_results_path} = results
+  const {time_periods} = data
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -89,12 +109,12 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     }
     updateResponse(data, setData, dataRequest).then()
     setNotice(null)
-    onRemoveAlert()
+    onRemoveAlert(updateResponse, data, setData)
   }
 
   const onDeclineAction = () => {
     setNotice(null)
-    onRemoveAlert()
+    onRemoveAlert(updateResponse, data, setData)
   }
 
   const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
@@ -119,16 +139,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   scrollTopTimePeriodCallback(nextTimePeriod)
   scrollTopModalCallback(showModal)
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
-
-  useEffect(() => {
-    if (time_periods && slug) {
-      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === slug);
-      if (foundTimePeriod) {
-        const index = time_periods.indexOf(foundTimePeriod);
-        setTimePeriodIndex(index);
-      }
-    }
-  }, [time_periods]);
+  findTimePeriodCallback(time_periods, slug, setTimePeriodIndex)
 
   const Footer = () => <Fragment>
     <QuestionButton data={data} />

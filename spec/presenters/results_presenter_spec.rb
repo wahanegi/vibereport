@@ -35,7 +35,6 @@ RSpec.describe Api::V1::ResultsPresenter do
     it 'renders a JSON response with the results data' do
       is_expected.to eq(
         {
-          time_periods: TimePeriod.ordered,
           emotions: time_period.emotions.to_a,
           gifs: [
             image: user_response.gif,

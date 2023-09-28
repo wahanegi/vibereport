@@ -196,7 +196,7 @@ export const Results = ({ data, setData, steps, hidden = false }) => {
   };
 
   return (
-    !hidden && <div className='ms-auto'>
+    !hidden && <div className='ms-auto me-2'>
       <div 
         className="b4 position-result pointer" 
         onClick={handlingOnClickImage}
