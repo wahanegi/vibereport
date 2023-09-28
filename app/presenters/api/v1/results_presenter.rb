@@ -1,9 +1,10 @@
 class Api::V1::ResultsPresenter
   include ApplicationHelper
   include ActiveAdminHelpers
-  attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users, :teams
 
-  def initialize(time_period_slug, current_user)
+  attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users, :teams, :original_url
+
+  def initialize(time_period_slug, current_user, original_url)
     @time_period = TimePeriod.find_by(slug: time_period_slug)
     @responses = time_period.responses.completed.working
     @fun_question_answers = responses.filter_map(&:fun_question_answer)
@@ -11,6 +12,7 @@ class Api::V1::ResultsPresenter
     @users = responses.filter_map(&:user)
     @current_user = current_user
     @teams = current_user.user_teams.managers.map(&:team)
+    @original_url = original_url
   end
 
   def json_hash
@@ -27,7 +29,8 @@ class Api::V1::ResultsPresenter
       current_response: current_user.responses.working.find_by(time_period_id: time_period.id),
       current_user:,
       received_and_public_shoutouts:,
-      teams: teams_with_emotion_index
+      prev_results_path:,
+      teams: original_url.include?('result_managers') ? teams_with_emotion_index : []
     }
   end
 
@@ -223,7 +226,7 @@ class Api::V1::ResultsPresenter
     @public_shoutout_blocks ||=
       begin
         return_blocks = Shoutout.where(time_period_id: time_period.id, public: true) - current_user.shoutouts
-        return_blocks.map { |shoutout| shoutout_block(shoutout) }
+        return_blocks.filter_map { |shoutout| shoutout_block(shoutout) }
       end
   end
 

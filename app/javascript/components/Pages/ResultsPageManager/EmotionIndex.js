@@ -16,7 +16,7 @@ const NoDataMessage = ({ teamName }) => (
   </div>
 );
 
-const EmotionIndex = ({ data, setData, teams, nextTimePeriod, isMinUsersResponses }) => {
+const EmotionIndex = ({ teams, nextTimePeriod, isMinUsersResponses }) => {
 
   function getDataForTeam(team) {
     const emotionData = {

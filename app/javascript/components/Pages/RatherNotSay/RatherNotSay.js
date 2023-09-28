@@ -1,7 +1,6 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import CornerElements from "../../UI/CornerElements";
 import Button from "../../UI/Button";
-import {signOutUser} from "../../requests/axios_requests";
 
 const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) => {
 

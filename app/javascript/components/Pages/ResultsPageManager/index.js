@@ -6,19 +6,21 @@ import {
   ShoutOutIcon,
   Wrapper
 } from "../../UI/ShareContent";
-import axios from "axios";
 import NavigationBar from "./NavigationBar";
 import CornerElements from "../../UI/CornerElements";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import LeaderVector from '../../../../assets/images/LeaderVector.svg';
 import EmotionIndex from "../ResultsPageManager/EmotionIndex"
+import {updateResponse} from "../../requests/axios_requests";
+import Loader from "../../UI/Loader";
+import {MIN_MANAGER_USERS_RESPONSES} from "../../helpers/consts";
+import {changeTimePeriodCallback, loadResultsCallback, scrollTopModalCallback, scrollTopTimePeriodCallback} from "../ResultsPage";
 
-const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) => {
-  const {isLoading, error} = service
+const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {emotions, gifs, time_periods, responses_count, current_user, teams} = results
+  const {emotions, time_periods, responses_count, teams} = results
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -33,16 +35,23 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
   const [showWorkingModal, setShowWorkingModal] = useState(false)
 
   const onRemoveAlert = () => {
-    saveDataToDb( steps, { notices: null } )
+    const dataRequest = {
+      response: {attributes: {notices: null}}
+    }
+    updateResponse(data, setData, dataRequest).then()
   }
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
     const dataRequest = {
-      not_working: false,
-      emotion_id: notice['emotion_id']
+      response: {
+        attributes: {
+          not_working: false,
+          emotion_id: notice['emotion_id']
+        }
+      }
     }
-    saveDataToDb( steps, dataRequest )
+    updateResponse(data, setData, dataRequest).then()
     setNotice(null)
     onRemoveAlert()
   }
@@ -52,9 +61,7 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
     onRemoveAlert()
   }
 
-  const MIN_USERS_RESPONSES = 1
-
-  const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
+  const isMinUsersResponses = responses_count < MIN_MANAGER_USERS_RESPONSES
 
   const showNextTimePeriod = () => {
     if (timePeriodIndex > 0) {
@@ -68,6 +75,11 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
     }
   }
 
+  loadResultsCallback(timePeriod, setLoaded, setResults, '/api/v1/result_managers/')
+  changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
+  scrollTopTimePeriodCallback(nextTimePeriod)
+  scrollTopModalCallback(showModal)
+
   const Footer = () => <Fragment>
     <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
@@ -80,37 +92,9 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
     }
   </Fragment>
 
-  useEffect(() => {
-    if (time_periods) {
-      setTimePeriod(time_periods[timePeriodIndex])
-      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
-      setNextTimePeriod(time_periods[timePeriodIndex - 1])
-    }
-  }, [timePeriodIndex, time_periods?.length])
+  if(!loaded) return <Loader />
 
-  useEffect(() => {
-    axios.get(`/api/v1/result_managers/${timePeriod.slug}`)
-      .then(res => {
-        setResults(res.data)
-        setLoaded(true)
-      })
-  }, [timePeriod, data])
-
-  if (error) return <p>{error.message}</p>
-
-  useEffect(() => {
-    if (!nextTimePeriod) {
-      window.scrollTo({top: 0, behavior: 'smooth'})
-    }
-  }, [nextTimePeriod]);
-
-  useEffect(() => {
-    if (showModal) {
-      window.scrollTo({top: 200, behavior: 'smooth'})
-    }
-  }, [showModal]);
-
-  return loaded && !isLoading && <Fragment>
+  return loaded && <Fragment>
     <div className='position-relative'>
       <Wrapper>
         {
@@ -127,7 +111,7 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
-                            saveDataToDb, emotions, data, setShowWorkingModal }} />
+                            emotions, data, setShowWorkingModal, setData }} />
         <div className="folder-shape left-cut">
           <div className="right-cut">
             <div className='folder-line'></div>
@@ -135,13 +119,14 @@ const ResultsManager = ({data, setData, saveDataToDb, steps, service, draft}) =>
               <img className="image-container ms-1" src={LeaderVector} />
             </div>
           </div>
-          <EmotionIndex data={data} setData={setData} teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
+          <EmotionIndex teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         </div>
-        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true}/>
+        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true} />
       </Wrapper>
       <Footer />
     </div>
-    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal} saveDataToDb={saveDataToDb} steps={steps} />
+    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
+                  data={data} setData={setData} steps={steps} />
   </Fragment>
 }
 export default ResultsManager;

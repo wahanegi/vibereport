@@ -2,7 +2,6 @@ require 'rails_helper'
 require 'rspec/json_expectations'
 
 RSpec.describe Api::V1::ShoutoutsController, type: :controller do
-  include ApplicationHelper
   let!(:user) { create :user }
   let!(:user1) { create :user }
   let!(:user2) { create :user }
@@ -10,10 +9,14 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
   let!(:user4) { create :user }
   let!(:user5) { create :user }
   let!(:time_period) { create :time_period }
+
+  before(:each) do |test|
+    sign_in(user) unless test.metadata[:logged_out]
+  end
+
   describe 'POST #create' do
     context 'with valid parameters' do
       it 'creates a new shout-out with recipients of this shoutout' do
-        allow(controller).to receive(:current_user).and_return(user)
         expect do
           post :create, params: { shoutout: { time_period_id: time_period.id,
                                               rich_text: 'value2' },
@@ -23,7 +26,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
       end
 
       it 'not allow duplicate records' do
-        allow(controller).to receive(:current_user).and_return(user1)
         expect do
           post :create, params: { shoutout: { time_period_id: time_period.id,
                                               rich_text: 'Similar message', public: true },
@@ -38,7 +40,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
 
     context 'with invalid parameters' do
       it 'does not create a shout-out with invalid time_period' do
-        allow(controller).to receive(:current_user).and_return(user)
         expect do
           post :create, params: { shoutout: { time_period_id: nil,
                                               rich_text: 'value2' },
@@ -46,7 +47,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         end.not_to change(Shoutout, :count)
         expect(ShoutoutRecipient.all.length).to be(0)
       end
-      it 'does not create a shoutout with an unauthorized user' do
+      it 'does not create a shoutout with an unauthorized user', logged_out: true do
         expect do
           post :create, params: { shoutout: { time_period_id: time_period.id,
                                               rich_text: 'value2' },
@@ -66,7 +67,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
     end
 
     it 'renders json answer with one recipient' do
-      allow(controller).to receive(:current_user).and_return(user)
       post :create, params: { shoutout: { time_period_id: time_period.id,
                                           rich_text: '<br>' },
                               recipients: [user5.id] }
@@ -76,7 +76,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
     end
 
     it 'renders json answer with some recipients' do
-      allow(controller).to receive(:current_user).and_return(user)
       post :create, params: { shoutout: { time_period_id: time_period.id,
                                           rich_text: '<br>' },
                               recipients: [user2.id, user3.id, user4.id] }
@@ -116,7 +115,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
     end
     context 'with valid attributes' do
       it 'updates shoutouts' do
-        allow(controller).to receive(:current_user).and_return(user)
         patch :update, params: {  id: shoutout.id,
                                   shoutout: { time_period_id: time_period.id,
                                               rich_text: '@Person1 thanks for all' },
@@ -129,7 +127,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
     end
     context 'with similar rich text' do
       it 'should not update when we have the similar record ' do
-        allow(controller).to receive(:current_user).and_return(user)
         post :create, params: { shoutout: { time_period_id: time_period.id,
                                             rich_text: '@Person1 thanks' },
                                 recipients: [user2.id, user3.id, user4.id] }
@@ -142,7 +139,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         expect(shoutout.rich_text).to eq('<br>')
       end
       it 'should not update when we have the similar record and public ' do
-        allow(controller).to receive(:current_user).and_return(user)
         post :create, params: { shoutout: { time_period_id: time_period.id,
                                             rich_text: '@Person1 thanks',
                                             public: true },
@@ -157,7 +153,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         expect(shoutout.rich_text).to eq('<br>')
       end
       it 'should update when we have the similar record, but another public ' do
-        allow(controller).to receive(:current_user).and_return(user)
         post :create, params: { shoutout: { time_period_id: time_period.id,
                                             rich_text: '@Person1 thanks',
                                             public: true },
@@ -174,7 +169,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         expect(shoutout.shoutout_recipients.length).to eq(3)
       end
       it 'should update shoutouts ' do
-        allow(controller).to receive(:current_user).and_return(user1)
         expect do
           post :create, params: { shoutout: { time_period_id: time_period.id,
                                               rich_text: '@Person1 thank you very much' },
@@ -192,7 +186,6 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         expect(Shoutout.last.rich_text).not_to eq('@Person1 thanks')
       end
       it 'should update when we have a similar rich text but other time period' do
-        allow(controller).to receive(:current_user).and_return(user)
         post :create, params: { shoutout: { time_period_id: time_period.id,
                                             rich_text: '@Person1 thanks' },
                                 recipients: [user2.id, user3.id, user4.id] }

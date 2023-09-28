@@ -1,8 +1,7 @@
 require 'digest'
 
 class Api::V1::ShoutoutsController < ApplicationController
-  include ApplicationHelper
-  before_action :require_user!
+  before_action :authenticate_user!
 
   def show
     render json: ShoutoutSerializer.new(shoutout).serializable_hash

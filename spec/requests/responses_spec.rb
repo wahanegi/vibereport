@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::ResponsesController do
   FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
@@ -11,7 +10,7 @@ RSpec.describe Api::V1::ResponsesController do
   let!(:response_attr) { attributes_for :response, emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection] }
 
   before(:each) do |test|
-    passwordless_sign_in(user) unless test.metadata[:logged_out]
+    sign_in(user) unless test.metadata[:logged_out]
   end
 
   describe '#create' do

@@ -1,14 +1,12 @@
 module Api
   module V1
     class ResponsesController < ApplicationController
-      include ApplicationHelper
-
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices, :rating,
                       :comment, :productivity, :productivity_comment, :fun_question_id, :shoutout_id,
                       :fun_question_answer_id, :completed_at, :draft, :celebrate_comment, { gif: %i[src height] }].freeze
 
       before_action :retrieve_response, only: %i[update]
-      before_action :require_user!, only: %i[create update]
+      before_action :authenticate_user!, only: %i[create update]
 
       def create
         @response = current_user.responses.build(response_params)
@@ -30,7 +28,7 @@ module Api
       end
 
       def response_flow_from_email
-        sign_in_user
+        sign_in user
         result = ResponseFlowFromEmail.new(params, @user).call
         if params[:time_period_id] == TimePeriod.current.id.to_s
           return redirect_to root_path if result[:success]
@@ -45,12 +43,13 @@ module Api
       def sign_out_user
         retrieve_response
         ReminderEmailWorker.new(current_user, @response, TimePeriod.current).run_notification if @response&.completed_at.nil?
-        redirect_to auth.sign_in_path if sign_out User
+        sign_out(current_user) if user_signed_in?
+        redirect_to new_user_session_path
       end
 
       def sign_in_from_email
         user
-        sign_in_user
+        sign_in user
         redirect_to root_path
       end
 
@@ -76,12 +75,8 @@ module Api
         @user ||= User.find_by(id: params[:user_id])
       end
 
-      def sign_in_user
-        sign_in user
-      end
-
       def complete_response
-        return  if response_params['attributes']['steps'].exclude?('results') || @response.completed_at.present?
+        return if response_params.dig('attributes', 'steps')&.exclude?('results') || @response.completed_at.present?
 
         @response.update(completed_at: Date.current)
       end

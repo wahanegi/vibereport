@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::FunQuestionAnswersController do
   let!(:user) { create :user }
@@ -28,7 +27,7 @@ RSpec.describe Api::V1::FunQuestionAnswersController do
   end
 
   before(:each) do |test|
-    passwordless_sign_in(user) unless test.metadata[:logged_out]
+    sign_in(user) unless test.metadata[:logged_out]
   end
 
   describe 'GET #show' do

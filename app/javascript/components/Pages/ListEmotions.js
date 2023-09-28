@@ -77,6 +77,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
     steps.push('rather-not-say')
     saveDataToDb(steps, {
       emotion_id: '',
+      completed_at: null,
       time_period_id: timePeriod.id,
       user_id: data.current_user.id })
   }

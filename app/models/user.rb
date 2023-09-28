@@ -10,6 +10,7 @@
 #  not_ask_visibility     :boolean          default(FALSE), not null
 #  opt_out                :boolean          default(FALSE)
 #  remember_created_at    :datetime
+#  remember_token         :string
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  created_at             :datetime         not null
@@ -23,7 +24,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable, :rememberable, :validatable and :omniauthable
-  devise :database_authenticatable, :registerable
+  devise :database_authenticatable, :registerable, :magic_link_authenticatable, :rememberable
 
   has_many :responses, dependent: :destroy
   has_many :shoutouts, dependent: :destroy
@@ -43,7 +44,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, if: :password_required?
   validates :first_name, :last_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
-  passwordless_with :email
+
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
 

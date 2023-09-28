@@ -1,7 +1,7 @@
 class Api::V1::EmotionsController < ApplicationController
-  include ApplicationHelper
   include UserEmailMailerHelper
-  before_action :require_user!
+  include ApplicationHelper
+  before_action :authenticate_user!
   before_action :current_response, only: [:index]
   def index
     if current_user.present?
@@ -51,7 +51,8 @@ class Api::V1::EmotionsController < ApplicationController
       fun_question:,
       user_shoutouts: current_user.shoutouts.not_celebrate,
       check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id]),
-      is_manager: current_user.user_teams.managers.any?
+      is_manager: current_user.user_teams.managers.any?,
+      prev_results_path:
     }
   end
 

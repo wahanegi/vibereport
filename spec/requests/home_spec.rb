@@ -1,10 +1,9 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe 'Homes', type: :request do
   let!(:user) { create :user }
   before(:each) do
-    passwordless_sign_in(user)
+    sign_in(user)
   end
 
   describe 'GET /index' do

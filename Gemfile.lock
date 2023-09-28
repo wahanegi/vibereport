@@ -124,6 +124,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-passwordless (0.7.1)
+      devise
     diff-lcs (1.5.0)
     docile (1.4.0)
     dotenv (2.8.1)
@@ -229,9 +231,6 @@ GEM
     parallel (1.23.0)
     parser (3.2.2.1)
       ast (~> 2.4.1)
-    passwordless (0.11.0)
-      bcrypt (~> 3.1.11)
-      rails (>= 5.1.4)
     pg (1.5.3)
     postmark (1.24.0)
       json
@@ -418,6 +417,7 @@ DEPENDENCIES
   cssbundling-rails (~> 1.1, >= 1.1.2)
   debug
   devise (~> 4.8)
+  devise-passwordless
   dotenv-rails (~> 2.1, >= 2.1.1)
   factory_bot_rails
   faker!
@@ -429,7 +429,6 @@ DEPENDENCIES
   jsonapi-serializer (~> 2.2)
   letter_opener_web
   nokogiri
-  passwordless (~> 0.11.0)
   pg (~> 1.1)
   postmark-rails (~> 0.22.1)
   premailer-rails

@@ -9,9 +9,6 @@ ActiveAdmin.register User do
     column :created_at
     column :opt_out
     column :not_ask_visibility
-    column 'Passwordless Sessions' do |user|
-      user.passwordless_sessions.size
-    end
     actions
   end
 
@@ -79,10 +76,6 @@ ActiveAdmin.register User do
         end
       end
     end
-  end
-
-  sidebar :passwordless_sessions, only: :show do
-    link_to 'Go to sessions', admin_user_passwordless_sessions_path(user)
   end
 
   form do |f|
