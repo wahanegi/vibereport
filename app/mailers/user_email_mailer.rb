@@ -42,7 +42,10 @@ class UserEmailMailer < ApplicationMailer
   def auto_remind_checkin(user, time_period)
     @user = user
     @time_period = time_period
-    @who_is_waiting = who_is_waiting(user)
+    @fun_question = time_period.fun_question
+    @fun_question_responses = @fun_question.fun_question_answers.limit(3)
+    @who_is_waiting = who_is_waiting(user, time_period)
+    @shout_outs = user.mentions.where(time_period_id: time_period.id)
     mail(to: @user.email, subject: random_remind_checkin_subject(time_period))
   end
 end

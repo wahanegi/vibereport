@@ -27,6 +27,9 @@ Here styles for:
     padding-top: 1px;
     padding-left: 5px;
 }
+.color-primary {
+    color: #D7007B;
+}
 
 .line1 {
     width: 137px;
@@ -389,6 +392,20 @@ text-align: center;
     align-items: center;
     color: #FFFFFF;
 }
+.btn-remind {
+    width: 16.688rem;
+    height: 3.75rem;
+    background: #D7007B;
+    border: 0.0625rem solid #000000;
+    box-shadow: 0 .25rem .25rem rgba(0, 0, 0, 0.25);
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 2rem;
+    font-family: 'Inter',  sans-serif;
+    line-height: 2.4rem;
+    align-items: center;
+    color: #FFFFFF;
+}
 .btn-text-magic {
     padding: .625rem 1.563rem .3125rem 1.563rem;
     width: 11.563rem;
@@ -425,6 +442,13 @@ text-align: center;
     line-height: 24px;
     color:       #454547;
     padding: 8px;
+}
+
+.text-shoutout {
+    text-align: left;
+    height: 30px;
+    font-size: 24px;
+    line-height: 24px;
 }
 
 html {
@@ -478,6 +502,15 @@ html {
     text-transform: capitalize;
 }
 
+.date-completed {
+    padding-top: 54px;
+    font-size: 16px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+
 /* reminder_email */
 .first-row-reminder{
     height:8px;
@@ -495,4 +528,19 @@ html {
 .text-reminder{
     width: 453px;
     color: rgba(0, 0, 0, 0.7);
+}
+
+ul {
+    margin-bottom: 30px;
+    list-style-type: disc;
+    padding-left: 20px;
+    font-size: 24px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+li {
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 30px;
 }

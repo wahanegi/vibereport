@@ -35,8 +35,14 @@ module UserEmailMailerHelper
 
   def who_is_waiting(user, time_period)
     teams = user.teams
-    is_manager = user.user_teams.manager.any?
-    "The #{teams.pluck(:name).to_sentence} #{pluralize(teams.count, 'team')}" \
-      "are waiting for you to check-in for #{time_period.date_range}"
+    is_manager = user.user_teams.managers.any?
+    managers = User.joins(:user_teams).where(user_teams: { manager: true, team_id: teams.ids }).uniq
+
+    if is_manager
+      "The #{teams.pluck(:name).to_sentence} #{'team'.pluralize(teams.count)}" \
+        "are waiting for you to check-in for #{time_period.date_range}"
+    elsif managers.any?
+      "#{managers.pluck(:first_name).to_sentence} are waiting for you to check-in for #{time_period.date_range}"
+    end
   end
 end

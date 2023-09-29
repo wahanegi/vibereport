@@ -25,46 +25,64 @@
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
 </head>
 <body>
-<div class="board mx-auto">
-  <div class="first-row">
-    <div class="mx-auto my-0">
-      <%= render 'layouts/logo', height: 61 %>
+  <div class="board mx-auto">
+    <div class="first-row">
+      <div class="ms-auto my-0">
+        <%= render 'layouts/logo', height: 61 %>
+      </div>
     </div>
-  </div>
-  <div class="second-row">
-    <!--[if mso]>
-    <table role="presentation" width="100%">
-      <tr>
-        <td style="width: 102px; height: 115px; text-align: left;">
-          <div class="calendar-days ml-55" style="background-image: url('calendar_days.png'); background-repeat: no-repeat; background-size: contain;">
-            <div class="date" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-              <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+    <div class="second-row">
+      <!--[if mso]>
+      <table role="presentation" width="100%">
+        <tr>
+          <td style="width: 102px; height: 115px; text-align: left;">
+            <div class="calendar-days ml-55" style="background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+              <div class="date" style="padding-top: 54px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+               TODAY
+              </div>
             </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-    <![endif]-->
-    <!--[if !mso]><!-->
-    <div class="calendar-days ml-55">
-       <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+          </td>
+        </tr>
+      </table>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <div class="calendar-complete-by ml-55">
+         <div class="date-completed">
+           TODAY
+         </div>
+      </div>
+      <!--<![endif]-->
     </div>
-    <!--<![endif]-->
-  </div>
-  <div class="mx-auto my-0 title">Submissions are in!</div>
-    <div class="mx-auto my-0 text-invitation">See how the team has been doing:</div>
-  <div class="container">
-    <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
-                { controller: "api/v1/results",
-                  action: "results_email",
-                  slug: @time_period.slug,
-                  user_id: @user.id }
-    %>
-  </div>
-  <div class="row-over-links">
-    <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
+    <div class="mx-auto my-0 title"><%= "Dear, #{@user.first_name}" %></div>
+    <div class="mx-auto my-0 text-invitation mb-2"><%= "#{@who_is_waiting}" %></div>
+    <div class="fourth-row-magic mb-2">
+      <div class="mx-auto btn-remind">
+        <div class="btn-text-magic">
+          <%= link_to "Check in now", { controller: 'api/v1/responses',
+                                        action: 'sign_in_from_email',
+                                        id: @time_period.id,
+                                        user_id: @user.id }%>
+        </div>
+      </div>
     </div>
+
+    <% if @shout_outs.any? %>
+      <div class="text-shoutout mt-37">Also did you know that you received some shoutouts?</div>
+      <ul class="mt-37">
+        <% @shout_outs.sample(3).each do |shout_out| %>
+          <li class="ml-200"><%= shout_out.rich_text.html_safe %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="text-shoutout mt-37">The fun question of the week: <%= @fun_question.question_body %></div>
+    <% if @fun_question_responses.any? %>
+      <div class="text-shoutout mt-37">Some answers thus far:</div>
+      <% @fun_question_responses.sample(3).each do |response| %>
+        <ul class="mt-37">
+          <li class="ml-200"><%= response.answer_body %></li>
+        </ul>
+      <% end %>
+    <% end %>
   </div>
-</div>
 </body>
 </html>
