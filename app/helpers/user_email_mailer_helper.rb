@@ -23,4 +23,20 @@ module UserEmailMailerHelper
     emotions.each_slice(6) { |sliced_emotions| table << sliced_emotions }
     table = table.transpose.flatten
   end
+
+  def random_remind_checkin_subject(time_period)
+    [
+      'Last chance to check in!',
+      "Reminder to complete your Vibereport check-in for #{time_period.date_range}",
+      'Must check in today',
+      'Your input is valuable'
+    ].sample
+  end
+
+  def who_is_waiting(user, time_period)
+    teams = user.teams
+    is_manager = user.user_teams.manager.any?
+    "The #{teams.pluck(:name).to_sentence} #{pluralize(teams.count, 'team')}" \
+      "are waiting for you to check-in for #{time_period.date_range}"
+  end
 end

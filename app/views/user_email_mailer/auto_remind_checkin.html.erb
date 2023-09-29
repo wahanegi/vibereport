@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Email letter</title>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+          font-style: normal;
+          font-weight:700;
+          text-align: center;
+          line-height: 0;
+      }
+      .board{
+          min-width:1080px;
+      }
+      .lnk-unsubscribe{
+          text-align: left;
+      }
+  </style>
+  <%= stylesheet_link_tag 'email_page' , media: 'all' %>
+</head>
+<body>
+<div class="board mx-auto">
+  <div class="first-row">
+    <div class="mx-auto my-0">
+      <%= render 'layouts/logo', height: 61 %>
+    </div>
+  </div>
+  <div class="second-row">
+    <!--[if mso]>
+    <table role="presentation" width="100%">
+      <tr>
+        <td style="width: 102px; height: 115px; text-align: left;">
+          <div class="calendar-days ml-55" style="background-image: url('calendar_days.png'); background-repeat: no-repeat; background-size: contain;">
+            <div class="date" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+              <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <div class="calendar-days ml-55">
+       <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+    </div>
+    <!--<![endif]-->
+  </div>
+  <div class="mx-auto my-0 title">Submissions are in!</div>
+    <div class="mx-auto my-0 text-invitation">See how the team has been doing:</div>
+  <div class="container">
+    <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
+                { controller: "api/v1/results",
+                  action: "results_email",
+                  slug: @time_period.slug,
+                  user_id: @user.id }
+    %>
+  </div>
+  <div class="row-over-links">
+    <div class="mx-auto my-0 lnk-was-not" style="width: max-content">
+    </div>
+  </div>
+</div>
+</body>
+</html>

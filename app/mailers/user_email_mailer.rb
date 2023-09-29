@@ -38,4 +38,11 @@ class UserEmailMailer < ApplicationMailer
     @message = message
     mail(to: @user.email, subject: '🔔 Reminder: Share Your Vibes from Last Week')
   end
+
+  def auto_remind_checkin(user, time_period)
+    @user = user
+    @time_period = time_period
+    @who_is_waiting = who_is_waiting(user)
+    mail(to: @user.email, subject: random_remind_checkin_subject(time_period))
+  end
 end
