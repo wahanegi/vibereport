@@ -54,7 +54,7 @@ ActiveAdmin.register Team do
   end
 
   collection_action :export_csv do
-    csv_header = ["Name", "User Emails"]
+    csv_header = ['Name', 'User Emails']
 
     csv_data = CSV.generate(headers: true) do |csv|
       csv << csv_header
@@ -64,17 +64,26 @@ ActiveAdmin.register Team do
       end
     end
 
-    send_data csv_data, type: 'text/csv; charset=utf-8; header=present', disposition: "attachment; filename=teams.csv"
+    send_data csv_data, type: 'text/csv; charset=utf-8; header=present', disposition: 'attachment; filename=teams.csv'
   end
 
   show do |team|
     attributes_table do
       row :name
+      row 'Managers' do
+        managers = team.user_teams.managers.map { |ut| ut.user.email }
+        if managers.empty?
+          'No managers present<br><br>'.html_safe + link_to('Add team managers', admin_team_user_teams_path(team))
+        else
+          managers_list = managers.sort.join('<br>').html_safe
+          managers_list + '<br><br>'.html_safe + link_to('Edit team managers', admin_team_user_teams_path(team))
+        end
+      end
       row 'Users' do
         if team.users.empty?
           'User List is Empty'
         else
-          team.users.map { |user| user.email }.sort.join("<br>").html_safe
+          team.users.map { |user| user.email }.sort.join('<br>').html_safe
         end
       end
       panel 'Select Time Period' do
@@ -82,7 +91,7 @@ ActiveAdmin.register Team do
           select_tag :time_period, 
                      options_from_collection_for_select(TimePeriod.all.order(end_date: :desc), :id, :date_range, params[:time_period]),
                      include_blank: 'Select Time Period',
-                     onchange: "this.form.submit();"
+                     onchange: 'this.form.submit();'
         end
       end
 
@@ -93,9 +102,9 @@ ActiveAdmin.register Team do
       if time_period
         previous_time_period = TimePeriod
           .joins(responses: {user: :teams})
-          .where("end_date < ?", time_period.start_date)
-          .where("teams.id = ?", team.id)
-          .where("responses.not_working = ?", false)
+          .where('end_date < ?', time_period.start_date)
+          .where('teams.id = ?', team.id)
+          .where('responses.not_working = ?', false)
           .order(end_date: :desc)
           .first
       end
@@ -113,7 +122,7 @@ ActiveAdmin.register Team do
           teammate_engagement_count = vars[:teammate_engagement_count]
 
           if responses_count == 0
-            if verbatim_list.present? && verbatim_list != "No teammate engagement verbatims present" 
+            if verbatim_list.present? && verbatim_list != 'No teammate engagement verbatims present'
               attributes_table_for team do
                 row :Teammate_Engagement_Verbatims do
                   if verbatim_list.is_a?(Array)
@@ -146,7 +155,7 @@ ActiveAdmin.register Team do
             previous_period_participation_percentage = vars[:previous_participation_percentage]
 
             productivity_verbatims = vars[:productivity_verbatims]
-            
+
             celebrate_comments_count = vars[:celebrate_comments_count]
             previous_period_celebrate_comments_count = vars[:previous_celebrate_comments_count]
 
@@ -180,7 +189,6 @@ ActiveAdmin.register Team do
                   div do
                     span productivity_avg
                     span trend_data[0].html_safe, style: trend_data[1]
-                    
                   end
                 else
                   div do
