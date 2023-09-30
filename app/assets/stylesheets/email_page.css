@@ -11,6 +11,9 @@ Here styles for:
     font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
     font-style: normal;
 }
+.italic {
+    font-style: italic;
+}
 .convert {
     width: 127px;
     height: 58px;
@@ -72,6 +75,9 @@ Here styles for:
 }
 .ml-41{
     margin-left: 41px;
+}
+.mr-30{
+    margin-right: 30px;
 }
 .p-0{
     padding:0;
@@ -216,7 +222,9 @@ text-align: center;
 }
 
 .calendar-complete-by {
-    text-align: left;
+    position: absolute;
+    left: 10px;
+    top: 0;
     width: 102px;
     height: 115px;
     background-image: -webkit-image-set(url("complete-by.png") 1x);
@@ -443,6 +451,13 @@ text-align: center;
     color:       #454547;
     padding: 8px;
 }
+.text-check {
+    height: 25px;
+    font-size: 20px;
+    line-height: 20px;
+    color:       #454547;
+    padding: 8px;
+}
 
 .text-shoutout {
     text-align: left;
@@ -531,7 +546,8 @@ html {
 }
 
 ul {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    margin-top: 10px;
     list-style-type: disc;
     padding-left: 20px;
     font-size: 24px;
@@ -543,4 +559,5 @@ li {
     font-size: 24px;
     text-align: left;
     margin-bottom: 30px;
+    margin-left: 10px;
 }

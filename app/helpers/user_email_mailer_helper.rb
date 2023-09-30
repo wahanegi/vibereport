@@ -40,9 +40,9 @@ module UserEmailMailerHelper
 
     if is_manager
       "The #{teams.pluck(:name).to_sentence} #{'team'.pluralize(teams.count)}" \
-        "are waiting for you to check-in for #{time_period.date_range}"
+        "#{teams.count == 1 ? 'is' : 'are'} waiting for you to check-in for #{time_period.date_range}"
     elsif managers.any?
-      "#{managers.pluck(:first_name).to_sentence} are waiting for you to check-in for #{time_period.date_range}"
+      "#{managers.pluck(:first_name).to_sentence} #{teams.count == 1 ? 'is' : 'are'} waiting for you to check-in for #{time_period.date_range}"
     end
   end
 end
