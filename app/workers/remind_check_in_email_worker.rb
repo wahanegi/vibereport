@@ -9,12 +9,12 @@ class RemindCheckInEmailWorker
   def run_notification
     return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_REMIND_CHECKIN'))
 
-    run_results_email!
+    run_remind_email!
   end
 
   private
 
-  def run_results_email!
+  def run_remind_email!
     users.each do |user|
       send_remind_email(user, time_period) if user_has_not_response?(user)
     end
