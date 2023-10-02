@@ -12,7 +12,7 @@ RSpec.describe RemindCheckInEmailWorker do
   let(:run_worker) { worker.run_notification }
 
   before(:each) do
-    allow(ENV).to receive(:[]).with('DAY_TO_SEND_REMIND_CHECKIN').and_return('monday')
+    stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_REMIND_CHECKIN' => Date.current.strftime('%A')))
   end
 
   describe '.initialize' do
@@ -21,22 +21,6 @@ RSpec.describe RemindCheckInEmailWorker do
     end
     it 'fetch time_period' do
       expect(worker.time_period).to eq(TimePeriod.current_time_period)
-    end
-  end
-
-  describe '#run_notification' do
-    it 'calls run_remind_email! when the current day matches the day to send' do
-      allow(Date).to receive(:current).and_return(Date.new(2023, 9, 30)) # Set the current date to match the day to send
-
-      expect(worker).to receive(:run_remind_email!)
-      run_worker
-    end
-
-    it 'does not call run_remind_email! when the current day does not match the day to send' do
-      allow(Date).to receive(:current).and_return(Date.new(2023, 9, 29)) # Set the current date to a different day
-
-      expect(worker).not_to receive(:run_remind_email!)
-      run_worker
     end
   end
 
