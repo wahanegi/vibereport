@@ -7,16 +7,18 @@ class RemindCheckInEmailWorker
   end
 
   def run_notification
-    return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_REMIND_CHECKIN'))
+    return unless Date.current.strftime('%A').casecmp?(ENV['DAY_TO_SEND_FINAL_REMINDER'] || '')
 
-    run_remind_email!
+    send_reminder_emails!
   end
 
   private
 
-  def run_remind_email!
+  def send_reminder_emails!
     users.each do |user|
-      send_remind_email(user, time_period) if user_has_not_response?(user)
+      next if user_has_current_response?
+
+      send_remind_email(user, time_period)
     end
   end
 
@@ -24,7 +26,7 @@ class RemindCheckInEmailWorker
     UserEmailMailer.auto_remind_checkin(user, time_period).deliver_now
   end
 
-  def user_has_not_response?(user)
-    !user.responses.exists?(time_period_id: time_period.id)
+  def user_has_current_response?(user)
+    user.responses.exists?(time_period_id: time_period.id)
   end
 end

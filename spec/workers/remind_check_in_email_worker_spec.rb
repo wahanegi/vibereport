@@ -12,7 +12,7 @@ RSpec.describe RemindCheckInEmailWorker do
   let(:run_worker) { worker.run_notification }
 
   before(:each) do
-    stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_REMIND_CHECKIN' => Date.current.strftime('%A')))
+    stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_FINAL_REMINDER' => Date.current.strftime('%A')))
   end
 
   describe '.initialize' do
