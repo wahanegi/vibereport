@@ -30,7 +30,7 @@ RSpec.describe RemindCheckInEmailWorker do
       expect(UserEmailMailer).to_not receive(:auto_remind_checkin).with(user_with_response, time_period).and_call_original
 
       expect do
-        worker.send(:send_remind_email, user_without_response, time_period)
+        worker.send(:send_reminder_email, user_without_response, time_period)
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       email = ActionMailer::Base.deliveries.last

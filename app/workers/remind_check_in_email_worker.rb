@@ -18,11 +18,11 @@ class RemindCheckInEmailWorker
     users.each do |user|
       next if user_has_current_response?
 
-      send_remind_email(user, time_period)
+      send_reminder_email(user, time_period)
     end
   end
 
-  def send_remind_email(user, time_period)
+  def send_reminder_email(user, time_period)
     UserEmailMailer.auto_remind_checkin(user, time_period).deliver_now
   end
 
