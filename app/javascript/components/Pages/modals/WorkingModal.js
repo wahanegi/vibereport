@@ -38,7 +38,7 @@ const WorkingModal = ({ show, setShow, data, setData, steps }) => {
             <Button className='btn-modal c1 delete border-0 w-auto' onClick={() => {setShow(false)}}>Skip check-in</Button>
           </div>
           <div className='m-3'>
-            <Button className='btn-modal c1 border-0 w-auto' onClick={onClickNotWorking}>Yes, I worked!!</Button>
+            <Button className='btn-modal c1 border-0 w-auto' onClick={onClickNotWorking}>Yes, I worked</Button>
           </div>
         </div>
       </Modal.Body>
