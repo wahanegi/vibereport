@@ -8,7 +8,7 @@ import Button from "../UI/Button";
 const UnsubscribePage = ({data}) => {
   const {current_user, time_period} = data
   const [unsubscribed, setUnsubscribed] = useState(current_user.opt_out)
-  const isManager = data.current_user.manager;
+  const isManager = data.is_manager;
   const previewValue = isManager ? 'result-managers' : 'results';
 
   const onUnsubscribe = () => {
