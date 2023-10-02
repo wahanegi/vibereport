@@ -10,8 +10,8 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   if(isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working
+  const isManager = data.is_manager;
   const navigate = useNavigate()
-  const isManager = data.current_user.manager;
   const handlingBack = () => {
     if (isPresent(data.prev_results_path)) return;
 

@@ -18,10 +18,8 @@ RSpec.describe Api::V1::ResultsPresenter do
   let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user, 'api/v1/result_managers') }
   let!(:team1) { create :team }
   let!(:team2) { create :team }
-
-  before do
-    user.teams << [team1, team2]
-  end
+  let!(:user_team) { create :user_team, user:, team: team1, manager: true }
+  let!(:user_team2) { create :user_team, user:, team: team2, manager: true }
 
   describe '#render' do
     subject { presenter.json_hash }

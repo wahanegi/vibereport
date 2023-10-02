@@ -129,9 +129,8 @@ export const ResultsManager = ({ data, setData, steps, draft, service, nextTimeP
   const slug = useParams().slug
 
   const handlingOnClickImage = () => {
-    const isManager = data.current_user.manager;
+    const isManager = data.is_manager;
     if (slug && isManager) return navigate(`/result-managers/${slug}`)
-
     steps.push('result-managers')
     const dataRequest = {
       response: {attributes: {steps: steps}}
@@ -174,7 +173,7 @@ export const Results = ({ data, setData, steps, hidden = false }) => {
   const navigate = useNavigate()
 
   const handlingOnClickImage = () => {
-    const isManager = data.current_user.manager;
+    const isManager = data.is_manager;
     const dataRequest = {
       response: {
         attributes: {
