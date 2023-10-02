@@ -11,6 +11,10 @@ RSpec.describe RemindCheckInEmailWorker do
   let(:worker) { RemindCheckInEmailWorker.new }
   let(:run_worker) { worker.run_notification }
 
+  before(:each) do
+    allow(ENV).to receive(:[]).with('DAY_TO_SEND_REMIND_CHECKIN').and_return('monday')
+  end
+
   describe '.initialize' do
     it 'fetches all users' do
       expect(worker.users).to match_array([user_with_response, user_without_response])
@@ -38,8 +42,6 @@ RSpec.describe RemindCheckInEmailWorker do
 
   describe '#send_remind_email' do
     it 'sends a reminder email to the user' do
-      stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_REMIND_CHECKIN' => Date.current.strftime('%A')))
-
       expect(UserEmailMailer).to receive(:auto_remind_checkin).with(user_without_response, time_period).and_call_original
       expect(UserEmailMailer).to_not receive(:auto_remind_checkin).with(user_with_response, time_period).and_call_original
 
