@@ -16,7 +16,7 @@ class RemindCheckInEmailWorker
 
   def send_reminder_emails!
     users.each do |user|
-      next if user_has_current_response?
+      next if user_has_current_response?(user)
 
       send_reminder_email(user, time_period)
     end
