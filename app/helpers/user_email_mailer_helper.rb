@@ -42,7 +42,7 @@ module UserEmailMailerHelper
 
   def text_for_waiting(is_manager, teams, managers, time_period)
     if is_manager
-      "The #{teams.pluck(:name).to_sentence} #{'team'.pluralize(teams.count)}" \
+      "The #{teams.pluck(:name).to_sentence} #{'team'.pluralize(teams.count)} " \
         "#{teams.count == 1 ? 'is' : 'are'} waiting for you to check-in for #{time_period.date_range}."
     elsif managers.any?
       "#{managers.pluck(:first_name).to_sentence} #{managers.count == 1 ? 'is' : 'are'} waiting for you to check-in for #{time_period.date_range}."
