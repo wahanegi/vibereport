@@ -11,6 +11,7 @@ module Api
       def create
         @response = current_user.responses.build(response_params)
         if @response.save
+          current_user.update!(time_period_index: 0)
           render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity

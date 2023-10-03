@@ -19,10 +19,9 @@ class UserEmailMailer < ApplicationMailer
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
   end
 
-  def results_email(user, time_period, words)
+  def results_email(user, time_period)
     @user = user
     @time_period = time_period
-    @words = words
     mail(to: @user.email, subject: "Hey #{user.first_name}, the results are in!")
   end
 

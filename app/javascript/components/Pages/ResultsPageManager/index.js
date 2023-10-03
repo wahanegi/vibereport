@@ -21,19 +21,18 @@ import {
   onRemoveAlert,
   scrollTopModalCallback,
   scrollTopTimePeriodCallback,
-  findTimePeriodCallback
+  onChangeTimePeriodIndex
 } from "../ResultsPage";
-import {useParams} from "react-router-dom";
 
 const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
   const {emotions, responses_count, teams, prev_results_path} = results
-  const {time_periods, time_period} = data
+  const {time_periods, time_period, current_user} = data
   const [timePeriod, setTimePeriod] = useState(time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
-  const [timePeriodIndex, setTimePeriodIndex] = useState(0);
+  const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
   const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
   const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
@@ -42,7 +41,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
-  const [slug, setSlug] = useState(useParams().slug)
+  const initialIndex = 0
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
@@ -68,15 +67,15 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
 
   const showNextTimePeriod = () => {
     if (timePeriodIndex > 0) {
-      setSlug(null)
-      setTimePeriodIndex(index => (index - 1));
+      const index = timePeriodIndex - 1
+      onChangeTimePeriodIndex(current_user, index, setTimePeriodIndex, data, setData)
     }
   }
 
   const showPrevTimePeriod = () => {
     if (timePeriodIndex < (time_periods.length - 1)) {
-      setSlug(null)
-      setTimePeriodIndex(index => (index + 1));
+      const index = timePeriodIndex + 1
+      onChangeTimePeriodIndex(current_user, index, setTimePeriodIndex, data, setData)
     }
   }
 
@@ -84,7 +83,6 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
   scrollTopTimePeriodCallback(nextTimePeriod)
   scrollTopModalCallback(showModal)
-  findTimePeriodCallback(time_periods, slug, setTimePeriodIndex)
 
   const Footer = () => <Fragment>
     <QuestionButton data={data} />
@@ -92,7 +90,9 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
     {
       nextTimePeriod && isBlank(data.prev_results_path) ?
         <div className='mt-5'>
-          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
+          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5'
+                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+          />
         </div>:
         <div style={{height: 120}}></div>
     }

@@ -23,13 +23,7 @@ class ResultsNotificationWorker
   end
 
   def send_results_email(user, time_period)
-    word_counts = time_period.responses.completed.where.not(emotion_id: nil).includes(:emotion)
-                             .where('emotions.category' => %w[positive negative])
-                             .group('emotions.word', 'emotions.category')
-                             .order('COUNT(emotions.word) DESC')
-                             .pluck('emotions.word', 'emotions.category', 'COUNT(emotions.word) AS count_all')
-
-    UserEmailMailer.results_email(user, time_period, counted_word(word_counts)).deliver_now
+    UserEmailMailer.results_email(user, time_period).deliver_now
   end
 
   def time_period_has_ended?
