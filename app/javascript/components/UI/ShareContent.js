@@ -171,6 +171,7 @@ export const ResultsManager = ({ data, setData, steps, draft, service, nextTimeP
 export const Results = ({ data, setData, steps, hidden = false }) => {
   const [showResults, setShowResults] = useState(false);
   const navigate = useNavigate()
+  const slug = useParams().slug
 
   const handlingOnClickImage = () => {
     const isManager = data.is_manager;
@@ -187,6 +188,8 @@ export const Results = ({ data, setData, steps, hidden = false }) => {
         steps.push('results');
         updateResponse(data, setData, dataRequest, navigate(`/${steps.slice(-1).toString()}`)).then();
       } else {
+        if (isPresent(slug)) return navigate(`/results/${slug}`);
+
         navigate(`/${steps.slice(-1).toString()}`)
       }
     } else {
