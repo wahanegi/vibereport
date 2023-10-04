@@ -16,6 +16,7 @@ import {updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 import {MIN_MANAGER_USERS_RESPONSES} from "../../helpers/consts";
 import {changeTimePeriodCallback, loadResultsCallback, scrollTopModalCallback, scrollTopTimePeriodCallback} from "../ResultsPage";
+import ShoutoutModal from "../../UI/ShoutoutModal";
 
 const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
@@ -125,6 +126,11 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
       </Wrapper>
       <Footer />
     </div>
+    {
+      showModal && <ShoutoutModal onClose = {() => {setShowModal(false)} }
+                                  data={data} setData={setData} />
+
+    }
     <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
                   data={data} setData={setData} steps={steps} />
   </Fragment>
