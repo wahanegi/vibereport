@@ -31,7 +31,11 @@ class ResultsNotificationWorker
                              .order('COUNT(emotions.word) DESC')
                              .pluck('emotions.word', 'emotions.category', 'COUNT(emotions.word) AS count_all')
 
-    UserEmailMailer.results_email(user, time_period, counted_word(word_counts), fun_question_id, user_recipients_ids).deliver_now
+    UserEmailMailer.results_email(
+      user, time_period,
+      counted_word(word_counts),
+      fun_question_id, user_recipients_ids
+    ).deliver_now
   end
 
   def time_period_has_ended?
