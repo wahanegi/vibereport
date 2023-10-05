@@ -17,7 +17,6 @@ class Api::V1::ResultsPresenter
 
   def json_hash
     {
-      time_periods: TimePeriod.ordered || [],
       emotions: responses.filter_map(&:emotion).sample(36).presence || [],
       gifs:,
       fun_question: question,

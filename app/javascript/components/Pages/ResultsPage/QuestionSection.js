@@ -173,16 +173,16 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, isMinUsersRespo
   const userName = fun_question?.user?.first_name
   const [answersArray, setAnswersArray] = useState(answers || [])
 
-  useEffect(() => {
-    setAnswersArray(answers)
-  }, [answers])
-
   if(isBlank(answersArray)) return <EmptyQuestionSection userName={userName}
                                                     fun_question={fun_question}
                                                     nextTimePeriod={nextTimePeriod}
                                                     data={data}
                                                     setData={setData}
                                                     setShowWorkingModal={setShowWorkingModal}/>
+
+  useEffect(() => {
+    setAnswersArray(answers)
+  }, [answers])
 
   return <div className='results col'>
     <Question {...{userName, fun_question}} />
