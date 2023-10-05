@@ -51,8 +51,22 @@
     </div>
     <!--<![endif]-->
   </div>
-  <div class="mx-auto my-0 title">Submissions are in!</div>
-    <div class="mx-auto my-0 text-invitation">See how the team has been doing:</div>
+  <div class="mx-auto my-0 title">
+    <% if @owner_fun_question == @user.id %>
+      <%= "See what they said!" %>
+    <% elsif @user_recipients_ids.include?(@user.id) %>
+      <%= "You received shoutouts!" %>
+    <% else %>
+      <%= "Submissions are in!" %>
+    <% end %>
+  </div>
+  <div class="mx-auto my-0 text-invitation">
+    <% if @owner_fun_question == @user.id %>
+      <%= "#{@fun_question_body}" %>
+    <% else %>
+      <%= "See how the team has been doing:" %>
+    <% end %>
+  </div>
   <div class="container">
     <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
                 { controller: "api/v1/results",
