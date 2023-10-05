@@ -52,17 +52,17 @@
     <!--<![endif]-->
   </div>
   <div class="mx-auto my-0 title">
-    <% if @owner_fun_question == @user.id %>
+    <% if @fun_question.user_id == @user.id %>
       <%= "See what they said!" %>
-    <% elsif @user_recipients_ids.include?(@user.id) %>
+    <% elsif @user.mentions.where(time_period_id: @time_period.id).any? %>
       <%= "You received shoutouts!" %>
     <% else %>
       <%= "Submissions are in!" %>
     <% end %>
   </div>
   <div class="mx-auto my-0 text-invitation">
-    <% if @owner_fun_question == @user.id %>
-      <%= "#{@fun_question_body}" %>
+    <% if @fun_question.user_id == @user.id %>
+      <%= "#{@fun_question.question_body}" %>
     <% else %>
       <%= "See how the team has been doing:" %>
     <% end %>
