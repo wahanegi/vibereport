@@ -27,9 +27,9 @@ class UserEmailMailer < ApplicationMailer
 
     count_fun_question_answer = fun_question.fun_question_answers.size
     is_shoutouts_with_public_true = Shoutout
-                                 .joins('LEFT JOIN shoutout_recipients ON shoutouts.id = shoutout_recipients.shoutout_id AND shoutouts.public = true')
-                                 .where(time_period_id: time_period.id)
-                                 .where(shoutout_recipients: { user_id: user.teams.ids }).any?
+                                    .joins('LEFT JOIN shoutout_recipients ON shoutouts.id = shoutout_recipients.shoutout_id AND shoutouts.public = true')
+                                    .where(time_period_id: time_period.id)
+                                    .where(shoutout_recipients: { user_id: user.teams.ids }).any?
 
     subject = if fun_question.user_id == user.id
                 "#{count_fun_question_answer} people answered a fun question that you submitted"
