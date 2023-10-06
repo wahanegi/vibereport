@@ -53,7 +53,7 @@
       </div>
       <!--<![endif]-->
     </div>
-    <div class="mx-auto my-0 title"><%= "Dear, #{@user.first_name}" %></div>
+    <div class="mx-auto my-0 title"><%= "Dear #{@user.first_name}," %></div>
     <div class="mx-auto my-0 text-invitation mb-2"><%= "#{@who_is_waiting}" %></div>
     <div class="fourth-row-magic mb-2">
       <div class="mx-auto btn-remind center">
@@ -67,7 +67,7 @@
     </div>
     <% if @shout_outs.any? %>
       <div class="ml-200">
-        <div class="text-shoutout mt-37">Also did you know that you received some shoutouts?</div>
+        <div class="text-shoutout mt-37">Also, did you know that you received some shoutouts?</div>
         <ul>
           <% @shout_outs.sample(3).each do |shout_out| %>
             <li><%= shout_out.rich_text.html_safe %></li>
@@ -76,7 +76,7 @@
       </div>
       <div class="text-check"><%= "After you check in you'll be able to see who posted these." %></div>
     <% end %>
-    <div class="text-shoutout mt-37 ml-200 italic"><%= @fun_question.question_body %></div>
+    <div class="text-shoutout mt-37 ml-200 italic"><%= "\"#{@fun_question.question_body}\"" %></div>
     <% if @fun_question_responses.any? %>
       <div class="ml-200">
         <div class="text-shoutout">Your team members responded:</div>
