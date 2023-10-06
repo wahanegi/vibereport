@@ -11,7 +11,7 @@ module Api
       def create
         @response = current_user.responses.build(response_params)
         if @response.save
-          current_user.update!(time_period_index: 0)
+          reset_time_period_index
           render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
@@ -87,6 +87,10 @@ module Api
 
         current_user.shoutouts.where(time_period_id: TimePeriod.current.id).destroy_all
         @response.fun_question_answer&.destroy
+      end
+
+      def reset_time_period_index
+        current_user.update!(time_period_index: 0)
       end
     end
   end
