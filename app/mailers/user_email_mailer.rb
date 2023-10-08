@@ -19,27 +19,16 @@ class UserEmailMailer < ApplicationMailer
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
   end
 
-  def results_email(user, time_period, words, fun_question)
+  def results_email(user, time_period, fun_question)
     @user = user
     @time_period = time_period
-    @words = words
     @fun_question = fun_question
 
-    count_fun_question_answer = fun_question.fun_question_answers.size
-    is_shoutouts_with_public_true = Shoutout
-                                    .joins('LEFT JOIN shoutout_recipients ON shoutouts.id = shoutout_recipients.shoutout_id AND shoutouts.public = true')
-                                    .where(time_period_id: time_period.id)
-                                    .where(shoutout_recipients: { user_id: user.teams.ids }).any?
+    content = ResultsContent.new(user, time_period, fun_question)
 
-    subject = if fun_question.user_id == user.id
-                "#{count_fun_question_answer} people answered a fun question that you submitted"
-              elsif user.mentions.where(time_period_id: time_period.id).any?
-                "Hey #{user.first_name}, you received shoutouts!"
-              elsif is_shoutouts_with_public_true
-                'One of your teammates received shoutouts!'
-              else
-                "Hey #{user.first_name}, the results are in!"
-              end
+    subject = content.subject
+    @main_header = content.main_header
+    @sub_header = content.sub_header
 
     mail(to: @user.email, subject:)
   end

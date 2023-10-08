@@ -52,20 +52,10 @@
     <!--<![endif]-->
   </div>
   <div class="mx-auto my-0 title">
-    <% if @fun_question.user_id == @user.id %>
-      <%= "See what they said!" %>
-    <% elsif @user.mentions.where(time_period_id: @time_period.id).any? %>
-      <%= "You received shoutouts!" %>
-    <% else %>
-      <%= "Submissions are in!" %>
-    <% end %>
+    <%= @main_header %>
   </div>
   <div class="mx-auto my-0 text-invitation">
-    <% if @fun_question.user_id == @user.id %>
-      <%= "#{@fun_question.question_body}" %>
-    <% else %>
-      <%= "See how the team has been doing:" %>
-    <% end %>
+    <%= @sub_header || 'See how the team has been doing:'%>
   </div>
   <div class="container">
     <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
