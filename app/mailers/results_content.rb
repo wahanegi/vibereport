@@ -1,5 +1,5 @@
 class ResultsContent
-  attr_reader :user, :time_period, :fun_question, :team
+  attr_reader :user, :time_period, :fun_question
 
   def initialize(user, time_period, fun_question)
     @user = user
@@ -41,7 +41,7 @@ class ResultsContent
 
   def shoutouts_with_public_true?
     Shoutout
-      .joins('LEFT JOIN shoutout_recipients ON shoutouts.id = shoutout_recipients.shoutout_id')
+      .joins(:shoutout_recipients)
       .where(public: true)
       .where(time_period_id: time_period.id)
       .where(shoutout_recipients: { user_id: user.teams.map { |team| team.users.ids }.flatten.uniq.reject { |id| id == user.id } }).any?
