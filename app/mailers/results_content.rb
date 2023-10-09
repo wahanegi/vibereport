@@ -36,7 +36,7 @@ class ResultsContent
   private
 
   def count_fun_question_answer
-    fun_question&.fun_question_answers.size
+    fun_question.fun_question_answers.size
   end
 
   def shoutouts_with_public_true?
@@ -44,6 +44,6 @@ class ResultsContent
       .joins('LEFT JOIN shoutout_recipients ON shoutouts.id = shoutout_recipients.shoutout_id')
       .where(public: true)
       .where(time_period_id: time_period.id)
-      .where(shoutout_recipients: { user_id: user.teams.map { |team| team.users.ids }.flatten.uniq.reject { |id| id == user.id}}).any?
+      .where(shoutout_recipients: { user_id: user.teams.map { |team| team.users.ids }.flatten.uniq.reject { |id| id == user.id } }).any?
   end
 end
