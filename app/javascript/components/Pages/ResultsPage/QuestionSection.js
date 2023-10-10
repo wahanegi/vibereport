@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../../helpers/helpers";
-import isEmpty from "ramda/src/isEmpty";
 import Form from "react-bootstrap/Form";
 import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import {Link} from "react-router-dom";
