@@ -4,6 +4,7 @@ import CornerElements from "../UI/CornerElements";
 import {apiRequest} from "../requests/axios_requests";
 import {Link} from "react-router-dom";
 import Button from "../UI/Button";
+import {isPresent} from "../helpers/helpers";
   
 const UnsubscribePage = ({data}) => {
   const {current_user, time_period} = data
@@ -13,8 +14,8 @@ const UnsubscribePage = ({data}) => {
 
   const onUnsubscribe = () => {
     const dataSend = { opt_out: true }
-    const dataFromServer = ({success}) => {
-      if (success) {
+    const dataFromServer = ({current_user}) => {
+      if (isPresent(current_user)) {
         setUnsubscribed(true)
       }
     }
