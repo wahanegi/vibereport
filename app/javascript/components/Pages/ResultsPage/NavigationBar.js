@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {updateResponse} from "../../requests/axios_requests";
 
 const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod,
-                        nextTimePeriod, steps, emotions, data, setShowWorkingModal, setData, prev_results_path}) => {
+                        nextTimePeriod, steps, emotions, data, setShowWorkingModal, setData}) => {
   if(isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working

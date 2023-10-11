@@ -13,6 +13,7 @@
 #  remember_token         :string
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  time_period_index      :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
