@@ -92,7 +92,7 @@ GEM
       ruby2_keywords (>= 0.0.2, < 1.0)
     ast (2.4.2)
     awesome_print (1.9.2)
-    bcrypt (3.1.18)
+    bcrypt (3.1.19)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -118,7 +118,7 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
-    devise (4.9.2)
+    devise (4.9.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -146,8 +146,8 @@ GEM
     formtastic_i18n (0.7.0)
     git-smart (0.1.11)
       colorize
-    globalid (1.1.0)
-      activesupport (>= 5.0)
+    globalid (1.2.1)
+      activesupport (>= 6.1)
     groupdate (6.2.1)
       activesupport (>= 5.2)
     has_scope (0.8.1)
@@ -197,7 +197,7 @@ GEM
       letter_opener (~> 1.7)
       railties (>= 5.2)
       rexml
-    loofah (2.21.3)
+    loofah (2.21.4)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -209,7 +209,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    minitest (5.19.0)
+    minitest (5.20.0)
     msgpack (1.7.0)
     net-imap (0.3.4)
       date
@@ -221,11 +221,11 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.3-arm64-darwin)
+    nokogiri (1.15.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.15.3-x86_64-darwin)
+    nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.15.3-x86_64-linux)
+    nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.23.0)
@@ -296,7 +296,7 @@ GEM
     regexp_parser (2.8.0)
     reline (0.3.3)
       io-console (~> 0.5)
-    responders (3.1.0)
+    responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.5)
@@ -370,12 +370,12 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    stimulus-rails (1.2.2)
+    stimulus-rails (1.3.0)
       railties (>= 6.0.0)
     thor (1.2.2)
     tilt (2.1.0)
     timeout (0.3.2)
-    turbo-rails (1.4.0)
+    turbo-rails (1.5.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -399,7 +399,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.11)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   arm64-darwin-20
@@ -416,7 +416,7 @@ DEPENDENCIES
   chartkick (~> 5.0, >= 5.0.2)
   cssbundling-rails (~> 1.1, >= 1.1.2)
   debug
-  devise (~> 4.8)
+  devise (~> 4.9, >= 4.9.3)
   devise-passwordless
   dotenv-rails (~> 2.1, >= 2.1.1)
   factory_bot_rails
@@ -449,8 +449,8 @@ DEPENDENCIES
   simplecov
   smarter_csv (~> 1.8, >= 1.8.4)
   sprockets-rails (~> 3.4, >= 3.4.2)
-  stimulus-rails (~> 1.2, >= 1.2.2)
-  turbo-rails (~> 1.3, >= 1.3.3)
+  stimulus-rails (~> 1.3, >= 1.3.0)
+  turbo-rails (~> 1.5, >= 1.5.0)
   tzinfo-data
   web-console
   webdrivers
