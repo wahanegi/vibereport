@@ -11,7 +11,7 @@ class Api::V1::ResultsPresenter
     @fun_question = time_period.fun_question
     @users = responses.filter_map(&:user)
     @current_user = current_user
-    @teams = current_user.user_teams.managers.map(&:team)
+    @teams = current_user.user_teams.not_members.map(&:team)
     @original_url = original_url
   end
 

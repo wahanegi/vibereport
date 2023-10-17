@@ -3,7 +3,7 @@
 # Table name: user_teams
 #
 #  id         :bigint           not null, primary key
-#  manager    :boolean          default(FALSE), not null
+#  role       :integer          default("member"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  team_id    :bigint           not null
@@ -27,8 +27,8 @@ RSpec.describe UserTeam, type: :model do
   let(:manager_user) { create(:user) }
   let(:non_manager_user) { create(:user) }
   let(:user_team) { create(:user_team) }
-  let(:manager_user_team) { create(:user_team, user: manager_user, team:, manager: true) }
-  let(:non_manager_user_team) { create(:user_team, user: non_manager_user, team:, manager: false) }
+  let(:manager_user_team) { create(:user_team, user: manager_user, team:, role: :manager) }
+  let(:non_manager_user_team) { create(:user_team, user: non_manager_user, team:, role: :member) }
 
   it 'factory works' do
     expect(user_team).to be_valid
