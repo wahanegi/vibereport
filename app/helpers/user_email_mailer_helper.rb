@@ -26,7 +26,7 @@ module UserEmailMailerHelper
 
   def random_remind_checkin_subject(time_period)
     [
-      'Last chance to check in!',
+      'Last chance to check-in!',
       "Reminder to complete your Vibereport check-in for #{time_period.date_range}",
       'Must check in today',
       'Your input is valuable'
@@ -43,10 +43,10 @@ module UserEmailMailerHelper
   def text_for_waiting(is_manager, teams, managers, time_period)
     if is_manager
       "The #{teams.pluck(:name).to_sentence} #{'team'.pluralize(teams.count)} " \
-        "#{teams.count == 1 ? 'is' : 'are'} waiting for you to check-in for #{time_period.date_range_str}."
+        "#{teams.count == 1 ? 'is' : 'are'} waiting for you to check-in for #{time_period.date_range_str}"
     elsif managers.any?
       "#{managers.pluck(:first_name).to_sentence} #{managers.count == 1 ? 'is' : 'are'} " \
-        "waiting for you to check-in for #{time_period.date_range_str}."
+        "waiting for you to check-in for #{time_period.date_range_str}"
     end
   end
 end

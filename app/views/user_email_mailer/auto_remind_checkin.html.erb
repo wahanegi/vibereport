@@ -23,22 +23,22 @@
           text-align: right;
       }
       ul {
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           margin-top: 10px;
           list-style-type: disc;
           padding-left: 20px;
           padding-right: 20px;
           font-size: 24px;
           line-height: 24px;
-          color: rgba(0, 0, 0, 0.7);
+          color: black;
       }
 
       li {
           font-size: 24px;
           text-align: left;
-          margin-bottom: 30px;
-          margin-left: 10px;
-          margin-right: 10px;
+          margin-bottom: 10px;
+          margin-left: 20px;
+          color: rgba(0, 0, 0, 0.7);
       }
   </style>
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
@@ -46,7 +46,7 @@
 <body>
   <div class="board mx-auto">
     <div class="second-row">
-      <div class="right mr-30">
+      <div class="right mr-30 mt-37">
         <%= render 'layouts/logo', height: 61 %>
       </div>
       <!--[if mso]>
@@ -71,9 +71,9 @@
       <!--<![endif]-->
     </div>
     <div class="mx-auto my-0 title"><%= "Dear #{@user.first_name}," %></div>
-    <div class="mx-auto my-0 text-invitation mb-2"><%= "#{@who_is_waiting}" %></div>
+    <div class="mx-auto my-0 text-check"><%= "#{@who_is_waiting}" %></div>
     <div class="fourth-row-magic mb-2">
-      <div class="mx-auto btn-remind center">
+      <div class="mt-37 btn-remind center">
         <div class="btn-text-magic">
           <%= link_to "Check in now", { controller: 'api/v1/responses',
                                         action: 'sign_in_from_email',
