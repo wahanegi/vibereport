@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {rangeFormat} from "../../helpers/helpers";
+import {isBlank, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   ShoutOutIcon,
@@ -15,16 +15,25 @@ import EmotionIndex from "../ResultsPageManager/EmotionIndex"
 import {updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 import {MIN_MANAGER_USERS_RESPONSES} from "../../helpers/consts";
-import {changeTimePeriodCallback, loadResultsCallback, scrollTopModalCallback, scrollTopTimePeriodCallback} from "../ResultsPage";
+import ShoutoutModal from "../../UI/ShoutoutModal";
+import {
+  changeTimePeriodCallback,
+  loadResultsCallback,
+  onRemoveAlert,
+  scrollTopModalCallback,
+  scrollTopTimePeriodCallback,
+  onChangeTimePeriodIndex
+} from "../ResultsPage";
 
 const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
-  const {emotions, time_periods, responses_count, teams} = results
-  const [timePeriod, setTimePeriod] = useState(data.time_period || {})
+  const {emotions, responses_count, teams, prev_results_path} = results
+  const {time_periods, time_period, current_user} = data
+  const [timePeriod, setTimePeriod] = useState(time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
-  const [timePeriodIndex, setTimePeriodIndex] = useState(0);
+  const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
   const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
   const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
@@ -33,13 +42,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
-
-  const onRemoveAlert = () => {
-    const dataRequest = {
-      response: {attributes: {notices: null}}
-    }
-    updateResponse(data, setData, dataRequest).then()
-  }
+  const initialIndex = 0
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
@@ -53,25 +56,27 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
     }
     updateResponse(data, setData, dataRequest).then()
     setNotice(null)
-    onRemoveAlert()
+    onRemoveAlert(updateResponse, data, setData)
   }
 
   const onDeclineAction = () => {
     setNotice(null)
-    onRemoveAlert()
+    onRemoveAlert(updateResponse, data, setData)
   }
 
   const isMinUsersResponses = responses_count < MIN_MANAGER_USERS_RESPONSES
 
   const showNextTimePeriod = () => {
     if (timePeriodIndex > 0) {
-      setTimePeriodIndex(index => (index - 1));
+      const index = timePeriodIndex - 1
+      onChangeTimePeriodIndex(current_user, index, setTimePeriodIndex, data, setData)
     }
   }
 
   const showPrevTimePeriod = () => {
     if (timePeriodIndex < (time_periods.length - 1)) {
-      setTimePeriodIndex(index => (index + 1));
+      const index = timePeriodIndex + 1
+      onChangeTimePeriodIndex(current_user, index, setTimePeriodIndex, data, setData)
     }
   }
 
@@ -84,9 +89,11 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
     <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
-      nextTimePeriod ?
+      nextTimePeriod && isBlank(data.prev_results_path) ?
         <div className='mt-5'>
-          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
+          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5'
+                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+          />
         </div>:
         <div style={{height: 120}}></div>
     }
@@ -111,7 +118,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
             <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
         }
         <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
-                            emotions, data, setShowWorkingModal, setData }} />
+                            emotions, data, setShowWorkingModal, setData, prev_results_path }} />
         <div className="folder-shape left-cut">
           <div className="right-cut">
             <div className='folder-line'></div>
@@ -125,6 +132,11 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
       </Wrapper>
       <Footer />
     </div>
+    {
+      showModal && <ShoutoutModal onClose = {() => {setShowModal(false)} }
+                                  data={data} setData={setData} />
+
+    }
     <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
                   data={data} setData={setData} steps={steps} />
   </Fragment>

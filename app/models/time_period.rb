@@ -19,7 +19,6 @@ class TimePeriod < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :emotions, through: :responses
   has_many :shoutouts, dependent: :destroy
-  has_many :celebrate_shoutouts, dependent: :destroy
 
   before_create :slugify
 

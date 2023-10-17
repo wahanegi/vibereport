@@ -54,10 +54,10 @@ export const signOutUser = async (id) =>{
 
 export const updateResponse = async (data, setData, dataRequest, redirect = () => {}) => {
   createCsrfToken()
-  const url = '/api/v1/responses/' + data.response.id
+  const url = '/api/v1/responses/' + data.response.attributes.id
   await axios.patch(url, dataRequest)
     .then(resp => {
-      setData(Object.assign({}, data, {response: resp.data.data}))
+      setData(Object.assign({}, data, {response: resp.data.data, current_user: resp.data.current_user}))
       redirect()
     })
 }

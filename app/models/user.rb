@@ -13,6 +13,7 @@
 #  remember_token         :string
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  time_period_index      :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -28,7 +29,6 @@ class User < ApplicationRecord
 
   has_many :responses, dependent: :destroy
   has_many :shoutouts, dependent: :destroy
-  has_many :celebrate_shoutouts, dependent: :destroy
   has_many :shoutout_recipients, dependent: :destroy
   has_many :fun_questions, dependent: :destroy
   has_many :fun_question_answers, dependent: :destroy
