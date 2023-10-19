@@ -414,6 +414,18 @@ text-align: center;
     align-items: center;
     color: #FFFFFF;
 }
+.btn-text-remind {
+    padding: .625rem 1.563rem .3125rem 1.563rem;
+    height: 2.813rem;
+}
+.btn-text-remind a {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    line-height: 2.438rem;
+    font-size: 2rem;
+    white-space: nowrap;
+    text-decoration: none;
+}
 .btn-text-magic {
     padding: .625rem 1.563rem .3125rem 1.563rem;
     width: 11.563rem;
