@@ -26,7 +26,7 @@ module UserEmailMailerHelper
 
   def random_remind_checkin_subject(time_period)
     [
-      'Last chance to check-in!',
+      'Last chance to check in!',
       "Reminder to complete your Vibereport check-in for #{time_period.date_range}",
       'Must check in today',
       'Your input is valuable'

@@ -19,24 +19,14 @@
       .center {
           text-align: center;
       }
-      .right {
-          text-align: right;
-      }
       ul {
           margin-bottom: 10px;
           margin-top: 10px;
-          list-style: none;
-          padding-left: 10px;
+          list-style-type: disc;
+          padding-left: 20px;
           padding-right: 20px;
           font-size: 24px;
           line-height: 24px;
-      }
-      ul li::before {
-          color: black;
-          content: "\2022";
-          font-weight: bold;
-          display: inline-block;
-          width: 1em;
       }
       li {
           font-size: 24px;
@@ -50,34 +40,36 @@
 </head>
 <body>
   <div class="board mx-auto">
-    <div class="second-row">
-      <div class="right mr-30 mt-37">
+    <div class="first-row">
+      <div class="mx-auto my-0">
         <%= render 'layouts/logo', height: 61 %>
       </div>
-      <!--[if mso]>
-      <table role="presentation" width="100%">
-        <tr>
-          <td style="width: 102px; height: 115px; text-align: left;">
-            <div class="calendar-days ml-55" style="background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
-              <div class="date" style="padding-top: 54px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-               TODAY
-              </div>
-            </div>
-          </td>
-        </tr>
-      </table>
-      <![endif]-->
-      <!--[if !mso]><!-->
-      <div class="calendar-complete-by ml-55">
-         <div class="date-completed">
-           TODAY
-         </div>
-      </div>
-      <!--<![endif]-->
     </div>
+    <!--[if mso]>
+    <table role="presentation" width="100%">
+      <tr>
+        <td class="second-row" style="height: 50px; text-align: left;">
+          <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 102px; height: 115px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+            <tr>
+              <td class="data" style="padding-top: 55px; width: 102px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+                TODAY
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <![endif]-->
+    <!--[if !mso]><!-->
+      <div class="second-row">
+        <div class="calendar ml-55">
+          <div class="data">TODAY</div>
+        </div>
+      </div>
+    <!--<![endif]-->
     <div class="mx-auto my-0 title"><%= "Dear #{@user.first_name}," %></div>
     <div class="mx-auto my-0 text-check"><%= "#{@who_is_waiting}" %></div>
-    <div class="fourth-row-magic mb-2">
+    <div class="fourth-row-magic">
       <div class="mt-37 btn-remind center">
         <div class="btn-text-remind">
           <%= link_to "Check in now", { controller: 'api/v1/responses',
@@ -108,7 +100,7 @@
           </ul>
         <% end %>
       </div>
-      <div class="text-check center"><%= "After you check in you'll be able to see who posted these." %></div>
+      <div class="text-check center my-0"><%= "After you check in you'll be able to see who posted these." %></div>
     <% end %>
   </div>
 </body>
