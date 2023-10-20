@@ -70,4 +70,8 @@ class TimePeriod < ApplicationRecord
   def date_range
     "#{start_date.strftime('%Y-%m-%d')} - #{end_date.strftime('%Y-%m-%d')}"
   end
+
+  def date_range_str
+    "#{start_date.strftime('%b %d')} - #{end_date.strftime('%b %d')}"
+  end
 end
