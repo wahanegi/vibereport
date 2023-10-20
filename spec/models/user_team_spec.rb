@@ -54,12 +54,12 @@ RSpec.describe UserTeam, type: :model do
       end
     end
 
-    describe 'not_members' do
+    describe 'has_team_access' do
       it 'returns user teams with managers and observers' do
-        not_members = UserTeam.not_members
-        expect(not_members).to include(manager_user_team)
-        expect(not_members).to include(observer_user_team)
-        expect(not_members).not_to include(member_user_team)
+        has_team_access = UserTeam.has_team_access
+        expect(has_team_access).to include(manager_user_team)
+        expect(has_team_access).to include(observer_user_team)
+        expect(has_team_access).not_to include(member_user_team)
       end
     end
   end

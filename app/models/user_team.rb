@@ -28,5 +28,5 @@ class UserTeam < ApplicationRecord
   enum role: { member: 0, manager: 1, observer: 2 }
 
   scope :managers, -> { where(role: :manager) }
-  scope :not_members, -> { where.not(role: :member) }
+  scope :has_team_access, -> { where.not(role: :member) }
 end
