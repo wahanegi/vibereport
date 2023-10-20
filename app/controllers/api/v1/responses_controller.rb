@@ -30,6 +30,7 @@ module Api
 
       def response_flow_from_email
         sign_in user
+        reset_time_period_index
         result = ResponseFlowFromEmail.new(params, @user).call
         if params[:time_period_id] == TimePeriod.current.id.to_s
           return redirect_to root_path if result[:success]
