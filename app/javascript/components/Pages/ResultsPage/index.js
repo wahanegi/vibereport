@@ -20,7 +20,7 @@ import WorkingModal from "../modals/WorkingModal";
 import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 
-export const loadResultsCallback = (timePeriod, setLoaded, setResults, url = '/api/v1/results/' ) => {
+export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/' ) => {
   useEffect(() => {
     setLoaded(false)
     axios.get(`${url}${timePeriod.slug}`)
@@ -28,7 +28,7 @@ export const loadResultsCallback = (timePeriod, setLoaded, setResults, url = '/a
         setResults(res.data)
         setLoaded(true)
       })
-  }, [timePeriod.id])
+  }, [timePeriod.id, data.user_shoutouts.length])
 }
 
 export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
@@ -135,7 +135,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     }
   }
 
-  loadResultsCallback(timePeriod, setLoaded, setResults)
+  loadResultsCallback(timePeriod, setLoaded, setResults, data)
   scrollTopTimePeriodCallback(nextTimePeriod)
   scrollTopModalCallback(showModal)
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)

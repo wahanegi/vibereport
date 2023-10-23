@@ -80,7 +80,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
     }
   }
 
-  loadResultsCallback(timePeriod, setLoaded, setResults, '/api/v1/result_managers/')
+  loadResultsCallback(timePeriod, setLoaded, setResults, data, '/api/v1/result_managers/')
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
   scrollTopTimePeriodCallback(nextTimePeriod)
   scrollTopModalCallback(showModal)
