@@ -1,12 +1,11 @@
 class Api::V1::UsersController < ApplicationController
-  include ApplicationHelper
   include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::OutputSafetyHelper
-  before_action :require_user!, only: %i[update]
+  before_action :authenticate_user!, only: %i[update]
 
   def update
     if current_user.update!(user_params)
-      render json: { success: true }
+      render json: { current_user: }
     else
       render json: { error: current_user.errors.messages }, status: :unprocessable_entity
     end
@@ -20,18 +19,15 @@ class Api::V1::UsersController < ApplicationController
 
   def send_reminder
     @user = User.find(params[:id])
-
     message = build_message
-
     UserEmailMailer.send_reminder(@user, message).deliver_now
-
     redirect_to admin_dashboard_path, notice: "Reminder sent to #{@user.full_name}"
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:not_ask_visibility, :opt_out)
+    params.require(:user).permit(:not_ask_visibility, :opt_out, :time_period_index)
   end
 
   def user

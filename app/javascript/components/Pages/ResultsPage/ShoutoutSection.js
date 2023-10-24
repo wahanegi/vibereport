@@ -12,8 +12,8 @@ const PreviewShoutoutSection = () =>
     <div className='row wrap shoutout preview mb-3' />
   </div>
 
-const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts, data,
-                           setData, isMinUsersResponses, current_user}) => {
+const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts,
+                           recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user}) => {
   const [showModal, setShowModal] = useState(false)
   const emptyCurrentUserShoutouts = isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
   const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
@@ -27,10 +27,9 @@ const ShoutoutSection = ({nextTimePeriod, timePeriod, sentShoutouts, receivedSho
   if(!nextTimePeriod && isMinUsersResponses) return <PreviewShoutoutSection />
 
   const ReceivedShoutouts = () => {
-    return !isEmpty(currentUserShoutouts.received) && <div className='px-2'>
-      <h5 className='text-start fw-semibold'>Received:</h5>
+    return !isEmpty(recivedPublicShoutouts) && <div className='px-2'>
       {
-        currentUserShoutouts.received.map(data => {
+        recivedPublicShoutouts.map(data => {
           const {shoutout, users, emojis = []} = data
           return <ShoutoutItem key={shoutout.id} {...{shoutout, users, emojis, current_user}} prefix={'From '} />
         })

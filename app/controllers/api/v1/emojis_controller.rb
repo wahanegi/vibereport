@@ -1,6 +1,5 @@
 class Api::V1::EmojisController < ApplicationController
-  include ApplicationHelper
-  before_action :require_user!, only: %i[create destroy]
+  before_action :authenticate_user!, only: %i[create destroy]
 
   def create
     emoji = current_user.emojis.new(emoji_params)

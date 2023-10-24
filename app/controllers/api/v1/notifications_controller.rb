@@ -1,6 +1,6 @@
 class Api::V1::NotificationsController < ApplicationController
   include ApplicationHelper
-  before_action :require_user!, only: %i[create]
+  before_action :authenticate_user!, only: %i[create]
 
   def create
     @notification = current_user.notifications.build(notification_params)

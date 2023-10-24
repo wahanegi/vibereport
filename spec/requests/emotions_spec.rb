@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::EmotionsController do
   let!(:time_period) { create :time_period }
@@ -14,7 +13,7 @@ RSpec.describe Api::V1::EmotionsController do
   end
 
   before(:each) do
-    passwordless_sign_in(user)
+    sign_in(user)
   end
 
   describe '#index' do
@@ -25,16 +24,13 @@ RSpec.describe Api::V1::EmotionsController do
 
     it 'should returns a proper format of the JSON response' do
       get '/api/v1/emotions'
-      expect(json.length).to eq(10)
+      expect(json.length).to eq(13)
       expect(json[:time_period][:id]).to eq(TimePeriod.current.id)
       expect(json[:time_period][:start_date]).to eq(TimePeriod.current.start_date.to_s)
       expect(json[:time_period][:end_date]).to eq(TimePeriod.current.end_date.to_s)
       expected = json_data.first
-
-      aggregate_failures do
-        expect(expected[:id]).not_to eq(emotion.id.to_s)
-        expect(expected[:type]).to eq('emotion')
-      end
+      expect(expected[:id]).not_to eq(emotion.id.to_s)
+      expect(expected[:type]).to eq('emotion')
     end
 
     it 'should will be correct the length of the response' do

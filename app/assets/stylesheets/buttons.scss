@@ -55,6 +55,10 @@
     color:            $gray-300;
     background-color: $white;
     box-shadow:       $btn-box-shadow-other;
+
+    &.w-385{
+      width: 24.06rem;
+    }
   }
 
   // use with C1 or C2 text
