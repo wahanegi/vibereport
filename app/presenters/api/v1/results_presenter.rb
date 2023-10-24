@@ -6,7 +6,7 @@ class Api::V1::ResultsPresenter
 
   def initialize(time_period_slug, current_user, original_url)
     @time_period = TimePeriod.find_by(slug: time_period_slug)
-    @responses = time_period.responses.completed.working
+    @responses = time_period.responses
     @fun_question_answers = responses.filter_map(&:fun_question_answer)
     @fun_question = time_period.fun_question
     @users = responses.filter_map(&:user)
