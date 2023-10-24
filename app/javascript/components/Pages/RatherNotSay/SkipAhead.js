@@ -2,7 +2,6 @@ import React, {Fragment, useState} from 'react';
 import CornerElements from "../../UI/CornerElements";
 import Button from "../../UI/Button";
 import {signOutUser} from "../../requests/axios_requests";
-import {redirect} from "react-router-dom";
 
 const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) => {
   const xCloseData = data.time_period.end_date
@@ -13,15 +12,16 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
       return new Intl.DateTimeFormat('en-GB', options).format(dt)
     }
 
-  const logoutHandling = () =>{
-      steps.push('emotion-selection-web')
-      saveDataToDb(steps, { draft: false })
-      redirect( window.location.href = `/sign_in`);
+  const logoutHandling = () => {
+    const id = data?.response?.id
+    steps.push('emotion-selection-web')
+    saveDataToDb(steps, { draft: false })
+    signOutUser(id).then(() => window.location.href = `/sign_in`);
   }
 
   const backHandling = () => {
-      steps.push('emotion-selection-web')
-      saveDataToDb(steps, { draft: false })
+    steps.push('emotion-selection-web')
+    saveDataToDb(steps, { draft: false })
   }
 
   return (

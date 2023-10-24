@@ -1,6 +1,5 @@
 class Api::V1::FunQuestionsController < ApplicationController
-  include ApplicationHelper
-  before_action :require_user!
+  before_action :authenticate_user!
 
   def show
     render json: FunQuestionSerializer.new(fun_question).serializable_hash

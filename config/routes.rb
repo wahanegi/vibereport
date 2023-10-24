@@ -2,8 +2,13 @@ Rails.application.routes.draw do
   get 'responses/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
-  devise_for :users
-  passwordless_for :users, at: '/', as: :auth
+  devise_for :users, controllers: { sessions: 'devise/passwordless/sessions' }
+  devise_scope :user do
+    get '/users/magic_link',
+        to: 'devise/passwordless/magic_links#show',
+        as: 'users_magic_link'
+  end
+
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   namespace :api do
@@ -17,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   get '/app', to: 'home#app'
+  get '/sent', to: 'home#sent'
   namespace :api do
     namespace :v1 do
       resources :emotions, only: %i[index create]
@@ -28,6 +34,7 @@ Rails.application.routes.draw do
       resources :notifications, only: %i[create]
       resources :users, only: %i[update]
       resources :emojis, only: %i[create destroy]
+      resources :result_managers, controller: 'results', only: %i[show results_email], param: :slug
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'
@@ -35,6 +42,7 @@ Rails.application.routes.draw do
       get '/results_email', to: 'results#results_email'
       get '/result', to: 'results#show'
       get '/unsubscribe', to: 'users#unsubscribe'
+      get '/result_manager', to: 'results#show'
     end
   end
   get '*path', to: 'home#app', constraints: lambda { |req|

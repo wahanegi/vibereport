@@ -3,9 +3,11 @@ import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import ResponseFlow from "./ResponseFlow";
 import { ALL_STEPS } from "./helpers/routes";
 import {apiRequest} from "./requests/axios_requests";
-import ResultsPreview from "./Pages/ResultsPage/ResultsPreview";
 import CheckInClosed from "./Pages/CheckInClosed";
 import UnsubscribePage from "./Pages/UnsubscribePage";
+import Results from "./Pages/ResultsPage";
+import Loader from "./UI/Loader";
+import ResultsManager from "./Pages/ResultsPageManager";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
@@ -49,7 +51,7 @@ const App = () => {
 
   return(
     <Fragment>
-      {isLoading && <p >Loading...</p>}
+      {isLoading && <Loader />}
       {error && <p>{error}</p>}
       <BrowserRouter>
         {!isNotLoadedData && <Routes>
@@ -67,7 +69,8 @@ const App = () => {
               }
             />
           ))}
-          <Route path="results/:slug" element={<ResultsPreview />} />
+          <Route path="results/:slug" element={<Results data={frontDatabase} setData={setFrontDatabase} />} />
+          <Route path="result-managers/:slug" element={<ResultsManager data={frontDatabase} setData={setFrontDatabase} />} />
           <Route path="check-in-closed" element={<CheckInClosed data={frontDatabase}/>} />
           <Route path="unsubscribe" element={<UnsubscribePage data={frontDatabase} />} />
         </Routes>}

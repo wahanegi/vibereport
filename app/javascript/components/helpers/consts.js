@@ -1,6 +1,5 @@
-export const GIPHY_UPLOAD_URL = 'https://giphy.com/upload';
 
-export const GIPHY_SEARCH_URL = '//api.giphy.com/v1/gifs/search?q';
+export const GIPHY_URL = '//api.giphy.com/v1/gifs/';
 
 export const GIPHY_INSTRUCTION_URL = 'https://docs.google.com/document/d/19VOqimOtENKUB0HqaPQ5-6iBx6YdJv90MBDwVQ8ZC_0/edit'
 
@@ -35,6 +34,7 @@ export const EMOTION_COLORS = {
 
 export const EMOTION_COL_NUMBERS = 6
 export const MIN_USERS_RESPONSES = 4
+export const MIN_MANAGER_USERS_RESPONSES = 1
 export const MAX_CHAR_LIMIT = 700
 
 export const EMOJIS_PER_PAGE = 5;

@@ -22,9 +22,10 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
-    "react-mentions": "^4.4.7",
+    "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.8.2",
     "react-transition-group": "^4.4.5",
+    "recharts": "^2.8.0",
     "sass": "^1.58.0",
     "sweetalert2": "^11.7.3"
   },
@@ -35,7 +36,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-env": "^7.22.6",
     "@babel/preset-react": "^7.18.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",

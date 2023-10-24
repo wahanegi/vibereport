@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
 import EmotionEntry from "./Pages/EmotionEntry";
-import SelectedGIPHYFollow from "./Pages/SelectedGIPHYFollow";
 import EmotionIntensity from "./Pages/EmotionIntensity";
 import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
@@ -17,14 +16,16 @@ import Results from "./Pages/ResultsPage";
 import EmotionType from "./Pages/EmotionType";
 import RatherNotSay from "./Pages/RatherNotSay/RatherNotSay";
 import SkipAhead from "./Pages/RatherNotSay/SkipAhead";
+import ResultsManager from "./Pages/ResultsPageManager";
 
 const ResponseFlow = ({step, data, setData}) => {
   const [isLoading, setIsLoading] = useState(false)
-          const [error, setError] = useState(false)
-                   const stepsArr = data.response.attributes.steps
-                   const navigate = useNavigate()
-                    const service = { isLoading,  error , setIsLoading}
-                    const draft = data.response.attributes.draft
+  const [error, setError] = useState(false)
+  const stepsArr = data.response.attributes.steps
+  const prev_results_path = data.prev_results_path
+  const navigate = useNavigate()
+  const service = {isLoading,  error , setIsLoading}
+  const draft = data.response.attributes.draft
   const mainPage = 'emotion-selection-web'
   const [go, setGo] = useState(null)
   const [isCustomGif, setIsCustomGif] = useState(false)
@@ -34,17 +35,17 @@ const ResponseFlow = ({step, data, setData}) => {
     let lastStep = stepsArr.slice(-1).toString()
     let index = stepsArr.indexOf(step)
 
-      if ( stepsArr[0] !== mainPage ) {
-        saveDataToDb([mainPage])
-      }
-      if (index === -1) {
-        navigate(`/${lastStep}`)
-        setGo(lastStep)
-      } else if (index !== stepsArr.length-1) {
-        saveDataToDb(stepsArr.slice(0, stepsArr.indexOf(step) + 1))
-      } else {
-        setGo(lastStep)
-      }
+    if ( stepsArr[0] !== mainPage ) {
+      saveDataToDb([mainPage])
+    }
+    if (index === -1) {
+      navigate(`/${lastStep}`)
+      setGo(lastStep)
+    } else if (index !== stepsArr.length-1) {
+      saveDataToDb(stepsArr.slice(0, stepsArr.indexOf(step) + 1))
+    } else {
+      setGo(lastStep)
+    }
   },[data])
 
   useEffect(()=> {
@@ -72,11 +73,15 @@ const ResponseFlow = ({step, data, setData}) => {
       });
   },[])
 
+  useEffect(() => {
+    prev_results_path && navigate(prev_results_path)
+  }, [data])
+
   //*** **setError** - Hook for handling error messages
   //*** **steps** - array with steps of user for update or save in DB
   //*** **addedData** - necessary data (and future data) for update or save in DB by using Response controller
   //*** Format addedData = **{key: value, ...., key(n): value(n)}**
-  const saveDataToDb = ( stepsArr, addedData = {}) =>{
+  const saveDataToDb = ( stepsArr, addedData = {}) => {
     const dataRequest = {response:{ attributes: { steps: stepsArr,...addedData } } }
     setIsLoading(true)
     createOrUpdate (data, dataRequest, saveDataToAttributes)
@@ -108,7 +113,6 @@ const ResponseFlow = ({step, data, setData}) => {
     'emotion-entry': <EmotionEntry />,
     'emotion-type': <EmotionType />,
     'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
-    'selected-giphy-follow': <SelectedGIPHYFollow isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'emotion-intensity': <EmotionIntensity />,
     'productivity-check': <ProductivityCheckLow />,
     'results': <Results />,
@@ -117,6 +121,7 @@ const ResponseFlow = ({step, data, setData}) => {
     'recognition': <Recognition />,
     'icebreaker-answer': <IcebreakerAnswer />,
     'icebreaker-question': <IcebreakerQuestion />,
+    'result-managers': <ResultsManager />,
   };
 
   const componentProps = {
