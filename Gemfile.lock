@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/faker-ruby/faker.git
-  revision: 5eb00cfb65b7fb823f0f99c6996b61dafd18e2d9
+  revision: 7cf0bbb99cb843fec5a0eb6d0115dfaf0b0aa6a9
   specs:
-    faker (2.22.0)
+    faker (3.2.1)
       i18n (>= 1.8.11, < 2)
 
 GEM
@@ -225,10 +225,6 @@ GEM
     net-smtp (0.4.0)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.15.4-x86_64-darwin)
-      racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -471,4 +467,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-   2.3.26
+   2.4.14
