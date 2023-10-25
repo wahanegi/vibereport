@@ -36,7 +36,7 @@ module UserEmailMailerHelper
   def who_is_waiting(user, time_period)
     teams = user.teams
     is_manager = user.user_teams.managers.any?
-    managers = User.joins(:user_teams).where(user_teams: { manager: true, team_id: teams.ids }).uniq
+    managers = User.joins(:user_teams).where(user_teams: { role: :manager, team_id: teams.ids }).uniq
     text_for_waiting(is_manager, teams, managers, time_period)
   end
 

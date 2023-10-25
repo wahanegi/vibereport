@@ -3,7 +3,7 @@
 # Table name: user_teams
 #
 #  id         :bigint           not null, primary key
-#  manager    :boolean          default(FALSE), not null
+#  role       :integer          default("member"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  team_id    :bigint           not null
@@ -25,10 +25,12 @@ require 'rails_helper'
 RSpec.describe UserTeam, type: :model do
   let(:team) { create(:team) }
   let(:manager_user) { create(:user) }
-  let(:non_manager_user) { create(:user) }
+  let(:observer_user) { create(:user) }
+  let(:member_user) { create(:user) }
   let(:user_team) { create(:user_team) }
-  let(:manager_user_team) { create(:user_team, user: manager_user, team:, manager: true) }
-  let(:non_manager_user_team) { create(:user_team, user: non_manager_user, team:, manager: false) }
+  let(:manager_user_team) { create(:user_team, user: manager_user, team:, role: :manager) }
+  let(:member_user_team) { create(:user_team, user: member_user, team:, role: :member) }
+  let(:observer_user_team) { create(:user_team, user: observer_user, team:, role: :observer) }
 
   it 'factory works' do
     expect(user_team).to be_valid
@@ -48,7 +50,16 @@ RSpec.describe UserTeam, type: :model do
       it 'returns user teams with managers' do
         managers = UserTeam.managers
         expect(managers).to include(manager_user_team)
-        expect(managers).not_to include(non_manager_user_team)
+        expect(managers).not_to include(member_user_team)
+      end
+    end
+
+    describe 'has_team_access' do
+      it 'returns user teams with managers and observers' do
+        has_team_access = UserTeam.has_team_access
+        expect(has_team_access).to include(manager_user_team)
+        expect(has_team_access).to include(observer_user_team)
+        expect(has_team_access).not_to include(member_user_team)
       end
     end
   end
