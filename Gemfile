@@ -41,6 +41,7 @@ end
 
 group :development do
   gem 'annotate'                      # Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the database schema.
+  gem 'bullet'                        # Finds N+1 queries on app
   gem 'fix-db-schema-conflicts'       # Ensures consistent output of db/schema.rb despite local differences in the database
   gem 'git-smart'                     # Installs some additional 'smart' git commands, like `git smart-pull`.
   gem 'letter_opener_web'             # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
