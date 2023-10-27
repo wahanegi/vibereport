@@ -3,7 +3,7 @@
 # Table name: user_teams
 #
 #  id         :bigint           not null, primary key
-#  manager    :boolean          default(FALSE), not null
+#  role       :integer          default("member"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  team_id    :bigint           not null
@@ -25,6 +25,8 @@ class UserTeam < ApplicationRecord
   belongs_to :team
 
   validates :user_id, uniqueness: { scope: :team_id }
+  enum role: { member: 0, manager: 1, observer: 2 }
 
-  scope :managers, -> { where(manager: true) }
+  scope :managers, -> { where(role: :manager) }
+  scope :has_team_access, -> { where.not(role: :member) }
 end
