@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
-import {isBlank, isEmptyStr, isNotEmptyStr} from "../../helpers/helpers";
+import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../../helpers/helpers";
 import Form from "react-bootstrap/Form";
-import {apiRequest} from "../../requests/axios_requests";
+import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import {Link} from "react-router-dom";
 import EmojiRow from "./Emojis/EmojiRow";
 
@@ -10,8 +10,8 @@ const PreviewQuestionSection = () =>
     <div className='row wrap question preview mb-3' />
   </div>
 
-const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, steps,
-                               saveDataToDb, setShowWorkingModal}) => {
+const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question,
+                               setShowWorkingModal, data, setData}) => {
   const [text, setText] = useState('');
   const [addClass, setAddClass] = useState('')
   const handleMouseEnter = () => {
@@ -25,12 +25,18 @@ const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question, steps,
   };
 
   const handlingBack = () => {
+    if (isPresent(data.prev_results_path)) return;
+
+    const steps = data.response.attributes.steps
     const index = steps.indexOf('icebreaker-answer');
     if (index === -1) {
       !nextTimePeriod && setShowWorkingModal(true)
     } else {
       const new_steps = steps.slice(0, index + 1);
-      !nextTimePeriod && saveDataToDb( new_steps )
+      const dataRequest = {
+        response: {attributes: {steps: new_steps}}
+      }
+      !nextTimePeriod && updateResponse(data, setData, dataRequest)
     }
   }
 
@@ -160,8 +166,8 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
   </div>
 }
 
-const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveDataToDb, isMinUsersResponses,
-                           setShowWorkingModal, current_user}) => {
+const QuestionSection = ({fun_question, answers, nextTimePeriod, isMinUsersResponses,
+                           setShowWorkingModal, current_user, data, setData}) => {
   if(!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
 
   const userName = fun_question?.user?.first_name
@@ -174,8 +180,8 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, steps, saveData
   if(isBlank(answersArray)) return <EmptyQuestionSection userName={userName}
                                                     fun_question={fun_question}
                                                     nextTimePeriod={nextTimePeriod}
-                                                    steps={steps}
-                                                    saveDataToDb={saveDataToDb}
+                                                    data={data}
+                                                    setData={setData}
                                                     setShowWorkingModal={setShowWorkingModal}/>
 
   return <div className='results col'>

@@ -20,16 +20,17 @@ describe ResultsNotificationWorker do
   describe '#send_results_email' do
     let(:user) { create(:user) }
     let(:time_period) { create(:time_period) }
+    let(:fun_question) { create :fun_question, time_period: }
 
     context 'when sending the results_email' do
       it 'sends an email with the correct data' do
         allow(worker).to receive(:time_period_has_ended?).and_return(true)
         allow(worker).to receive(:user_has_response?).and_return(true)
 
-        expect(UserEmailMailer).to receive(:results_email).with(user, time_period, an_instance_of(Array)).and_call_original
+        expect(UserEmailMailer).to receive(:results_email).with(user, time_period, fun_question).and_call_original
 
         expect do
-          worker.send(:send_results_email, user, time_period)
+          worker.send(:send_results_email, user, time_period, fun_question)
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         email = ActionMailer::Base.deliveries.last

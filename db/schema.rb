@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_17_173020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,20 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "passwordless_sessions", force: :cascade do |t|
-    t.bigint "authenticatable_id"
-    t.string "authenticatable_type"
-    t.datetime "claimed_at", precision: nil
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "expires_at", precision: nil, null: false
-    t.string "remote_addr", null: false
-    t.datetime "timeout_at", precision: nil, null: false
-    t.string "token", null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.text "user_agent", null: false
-    t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
-  end
-
   create_table "responses", force: :cascade do |t|
     t.string "celebrate_comment"
     t.text "comment"
@@ -177,6 +163,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
 
   create_table "user_teams", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "role", default: 0, null: false
     t.bigint "team_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -194,8 +181,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_130700) do
     t.boolean "not_ask_visibility", default: false, null: false
     t.boolean "opt_out", default: false
     t.datetime "remember_created_at"
+    t.string "remember_token"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.integer "time_period_index", default: 0
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

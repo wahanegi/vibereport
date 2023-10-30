@@ -66,6 +66,9 @@
   &.result-page {
     max-width: 100%
   }
+  &.manager-result-page {
+    width: auto;
+  }
 }
 
 .gif-list {
@@ -174,4 +177,8 @@
   width: 90px;
   height: 10px;
   margin-top: 6px;
+}
+
+.card-colors {
+  --bs-card-bg: unset !important;
 }

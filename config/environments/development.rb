@@ -1,6 +1,12 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.console       = true
+    Bullet.rails_logger  = true
+  end
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -87,6 +93,7 @@ ENV['ADMIN_PASSWORD'] = 'password'
 # General use
 ENV['DAY_TO_SEND_INVITES'] = 'friday'
 ENV['DAY_TO_SEND_RESULTS_EMAIL'] = 'tuesday'
+ENV['DAY_TO_SEND_FINAL_REMINDER'] = 'monday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
 ENV['DEFAULT_FROM_ADDRESS'] = 'hello'
 ENV['GIPHY_API_KEY'] = 'v6xr0UlohPqB69kIH5HlnmIIGxc34EaS'

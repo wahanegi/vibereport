@@ -1035,7 +1035,7 @@ a.dropdown-item{
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: $gray-300 ;
     border-radius: 6px;
@@ -1131,4 +1131,226 @@ input:checked + .slider-shoutout img {
 .switcher-title{
   font-size: 19.5px;
   text-align: left;
+}
+
+
+// Toggle shoutouts
+
+.switcher-shoutout{
+  height: 48px;
+  width: 105px;
+}
+
+.placement-shoutout-toggle {
+  z-index: 40;
+  top: -147px;
+  left: -367px;
+}
+
+.switcher-shoutout input{
+  opacity: 0;
+  width: 0;
+  height: 0 !important;
+}
+
+.slider-shoutout{
+  cursor: pointer;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  background-color: $switch-grey;
+  box-shadow: 3px 4.5px 3px 0px $gray-250;
+  border-radius: 100px;
+}
+
+.slider-shoutout:before{
+  position: absolute;
+  content: '';
+  height: 40px;
+  width: 61.5px;
+  background-color: $light-violet;
+  border-radius: 100px;
+  top: 4px;
+  left: 40px;
+  bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.slider-shoutout img {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  top: 50%;
+  left: 68%;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease-in-out;
+}
+
+input:checked + .slider-shoutout:before {
+  transform: translateX(-35px);
+  background-color: $color-rose;
+}
+
+input:checked + .slider-shoutout img {
+  left: 34%;
+}
+
+.placement-switcher-title{
+  z-index: 31;
+  top: 8px;
+  left: 125px;
+  min-width: 130px;
+}
+
+.switcher-title{
+  font-size: 19.5px;
+  text-align: left;
+}
+
+@media (max-width: 1440px) {
+  .folder-shape {
+      width: 75%;
+  }
+
+  .folder-shape.result-page {
+      width: 100%;
+  }
+}
+
+.folder-shape {
+  width: 1190px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #cdd8ea 40%, #CDD8EA 100%);
+  border-radius: 20px;
+  position: relative;
+  padding: 50px;
+  margin: 100px auto 0;
+  border: 3px solid $soft-blue;  
+}
+
+.folder-shape::before {
+  content: "";
+  z-index: 1;
+  width: 20%;
+  height: 30px;
+  background: linear-gradient(180deg, #cdd8ea 0%, #FFFFFF 0%, #FFFFFF 100%);
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  border-radius: 20px 20px 0 0;
+  transform: translateX(-50%);
+  border-top: 3px solid $soft-blue;
+  overflow: hidden;
+  border-left: 3px solid $soft-blue;
+  border-right: 3px solid $soft-blue;
+}
+
+.folder-shape::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 50%;
+  z-index: 2;
+}
+
+.folder-shape::nth-last-child(-n+2):after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 50%;
+  z-index: 2;
+}
+.folder-shape.left-cut::after,
+.right-cut::after {
+    content: "";
+    z-index: 2;
+    width: 10%;
+    height: 47px;
+    position: absolute;
+    top: -47px;
+}
+
+.folder-shape.left-cut::after {
+  left: 30%;
+  z-index: 3;
+  border-radius: 0 0 20px 0;
+  border-right: 3px solid $soft-blue;
+  border-bottom: 3px solid $soft-blue;
+  margin: 5px 0 0 3px;
+  height: 42px;
+}
+
+.right-cut::after {
+  left: 60%;
+  z-index: 4;
+  border-radius: 0 0 0 20px;
+  border-left: 3px solid $soft-blue;
+  border-bottom: 3px solid $soft-blue;
+  margin: 5px 0 0 -3px;
+  height: 42px;
+}
+
+.folder-line {
+  margin: -54px 35% 50px 35%;
+  border-bottom: 4px solid white;
+}
+
+.position {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: $soft-blue;
+}
+
+.position-result {
+  position: relative;
+  top: 30px;
+  color: $soft-blue;
+}
+
+.position-result img {
+  height: 55px;
+  padding-top: 2px;
+}
+
+.calculate {
+  padding: 32px 10px 18px 10px;
+  background: $white;
+  border: 3px solid $soft-blue;
+  border-radius: 20px;
+  &.preview {
+    height: 500px;
+    filter: blur(8px);
+  }
+}
+
+.calculate .team-name {
+  color: $soft-blue;
+}
+
+.calculate .grey {
+  color: $grey !important;
+}
+
+.charts-wrapper {
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.no-responses {
+  font-size: 24px;
+  color: $soft-blue;
+  margin: 10px 0;
+  text-align: center;
 }

@@ -35,7 +35,7 @@ export const datePrepare = (time) => {
   return `${month} ${date.getDate()}`
 }
 
-export const shortMonth = (date) => date.toLocaleString('en-GB', {month: 'short'})
+export const shortMonth = (date) => date.toLocaleString('en-US', {month: 'short'})
 
 export function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);

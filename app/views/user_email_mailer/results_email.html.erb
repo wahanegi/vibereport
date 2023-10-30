@@ -51,8 +51,12 @@
     </div>
     <!--<![endif]-->
   </div>
-  <div class="mx-auto my-0 title">Submissions are in!</div>
-    <div class="mx-auto my-0 text-invitation">See how the team has been doing:</div>
+  <div class="mx-auto my-0 title">
+    <%= @main_header %>
+  </div>
+  <div class="mx-auto my-0 text-invitation">
+    <%= @sub_header || 'See how the team has been doing:'%>
+  </div>
   <div class="container">
     <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
                 { controller: "api/v1/results",

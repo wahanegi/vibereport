@@ -11,6 +11,9 @@ Here styles for:
     font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
     font-style: normal;
 }
+.italic {
+    font-style: italic;
+}
 .convert {
     width: 127px;
     height: 58px;
@@ -26,6 +29,9 @@ Here styles for:
     font-weight: 600;
     padding-top: 1px;
     padding-left: 5px;
+}
+.color-primary {
+    color: #D7007B;
 }
 
 .line1 {
@@ -69,6 +75,9 @@ Here styles for:
 }
 .ml-41{
     margin-left: 41px;
+}
+.mr-30{
+    margin-right: 30px;
 }
 .p-0{
     padding:0;
@@ -211,9 +220,10 @@ text-align: center;
     background-repeat: no-repeat;
     background-size: contain;
 }
-
 .calendar-complete-by {
-    text-align: left;
+    position: absolute;
+    left: 10px;
+    top: 0;
     width: 102px;
     height: 115px;
     background-image: -webkit-image-set(url("complete-by.png") 1x);
@@ -389,6 +399,32 @@ text-align: center;
     align-items: center;
     color: #FFFFFF;
 }
+.btn-remind {
+    width: 16.688rem;
+    height: 3.75rem;
+    background: #D7007B;
+    border: 0.0625rem solid #000000;
+    box-shadow: 0 .25rem .25rem rgba(0, 0, 0, 0.25);
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 2rem;
+    font-family: 'Inter',  sans-serif;
+    line-height: 2.4rem;
+    align-items: center;
+    color: #FFFFFF;
+}
+.btn-text-remind {
+    padding: .625rem 1.563rem .3125rem 1.563rem;
+    height: 2.813rem;
+}
+.btn-text-remind a {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    line-height: 2.438rem;
+    font-size: 2rem;
+    white-space: nowrap;
+    text-decoration: none;
+}
 .btn-text-magic {
     padding: .625rem 1.563rem .3125rem 1.563rem;
     width: 11.563rem;
@@ -425,6 +461,19 @@ text-align: center;
     line-height: 24px;
     color:       #454547;
     padding: 8px;
+}
+.text-check {
+    height: 32px;
+    font-size: 20px;
+    line-height: 25px;
+    padding: 8px;
+}
+
+.text-shoutout {
+    text-align: left;
+    height: 30px;
+    font-size: 24px;
+    line-height: 24px;
 }
 
 html {
@@ -471,6 +520,15 @@ html {
 
 .date {
     padding-top: 42px;
+    font-size: 16px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+
+.date-completed {
+    padding-top: 54px;
     font-size: 16px;
     line-height: 17px;
     color: rgba(0, 0, 0, 0.7);

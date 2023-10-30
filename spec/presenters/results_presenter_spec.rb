@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::ResultsPresenter do
   let!(:user) { create :user }
@@ -16,15 +15,25 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
   let!(:emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
-  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user) }
+  let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user, 'api/v1/result_managers') }
+  let!(:team1) { create :team }
+  let!(:team2) { create :team }
+  let!(:user_team) { create :user_team, user:, team: team1, role: :manager }
+  let!(:user_team2) { create :user_team, user:, team: team2, role: :manager }
 
   describe '#render' do
     subject { presenter.json_hash }
+
+    before do
+      allow(ENV).to receive(:[]).with('START_WEEK_DAY').and_return('tuesday')
+      allow(ENV).to receive(:[]).with('DAY_TO_SEND_INVITES').and_return('friday')
+      allow(Date.current).to receive(:wday).and_return(6)
+    end
+
     it 'renders a JSON response with the results data' do
       is_expected.to eq(
         {
-          time_periods: TimePeriod.ordered,
-          emotions: time_period.emotions,
+          emotions: time_period.emotions.to_a,
           gifs: [
             image: user_response.gif,
             emotion: user_response.emotion
@@ -91,6 +100,31 @@ RSpec.describe Api::V1::ResultsPresenter do
               shoutout: shoutout3,
               users: [user2],
               emojis: []
+            }
+          ],
+          prev_results_path: nil,
+          teams: [
+            {
+              id: team1.id,
+              name: team1.name,
+              emotion_index_all: presenter.emotion_index_all(team1),
+              productivity_average_all: presenter.productivity_average_all(team1),
+              emotion_index_current_period: presenter.emotion_index_current_period(team1),
+              productivity_average_current_period: presenter.productivity_average_current_period(team1),
+              previous_emotion_index: presenter.previous_emotion_index(team1),
+              previous_productivity_average: presenter.previous_productivity_average(team1),
+              no_data_present: false
+            },
+            {
+              id: team2.id,
+              name: team2.name,
+              emotion_index_all: presenter.emotion_index_all(team2),
+              productivity_average_all: presenter.productivity_average_all(team2),
+              emotion_index_current_period: presenter.emotion_index_current_period(team2),
+              productivity_average_current_period: presenter.productivity_average_current_period(team2),
+              previous_emotion_index: presenter.previous_emotion_index(team2),
+              previous_productivity_average: presenter.previous_productivity_average(team2),
+              no_data_present: false
             }
           ]
         }

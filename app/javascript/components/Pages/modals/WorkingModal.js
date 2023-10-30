@@ -2,12 +2,19 @@ import React, {Fragment} from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "../../UI/Button";
 import xClose from "../../../../assets/images/sys_svg/x-close.svg";
+import {useNavigate} from "react-router-dom";
+import {updateResponse} from "../../requests/axios_requests";
 
-const WorkingModal = ({ show, setShow, saveDataToDb, steps }) => {
+const WorkingModal = ({ show, setShow, data, setData, steps }) => {
+  const navigate = useNavigate()
   const onClickNotWorking = () => {
     const index = steps.indexOf('emotion-selection-web');
     const new_steps = steps.slice(0, index + 1);
-    saveDataToDb( new_steps, {not_working: false, draft: false} )
+
+    const dataRequest = {
+      response: {attributes: {not_working: false, draft: false, steps: new_steps}}
+    }
+    updateResponse(data, setData, dataRequest, navigate(`/${new_steps.slice(-1).toString()}`)).then()
   }
 
   return <Fragment>

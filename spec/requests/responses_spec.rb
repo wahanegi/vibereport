@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'passwordless/test_helpers'
 
 RSpec.describe Api::V1::ResponsesController do
   FactoryBot.create(:time_period, start_date: Date.current, end_date: Date.current + 6.days)
@@ -11,7 +10,7 @@ RSpec.describe Api::V1::ResponsesController do
   let!(:response_attr) { attributes_for :response, emotion_id: emotion.id, time_period_id: time_period.id, user_id: user.id, steps: %w[emotion-selection-web meme-selection] }
 
   before(:each) do |test|
-    passwordless_sign_in(user) unless test.metadata[:logged_out]
+    sign_in(user) unless test.metadata[:logged_out]
   end
 
   describe '#create' do
@@ -66,6 +65,7 @@ RSpec.describe Api::V1::ResponsesController do
           'last_name' => user.last_name,
           'not_ask_visibility' => user.not_ask_visibility,
           'opt_out' => user.opt_out,
+          'time_period_index' => 0,
           'created_at' => user.created_at.strftime('%FT%T.%LZ'),
           'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
         }
@@ -121,6 +121,7 @@ RSpec.describe Api::V1::ResponsesController do
           'last_name' => user.last_name,
           'not_ask_visibility' => user.not_ask_visibility,
           'opt_out' => user.opt_out,
+          'time_period_index' => 0,
           'created_at' => user.created_at.strftime('%FT%T.%LZ'),
           'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
         }
