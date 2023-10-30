@@ -93,20 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_17_173020) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "passwordless_sessions", force: :cascade do |t|
-    t.bigint "authenticatable_id"
-    t.string "authenticatable_type"
-    t.datetime "claimed_at", precision: nil
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "expires_at", precision: nil, null: false
-    t.string "remote_addr", null: false
-    t.datetime "timeout_at", precision: nil, null: false
-    t.string "token", null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.text "user_agent", null: false
-    t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
-  end
-
   create_table "responses", force: :cascade do |t|
     t.string "celebrate_comment"
     t.text "comment"
