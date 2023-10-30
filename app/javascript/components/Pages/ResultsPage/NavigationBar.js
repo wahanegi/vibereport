@@ -10,8 +10,8 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   if(isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working
+  const hasTeamAccess = data.has_team_access;
   const navigate = useNavigate()
-  const isManager = data.current_user.manager;
   const handlingBack = () => {
     if (isPresent(data.prev_results_path)) return;
 
@@ -40,9 +40,9 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
     <div className='d-flex justify-content-between position-relative' style={{marginLeft: 172, marginRight: 172, top: 40}}>
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
                 positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
+      {hasTeamAccess && <ResultsManager data={data} setData={setData} steps={steps} nextTimePeriod={nextTimePeriod} />}
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
                 positionRight={true} hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
-      {isManager && <ResultsManager data={data} setData={setData} steps={steps} hidden={nextTimePeriod} />}
       <EditResponse onClick={handlingBack} hidden={nextTimePeriod} />
     </div>
   </Fragment>

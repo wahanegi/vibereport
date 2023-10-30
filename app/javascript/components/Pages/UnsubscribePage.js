@@ -4,17 +4,18 @@ import CornerElements from "../UI/CornerElements";
 import {apiRequest} from "../requests/axios_requests";
 import {Link} from "react-router-dom";
 import Button from "../UI/Button";
+import {isPresent} from "../helpers/helpers";
   
 const UnsubscribePage = ({data}) => {
   const {current_user, time_period} = data
   const [unsubscribed, setUnsubscribed] = useState(current_user.opt_out)
-  const isManager = data.current_user.manager;
-  const previewValue = isManager ? 'result-managers' : 'results';
+  const hasTeamAccess = data.has_team_access;
+  const previewValue = hasTeamAccess ? 'result-managers' : 'results';
 
   const onUnsubscribe = () => {
     const dataSend = { opt_out: true }
-    const dataFromServer = ({success}) => {
-      if (success) {
+    const dataFromServer = ({current_user}) => {
+      if (isPresent(current_user)) {
         setUnsubscribed(true)
       }
     }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_17_173020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -163,6 +163,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
 
   create_table "user_teams", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "role", default: 0, null: false
     t.bigint "team_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -177,13 +178,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_01_084529) do
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "last_name"
-    t.boolean "manager", default: false
     t.boolean "not_ask_visibility", default: false, null: false
     t.boolean "opt_out", default: false
     t.datetime "remember_created_at"
     t.string "remember_token"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.integer "time_period_index", default: 0
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -51,7 +51,9 @@ class Api::V1::EmotionsController < ApplicationController
       fun_question:,
       user_shoutouts: current_user.shoutouts.not_celebrate,
       check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id]),
-      prev_results_path:
+      has_team_access: current_user.user_teams.has_team_access.any?,
+      prev_results_path:,
+      time_periods: TimePeriod.ordered || []
     }
   end
 

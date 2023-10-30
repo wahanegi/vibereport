@@ -7,13 +7,13 @@
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
 #  last_name              :string
-#  manager                :boolean          default(FALSE)
 #  not_ask_visibility     :boolean          default(FALSE), not null
 #  opt_out                :boolean          default(FALSE)
 #  remember_created_at    :datetime
 #  remember_token         :string
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  time_period_index      :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -29,7 +29,6 @@ class User < ApplicationRecord
 
   has_many :responses, dependent: :destroy
   has_many :shoutouts, dependent: :destroy
-  has_many :celebrate_shoutouts, dependent: :destroy
   has_many :shoutout_recipients, dependent: :destroy
   has_many :fun_questions, dependent: :destroy
   has_many :fun_question_answers, dependent: :destroy
@@ -48,7 +47,6 @@ class User < ApplicationRecord
 
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
-  scope :manager, -> { where(manager: false) }
 
   def full_name
     "#{first_name} #{last_name}"

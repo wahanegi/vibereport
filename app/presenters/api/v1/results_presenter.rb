@@ -6,18 +6,17 @@ class Api::V1::ResultsPresenter
 
   def initialize(time_period_slug, current_user, original_url)
     @time_period = TimePeriod.find_by(slug: time_period_slug)
-    @responses = time_period.responses.completed.working
-    @fun_question_answers = responses.filter_map(&:fun_question_answer)
+    @responses = time_period.responses.includes(:fun_question_answer, :user, :emotion)
+    @fun_question_answers = responses.includes(fun_question_answer: :user).filter_map(&:fun_question_answer)
     @fun_question = time_period.fun_question
     @users = responses.filter_map(&:user)
     @current_user = current_user
-    @teams = current_user.teams
+    @teams = current_user.user_teams.has_team_access.map(&:team)
     @original_url = original_url
   end
 
   def json_hash
     {
-      time_periods: TimePeriod.ordered || [],
       emotions: responses.filter_map(&:emotion).sample(36).presence || [],
       gifs:,
       fun_question: question,
@@ -225,7 +224,7 @@ class Api::V1::ResultsPresenter
   def public_shoutout_blocks
     @public_shoutout_blocks ||=
       begin
-        return_blocks = Shoutout.where(time_period_id: time_period.id, public: true) - current_user.shoutouts
+        return_blocks = Shoutout.includes([:user]).where(time_period_id: time_period.id, public: true) - current_user.shoutouts
         return_blocks.filter_map { |shoutout| shoutout_block(shoutout) }
       end
   end
@@ -254,7 +253,7 @@ class Api::V1::ResultsPresenter
   def recipients_block(shoutout)
     {
       shoutout:,
-      users: shoutout.shoutout_recipients.map(&:user),
+      users: shoutout.shoutout_recipients.includes([:user]).map(&:user),
       emojis: emojis_data(shoutout.emojis)
     }
   end
