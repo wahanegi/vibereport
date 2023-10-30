@@ -5,8 +5,7 @@ class Devise::Passwordless::SessionsController < Devise::SessionsController
   def create
     self.resource = resource_class.find_by(email: create_params[:email])
     if self.resource
-      remember_me = true
-      resource.send_magic_link(remember_me)
+      resource.send_magic_link(remember_me: true)
     end
 
     self.resource = resource_class.new(create_params)
