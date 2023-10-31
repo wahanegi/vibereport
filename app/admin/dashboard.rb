@@ -58,14 +58,12 @@ ActiveAdmin.register_page 'Dashboard' do
               "#{user.full_name} (#{user.email})"
             end
 
-            column :reminder_message do |user|
+            column "Reminder Link" do |user|
               if TimePeriod.current
-                general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: user.id }))
+                general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: user.id, host: 'https://cp.vibereport.app' }))
                 
                 div class: "custom-textarea-style" do
-                  text_node "Hi 👋 #{user.first_name}, please enter your Vibereport check-in 📝 for last week: "
-                  a "🔗 Link here", href: general_link
-                  text_node "Thanks! 😊"
+                  text_node general_link
                 end
               else
                 text_node "No current TimePeriod available."
