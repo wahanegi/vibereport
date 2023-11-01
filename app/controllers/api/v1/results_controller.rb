@@ -12,6 +12,7 @@ class Api::V1::ResultsController < ApplicationController
   def results_email
     sign_in user
     msg = results_email_error_message
+    update_user_time_index
     return redirect_to "/results/#{params[:slug]}" if msg.blank?
 
     render json: { error: msg }, status: :unprocessable_entity
@@ -36,5 +37,15 @@ class Api::V1::ResultsController < ApplicationController
 
   def current_response
     @current_response ||= current_user.responses.find_by(time_period_id: TimePeriod.current.id)
+  end
+
+  def time_periods
+    @time_periods ||= TimePeriod.ordered
+  end
+
+  def update_user_time_index
+    requested_time_period = time_periods.find_by(slug: params[:slug])
+    index = time_periods.index(requested_time_period)
+    user.update!(time_period_index: index)
   end
 end

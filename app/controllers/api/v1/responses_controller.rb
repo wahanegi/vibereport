@@ -11,6 +11,7 @@ module Api
       def create
         @response = current_user.responses.build(response_params)
         if @response.save
+          reset_time_period_index
           render json: ResponseSerializer.new(@response).serializable_hash.merge(additional_data)
         else
           render json: { error: @response.errors }, status: :unprocessable_entity
@@ -29,6 +30,7 @@ module Api
 
       def response_flow_from_email
         sign_in user
+        reset_time_period_index
         result = ResponseFlowFromEmail.new(params, @user).call
         if params[:time_period_id] == TimePeriod.current.id.to_s
           return redirect_to root_path if result[:success]
@@ -86,6 +88,10 @@ module Api
 
         current_user.shoutouts.where(time_period_id: TimePeriod.current.id).destroy_all
         @response.fun_question_answer&.destroy
+      end
+
+      def reset_time_period_index
+        current_user.update!(time_period_index: 0)
       end
     end
   end

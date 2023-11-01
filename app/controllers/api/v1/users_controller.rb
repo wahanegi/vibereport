@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if current_user.update!(user_params)
-      render json: { success: true }
+      render json: { current_user: }
     else
       render json: { error: current_user.errors.messages }, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:not_ask_visibility, :opt_out, :manager)
+    params.require(:user).permit(:not_ask_visibility, :opt_out, :time_period_index)
   end
 
   def user

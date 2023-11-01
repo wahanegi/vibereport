@@ -17,11 +17,10 @@ import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
-import {useParams} from "react-router-dom";
-import {updateResponse} from "../../requests/axios_requests";
+import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 
-export const loadResultsCallback = (timePeriod, setLoaded, setResults, url = '/api/v1/results/' ) => {
+export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/' ) => {
   useEffect(() => {
     setLoaded(false)
     axios.get(`${url}${timePeriod.slug}`)
@@ -29,7 +28,7 @@ export const loadResultsCallback = (timePeriod, setLoaded, setResults, url = '/a
         setResults(res.data)
         setLoaded(true)
       })
-  }, [timePeriod.id])
+  }, [timePeriod.id, data.user_shoutouts.length])
 }
 
 export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
@@ -65,28 +64,29 @@ export const onRemoveAlert = (updateResponse, data, setData) => {
   updateResponse(data, setData, dataRequest).then()
 }
 
-export const findTimePeriodCallback = (time_periods, slug, setTimePeriodIndex) => {
-  useEffect(() => {
-    if (time_periods && slug) {
-      const foundTimePeriod = time_periods.find(time_period => String(time_period.slug) === slug);
-      if (foundTimePeriod) {
-        const index = time_periods.indexOf(foundTimePeriod);
-        setTimePeriodIndex(index);
-      }
+export const onChangeTimePeriodIndex = (current_user, index, setTimePeriodIndex, data, setData) => {
+  const dataSend = { time_period_index: index }
+  const dataFromServer = ({current_user}) => {
+    if (isPresent(current_user)) {
+      setTimePeriodIndex(current_user.time_period_index)
+      setData(Object.assign({}, data, {current_user}))
     }
-  }, [time_periods]);
-};
+  }
+  const url = '/api/v1/users/'
+  const id = current_user.id
+  apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then();
+}
 
 const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState( {})
   const {answers, emotions, fun_question, gifs, sent_shoutouts, received_shoutouts,
-        current_user_shoutouts, responses_count, current_user, received_and_public_shoutouts, prev_results_path} = results
-  const {time_periods} = data
+        current_user_shoutouts, responses_count, received_and_public_shoutouts, prev_results_path} = results
+  const {time_periods, current_user} = data
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
-  const [timePeriodIndex, setTimePeriodIndex] = useState(0);
+  const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
   const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
   const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
@@ -95,7 +95,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   const confirmButtonText = 'Yes, I worked'
   const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
-  const [slug, setSlug] = useState(useParams().slug)
+  const initialIndex = 0
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
@@ -123,23 +123,22 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return;
 
     if (timePeriodIndex > 0) {
-      setSlug(null)
-      setTimePeriodIndex(index => (index - 1));
+      const index = timePeriodIndex - 1
+      onChangeTimePeriodIndex(current_user, index, setTimePeriodIndex, data, setData)
     }
   }
 
   const showPrevTimePeriod = () => {
     if (timePeriodIndex < (time_periods.length - 1)) {
-      setSlug(null)
-      setTimePeriodIndex(index => (index + 1));
+      const index = timePeriodIndex + 1
+      onChangeTimePeriodIndex(current_user, index, setTimePeriodIndex, data, setData)
     }
   }
 
-  loadResultsCallback(timePeriod, setLoaded, setResults)
+  loadResultsCallback(timePeriod, setLoaded, setResults, data)
   scrollTopTimePeriodCallback(nextTimePeriod)
   scrollTopModalCallback(showModal)
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
-  findTimePeriodCallback(time_periods, slug, setTimePeriodIndex)
 
   const Footer = () => <Fragment>
     <QuestionButton data={data} />
@@ -147,7 +146,9 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     {
       nextTimePeriod && isBlank(data.prev_results_path) ?
         <div className='mt-5'>
-          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5' onClick={() => setTimePeriodIndex(0)} />
+          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5'
+                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+          />
         </div>:
         <div style={{height: 120}}></div>
     }

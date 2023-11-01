@@ -49,6 +49,7 @@ RSpec.describe Api::V1::FunQuestionAnswersController do
             'last_name' => user.last_name,
             'not_ask_visibility' => user.not_ask_visibility,
             'opt_out' => user.opt_out,
+            'time_period_index' => 0,
             'created_at' => user.created_at.strftime('%FT%T.%LZ'),
             'updated_at' => user.updated_at.strftime('%FT%T.%LZ')
           }
