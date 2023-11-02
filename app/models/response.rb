@@ -72,4 +72,13 @@ class Response < ApplicationRecord
             .where("? = ANY(STRING_TO_ARRAY(celebrate_comment, ' '))", user_id)
             .where(user_id: celebrate_user_ids)
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[celebrate_comment comment completed_at created_at draft emotion_id fun_question_answer_id fun_question_id gif id id_value
+       not_working notices productivity productivity_comment rating shoutout_id steps time_period_id updated_at user_id]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[emotion fun_question fun_question_answer time_period user]
+  end
 end
