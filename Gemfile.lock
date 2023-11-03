@@ -454,7 +454,7 @@ DEPENDENCIES
   faker!
   fix-db-schema-conflicts
   git-smart
-  groupdate (~> 6.2, >= 6.2.1)
+  groupdate (~> 6.3, >= 6.3.0)
   jbuilder (~> 2.11, >= 2.11.5)
   jsbundling-rails (~> 1.1, >= 1.1.2)
   jsonapi-serializer (~> 2.2)
@@ -472,7 +472,7 @@ DEPENDENCIES
   rspec-rails (>= 6.0.3)
   rubocop (~> 1.45, >= 1.45.1)
   rubocop-performance (~> 1.16)
-  rubocop-rails (~> 2.17, >= 2.17.4)
+  rubocop-rails (~> 2.20, >= 2.20.0)
   sassc-rails (~> 2.1, >= 2.1.2)
   selenium-webdriver
   shoulda-callback-matchers

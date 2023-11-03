@@ -10,7 +10,7 @@ gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful
 gem 'cssbundling-rails', '~> 1.2', '>= 1.2.0'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem 'devise', '~> 4.8'                                        # Flexible authentication solution for Rails with Warden
 gem 'devise-passwordless', '>= 1.0.0'                         # A passwordless a.k.a. "magic link" login strategy
-gem 'groupdate', '~> 6.2', '>= 6.2.1'                         # The simplest way to group temporal data
+gem 'groupdate', '~> 6.3', '>= 6.3.0'                         # The simplest way to group temporal data
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.2'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
@@ -23,7 +23,7 @@ gem 'rails', '~> 7.1.0'                                       # Ruby on Rails is
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
 gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
 gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
-gem 'rubocop-rails', '~> 2.17', '>= 2.17.4', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
+gem 'rubocop-rails', '~> 2.20', '>= 2.20.0', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
 gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
 gem 'smarter_csv', '1.9.0'                                    # This gem for smarter importing of CSV Files as Array(s) of Hashes, with optional features for processing large files in parallel.
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
