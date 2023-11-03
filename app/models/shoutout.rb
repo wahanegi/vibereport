@@ -52,5 +52,13 @@ class Shoutout < ApplicationRecord
   def time_period_range
     time_period.date_range
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[public time_period_id type user_id]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[emojis recipients shoutout_recipients time_period user]
+  end
 end
 

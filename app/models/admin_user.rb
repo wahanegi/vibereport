@@ -24,4 +24,8 @@ class AdminUser < ApplicationRecord
 
   validates :email, presence: true
   validates :password, presence: true
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at email id id_value]
+  end
 end

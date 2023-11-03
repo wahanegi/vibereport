@@ -29,4 +29,8 @@ class UserTeam < ApplicationRecord
 
   scope :managers, -> { where(role: :manager) }
   scope :has_team_access, -> { where.not(role: :member) }
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at id id_value role team_id updated_at user_id]
+  end
 end
