@@ -74,4 +74,8 @@ class TimePeriod < ApplicationRecord
   def date_range_str
     "#{start_date.strftime('%b %d')} - #{end_date.strftime('%b %d')}"
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[due_date end_date slug start_date]
+  end
 end

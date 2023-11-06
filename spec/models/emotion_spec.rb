@@ -115,4 +115,3 @@ RSpec.describe Emotion, type: :model do
     end
   end
 end
-

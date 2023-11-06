@@ -33,4 +33,8 @@ class FunQuestion < ApplicationRecord
 
   validates :question_body, presence: true, uniqueness: { case_sensitive: false }
   validates :time_period, uniqueness: true, unless: -> { time_period.nil? }
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at id id_value public question_body time_period_id updated_at used user_id]
+  end
 end

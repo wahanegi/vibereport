@@ -18,6 +18,14 @@ class Team < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: true
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id name]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[user_teams users]
+  end
+
   private
 
   def strip_name
