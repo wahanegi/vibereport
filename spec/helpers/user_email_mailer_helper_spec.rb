@@ -44,4 +44,25 @@ describe UserEmailMailerHelper, type: :helper do
       expect(result.size).to eq(NUMBER_OF_ELEMENTS * 2)
     end
   end
+
+  describe '#who_is_waiting' do
+    let(:user) { create :user }
+    let(:user2) { create :user }
+    let(:time_period) { create(:time_period) }
+
+    it 'returns message when the user is a manager' do
+      user_team = create(:user_team, user:, role: :manager)
+      user_team2 = create(:user_team, user: user2, role: :observer)
+      team = user_team.team
+      user_team2.team
+      result = who_is_waiting(user, time_period)
+      expect(result).to eq("The #{team.name} team is waiting for you to check-in for #{time_period.date_range_str}")
+    end
+
+    it 'returns nil when the user is not a manager' do
+      create(:user_team, user:, role: :observer)
+      result = who_is_waiting(user, time_period)
+      expect(result).to eq(nil)
+    end
+  end
 end
