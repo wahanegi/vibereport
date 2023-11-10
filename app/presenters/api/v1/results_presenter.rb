@@ -121,7 +121,7 @@ class Api::V1::ResultsPresenter
   end
 
   def gifs
-    responses.filter_map { |response| gif_block(response) }
+    responses.unique_responses.filter_map { |response| gif_block(response) }
   end
 
   def gif_block(response)

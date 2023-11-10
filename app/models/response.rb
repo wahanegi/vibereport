@@ -58,6 +58,7 @@ class Response < ApplicationRecord
   scope :working, -> { where(not_working: false) }
   scope :completed, -> { where.not(completed_at: nil) }
   scope :celebrated, -> { where.not(celebrate_comment: [nil, '']) }
+  scope :unique_responses, -> { select('DISTINCT ON ("gif"->>\'src\', "emotion_id") *') }
 
   def celebrate_user_ids
     Response.celebrate_user_ids_from_comment(celebrate_comment)
