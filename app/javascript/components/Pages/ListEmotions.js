@@ -7,7 +7,6 @@ import Button from "../UI/Button";
 import NotWorkingModal from "./modals/NotWorkingModal";
 import {isPresent} from "../helpers/helpers";
 import Logo from "../UI/Logo";
-import Shuffle from '../../../assets/images/shuffle-solid.svg'
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
@@ -100,7 +99,6 @@ function ListEmotions({ data, setData, saveDataToDb, steps, service, draft, setI
           <div className="invitation mx-auto p-0">Time for your latest check-in!</div>
           <div className="mx-auto my-0 question">What word best describes how you feel about work?</div>
             <div className='d-flex mx-auto emotions position-relative'>
-                <img src={Shuffle} className="shuffle-icon" alt='Shuffle icons' onClick={() => setIsShuffleEmotions(true)} />
                 {emotions.map((emotion, index) =>
                   <div className='width-block' key={emotion.id}>
                    <ButtonEmotion key={emotion.id}
@@ -117,7 +115,10 @@ function ListEmotions({ data, setData, saveDataToDb, steps, service, draft, setI
               </div>
           <div className="underline_list"></div>
           <div className='neutral-area'>
-            <Button className='btn btn-bubbles neutral wb1 not-standart' onClick={notSayHandling}>I'd rather not say...</Button>
+            <div className='d-flex'>
+              <Button className='btn btn-bubbles neutral wb1 not-standart me-1' onClick={() => setIsShuffleEmotions(true)}>Show me different words</Button>
+              <Button className='btn btn-bubbles neutral wb1 not-standart' onClick={notSayHandling}>I'd rather not say...</Button>
+            </div>
           </div>
           <div className="big-btn-tooltip correct">Share it in your own words!</div>
           <div className="big-btn">
