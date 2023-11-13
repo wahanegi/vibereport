@@ -48,6 +48,7 @@ RSpec.describe Response, type: :model do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
+  let!(:emotion2) { create :emotion }
   let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let!(:fun_question) { create :fun_question }
   let!(:fun_question_answer) { create :fun_question_answer }
@@ -125,6 +126,22 @@ RSpec.describe Response, type: :model do
     end
     it 'completed scope' do
       expect(Response.completed).to match_array([completed_response])
+    end
+
+    describe 'unique_responses scope' do
+      let!(:response1) { FactoryBot.create(:response, gif: { src: 'unique_src' }, time_period:, emotion:) }
+      let!(:response2) { FactoryBot.create(:response, gif: { src: 'unique_src' }, time_period:, emotion: emotion2) }
+      let!(:response3) { FactoryBot.create(:response, gif: { src: 'unique_src' }, time_period:, emotion:) }
+      let!(:response4) { FactoryBot.create(:response, gif: { src: 'different_src' }, time_period:, emotion:) }
+
+      it 'returns only unique responses based on gif src and emotion_id' do
+        unique_responses = Response.unique_responses.reload
+
+        expect(unique_responses).to include(response1)
+        expect(unique_responses).to include(response2)
+        expect(unique_responses).to_not include(response3)
+        expect(unique_responses).to include(response4)
+      end
     end
   end
 end

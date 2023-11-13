@@ -20,4 +20,8 @@ class Emotion < ApplicationRecord
   before_save { self.word&.downcase! }
 
   scope :matching_emotions, ->(emotion_params) { where(word: emotion_params[:word], category: emotion_params[:category]) }
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[category public word]
+  end
 end

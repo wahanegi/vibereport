@@ -53,11 +53,12 @@ class Response < ApplicationRecord
   validates :steps, presence: true
   validates :productivity, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9 },
                            presence: true, if: -> { steps.present? && steps.include?('productivity-bad-follow-up') }
-  serialize :steps, JSON
+  serialize :steps, coder: JSON
 
   scope :working, -> { where(not_working: false) }
   scope :completed, -> { where.not(completed_at: nil) }
   scope :celebrated, -> { where.not(celebrate_comment: [nil, '']) }
+  scope :unique_responses, -> { select('DISTINCT ON ("gif"->>\'src\', "emotion_id") *') }
 
   def celebrate_user_ids
     Response.celebrate_user_ids_from_comment(celebrate_comment)
@@ -71,5 +72,16 @@ class Response < ApplicationRecord
     Response.celebrated
             .where("? = ANY(STRING_TO_ARRAY(celebrate_comment, ' '))", user_id)
             .where(user_id: celebrate_user_ids)
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[celebrate_comment comment completed_at created_at draft
+       emotion_id fun_question_answer_id fun_question_id gif id id_value
+       not_working notices productivity productivity_comment rating
+       shoutout_id steps time_period_id updated_at user_id]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[emotion fun_question fun_question_answer time_period user]
   end
 end
