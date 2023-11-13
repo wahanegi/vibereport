@@ -7,17 +7,19 @@ import Button from "../UI/Button";
 import NotWorkingModal from "./modals/NotWorkingModal";
 import {isPresent} from "../helpers/helpers";
 import Logo from "../UI/Logo";
+import Shuffle from '../../../assets/images/shuffle-solid.svg'
 
 //*** Below what we have in the data. See variable **emotionDataRespUserIdTimePeriod** in the App.js
 //***        data: {Emotions:{id:..., type:..., attributes:{ word:..., category:... }},
 //***               response:{attributes: {steps: "[\"ListEmotions\"]", word:""}},
 //***               current_user_id: ...,
 //***               time_period:{...}
-function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
+function ListEmotions({ data, setData, saveDataToDb, steps, service, draft, setIsShuffleEmotions}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
   const [showNotWorkingModal, setShowNotWorkingModal] = useState(false)
+
   const clickHandling = (emotion_word, emotion_id) => {
     steps.push('emotion-type')
     const dataRequest = {
@@ -97,7 +99,8 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
           </div>
           <div className="invitation mx-auto p-0">Time for your latest check-in!</div>
           <div className="mx-auto my-0 question">What word best describes how you feel about work?</div>
-            <div className='d-flex mx-auto emotions'>
+            <div className='d-flex mx-auto emotions position-relative'>
+                <img src={Shuffle} className="shuffle-icon" alt='Shuffle icons' onClick={() => setIsShuffleEmotions(true)} />
                 {emotions.map((emotion, index) =>
                   <div className='width-block' key={emotion.id}>
                    <ButtonEmotion key={emotion.id}

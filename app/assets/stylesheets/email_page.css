@@ -230,6 +230,15 @@ text-align: center;
     background-repeat: no-repeat;
     background-size: contain;
 }
+.shuffle-icon {
+    position: absolute;
+    right: -9px;
+    top: -7px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1;
+}
 .invitation {
     width: 453px;
     height: 55px;

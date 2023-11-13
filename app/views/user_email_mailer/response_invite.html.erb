@@ -21,6 +21,13 @@
       .lnk-unsubscribe{
           text-align: left;
       }
+      .emotions-container {
+          text-align: center;
+      }
+      .emotions {
+          position: relative;
+          width: min-content
+      }
   </style>
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
 </head>
@@ -55,20 +62,26 @@
   <!--<![endif]-->
   <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
   <div class="mx-auto my-0 question">What word best describes how you feel about work?</div>
-  <div>
+  <div class="emotions-container">
+    <div class="emotions">
+      <%= link_to image_tag("shuffle-solid.svg"), { controller: 'api/v1/responses',
+                                                    action: 'sign_in_from_email',
+                                                    user_id: @user.id }, class: 'shuffle-icon' %>
+
       <% (0..5).each do |row|%>
         <div class="emotions d-flex">
-        <% (0..3).each do |col|%>
-        <% cell = @table[(row*4 + col)] %>
-          <div class="<%= "btn-emotion #{cell.category}" %>"
-             style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
-            <% @link_for_emotion[:emotion_id] = cell.id %>
-            <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
-          </div>
-      <% end %>
+          <% (0..3).each do |col|%>
+            <% cell = @table[(row*4 + col)] %>
+            <div class="<%= "btn-emotion #{cell.category}" %>"
+                 style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
+              <% @link_for_emotion[:emotion_id] = cell.id %>
+              <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>
+  </div>
   <div class="underline_list"></div>
   <div class='neutral-area' style="padding: 10px 0;">
       <div class="<%= "btn-emotion neutral" %>" style="width: 215px; margin:0 auto; padding: 5px 0; line-height:1;">
