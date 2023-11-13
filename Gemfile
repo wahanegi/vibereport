@@ -8,7 +8,7 @@ gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful Javascript charts with one line of Ruby
 gem 'cssbundling-rails', '~> 1.2', '>= 1.2.0'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem 'devise', '~> 4.9', '>= 4.9.3' # Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.9', '>= 4.9.3'                            # Flexible authentication solution for Rails with Warden
 gem 'devise-passwordless', '>= 1.0.0'                         # A passwordless a.k.a. "magic link" login strategy
 gem 'groupdate', '~> 6.3', '>= 6.3.0'                         # The simplest way to group temporal data
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -27,8 +27,8 @@ gem 'rubocop-rails', '~> 2.20', '>= 2.20.0', require: false   # Automatic Rails 
 gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
 gem 'smarter_csv', '1.9.0'                                    # This gem for smarter importing of CSV Files as Array(s) of Hashes, with optional features for processing large files in parallel.
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'stimulus-rails', '~> 1.3', '>= 1.3.0' # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem 'turbo-rails', '~> 1.5', '>= 1.5.0' # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem 'stimulus-rails', '~> 1.3', '>= 1.3.0'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'turbo-rails', '~> 1.5', '>= 1.5.0'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem #A passwordless a.k.a. "magic link" login strategy
 
 group :development, :test do
