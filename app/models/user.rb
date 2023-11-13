@@ -60,4 +60,8 @@ class User < ApplicationRecord
     first_name&.strip!
     last_name&.strip!
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[email first_name id last_name not_ask_visibility opt_out time_period_index updated_at]
+  end
 end

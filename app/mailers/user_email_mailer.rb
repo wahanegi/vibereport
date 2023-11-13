@@ -19,10 +19,18 @@ class UserEmailMailer < ApplicationMailer
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
   end
 
-  def results_email(user, time_period)
+  def results_email(user, time_period, fun_question)
     @user = user
     @time_period = time_period
-    mail(to: @user.email, subject: "Hey #{user.first_name}, the results are in!")
+    @fun_question = fun_question
+
+    content = ResultsContent.new(user, time_period, fun_question)
+
+    subject = content.subject
+    @main_header = content.main_header
+    @sub_header = content.sub_header
+
+    mail(to: @user.email, subject:)
   end
 
   def reminder_email(user, response, time_period)
@@ -36,5 +44,15 @@ class UserEmailMailer < ApplicationMailer
     @user = user
     @message = message
     mail(to: @user.email, subject: '🔔 Reminder: Share Your Vibes from Last Week')
+  end
+
+  def auto_remind_checkin(user, time_period)
+    @user = user
+    @time_period = time_period
+    @fun_question = time_period.fun_question
+    @fun_question_responses = @fun_question.fun_question_answers.limit(3)
+    @who_is_waiting = who_is_waiting(user, time_period)
+    @shout_outs = user.mentions.where(time_period_id: time_period.id)
+    mail(to: @user.email, subject: random_remind_checkin_subject(time_period))
   end
 end

@@ -129,13 +129,13 @@ export const ResultsManager = ({ data, setData, steps, draft, service, nextTimeP
   const slug = useParams().slug
 
   const handlingOnClickImage = () => {
-    const isManager = data.is_manager;
-    if (slug && isManager) return navigate(`/result-managers/${slug}`)
+    const hasTeamAccess = data.has_team_access;
+    if (slug && hasTeamAccess) return navigate(`/result-managers/${slug}`)
     steps.push('result-managers')
     const dataRequest = {
       response: {attributes: {steps: steps}}
     }
-    if (isManager) {
+    if (hasTeamAccess) {
       updateResponse(data, setData, dataRequest, navigate(`/${steps.slice(-1).toString()}`)).then()
     } else {
       setShowResultsManager(true);
@@ -174,7 +174,7 @@ export const Results = ({ data, setData, steps, hidden = false }) => {
   const slug = useParams().slug
 
   const handlingOnClickImage = () => {
-    const isManager = data.is_manager;
+    const hasTeamAccess = data.has_team_access;
     const dataRequest = {
       response: {
         attributes: {
@@ -183,7 +183,7 @@ export const Results = ({ data, setData, steps, hidden = false }) => {
       }
     }
 
-    if (isManager) {
+    if (hasTeamAccess) {
       if (data.response.attributes.id) {
         steps.push('results');
         updateResponse(data, setData, dataRequest, navigate(`/${steps.slice(-1).toString()}`)).then();
