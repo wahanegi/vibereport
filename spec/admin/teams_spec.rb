@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'csv'
 
-RSpec.describe "Admin::Teams", type: :request do
+RSpec.describe 'Admin::Teams', type: :request do
   let(:admin_user) { create(:admin_user) }
 
   before do
