@@ -11,13 +11,13 @@ RSpec.describe 'Admin::FunQuestionAnswers', type: :request do
 
   describe 'Export CSV' do
     it 'exports fun question answers as CSV' do
-      get export_csv_admin_fun_question_fun_question_answers_path(fun_question_id: fun_question.id, format: :csv)
+      get export_csv_admin_fun_question_answers_path(fun_question_id: fun_question.id, format: :csv)
 
       expect(response.content_type).to include('text/csv')
       expect(response.headers['Content-Disposition']).to include('attachment; filename=fun_question_answers.csv')
 
       csv_content = CSV.parse(response.body, headers: true)
-      expect(csv_content.headers).to eq(['Question', 'User Name', 'Answer'])
+      expect(csv_content.headers).to eq(['Question', 'User Name who answered it', 'Answer'])
 
       fun_question_answers.each do |answer|
         expect(csv_content.to_s).to include(answer.fun_question.question_body)

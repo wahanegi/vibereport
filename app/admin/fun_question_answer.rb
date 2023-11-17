@@ -1,12 +1,12 @@
 ActiveAdmin.register FunQuestionAnswer do
-  belongs_to :fun_question
-  actions :all
-
   permit_params :answer_body, :response_id, :user_id, :fun_question_id
 
   index do
     selectable_column
-    column 'User Name' do |fun_question_answer|
+    column 'Question Body' do |fun_question_answer|
+      fun_question_answer.fun_question.question_body
+    end
+    column 'User Name who answered it' do |fun_question_answer|
       user = fun_question_answer.user
       "#{user.full_name}"
     end
@@ -44,11 +44,11 @@ ActiveAdmin.register FunQuestionAnswer do
   end
 
   action_item :export_csv, only: :index do
-    link_to 'Export CSV', export_csv_admin_fun_question_fun_question_answers_path(fun_question_id: params[:fun_question_id])
+    link_to 'Export CSV', export_csv_admin_fun_question_answers_path(fun_question_id: params[:fun_question_id])
   end
 
   collection_action :export_csv do
-    csv_header = ['Question', 'User Name', 'Answer']
+    csv_header = ['Question', 'User Name who answered it', 'Answer']
 
     csv_data = CSV.generate(headers: true) do |csv|
       csv << csv_header
