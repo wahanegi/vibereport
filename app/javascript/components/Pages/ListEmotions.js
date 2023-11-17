@@ -13,11 +13,12 @@ import Logo from "../UI/Logo";
 //***               response:{attributes: {steps: "[\"ListEmotions\"]", word:""}},
 //***               current_user_id: ...,
 //***               time_period:{...}
-function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
+function ListEmotions({ data, setData, saveDataToDb, steps, service, draft, setIsShuffleEmotions}) {
   const {isLoading, error} = service
   const emotions = data.data
   const timePeriod = data.time_period
   const [showNotWorkingModal, setShowNotWorkingModal] = useState(false)
+
   const clickHandling = (emotion_word, emotion_id) => {
     steps.push('emotion-type')
     const dataRequest = {
@@ -97,7 +98,7 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
           </div>
           <div className="invitation mx-auto p-0">Time for your latest check-in!</div>
           <div className="mx-auto my-0 question">What word best describes how you feel about work?</div>
-            <div className='d-flex mx-auto emotions'>
+            <div className='d-flex mx-auto emotions position-relative'>
                 {emotions.map((emotion, index) =>
                   <div className='width-block' key={emotion.id}>
                    <ButtonEmotion key={emotion.id}
@@ -114,7 +115,10 @@ function ListEmotions({ data,  setData , saveDataToDb, steps, service, draft}) {
               </div>
           <div className="underline_list"></div>
           <div className='neutral-area'>
-            <Button className='btn btn-bubbles neutral wb1 not-standart' onClick={notSayHandling}>I'd rather not say...</Button>
+            <div className='d-flex'>
+              <Button className='btn btn-bubbles neutral wb1 not-standart me-1' onClick={() => setIsShuffleEmotions(true)}>Show me different words</Button>
+              <Button className='btn btn-bubbles neutral wb1 not-standart' onClick={notSayHandling}>I'd rather not say...</Button>
+            </div>
           </div>
           <div className="big-btn-tooltip correct">Share it in your own words!</div>
           <div className="big-btn">

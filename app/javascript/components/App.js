@@ -25,29 +25,32 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isNotLoadedData, setIsNotLoadedData] = useState(true)
   const [step, setStep] = useState(mainPage)
+  const [isShuffleEmotions, setIsShuffleEmotions] = useState(false);
 
   useEffect(()=>{
     const setData = ( dataFromServer ) => {
       let steps = dataFromServer.response.attributes.steps
       if (!Array.isArray(steps)) {
         dataFromServer = {...dataFromServer, response:{...dataFromServer.response,
-            attributes:{...dataFromServer.response.attributes, steps: [mainPage] }}}
+            attributes: {...dataFromServer.response.attributes, steps: [mainPage] }}}
         steps = [mainPage]
       }
-        setFrontDatabase(dataFromServer)
+      setFrontDatabase(dataFromServer)
       let lastStep = steps.slice(-1).toString()
       setStep(lastStep)
       setIsLoading(false)
       setIsNotLoadedData(false)
     }
-    if (isNotLoadedData) {
+    if (isNotLoadedData || isShuffleEmotions) {
       setIsLoading(true)
-      apiRequest('GET',{}, setData, ()=>{}, '/api/v1/emotions').catch((e)=>{
-        setError(error.message)
-        setIsLoading(false)
-      })
+      apiRequest('GET', {}, setData, ()=>{}, '/api/v1/emotions')
+        .then(() => {
+          setIsShuffleEmotions(false);
+          setIsLoading(false);
+        })
+        .catch(e => setError(e.message))
     }
-  },[frontDatabase])
+  },[frontDatabase, isShuffleEmotions])
 
   return(
     <Fragment>
@@ -65,6 +68,7 @@ const App = () => {
                   step={item.step}
                   data={frontDatabase}
                   setData={setFrontDatabase}
+                  setIsShuffleEmotions={setIsShuffleEmotions}
                 />
               }
             />

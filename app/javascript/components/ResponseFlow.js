@@ -18,7 +18,7 @@ import RatherNotSay from "./Pages/RatherNotSay/RatherNotSay";
 import SkipAhead from "./Pages/RatherNotSay/SkipAhead";
 import ResultsManager from "./Pages/ResultsPageManager";
 
-const ResponseFlow = ({step, data, setData}) => {
+const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const stepsArr = data.response.attributes.steps
@@ -107,7 +107,7 @@ const ResponseFlow = ({step, data, setData}) => {
   }
 
   const componentMap = {
-    'emotion-selection-web': <ListEmotions />,
+    'emotion-selection-web': <ListEmotions setIsShuffleEmotions={setIsShuffleEmotions} />,
     'rather-not-say': <RatherNotSay/>,
     'skip-ahead': <SkipAhead/>,
     'emotion-entry': <EmotionEntry />,
