@@ -1,6 +1,8 @@
 ActiveAdmin.register FunQuestionAnswer do
   permit_params :answer_body, :response_id, :user_id, :fun_question_id
 
+  actions :all, except: [:new]
+
   index do
     selectable_column
     column 'Question Body' do |fun_question_answer|
