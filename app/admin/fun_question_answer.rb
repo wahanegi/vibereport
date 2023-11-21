@@ -1,12 +1,17 @@
 ActiveAdmin.register FunQuestionAnswer do
-  belongs_to :fun_question
-  actions :all
-
   permit_params :answer_body, :response_id, :user_id, :fun_question_id
+
+  actions :all, except: [:new]
 
   index do
     selectable_column
-    id_column
+    column 'Question Body' do |fun_question_answer|
+      fun_question_answer.fun_question.question_body
+    end
+    column 'User Name who answered it' do |fun_question_answer|
+      user = fun_question_answer.user
+      "#{user.full_name}"
+    end
     column :answer_body
     column :created_at
     actions
@@ -17,9 +22,13 @@ ActiveAdmin.register FunQuestionAnswer do
 
   show do |fun_question|
     answer = FunQuestionAnswer.find_by(id: fun_question.id)
+    fun_question = fun_question_answer.fun_question
     columns do
       column do
         attributes_table do
+          row 'Question Body' do
+            fun_question.question_body
+          end
           row :answer_body
           row :created_at
           row :updated_at
@@ -34,5 +43,24 @@ ActiveAdmin.register FunQuestionAnswer do
       f.input :answer_body
     end
     f.actions
+  end
+
+  action_item :export_csv, only: :index do
+    link_to 'Export CSV', export_csv_admin_fun_question_answers_path(fun_question_id: params[:fun_question_id])
+  end
+
+  collection_action :export_csv do
+    csv_header = ['Question', 'User Name who answered it', 'Answer']
+
+    csv_data = CSV.generate(headers: true) do |csv|
+      csv << csv_header
+
+      FunQuestionAnswer.includes(fun_question: :user).find_each do |answer|
+        user_name = [answer.user.first_name, answer.user.last_name].compact.join(' ')
+        csv << [answer.fun_question.question_body, user_name, answer.answer_body]
+      end
+    end
+
+    send_data csv_data, type: 'text/csv; charset=utf-8; header=present', disposition: 'attachment; filename=fun_question_answers.csv'
   end
 end
