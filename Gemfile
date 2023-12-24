@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
-gem 'activeadmin', '~> 3.1', '>= 3.1.0'                      # The administration framework for Ruby on Rails
+gem 'activeadmin', '~> 3.2', '>= 3.2.0' # The administration framework for Ruby on Rails
 gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted data structures in console.
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful Javascript charts with one line of Ruby
