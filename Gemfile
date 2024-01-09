@@ -17,7 +17,7 @@ gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and
 gem 'nokogiri'                                                # premailer-rails requires either nokogiri or hpricot.
 gem 'pg', '~> 1.1'                                            # Postgres gem
 gem 'premailer-rails'                                         # gem is a drop in solution for styling HTML emails with CSS without having to do the hard work yourself.
-gem 'puma', '~> 6.4'                                          # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
+gem 'puma', '~> 6.4', '>= 6.4.2' # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 gem 'rack-cors', '~> 2.0', '>= 2.0.1'                         # Middleware that will make Rack-based apps CORS compatible. Fork the project here: https://github.com/cyu/rack-cors
 gem 'rails', '~> 7.1.0'                                       # Ruby on Rails is a full-stack web framework.
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
