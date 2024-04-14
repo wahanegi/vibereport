@@ -8,7 +8,7 @@ gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful Javascript charts with one line of Ruby
 gem 'cssbundling-rails', '~> 1.2', '>= 1.2.0'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem 'devise', '~> 4.9', '>= 4.9.3'                            # Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.9', '>= 4.9.4' # Flexible authentication solution for Rails with Warden
 gem 'devise-passwordless', '>= 1.0.0'                         # A passwordless a.k.a. "magic link" login strategy
 gem 'groupdate', '~> 6.3', '>= 6.3.0'                         # The simplest way to group temporal data
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
