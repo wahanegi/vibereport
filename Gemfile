@@ -11,7 +11,7 @@ gem 'cssbundling-rails', '~> 1.2', '>= 1.2.0'                 # Bundle and proce
 gem 'devise', '~> 4.9', '>= 4.9.3'                            # Flexible authentication solution for Rails with Warden
 gem 'devise-passwordless', '>= 1.0.0'                         # A passwordless a.k.a. "magic link" login strategy
 gem 'groupdate', '~> 6.3', '>= 6.3.0'                         # The simplest way to group temporal data
-gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
+gem 'jbuilder', '~> 2.12', '>= 2.12.0' # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jsbundling-rails', '~> 1.1', '>= 1.1.2'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
 gem 'nokogiri'                                                # premailer-rails requires either nokogiri or hpricot.
