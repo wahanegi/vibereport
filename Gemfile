@@ -21,9 +21,9 @@ gem 'puma', '~> 6.4'                                          # Webserver recomm
 gem 'rack-cors', '~> 2.0', '>= 2.0.1'                         # Middleware that will make Rack-based apps CORS compatible. Fork the project here: https://github.com/cyu/rack-cors
 gem 'rails', '~> 7.1.0'                                       # Ruby on Rails is a full-stack web framework.
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
-gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
-gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
-gem 'rubocop-rails', '~> 2.20', '>= 2.20.0', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
+gem 'rubocop', '~> 1.58', '>= 1.58.0', require: false # A Ruby static code analyzer https://github.com/bbatsov/rubocop
+gem 'rubocop-performance', '~> 1.20', '>= 1.20.0', require: false # A rubocop Performance extension
+gem 'rubocop-rails', '~> 2.22', '>= 2.22.2', require: false # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
 gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
 gem 'smarter_csv', '1.9.0'                                    # This gem for smarter importing of CSV Files as Array(s) of Hashes, with optional features for processing large files in parallel.
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -44,7 +44,7 @@ group :development do
   gem 'bullet'                        # Finds N+1 queries on app
   gem 'fix-db-schema-conflicts'       # Ensures consistent output of db/schema.rb despite local differences in the database
   gem 'git-smart'                     # Installs some additional 'smart' git commands, like `git smart-pull`.
-  gem 'letter_opener_web'             # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
+  gem 'letter_opener_web'             , '>= 3.0.0' # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
   gem 'web-console', '>= 4.2.1'       # Access an IRB console on exceptions page/console
 end
 
@@ -53,7 +53,7 @@ group :test do
   gem 'capybara'                      # Capybara is an integration testing tool for rack based web applications. It simulates how a user would interact with a website
   gem 'rails-controller-testing'      # Extracting `assigns` and `assert_template` from ActionDispatch.
   gem 'rspec-json_expectations'       # for testing a JSON response
-  gem 'selenium-webdriver'            # It aims to mimic the behaviour of a real user as it interacts with the application's HTML. It's primarily intended for web application testing, but any web-based task can automated.
+  gem 'selenium-webdriver'            , '>= 4.11.0' # It aims to mimic the behaviour of a real user as it interacts with the application's HTML. It's primarily intended for web application testing, but any web-based task can automated.
   gem 'shoulda-callback-matchers'     # Matchers to test before, after and around hooks
   gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'simplecov', require: false     # Code coverage for Ruby. See https://github.com/simplecov-ruby/simplecov for setting options
