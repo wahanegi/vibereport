@@ -3,23 +3,23 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
-gem 'activeadmin', '~> 3.1', '>= 3.1.0'                      # The administration framework for Ruby on Rails
+gem 'activeadmin', '~> 3.2', '>= 3.2.0' # The administration framework for Ruby on Rails
 gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted data structures in console.
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful Javascript charts with one line of Ruby
-gem 'cssbundling-rails', '~> 1.2', '>= 1.2.0'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem 'devise', '~> 4.9', '>= 4.9.3'                            # Flexible authentication solution for Rails with Warden
-gem 'devise-passwordless', '>= 1.0.0'                         # A passwordless a.k.a. "magic link" login strategy
+gem 'cssbundling-rails', '~> 1.4', '>= 1.4.0' # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem 'devise', '~> 4.9', '>= 4.9.4' # Flexible authentication solution for Rails with Warden
+gem 'devise-passwordless', '>= 1.0.2' # A passwordless a.k.a. "magic link" login strategy
 gem 'groupdate', '~> 6.3', '>= 6.3.0'                         # The simplest way to group temporal data
 gem 'jbuilder', '~> 2.11', '>= 2.11.5'                        # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jsbundling-rails', '~> 1.1', '>= 1.1.2'                  # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem 'jsbundling-rails', '~> 1.2', '>= 1.2.2' # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
 gem 'nokogiri'                                                # premailer-rails requires either nokogiri or hpricot.
 gem 'pg', '~> 1.1'                                            # Postgres gem
 gem 'premailer-rails'                                         # gem is a drop in solution for styling HTML emails with CSS without having to do the hard work yourself.
 gem 'puma', '~> 6.4'                                          # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 gem 'rack-cors', '~> 2.0', '>= 2.0.1'                         # Middleware that will make Rack-based apps CORS compatible. Fork the project here: https://github.com/cyu/rack-cors
-gem 'rails', '~> 7.1.0'                                       # Ruby on Rails is a full-stack web framework.
+gem 'rails', '~> 7.1.3', '>= 7.1.3.4' # Ruby on Rails is a full-stack web framework.
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
 gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
 gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
@@ -27,16 +27,16 @@ gem 'rubocop-rails', '~> 2.20', '>= 2.20.0', require: false   # Automatic Rails 
 gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
 gem 'smarter_csv', '1.9.0'                                    # This gem for smarter importing of CSV Files as Array(s) of Hashes, with optional features for processing large files in parallel.
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'stimulus-rails', '~> 1.3', '>= 1.3.0'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem 'turbo-rails', '~> 1.5', '>= 1.5.0'                       # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem 'stimulus-rails', '~> 1.3', '>= 1.3.1' # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'turbo-rails', '~> 2.0', '>= 2.0.0' # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem #A passwordless a.k.a. "magic link" login strategy
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]                 # Debugging functionality for Ruby.
-  gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'                        # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
-  gem 'factory_bot_rails'                                         # Test data generator -- see spec/support/factory_helper.rb
+  gem 'dotenv-rails', '~> 3.0', '>= 3.0.0' # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
+  gem 'factory_bot_rails'                                         , '>= 6.3.0' # Test data generator -- see spec/support/factory_helper.rb
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git'  # Easy way to add fake data: names, email addresses, etc.
-  gem 'rspec-rails', '>= 6.0.3'                                   # rspec-rails is a testing framework for Rails 5+.
+  gem 'rspec-rails', '>= 6.0.4' # rspec-rails is a testing framework for Rails 5+.
 end
 
 group :development do
@@ -44,7 +44,7 @@ group :development do
   gem 'bullet'                        # Finds N+1 queries on app
   gem 'fix-db-schema-conflicts'       # Ensures consistent output of db/schema.rb despite local differences in the database
   gem 'git-smart'                     # Installs some additional 'smart' git commands, like `git smart-pull`.
-  gem 'letter_opener_web'             # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
+  gem 'letter_opener_web'             , '>= 3.0.0' # Gives letter_opener an interface for browsing sent emails. Configuration not added  - gem 'letter_opener_web'
   gem 'web-console', '>= 4.2.1'       # Access an IRB console on exceptions page/console
 end
 
