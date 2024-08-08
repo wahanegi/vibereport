@@ -21,7 +21,7 @@ gem 'puma', '~> 6.4'                                          # Webserver recomm
 gem 'rack-cors', '~> 2.0', '>= 2.0.1'                         # Middleware that will make Rack-based apps CORS compatible. Fork the project here: https://github.com/cyu/rack-cors
 gem 'rails', '~> 7.1.0'                                       # Ruby on Rails is a full-stack web framework.
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
-gem 'rubocop', '~> 1.45', '>= 1.45.1', require: false         # A Ruby static code analyzer https://github.com/bbatsov/rubocop
+gem 'rubocop', '~> 1.58', '>= 1.58.0', require: false # A Ruby static code analyzer https://github.com/bbatsov/rubocop
 gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
 gem 'rubocop-rails', '~> 2.20', '>= 2.20.0', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
 gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
