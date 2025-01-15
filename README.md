@@ -174,6 +174,68 @@ otherwise you won't be able to see your updated CSS and JavaScript
 
 NOTE: `rails s` - is not used
 
+## Populate the Database with Necessary Data
+
+Follow these steps to set up the database with the required data for the application:
+
+### Step 1: Start the Rails Console
+Run the Rails console using the following command:
+
+```bash
+rails c
+```
+
+### Step 2: Create an Admin User
+Use the command below to create an admin user:
+
+```ruby
+AdminUser.create!(email: 'youremail@gmail.com', password: '1234qwer')
+```
+
+---
+
+### Step 3: Log in as the Admin User
+1. Open your browser and navigate to [http://localhost:3000/admin/login](http://localhost:3000/admin/login).
+2. Enter the email and password you used to create the admin user.
+
+---
+
+### Step 4: Populate Data via the Admin Dashboard
+Once logged in, complete the following steps in the Admin Dashboard:
+
+#### 4.1: Create a User
+- Navigate to the **Users** tab.
+- Fill out all required fields to create a user.
+
+#### 4.2: Add Emotions
+- Navigate to the **Emotions** tab.
+- Create approximately 10 emotions (both positive and negative).
+
+#### 4.3: Create a Team
+- Navigate to the **Teams** tab.
+- Add a new team.
+
+#### 4.4: Set Up a Time Period
+- Navigate to the **Time Periods** tab.
+- Create a new time period with the following details:
+   - **Start Date**: Set to today.
+   - **End Date**: Set to a future date.
+   - **Due Date**: Set to a future date.
+
+---
+
+### Step 5: Log in as the User
+1. Open your browser and go to [http://localhost:3000/users/sign_in](http://localhost:3000/users/sign_in).
+2. Enter the name and password you provided when creating the user.
+3. After signing in, you should see the message: **Check your inbox!**
+
+---
+
+### Step 6: Access the Application via Email
+1. The [Letter Opener](https://github.com/ryanb/letter_opener) gem will open a new tab displaying the email.
+2. Click on the **Access Site** link in the email to log into the application.
+
+
 ## OpenSSL::Cipher::CipherError
 
 When you create encrypted credentials in Rails 7, the contents of the `config/credentials.yml.enc` file are encrypted using a master key that is stored in the `config/master.key` file. This encryption process uses the `OpenSSL library`, and if there is a problem with `OpenSSL`, you might see the `OpenSSL::Cipher::CipherError` error.
