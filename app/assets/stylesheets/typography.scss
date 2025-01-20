@@ -1,1 +1,87 @@
-// test commit
+// Bootstrap settings
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// Import Bootstrap's SCSS variables and utilities TODO: correct imports???
+@import "bootstrap/scss/_variables";
+@import "bootstrap/scss/_utilities";
+@import "bootstrap/scss/_functions";
+
+// Setting basic variables for typography TODO: will be remove to _variables.scss
+$font-family-base: 'Josefin Sans', sans-serif;
+$font-size-base: 1rem;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$line-height-base: 1.2;
+$headings-font-family: $font-family-base;
+$headings-font-weight: 600;
+$headings-color: $black;
+
+// Adaptive fonts: Enabling RFS (Responsive Font Sizes)
+$enable-responsive-font-sizes: true; // TODO study how to use?
+
+// font-grid variables
+$font-size: (
+        1: 3rem,     // fs-1
+        2: 2.5rem,   // fs-2
+        3: 2rem,     // fs-3
+        4: 1.75rem,  // fs-4
+        5: 1.5rem,   // fs-5
+        6: 1.25rem,  // fs-6
+        7: 1rem,     // fs-7
+        8: 0.875rem, // fs-8
+        9: 0.75rem,  // fs-9
+        10: 0.625rem // fs-10
+);
+
+// Overwriting default Bootstrap variables
+$font-size-xl: map-get($font-size, 1);
+$font-size-lg: map-get($font-size, 2);
+$font-size-md: map-get($font-size, 3);
+$font-size-base: map-get($font-size, 6); // 1.25rem
+$font-size-sm: map-get($font-size, 7);
+$font-size-xs: map-get($font-size, 8);
+
+/* Custom typography styles */
+// body text-styles
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: $headings-color;
+  // background-color: $white; TODO should be here ???
+}
+
+// Heading styles
+$herding-styles: (
+        h1: (font-size: $font-size-xl, margin-bottom: 2rem),
+        h2: (font-size: $font-size-lg, margin-bottom: 1.75rem),
+        h3: (font-size: $font-size-md, margin-bottom: 1.5rem),
+        h4: (font-size: $font-size-base, margin-bottom: 1.25rem),
+        h5: (font-size: $font-size-xl, margin-bottom: 1rem),
+        h6: (font-size: $font-size-xs, margin-bottom: 0.75rem),
+);
+
+// Generating styles for headings
+@each $heading, $styles in $herding-styles {
+  #{$heading}, .#{$heading} {
+    font-family: $headings-font-family;
+    font-weight: $headings-font-weight;
+    line-height: $line-height-base;
+    font-size: map-get($styles, font-size);
+  }
+}
+
+// Adding font-grid variables to Bootstrap "font-size"-utility (fs-*)
+$utilities: map-merge(
+                $utilities, (
+                "font-size": (
+                        property: font-size,
+                        class: fs,
+                        values: $font-size,
+                )
+        )
+)
