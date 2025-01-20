@@ -16,7 +16,6 @@ $gray-900:        rgba(0, 0, 0, 0.9);
 
 $apricot:         #FCDDCE; // For negative background color
 $cinnamon:        #D1794E; // For negative color
-$gray-tea-green:  #CCEDD5; // For positive background color
 $emerald:         #7FCD95;
 $navy-blue:       #0007A3;
 $red-violet:      #D7007B;
@@ -35,16 +34,25 @@ $orange-400:      #F09D74;
 $orange-500:      #F18C59;
 $orange-700:      #F68E5B;
 
-$green-100:       #D9F1E0 ;
-$green-200:       #CCEDD5 ;
-$green-300:       #B9E6C6 ;
-$green-400:       #A6DFB6 ;
-$green-500:       #80D197 ;
-$green-700:       #5DAA73 ;
+$green-100:       #D9F1E0;
+$green-200:       #CCEDD5;
+$green-300:       #B9E6C6;
+$green-400:       #A6DFB6;
+$green-500:       #80D197;
+$green-700:       #5DAA73;
 
 //other colors
 $yellow-cub:      #FFC93D;
 $red:             #EB4848;
+$rose:            #E02AA4;
+$bright-green:    #02A32F;
+$bright-orange:   #F45C12;
+$light-blue:      rgba(86, 137, 235, 0.3);
+$light-grey:      #D9D9D9;
+$medium-grey:     #A6A1A1;
+$color-grey:      #CCC2C2;
+$switch-grey:     #D3D2D5;
+$light-violet:    #9083A5;
 
 //BOOTSTRAP REPLACEMENT
 $primary:         $red-violet;
@@ -56,32 +64,6 @@ $danger:          $red;
 $light:           $gray-100;
 $dark:            $gray-500;
 
-
-
-
-// TEMPORARY OUR COLORS for project
-
-$color-rose:      #E02AA4;
-//$green: #4F9B64;
-$color-green: #02A32F;
-//$light-green: #CCEDD5;
-$light-blue: rgba(86, 137, 235, 0.3);
-$light-blue-input: rgba(194, 211, 242, 0.6);
-//$blue: #4C77CB;
-$dark-blue: #5689EB;
-$light-red: #FCDDCE;
-$color-orange: #F45C12;
-$light-grey: #D9D9D9;
-$medium-grey: #A6A1A1;
-$grey: #9E9E9E;
-$dark-grey: #4D4D4D;
-$color-grey: #CCC2C2;
-$switch-grey: #D3D2D5;
-$light-violet: #9083A5;
-
-// these colors commented cause they conflicted  to CI-122's epic story
-//$primary: $blue;
-//$secondary: #CCDCF9;
 
 :root{
   --bs-link-color: #000;

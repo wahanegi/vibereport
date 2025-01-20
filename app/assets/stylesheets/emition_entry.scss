@@ -25,18 +25,18 @@ h4.emotion-entry {
 
 .form-control {
   &.input-positive {
-    background-color: $gray-tea-green;
+    background-color: $green-200;
     color: $green-700;
-    border-color: $dark-blue !important;
+    border-color: $royal-blue !important;
 
     &::placeholder{
       color: $green-700;
     }
   }
   &.input-negative {
-    background-color: $light-red;
+    background-color: $apricot;
     color: $orange-700;
-    border-color: $dark-blue !important;
+    border-color: $royal-blue !important;
 
     &::placeholder{
       color: $orange-700;

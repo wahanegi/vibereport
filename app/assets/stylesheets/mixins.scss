@@ -1,11 +1,11 @@
 @import 'variables';
 @mixin emotion{
   &.positive{
-    background-color: $gray-tea-green ;
+    background-color: $green-200 ;
     color:            $sea-green;
     &:active{
       color: shift-color($sea-green,50%);
-      background-color: shift-color($gray-tea-green,15%);
+      background-color: shift-color($green-200,15%);
     }
   }
   &.neutral{
