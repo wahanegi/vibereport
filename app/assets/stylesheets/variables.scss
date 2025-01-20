@@ -41,13 +41,15 @@ $link-color:                  $navy-blue       !important;
 $link-primary:                $navy-blue       !important;
 
 // Dropdown menu container and contents.
-$dropdown-padding-x:          1rem            !global;
-$dropdown-padding-y:          1rem             !global;
+$dropdown-padding-x:          11px             !global;
+$dropdown-padding-y:          9px              !global;
 $dropdown-spacer:             .625rem          !global;
 $dropdown-bg:                 $gray-100        !global;
 $dropdown-border-color:       $black !global;
 $dropdown-border-width:       1px              !global;
 $dropdown-border-radius:      8px              !global;
+$dropdown-item-padding-y:     5px              !global;
+$dropdown-item-padding-x:     0                !global;
 $dropdown-link-hover-bg:      $gray-100        !global;
 
 // For margin and padding
@@ -64,6 +66,8 @@ $spacers: (
         8: $spacer * 2.25
 ) ;
 
+
+// Breakpoints
 $grid-breakpoints: (
   sm: 576px,
   md: 768px,
