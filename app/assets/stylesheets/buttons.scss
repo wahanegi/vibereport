@@ -38,14 +38,6 @@
     background-color: $red;
   }
 
-  &.shadow {
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25)
-  }
-
-  &.padding10-20 {
-    padding: 10px 20px;
-  }
-
   // use with C2 or C3 text
   &.btn-feature{
     width:            26.25rem;
@@ -119,14 +111,6 @@
       overflow:       hidden;
       @include emotion
     }
-    &.wb2{
-      padding:        0 18px;
-      height:         4.375rem;
-      border-radius:  2.125rem;
-      box-shadow:     9px 13.5px 13.5px $gray-100;
-      min-width:      17.875rem;
-      @include emotion
-    }
   }
 
 
@@ -156,21 +140,6 @@
     font-size:        20px !important;
 
   }
-}
-
-// For the Special inputs
-// Intensity selection & follow-up field (use B3)
-.btn-intensity-positive-semicircle{
-  @include row-semicircle($green-100, $green-200, $green-300, $green-400, $green-500)
-}
-.btn-intensity-negative-semicircle{
-  @include row-semicircle($orange-100, $orange-200, $orange-300, $orange-400, $orange-500)
-}
-.btn-intensity-positive-quarter-circle{
-  @include row-quarter-circle($green-100, $green-200, $green-300, $green-400, $green-500)
-}
-.btn-intensity-negative-quarter-circle{
-  @include row-quarter-circle($orange-100, $orange-200, $orange-300, $orange-400, $orange-500)
 }
 
 // The recommend using the general styles above
@@ -244,48 +213,4 @@
     cursor: pointer;
   }
 
-  &.outline {
-    padding: 10px 20px;
-    min-height: 60px;
-    border: 2.48225px solid $dark-blue;
-    filter: drop-shadow(0px 3.30966px 3.30966px rgba(0, 0, 0, 0.25))
-    drop-shadow(3.30966px 4.96449px 3.30966px rgba(0, 0, 0, 0.25));
-    border-radius: 15.8924px;
-    font-size: 32px;
-    line-height: 32px;
-    text-align: center;
-    background: $color-white;
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  &.primary {
-    padding: 10px 20px;
-    min-height: 60px;
-    width: 235px;
-    background: $dark-blue;
-    border: 1px solid $color-black;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
-    font-size: 32px;
-    line-height: 39px;
-    color: $color-white;
-  }
-
-  &.navigation {
-    width: 235px;
-    height: 52px;
-    border: 1px solid $color-black;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
-    font-size: 26.6341px;
-    line-height: 32px;
-    color: $color-white;
-    margin-left: 70px;
-    &.next {
-      background: $dark-blue;
-    }
-    &.back {
-      background: $grey;
-    }
-  }
 }
