@@ -63,3 +63,10 @@ $spacers: (
         7: $spacer * 2,
         8: $spacer * 2.25
 ) ;
+
+$grid-breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
