@@ -66,3 +66,26 @@ $dark:            $gray-500;
 :root{
   --bs-link-color: #000;
 }
+
+// Utility classes for custom colors
+.text-gray-200 {
+  color: $gray-200;
+}
+.text-gray-600 {
+  color: $gray-600;
+}
+.bg-green-200 {
+  background-color: $green-200;
+}
+.bg-apricot {
+  background-color: $apricot;
+}
+.border-royal-blue {
+  border-color: $royal-blue !important;
+}
+.text-green-700, .text-placeholder-green-700::placeholder, .text-focus-green-700:focus {
+  color: $green-700;
+}
+.text-orange-700, .text-placeholder-orange-700::placeholder, .text-focus-orange-700:focus {
+  color: $orange-700;
+}
