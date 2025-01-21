@@ -38,15 +38,20 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
     fetchEmotions(setEmotions);
   }, []);
 
+  const emotionClasses = {
+    positive: 'bg-green-200 text-placeholder-green-700 text-green-700 text-focus-green-700',
+    negative: 'bg-apricot text-placeholder-orange-700 text-orange-700 text-focus-orange-700',
+  };
+  
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading &&
     <Wrapper>
       <div className='central-element'>
         <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
-        <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>
+        <h4 className="mt-3 text-gray-600">What word best describes work, recently?</h4>
         <Form.Control
-          className ={`input-${selectedType} email_field input-new-word mb-80`}
+          className ={`${emotionClasses[selectedType]} email_field input-new-word mb-80 border-royal-blue`}
           type="text" maxLength={15}
           autoComplete="off"
           placeholder="Add a new word"

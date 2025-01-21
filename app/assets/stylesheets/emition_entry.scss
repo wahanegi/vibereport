@@ -22,24 +22,3 @@ h4.emotion-entry {
     font-weight: 700;
   }
 }
-
-.form-control {
-  &.input-positive {
-    background-color: $gray-tea-green;
-    color: $green-700;
-    border-color: $dark-blue !important;
-
-    &::placeholder{
-      color: $green-700;
-    }
-  }
-  &.input-negative {
-    background-color: $light-red;
-    color: $orange-700;
-    border-color: $dark-blue !important;
-
-    &::placeholder{
-      color: $orange-700;
-    }
-  }
-}
