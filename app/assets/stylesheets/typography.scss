@@ -1,26 +1,16 @@
-// Bootstrap settings
-@import "~bootstrap/scss/bootstrap";
-@import "~bootstrap/scss/reboot";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+@import 'bootstrap/scss/bootstrap';
 
-// Import Bootstrap's SCSS variables and utilities TODO: correct imports???
-@import "bootstrap/scss/_variables";
-@import "bootstrap/scss/_utilities";
-@import "bootstrap/scss/_functions";
-
-// Setting basic variables for typography TODO: will be remove to _variables.scss
-$font-family-base: 'Josefin Sans', sans-serif;
+// Setting basic variables for typography TODO: will be review when the configuration is complete
 $font-size-base: 1rem;
 $font-weight-normal: 400;
 $font-weight-bold: 700;
-$line-height-base: 1.2;
+
 $headings-font-family: $font-family-base;
 $headings-font-weight: 600;
 $headings-color: $black;
 
 // Adaptive fonts: Enabling RFS (Responsive Font Sizes)
-$enable-responsive-font-sizes: true; // TODO study how to use?
+$enable-responsive-font-sizes: true; // TODO: study how to use.
 
 // font-grid variables
 $font-size: (
@@ -52,11 +42,11 @@ body {
   font-weight: $font-weight-normal;
   line-height: $line-height-base;
   color: $headings-color;
-  // background-color: $white; TODO should be here ???
+  background-color: $white; // TODO: will be review when the configuration is complete
 }
 
 // Heading styles
-$herding-styles: (
+$heading-styles: (
         h1: (font-size: $font-size-xl, margin-bottom: 2rem),
         h2: (font-size: $font-size-lg, margin-bottom: 1.75rem),
         h3: (font-size: $font-size-md, margin-bottom: 1.5rem),
@@ -66,12 +56,14 @@ $herding-styles: (
 );
 
 // Generating styles for headings
-@each $heading, $styles in $herding-styles {
+@each $heading, $styles in $heading-styles {
   #{$heading}, .#{$heading} {
     font-family: $headings-font-family;
     font-weight: $headings-font-weight;
     line-height: $line-height-base;
     font-size: map-get($styles, font-size);
+    @include rfs(map-get($styles, font-size)); // add RFS
+    margin-bottom: map-get($styles, margin-bottom);
   }
 }
 
