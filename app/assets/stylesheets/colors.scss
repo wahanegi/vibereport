@@ -16,16 +16,16 @@ $gray-900:        rgba(0, 0, 0, 0.9);
 
 $apricot:         #FCDDCE; // For negative background color
 $cinnamon:        #D1794E; // For negative color
-$emerald:         #7FCD95;
-$navy-blue:       #0007A3;
-$red-violet:      #D7007B;
+$emerald:         #7FCD95; // For positive accents
+$navy-blue:       #0007A3; // For info or neutral accents
+$red-violet:      #D7007B; // Primary brand color
 $pale-cornflower: #CCDCF9; // For neutral background color
-$pink:            #F9D9EB;
-$royal-blue:      #5689EB;
+$pink:            #F9D9EB; // Secondary brand accent
+$royal-blue:      #5689EB; // For links or active states
 $sea-green:       #4F9B64; // For positive color
 $steel-blue:      #4C77CB; // For neutral color
-$tea-green:       #DEF1E3;
-$soft-blue:       #6593EB;
+$tea-green:       #DEF1E3; // Positive background color
+$soft-blue:       #6593EB; // Secondary links or accents
 
 $orange-100:      #FADFD1;
 $orange-200:      #F7CDB8;
@@ -71,8 +71,29 @@ $dark:            $gray-500;
 .text-gray-200 {
   color: $gray-200;
 }
+.text-gray-300, .text-gray-300-hover:hover {
+  color: $gray-300;
+}
 .text-gray-600 {
   color: $gray-600;
+}
+.text-green-700, .text-placeholder-green-700::placeholder, .text-focus-green-700:focus {
+  color: $green-700;
+}
+.text-orange-700, .text-placeholder-orange-700::placeholder, .text-focus-orange-700:focus {
+  color: $orange-700;
+}
+.text-cinnamon {
+  color: $cinnamon;
+}
+.text-steel-blue {
+  color: $steel-blue;
+}
+.bg-gray-200, .bg-gray-hover-200:hover{
+  background-color: $gray-200;
+}
+.bg-gray-200-active:active{
+  background-color: shift-color($gray-200, 30%);
 }
 .bg-green-200 {
   background-color: $green-200;
@@ -80,12 +101,15 @@ $dark:            $gray-500;
 .bg-apricot {
   background-color: $apricot;
 }
+.bg-pale-cornflower {
+  background-color: $pale-cornflower;
+}
 .border-royal-blue {
   border-color: $royal-blue !important;
 }
-.text-green-700, .text-placeholder-green-700::placeholder, .text-focus-green-700:focus {
-  color: $green-700;
+.hover\:bg-primary-hover:hover {
+  background-color: shift-color($primary, 30%) !important;
 }
-.text-orange-700, .text-placeholder-orange-700::placeholder, .text-focus-orange-700:focus {
-  color: $orange-700;
+.disabled:disabled {
+  opacity: 0.45 !important;
 }

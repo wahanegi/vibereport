@@ -19,18 +19,8 @@
     height:           3.75rem;
     border:           1px solid $black;
     border-radius:    .75rem ;
-    color:            $white;
-    background-color: $royal-blue;
     box-shadow:       $btn-box-shadow-other !important;
     padding:          0 20px;
-    &.back{
-      background-color: $gray-200;
-      &:active {
-        background-color: shift-color($gray-200, 30%);
-        border:           1px solid $black;
-        color:            $white;
-      }
-    }
   }
 
   &.btn-danger{
@@ -44,8 +34,6 @@
     height:           3.75rem;
     border:           2.5px solid $royal-blue;
     border-radius:    1rem;
-    color:            $gray-300;
-    background-color: $white;
     box-shadow:       $btn-box-shadow-other;
 
     &.w-385{
@@ -59,8 +47,6 @@
     width:            15rem;
     height:           4rem;
     border-radius:    6px;
-    color:            $white      ;
-    background-color: $royal-blue;
     box-shadow:       $btn-box-shadow;
     &.active {
       box-shadow: 4px 2px 2px $gray-100;
@@ -73,21 +59,6 @@
     }
     &.btn-no{
       width: 196px;
-    }
-    &.back {
-      background-color: $gray-200 !important;
-    }
-    &.delete {
-      background-color: $red;
-    }
-    &.system{
-      background-color: $primary;
-      &:hover{
-        background-color: shift-color($primary,30%);
-      }
-      &:disabled {
-        opacity: 0.45;
-      }
     }
   }
 
@@ -165,21 +136,6 @@
     line-height: 44px;
     text-align: center;
     cursor: default !important;
-
-    &.positive {
-      background: $green-200;
-      color: $sea-green;
-    }
-
-    &.neutral {
-      background: $pale-cornflower;
-      color: $steel-blue;
-    }
-
-    &.negative {
-      background: $apricot;
-      color: $cinnamon;
-    }
   }
 
   &.shoutout {
@@ -187,10 +143,8 @@
     padding: 5px;
     min-height: 59px;
     border: 4px solid $red-violet;
-    color: $red-violet;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    background-color: $white;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -212,5 +166,4 @@
     background-size: cover;
     cursor: pointer;
   }
-
 }

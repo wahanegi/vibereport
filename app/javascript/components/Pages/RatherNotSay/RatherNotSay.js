@@ -25,7 +25,7 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
                   <Button className='btn-modal c1 btn-wide' onClick={ skipHandling }>Yes, skip ahead</Button>
               </div>
               <div className='row4'>
-                  <Button className='btn-modal c1 back btn-no' onClick={ noHandling }>No</Button>
+                  <Button className='btn-modal c1 bg-gray-200 bg-gray-hover-200 btn-no' onClick={ noHandling }>No</Button>
               </div>
           </div>
          <CornerElements         data = { data }
