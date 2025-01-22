@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {Wrapper} from "../UI/ShareContent";
 import Form from 'react-bootstrap/Form';
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
@@ -41,7 +40,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading &&
-    <Wrapper>
+    <>
       <div className='central-element'>
         <h1 className= 'emotion-entry'>A new one! What’s up?</h1>
         <h4 className="emotion-entry mt-3">What word best describes work, recently?</h4>
@@ -62,7 +61,7 @@ const EmotionEntry = ({data, setData, saveDataToDb, steps, service, draft}) => {
                       saveDataToDb={saveDataToDb}
                       steps={steps}
                       draft={draft}/>
-    </Wrapper>
+    </>
 };
 
 export default EmotionEntry;

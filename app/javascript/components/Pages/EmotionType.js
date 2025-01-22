@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BigBtnEmotion, Wrapper} from "../UI/ShareContent";
+import {BigBtnEmotion} from "../UI/ShareContent";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
 import ToggleEmotionType from "../UI/ToggleEmotionType";
@@ -54,21 +54,23 @@ const EmotionType = ({data, setData, saveDataToDb, steps, service, draft}) => {
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading &&
-    <Wrapper>
+    <>
       <div className='central-element'>
         <div className= 'mt-123 mb-80 text-center'>
           <BigBtnEmotion showPencil={false} emotion={data.emotion} selectedType={selectedType}/>
         </div>
         <ToggleEmotionType selectedType={selectedType} handleEmotionType={handleEmotionType}/>
+        <div className="mt-3">
+          <BlockLowerBtns nextHandling={handlingOnClickNext}/>
+        </div>
       </div>
-      <BlockLowerBtns nextHandling={handlingOnClickNext}/>
       <CornerElements data={data}
                       setData={setData}
                       saveDataToDb={saveDataToDb}
                       steps={steps}
                       draft={isDraft}
                       handleSaveDraft={handleSaveDraft}/>
-    </Wrapper>
+    </>
 };
 
 export default EmotionType;

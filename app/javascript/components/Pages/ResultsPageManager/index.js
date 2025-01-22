@@ -4,7 +4,6 @@ import {isBlank, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   ShoutOutIcon,
-  Wrapper
 } from "../../UI/ShareContent";
 import NavigationBar from "./NavigationBar";
 import CornerElements from "../../UI/CornerElements";
@@ -103,7 +102,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
 
   return loaded && <Fragment>
     <div className='position-relative'>
-      <Wrapper>
+      <>
         {
           notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
         }
@@ -129,7 +128,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
           <EmotionIndex teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         </div>
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true} />
-      </Wrapper>
+      </>
       <Footer />
     </div>
     {

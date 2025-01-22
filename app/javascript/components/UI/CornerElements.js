@@ -19,7 +19,6 @@ const CornerElements = ({
                             handleSaveDraft }) => {
   return (
     <Fragment>
-      <Logo />
       {
         !hideBottom ?
           <Fragment>

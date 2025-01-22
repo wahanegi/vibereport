@@ -10,14 +10,12 @@ const BlockLowerBtns = ({ isNext = true,
                             stringBody = '',
                             handlingOnClickNext = () =>{}}) => {
   return (
-      <div className='d-flex justify-content-around'>
-          <div className='d-flex position-absolute placement-buttons justify-content-between pb-52'>
+      <div className='d-flex gap-3'>
               <BtnBack onClick={backHandling}/>
               {isNext  && !isSubmit && <BtnPrimary text='Next' onClick={nextHandling} disabled={disabled} />}
               {!isNext && !isSubmit && <BtnPrimary text='Skip' onClick={skipHandling} />}
               {isSubmit && <BtnPrimary onClick={handlingOnClickNext}
                                        text={isEmptyStr(stringBody) ? 'Skip to Results' : 'Submit'} />}
-          </div>
       </div>
   );
 };

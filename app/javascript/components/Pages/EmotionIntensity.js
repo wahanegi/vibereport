@@ -1,5 +1,4 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {Wrapper} from "../UI/ShareContent";
 import {capitalizeFirstLetter, isBlank} from "../helpers/helpers";
 import ButtonEmotion from "../UI/ButtonEmotion";
 import PoweredBy from '../../../assets/images/PoweredBy.svg';
@@ -132,7 +131,7 @@ const generateStyles = (value, selected, category) => {
 
   if (!!error) return <p>{error.message}</p>
 
-  return !isLoading && <Wrapper>
+  return !isLoading && <>
     <div className='central-element'>
       <EmotionSection />
       <IntenseLine
@@ -152,7 +151,7 @@ const generateStyles = (value, selected, category) => {
                     steps={steps}
                     draft={isDraft}
                     handleSaveDraft={handleSaveDraft}/>
-  </Wrapper>
+  </>
 };
 
 export default EmotionIntensity;

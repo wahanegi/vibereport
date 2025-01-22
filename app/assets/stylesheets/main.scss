@@ -63,12 +63,8 @@ a {
   height: 100vh;
   width: 100vw;
 }
-.wrapper {
-  min-height: 100vh;
-  text-align: center;
-}
+
 .central-element {
-  margin-top: 151px;
   min-height: 60vh;
 }
 .help-icon {
@@ -288,10 +284,7 @@ input.email-input-new:focus-visible{
     }
   }
 }
-.placement-buttons {
-  top: 784px;
-  width: 800px;
-}
+
 .field-shout-outs {
   width: 884px !important;
   height: 239px;

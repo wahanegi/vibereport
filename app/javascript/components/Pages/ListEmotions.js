@@ -87,8 +87,7 @@ function ListEmotions({ data, setData, saveDataToDb, steps, service, draft, setI
     <Fragment>
       { !!error && <p>{error.message}</p>}
       { !isLoading && !error &&
-        <div className="board  mt-35">
-          <Logo />
+        <div className="board mt-35">
           <div className="h-40">
              <div className="calendar-complete-by ml-200 mt-151">
                <div className="data mx-auto my-0 ">

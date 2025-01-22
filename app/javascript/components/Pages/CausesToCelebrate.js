@@ -1,7 +1,4 @@
 import React, {useEffect, useState} from "react"
-import {
-  Wrapper
-} from "../UI/ShareContent";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
 import {MAX_CHAR_LIMIT} from "../helpers/consts";
@@ -41,7 +38,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
 
   if (!!error) return <p>{error.message}</p>
 
-  return !isLoading && <Wrapper>
+  return !isLoading && <>
     <div className='central-element'>
       <h1>Are there any recent <br/> causes to celebrate?</h1>
       <div className="rating-comment-container">
@@ -69,7 +66,7 @@ const CausesToCelebrate = ({data, setData, saveDataToDb, steps, service, draft})
                     steps={steps}
                     draft={isDraft}
                     handleSaveDraft={handleSaveDraft} />
-  </Wrapper>
+  </>
 }
 
 export default CausesToCelebrate;

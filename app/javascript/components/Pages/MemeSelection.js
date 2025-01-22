@@ -5,8 +5,7 @@ import {
   BigBtnEmotion,
   BtnOutline,
   BtnPrimary,
-  Header,
-  Wrapper
+  Header
 } from "../UI/ShareContent";
 import {backHandling, gifUrlWithId, isBlank, isPresent} from "../helpers/helpers";
 import CornerElements from "../UI/CornerElements";
@@ -145,7 +144,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
 
   if (!!error) return <p>{error.message}</p>
 
-  return !isLoading && <Wrapper>
+  return !isLoading && <>
     <Header />
     <div className='align-self-center gif-wrap'>
         <Gif {...{emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex,
@@ -159,7 +158,7 @@ const MemeSelection = ({data, setData, saveDataToDb, steps, service, isCustomGif
                     steps={steps}
                     draft={isDraft}
                     handleSaveDraft={handleSaveDraft} />
-  </Wrapper>
+  </>
 }
 
 export default MemeSelection;

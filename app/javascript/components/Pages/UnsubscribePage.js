@@ -1,5 +1,4 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {Wrapper} from "../UI/ShareContent";
 import CornerElements from "../UI/CornerElements";
 import {apiRequest} from "../requests/axios_requests";
 import {Link} from "react-router-dom";
@@ -65,7 +64,7 @@ const UnsubscribePage = ({data}) => {
   </Fragment>
 
   return <Fragment>
-    <Wrapper>
+    <>
       <div className='central-element'>
         {unsubscribed ?
           <Unsubscribed />:
@@ -73,7 +72,7 @@ const UnsubscribePage = ({data}) => {
         }
       </div>
       <CornerElements data={data} draft={true} preview={previewValue} hideShoutout={true} />
-    </Wrapper>
+    </>
   </Fragment>
 };
 

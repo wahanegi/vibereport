@@ -1,5 +1,4 @@
 import React, {useState, Fragment, useEffect} from 'react';
-import {Wrapper} from "../UI/ShareContent";
 import flame2 from '../../../assets/images/flame2.svg';
 import flame3 from '../../../assets/images/flame3.svg';
 import flame4 from '../../../assets/images/flame4.svg';
@@ -96,7 +95,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service, draf
   if (!!error) return <p>{error.message}</p>
 
   return !isLoading &&
-    <Wrapper>
+    <>
       <div className='central-element'>
         <ProductivitySlider productivity={productivity} handleSliderChange={handleSliderChange} flameImages={flameImages} generateStyles={generateStyles} imageSizes={imageSizes}/>
       </div>
@@ -107,7 +106,7 @@ const ProductivityCheckLow = ({data, setData, saveDataToDb, steps, service, draf
                       steps={steps}
                       draft={isDraft}
                       handleSaveDraft={handleSaveDraft} />
-    </Wrapper>
+    </>
 };
 
 export default ProductivityCheckLow;

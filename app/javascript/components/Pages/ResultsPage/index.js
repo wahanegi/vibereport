@@ -4,7 +4,6 @@ import {isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
 import {
   BtnBack,
   ShoutOutIcon,
-  Wrapper
 } from "../../UI/ShareContent";
 import axios from "axios";
 import NavigationBar from "./NavigationBar";
@@ -158,7 +157,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
 
   return loaded && <Fragment>
     <div className='position-relative'>
-      <Wrapper>
+      <>
         {
           notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
         }
@@ -194,7 +193,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
                          setData={setData}
                          setShowWorkingModal={setShowWorkingModal}/>
         <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}/>
-      </Wrapper>
+      </>
       <Footer />
     </div>
     {

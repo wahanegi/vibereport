@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {Wrapper} from "../UI/ShareContent";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import CornerElements from "../UI/CornerElements";
 import {MAX_CHAR_LIMIT} from "../helpers/consts";
@@ -29,7 +28,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
 
   if (!!error) return <p>{error.message}</p>
 
-  return !isLoading && <Wrapper>
+  return !isLoading && <>
     <div className='central-element'>
       <h1>It's like that sometimes...</h1>
       <h2 className="color-black">Reflect on what you think limited <br /> your productivity...</h2>
@@ -58,7 +57,7 @@ const ProductivityBadFollowUp = ({data, setData, saveDataToDb, steps, service, d
                     steps={steps}
                     draft={isDraft}
                     handleSaveDraft={handleSaveDraft} />
-  </Wrapper>
+  </>
 };
 
 export default ProductivityBadFollowUp;
