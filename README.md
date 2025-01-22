@@ -11,7 +11,7 @@ Vibe Report is a free weekly check-in and employee recognition tool that is easi
 
 The Vibe Report App is built on:
 * Ruby 3.1.2
-* Rails 7.0.4
+* Rails 7.2
 * postgresql 10.0 or higher
 
 
