@@ -194,7 +194,7 @@ GEM
       railties (>= 6.0)
       responders (>= 2)
     io-console (0.8.0)
-    irb (1.15.0)
+    irb (1.15.1)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
@@ -508,7 +508,7 @@ DEPENDENCIES
   premailer-rails
   puma (~> 6.4)
   rack-cors (~> 2.0, >= 2.0.1)
-  rails (~> 7.1.0)
+  rails (~> 7.1.5.1)
   rails-controller-testing
   redis (~> 4.0)
   rspec-json_expectations
