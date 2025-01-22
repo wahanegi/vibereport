@@ -10,13 +10,15 @@
 Vibe Report is a free weekly check-in and employee recognition tool that is easily customizable, providing an engaging, user-friendly experience that your team will be thankful for. Check-in, elicit feedback, and retain your team with actionable insights. Allow your team members to share, express themselves creatively, and recognize each other no matter where they are for a thriving, collaborative, and supportive culture.
 
 The Vibe Report App is built on:
-* Ruby 3.1.2
-* Rails 7.0.4
-* postgresql 10.0 or higher
 
+- Ruby 3.2.6
+- Rails 7.1.5.1
+- postgresql 10.0 or higher
 
 ---
+
 ## Table of Contents
+
 [New Development Machine Install (Mac)](#new-development-machine-install-mac)
 
 [GIT and Changing Code](#git)
@@ -31,11 +33,12 @@ The Vibe Report App is built on:
 
 [License](#license)
 
-
 ---
+
 ## New Development Machine Install (Mac)
 
-*NOTE:* After installing something new, if something doesn't work like you expect, try quitting and restarting terminal.
+_NOTE:_ After installing something new, if something doesn't work like you expect, try quitting and restarting terminal.
+
 1. Install the latest version of XCode from the App store, run `$ xcode-select --install`
 2. Install the latest version of Homebrew: http://brew.sh
 3. Install Git on Mac using homebrew: `$ brew install git`
@@ -43,8 +46,8 @@ The Vibe Report App is built on:
 5. Set your GIT email address from terminal: `$ git config --global user.email "YOUR EMAIL ADDRESS"`
 6. Generate and add SSH keys your Github account by following the instructions at https://help.github.com/articles/generating-ssh-keys/
 7. Install GPG using homebrew: `$ brew install gpg` (May be needed for RVM in next step)
-8. Install the latest version of RVM: https://rvm.io, but instead of `gpg2` Use `gpg` in the command that adds the GPG keys.  If this doesn't work check out the [security](http://rvm.io/rvm/security) page for a workaround.
-9. Install Ruby from terminal using RVM: `$ rvm install 3.1.2`
+8. Install the latest version of RVM: https://rvm.io, but instead of `gpg2` Use `gpg` in the command that adds the GPG keys. If this doesn't work check out the [security](http://rvm.io/rvm/security) page for a workaround.
+9. Install Ruby from terminal using RVM: `$ rvm install 3.2.6`
 10. Install posgtresql from terminal: `$ brew install postgresql` and follow on screen instructions (very important)
 11. Create postgresql superuser postgres: `$ createuser postgres -s`
 12. Change your directory to where you want your work projects in terminal and clone the git repo: `$ git@github.com:wahanegi/vibereport.git`
@@ -61,29 +64,30 @@ The Vibe Report App is built on:
 23. In Rubymine it's necessary to enable appropriate version of Javascript to make sure correct syntax highlighting.
     `Rubymine` -> `Preferences` -> `Languages & Frameworks` -> `Javascript`: Then set `Javascript language version` to "ECMA Script 6"
 
-
-
 ### Highly Recommended Mac Goodies
-1. For pretty and customizable command line info, including branch and whether you have uncommited changes or not:
 
-        $ brew install zsh-git-prompt
+1.  For pretty and customizable command line info, including branch and whether you have uncommited changes or not:
 
-   Then update `~/.zshrc` with the following code:
+            $ brew install zsh-git-prompt
 
-        source "/usr/local/opt/zsh-git-prompt/zshrc.sh"
+    Then update `~/.zshrc` with the following code:
 
-        PROMPT='%~%b$(git_super_status)\$ '
-        
-        clean_branches() {
-            git remote prune origin
-            git branch -vv | grep "origin/.*: gone]" | awk '{print $1}' | xargs git branch -D
-        }
-*NOTE*: The `source "..."` might be different than what is above. Copy/paste it from the brew installation output.
+            source "/usr/local/opt/zsh-git-prompt/zshrc.sh"
 
-2. For a fast command line way to browse the most recent git commits: `$ brew install tig`. Then run `$ tig` at the command prompt.
-3. For Code Editing: [RubyMine from JetBrains](https://www.jetbrains.com/ruby/download)
+            PROMPT='%~%b$(git_super_status)\$ '
+
+            clean_branches() {
+                git remote prune origin
+                git branch -vv | grep "origin/.*: gone]" | awk '{print $1}' | xargs git branch -D
+            }
+
+    _NOTE_: The `source "..."` might be different than what is above. Copy/paste it from the brew installation output.
+
+2.  For a fast command line way to browse the most recent git commits: `$ brew install tig`. Then run `$ tig` at the command prompt.
+3.  For Code Editing: [RubyMine from JetBrains](https://www.jetbrains.com/ruby/download)
 
 ### Rubymine Support for Rubocop (Code Linting)
+
 Code Linting gives formatting and syntax suggestions to make your code more readable.
 
 In Rubymine go to `Rubymine` -> `Preferences` -> `Editor` -> `Inspections` -> `Ruby` -> `Gems and gems management` -> `Rubocop`: Make sure that the checkbox is checked.
@@ -97,10 +101,10 @@ Every time you are ready to start work, do the following terminal commands in th
     $ git smart-pull
     $ bundle
     $ rails db:migrate
+
 Then if your server isn't started yet:
 
 [Start Rails server](#start-rails-server)
-
 
 At this point you can point your browser to http://localhost:3000/ and start development work.
 To stop the server click `CNTL-C` in all three tabs.
@@ -125,11 +129,12 @@ Switching between master and a private branch:
         $ git checkout master
 
 ### Cherry Picking
+
 If you need to copy over a commit from one branch to another without merging:
 
-1. Copy the SHA of the commit you want to copy over (the program "tig" is good for this which can be installed via brew on a Mac).
-2. Go to the branch you want to copy the commit to ($ git checkout [BRANCHNAME])
-3. Use cherry-pick to copy over the commit:
+1.  Copy the SHA of the commit you want to copy over (the program "tig" is good for this which can be installed via brew on a Mac).
+2.  Go to the branch you want to copy the commit to ($ git checkout [BRANCHNAME])
+3.  Use cherry-pick to copy over the commit:
 
         $ git cherry-pick [SHA]
 
@@ -139,23 +144,26 @@ See https://ariejan.net/2010/06/10/cherry-picking-specific-commits-from-another-
 
 ## Code Submissions and Reviews
 
-1. Any significant feature should be done in a separate branch.
+1.  Any significant feature should be done in a separate branch.
 
          $ git checkout -b CI-XXX
-2. When a feature is complete and tests pass, push to github.
 
-         $ git push origin CI-XXX
-3. If you want to update your new branch with changes from master (very recommended), do the following:
-
-         $ git checkout master
-         $ git pull origin master
-         $ git checkout CI-XXX
-         $ git merge master
-   Then resolve conflicts manually and push to your new_branch_name again
+2.  When a feature is complete and tests pass, push to github.
 
          $ git push origin CI-XXX
 
-4. When all work in branch is done, create a pull request:
+3.  If you want to update your new branch with changes from master (very recommended), do the following:
+
+          $ git checkout master
+          $ git pull origin master
+          $ git checkout CI-XXX
+          $ git merge master
+
+    Then resolve conflicts manually and push to your new_branch_name again
+
+          $ git push origin CI-XXX
+
+4.  When all work in branch is done, create a pull request:
     - Go to https://github.com/wahanegi/vibereport
     - Click "Pull Requests" -> "New Pull Request"
     - Set base branch to master and compare-to branch to the `CI-XXX` branch where you've done your work
@@ -164,13 +172,13 @@ See https://ariejan.net/2010/06/10/cherry-picking-specific-commits-from-another-
 
 ## Start Rails server
 
-To start a Rails server with React, you need to  use the command every time you start the server:
+To start a Rails server with React, you need to use the command every time you start the server:
 
-`rake assets:precompile` 
+`rake assets:precompile`
 
 To start the Rails server use: `./bin/dev`
 
-otherwise you won't be able to see your updated CSS and JavaScript 
+otherwise you won't be able to see your updated CSS and JavaScript
 
 NOTE: `rails s` - is not used
 
@@ -179,6 +187,7 @@ NOTE: `rails s` - is not used
 Follow these steps to set up the database with the required data for the application:
 
 ### Step 1: Start the Rails Console
+
 Run the Rails console using the following command:
 
 ```bash
@@ -186,6 +195,7 @@ rails c
 ```
 
 ### Step 2: Create an Admin User
+
 Use the command below to create an admin user:
 
 ```ruby
@@ -195,36 +205,43 @@ AdminUser.create!(email: 'youremail@gmail.com', password: '1234qwer')
 ---
 
 ### Step 3: Log in as the Admin User
+
 1. Open your browser and navigate to [http://localhost:3000/admin/login](http://localhost:3000/admin/login).
 2. Enter the email and password you used to create the admin user.
 
 ---
 
 ### Step 4: Populate Data via the Admin Dashboard
+
 Once logged in, complete the following steps in the Admin Dashboard:
 
 #### 4.1: Create a User
+
 - Navigate to the **Users** tab.
 - Fill out all required fields to create a user.
 
 #### 4.2: Add Emotions
+
 - Navigate to the **Emotions** tab.
 - Create approximately 10 emotions (both positive and negative).
 
 #### 4.3: Create a Team
+
 - Navigate to the **Teams** tab.
 - Add a new team.
 
 #### 4.4: Set Up a Time Period
+
 - Navigate to the **Time Periods** tab.
 - Create a new time period with the following details:
-   - **Start Date**: Set to today.
-   - **End Date**: Set to a future date.
-   - **Due Date**: Set to a future date.
+  - **Start Date**: Set to today.
+  - **End Date**: Set to a future date.
+  - **Due Date**: Set to a future date.
 
 ---
 
 ### Step 5: Log in as the User
+
 1. Open your browser and go to [http://localhost:3000/users/sign_in](http://localhost:3000/users/sign_in).
 2. Enter the name and password you provided when creating the user.
 3. After signing in, you should see the message: **Check your inbox!**
@@ -232,9 +249,9 @@ Once logged in, complete the following steps in the Admin Dashboard:
 ---
 
 ### Step 6: Access the Application via Email
+
 1. The [Letter Opener](https://github.com/ryanb/letter_opener) gem will open a new tab displaying the email.
 2. Click on the **Access Site** link in the email to log into the application.
-
 
 ## OpenSSL::Cipher::CipherError
 
@@ -250,7 +267,7 @@ To address the `OpenSSL::Cipher::CipherError` error in Rails application, you ca
 
 - Run the following command to open the Rails credentials file for editing:
 
-    `EDITOR="code --wait" bin/rails credentials:edit` - just replace “code” with whatever editor you use.
+  `EDITOR="code --wait" bin/rails credentials:edit` - just replace “code” with whatever editor you use.
 
 - Save the file and exit the editor.
 
