@@ -19,9 +19,16 @@ import BackRevert from '../../../assets/images/BackToResultsButton.svg';
 import {updateResponse} from "../requests/axios_requests";
 
 export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = '', selectedType }) =>{
-const categoryClass = selectedType ? selectedType : emotion.category;
+  const categoryClass = selectedType || emotion.category;
+  const categoryStyles = {
+    positive: 'bg-green-200 text-success',
+    neutral: 'bg-pale-cornflower text-steel-blue',
+    negative: 'bg-apricot text-cinnamon',
+  };
+
+  const appliedStyles = categoryStyles[categoryClass] || '';
 return(
-  <button className={`${addClass} btn-custom emotion ${categoryClass}`}>
+  <button className={`${addClass} btn-custom emotion ${appliedStyles}`}>
     <span hidden={!showPencil} onClick={onClick} className="edit-icon">
       <img src={edit_pencil} alt="pencil"/>
     </span>
@@ -31,13 +38,13 @@ return(
 }
 
 export const BtnSendMoreShoutouts = ({ onClick }) =>
-  <button className={'btn-custom shoutout d-flex flex-nowrap align-items-center'} onClick={onClick}>
+  <button className={'btn-custom shoutout text-primary bg-white d-flex flex-nowrap align-items-center'} onClick={onClick}>
     Send more Shoutouts
     <span><img src={shoutout} alt="shoutout"/></span>
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-feature c2 ${addClass}`} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-feature text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
@@ -84,7 +91,7 @@ export const BtnSkip = ({ addClass = '', hidden = true, onClick, disabled }) =>
   </button>
 
 export const BtnBack = ({ addClass = '', hidden, onClick, disabled, text = 'Back' }) =>
-  <button onClick={onClick} className={`btn btn-regular c1 back ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 bg-gray-200 bg-gray-hover-200 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 

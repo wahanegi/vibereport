@@ -16,17 +16,17 @@ a {
   font-weight: 700;
   font-size: 48px;
   line-height: 48px;
-  color: $color-black;
+  color: $black;
   white-space: pre-line;
 }
 .sub-header {
   font-weight: 700;
   font-size: 36px;
   line-height: 36px;
-  color: $color-black;
+  color: $black;
 }
 .muted {
-  color: $color-muted;
+  color: $gray-600;
 }
 
 .text-field-new-html {
@@ -38,14 +38,14 @@ a {
 }
 .email_field {
   box-sizing: border-box;
-  background: $color-white;
+  background: $white;
   margin: 0 auto;
 }
 .email_field input {
   height: 70px;
   font-size: 40px;
   line-height: 70px;
-  color: $color-muted;
+  color: $gray-600;
   margin: 13px 0;
   border: 3px solid $light-blue;
   border-radius: 15px;
@@ -86,7 +86,7 @@ a {
   color: $sea-green;
 }
 .color-rose {
-  color: $color-rose;
+  color: $rose;
 }
 .red-violet {
   color: $red-violet;
@@ -540,39 +540,39 @@ input.email-input-new:focus-visible{
   }
 
   .form-range.level-1::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 85%, #D7C2B8 85%);
+    background: linear-gradient(247deg, $white 85%, #D7C2B8 85%);
   }
 
   .form-range.level-2::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 75%, #D7C2B8 75%);
+    background: linear-gradient(247deg, $white 75%, #D7C2B8 75%);
   }
 
   .form-range.level-3::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 65%, #E7AF92 65%);
+    background: linear-gradient(247deg, $white 65%, #E7AF92 65%);
   }
 
   .form-range.level-4::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 55%, #E49770 55%);
+    background: linear-gradient(247deg, $white 55%, #E49770 55%);
   }
 
   .form-range.level-5::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 45%, #E8956C 45%);
+    background: linear-gradient(247deg, $white 45%, #E8956C 45%);
   }
 
   .form-range.level-6::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 35%, #ED7B45 35%);
+    background: linear-gradient(247deg, $white 35%, #ED7B45 35%);
   }
 
   .form-range.level-7::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 25%, #FF5300 25%);
+    background: linear-gradient(247deg, $white 25%, #FF5300 25%);
   }
 
   .form-range.level-8::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 15%, #E26D6D 15%);
+    background: linear-gradient(247deg, $white 15%, #E26D6D 15%);
   }
 
   .form-range.level-9::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $color-white 0%, #EB4848 0%);
+    background: linear-gradient(247deg, $white 0%, #EB4848 0%);
   }
 
   .form-range:focus::-webkit-slider-thumb {
@@ -625,63 +625,63 @@ input.email-input-new:focus-visible{
   background: #D7C2B8;
 }
 .productivity-container input[type=range].level-1::-moz-range-track {
-  background: linear-gradient(247deg, $color-white 85%, #D7C2B8 85%);
+  background: linear-gradient(247deg, $white 85%, #D7C2B8 85%);
 }
 
 .productivity-container input[type=range].level-2::-moz-range-thumb {
   background: #E7AF92;
 }
 .productivity-container input[type=range].level-2::-moz-range-track {
-  background: linear-gradient(247deg, $color-white 75%, #D7C2B8 75%);
+  background: linear-gradient(247deg, $white 75%, #D7C2B8 75%);
 }
 
 .productivity-container input[type=range].level-3::-moz-range-thumb {
   background: #E49770;
 }
 .productivity-container input[type=range].level-3::-moz-range-track {
- background: linear-gradient(247deg, $color-white 65%, #E7AF92 65%);
+ background: linear-gradient(247deg, $white 65%, #E7AF92 65%);
 }
 
 .productivity-container input[type=range].level-4::-moz-range-thumb {
   background: #E8956C;
 }
 .productivity-container input[type=range].level-4::-moz-range-track {
- background: linear-gradient(247deg, $color-white 55%, #E49770 55%);
+ background: linear-gradient(247deg, $white 55%, #E49770 55%);
 }
 
 .productivity-container input[type=range].level-5::-moz-range-thumb {
   background: #ED7B45;
 }
 .productivity-container input[type=range].level-5::-moz-range-track {
-  background: linear-gradient(247deg, $color-white 45%, #E8956C 45%);
+  background: linear-gradient(247deg, $white 45%, #E8956C 45%);
 }
 
 .productivity-container input[type=range].level-6::-moz-range-thumb {
   background: #FF5300;
 }
 .productivity-container input[type=range].level-6::-moz-range-track {
-  background: linear-gradient(247deg, $color-white 35%, #ED7B45 35%);
+  background: linear-gradient(247deg, $white 35%, #ED7B45 35%);
 }
 
 .productivity-container input[type=range].level-7::-moz-range-thumb {
   background: #E26D6D;
 }
 .productivity-container input[type=range].level-7::-moz-range-track {
-  background: linear-gradient(247deg, $color-white 25%, #FF5300 25%);
+  background: linear-gradient(247deg, $white 25%, #FF5300 25%);
 }
 
 .productivity-container input[type=range].level-8::-moz-range-thumb {
   background: #EB4848;
 }
 .productivity-container input[type=range].level-8::-moz-range-track {
-  background: linear-gradient(247deg, $color-white 15%, #E26D6D 15%);
+  background: linear-gradient(247deg, $white 15%, #E26D6D 15%);
 }
 
 .productivity-container input[type=range].level-9::-moz-range-thumb {
   background: #FF0000;
 }
 .productivity-container input[type=range].level-9::-moz-range-track {
-  background: linear-gradient(247deg, $color-white 0%, #EB4848 0%);
+  background: linear-gradient(247deg, $white 0%, #EB4848 0%);
 }
 
 //ShoutoutModal
@@ -979,44 +979,44 @@ a.dropdown-item{
   border-radius: 100px !important;
 }
 .btn-check.toggle-negative-check + .toggle-negative:hover{
-  color: $color-orange;
+  color: $bright-orange;
   background-color: transparent;
 }
 .btn-check.toggle-negative-check:checked + .toggle-negative
 {
-  background-color: $light-red;
-  border: 3px solid $color-orange;
+  background-color: $apricot;
+  border: 3px solid $bright-orange;
   box-shadow: 4px 0 4px 0 rgba(0, 0, 0, 0.35);
 }
 .toggle-negative:hover .icon-negative,
 .toggle-negative:focus .icon-negative,
 .btn-check.toggle-negative-check:checked + .toggle-negative .icon-negative{
-  border: 3px solid $color-orange;
+  border: 3px solid $bright-orange;
 }
 .toggle-negative:hover span,
 .btn-check.toggle-negative-check:checked + .toggle-negative{
   font-size: 20px;
-  color: $color-orange;
+  color: $bright-orange;
 }
 .btn-check.toggle-positive-check + .toggle-positive:hover{
-  color: $color-green;
+  color: $bright-green;
   background-color: transparent;
 }
 .btn-check.toggle-positive-check:checked + .toggle-positive{
   z-index: 100;
-  background-color: $gray-tea-green;
-  border: 3px solid $color-green;
+  background-color: $green-200;
+  border: 3px solid $bright-green;
   box-shadow: -4px 0 4px 0 rgba(0, 0, 0, 0.35);
 }
 .toggle-positive:hover .icon-positive,
 .toggle-positive:focus .icon-positive,
 .btn-check.toggle-positive-check:checked + .toggle-positive .icon-positive{
-  border: 3px solid $color-green;
+  border: 3px solid $bright-green;
 }
 .toggle-positive:hover span,
 .btn-check.toggle-positive-check:checked + .toggle-positive {
   font-size: 20px;
-  color: $color-green;
+  color: $bright-green;
 }
 
 .celebrate__suggestions__list {
@@ -1107,7 +1107,7 @@ a.dropdown-item{
 
 input:checked + .slider-shoutout:before {
   transform: translateX(-35px);
-  background-color: $color-rose;
+  background-color: $rose;
 }
 
 input:checked + .slider-shoutout img {
@@ -1187,7 +1187,7 @@ input:checked + .slider-shoutout img {
 
 input:checked + .slider-shoutout:before {
   transform: translateX(-35px);
-  background-color: $color-rose;
+  background-color: $rose;
 }
 
 input:checked + .slider-shoutout img {
@@ -1333,7 +1333,7 @@ input:checked + .slider-shoutout img {
 }
 
 .calculate .grey {
-  color: $grey !important;
+  color: $gray-200 !important;
 }
 
 .charts-wrapper {

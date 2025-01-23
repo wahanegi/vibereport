@@ -42,7 +42,7 @@ const RatherNotSay = ({
           </Button>
         </div>
         <div className="row4">
-          <Button className="btn-modal c1 back btn-no" onClick={noHandling}>
+          <Button className="btn-modal c1 bg-gray-200 bg-gray-hover-200 btn-no" onClick={noHandling}>
             No
           </Button>
         </div>

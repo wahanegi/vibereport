@@ -23,10 +23,10 @@ const NotWorkingModal = ({ data, makeNotWorking, show, setShow }) => {
         </div>
         <div className='column'>
           <div className='row my-2'>
-            <Button className='btn-modal c1 back border-0 w-auto' onClick={() => {setShow(false)}}>No, go back</Button>
+            <Button className='btn-modal c1 bg-gray-200 bg-gray-hover-200 border-0 w-auto' onClick={() => {setShow(false)}}>No, go back</Button>
           </div>
           <div className='row mb-2'>
-            <Button className='btn-modal c1 delete border-0 w-auto' onClick={onClickNotWorking}> I was not working, delete</Button>
+            <Button className='btn-modal c1 bg-danger border-0 w-auto' onClick={onClickNotWorking}> I was not working, delete</Button>
           </div>
         </div>
       </Modal.Body>

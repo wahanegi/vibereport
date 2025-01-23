@@ -35,7 +35,7 @@ const UnsubscribePage = ({data}) => {
     </div>
     <div className='text-center'>
       <Link to={'/'} target="_self" rel="noopener noreferrer">
-        <Button className='btn-modal c1 back w-auto px-3 mt-1'>
+        <Button className='btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 mt-1'>
           Cancel
         </Button>
       </Link>
@@ -56,7 +56,7 @@ const UnsubscribePage = ({data}) => {
     </div>
     <div className='text-center'>
       <Link to={`/results/${time_period.slug}`} target="_self" rel="noopener noreferrer">
-        <Button className='btn-modal c1 back w-auto px-3 mt-3'>
+        <Button className='btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 mt-3'>
           Recent results
         </Button>
       </Link>

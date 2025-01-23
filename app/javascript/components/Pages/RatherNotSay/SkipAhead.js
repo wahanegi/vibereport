@@ -53,7 +53,7 @@ const RatherNotSay = ({
           </Button>
         </div>
         <div className="row4">
-          <Button className="btn-modal c1 back btn-wide" onClick={backHandling}>
+          <Button className="btn-modal bg-gray-200 bg-gray-hover-200 c1 btn-wide" onClick={backHandling}>
             Back to check-in
           </Button>
         </div>
