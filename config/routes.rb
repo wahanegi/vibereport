@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   get 'responses/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
+  begin
+    ActiveAdmin.routes(self)
+  rescue StandardError
+    ActiveAdmin::DatabaseHitDuringLoad
+  end
   devise_for :users, controllers: { sessions: 'devise/passwordless/sessions' }
   devise_scope :user do
     get '/users/magic_link',

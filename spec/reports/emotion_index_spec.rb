@@ -28,7 +28,7 @@ RSpec.describe EmotionIndex, type: :model do
       it 'calculates correct emotion index' do
         result = subject
         expected_emotion_index = ((positive_response_1.rating + positive_response_2.rating - negative_response.rating) / 3.0).round(2)
-      
+
         expect(result[0]).to eq(expected_emotion_index)
       end
     end

@@ -37,9 +37,6 @@ RSpec.describe Emotion, type: :model do
     end
   end
 
-  describe 'Relationships' do
-  end
-
   describe 'Validations' do
     it { is_expected.to validate_presence_of :word }
     it { is_expected.to validate_length_of(:word).is_at_least(2).is_at_most(15) }

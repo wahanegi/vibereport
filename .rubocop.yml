@@ -11,6 +11,9 @@ AllCops:
     - 'bin/**/*'
 
 # Rails rules
+Rails/TimeZone:
+  Enabled: false
+
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
@@ -134,4 +137,7 @@ Lint/AmbiguousBlockAssociation:
 
 # Naming rules
 Naming/VariableNumber:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
   Enabled: false

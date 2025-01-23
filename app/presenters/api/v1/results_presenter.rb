@@ -35,7 +35,7 @@ class Api::V1::ResultsPresenter
 
   def no_data_present_for_period?(team)
     responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period, not_working: false).count
-    responses_count == 0
+    responses_count.zero?
   end
 
   def emotion_index_all(team)
@@ -56,6 +56,7 @@ class Api::V1::ResultsPresenter
 
   def emotion_index_current_period(team)
     return 0 if no_data_present_for_period?(team)
+
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
       current_period: time_period
@@ -65,6 +66,7 @@ class Api::V1::ResultsPresenter
 
   def productivity_average_current_period(team)
     return 0 if no_data_present_for_period?(team)
+
     vars = ActiveAdminHelpers.time_period_vars(
       team:,
       current_period: time_period
@@ -74,7 +76,7 @@ class Api::V1::ResultsPresenter
 
   def previous_emotion_index(team)
     previous_time_period = TimePeriod.joins(responses: { user: :teams })
-                                     .where('end_date < ?', time_period.start_date)
+                                     .where(end_date: ...time_period.start_date)
                                      .where(teams: { id: team.id })
                                      .where(responses: { not_working: false })
                                      .order(end_date: :desc)
@@ -90,7 +92,7 @@ class Api::V1::ResultsPresenter
 
   def previous_productivity_average(team)
     previous_time_period = TimePeriod.joins(responses: { user: :teams })
-                                     .where('end_date < ?', time_period.start_date)
+                                     .where(end_date: ...time_period.start_date)
                                      .where(teams: { id: team.id })
                                      .where(responses: { not_working: false })
                                      .order(end_date: :desc)
