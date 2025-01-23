@@ -21,7 +21,7 @@ class ProductivityVerbatims < AdminReport
 
     Response.joins(user: :user_teams)
             .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
-            .where(productivity: ..2)
+            .where('productivity <= ?', 2)
             .where.not(productivity_comment: [''])
             .pluck(:productivity_comment)
   end
@@ -34,7 +34,7 @@ class ProductivityVerbatims < AdminReport
   def fetch_comments
     Response.joins(:emotion)
             .where(responses: { time_period_id: @time_periods })
-            .where(productivity: ..2)
+            .where('productivity <= ?', 2)
             .where.not(productivity_comment: [''])
             .pluck(:productivity_comment)
   end

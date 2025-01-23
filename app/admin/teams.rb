@@ -100,7 +100,7 @@ ActiveAdmin.register Team do
       if time_period
         previous_time_period = TimePeriod
                                .joins(responses: { user: :teams })
-                               .where(end_date: ...time_period.start_date)
+                               .where('end_date < ?', time_period.start_date)
                                .where(teams: { id: team.id })
                                .where(responses: { not_working: false })
                                .order(end_date: :desc)

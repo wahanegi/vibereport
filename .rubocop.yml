@@ -50,6 +50,9 @@ Rails/BulkChangeTable:
 Rails/ThreeStateBooleanColumn:
   Enabled: false
 
+Rails/WhereRange:
+  Enabled: false
+
 # Style rules
 Style/GlobalStdStream:
   Enabled: false

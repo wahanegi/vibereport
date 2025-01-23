@@ -76,7 +76,7 @@ class Api::V1::ResultsPresenter
 
   def previous_emotion_index(team)
     previous_time_period = TimePeriod.joins(responses: { user: :teams })
-                                     .where(end_date: ...time_period.start_date)
+                                     .where('end_date < ?', time_period.start_date)
                                      .where(teams: { id: team.id })
                                      .where(responses: { not_working: false })
                                      .order(end_date: :desc)
@@ -92,7 +92,7 @@ class Api::V1::ResultsPresenter
 
   def previous_productivity_average(team)
     previous_time_period = TimePeriod.joins(responses: { user: :teams })
-                                     .where(end_date: ...time_period.start_date)
+                                     .where('end_date < ?', time_period.start_date)
                                      .where(teams: { id: team.id })
                                      .where(responses: { not_working: false })
                                      .order(end_date: :desc)
