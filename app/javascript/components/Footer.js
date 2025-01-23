@@ -4,8 +4,8 @@ import QuestionButton from './UI/QuestionButton';
 
 const Footer = ({ data, setData, hideShoutout }) => {
   return (
-    <footer className="container py-3">
-      <div className="d-flex justify-content-between align-items-center">
+    <footer className="d-flex w-100 p-3 position-fixed bottom-0 left-0">
+      <div className="d-flex justify-content-between align-items-center w-100">
         <ShoutoutButton data={data} setData={setData} hideShoutout={hideShoutout} />
         <QuestionButton data={data} />
       </div>

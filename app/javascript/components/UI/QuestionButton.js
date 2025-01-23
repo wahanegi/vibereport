@@ -14,7 +14,7 @@ const QuestionButton = ({ data }) => {
   };
 
   return <>
-    <button onClick={() => setShowHelpModal(true)} className="hud help pointer">
+    <button onClick={() => setShowHelpModal(true)} className="border-0 bg-transparent">
       <img className="help-icon" src={questionMark} alt="Question" />
     </button>
 
