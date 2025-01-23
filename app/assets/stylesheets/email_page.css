@@ -221,9 +221,6 @@ text-align: center;
     background-size: contain;
 }
 .calendar-complete-by {
-    position: absolute;
-    left: 10px;
-    top: 0;
     width: 102px;
     height: 115px;
     background-image: -webkit-image-set(url("complete-by.png") 1x);
@@ -245,9 +242,8 @@ text-align: center;
     padding-bottom: 6px;
 }
 .underline_list {
-    margin:  0 auto;
-    width: 720px;
     border-bottom: 3px solid #D2D2D2;
+    margin: 0 auto;
 }
 .data {
     padding-top: 55px;
