@@ -10,8 +10,9 @@
 Vibe Report is a free weekly check-in and employee recognition tool that is easily customizable, providing an engaging, user-friendly experience that your team will be thankful for. Check-in, elicit feedback, and retain your team with actionable insights. Allow your team members to share, express themselves creatively, and recognize each other no matter where they are for a thriving, collaborative, and supportive culture.
 
 The Vibe Report App is built on:
-* Ruby 3.1.2
-* Rails 7.0.4
+
+* Ruby 3.2.6
+* Rails 7.1.5.1
 * postgresql 10.0 or higher
 
 
@@ -44,7 +45,7 @@ The Vibe Report App is built on:
 6. Generate and add SSH keys your Github account by following the instructions at https://help.github.com/articles/generating-ssh-keys/
 7. Install GPG using homebrew: `$ brew install gpg` (May be needed for RVM in next step)
 8. Install the latest version of RVM: https://rvm.io, but instead of `gpg2` Use `gpg` in the command that adds the GPG keys.  If this doesn't work check out the [security](http://rvm.io/rvm/security) page for a workaround.
-9. Install Ruby from terminal using RVM: `$ rvm install 3.1.2`
+9. Install Ruby from terminal using RVM: `$ rvm install 3.2.6`
 10. Install posgtresql from terminal: `$ brew install postgresql` and follow on screen instructions (very important)
 11. Create postgresql superuser postgres: `$ createuser postgres -s`
 12. Change your directory to where you want your work projects in terminal and clone the git repo: `$ git@github.com:wahanegi/vibereport.git`
