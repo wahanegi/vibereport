@@ -8,7 +8,6 @@ import UnsubscribePage from "./Pages/UnsubscribePage";
 import Results from "./Pages/ResultsPage";
 import Loader from "./UI/Loader";
 import ResultsManager from "./Pages/ResultsPageManager";
-import Layout from "./Layout";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
@@ -54,7 +53,7 @@ const App = () => {
   },[frontDatabase, isShuffleEmotions])
 
   return(
-    <Layout>
+    <Fragment>
       {isLoading && <Loader />}
       {error && <p>{error}</p>}
       <BrowserRouter>
@@ -80,7 +79,7 @@ const App = () => {
           <Route path="unsubscribe" element={<UnsubscribePage data={frontDatabase} />} />
         </Routes>}
       </BrowserRouter>
-    </Layout>
+    </Fragment>
   )
 }
 export default App;
