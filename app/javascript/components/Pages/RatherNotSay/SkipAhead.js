@@ -35,7 +35,7 @@ const RatherNotSay = ({ data,  setData , saveDataToDb, steps, service, draft}) =
                   <Button className='btn-modal c1 btn-wide' onClick={ logoutHandling }>Ok, log out</Button>
               </div>
               <div className='row4'>
-                  <Button className='btn-modal c1 back btn-wide'
+                  <Button className='btn-modal bg-gray-200 bg-gray-hover-200 c1 btn-wide'
                           onClick={ backHandling }>Back to check-in</Button>
               </div>
           </div>
