@@ -40,12 +40,12 @@ RSpec.describe Emoji, type: :model do
 
   describe 'scopes' do
     describe '.ordered' do
-      it 'orders emojis by created_at in descending order' do
-        emoji1 = FactoryBot.create(:emoji, created_at: 2.days.ago, user_id: user.id, emojiable: fun_question_answer)
-        emoji2 = FactoryBot.create(:emoji, created_at: 1.day.ago, user_id: user.id, emojiable: fun_question_answer)
-        emoji3 = FactoryBot.create(:emoji, created_at: Date.current, user_id: user.id, emojiable: fun_question_answer)
+      let!(:emoji_list) { FactoryBot.create_list(:emoji, 3, user: user, emojiable: fun_question_answer) }
 
-        expect(Emoji.ordered).to eq([emoji3, emoji2, emoji1])
+      it 'orders emojis by created_at in descending order' do
+        ordered = Emoji.order(created_at: :desc)
+
+        expect(Emoji.ordered).to eq(ordered)
       end
     end
   end
