@@ -89,6 +89,9 @@ Style/MultilineIfModifier:
   Exclude:
     - 'app/admin/**/*'
 
+Style/MixinUsage:
+  Enabled: false
+
 # Layout rules
 Layout/HashAlignment:
   Enabled: false
