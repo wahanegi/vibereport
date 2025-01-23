@@ -6,7 +6,7 @@ import {
   ShoutOutIcon,
 } from "../../UI/ShareContent";
 import NavigationBar from "./NavigationBar";
-import CornerElements from "../../UI/CornerElements";
+import Layout from '../../Layout';
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import LeaderVector from '../../../../assets/images/LeaderVector.svg';
@@ -100,7 +100,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
 
   if(!loaded) return <Loader />
 
-  return loaded && <Fragment>
+  return loaded && <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
     <div className='position-relative'>
       <>
         {
@@ -127,7 +127,6 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
           </div>
           <EmotionIndex teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
         </div>
-        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true} />
       </>
       <Footer />
     </div>
@@ -138,6 +137,6 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
     }
     <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
                   data={data} setData={setData} steps={steps} />
-  </Fragment>
+  </Layout>
 }
 export default ResultsManager;

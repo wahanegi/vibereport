@@ -12,12 +12,13 @@ import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
-import CornerElements from "../../UI/CornerElements";
+import Layout from '../../Layout';
 import ShoutoutModal from "../../UI/ShoutoutModal";
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
+
 
 export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/' ) => {
   useEffect(() => {
@@ -155,7 +156,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
 
   if(!loaded) return <Loader />
 
-  return loaded && <Fragment>
+  return loaded && <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
     <div className='position-relative'>
       <>
         {
@@ -192,7 +193,6 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
                          data={data}
                          setData={setData}
                          setShowWorkingModal={setShowWorkingModal}/>
-        <CornerElements data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}/>
       </>
       <Footer />
     </div>
@@ -203,6 +203,6 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     }
     <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
                   data={data} setData={setData} steps={steps} />
-  </Fragment>
+  </Layout>
 }
 export default Results;
