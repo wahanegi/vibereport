@@ -106,19 +106,21 @@ function ListEmotions({
     >
       {!!error && <p>{error.message}</p>}
       {!isLoading && !error && (
-        <div className="d-flex flex-column justify-content-center align-items-center">
-          <div className="d-flex justify-content-center align-items-center">
-            <div className="calendar-complete-by">
-              <div className="data mx-auto my-0 ">
-                {rangeFormat(timePeriod)}
+        <div className="d-flex flex-column justify-content-start pt-8 align-items-center">
+          <div className="d-flex flex-column justify-content-center pt-8 align-items-center">
+            <div className="d-flex justify-content-center align-items-start flex-wrap">
+              <div className="calendar-complete-by mb-3">
+                <div className="data mx-auto my-0">
+                  {rangeFormat(timePeriod)}
+                </div>
               </div>
-            </div>
-            <div className="d-flex flex-column justify-content-center align-items-center">
-              <div className="invitation mx-auto p-0">
-                Time for your latest check-in!
-              </div>
-              <div className="mx-auto my-0 question">
-                What word best describes how you feel about work?
+              <div className="d-flex flex-column justify-content-center pt-1 align-items-center">
+                <div className="pb-3 fs-5 text-gray-700 mx-auto">
+                  Time for your latest check-in!
+                </div>
+                <div className="mx-auto my-0 question">
+                  What word best describes how you feel about work?
+                </div>
               </div>
             </div>
           </div>
@@ -140,7 +142,7 @@ function ListEmotions({
               </div>
             ))}
           </div>
-          <div class="w-75 border-bottom border-3 border-light mx-auto"></div>
+          <div className="w-75 border-bottom border-3 border-light mx-auto"></div>
           <div className="neutral-area">
             <div className="d-flex">
               <Button
