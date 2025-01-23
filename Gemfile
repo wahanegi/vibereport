@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.2.6'
 
-gem 'activeadmin', '~> 3.1', '>= 3.1.0'                      # The administration framework for Ruby on Rails
+gem 'activeadmin', '~> 3.1', '>= 3.1.0'                       # The administration framework for Ruby on Rails
 gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted data structures in console.
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
 gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful Javascript charts with one line of Ruby
@@ -35,8 +35,8 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]                 # Debugging functionality for Ruby.
   gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'                        # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
   gem 'factory_bot_rails'                                         # Test data generator -- see spec/support/factory_helper.rb
-  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git'  # Easy way to add fake data: names, email addresses, etc.
-  gem 'rspec-rails', '>= 6.0.3'                                   # rspec-rails is a testing framework for Rails 5+.
+  gem 'faker', git: 'https://github.com/faker-ruby/faker.git' # Easy way to add fake data: names, email addresses, etc.
+  gem 'rspec-rails', '>= 6.0.3' # rspec-rails is a testing framework for Rails 5+.
 end
 
 group :development do
