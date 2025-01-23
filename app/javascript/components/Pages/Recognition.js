@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Wrapper} from "../UI/ShareContent";
 import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
@@ -99,7 +98,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   }
 
   return (
-    <Wrapper>
+    <>
       <div className='mx-auto w-746 h-59 mt-151 mb-4'>
         <h1 className='color-black'>Recognition is important!</h1>
       </div>
@@ -128,7 +127,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
       {isModal && <ShoutoutDelete onClose={ onClose } data={ data } setData={ setData } idShoutout={ idShoutout }/>}
       <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext = { !!numShoutOuts } />
       {!numShoutOuts && cornerElements( numShoutOuts )}
-    </Wrapper>
+    </>
   );
 };
 
