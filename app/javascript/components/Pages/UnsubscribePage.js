@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {Wrapper} from "../UI/ShareContent";
-import CornerElements from "../UI/CornerElements";
+import Layout from '../Layout';
 import {apiRequest} from "../requests/axios_requests";
 import {Link} from "react-router-dom";
 import Button from "../UI/Button";
 import {isPresent} from "../helpers/helpers";
-  
+
 const UnsubscribePage = ({data}) => {
   const {current_user, time_period} = data
   const [unsubscribed, setUnsubscribed] = useState(current_user.opt_out)
@@ -65,15 +64,14 @@ const UnsubscribePage = ({data}) => {
   </Fragment>
 
   return <Fragment>
-    <Wrapper>
+    <Layout data={data} draft={true} preview={previewValue} hideShoutout={true}>
       <div className='central-element'>
         {unsubscribed ?
           <Unsubscribed />:
           <Unsubscribe />
         }
       </div>
-      <CornerElements data={data} draft={true} preview={previewValue} hideShoutout={true} />
-    </Wrapper>
+    </Layout>
   </Fragment>
 };
 
