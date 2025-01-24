@@ -15,7 +15,6 @@ const Header = ({data, steps, draft, handleSaveDraft, saveDataToDb}) => {
           draft={draft}
           data={data}
           handleSaveDraft={handleSaveDraft}
-          // className={"placement-menu"}
         />
       </div>
     </header>

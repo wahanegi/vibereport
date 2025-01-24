@@ -191,30 +191,9 @@ textarea {
   height: 80px;
   width: 80px;
   padding: 0 !important;
-
-  //background-color: $white                  !important;
-  //border-radius:    50%                     !important;
-  //border-color:     $white                  !important;
 }
 
-//.dropdown-menu{
-//  position:         absolute;
-//  margin-right:     -19px                  !important;
-//  &.show {
-//    margin-top:     43px;
-//    border:         1px solid black;
-//  }
-//}
-
-//.placement-menu{
-//  z-index: 1;
-//  position:         fixed;
-//  right:            30px;
-//  top:              62px;
-//}
-
 #dropdown-stick {
-  //color: transparent !important;
   // TODO: The styles for "&.show" could be moved to ".dropdown-toggle," making "#dropdown-stick" unnecessary.
   &.show {
     .one-line-menu {
