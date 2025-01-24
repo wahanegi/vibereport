@@ -3,7 +3,7 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
   SuggestExtensions: false
   NewCops: enable
   Exclude:
@@ -11,16 +11,7 @@ AllCops:
     - 'bin/**/*'
 
 # Rails rules
-Rails/TimeZone:
-  Enabled: false
-
-Rails/UniqueValidationWithoutIndex:
-  Enabled: false
-
 Rails/ResponseParsedBody:
-  Enabled: false
-
-Rails/Pluck:
   Enabled: false
 
 Rails/OutputSafety:
@@ -29,22 +20,7 @@ Rails/OutputSafety:
 Rails/SkipsModelValidations:
   Enabled: false
 
-Rails/Output:
-  Enabled: false
-
-Rails/MailerName:
-  Enabled: false
-
 Rails/FindEach:
-  Enabled: false
-
-Rails/I18nLocaleTexts:
-  Enabled: false
-
-Rails/ReversibleMigration:
-  Enabled: false
-
-Rails/BulkChangeTable:
   Enabled: false
 
 Rails/ThreeStateBooleanColumn:
@@ -54,9 +30,6 @@ Rails/WhereRange:
   Enabled: false
 
 # Style rules
-Style/GlobalStdStream:
-  Enabled: false
-
 Style/OptionalBooleanParameter:
   Enabled: false
 
@@ -89,9 +62,6 @@ Style/MultilineIfModifier:
   Exclude:
     - 'app/admin/**/*'
 
-Style/MixinUsage:
-  Enabled: false
-
 # Layout rules
 Layout/HashAlignment:
   Enabled: false
@@ -100,7 +70,7 @@ Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
 Layout/LineLength:
-  Max: 140
+  Max: 125
   Exclude:
     - '**/*_spec.rb'
     - '**/factories/**.rb'
@@ -110,14 +80,19 @@ Layout/LineLength:
 
 # Metrics rules
 Metrics/AbcSize:
-  Enabled: false
+  Exclude:
+    - '**/*_spec.rb'
+
+Metrics/ClassLength:
+  Max: 150
 
 Metrics/ModuleLength:
+  Max: 150
   Exclude:
     - '**/*_spec.rb'
 
 Metrics/MethodLength:
-  Max: 30
+  Max: 20
   Exclude:
     - '**/*_spec.rb'
 
@@ -125,25 +100,11 @@ Metrics/BlockLength:
   Exclude:
     - '**/*_spec.rb'
     - '**/factories/**.rb'
-    - 'config/**.rb'
-    - 'config/environments/**.rb'
+    - 'config/**/*.rb'
     - 'lib/tasks/**'
     - 'app/admin/**/*.rb'
-
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/BlockNesting:
-  Enabled: false
 
 # Lint rules
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
-
-# Naming rules
-Naming/VariableNumber:
-  Enabled: false
-
-Naming/MemoizedInstanceVariableName:
-  Enabled: false

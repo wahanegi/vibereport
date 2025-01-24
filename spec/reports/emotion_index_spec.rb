@@ -14,8 +14,8 @@ RSpec.describe EmotionIndex, type: :model do
     end
 
     context 'when there are responses' do
-      let!(:positive_response_1) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 5) }
-      let!(:positive_response_2) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 3) }
+      let!(:positive_response1) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 5) }
+      let!(:positive_response2) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 3) }
       let!(:negative_response) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'negative'), rating: 2) }
 
       it 'returns a hash with emotion index and a chart' do
@@ -27,31 +27,31 @@ RSpec.describe EmotionIndex, type: :model do
 
       it 'calculates correct emotion index' do
         result = subject
-        expected_emotion_index = ((positive_response_1.rating + positive_response_2.rating - negative_response.rating) / 3.0).round(2)
+        expected_emotion_index = ((positive_response1.rating + positive_response2.rating - negative_response.rating) / 3.0).round(2)
 
         expect(result[0]).to eq(expected_emotion_index)
       end
     end
 
     context 'when there are only positive responses' do
-      let!(:positive_response_1) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 5) }
-      let!(:positive_response_2) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 3) }
+      let!(:positive_response1) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 5) }
+      let!(:positive_response2) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'positive'), rating: 3) }
 
       it 'calculates correct emotion index' do
         result = subject
-        expected_emotion_index = ((positive_response_1.rating + positive_response_2.rating) / 2.0).round(2)
+        expected_emotion_index = ((positive_response1.rating + positive_response2.rating) / 2.0).round(2)
 
         expect(result[0]).to eq(expected_emotion_index)
       end
     end
 
     context 'when there are only negative responses' do
-      let!(:negative_response_1) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'negative'), rating: 2) }
-      let!(:negative_response_2) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'negative'), rating: 1) }
+      let!(:negative_response1) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'negative'), rating: 2) }
+      let!(:negative_response2) { create(:response, user: create(:user, teams: [team]), time_period: time_periods.first, emotion: create(:emotion, category: 'negative'), rating: 1) }
 
       it 'calculates correct emotion index' do
         result = subject
-        expected_emotion_index = -((negative_response_1.rating + negative_response_2.rating) / 2.0).round(2)
+        expected_emotion_index = -((negative_response1.rating + negative_response2.rating) / 2.0).round(2)
 
         expect(result[0]).to eq(expected_emotion_index)
       end
