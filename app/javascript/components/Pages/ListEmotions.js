@@ -160,23 +160,25 @@ function ListEmotions({
             </div>
             <div className="w-50 border-bottom border-3 border-light mx-auto"></div>
           </div>
-          <div className="big-btn-tooltip correct">
+          <div className="py-1 fs-5 text-gray-700 mx-auto">
             Share it in your own words!
           </div>
-          <div className="big-btn">
+          <div className="d-flex mx-auto">
             <BtnAddYourOwnWord
               className="link-text c3"
               content="Add your own word"
               onClick={ownWordHandling}
             />
           </div>
-          <NavLink
-            className="lnk-was-not mx-auto my-0"
-            onClick={onClickNotWorking}
-            to={''}
-          >
-            I was not working recently
-          </NavLink>
+          <div className="d-flex mx-auto py-1 bg-white">
+            <NavLink
+              className="mx-auto my-1"
+              onClick={onClickNotWorking}
+              to={''}
+            >
+              I was not working recently
+            </NavLink>
+          </div>
         </div>
       )}
       <NotWorkingModal
