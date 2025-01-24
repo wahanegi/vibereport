@@ -40,7 +40,7 @@ RSpec.describe Emoji, type: :model do
 
   describe 'scopes' do
     describe '.ordered' do
-      let!(:emoji_list) { FactoryBot.create_list(:emoji, 3, user: user, emojiable: fun_question_answer) }
+      let!(:emoji_list) { [Date.current, 1.day.ago, 2.days.ago].map { |date| create(:emoji, created_at: date, user: user, emojiable: fun_question_answer) } }
 
       it 'orders emojis by created_at in descending order' do
         ordered = Emoji.order(created_at: :desc)
