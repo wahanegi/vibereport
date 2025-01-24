@@ -97,12 +97,13 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, isResult = 
   };
 
   return (
+    // TODO className="placement-menu"
     <div className={ `${className}` }>
       <Dropdown onClick={handleChangeImg} ref={dropdownRef}>
-        <Dropdown.Toggle  id='dropdown-stick'>
+        <Dropdown.Toggle  id='dropdown-stick' className={"rounded-circle bg-light border-0"}>
           <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' />
         </Dropdown.Toggle>
-        <Dropdown.Menu>
+        <Dropdown.Menu className={"mt-5 border border-1 border-color"}>
           <Dropdown.Item href="#" >
             <Button className={`btn-item-menu wb1 mx-auto my-auto${draft || isLastStepDisabled ? ' disabled-btn-draft' : ''}`}
                     disabled={draft || isLastStepDisabled} onClick={handleSaveDraft}>
