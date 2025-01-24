@@ -97,7 +97,6 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, isResult = 
   };
 
   return (
-    // TODO className="placement-menu"
     <div className={ `${className}` }>
       <Dropdown onClick={handleChangeImg} ref={dropdownRef}>
         <Dropdown.Toggle  id='dropdown-stick' className={"rounded-circle bg-light border-0"}>
