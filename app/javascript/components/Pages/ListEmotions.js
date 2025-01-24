@@ -107,15 +107,15 @@ function ListEmotions({
       {!!error && <p>{error.message}</p>}
       {!isLoading && !error && (
         <div className="col-12 col-md-10 col-lg-8 mx-auto">
-          <div className="d-flex flex-column justify-content-center pt-8 align-items-center">
-            <div className="d-flex justify-content-center align-items-start flex-wrap">
-              <div className="calendar-complete-by mb-3">
-                <div className="data mx-auto my-0">
-                  {rangeFormat(timePeriod)}
+          <div className="pt-8">
+            <div className="row justify-content-center align-items-center text-center">
+              <div className="col-12 col-sm-auto mb-3 d-flex">
+                <div className="calendar-complete-by">
+                  <div className="data">{rangeFormat(timePeriod)}</div>
                 </div>
               </div>
-              <div className="d-flex flex-column justify-content-center align-items-center w-75">
-                <div className="pb-3 fs-5 text-gray-700 mx-auto">
+              <div className="col-12 col-sm w-75">
+                <div className="pb-3 fs-5 text-gray-700">
                   Time for your latest check-in!
                 </div>
                 <div className="lh-1 text-black fs-1">
@@ -124,12 +124,12 @@ function ListEmotions({
               </div>
             </div>
           </div>
-          <div className="py-1">
+          <div className="py-1 col-8 col-md-9 col-lg-10 col-xl-8 mx-auto">
             <div className="row justify-content-center">
               {emotions.map((emotion, index) => (
                 <div
                   key={emotion.id}
-                  className="col-6 col-md-3 d-flex justify-content-center py-2"
+                  className="col-6 col-md-3 d-flex justify-content-center"
                 >
                   <ButtonEmotion
                     key={emotion.id}
