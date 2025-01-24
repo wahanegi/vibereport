@@ -108,8 +108,8 @@ function ListEmotions({
       {!isLoading && !error && (
         <div className="col-12 col-md-10 col-lg-8 mx-auto">
           <div className="pt-8">
-            <div className="row justify-content-center align-items-center text-center">
-              <div className="col-12 col-sm-auto mb-3 d-flex">
+            <div className="row justify-content-center">
+              <div className="col-12 col-md-auto mb-3 d-flex">
                 <div className="calendar-complete-by">
                   <div className="data">{rangeFormat(timePeriod)}</div>
                 </div>
@@ -149,9 +149,9 @@ function ListEmotions({
           </div>
           <div className="w-75 border-bottom border-3 border-light mx-auto"></div>
           <div className="d-flex flex-column">
-            <div className="d-flex py-1">
+            <div className="d-flex py-1 gap-2">
               <Button
-                className="btn btn-bubbles neutral wb1 not-standart me-1"
+                className="btn btn-bubbles neutral wb1 not-standart"
                 onClick={() => setIsShuffleEmotions(true)}
               >
                 Show me different words
@@ -165,24 +165,25 @@ function ListEmotions({
             </div>
             <div className="w-50 border-bottom border-3 border-light mx-auto"></div>
           </div>
-          <div className="py-1 fs-5 text-gray-700 mx-auto">
-            Share it in your own words!
-          </div>
-          <div className="d-flex mx-auto">
-            <BtnAddYourOwnWord
-              className="link-text c3"
-              content="Add your own word"
-              onClick={ownWordHandling}
-            />
-          </div>
-          <div className="d-flex mx-auto py-1 bg-white">
-            <NavLink
-              className="mx-auto my-1"
-              onClick={onClickNotWorking}
-              to={''}
-            >
-              I was not working recently
-            </NavLink>
+          <div className="text-center d-flex flex-column justify-content-center">
+            <div className="py-1 fs-5 text-gray-700 mx-auto">
+              Share it in your own words!
+            </div>
+            <div className="d-flex mx-auto">
+              <BtnAddYourOwnWord
+                content="Add your own word"
+                onClick={ownWordHandling}
+              />
+            </div>
+            <div className="d-flex mx-auto py-2">
+              <NavLink
+                className="mx-auto my-1"
+                onClick={onClickNotWorking}
+                to={''}
+              >
+                I was not working recently
+              </NavLink>
+            </div>
           </div>
         </div>
       )}
