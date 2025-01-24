@@ -6,108 +6,120 @@
 ////////////////////////////////////////////
 // START OF DESIGN SYSTEM VIBEREPORT AREA //
 
-a{
-  font-size:   1.438rem ; //23px
+a {
+  font-size: 1.438rem; //23px
 }
+
 body {
   font: {
-    family:    $font-family-base;
-    style:     normal;
+    family: $font-family-base;
+    style: normal;
   }
-  text-align:  center;
+  text-align: center;
   line-height: 1.2;
 }
 
-p{
+p {
   line-height: 100%;
 }
 
 h1, h2 {
   font-weight: 700 !important;
   line-height: 100% !important;
-  color:       $gray-500;
+  color: $gray-500;
 }
+
 h1, .h1 {
-  font-size:   $h1-font-size ;
+  font-size: $h1-font-size;
   margin-bottom: 48px !important;
 }
 
 h2, .h2 {
-  font-size:   $h2-font-size ;
+  font-size: $h2-font-size;
   margin-bottom: 36px !important;
 }
 
 h1 {
-  color:       $black
+  color: $black
 }
 
 .b1 {
-  font-size:   2.5rem !important; //40px
+  font-size: 2.5rem !important; //40px
 }
+
 .b2 {
-  font-size:   2rem !important; //32px
+  font-size: 2rem !important; //32px
 }
+
 .b3 {
-  font-size:   1.5rem !important; //24px
+  font-size: 1.5rem !important; //24px
 }
+
 .b4 {
-  font-size:   1rem !important; //16px
+  font-size: 1rem !important; //16px
 }
+
 .u1 {
   font: {
-    family:    $font-family-italic, sans-serif !important;
-    weight:    $font-weight-semi-bold !important;
-    size:      1rem !important;  //16px
+    family: $font-family-italic, sans-serif !important;
+    weight: $font-weight-semi-bold !important;
+    size: 1rem !important; //16px
   }
 }
+
 .wb1 {
-  font-size:   1.25rem !important;//20px
+  font-size: 1.25rem !important; //20px
 }
+
 .wb2 {
-  font-size:   2.625rem !important; //42px
+  font-size: 2.625rem !important; //42px
 }
 
 // Use for regular buttons
 .c1 {
   font: {
-    family:    $font-family-second !important;
-    weight:    $font-weight-bold !important;
-    size:      2rem !important; //32px
-  }
-}
-.c2 {
-  font: {
-    family:     $font-family-base !important;
-    weight:     $font-weight-bold !important;
-    size:       2rem !important;  //32px
-  }
-}
-.c3 {
-  font: {
-    family:     $font-family-base !important;
-    weight:     $font-weight-bold !important;
-    size:       2.25rem !important; //36px
+    family: $font-family-second !important;
+    weight: $font-weight-bold !important;
+    size: 2rem !important; //32px
   }
 }
 
+.c2 {
+  font: {
+    family: $font-family-base !important;
+    weight: $font-weight-bold !important;
+    size: 2rem !important; //32px
+  }
+}
+
+.c3 {
+  font: {
+    family: $font-family-base !important;
+    weight: $font-weight-bold !important;
+    size: 2.25rem !important; //36px
+  }
+}
 
 
 // use with B1, B2, or B3 text
-.form-control{
-  border:                     3px solid $gray-100;
+.form-control {
+  border: 3px solid $gray-100;
+
   &:focus {
-    border:                   3px solid $input-btn-border-color !important; //3px
-    box-shadow:               none             !important;
+    border: 3px solid $input-btn-border-color !important; //3px
+    box-shadow: none !important;
   }
 }
-input, textarea{
-  height:               4.375rem;//70px
-  text-align:           left;
-  border:               3px solid $royal-blue ;
-  border-radius:        15px;
-  box-shadow: $btn-box-shadow-other ;
-  &:focus{
-    border:             3px solid $royal-blue ;
+
+input, textarea {
+  height: 4.375rem; //70px
+  text-align: left;
+  border: 3px solid $royal-blue;
+  border-radius: 15px;
+  box-shadow: $btn-box-shadow-other;
+
+  &:focus {
+    border: 3px solid $royal-blue;
   }
 
   &::-webkit-scrollbar {
@@ -126,21 +138,25 @@ input, textarea{
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: shade-color($gray-300,10%);
+    background: shade-color($gray-300, 10%);
   }
 }
+
 textarea {
-  &.b1{
-    height:             calc(2.5rem * ($line-height-base * 6 - 1)) ;
+  &.b1 {
+    height: calc(2.5rem * ($line-height-base * 6 - 1));
   }
-  &.b2{
-    height:             calc(2rem * ($line-height-base * 6 - 0.95)) ;
+
+  &.b2 {
+    height: calc(2rem * ($line-height-base * 6 - 0.95));
   }
-  &.b3{
-    height:             calc(1.5rem * ($line-height-base * 6 - 0.8)) ;
+
+  &.b3 {
+    height: calc(1.5rem * ($line-height-base * 6 - 0.8));
   }
-  &:focus{
-    border-color:       $royal-blue !important;
+
+  &:focus {
+    border-color: $royal-blue !important;
   }
 }
 
@@ -148,58 +164,48 @@ textarea {
 // Using with the Special inputs
 // Intensity selection & follow-up field (use B3)
 
-.follow-up-field{
+.follow-up-field {
   textarea {
-    margin-top:              4px;
-    width:                   calc($btn-width-intensity * 5 - 1rem) ;
-    height:                  18.875rem ; //302px
-    border-top-left-radius:  29px !important;
+    margin-top: 4px;
+    width: calc($btn-width-intensity * 5 - 1rem);
+    height: 18.875rem; //302px
+    border-top-left-radius: 29px !important;
     border-top-right-radius: 29px !important;
   }
 }
-.question-field{
-  width:                     46.625rem          !important; //746px
-  min-height:                17.5rem            ; //280px
-  &.form-control{
-    border:                  3px solid $emerald !important;;
+
+.question-field {
+  width: 46.625rem !important; //746px
+  min-height: 17.5rem; //280px
+  &.form-control {
+    border: 3px solid $emerald !important;;
+
     &:focus {
-      border:                3px solid $sea-green !important;
+      border: 3px solid $sea-green !important;
     }
   }
 }
 
 // FOR DROPDOWN MENU
-
-.dropdown-toggle{
+.dropdown-toggle {
   height: 80px;
-  width:80px;
-  background-color: $white                  !important;
-  border-radius:    50%                     !important;
-  border-color:     $white                  !important;
-  padding:          0                       !important;
+  width: 80px;
+  padding: 0 !important;
 }
-.dropdown-menu{
-  position:         absolute;
-  margin-right:     -19px                  !important;
-  &.show {
-    margin-top:     43px;
-    border:         1px solid black;
-  }
-}
-.placement-menu{
-  z-index: 1;
-  position:         fixed;
-  right:            30px;
-  top:              62px;
-}
+
 #dropdown-stick {
-  color: transparent !important;
+  // TODO: The styles for "&.show" could be moved to ".dropdown-toggle," making "#dropdown-stick" unnecessary.
   &.show {
     .one-line-menu {
       border-color: $primary;
     }
   }
 }
+
+.dropdown-toggle::after {
+  visibility: hidden;
+}
+
 // END of DROPDOWN MENU
 
 // END OF DESIGN SYSTEM VIBEREPORT AREA //
