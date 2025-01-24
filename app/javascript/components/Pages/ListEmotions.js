@@ -106,7 +106,7 @@ function ListEmotions({
     >
       {!!error && <p>{error.message}</p>}
       {!isLoading && !error && (
-        <div className="d-flex flex-column justify-content-start pt-8 align-items-center">
+        <div className="col-12 col-md-10 col-lg-8 mx-auto">
           <div className="d-flex flex-column justify-content-center pt-8 align-items-center">
             <div className="d-flex justify-content-center align-items-start flex-wrap">
               <div className="calendar-complete-by mb-3">
@@ -114,19 +114,19 @@ function ListEmotions({
                   {rangeFormat(timePeriod)}
                 </div>
               </div>
-              <div className="d-flex flex-column justify-content-center pt-1 align-items-center">
+              <div className="d-flex flex-column justify-content-center align-items-center w-75">
                 <div className="pb-3 fs-5 text-gray-700 mx-auto">
                   Time for your latest check-in!
                 </div>
-                <div className="fs-1 lh-1 text-black">
+                <div className="lh-1 text-black fs-1">
                   What word best describes how you feel about work?
                 </div>
               </div>
             </div>
           </div>
-          <div className="d-flex mx-auto emotions position-relative">
+          <div className="d-flex mx-auto py-1">
             {emotions.map((emotion, index) => (
-              <div className="width-block" key={emotion.id}>
+              <div key={emotion.id}>
                 <ButtonEmotion
                   key={emotion.id}
                   category={emotions[index].attributes.category}
@@ -143,8 +143,8 @@ function ListEmotions({
             ))}
           </div>
           <div className="w-75 border-bottom border-3 border-light mx-auto"></div>
-          <div className="neutral-area">
-            <div className="d-flex">
+          <div className="d-flex flex-column">
+            <div className="d-flex py-1">
               <Button
                 className="btn btn-bubbles neutral wb1 not-standart me-1"
                 onClick={() => setIsShuffleEmotions(true)}
@@ -158,6 +158,7 @@ function ListEmotions({
                 I'd rather not say...
               </Button>
             </div>
+            <div className="w-50 border-bottom border-3 border-light mx-auto"></div>
           </div>
           <div className="big-btn-tooltip correct">
             Share it in your own words!
