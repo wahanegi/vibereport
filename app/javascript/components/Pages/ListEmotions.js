@@ -118,7 +118,7 @@ function ListEmotions({
                 <div className="pb-3 fs-5 text-gray-700 mx-auto">
                   Time for your latest check-in!
                 </div>
-                <div className="mx-auto my-0 question">
+                <div className="fs-1 lh-1 text-black">
                   What word best describes how you feel about work?
                 </div>
               </div>
