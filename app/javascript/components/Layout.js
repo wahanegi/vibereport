@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Header from "./Header";
 import Footer from "./Footer";
+import DataContext from "./store/DataContext";
 
 const Layout = ({children}) => {
   return (

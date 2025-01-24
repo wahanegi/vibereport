@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react"
+import React, {Fragment, useContext, useEffect, useState} from "react"
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import ResponseFlow from "./ResponseFlow";
 import { ALL_STEPS } from "./helpers/routes";
@@ -9,6 +9,7 @@ import Results from "./Pages/ResultsPage";
 import Loader from "./UI/Loader";
 import ResultsManager from "./Pages/ResultsPageManager";
 import Layout from "./Layout";
+import DataContext, {DataProvider} from "./store/DataContext";
 
 const initDB = {
   data:{id:null, type:null, attributes:{word:null, category: null}},
@@ -53,34 +54,38 @@ const App = () => {
     }
   },[frontDatabase, isShuffleEmotions])
 
+  // useEffect(() => {}, [])
+
   return(
-    <Layout>
-      {isLoading && <Loader />}
-      {error && <p>{error}</p>}
+    <DataProvider>
       <BrowserRouter>
-        {!isNotLoadedData && <Routes>
-          <Route path="*" element={<Navigate to={`/${step}`}/>}/>
-          {ALL_STEPS.map((item, index) => (
-            <Route
-              key={item.id}
-              path={`/${ALL_STEPS[index].step}`}
-              element={
-                <ResponseFlow
-                  step={item.step}
-                  data={frontDatabase}
-                  setData={setFrontDatabase}
-                  setIsShuffleEmotions={setIsShuffleEmotions}
-                />
-              }
-            />
-          ))}
-          <Route path="results/:slug" element={<Results data={frontDatabase} setData={setFrontDatabase} />} />
-          <Route path="result-managers/:slug" element={<ResultsManager data={frontDatabase} setData={setFrontDatabase} />} />
-          <Route path="check-in-closed" element={<CheckInClosed data={frontDatabase}/>} />
-          <Route path="unsubscribe" element={<UnsubscribePage data={frontDatabase} />} />
-        </Routes>}
+        <Layout>
+          {isLoading && <Loader />}
+          {error && <p>{error}</p>}
+          {!isNotLoadedData && <Routes>
+            <Route path="*" element={<Navigate to={`/${step}`}/>}/>
+            {ALL_STEPS.map((item, index) => (
+              <Route
+                key={item.id}
+                path={`/${ALL_STEPS[index].step}`}
+                element={
+                  <ResponseFlow
+                    step={item.step}
+                    data={frontDatabase}
+                    setData={setFrontDatabase}
+                    setIsShuffleEmotions={setIsShuffleEmotions}
+                  />
+                }
+              />
+            ))}
+            <Route path="results/:slug" element={<Results data={frontDatabase} setData={setFrontDatabase} />} />
+            <Route path="result-managers/:slug" element={<ResultsManager data={frontDatabase} setData={setFrontDatabase} />} />
+            <Route path="check-in-closed" element={<CheckInClosed data={frontDatabase}/>} />
+            <Route path="unsubscribe" element={<UnsubscribePage data={frontDatabase} />} />
+          </Routes>}
+        </Layout>
       </BrowserRouter>
-    </Layout>
+    </DataProvider>
   )
 }
 export default App;
