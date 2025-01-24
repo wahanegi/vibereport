@@ -63,19 +63,6 @@
   top: 120px;
 }
 
-.hud {
-  position: fixed;
-  bottom: 30px;
-  &.help {
-    right: 39px;
-    bottom: 45px;
-    z-index: 30;
-  }
-  &.shoutout {
-    left: 40px;
-    z-index: 2;
-  }
-}
 .emoji-tooltip {
   background-color: $black;
   color: $white;
