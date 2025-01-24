@@ -124,23 +124,28 @@ function ListEmotions({
               </div>
             </div>
           </div>
-          <div className="d-flex mx-auto py-1">
-            {emotions.map((emotion, index) => (
-              <div key={emotion.id}>
-                <ButtonEmotion
+          <div className="py-1">
+            <div className="row justify-content-center">
+              {emotions.map((emotion, index) => (
+                <div
                   key={emotion.id}
-                  category={emotions[index].attributes.category}
-                  onClick={() =>
-                    clickHandling(
-                      emotions[index].attributes.word,
-                      emotions[index].id
-                    )
-                  }
+                  className="col-6 col-md-3 d-flex justify-content-center py-2"
                 >
-                  {emotions[index].attributes.word}
-                </ButtonEmotion>
-              </div>
-            ))}
+                  <ButtonEmotion
+                    key={emotion.id}
+                    category={emotions[index].attributes.category}
+                    onClick={() =>
+                      clickHandling(
+                        emotions[index].attributes.word,
+                        emotions[index].id
+                      )
+                    }
+                  >
+                    {emotions[index].attributes.word}
+                  </ButtonEmotion>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="w-75 border-bottom border-3 border-light mx-auto"></div>
           <div className="d-flex flex-column">
