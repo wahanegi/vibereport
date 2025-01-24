@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
-import ButtonEmotion from '../UI/ButtonEmotion';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import ButtonEmotion from '../UI/ButtonEmotion';
 import BtnAddYourOwnWord from '../UI/BtnAddYourOwnWord';
 import Layout from '../Layout';
 import Button from '../UI/Button';
@@ -106,43 +106,52 @@ function ListEmotions({
     >
       {!!error && <p>{error.message}</p>}
       {!isLoading && !error && (
-        <div className="board mt-35">
-          <div className="h-40">
-            <div className="calendar-complete-by ml-200 mt-151">
-              <div className="data mx-auto my-0 ">
-                {rangeFormat(timePeriod)}
+        <div className="col-12 col-md-10 col-lg-8 mx-auto">
+          <div className="pt-8">
+            <div className="row justify-content-center">
+              <div className="col-12 col-md-auto mb-3 d-flex">
+                <div className="calendar-complete-by">
+                  <div className="data">{rangeFormat(timePeriod)}</div>
+                </div>
+              </div>
+              <div className="col-12 col-sm w-75">
+                <div className="pb-3 fs-5 text-gray-700">
+                  Time for your latest check-in!
+                </div>
+                <div className="lh-1 text-black fs-1">
+                  What word best describes how you feel about work?
+                </div>
               </div>
             </div>
           </div>
-          <div className="invitation mx-auto p-0">
-            Time for your latest check-in!
-          </div>
-          <div className="mx-auto my-0 question">
-            What word best describes how you feel about work?
-          </div>
-          <div className="d-flex mx-auto emotions position-relative">
-            {emotions.map((emotion, index) => (
-              <div className="width-block" key={emotion.id}>
-                <ButtonEmotion
+          <div className="py-1 col-8 col-md-9 col-lg-10 col-xl-8 mx-auto">
+            <div className="row justify-content-center">
+              {emotions.map((emotion, index) => (
+                <div
                   key={emotion.id}
-                  category={emotions[index].attributes.category}
-                  onClick={() =>
-                    clickHandling(
-                      emotions[index].attributes.word,
-                      emotions[index].id
-                    )
-                  }
+                  className="col-6 col-md-3 d-flex justify-content-center"
                 >
-                  {emotions[index].attributes.word}
-                </ButtonEmotion>
-              </div>
-            ))}
+                  <ButtonEmotion
+                    key={emotion.id}
+                    category={emotions[index].attributes.category}
+                    onClick={() =>
+                      clickHandling(
+                        emotions[index].attributes.word,
+                        emotions[index].id
+                      )
+                    }
+                  >
+                    {emotions[index].attributes.word}
+                  </ButtonEmotion>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="underline_list"></div>
-          <div className="neutral-area">
-            <div className="d-flex">
+          <div className="w-75 border-bottom border-3 border-light mx-auto"></div>
+          <div className="d-flex flex-column">
+            <div className="d-flex py-1 gap-2">
               <Button
-                className="btn btn-bubbles neutral wb1 not-standart me-1"
+                className="btn btn-bubbles neutral wb1 not-standart"
                 onClick={() => setIsShuffleEmotions(true)}
               >
                 Show me different words
@@ -154,24 +163,28 @@ function ListEmotions({
                 I'd rather not say...
               </Button>
             </div>
+            <div className="w-50 border-bottom border-3 border-light mx-auto"></div>
           </div>
-          <div className="big-btn-tooltip correct">
-            Share it in your own words!
+          <div className="text-center d-flex flex-column justify-content-center">
+            <div className="py-1 fs-5 text-gray-700 mx-auto">
+              Share it in your own words!
+            </div>
+            <div className="d-flex mx-auto">
+              <BtnAddYourOwnWord
+                content="Add your own word"
+                onClick={ownWordHandling}
+              />
+            </div>
+            <div className="d-flex mx-auto py-2">
+              <NavLink
+                className="mx-auto my-1"
+                onClick={onClickNotWorking}
+                to={''}
+              >
+                I was not working recently
+              </NavLink>
+            </div>
           </div>
-          <div className="big-btn">
-            <BtnAddYourOwnWord
-              className="link-text c3"
-              content="Add your own word"
-              onClick={ownWordHandling}
-            />
-          </div>
-          <NavLink
-            className="lnk-was-not mx-auto my-0"
-            onClick={onClickNotWorking}
-            to={''}
-          >
-            I was not working recently
-          </NavLink>
         </div>
       )}
       <NotWorkingModal

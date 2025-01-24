@@ -221,9 +221,6 @@ text-align: center;
     background-size: contain;
 }
 .calendar-complete-by {
-    position: absolute;
-    left: 10px;
-    top: 0;
     width: 102px;
     height: 115px;
     background-image: -webkit-image-set(url("complete-by.png") 1x);
@@ -245,9 +242,8 @@ text-align: center;
     padding-bottom: 6px;
 }
 .underline_list {
-    margin:  0 auto;
-    width: 720px;
     border-bottom: 3px solid #D2D2D2;
+    margin: 0 auto;
 }
 .data {
     padding-top: 55px;
@@ -327,18 +323,24 @@ text-align: center;
     margin: 0 auto 24px auto;
 }
 .big-btn-text a{
+    display: inline-block;
     padding: 13px 23px 13px 23px;
-    width: 385px;
-    height: 70px;
-    font-size: 36px;
-    line-height: 36px;
+    font-size: 2.25rem;
+    line-height: 2.25rem;
     color: rgba(0, 0, 0, 0.6);
     border: 3px solid #5689EB;
-    border-radius: 19px;
+    border-radius: 1rem;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
-    text-decoration-line: none;
+    text-decoration: none;
     white-space: nowrap;
-    margin-inline-start: 0;
+}
+
+@media (max-width: 767.98px) {
+    .big-btn-text a {
+        padding: 10px 15px;
+        font-size: 1.25rem;
+        line-height: 1.2;
+    }
 }
 .lnk-unsubscribe a {
     font-size: 16px;
