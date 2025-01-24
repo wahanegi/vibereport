@@ -13,15 +13,19 @@ class Emotion < ApplicationRecord
   has_many :responses, dependent: :destroy
 
   SHOW_NUMBER_PER_CATEGORY = 12
-  enum category: { negative: 0, positive: 1 }
+  enum :category, { negative: 0, positive: 1 }
   scope :emotion_public, -> { where(public: true) }
   validates :word, presence: true, length: { in: 2..15 }, uniqueness: { scope: :category, case_sensitive: false }
-  validates :category, inclusion: { in: Emotion::categories }
-  before_save { self.word&.downcase! }
+  validates :category, inclusion: { in: Emotion.categories }
+  before_save { word&.downcase! }
 
   scope :matching_emotions, ->(emotion_params) { where(word: emotion_params[:word], category: emotion_params[:category]) }
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[category public word]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[responses]
   end
 end
