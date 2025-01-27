@@ -13,7 +13,6 @@ import { isBlank } from '../helpers/helpers';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import Layout from '../Layout';
 
-
 const ProductivitySlider = ({
   productivity,
   handleSliderChange,
@@ -22,24 +21,23 @@ const ProductivitySlider = ({
   imageSizes,
 }) => (
   <Fragment>
-    <div className="productivity-container">
+    <div className="d-flex flex-column align-items-center p-2 mx-auto productivity-container">
       <form>
-        <h1 className="mb-2 mx-auto my-0 question">
+        <h1 className="mx-auto my-0 lh-1 text-black fs-1">
           How productive have you been feeling recently?
         </h1>
-        <br />
-        <div className="productivity-card">
+        <div>
           {productivity > 0 && (
-            <div className="image-size">
+            <div>
               <img
                 src={flameImages[productivity - 1]}
                 alt={`Productivity flame level ${productivity}`}
                 style={generateStyles(imageSizes[productivity - 1])}
-                className="image-container"
+                className="img-fluid"
               />
             </div>
           )}
-          <div className="range-size">
+          <div>
             <input
               type="range"
               min="0"
@@ -47,7 +45,7 @@ const ProductivitySlider = ({
               defaultValue={productivity}
               onChange={handleSliderChange}
               id="productivity-slider"
-              className={`form-range level-${productivity}`}
+              className={`border-0 shadow-none form-range level-${productivity}`}
             />
             <p>Use the slider</p>
           </div>
@@ -132,7 +130,7 @@ const ProductivityCheckLow = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="central-element">
+        <div className="col-10 col-md-8">
           <ProductivitySlider
             productivity={productivity}
             handleSliderChange={handleSliderChange}
@@ -140,11 +138,12 @@ const ProductivityCheckLow = ({
             generateStyles={generateStyles}
             imageSizes={imageSizes}
           />
+
+          <BlockLowerBtns
+            nextHandling={handlingOnClickNext}
+            disabled={isBlank(productivity) || productivity === 0}
+          />
         </div>
-        <BlockLowerBtns
-          nextHandling={handlingOnClickNext}
-          disabled={isBlank(productivity) || productivity === 0}
-        />
       </Layout>
     )
   );
