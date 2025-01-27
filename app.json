@@ -38,20 +38,17 @@
       ],
       "env": {
         "ADMIN_USER": "admin@vibereport.app",
-        "ADMIN_PASSWORD": {
-          "description": "A randomly generated string",
-          "generator": "secret"
-        },
+        "ADMIN_PASSWORD": "Password1!",
         "DAY_TO_SEND_INVITES": "friday",
         "DISABLE_DATABASE_ENVIRONMENT_CHECK": "1",
-        "DOMAIN_URL": "vibereport.app",
+        "DOMAIN_URL": "${HEROKU_APP_NAME}.herokuapp.com",
         "EMAIL_DOMAIN": "vibereport.app",
         "SMTP_ADDRESS": "sandbox.smtp.mailtrap.io",
         "SMTP_AUTHENTICATION": "cram_md5",
         "SMTP_DOMAIN": "sandbox.smtp.mailtrap.io",
-        "SMTP_PASSWORD": "xxx",
+        "SMTP_PASSWORD": "ADD THIS FROM MAILTRAP",
         "SMTP_PORT": "2525",
-        "SMTP_USERNAME": "xxx",
+        "SMTP_USERNAME": "ADD THIS FROM MAILTRAP",
         "DEFAULT_FROM_ADDRESS": "hello",
         "DAY_TO_SEND_RESULTS_EMAIL": "friday"
       },
