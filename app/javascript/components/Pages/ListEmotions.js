@@ -107,7 +107,7 @@ function ListEmotions({
       {!!error && <p>{error.message}</p>}
       {!isLoading && !error && (
         <div className="col-12 col-md-10 col-lg-8 mx-auto">
-          <div className="pt-8">
+          <div className="container-fluid pt-8">
             <div className="row justify-content-center">
               <div className="col-12 col-md-auto mb-3 d-flex">
                 <div className="calendar-complete-by">
