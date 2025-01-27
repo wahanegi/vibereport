@@ -23,7 +23,7 @@ const ProductivitySlider = ({
   <Fragment>
     <div className="d-flex flex-column align-items-center p-2 mx-auto productivity-container">
       <form>
-        <h1 className="mx-auto my-0 lh-1 text-black fs-1">
+        <h1 className="mx-auto my-0 lh-1 text-black fs-3 fs-md-1">
           How productive have you been feeling recently?
         </h1>
         <div>
