@@ -20,7 +20,7 @@ const Layout = ({
   return (
     <div className="d-flex flex-row vh-100">
       <Header data={data} steps={steps} draft={draft} handleSaveDraft={handleSaveDraft} saveDataToDb={saveDataToDb} />
-      <main className="flex-grow-1 d-flex flex-row overflow-auto" role="main">
+      <main className="flex-grow-1 d-flex flex-row overflow-auto pb-10" role="main">
         {children}
       </main>
       <Footer data={data} setData={setData} hideShoutout={hideShoutout} />
