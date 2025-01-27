@@ -383,12 +383,6 @@ input.email-input-new:focus-visible{
       padding-top: 7px;
     }
   }
-  //Productivity Bad Follow Up
-  .wrap-textarea-bad-follow{
-    border-radius: 15px;
-    width: 660px;
-    height: 350px;
-  }
   // Emotion intensity
   .wrap-textarea-intensity{
     width: 550px;
@@ -396,6 +390,14 @@ input.email-input-new:focus-visible{
     border-radius: 28.7214px;
   }
 }
+
+  //Productivity Bad Follow Up
+  .wrap-textarea-bad-follow{
+    height: 350px;
+    textarea {
+      resize: none;
+    }
+  }
 
 .comment-label {
   textarea {
