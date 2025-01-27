@@ -3,14 +3,10 @@ import ShoutoutButton from './UI/ShoutoutButton';
 import QuestionButton from './UI/QuestionButton';
 
 const Footer = ({ data, setData, hideShoutout }) => {
-  return <>
-      <div className="position-fixed z-1 left-px-10 bottom-px-10">
-        <ShoutoutButton data={data} setData={setData} hideShoutout={hideShoutout} />
-      </div>
-      <div className="position-fixed z-1 right-px-10 bottom-px-10">
-        <QuestionButton data={data} />
-      </div>
-  </>
+  return <footer className='d-flex justify-content-between p-1 w-100 align-items-center'>
+    <ShoutoutButton data={data} setData={setData} hideShoutout={hideShoutout} />
+    <QuestionButton data={data} />
+  </footer>
 };
 
 export default Footer;
