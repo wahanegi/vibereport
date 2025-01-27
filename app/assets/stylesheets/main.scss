@@ -399,26 +399,10 @@ input.email-input-new:focus-visible{
 
 .comment-label {
   textarea {
-    box-sizing: border-box !important;
-    width: 550px;
-    height: 190px;
-    border: 2px solid $black !important;
-    border-radius: 28.7214px;
-    padding-top: 20px;
-    font-size: 23px;
-    margin-top: 5px;
+    border: 3px solid $royal-blue !important;
+    font-size: map-get($map: $font-sizes, $key: 4);
     text-align: justify;
-    box-shadow: unset;
-    padding-inline-start: 1.375rem;
-    padding-inline-end:   1.375rem;
     resize: none;
-    &.w660-h350-br15 {
-      padding: 5px 15px;
-      width: 642px;
-      height: 315px !important;
-      border: none !important;
-      border-radius: 0;
-    }
     &.form-control-intensity{
       padding: 5px 15px;
       width: 530px;
@@ -439,14 +423,19 @@ input.email-input-new:focus-visible{
       border: none !important;
       border-radius: 0;
     }
+    &:focus {
+      border: 6px solid $royal-blue !important;
+      padding: calc(1.5rem - 3px) !important;
+      outline: none !important;
+    }
+    &::placeholder {
+      color: #0009 !important;
+      font-style: normal;
+      font-size: map-get($map: $font-sizes, $key: 4);
+      text-align: initial;
+    }
   }
 
-  textarea::placeholder {
-    color: #0009 !important;
-    font-style: normal;
-    font-size: 23px;
-    text-align: initial;
-  }
 }
 
 .gif-productivity {
