@@ -149,9 +149,10 @@ const IcebreakerQuestion = ({
               </p>
               {loaded && (
                 <div className="w-100">
+                  <div className='border border-3 rounded rounded-4 border-emerald p-1 costume-focus'>
                   <form>
                     <textarea
-                      className="w-100 border border-3 rounded rounded-4 border-emerald p-2 wrap-textarea"
+                      className="w-100 p-1 border-0 wrap-textarea"
                       name="question_body"
                       placeholder="What would you ask the team? You could be selected!"
                       value={funQuestion?.question_body || ''}
@@ -160,6 +161,7 @@ const IcebreakerQuestion = ({
                       style={{ height: '295px' }}
                     />
                   </form>
+                  </div>
                 </div>
               )}
             </div>
