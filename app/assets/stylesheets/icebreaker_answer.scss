@@ -1,12 +1,17 @@
-@import "colors";
-@import "design_system_vibereport";
+@import 'colors';
+@import 'design_system_vibereport';
 
 .wrap-textarea {
   resize: none;
-  &:focus{
+  box-shadow: none !important;
+  &:focus {
     outline: none;
-    border: 6px solid $emerald !important;
+    border: none !important;
     box-shadow: none !important;
   }
-  
+}
+.costume-focus {
+  &:focus-within {
+    border: 6px solid $emerald !important;
+  }
 }
