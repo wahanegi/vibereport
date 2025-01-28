@@ -29,6 +29,31 @@ const NoticeAlert = (onConfirmAction, onDeclineAction) => {
   )
 }
 
+const TextHeader = (nextTimePeriod, isMinUsersResponses, timePeriod) => {
+  if (!nextTimePeriod) {
+    return (
+      <div className="text-header-position">
+        {isMinUsersResponses ? (
+          <>
+            <h1 className="mb-0">You're one of the first to check in!</h1>
+            <h6>Come back later to view the results</h6>
+          </>
+        ) : (
+          <h1 className="mb-0">The team is feeling...</h1>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="text-header-position">
+      <h1 className="mb-0">
+        During {rangeFormat(timePeriod)} the team was feeling...
+      </h1>
+    </div>
+  );
+}
+
 export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/') => {
   useEffect(() => {
     setLoaded(false)
@@ -145,17 +170,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   return loaded ? <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
     <div className='position-relative'>
       {notice && <NoticeAlert onConfirmAction={onConfirmAction} onDeclineAction={onDeclineAction} />}
-
-      {
-        !nextTimePeriod ?
-          isMinUsersResponses ?
-            <div className='text-header-position'>
-              <h1 className='mb-0'>You're one of the first to check in!</h1>
-              <h6>Come back later to view the results</h6>
-            </div> :
-            <h1 className='text-header-position'>The team is feeling...</h1> :
-          <h1 className='text-header-position'>During {rangeFormat(timePeriod)} the team was feeling...</h1>
-      }
+      
+      <TextHeader nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} timePeriod={timePeriod} />
 
       <NavigationBar {...{
         timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods,
@@ -192,8 +208,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
         setShowWorkingModal={setShowWorkingModal} />
 
       {
-        nextTimePeriod && isBlank(data.prev_results_path) ?
-          <div className='mt-5'>
+        nextTimePeriod && isBlank(data.prev_results_path)
+          ? <div className='mt-5'>
             <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
               onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
             />
