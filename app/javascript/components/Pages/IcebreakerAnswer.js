@@ -6,7 +6,6 @@ import Layout from '../Layout';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import { MAX_CHAR_LIMIT } from '../helpers/consts';
 
-
 const FULL_PRIMARY_HEIGHT = 401;
 const MARGIN_BOTTOM = 17;
 const HEIGHT_ROW_USER = 40;
@@ -148,7 +147,7 @@ const IcebreakerAnswer = ({
   });
 
   const onOffSmbAT = (
-    <span className={`${'red-violet'} && ${!user && 'transparent'}`}>@</span>
+    <span className={`${'text-primary'} && ${!user && 'd-none'}`}>@</span>
   );
 
   return (
@@ -161,12 +160,12 @@ const IcebreakerAnswer = ({
       handleSaveDraft={handleSaveDraft}
     >
       {loaded && !isLoading && !error && (
-        <div className="icebreaker-position">
-          <div className="justify-content-beetwen flex-column h-176">
+        <div className="w-100 m-2">
+          <div className="mb-3 d-flex flex-column">
             <h1 className="mb-0 lh-1">Kick back, relax.</h1>
             <h1 className="mb-3">Time for a team question!</h1>
-            <h2 className={`${'color-black mb-0'} ${!user && 'transparent'}`}>
-              Brought to us by {onOffSmbAT}
+            <h2 className={`${'text-black mb-0'} ${!user && 'd-none'}`}>
+              Brought to us by <span className='text-primary'>@</span>
               {user}
             </h2>
           </div>
@@ -198,13 +197,13 @@ const IcebreakerAnswer = ({
               </div>
             </div>
           </div>
+          <BlockLowerBtns
+            isSubmit={true}
+            handlingOnClickNext={handlingOnClickNext}
+            stringBody={answerBody}
+          />
         </div>
       )}
-      <BlockLowerBtns
-        isSubmit={true}
-        handlingOnClickNext={handlingOnClickNext}
-        stringBody={answerBody}
-      />
     </Layout>
   );
 };

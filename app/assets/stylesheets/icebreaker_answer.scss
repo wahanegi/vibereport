@@ -1,11 +1,6 @@
 @import "colors";
 @import "design_system_vibereport";
 
-.icebreaker-position {
-  position: relative;
-  top: 114px;
-}
-
 .icebreaker {
   .wrap {
     display: inline-flex;
@@ -70,8 +65,4 @@
 
 .c1.answer-custom {
   font-size: 26px !important;
-}
-
-.h-176 {
-  height: 176px;
 }
