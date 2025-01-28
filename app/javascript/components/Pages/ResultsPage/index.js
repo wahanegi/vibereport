@@ -137,9 +137,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   scrollTopModalCallback(showModal)
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
 
-  if (!loaded) return <Loader />
-
-  return loaded && <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
+  return loaded ? <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
     <div className='position-relative'>
       <>
         {
@@ -178,6 +176,15 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
           data={data}
           setData={setData}
           setShowWorkingModal={setShowWorkingModal} />
+        {
+          nextTimePeriod && isBlank(data.prev_results_path) ?
+            <div className='mt-5'>
+              <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
+                onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+              />
+            </div> :
+            <div style={{ height: 120 }}></div>
+        }
       </>
     </div>
     {
@@ -187,6 +194,6 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
     }
     <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
       data={data} setData={setData} steps={steps} />
-  </Layout>
+  </Layout> : <Loader />
 }
 export default Results;
