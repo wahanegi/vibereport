@@ -69,11 +69,13 @@ $heading-styles: (
 
 // Adding font-grid variables to Bootstrap "font-size"-utility (fs-*)
 $utilities: map-merge(
-                $utilities, (
-                "font-size": (
-                        property: font-size,
-                        class: fs,
-                        values: $font-size,
-                )
-        )
-)
+    $utilities,
+    (
+      "font-size": (
+        property: font-size,
+        class: fs,
+        values: $font-size,
+        responsive: true
+      )
+    )
+  );

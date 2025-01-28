@@ -11,7 +11,6 @@ import Layout from '../Layout';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import { MAX_CHAR_LIMIT } from '../helpers/consts';
 
-
 const IcebreakerQuestion = ({
   data,
   setData,
@@ -135,44 +134,43 @@ const IcebreakerQuestion = ({
       handleSaveDraft={handleSaveDraft}
     >
       {!isLoading && !error && (
-        <div className="icebreaker-position">
-          <div className="d-flex justify-content-center flex-column">
+        <div className="w-100 m-2">
+          <div className="mb-3 d-flex flex-column">
             <h4 className="mb-0">Thanks for answering!</h4>
-            <h1 className="mb-3">
-              Interested in submitting your <br /> own question to the team?
+            <h1 className="mb-3 lh-1 fs-3 fs-md-1 col-8 mx-auto">
+              Interested in submitting your own question to the team?
             </h1>
           </div>
-          <div className="icebreaker">
-            <div className="wrap">
-              <p className="b3 muted">
-                <span className="red-violet">@</span>
+          <div className="mb-2">
+            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow col-12 col-md-8">
+              <p className="fs-5 text-gray-600">
+                <span className="text-primary">@</span>
                 {userName} asks:
               </p>
               {loaded && (
-                <div className="wrap-textarea middle">
+                <div className="w-100">
                   <form>
-                    <div className="form-group">
-                      <textarea
-                        className="input middle"
-                        name="question_body"
-                        placeholder="What would you ask the team? You could be selected!"
-                        value={funQuestion?.question_body || ''}
-                        onChange={onChangQuestion}
-                        maxLength={MAX_CHAR_LIMIT}
-                      />
-                    </div>
+                    <textarea
+                      className="w-100 border border-3 rounded rounded-4 border-emerald p-2 wrap-textarea"
+                      name="question_body"
+                      placeholder="What would you ask the team? You could be selected!"
+                      value={funQuestion?.question_body || ''}
+                      onChange={onChangQuestion}
+                      maxLength={MAX_CHAR_LIMIT}
+                      style={{ height: '280px' }}
+                    />
                   </form>
                 </div>
               )}
             </div>
           </div>
+          <BlockLowerBtns
+            isSubmit={true}
+            handlingOnClickNext={handlingOnClickNext}
+            stringBody={funQuestionBody}
+          />
         </div>
       )}
-      <BlockLowerBtns
-        isSubmit={true}
-        handlingOnClickNext={handlingOnClickNext}
-        stringBody={funQuestionBody}
-      />
     </Layout>
   );
 };
