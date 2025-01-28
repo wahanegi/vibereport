@@ -10,49 +10,9 @@ import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import { MIN_USERS_RESPONSES } from "../../helpers/consts";
 import Layout from '../../Layout';
-import ShoutoutModal from "../../UI/ShoutoutModal";
-import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import { apiRequest, updateResponse } from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
-
-
-const NoticeAlert = (onConfirmAction, onDeclineAction) => {
-  const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
-  const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
-    '</br></br>Skip this chek-in if you weren\'t working.'
-  const cancelButtonText = 'Skip check-in'
-  const confirmButtonText = 'Yes, I worked'
-
-  return (
-    <SweetAlert {...{ onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText }} />
-  )
-}
-
-const TextHeader = (nextTimePeriod, isMinUsersResponses, timePeriod) => {
-  if (!nextTimePeriod) {
-    return (
-      <div className="text-header-position">
-        {isMinUsersResponses ? (
-          <>
-            <h1 className="mb-0">You're one of the first to check in!</h1>
-            <h6>Come back later to view the results</h6>
-          </>
-        ) : (
-          <h1 className="mb-0">The team is feeling...</h1>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div className="text-header-position">
-      <h1 className="mb-0">
-        During {rangeFormat(timePeriod)} the team was feeling...
-      </h1>
-    </div>
-  );
-}
 
 export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/') => {
   useEffect(() => {
@@ -124,6 +84,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
   const initialIndex = 0
+  const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
@@ -145,8 +106,6 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
     onRemoveAlert(updateResponse, data, setData)
   }
 
-  const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
-
   const showNextTimePeriod = () => {
     if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return;
 
@@ -167,11 +126,61 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   scrollTopTimePeriodCallback(nextTimePeriod)
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
 
-  return loaded ? <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
+  const TextHeader = () => {
+    if (!nextTimePeriod) {
+      return (
+        <div className="text-header-position">
+          {isMinUsersResponses ? (
+            <>
+              <h1 className="mb-0">You're one of the first to check in!</h1>
+              <h6>Come back later to view the results</h6>
+            </>
+          ) : (
+            <h1 className="mb-0">The team is feeling...</h1>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-header-position">
+        <h1 className="mb-0">
+          During {rangeFormat(timePeriod)} the team was feeling...
+        </h1>
+      </div>
+    );
+  }
+
+  const TimePeriodNavigation = () => {
+    if (nextTimePeriod && isBlank(data.prev_results_path)) {
+      return (
+        <div className='mt-5'>
+          <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
+            onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+          />
+        </div>
+      )
+    }
+    return <div style={{ height: 120 }}></div>
+  }
+
+  const NoticeAlert = () => {
+    const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
+    const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
+      '</br></br>Skip this chek-in if you weren\'t working.'
+    const cancelButtonText = 'Skip check-in'
+    const confirmButtonText = 'Yes, I worked'
+
+    return (notice && <SweetAlert {...{ onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText }} />)
+  }
+
+  if (!loaded) return <Loader />
+
+  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
     <div className='position-relative'>
-      {notice && <NoticeAlert onConfirmAction={onConfirmAction} onDeclineAction={onDeclineAction} />}
-      
-      <TextHeader nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} timePeriod={timePeriod} />
+      <NoticeAlert />
+
+      <TextHeader />
 
       <NavigationBar {...{
         timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods,
@@ -179,10 +188,10 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
         emotions, data, setShowWorkingModal, setData, prev_results_path
       }} />
 
-      <EmotionSection emotions={emotions}
+      {/* <EmotionSection emotions={emotions}
         nextTimePeriod={nextTimePeriod}
         data={data}
-        isMinUsersResponses={isMinUsersResponses} />
+        isMinUsersResponses={isMinUsersResponses} /> */}
 
       <GifSection gifs={gifs}
         nextTimePeriod={nextTimePeriod}
@@ -207,15 +216,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
         setData={setData}
         setShowWorkingModal={setShowWorkingModal} />
 
-      {
-        nextTimePeriod && isBlank(data.prev_results_path)
-          ? <div className='mt-5'>
-            <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
-              onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
-            />
-          </div>
-          : <div style={{ height: 120 }}></div>
-      }
+      <TimePeriodNavigation />
     </div>
     <WorkingModal
       show={showWorkingModal}
@@ -224,6 +225,5 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
       setData={setData}
       steps={steps} />
   </Layout>
-    : <Loader />
 }
 export default Results;
