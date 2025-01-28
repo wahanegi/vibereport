@@ -110,6 +110,9 @@ $dark:            $gray-500;
 .border-royal-blue {
   border-color: $royal-blue !important;
 }
+.border-emerald {
+  border-color: $emerald !important;
+}
 .hover\:bg-primary-hover:hover {
   background-color: shift-color($primary, 30%) !important;
 }
