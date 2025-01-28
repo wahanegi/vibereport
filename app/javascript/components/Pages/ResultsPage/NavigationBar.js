@@ -37,7 +37,7 @@ const NavigationBar = ({ timePeriod, showPrevTimePeriod, showNextTimePeriod, tim
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
 
   return (
-    <div className='d-flex justify-content-between position-relative' style={{ marginLeft: 172, marginRight: 172, top: 40 }}>
+    <div className='d-flex justify-content-between position-relative'>
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
         positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
       {hasTeamAccess && <ResultsManager data={data} setData={setData} steps={steps} nextTimePeriod={nextTimePeriod} />}
