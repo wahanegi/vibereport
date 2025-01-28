@@ -158,9 +158,9 @@ const IcebreakerAnswer = ({
       {loaded && !isLoading && !error && (
         <div className="w-100 m-2">
           <div className="mb-3 d-flex flex-column">
-            <h1 className="mb-0 lh-1">Kick back, relax.</h1>
-            <h1 className="mb-3">Time for a team question!</h1>
-            <h2 className={`${'text-black mb-0'} ${!user && 'd-none'}`}>
+            <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
+            <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>
+            <h2 className={`${'text-black mb-0 fs-5 fs-md-3'} ${!user && 'd-none'}`}>
               Brought to us by <span className="text-primary">@</span>
               {user}
             </h2>
