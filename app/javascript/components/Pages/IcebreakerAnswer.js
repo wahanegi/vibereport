@@ -174,7 +174,7 @@ const IcebreakerAnswer = ({
                 </p>
               )}
               <h5 id="question">{question_body}</h5>
-              <div className="w-100" style={{ height: computedHeight }}>
+              <div className="w-100">
                 <form>
                   <textarea
                     className="w-100 border border-3 rounded rounded-4 border-emerald p-2 wrap-textarea"

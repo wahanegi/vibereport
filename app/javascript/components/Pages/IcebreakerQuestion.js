@@ -157,7 +157,7 @@ const IcebreakerQuestion = ({
                       value={funQuestion?.question_body || ''}
                       onChange={onChangQuestion}
                       maxLength={MAX_CHAR_LIMIT}
-                      style={{ height: '280px' }}
+                      style={{ height: '295px' }}
                     />
                   </form>
                 </div>
