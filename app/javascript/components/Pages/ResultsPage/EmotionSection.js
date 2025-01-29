@@ -4,7 +4,7 @@ import { EMOTION_COL_NUMBERS, MIN_USERS_RESPONSES } from "../../helpers/consts";
 import { splitArray } from "../../helpers/helpers";
 import { filter } from "ramda";
 
-const AnimatedEmotion = ({ word, category, addBlur = false, count = 1 }) => {
+const AnimatedEmotion = ({ word}) => {
   const shift = Math.round(Math.random() * 10) / 10
 
   const animatedStyles = {
@@ -22,14 +22,14 @@ const PreviewEmotionSection = ({ data }) => {
   const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
 
-  return <div className='container' style={{filter: 'blur(5px)'}}>
+  return <div className='container w-75' style={{filter: 'blur(5px)'}}>
     {
       splitEmotions.map((emotions, index) =>
         <div className="row" key={index}>
           {
             emotions.map((emotion, index) =>
               <div className="col" key={index}>
-                <AnimatedEmotion word={emotion.attributes.word} category={emotion.attributes.category} addBlur={true} />
+                <AnimatedEmotion word={emotion.attributes.word} />
               </div>)
           }
         </div>
@@ -66,14 +66,14 @@ const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses })
 
   if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data} />
 
-  return <div className='container'>
+  return <div className='container w-75'>
     {
       splitEmotions.map((emotions, index) =>
         <div className="row" key={index}>
           {
             emotions.map((emotion, index) =>
               <div className="col" key={index}>
-                <AnimatedEmotion word={emotion.word} category={emotion.category} count={emotion.count} />
+                <AnimatedEmotion word={emotion.word} />
               </div>)
           }
         </div>
