@@ -188,10 +188,10 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
         emotions, data, setShowWorkingModal, setData, prev_results_path
       }} />
 
-      {/* <EmotionSection emotions={emotions}
+      <EmotionSection emotions={emotions}
         nextTimePeriod={nextTimePeriod}
         data={data}
-        isMinUsersResponses={isMinUsersResponses} /> */}
+        isMinUsersResponses={isMinUsersResponses} />
 
       <GifSection gifs={gifs}
         nextTimePeriod={nextTimePeriod}
