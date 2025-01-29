@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from './UI/Logo';
 import Menu from './UI/Menu';
 
-const Header = ({data, steps, draft, handleSaveDraft, saveDataToDb}) => {
+const Header = ({data, steps, draft, handleSaveDraft, saveDataToDb, isResult = false}) => {
   return (
     <header className="container-fluid d-flex flex-wrap flex-md-nowrap align-items-center justify-content-between bg-light py-2">
       <div className="flex-shrink-1">
@@ -15,6 +15,7 @@ const Header = ({data, steps, draft, handleSaveDraft, saveDataToDb}) => {
           draft={draft}
           data={data}
           handleSaveDraft={handleSaveDraft}
+          isResult={isResult}
         />
       </div>
     </header>
