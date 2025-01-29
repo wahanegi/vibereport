@@ -3,24 +3,23 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 3.2
-  SuggestExtensions: false
+  TargetRubyVersion: 3.1
   NewCops: enable
   Exclude:
     - 'db/schema.rb'
-    - 'bin/**/*'
 
-# Rails rules
-Rails/ResponseParsedBody:
-  Enabled: false
-
-Rails/OutputSafety:
-  Enabled: false
+Rails:
+  Enabled: true
 
 Rails/SkipsModelValidations:
   Enabled: false
 
-# Style rules
+Rails/Output:
+  Enabled: false
+
+Rails/MailerName:
+  Enabled: false
+
 Style/OptionalBooleanParameter:
   Enabled: false
 
@@ -33,10 +32,7 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
-Style/RedundantFetchBlock:
-  Enabled: false
-
-Style/FetchEnvVar:
+Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
 Style/SymbolProc:
@@ -47,37 +43,22 @@ Style/MultilineIfModifier:
   Exclude:
     - 'app/admin/**/*'
 
-# Layout rules
-Layout/HashAlignment:
-  Enabled: false
-
-Layout/EmptyLinesAroundClassBody:
-  Enabled: false
-
 Layout/LineLength:
   Max: 125
   Exclude:
     - '**/*_spec.rb'
     - '**/factories/**.rb'
     - 'Gemfile'
-    - 'config/**/*.rb'
-    - 'app/admin/**/*.rb'
 
-# Metrics rules
 Metrics/AbcSize:
   Exclude:
     - '**/*_spec.rb'
 
-Metrics/ClassLength:
-  Max: 150
-
 Metrics/ModuleLength:
-  Max: 150
   Exclude:
     - '**/*_spec.rb'
 
 Metrics/MethodLength:
-  Max: 20
   Exclude:
     - '**/*_spec.rb'
 
@@ -85,11 +66,7 @@ Metrics/BlockLength:
   Exclude:
     - '**/*_spec.rb'
     - '**/factories/**.rb'
-    - 'config/**/*.rb'
-    - 'lib/tasks/**'
-    - 'app/admin/**/*.rb'
 
-# Lint rules
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
