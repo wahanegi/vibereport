@@ -410,19 +410,6 @@ input.email-input-new:focus-visible{
       border: none !important;
       border-radius: 0;
     }
-    &.form-control-help{
-      @media (max-width: 991px) {
-        width: 390px;
-      }
-      @media (min-width: 992px) {
-        width: 690px;
-      }
-      margin-top: 12px;
-      padding: 5px 15px;
-      height: 155px !important;
-      border: none !important;
-      border-radius: 0;
-    }
     &:focus {
       border: 6px solid $royal-blue !important;
       padding: calc(1.5rem - 3px) !important;
@@ -436,6 +423,18 @@ input.email-input-new:focus-visible{
     }
   }
 
+}
+
+.help-modal-textarea {
+    text-align: justify;
+    resize: none;
+    height: 180px;
+    &:focus {
+      border: none !important;
+      padding: calc(1.5rem - 3px) !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
 }
 
 .gif-productivity {
