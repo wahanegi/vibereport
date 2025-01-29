@@ -42,13 +42,13 @@ const HelpModal = ({
       >
         <img
           src={xClose}
-          className="position-absolute top-0 start-100 translate-middle"
+          className="position-absolute top-0 start-100 translate-middle x-close"
           onClick={() => {
             setShowHelpModal(false);
           }}
         />
         <Modal.Body>
-          <div className="fs-5 mb-1 px-2">
+          <div className="mb-1 px-2">
             <h4 className="modal-title">Questions or issues? Let us know!</h4>
             <h6 className="text-gray-600 mb-1">
               Your questions and insights help make Vibe Report better!
@@ -72,7 +72,7 @@ const HelpModal = ({
               <form>
                 <textarea
                   ref={ref}
-                  className="help-modal-textarea w-100 border-0 p-1 rounded-0"
+                  className="help-modal-textarea w-100 border-0 p-1 rounded-0 shadow-none"
                   value={details}
                   placeholder="We will do our best to address your concern(s)."
                   onChange={(e) => setDetailsText(e.target.value)}
@@ -92,7 +92,7 @@ const HelpModal = ({
           </div>
           <div className="bg-light-gray border-light-gray border border-4 rounded rounded-4">
             <h6>Additional information about Vibe Report can be found at:</h6>
-            <Link to={'#'} className="h6 text-decoration-none">
+            <Link to={'#'} className="fs-6 text-decoration-none">
               https://samplenamerealsourcehere.com
             </Link>
           </div>

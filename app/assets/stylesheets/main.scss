@@ -431,10 +431,13 @@ input.email-input-new:focus-visible{
     height: 180px;
     &:focus {
       border: none !important;
-      padding: calc(1.5rem - 3px) !important;
       outline: none !important;
       box-shadow: none !important;
     }
+}
+.x-close {
+  cursor: pointer;
+  z-index: 31;
 }
 
 .gif-productivity {
@@ -891,17 +894,6 @@ a.dropdown-item{
 }
 .modal-help.lg textarea {
   border: none !important;
-}
-
-//Modal Help Input
-.help-modal-input-container {
-  .wrap-textarea {
-    margin: auto;
-    border: 2px solid $royal-blue;
-  }
-  .wrap-textarea-help{
-    border-radius: 15px;
-  }
 }
 
 //RatherNotSay
