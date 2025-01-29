@@ -14,27 +14,23 @@ const PreviewGifSection = () => {
   const squares = [];
 
   for (let i = 0; i < 12; i++) {
-    squares.push(<div className='gif-item result-page' key={i}>
+    squares.push(<div className='col align-items-center' key={i}>
       <div style={squareStyle} key={i}></div>
     </div>);
   }
 
-  return <div className='align-self-center gif-wrap result-page mb-3'>
-    <div className='border-none card'>
-      <div className='card-body h-auto p-0'>
-        <div className="gif-list">
-          {squares}
-        </div>
-      </div>
+  return (<div className='container mx-auto'>
+    <div className="row row-cols-lg-4 row-cols-md-2 row-cols-1">
+      {squares}
     </div>
-  </div>
+  </div>)
 }
 
 const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
   const showPreview = !nextTimePeriod && isMinUsersResponses
-  if(showPreview) return <PreviewGifSection />
+  if (showPreview) return <PreviewGifSection />
 
-  if(isEmpty(gifs)) return null
+  if (isEmpty(gifs)) return null
 
   const gifItems = gifs.sort((a, b) => a.image.height - b.image.height).map((gif, index) => {
     return <div className='gif-item result-page' key={index}>
@@ -52,7 +48,7 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
         </div>
       </div>
     </div>
-    <img src={PoweredBy} alt='PoweredBy' className={`big image-powered-by align-top`}/>
+    <img src={PoweredBy} alt='PoweredBy' className={`big image-powered-by align-top`} />
   </div>
 };
 

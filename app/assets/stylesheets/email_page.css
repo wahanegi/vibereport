@@ -445,13 +445,7 @@ text-align: center;
 }
 
 /* send_results_email */
-.container {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    height: 325px;
-    padding: 0;
-}
+
   
 .random-word:hover {
     transform: scale(1.2);
