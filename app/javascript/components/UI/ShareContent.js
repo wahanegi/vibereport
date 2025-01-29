@@ -119,10 +119,10 @@ export const Header = ({saveDataToDb, steps, draft, disabled, data, handleSaveDr
 </div>
 
 export const EditResponse = ({ hidden = false, onClick }) =>
-  !hidden && <div style={{width: 135}}>
-    <p className='mb-0 text-start'>Edit responses</p>
-    <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
-  </div>
+  !hidden && <button className='border-0 bg-transparent' onClick={onClick}>
+    <p className='m-0'>Edit responses</p>
+    <img className='pointer' src={editResponse} alt="edit response" />
+  </button>
 
 export const ResultsManager = ({ data, setData, steps, draft, service, nextTimePeriod}) => {
   const [showResultsManager, setShowResultsManager] = useState(false);

@@ -129,21 +129,21 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   const TextHeader = () => {
     if (!nextTimePeriod) {
       return (
-        <div className="text-header-position">
+        <div className="mt-5">
           {isMinUsersResponses ? (
             <>
-              <h1 className="mb-0">You're one of the first to check in!</h1>
+              <h1>You're one of the first to check in!</h1>
               <h6>Come back later to view the results</h6>
             </>
           ) : (
-            <h1 className="mb-0">The team is feeling...</h1>
+            <h1>The team is feeling...</h1>
           )}
         </div>
       );
     }
 
     return (
-      <div className="text-header-position">
+      <div className="mt-5">
         <h1 className="mb-0">
           During {rangeFormat(timePeriod)} the team was feeling...
         </h1>
