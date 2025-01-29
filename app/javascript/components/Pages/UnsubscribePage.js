@@ -58,7 +58,7 @@ const UnsubscribePage = ({ data }) => {
   const Unsubscribed = () => (
     <Fragment>
       <div className="mt-5 col-12 col-md-8 col-lg-6 mx-auto px-2">
-        <h1 className="mb-1 fs-3 fs-md-1">
+        <h1 className="mb-1 fs-3 fs-md-1 px-lg-2">
           You have been unsubscribed from check-in reminders.
         </h1>
         <h4 className="text-gray-600 mb-2">
