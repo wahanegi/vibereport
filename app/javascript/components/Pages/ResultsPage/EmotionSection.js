@@ -10,7 +10,6 @@ const AnimatedEmotion = ({ word, category, addBlur = false, count = 1 }) => {
   const animatedStyles = {
     marginTop: `${shift * 40}px`,
     fontSize: `${shift + 0.4}rem`,
-    filter: addBlur ? 'blur(8px)' : 'none',
   }
 
   return (
@@ -23,23 +22,19 @@ const PreviewEmotionSection = ({ data }) => {
   const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS)
   const rowsNumber = splitEmotions.length
 
-  return <div className='mb-2' style={{ marginTop: 60 }}>
-    <table className="table table-borderless d-flex justify-content-center" style={{ height: `${rowsNumber * 80}px` }}>
-      <tbody>
-        {
-          splitEmotions.map((emotions, index) =>
-            <tr key={index}>
-              {
-                emotions.map((emotion, index) =>
-                  <td key={index}>
-                    <AnimatedEmotion word={emotion.attributes.word} category={emotion.attributes.category} addBlur={true} />
-                  </td>)
-              }
-            </tr>
-          )
-        }
-      </tbody>
-    </table>
+  return <div className='container' style={{filter: 'blur(5px)'}}>
+    {
+      splitEmotions.map((emotions, index) =>
+        <div className="row" key={index}>
+          {
+            emotions.map((emotion, index) =>
+              <div className="col" key={index}>
+                <AnimatedEmotion word={emotion.attributes.word} category={emotion.attributes.category} addBlur={true} />
+              </div>)
+          }
+        </div>
+      )
+    }
   </div>
 }
 
@@ -71,23 +66,19 @@ const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses })
 
   if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data} />
 
-  return <div className='mb-2' style={{ marginTop: 60 }}>
-    <table className="table table-borderless d-flex justify-content-center" style={{ height: `${rowsNumber * 80}px` }}>
-      <tbody>
-        {
-          splitEmotions.map((emotions, index) =>
-            <tr key={index}>
-              {
-                emotions.map((emotion, index) =>
-                  <td key={index}>
-                    <AnimatedEmotion word={emotion.word} category={emotion.category} count={emotion.count} />
-                  </td>)
-              }
-            </tr>
-          )
-        }
-      </tbody>
-    </table>
+  return <div className='container'>
+    {
+      splitEmotions.map((emotions, index) =>
+        <div className="row" key={index}>
+          {
+            emotions.map((emotion, index) =>
+              <div className="col" key={index}>
+                <AnimatedEmotion word={emotion.word} category={emotion.category} count={emotion.count} />
+              </div>)
+          }
+        </div>
+      )
+    }
   </div>
 
 }

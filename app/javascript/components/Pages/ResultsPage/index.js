@@ -129,25 +129,19 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   const TextHeader = () => {
     if (!nextTimePeriod) {
       return (
-        <div className="mt-5">
-          {isMinUsersResponses ? (
-            <>
-              <h1>You're one of the first to check in!</h1>
-              <h6>Come back later to view the results</h6>
-            </>
-          ) : (
-            <h1>The team is feeling...</h1>
-          )}
-        </div>
+        isMinUsersResponses ? (
+          <div className='d-flex flex-column gap-1'>
+            <h1>You're one of the first to check in!</h1>
+            <h6>Come back later to view the results</h6>
+          </div>
+        ) : (
+          <h1>The team is feeling...</h1>
+        )
       );
     }
 
     return (
-      <div className="mt-5">
-        <h1 className="mb-0">
-          During {rangeFormat(timePeriod)} the team was feeling...
-        </h1>
-      </div>
+      <h1>During {rangeFormat(timePeriod)} the team was feeling...</h1>
     );
   }
 
@@ -165,9 +159,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   }
 
   const NoticeAlert = () => {
-    const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
-    const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
-      '</br></br>Skip this chek-in if you weren\'t working.'
+    const alertTitle = `<div class='fs-5'>Just to confirm...</div></br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
+    const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br></br></br>Skip this chek-in if you weren\'t working.'
     const cancelButtonText = 'Skip check-in'
     const confirmButtonText = 'Yes, I worked'
 
@@ -177,7 +170,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   if (!loaded) return <Loader />
 
   return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='position-relative'>
+
+    <div className='d-flex flex-column gap-5 m-auto my-2'>
       <NoticeAlert />
 
       <TextHeader />
