@@ -1,11 +1,10 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {capitalizeFirstLetter, isBlank} from '../helpers/helpers';
-import ButtonEmotion from '../UI/ButtonEmotion';
-import PoweredBy from '../../../assets/images/PoweredBy.svg';
-import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
 import Layout from '../Layout';
+import ButtonEmotion from '../UI/ButtonEmotion';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-
+import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
+import PoweredBy from '../../../assets/images/PoweredBy.svg';
 
 const IntenseLine = ({
                        rating, setRating, comment, setComment, generateStyles, category, isBlankGif,
@@ -86,24 +85,26 @@ const EmotionIntensity = ({
     saveDataToDb(steps, {rating, comment, draft: false});
   };
 
-  const EmotionGif = () => (<div className="d-flex flex-column align-items-center">
-    <div className="gif d-inline-block text-end">
-      <img
-        src={gif_url}
-        alt="Giphy image"
-        className={`small image-${category} align-top`}
-      />
-      <br/>
-      <img
-        src={PoweredBy}
-        alt="PoweredBy"
-        className={`small-image-powered-by align-top`}
-      />
+  const EmotionGif = () => (
+    <div className="d-flex flex-column align-items-center">
+      <div className="gif d-inline-block text-end">
+        <img
+          src={gif_url}
+          alt="Giphy image"
+          className={`small image-${category} align-top`}
+        />
+        <br/>
+        <img
+          src={PoweredBy}
+          alt="PoweredBy"
+          className={`small-image-powered-by align-top`}
+        />
+      </div>
+      <div className="emotion-small">
+        <ButtonEmotion category={category}>{word}</ButtonEmotion>
+      </div>
     </div>
-    <div className="emotion-small">
-      <ButtonEmotion category={category}>{word}</ButtonEmotion>
-    </div>
-  </div>);
+  );
 
   const EmotionSection = () => (<Fragment>
     {isBlank(gif_url) ? (<Fragment>
