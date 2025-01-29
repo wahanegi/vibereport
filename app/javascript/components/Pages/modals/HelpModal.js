@@ -49,25 +49,25 @@ const HelpModal = ({
         />
         <Modal.Body>
           <div className="mb-1 px-2">
-            <h4 className="modal-title">Questions or issues? Let us know!</h4>
-            <h6 className="text-gray-600 mb-1">
+            <h4 className="modal-title fs-5 fs-md-3">Questions or issues? Let us know!</h4>
+            <h6 className="text-gray-600 mb-1 fs-7 fs-md-6">
               Your questions and insights help make Vibe Report better!
             </h6>
             {current_user?.first_name ? (
               <div>
-                <h6 className="text-start">Your name:</h6>
-                <h5 className="text-start text-gray-600 ps-1">
+                <h6 className="text-start fs-7 fs-md-6">Your name:</h6>
+                <h5 className="text-start text-gray-600 ps-1 fs-7 fs-md-4">
                   {current_user.first_name}
                 </h5>
               </div>
             ) : null}
-            <h6 className="text-start">Your email address:</h6>
-            <h5 className="text-start text-gray-600 ps-1">
+            <h6 className="text-start fs-7 fs-md-6">Your email address:</h6>
+            <h5 className="text-start text-gray-600 ps-1 fs-7 fs-md-4">
               {current_user.email}
             </h5>
           </div>
           <div className="mb-1 px-2">
-            <h6 className="text-start mb-1">Details:</h6>
+            <h6 className="text-start mb-1 fs-7 fs-md-6">Details:</h6>
             <div className="w-100 border border-3 rounded rounded-4 border-royal-blue p-1">
               <form>
                 <textarea
@@ -92,7 +92,7 @@ const HelpModal = ({
           </div>
           <div className="bg-light-gray border-light-gray border border-4 rounded rounded-4">
             <h6>Additional information about Vibe Report can be found at:</h6>
-            <Link to={'#'} className="fs-6 text-decoration-none">
+            <Link to={'#'} className="fs-7 fs-md-6 text-decoration-none">
               https://samplenamerealsourcehere.com
             </Link>
           </div>
