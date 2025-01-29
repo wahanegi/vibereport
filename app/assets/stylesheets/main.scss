@@ -1337,3 +1337,7 @@ input:checked + .slider-shoutout img {
   margin: 10px 0;
   text-align: center;
 }
+
+.outline-focus-none:focus-visible {
+    outline: none;
+}
