@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import Layout from '../Layout';
 import {apiRequest} from "../requests/axios_requests";
 import {Link} from "react-router-dom";
@@ -8,8 +8,6 @@ import {isPresent} from "../helpers/helpers";
 const UnsubscribePage = ({data}) => {
   const {current_user, time_period} = data
   const [unsubscribed, setUnsubscribed] = useState(current_user.opt_out)
-  const hasTeamAccess = data.has_team_access;
-  const previewValue = hasTeamAccess ? 'result-managers' : 'results';
 
   const onUnsubscribe = () => {
     const dataSend = { opt_out: true }
@@ -64,7 +62,7 @@ const UnsubscribePage = ({data}) => {
   </Fragment>
 
   return <Fragment>
-    <Layout data={data} draft={true} preview={previewValue} hideShoutout={true}>
+    <Layout data={data} draft={true} isResult={true} hideShoutout={true}>
       <div className='central-element'>
         {unsubscribed ?
           <Unsubscribed />:
