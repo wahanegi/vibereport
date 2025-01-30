@@ -112,8 +112,8 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
           </div>
         </div>
         }
-        <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext={ !!numShoutOuts } />
       </div>
+        <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext={ !!numShoutOuts } />
 
       {!!numShoutOuts &&
         <div>
