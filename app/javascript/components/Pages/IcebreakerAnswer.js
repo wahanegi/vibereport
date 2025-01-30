@@ -6,7 +6,6 @@ import Layout from '../Layout';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import { MAX_CHAR_LIMIT } from '../helpers/consts';
 
-
 const FULL_PRIMARY_HEIGHT = 401;
 const MARGIN_BOTTOM = 17;
 const HEIGHT_ROW_USER = 40;
@@ -147,10 +146,6 @@ const IcebreakerAnswer = ({
     }, 1);
   });
 
-  const onOffSmbAT = (
-    <span className={`${'red-violet'} && ${!user && 'transparent'}`}>@</span>
-  );
-
   return (
     <Layout
       data={data}
@@ -161,50 +156,48 @@ const IcebreakerAnswer = ({
       handleSaveDraft={handleSaveDraft}
     >
       {loaded && !isLoading && !error && (
-        <div className="icebreaker-position">
-          <div className="justify-content-beetwen flex-column h-176">
-            <h1 className="mb-0 lh-1">Kick back, relax.</h1>
-            <h1 className="mb-3">Time for a team question!</h1>
-            <h2 className={`${'color-black mb-0'} ${!user && 'transparent'}`}>
-              Brought to us by {onOffSmbAT}
+        <div className="w-100 m-2">
+          <div className="mb-3 d-flex flex-column">
+            <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
+            <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>
+            <h2 className={`${'text-black mb-0 fs-5 fs-md-3'} ${!user && 'd-none'}`}>
+              Brought to us by <span className="text-primary">@</span>
               {user}
             </h2>
           </div>
-          <div className="icebreaker">
-            <div className="wrap">
+          <div className="mb-2">
+            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow col-12 col-md-8">
               {user && (
-                <p className="b3 muted align-content-end">
-                  {onOffSmbAT}
+                <p className="fs-5 text-gray-600">
+                  <span className="text-primary">@</span>
                   {user} asks:
                 </p>
               )}
-              <h5 id="question" className="text-md-start">
-                {question_body}
-              </h5>
-              <div className="wrap-textarea" style={{ height: computedHeight }}>
+              <h5 id="question">{question_body}</h5>
+              <div className="w-100">
+              <div className='border border-3 rounded rounded-4 border-emerald p-1 costume-focus'>
                 <form>
-                  <div className="form-group">
-                    <textarea
-                      className="input mb-0"
-                      name="answer_body"
-                      style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
-                      placeholder="Tell us what you think!"
-                      value={answerFunQuestion?.answer_body || ''}
-                      onChange={onChangAnswer}
-                      maxLength={MAX_CHAR_LIMIT}
-                    />
-                  </div>
+                  <textarea
+                    className="w-100 p-1 border-0 wrap-textarea"
+                    name="answer_body"
+                    style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
+                    placeholder="Tell us what you think!"
+                    value={answerFunQuestion?.answer_body || ''}
+                    onChange={onChangAnswer}
+                    maxLength={MAX_CHAR_LIMIT}
+                  />
                 </form>
+                </div>
               </div>
             </div>
           </div>
+          <BlockLowerBtns
+            isSubmit={true}
+            handlingOnClickNext={handlingOnClickNext}
+            stringBody={answerBody}
+          />
         </div>
       )}
-      <BlockLowerBtns
-        isSubmit={true}
-        handlingOnClickNext={handlingOnClickNext}
-        stringBody={answerBody}
-      />
     </Layout>
   );
 };
