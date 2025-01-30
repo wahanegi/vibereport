@@ -1400,6 +1400,10 @@ input:checked + .slider-shoutout img {
   text-align: center;
 }
 
+.outline-focus-none:focus-visible {
+    outline: none;
+}
+
 // TODO: Do not delete - Updated classes for EmotionIntensity
 .emotion-intensity {
   .wrap-textarea {
