@@ -3,7 +3,7 @@ import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
 import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
-import ShoutoutModal from "../UI/ShoutoutModal";
+import ShoutoutModal from './modals/ShoutoutModal';
 import trashRed from "../../../assets/images/sys_svg/frame-440.png"
 import trash from "../../../assets/images/sys_svg/frame-439.png"
 import ShoutoutDelete from "../UI/ShoutoutDelete";
@@ -113,7 +113,8 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
         {
           !!numShoutOuts && <div>
             {shoutOutForm.status &&
-              <ShoutoutModal onClose = { closeHandling }
+              <ShoutoutModal shoutOutForm = { shoutOutForm }
+                             setShoutOutForm = { setShoutOutForm }
                              data = { data }
                              setData = { setData }
                              editObj = { shoutOutForm.editObj } />}

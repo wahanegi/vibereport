@@ -5,7 +5,8 @@ import Pluralize from 'pluralize';
 import ShoutoutAwards from "./ShoutoutAwards";
 import ShoutoutItem from "./ShoutoutItem";
 import {BtnSendMoreShoutouts} from "../../UI/ShareContent";
-import ShoutoutModal from "../../UI/ShoutoutModal";
+import ShoutoutModal from "../modals/ShoutoutModal";
+
 
 const PreviewShoutoutSection = () =>
   <div className='results col'>

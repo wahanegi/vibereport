@@ -4,19 +4,21 @@ import { isEmpty } from '../../helpers/helpers';
 import { apiRequest } from '../../requests/axios_requests';
 import xClose from '../../../../assets/images/sys_svg/x-close.svg';
 import RichInputElement from '../../UI/rich-text/RichInputElement';
+import Alert from '../../UI/modal/Alert';
 
-const ShoutoutModalNew = ({
+const ShoutoutModal = ({
   shoutOutForm,
   setShoutOutForm,
   data,
   setData: setDataInDB,
   editObj = {},
 }) => {
+  const [isNotAlert, setIsNotAlert] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const [richText, setRichText] = useState(
     isEmpty(editObj) ? '' : editObj.rich_text
   );
   const idEditText = isEmpty(editObj) ? null : editObj.id;
-  const [errorMessage, setErrorMessage] = useState('');
 
   const submitHandling = ({ richText, chosenUsers, isPublic }) => {
     const dataSend = {
@@ -70,6 +72,11 @@ const ShoutoutModalNew = ({
       setIsNotAlert(false);
     }
   };
+
+  const closeAlert = () => {
+    setIsNotAlert(true);
+  };
+
   return (
     <>
       <Modal
@@ -99,8 +106,11 @@ const ShoutoutModalNew = ({
           />
         </Modal.Body>
       </Modal>
+      {!isNotAlert && (
+        <Alert onClose={closeAlert} errorMessage={errorMessage} />
+      )}
     </>
   );
 };
 
-export default ShoutoutModalNew;
+export default ShoutoutModal;

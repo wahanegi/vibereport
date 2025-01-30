@@ -14,7 +14,7 @@ import EmotionIndex from "../ResultsPageManager/EmotionIndex"
 import {updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 import {MIN_MANAGER_USERS_RESPONSES} from "../../helpers/consts";
-import ShoutoutModal from "../../UI/ShoutoutModal";
+
 import {
   changeTimePeriodCallback,
   loadResultsCallback,
@@ -23,6 +23,7 @@ import {
   scrollTopTimePeriodCallback,
   onChangeTimePeriodIndex
 } from "../ResultsPage";
+import ShoutoutModal from '../modals/ShoutoutModal';
 
 const ResultsManager = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
   const [loaded, setLoaded] = useState(false)

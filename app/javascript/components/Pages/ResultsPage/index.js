@@ -13,7 +13,7 @@ import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import Layout from '../../Layout';
-import ShoutoutModal from "../../UI/ShoutoutModal";
+import ShoutoutModal from '../modals/ShoutoutModal';
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import {apiRequest, updateResponse} from "../../requests/axios_requests";

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
 import ShoutoutIcon from '../../../assets/images/sys_svg/shoutout-new.svg';
-import ShoutoutModalNew from '../Pages/modals/ShoutoutModalNew';
+import ShoutoutModal from '../Pages/modals/ShoutoutModal';
 
 const ShoutoutButton = ({ data, setData, hideShoutout }) => {
   if (hideShoutout) return;
@@ -17,11 +16,7 @@ const ShoutoutButton = ({ data, setData, hideShoutout }) => {
         <img src={ShoutoutIcon} alt="Shoutout" />
       </button>
 
-      {/* {shoutOutForm && <ShoutoutModal
-            onClose={() => setShoutOutForm(false)}
-            data={data}
-            setData={setData} />} */}
-      <ShoutoutModalNew
+      <ShoutoutModal
         shoutOutForm={shoutOutForm}
         setShoutOutForm={setShoutOutForm}
         data={data}
