@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import {isEmpty} from '../../helpers/helpers'
+import { isEmpty } from '../../helpers/helpers';
 import { apiRequest } from '../../requests/axios_requests';
 import xClose from '../../../../assets/images/sys_svg/x-close.svg';
 import RichInputElement from '../../UI/rich-text/RichInputElement';
@@ -15,8 +15,8 @@ const ShoutoutModalNew = ({
   const [richText, setRichText] = useState(
     isEmpty(editObj) ? '' : editObj.rich_text
   );
-  const  idEditText =  isEmpty(editObj) ? null : editObj.id
-  const [errorMessage, setErrorMessage] = useState("")
+  const idEditText = isEmpty(editObj) ? null : editObj.id;
+  const [errorMessage, setErrorMessage] = useState('');
 
   const submitHandling = ({ richText, chosenUsers, isPublic }) => {
     const dataSend = {
@@ -42,7 +42,7 @@ const ShoutoutModalNew = ({
         user_shoutouts: [...currentShoutOuts, createdUpdatedShoutOut],
       });
 
-      setShoutOutForm(false)
+      setShoutOutForm(false);
     };
 
     setRichText(richText);
@@ -65,11 +65,11 @@ const ShoutoutModalNew = ({
   };
 
   const handlingErrors = (errors) => {
-    if ( errors.response.data.error.rich_text?.length ) {
-      setErrorMessage( errors.response.data.error.rich_text[0] )
-      setIsNotAlert(false)
+    if (errors.response.data.error.rich_text?.length) {
+      setErrorMessage(errors.response.data.error.rich_text[0]);
+      setIsNotAlert(false);
     }
-  }
+  };
   return (
     <>
       <Modal
@@ -79,7 +79,7 @@ const ShoutoutModalNew = ({
           setShoutOutForm(false);
         }}
         centered
-        dialogClassName="px-1"
+        dialogClassName="px-1 custom-modal"
       >
         <img
           src={xClose}
@@ -89,16 +89,14 @@ const ShoutoutModalNew = ({
           }}
         />
         <Modal.Body>
-          <div className="mb-1 px-2">
-            <RichInputElement
-              richText={richText}
-              listUsers={data.users.filter(
-                (user) => user.id !== data.current_user.id
-              )}
-              onSubmit={submitHandling}
-              editObj={editObj}
-            />
-          </div>
+          <RichInputElement
+            richText={richText}
+            listUsers={data.users.filter(
+              (user) => user.id !== data.current_user.id
+            )}
+            onSubmit={submitHandling}
+            editObj={editObj}
+          />
         </Modal.Body>
       </Modal>
     </>

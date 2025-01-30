@@ -740,53 +740,29 @@ input.email-input-new:focus-visible{
   }
 }
 
-.shoutout-input-block {
-  min-width: 925px;
-  height:514px;
-  top:0;
-  margin-top: 250px;
-  overflow-x: hidden;
-  .x-close {
-    z-index: 31;
-    margin-top: -25px;
-    margin-left: 414px;
-    cursor: pointer
-  }
-  .placement-shoutout-btn {
-    z-index: 31;
-    top: -90px;
-    right: -297px;
-  }
-  .place-size-shout-out {
-    width: 884px !important;
-    min-width: 884px !important;
-    height: 514px;
-    border-radius: 20px !important;
-    z-index: 30;
-    animation: slide-down 300ms ease-out forwards;
+.place-size-shout-out {
+  height: 514px;
+  border-radius: 20px !important;
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+  overflow: auto;
+  .inner-div {
+    height:390px;
+    z-index:31;
     overflow: auto;
+    border-color: transparent;
     &.form-control{
-      border: 4px solid $primary !important;
+      border-color: transparent !important;
       &:focus {
-        border: 4px solid $primary !important;
-      }
-    }
-    .inner-div {
-      width:861px;
-      height:390px;
-      z-index:31;
-      overflow: auto;
-      border-color: transparent;
-      &.form-control{
         border-color: transparent !important;
-        &:focus {
-          border-color: transparent !important;
-        }
       }
     }
   }
 }
 
+.custom-modal .modal-content {
+  border: 4px solid $primary !important;
+}
 //DropDownList
 .drop-down-block {
   &::-webkit-scrollbar {

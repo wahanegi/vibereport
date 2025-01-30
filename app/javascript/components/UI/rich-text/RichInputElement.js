@@ -671,16 +671,16 @@ const RichInputElement = ({
           onKeyDown={handleKeyDown}
           onClick={clickHandling}
           cursorPos={Cursor.getCurrentCursorPosition(element)}
-          className="c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2"
+          className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
-        <div className='d-flex justify-content-between w-100'>
+        <div className='d-flex flex-column gap-3 justify-content-between flex-lg-row w-100'>
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
           />
           <Button
-            className={`placement-shoutout-btn position-relative btn-modal bg-primary hover:bg-primary-hover c2 p-0 ${
+            className={`btn-modal bg-primary hover:bg-primary-hover c2 p-0 ${
               isDisabled ? 'disabled' : ''
             }`}
             onClick={submitHandling}
