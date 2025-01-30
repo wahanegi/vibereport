@@ -14,6 +14,7 @@ Here styles for:
 .italic {
     font-style: italic;
 }
+/* TODO: do not use*/
 .convert {
     width: 127px;
     height: 58px;
@@ -23,6 +24,7 @@ Here styles for:
     border: 1px solid #000000;
     box-shadow: 4px 4px 4px #8c8888;
 }
+/* TODO: do not use*/
 .convert p {
     font-size: 12px;
     line-height: 12px;
@@ -34,6 +36,7 @@ Here styles for:
     color: #D7007B;
 }
 
+/*TODO: do not use // in logo.scss the same*/
 .line1 {
     width: 137px;
     margin-top: 15px;
@@ -41,6 +44,7 @@ Here styles for:
     border-bottom: 1px solid #000000;
     transform: rotate(-155.83deg);
 }
+/*TODO: do not use // in logo.scss the same*/
 .line2 {
     width: 137px;
     margin-top: 0;
@@ -48,18 +52,21 @@ Here styles for:
     border-bottom: 1px solid #000000;
     transform: rotate(-23.42deg);
 }
+/*TODO: do not use // in logo.scss the same*/
 .offset-line2{
     width: 207.14px;
     margin-top: -1.5px;
     margin-left: -9.5px;
     transform: rotate(-24.4deg);
 }
+/*TODO: do not use // in logo.scss the same*/
 .offset-line1{
     width: 207.14px;
     margin-top: 29.3px;
     margin-left: -9.4px;
     transform: rotate(-155.6deg);
 }
+/*TODO: do not use // in logo.scss the same*/
 .bigger {
     width: 190px;
     height: 87px;
@@ -67,18 +74,26 @@ Here styles for:
 .ml-200{
     margin-left: 200px;
 }
+
+/*TODO: do not use*/
 .ml-240{
     margin-left: 240px;
 }
 .mt-37{
     margin-top:37px;
 }
+
+/*TODO: do not use*/
 .ml-41{
     margin-left: 41px;
 }
+
+/*TODO: do not use*/
 .mr-30{
     margin-right: 30px;
 }
+
+/*TODO: do not use*/
 .p-0{
     padding:0;
 }
@@ -162,9 +177,13 @@ font-style: normal;
 font-weight:700;
 text-align: center;
 }
+
+/*TODO: do not use*/
 .board{
     min-width:1080px;
 }
+
+/*TODO: do not use*/
 .mt-35{
     margin-top: 35px;
 }
@@ -199,15 +218,23 @@ text-align: center;
 .ml-55{
     margin-left: 55px;
 }
+
+/*TODO: do not use*/
 .mt-10{
     margin-top: 10px;
 }
+
+/*TODO: do not use*/
 .pt-20{
     padding-top: 20px;
 }
+
+/*TODO: do not use*/
 .pl-15{
     padding-left: 15px;
 }
+
+/*TODO: do not use*/
 .my-8{
     margin-top: 8px;
     margin-bottom: 8px;
@@ -305,6 +332,8 @@ text-align: center;
     color: rgba(0, 0, 0, 0.7);
     margin: 18px auto 14px auto;
 }
+
+/*TODO: do not use*/
 .correct{
     height: 31px;
 }
@@ -355,6 +384,8 @@ text-align: center;
     height: 3.7rem;
     margin-bottom: 2.125rem;
 }
+
+/*TODO: do not use*/
 .logo-magic{
     color: #000;
 }
@@ -445,6 +476,9 @@ text-align: center;
 }
 
 /* send_results_email */
+/* TODO the same name-class in app/assets/stylesheets/main.scss
+    Use only in app/views/user_email_mailer/results_email.html.erb
+*/
 .container {
     display: inline-flex;
     justify-content: center;
@@ -452,7 +486,8 @@ text-align: center;
     height: 325px;
     padding: 0;
 }
-  
+
+/*TODO: do not use*/
 .random-word:hover {
     transform: scale(1.2);
 }
@@ -507,6 +542,7 @@ html {
     margin-bottom: 30px;
 }
 
+/*TODO: do not use*/
 .link-text-results{
     display: block;
     width: 385px;
@@ -529,6 +565,7 @@ html {
     text-transform: capitalize;
 }
 
+/*TODO: do not use*/
 .date-completed {
     padding-top: 54px;
     font-size: 16px;

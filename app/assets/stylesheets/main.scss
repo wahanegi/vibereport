@@ -14,30 +14,35 @@ a {
   font-weight: $font-weight-bold !important;
 }
 
-.header {
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 48px;
-  color: $black;
-  white-space: pre-line;
-}
+/*TODO: do not use*/
+//.header {
+//  font-weight: 700;
+//  font-size: 48px;
+//  line-height: 48px;
+//  color: $black;
+//  white-space: pre-line;
+//}
 
-.sub-header {
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 36px;
-  color: $black;
-}
+/*TODO: do not use*/
+//.sub-header {
+//  font-weight: 700;
+//  font-size: 36px;
+//  line-height: 36px;
+//  color: $black;
+//}
 
 .muted {
   color: $gray-600;
 }
 
+/*TODO: do not use*/
 .text-field-new-html {
   width: 588px !important;
   height: 59px;
 }
 
+
+/*TODO: do not use*/
 .light-grey-text {
   color: $light-grey;
 }
@@ -68,6 +73,7 @@ a {
   --bs-link-hover-color: rgba(0, 0, 0, 0.6);
 }
 
+// TODO the same name-class in app/assets/stylesheets/email_page.css
 .container {
   height: 100vh;
   width: 100vw;
@@ -82,6 +88,7 @@ a {
   filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 
+/*TODO: do not use*/
 .width-block {
   width: 180px;
 }
@@ -92,6 +99,7 @@ a {
   color: $primary;
 }
 
+//TODO: in some *.js change to BS: text-black or put in body{}
 .color-black {
   color: $black;
 }
@@ -120,6 +128,7 @@ a {
   color: $gray-200 !important;
 }
 
+// TODO: change to bg-transparent | opacity-0 | text-opacity-0
 .transparent {
   color: transparent;
 }
@@ -134,31 +143,39 @@ a {
   margin-top: 123px;
 }
 
+
+/*TODO: do not use*/
 .mt-negative-17 {
   margin-top: -17px !important;
 }
 
+/*TODO: do not use => code is commented */
 .mb-115 {
   margin-bottom: 115px;
 }
 
+// TODO: change to BS: mb-*
 .mb-80 {
   margin-bottom: 80px;
 }
 
+/*TODO: do not use*/
 .input-label {
   width: 588px;
   height: 59px;
 }
 
+/*TODO: do not use*/
 .w-660 {
   width: 660px;
 }
 
+/*TODO: do not use*/
 .mt-162 {
   margin-top: 162px;
 }
 
+/*TODO: do not use*/
 .minW-675 {
   min-width: 675px
 }
@@ -171,6 +188,7 @@ a {
   width: 82px;
 }
 
+/*TODO: do not use*/
 input.email-input-new:focus-visible {
   outline: none;
 }
@@ -181,14 +199,17 @@ input.email-input-new:focus-visible {
   min-width: 750px;
 }
 
+/*TODO: do not use*/
 .mb-negative-17 {
   margin-bottom: -17px;
 }
 
+// TODO: change to BS: mb-*
 .mb-28 {
   margin-bottom: 28px !important;
 }
 
+// TODO: change to BS: mb-*
 .mt-64 {
   margin-top: 63px;
 }
@@ -198,6 +219,7 @@ input.email-input-new:focus-visible {
   height: 49px;
 }
 
+// TODO: change to BS: mb-*
 .mt-85 {
   margin-top: 85px;
 }
@@ -207,6 +229,7 @@ input.email-input-new:focus-visible {
   height: 59px;
 }
 
+/*TODO: do not use*/
 .placement-size-link {
   top: 767px;
   min-width: 650px;
@@ -217,6 +240,7 @@ input.email-input-new:focus-visible {
 }
 
 // for drawing envelope -------
+/*TODO: do not use*/
 .t-35 {
   top: 35px;
 }
@@ -235,6 +259,7 @@ input.email-input-new:focus-visible {
   margin-top: 151px;
 }
 
+/*TODO: do not use*/
 .mt-180 {
   margin-top: 180px;
 }
@@ -243,6 +268,7 @@ input.email-input-new:focus-visible {
   padding-bottom: 52px;
 }
 
+/*TODO: del and use .pointer"*/
 .pencil {
   cursor: pointer;
 }
@@ -262,6 +288,7 @@ input.email-input-new:focus-visible {
   display: block;
 }
 
+/*TODO: do not use*/
 .left-bottom-corner {
   position: absolute;
   left: 45px;
@@ -275,6 +302,8 @@ input.email-input-new:focus-visible {
   }
 }
 
+
+/*TODO: do not use*/
 .into-centerX2_5 {
   animation-name: moveIntoCenterX2_5;
   animation-duration: 2s;
@@ -292,6 +321,7 @@ input.email-input-new:focus-visible {
   }
 }
 
+/*TODO: do not use*/
 .into-centerX {
   animation-name: moveIntoCenter;
   animation-duration: 2s;
@@ -310,6 +340,8 @@ input.email-input-new:focus-visible {
   }
 }
 
+
+/*TODO: do not use*/
 .blink {
   top: 459px;
   left: calc(50vw - 54px);
@@ -380,6 +412,7 @@ input.email-input-new:focus-visible {
   }
 }
 
+//TODO: should use BS-classes
 .click-annotation {
   margin-top: 350px;
   color: $gray-600;
@@ -418,7 +451,7 @@ input.email-input-new:focus-visible {
 .rating-comment-container {
   //Productivity Bad Follow Up
   .wrap-textarea-bad-follow {
-    border-radius: 15px;
+    border-radius: 15px; //TODO: should use BS-classes
     width: 660px;
     height: 350px;
   }
@@ -450,6 +483,7 @@ input.email-input-new:focus-visible {
   }
 }
 
+/*TODO: should use BS-classes*/
 .emotion-small {
   margin: 0px 0px 30px;
   margin-top: -6px;
@@ -463,6 +497,7 @@ input.email-input-new:focus-visible {
 
 
 //QuestionButton
+/*TODO: do not use*/
 .placement-question-btn {
   position: absolute;
   right: 47px;
@@ -472,6 +507,7 @@ input.email-input-new:focus-visible {
 }
 
 //ProductivitySlider
+/*TODO: should use BS-classes*/
 .productivity-container {
   display: flex;
   flex-direction: column;
@@ -599,6 +635,7 @@ input.email-input-new:focus-visible {
   }
 }
 
+/*TODO: do not use*/
 .mentions-mention {
   z-index: 1;
   position: relative;
@@ -708,16 +745,21 @@ input.email-input-new:focus-visible {
   background: $medium-grey;
   filter: blur(50px);
 
+  /*TODO: do not use*/
   &.celebrate-modal {
     height: 140vh;
   }
 }
 
+
+/*TODO: do not use*/
 .modal-dialog-celebrate {
   z-index: 30;
   margin-top: 25vh;
   top: 0;
 
+  /*TODO: delete from app/views/layouts/_help_modal.erb
+       app/views/layouts/_help_modal.erb */
   .x-close {
     z-index: 31;
     margin-top: -25px;

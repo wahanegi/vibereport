@@ -162,7 +162,7 @@ textarea {
 // Using with the Special inputs
 // Intensity selection & follow-up field (use B3)
 
-.follow-up-field {
+.follow-up-field { // TODO: do not use
   textarea {
     margin-top: 4px;
     width: calc($btn-width-intensity * 5 - 1rem);
@@ -172,7 +172,7 @@ textarea {
   }
 }
 
-.question-field {
+.question-field { // TODO: do not use
   width: 46.625rem !important; //746px
   min-height: 17.5rem; //280px
   &.form-control {
@@ -185,7 +185,7 @@ textarea {
 }
 
 // FOR DROPDOWN MENU
-.dropdown-toggle {
+.dropdown-toggle { // TODO: do not use
   height: 80px;
   width: 80px;
   padding: 0 !important;

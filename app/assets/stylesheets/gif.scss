@@ -15,6 +15,7 @@
   transform: translate(-50%, -50%); /* Center the element */
 }
 
+/*TODO: do not use*/
 .gif-clicked-positive {
   box-sizing: border-box;
   display: inline-block;
@@ -28,6 +29,7 @@
   }
 }
 
+/*TODO: do not use*/
 .gif-clicked-neutral {
   box-sizing: border-box;
   display: inline-block;
@@ -41,6 +43,7 @@
   }
 }
 
+/*TODO: do not use*/
 .gif-clicked-negative {
   box-sizing: border-box;
   display: inline-block;
@@ -66,6 +69,8 @@
   &.result-page {
     max-width: 100%
   }
+
+  /*TODO: do not use*/
   &.manager-result-page {
     width: auto;
   }
@@ -131,6 +136,7 @@
   }
 }
 
+/*TODO: should change to class="border border-0"*/
 .border-none {
   border: none !important;
 }
@@ -179,6 +185,7 @@
   margin-top: 6px;
 }
 
+/*TODO: do not use*/
 .card-colors {
   --bs-card-bg: unset !important;
 }

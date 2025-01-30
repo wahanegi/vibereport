@@ -14,6 +14,7 @@
         filter: blur(8px);
       }
     }
+
     &.shoutout {
       padding: 32px 10px 18px 10px;
       background: $pink;
@@ -53,6 +54,7 @@
   }
 }
 
+/*TODO: do not use*/
 .header-position {
   position: relative;
   top: 137px;
@@ -89,6 +91,7 @@
   //top: 20px;
   z-index: 100
 }
+
 .padding-x4 {
   margin-left: 4px;
   margin-right: 4px;
