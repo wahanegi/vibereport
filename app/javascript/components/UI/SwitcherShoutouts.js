@@ -6,17 +6,17 @@ const SwitcherShoutouts = ({ isChecked, handleCheckboxChange }) => {
 
   return(
     <div>
-       <label className="d-flex position-relative placement-shoutout-toggle switcher-shoutout">
+       <label className="d-flex flex-column switcher-shoutout">
          <input
            type="checkbox"
            checked={isChecked}
            onChange={handleCheckboxChange}
          />
-         <span className="slider-shoutout position-absolute">
+         <span className="slider-shoutout">
            <img src={isChecked ? iconPublic : iconPrivate}
                 alt={isChecked ? 'public' : 'private'}/>
          </span>
-         <span className="d-inline-block position-relative placement-switcher-title">
+         <span className="d-inline-block">
            <h4 className="switcher-title">{isChecked ? 'Public post' : 'Tagged only'}</h4>
          </span>
        </label>

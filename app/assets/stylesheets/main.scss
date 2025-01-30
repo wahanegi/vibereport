@@ -79,9 +79,6 @@ a {
 .color-primary {
   color: $primary;
 }
-.color-black {
-  color: $black;
-}
 .color-green {
   color: $sea-green;
 }
@@ -323,10 +320,7 @@ input.email-input-new:focus-visible{
     }
   }
 }
-.click-annotation {
-  margin-top: 350px;
-  color: $gray-600;
-}
+
 //system scroll
 .field-shout-outs ,
 .drop-down-block,
@@ -690,6 +684,7 @@ input.email-input-new:focus-visible{
    z-index: 20;
   overflow: hidden;
        top: 0;
+  left: 0
 }
 
 .backdrop {
@@ -750,10 +745,11 @@ input.email-input-new:focus-visible{
 }
 
 .shoutout-input-block {
-  min-width: 925px;
+  //width: 100%;
+  //max-width: 925px;
   height:514px;
-  top:0;
-  margin-top: 250px;
+  //top:0;
+  //margin-top: 250px;
   overflow-x: hidden;
   .x-close {
     z-index: 31;
@@ -763,12 +759,12 @@ input.email-input-new:focus-visible{
   }
   .placement-shoutout-btn {
     z-index: 31;
-    top: -90px;
-    right: -297px;
+    //top: -90px;
+    //right: -297px;
   }
   .place-size-shout-out {
-    width: 884px !important;
-    min-width: 884px !important;
+    width: 100%;
+    max-width: 884px;
     height: 514px;
     border-radius: 20px !important;
     z-index: 30;
@@ -781,8 +777,9 @@ input.email-input-new:focus-visible{
       }
     }
     .inner-div {
-      width:861px;
-      height:390px;
+      width: 100%;
+      height: auto;
+      max-height: 390px;
       z-index:31;
       overflow: auto;
       border-color: transparent;
@@ -795,6 +792,52 @@ input.email-input-new:focus-visible{
     }
   }
 }
+// .shoutout-input-block {
+//  min-width: 925px;
+//  height:514px;
+//  top:0;
+//  margin-top: 250px;
+//  overflow-x: hidden;
+//  .x-close {
+//    z-index: 31;
+//    margin-top: -25px;
+//    margin-left: 414px;
+//    cursor: pointer
+//  }
+//  .placement-shoutout-btn {
+//    z-index: 31;
+//    top: -90px;
+//    right: -297px;
+//  }
+//  .place-size-shout-out {
+//    width: 884px !important;
+//    min-width: 884px !important;
+//    height: 514px;
+//    border-radius: 20px !important;
+//    z-index: 30;
+//    animation: slide-down 300ms ease-out forwards;
+//    overflow: auto;
+//    &.form-control{
+//      border: 4px solid $primary !important;
+//      &:focus {
+//        border: 4px solid $primary !important;
+//      }
+//    }
+//    .inner-div {
+//      width:861px;
+//      height:390px;
+//      z-index:31;
+//      overflow: auto;
+//      border-color: transparent;
+//      &.form-control{
+//        border-color: transparent !important;
+//        &:focus {
+//          border-color: transparent !important;
+//        }
+//      }
+//    }
+//  }
+//}
 
 //DropDownList
 .drop-down-block {
@@ -1050,15 +1093,15 @@ a.dropdown-item{
 // Toggle shoutouts
 
 .switcher-shoutout{
-  height: 48px;
-  width: 105px;
+  //height: 48px;
+  width: 120px;
 }
 
-.placement-shoutout-toggle {
-  z-index: 40;
-  top: -147px;
-  left: -367px;
-}
+//.placement-shoutout-toggle {
+//  z-index: 40;
+//  top: -147px;
+//  left: -367px;
+//}
 
 .switcher-shoutout input{
   opacity: 0;
@@ -1068,11 +1111,11 @@ a.dropdown-item{
 
 .slider-shoutout{
   cursor: pointer;
-
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  width: 61.5px;
+  //top: 0;
+  //left: 0;
+  //bottom: 0;
+  //right: 0;
 
   background-color: $switch-grey;
   box-shadow: 3px 4.5px 3px 0px $gray-250;
@@ -1080,15 +1123,16 @@ a.dropdown-item{
 }
 
 .slider-shoutout:before{
-  position: absolute;
+  //position: absolute;
+  margin-left: 30px;
   content: '';
   height: 40px;
-  width: 61.5px;
+  width: 40px;
   background-color: $light-violet;
   border-radius: 100px;
-  top: 4px;
-  left: 40px;
-  bottom: 4px;
+  //top: 4px;
+  //left: 40px;
+  //bottom: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1122,23 +1166,23 @@ input:checked + .slider-shoutout img {
 }
 
 .switcher-title{
-  font-size: 19.5px;
-  text-align: left;
+  //font-size: 19.5px;
+  //text-align: left;
 }
 
 
 // Toggle shoutouts
 
-.switcher-shoutout{
-  height: 48px;
-  width: 105px;
-}
+//.switcher-shoutout{
+  //height: 48px;
+  //width: 105px;
+//}
 
-.placement-shoutout-toggle {
-  z-index: 40;
-  top: -147px;
-  left: -367px;
-}
+//.placement-shoutout-toggle {
+//  z-index: 40;
+//  top: -147px;
+//  left: -367px;
+//}
 
 .switcher-shoutout input{
   opacity: 0;
@@ -1146,34 +1190,34 @@ input:checked + .slider-shoutout img {
   height: 0 !important;
 }
 
-.slider-shoutout{
-  cursor: pointer;
+//.slider-shoutout{
+//  cursor: pointer;
+//
+//  top: 0;
+//  left: 0;
+//  bottom: 0;
+//  right: 0;
+//
+//  background-color: $switch-grey;
+//  box-shadow: 3px 4.5px 3px 0px $gray-250;
+//  border-radius: 100px;
+//}
 
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  background-color: $switch-grey;
-  box-shadow: 3px 4.5px 3px 0px $gray-250;
-  border-radius: 100px;
-}
-
-.slider-shoutout:before{
-  position: absolute;
-  content: '';
-  height: 40px;
-  width: 61.5px;
-  background-color: $light-violet;
-  border-radius: 100px;
-  top: 4px;
-  left: 40px;
-  bottom: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
+//.slider-shoutout:before{
+//  //position: absolute;
+//  content: '';
+//  height: 40px;
+//  width: 61.5px;
+//  background-color: $light-violet;
+//  border-radius: 100px;
+//  //top: 4px;
+//  //left: 40px;
+//  //bottom: 4px;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+//}
 
 .slider-shoutout img {
   position: absolute;
@@ -1185,25 +1229,25 @@ input:checked + .slider-shoutout img {
   transition: left 0.3s ease-in-out;
 }
 
-input:checked + .slider-shoutout:before {
-  transform: translateX(-35px);
-  background-color: $rose;
-}
+//input:checked + .slider-shoutout:before {
+//  transform: translateX(-35px);
+//  background-color: $rose;
+//}
 
 input:checked + .slider-shoutout img {
   left: 34%;
 }
 
 .placement-switcher-title{
-  z-index: 31;
-  top: 8px;
-  left: 125px;
-  min-width: 130px;
+  //z-index: 31;
+  //top: 8px;
+  //left: 125px;
+  //min-width: 130px;
 }
 
 .switcher-title{
-  font-size: 19.5px;
-  text-align: left;
+  //font-size: 19.5px;
+  //text-align: left;
 }
 
 @media (max-width: 1440px) {
