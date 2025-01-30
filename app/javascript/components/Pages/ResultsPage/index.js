@@ -155,7 +155,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
         </div>
       )
     }
-    return <div style={{ height: 120 }}></div>
+    return <div className='my-5'></div>
   }
 
   const NoticeAlert = () => {
@@ -170,7 +170,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   if (!loaded) return <Loader />
 
   return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='d-flex flex-column gap-7 my-2 align-items-center'>
+    <div className='d-flex flex-column gap-7 my-2 w-100 align-items-center'>
       <NoticeAlert />
 
       <TextHeader />

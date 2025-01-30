@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import isEmpty from "ramda/src/isEmpty";
 import Pluralize from 'pluralize';
 import ShoutoutAwards from "./ShoutoutAwards";
@@ -6,7 +6,7 @@ import ShoutoutItem from "./ShoutoutItem";
 import ShoutoutModal from "../../UI/ShoutoutModal";
 
 const PreviewShoutoutSection = () =>
-  <div className='results col blur-effect'>
+  <div className='results container blur-effect'>
     <div className='row wrap shoutout preview'></div>
   </div>
 
@@ -15,12 +15,6 @@ const ShoutoutSection = ({ nextTimePeriod, timePeriod, sentShoutouts, receivedSh
   const [showModal, setShowModal] = useState(false)
   const emptyCurrentUserShoutouts = isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
   const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
-
-  useEffect(() => {
-    if (showModal) {
-      window.scrollTo({ top: 200, behavior: 'smooth' })
-    }
-  }, [showModal]);
 
   if (!nextTimePeriod && isMinUsersResponses) return <PreviewShoutoutSection />
 
@@ -48,7 +42,7 @@ const ShoutoutSection = ({ nextTimePeriod, timePeriod, sentShoutouts, receivedSh
   }
 
   return <>
-    <div className='results col' hidden={emptyShoutouts}>
+    <div className='results container' hidden={emptyShoutouts}>
       <div className='row wrap shoutout mb-1'>
         <ShoutoutAwards {...{ timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, showModal, setShowModal, currentUserShoutouts, emptyShoutouts }} />
         <div className='d-flex justify-content-start ps-2 mb-1'>

@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
-  <div className='results col blur-effect'>
+  <div className='results container blur-effect'>
     <div className='row wrap question preview' />
   </div>
 
@@ -184,7 +184,7 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, isMinUsersRespo
                                                     setData={setData}
                                                     setShowWorkingModal={setShowWorkingModal}/>
 
-  return <div className='results col'>
+  return <div className='results container'>
     <Question {...{userName, fun_question}} />
     {
       answersArray.map(data => {
