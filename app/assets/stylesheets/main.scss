@@ -1350,3 +1350,13 @@ input:checked + .slider-shoutout img {
     opacity: 1;
 	}
 }
+
+.square {
+  background-color: #524F50;
+  height: 125px;
+  border-radius: 6px;
+}
+
+.blur-effect {
+  filter: blur(8px);
+}

@@ -6,8 +6,8 @@ import {Link} from "react-router-dom";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
-  <div className='results col'>
-    <div className='row wrap question preview mb-3' />
+  <div className='results col blur-effect'>
+    <div className='row wrap question preview' />
   </div>
 
 const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question,

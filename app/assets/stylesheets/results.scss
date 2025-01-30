@@ -11,7 +11,6 @@
       background: $tea-green;
       &.preview {
         height: 500px;
-        filter: blur(8px);
       }
     }
     &.shoutout {
@@ -20,7 +19,6 @@
       border: 3px solid $red-violet;
       &.preview {
         height: 500px;
-        filter: blur(8px);
       }
     }
 

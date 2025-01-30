@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { MIN_USERS_RESPONSES } from "../../helpers/consts";
 import isEmpty from "ramda/src/isEmpty";
 import Pluralize from 'pluralize';
 import ShoutoutAwards from "./ShoutoutAwards";
 import ShoutoutItem from "./ShoutoutItem";
-import { BtnSendMoreShoutouts } from "../../UI/ShareContent";
 import ShoutoutModal from "../../UI/ShoutoutModal";
 
 const PreviewShoutoutSection = () =>
-  <div className='results col'>
-    <div className='row wrap shoutout preview mb-3' />
+  <div className='results col blur-effect'>
+    <div className='row wrap shoutout preview'></div>
   </div>
 
 const ShoutoutSection = ({ nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts,

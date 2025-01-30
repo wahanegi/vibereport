@@ -19,7 +19,7 @@ const PreviewEmotionSection = ({ data }) => {
   const filteredData = data.data.filter(item => item.attributes.category === "positive" || item.attributes.category === "negative");
   const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS)
 
-  return <div className='container w-75' style={{filter: 'blur(5px)'}}>
+  return <div className='container w-75 blur-effect'>
     {
       splitEmotions.map((emotions, index) =>
         <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>

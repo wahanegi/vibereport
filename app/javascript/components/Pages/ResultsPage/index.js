@@ -170,7 +170,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   if (!loaded) return <Loader />
 
   return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='d-flex flex-column gap-5 my-2 align-items-center'>
+    <div className='d-flex flex-column gap-7 my-2 align-items-center'>
       <NoticeAlert />
 
       <TextHeader />
