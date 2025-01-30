@@ -1333,30 +1333,3 @@ input:checked + .slider-shoutout img {
   margin: 10px 0;
   text-align: center;
 }
-
-.word {
-  --duration: 4s;
-  animation: blinkAndScale var(--duration) ease 0s infinite alternate none;
-}
-
-@keyframes blinkAndScale {
-	from {
-		transform: scale(.5);
-    opacity: .5;
-	}
-
-	to {
-		transform: scale(1.2);
-    opacity: 1;
-	}
-}
-
-.square {
-  background-color: #524F50;
-  height: 125px;
-  border-radius: 6px;
-}
-
-.blur-effect {
-  filter: blur(8px);
-}
