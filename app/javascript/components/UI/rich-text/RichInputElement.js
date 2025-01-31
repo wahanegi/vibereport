@@ -420,21 +420,25 @@ const clickEnterTabHandling = ( i ) => {
   }
 
   return (
-    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0  mt327 mb-6 overflow-hidden'>
+    <div className='shoutout-input-block col-8 offset-2 vw-100 mx-0 mb-6 mt-6 overflow-hidden'>
       <img src={xClose} className='position-absolute x-close' onClick={onClose}/>
-      <div className=' d-flex flex-column align-items-center'>
+      <div className='d-flex flex-column align-items-center justify-content-center'>
         <RichTextArea      textHTML = { textHTML }
                                refs = { textAreaRef }
                           onKeyDown = { handleKeyDown }
                             onClick = { clickHandling }
                           cursorPos = { Cursor.getCurrentCursorPosition(element) }
-                          className = 'c3 place-size-shout-out form-control text-start d-inline-block lh-sm pt-2'
-                        placeholder = {`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}/>
-        <Button className={`placement-shoutout-btn position-relative btn-modal bg-primary hover:bg-primary-hover c2 p-0 ${isDisabled ? 'disabled' : ''}`}
-                onClick = { submitHandling }>
-          Send Shoutout
-        </Button>
-        <SwitcherShoutouts isChecked = {isChecked} handleCheckboxChange = {handleCheckboxChange} />
+                          className = 'c3 place-size-shout-out form-control text-start d-flex flex-md-row lh-sm pt-2 pb-2'
+                           placeholder = {`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}>
+          <div className="d-flex mt-auto gap-3 justify-content-between">
+            <SwitcherShoutouts isChecked = {isChecked} handleCheckboxChange = {handleCheckboxChange} />
+            <Button
+              className={`btn-sm placement-shoutout-btn position-relative btn-modal bg-primary hover:bg-primary-hover c2 p-0 ${isDisabled ? 'disabled' : ''}`}
+              onClick = { submitHandling }>
+              Send Shoutout
+            </Button>
+          </div>
+        </RichTextArea>
       </div>
       {isDropdownList && filteredUsers.length && indexOfSelection !== undefined &&
           <DropDownList       dataList = { filteredUsers }

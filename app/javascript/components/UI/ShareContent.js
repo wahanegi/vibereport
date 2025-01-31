@@ -44,12 +44,12 @@ export const BtnSendMoreShoutouts = ({ onClick }) =>
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-feature text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-feature btn-lg text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-lg btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
