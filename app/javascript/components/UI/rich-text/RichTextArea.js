@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import parse from "html-react-parser";
 
-const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursorPos, placeholder}) => {
+const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursorPos, placeholder, children}) => {
     const [isNotActive, setIsNotActive] = useState(true)
   useEffect(() => {
     const rect = refs.current.getBoundingClientRect();
@@ -39,6 +39,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
              className = {`c3 form-control text-start  inner-div scrolling  ${isPlaceholder && 'gray-300'}`}>
             { parse( isPlaceholder ?   placeholder : textHTML + '\x0A') }
           </div>
+          {children}
         </div>
     );
 };
