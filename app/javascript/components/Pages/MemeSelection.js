@@ -166,7 +166,7 @@ const MemeSelection = ({
   );
 
   const Header = () => (
-    <div className="d-flex justify-content-between mx-3 mt-3">
+    <div className="d-flex mx-3 mt-3">
       <div className="mx-auto">
         <h5 style={{ opacity: 0.6 }}>You picked:</h5>
         <BigBtnEmotion emotion={emotion} onClick={backHandling} />
@@ -186,7 +186,7 @@ const MemeSelection = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-  <div className="align-self-center gif-wrap pb-10">
+  <div className="container-sm gif-wrap">
         <Header />
           <Gif
             {...{
