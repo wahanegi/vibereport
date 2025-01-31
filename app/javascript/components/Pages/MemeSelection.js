@@ -133,7 +133,7 @@ const MemeSelection = ({
   }, [selectedFile]);
 
   const Navigation = () => (
-    <div className="d-flex justify-content-evenly gap-1">
+    <div className="d-flex gap-2 d-sm-flex justify-content-sm-evenly justify-content-lg-between">
       <div>
         <h5 className="mt-2 mb-0 text-muted">Share it in your way!</h5>
         <div>
@@ -145,7 +145,7 @@ const MemeSelection = ({
             type="file"
             accept="image/gif, video/*" // Accepts GIF and any video format
             ref={fileInputRef}
-            style={{ display: 'none' }}
+            className="d-none"
             onChange={handleFileChange}
           />
         </div>
