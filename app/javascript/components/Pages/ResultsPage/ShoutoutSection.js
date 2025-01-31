@@ -3,7 +3,9 @@ import isEmpty from "ramda/src/isEmpty";
 import Pluralize from 'pluralize';
 import ShoutoutAwards from "./ShoutoutAwards";
 import ShoutoutItem from "./ShoutoutItem";
-import ShoutoutModal from "../../UI/ShoutoutModal";
+import {BtnSendMoreShoutouts} from "../../UI/ShareContent";
+import ShoutoutModal from "../modals/ShoutoutModal";
+
 
 const PreviewShoutoutSection = () =>
   <div className='results container blur-effect'>
