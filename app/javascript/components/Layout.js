@@ -23,7 +23,13 @@ const Layout = ({
       <main className="flex-grow-1 d-flex flex-row overflow-auto" role="main">
         {children}
       </main>
-      <Footer data={data} setData={setData} hideShoutout={hideShoutout} />
+      <Footer
+        data={data}
+        setData={setData}
+        hideShoutout={hideShoutout}
+        numShoutouts={numShoutouts}
+        isMoveShoutout={isMoveShoutout}
+      />
     </div>
   );
 };

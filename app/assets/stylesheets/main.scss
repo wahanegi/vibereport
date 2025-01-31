@@ -68,11 +68,6 @@ a {
   --bs-link-hover-color: rgba(0, 0, 0, 0.6);
 }
 
-.container {
-  height: 100vh;
-  width: 100vw;
-}
-
 .central-element {
   min-height: 60vh;
 }
@@ -91,11 +86,6 @@ a {
 .color-primary {
   color: $primary;
 }
-
-.color-black {
-  color: $black;
-}
-
 .color-green {
   color: $sea-green;
 }
@@ -378,11 +368,6 @@ input.email-input-new:focus-visible {
       }
     }
   }
-}
-
-.click-annotation {
-  margin-top: 350px;
-  color: $gray-600;
 }
 
 //system scroll
@@ -1099,12 +1084,12 @@ a.dropdown-item {
   position: absolute;
   content: '';
   height: 40px;
-  width: 61.5px;
+  width: 40px;
   background-color: $light-violet;
   border-radius: 100px;
-  top: 4px;
-  left: 40px;
-  bottom: 4px;
+  //top: 4px;
+  //left: 40px;
+  //bottom: 4px;
   display: flex;
   align-items: center;
   justify-content: center;

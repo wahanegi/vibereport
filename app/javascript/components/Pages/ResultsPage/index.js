@@ -1,26 +1,22 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import SweetAlert from "../../UI/SweetAlert";
-import {isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
-import {
-  BtnBack,
-  ShoutOutIcon,
-} from "../../UI/ShareContent";
+import { isBlank, isPresent, rangeFormat } from "../../helpers/helpers";
+import { BtnBack, ShoutOutIcon } from "../../UI/ShareContent";
 import axios from "axios";
 import NavigationBar from "./NavigationBar";
 import EmotionSection from "./EmotionSection";
 import GifSection from "./GifSection";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
-import {MIN_USERS_RESPONSES} from "../../helpers/consts";
+import { MIN_USERS_RESPONSES } from "../../helpers/consts";
 import Layout from '../../Layout';
 import ShoutoutModal from '../modals/ShoutoutModal';
 import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
-import {apiRequest, updateResponse} from "../../requests/axios_requests";
+import { apiRequest, updateResponse } from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 
-
-export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/' ) => {
+export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/') => {
   useEffect(() => {
     setLoaded(false)
     axios.get(`${url}${timePeriod.slug}`)
@@ -34,7 +30,7 @@ export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url
 export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
   useEffect(() => {
     if (!nextTimePeriod) {
-      window.scrollTo({top: 0, behavior: 'smooth'})
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [nextTimePeriod]);
 }
@@ -42,7 +38,7 @@ export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
 export const scrollTopModalCallback = (showModal) => {
   useEffect(() => {
     if (showModal) {
-      window.scrollTo({top: 200, behavior: 'smooth'})
+      window.scrollTo({ top: 200, behavior: 'smooth' })
     }
   }, [showModal])
 };
@@ -59,43 +55,38 @@ export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTim
 
 export const onRemoveAlert = (updateResponse, data, setData) => {
   const dataRequest = {
-    response: {attributes: {notices: null}}
+    response: { attributes: { notices: null } }
   }
   updateResponse(data, setData, dataRequest).then()
 }
 
 export const onChangeTimePeriodIndex = (current_user, index, setTimePeriodIndex, data, setData) => {
   const dataSend = { time_period_index: index }
-  const dataFromServer = ({current_user}) => {
+  const dataFromServer = ({ current_user }) => {
     if (isPresent(current_user)) {
       setTimePeriodIndex(current_user.time_period_index)
-      setData(Object.assign({}, data, {current_user}))
+      setData(Object.assign({}, data, { current_user }))
     }
   }
   const url = '/api/v1/users/'
   const id = current_user.id
-  apiRequest("PATCH", dataSend, dataFromServer, ()=>{}, `${url}${id}`).then();
+  apiRequest("PATCH", dataSend, dataFromServer, () => { }, `${url}${id}`).then();
 }
 
-const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
+const Results = ({ data, setData, steps = data.response.attributes.steps || [], draft = true }) => {
   const [loaded, setLoaded] = useState(false)
-  const [results, setResults] = useState( {})
-  const {answers, emotions, fun_question, gifs, sent_shoutouts, received_shoutouts,
-        current_user_shoutouts, responses_count, received_and_public_shoutouts, prev_results_path} = results
-  const {time_periods, current_user} = data
+  const [results, setResults] = useState({})
+  const { answers, emotions, fun_question, gifs, sent_shoutouts, received_shoutouts,
+    current_user_shoutouts, responses_count, received_and_public_shoutouts, prev_results_path } = results
+  const { time_periods, current_user } = data
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
   const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
-  const alertTitle = "<div class='fs-5'>Just to confirm...</div>" + `</br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
-  const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br>' +
-  '</br></br>Skip this chek-in if you weren\'t working.'
-  const cancelButtonText = 'Skip check-in'
-  const confirmButtonText = 'Yes, I worked'
-  const [showModal, setShowModal] = useState(false)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
   const initialIndex = 0
+  const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
 
   const onConfirmAction = () => {
     steps[steps.length - 1] = notice['last_step']
@@ -117,8 +108,6 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     onRemoveAlert(updateResponse, data, setData)
   }
 
-  const isMinUsersResponses = responses_count < MIN_USERS_RESPONSES
-
   const showNextTimePeriod = () => {
     if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return;
 
@@ -137,72 +126,99 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
 
   loadResultsCallback(timePeriod, setLoaded, setResults, data)
   scrollTopTimePeriodCallback(nextTimePeriod)
-  scrollTopModalCallback(showModal)
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
 
-  const Footer = () => <Fragment>
-    <QuestionButton data={data} />
-    <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
-    {
-      nextTimePeriod && isBlank(data.prev_results_path) ?
+  const TextHeader = () => {
+    if (!nextTimePeriod) {
+      return (
+        isMinUsersResponses ? (
+          <div className='d-flex flex-column gap-1'>
+            <h1>You're one of the first to check in!</h1>
+            <h6>Come back later to view the results</h6>
+          </div>
+        ) : (
+          <h1>The team is feeling...</h1>
+        )
+      );
+    }
+
+    return (
+      <h1>During {rangeFormat(timePeriod)} the team was feeling...</h1>
+    );
+  }
+
+  const TimePeriodNavigation = () => {
+    if (nextTimePeriod && isBlank(data.prev_results_path)) {
+      return (
         <div className='mt-5'>
-          <BtnBack text ='Back to most recent' addClass='mb-4 mt-5'
-                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+          <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
+            onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
           />
-        </div>:
-        <div style={{height: 120}}></div>
+        </div>
+      )
     }
-  </Fragment>
+    return <div className='my-5'></div>
+  }
 
-  if(!loaded) return <Loader />
+  const NoticeAlert = () => {
+    const alertTitle = `<div class='fs-5'>Just to confirm...</div></br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
+    const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br></br></br>Skip this chek-in if you weren\'t working.'
+    const cancelButtonText = 'Skip check-in'
+    const confirmButtonText = 'Yes, I worked'
 
-  return loaded && <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='position-relative'>
-      <>
-        {
-          notice && <SweetAlert {...{onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText}} />
-        }
-        {
-          !nextTimePeriod ?
-            isMinUsersResponses ?
-              <div className='text-header-position'>
-                <h1 className='mb-0'>You're one of the first<br/>to check in!</h1>
-                <h6>Come back later to view the results </h6><br/>
-              </div>:
-              <h1 className='text-header-position'><br/>The team is feeling...</h1>:
-            <h1 className='text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...</h1>
-        }
-        <NavigationBar {...{timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
-                            emotions, data, setShowWorkingModal, setData, prev_results_path }} />
-        <EmotionSection emotions={emotions} nextTimePeriod={nextTimePeriod} data={data} isMinUsersResponses={isMinUsersResponses} />
-        <GifSection gifs={gifs} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses} />
-        <ShoutoutSection nextTimePeriod={nextTimePeriod}
-                         current_user={current_user}
-                         timePeriod={timePeriod}
-                         sentShoutouts={sent_shoutouts}
-                         receivedShoutouts={received_shoutouts}
-                         data={data} setData={setData}
-                         isMinUsersResponses={isMinUsersResponses}
-                         currentUserShoutouts={current_user_shoutouts}
-                         recivedPublicShoutouts={received_and_public_shoutouts} />
-        <QuestionSection fun_question={fun_question}
-                         current_user={current_user}
-                         answers={answers}
-                         isMinUsersResponses={isMinUsersResponses}
-                         nextTimePeriod={nextTimePeriod}
-                         data={data}
-                         setData={setData}
-                         setShowWorkingModal={setShowWorkingModal}/>
-      </>
-      <Footer />
+    return (notice && <SweetAlert {...{ onConfirmAction, onDeclineAction, alertTitle, alertHtml, cancelButtonText, confirmButtonText }} />)
+  }
+
+  if (!loaded) return <Loader />
+
+  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
+    <div className='d-flex flex-column gap-7 my-2 w-100 align-items-center'>
+      <NoticeAlert />
+
+      <TextHeader />
+
+      <NavigationBar {...{
+        timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods,
+        prevTimePeriod, nextTimePeriod, steps,
+        emotions, data, setShowWorkingModal, setData, prev_results_path
+      }} />
+
+      <EmotionSection emotions={emotions}
+        nextTimePeriod={nextTimePeriod}
+        data={data}
+        isMinUsersResponses={isMinUsersResponses} />
+
+      <GifSection gifs={gifs}
+        nextTimePeriod={nextTimePeriod}
+        isMinUsersResponses={isMinUsersResponses} />
+
+      <ShoutoutSection nextTimePeriod={nextTimePeriod}
+        current_user={current_user}
+        timePeriod={timePeriod}
+        sentShoutouts={sent_shoutouts}
+        receivedShoutouts={received_shoutouts}
+        data={data} setData={setData}
+        isMinUsersResponses={isMinUsersResponses}
+        currentUserShoutouts={current_user_shoutouts}
+        recivedPublicShoutouts={received_and_public_shoutouts} />
+
+      <QuestionSection fun_question={fun_question}
+        current_user={current_user}
+        answers={answers}
+        isMinUsersResponses={isMinUsersResponses}
+        nextTimePeriod={nextTimePeriod}
+        data={data}
+        setData={setData}
+        setShowWorkingModal={setShowWorkingModal} />
+
+      <TimePeriodNavigation />
     </div>
-    {
-      showModal && <ShoutoutModal onClose = {() => {setShowModal(false)} }
-                                  data={data} setData={setData} />
-
-    }
-    <WorkingModal show={showWorkingModal} setShow={setShowWorkingModal}
-                  data={data} setData={setData} steps={steps} />
+    <WorkingModal
+      show={showWorkingModal}
+      setShow={setShowWorkingModal}
+      data={data}
+      setData={setData}
+      steps={steps} />
   </Layout>
 }
 export default Results;

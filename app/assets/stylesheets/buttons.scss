@@ -15,12 +15,10 @@
 
   // use with C1 text
   &.btn-regular{
-    min-width:        14.688rem;
+    min-width:        15rem;
     height:           3.75rem;
     border:           1px solid $black;
-    border-radius:    .75rem ;
     box-shadow:       $btn-box-shadow-other !important;
-    padding:          0 20px;
   }
 
   &.btn-danger{
@@ -30,10 +28,7 @@
 
   // use with C2 or C3 text
   &.btn-feature{
-    width:            26.25rem;
-    height:           3.75rem;
     border:           2.5px solid $royal-blue;
-    border-radius:    1rem;
     box-shadow:       $btn-box-shadow-other;
 
     &.w-385{

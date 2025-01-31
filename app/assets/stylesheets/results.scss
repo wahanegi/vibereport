@@ -3,7 +3,6 @@
     margin: auto;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
-    width: 75vw;
     background-color: $white;
     &.question {
       padding: 32px 27px 18px 27px;
@@ -11,7 +10,6 @@
       background: $tea-green;
       &.preview {
         height: 500px;
-        filter: blur(8px);
       }
     }
     &.shoutout {
@@ -20,7 +18,6 @@
       border: 3px solid $red-violet;
       &.preview {
         height: 500px;
-        filter: blur(8px);
       }
     }
 
@@ -56,11 +53,6 @@
 .header-position {
   position: relative;
   top: 137px;
-}
-
-.text-header-position {
-  position: relative;
-  top: 120px;
 }
 
 .emoji-tooltip {
@@ -100,4 +92,31 @@
 .emoji-container {
   font-size: 22px !important;
   line-height: 22px !important;
+}
+
+.word {
+  --duration: 4s;
+  animation: blinkAndScale var(--duration) ease 0s infinite alternate none;
+}
+
+@keyframes blinkAndScale {
+	from {
+		transform: scale(.5);
+    opacity: .5;
+	}
+
+	to {
+		transform: scale(1.2);
+    opacity: 1;
+	}
+}
+
+.square {
+  background-color: #524F50;
+  height: 125px;
+  border-radius: 6px;
+}
+
+.blur-effect {
+  filter: blur(8px);
 }
