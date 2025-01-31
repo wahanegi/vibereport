@@ -107,7 +107,9 @@ $dark: $gray-500; // TODO: do not use !!! but $gray-100 - used
 .bg-gray-200-active:active { // TODO: do not use
   background-color: shift-color($gray-200, 30%);
 }
-
+.bg-light-gray {
+  background-color: $light-grey;
+}
 .bg-green-200 {
   background-color: $green-200;
 }
@@ -127,7 +129,9 @@ $dark: $gray-500; // TODO: do not use !!! but $gray-100 - used
 .border-emerald {
   border-color: $emerald !important;
 }
-
+.border-light-gray {
+  border-color: $light-grey !important;
+}
 .hover\:bg-primary-hover:hover {
   background-color: shift-color($primary, 30%) !important;
 }

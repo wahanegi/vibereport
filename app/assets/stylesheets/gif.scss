@@ -1,9 +1,6 @@
 .gif-item {
-  box-sizing: border-box;
-  display: inline-block;
   margin: 0.5%;
   position: relative;
-  width: 19%;
   &.result-page {
     width: 24%;
   }
@@ -21,7 +18,6 @@
   display: inline-block;
   margin: 0.5%;
   position: relative;
-  width: 19%;
   border: 8px solid $sea-green;
   border-radius: 6px;
   img {
@@ -77,9 +73,15 @@
 }
 
 .gif-list {
-  column-gap: 0.5em;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5em;
   font-size: .85em;
   padding: 0;
+
+  @media (max-width: 568px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .gif-card {

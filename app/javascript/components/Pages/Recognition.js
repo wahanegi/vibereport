@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useRef} from 'react';
-import CornerElements from "../UI/CornerElements";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
 import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
-import ShoutoutModal from "../UI/ShoutoutModal";
+import ShoutoutModal from './modals/ShoutoutModal';
 import trashRed from "../../../assets/images/sys_svg/frame-440.png"
 import trash from "../../../assets/images/sys_svg/frame-439.png"
 import ShoutoutDelete from "../UI/ShoutoutDelete";
+import Layout from "../Layout";
+import ShoutoutButton from "../UI/ShoutoutButton";
 
 const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [ shoutOutForm, setShoutOutForm ] = useState( { status: false, editObj: {}} )
@@ -86,48 +87,60 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
     )
   }
 
-  const cornerElements = (num) => {
-    return <CornerElements data = { data }
-                           setData = { setData }
-                           numShoutouts = { num }
-                           isMoveShoutout = { true }
-                           saveDataToDb = {saveDataToDb}
-                           steps = {steps}
-                           draft = {isDraft}
-                           handleSaveDraft={handleSaveDraft}/>
-  }
-
   return (
-    <>
-      <div className='mx-auto w-746 h-59 mt-151 mb-4'>
-        <h1 className='color-black'>Recognition is important!</h1>
-      </div>
-        {!numShoutOuts && <div><h2 className='color-black'>
-          Consider giving members of your team a <br/>
-          Shoutout to show your appreciation.</h2>
-          <div className='click-annotation b4'>Click to give a Shoutout!</div>
+    <Layout
+      data={data}
+      setData={setData}
+      numShoutouts = {numShoutOuts}
+      saveDataToDb={saveDataToDb}
+      steps={steps}
+      draft={isDraft}
+      handleSaveDraft={handleSaveDraft}
+    >
+      <div className='container-fluid mt-6'>
+        <h1 className='text-black'>Recognition is important!</h1>
+
+        {!numShoutOuts &&
+          <div className='mb-6'>
+            <h2 className='text-black'>
+            Consider giving members of your team a <br/>
+            Shoutout to show your appreciation.
+            </h2>
+          <div className='pt-2'>
+            <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}/>
+            <div className='gray-600 fs-7 mt-1'>Click to give a Shoutout!</div>
+          </div>
         </div>
         }
+      </div>
+        <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext={ !!numShoutOuts } />
 
-      {!!numShoutOuts && <div><h2 className='color-black mb-1'>You've mentioned:</h2></div>}
-        {
-          !!numShoutOuts && <div>
+      {!!numShoutOuts &&
+        <div>
+          <h2 className='text-black mb-1'>
+            You've mentioned:
+          </h2>
+        </div>
+      }
+        {!!numShoutOuts &&
+          <div>
             {shoutOutForm.status &&
-              <ShoutoutModal onClose = { closeHandling }
+              <ShoutoutModal shoutOutForm = { shoutOutForm }
+                             setShoutOutForm = { setShoutOutForm }
                              data = { data }
                              setData = { setData }
                              editObj = { shoutOutForm.editObj } />}
             <div className='d-flex justify-content-center field-shout-outs mx-auto'>
               {output(shoutOuts)}
             </div>
-            <p className='b3 mt-4 lh-base'>Any more shoutouts to give?</p>
-            { cornerElements( numShoutOuts ) }
+            <div>
+              <p className='b3 mt-4 lh-base'>Any more shoutouts to give?</p>
+              <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps} draft={isDraft} handleSaveDraft={handleSaveDraft}/>
+            </div>
           </div>
         }
       {isModal && <ShoutoutDelete onClose={ onClose } data={ data } setData={ setData } idShoutout={ idShoutout }/>}
-      <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext = { !!numShoutOuts } />
-      {!numShoutOuts && cornerElements( numShoutOuts )}
-    </>
+    </Layout>
   );
 };
 

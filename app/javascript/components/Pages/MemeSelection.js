@@ -133,7 +133,7 @@ const MemeSelection = ({
   }, [selectedFile]);
 
   const Navigation = () => (
-    <div className="d-flex justify-content-between gap-3 pb-45">
+    <div className="d-flex justify-content-evenly gap-1">
       <div>
         <h5 className="mt-2 mb-0 text-muted">Share it in your way!</h5>
         <div>
@@ -150,7 +150,7 @@ const MemeSelection = ({
           />
         </div>
       </div>
-      <div style={{ marginTop: 52 }}>
+      <div className="align-content-end">
         <BtnPrimary
           text="Next"
           onClick={chooseGIPHYHandling}
@@ -166,7 +166,7 @@ const MemeSelection = ({
   );
 
   const Header = () => (
-    <div className="d-flex justify-content-between mx-3 mt-8">
+    <div className="d-flex justify-content-between mx-3 mt-3">
       <div className="mx-auto">
         <h5 style={{ opacity: 0.6 }}>You picked:</h5>
         <BigBtnEmotion emotion={emotion} onClick={backHandling} />
@@ -186,8 +186,8 @@ const MemeSelection = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
+  <div className="align-self-center gif-wrap pb-10">
         <Header />
-        <div className="align-self-center gif-wrap">
           <Gif
             {...{
               emotion,
@@ -203,7 +203,7 @@ const MemeSelection = ({
             }}
           />
           <Navigation />
-        </div>
+  </div>
       </Layout>
     )
   );

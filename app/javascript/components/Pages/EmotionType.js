@@ -81,7 +81,7 @@ const EmotionType = ({
         handleSaveDraft={handleSaveDraft}
       >
         <div className="central-element">
-          <div className="mt-123 mb-80 text-center">
+          <div className="mt-1 mb-5 text-center">
             <BigBtnEmotion
               showPencil={false}
               emotion={data.emotion}

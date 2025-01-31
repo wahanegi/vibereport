@@ -287,7 +287,6 @@ text-align: center;
     line-height: 48px;
     color: #000000;
     white-space: pre-line;
-    width: 735px;
     min-height: 100px;
 }
 .lnk-was-not a{
@@ -476,18 +475,8 @@ text-align: center;
 }
 
 /* send_results_email */
-/* TODO the same name-class in app/assets/stylesheets/main.scss
-    Use only in app/views/user_email_mailer/results_email.html.erb
-*/
-.container {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    height: 325px;
-    padding: 0;
-}
 
-/*TODO: do not use*/
+  
 .random-word:hover {
     transform: scale(1.2);
 }
