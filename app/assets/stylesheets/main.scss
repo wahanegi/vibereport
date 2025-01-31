@@ -1084,12 +1084,12 @@ a.dropdown-item {
   position: absolute;
   content: '';
   height: 40px;
-  width: 40px;
+  width: 61.5px;
   background-color: $light-violet;
   border-radius: 100px;
-  //top: 4px;
-  //left: 40px;
-  //bottom: 4px;
+  top: 4px;
+  left: 40px;
+  bottom: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1113,13 +1113,6 @@ input:checked + .slider-shoutout:before {
 
 input:checked + .slider-shoutout img {
   left: 34%;
-}
-
-.placement-switcher-title {
-  z-index: 31;
-  top: 8px;
-  left: 125px;
-  min-width: 130px;
 }
 
 @media (max-width: 1440px) {

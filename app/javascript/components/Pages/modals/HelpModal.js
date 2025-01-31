@@ -82,7 +82,7 @@ const HelpModal = ({
 
             <div className="text-center mb-1 mt-2">
               <button
-                className="btn btn-regular c1 border-0"
+                className="btn btn-regular btn-lg c1 border-0"
                 disabled={!details?.trim()}
                 onClick={createNotification}
               >
