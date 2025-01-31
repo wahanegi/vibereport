@@ -3,39 +3,14 @@ include ActiveAdminHelpers
 ActiveAdmin.register_page 'Dashboard' do
   menu priority: 1, label: proc { I18n.t('active_admin.dashboard') }
 
-  content title: proc { I18n.t("active_admin.dashboard") } do
+  content title: proc { I18n.t('active_admin.dashboard') } do
     columns do
-      current_period = TimePeriod.current      
+      current_period = TimePeriod.current
       vars = ActiveAdminHelpers.time_period_vars(
         current_period: current_period
       )
 
-      panel "Average for range #{current_period&.date_range} / Average for all time periods" do
-        div do
-          strong 'Emotion Index: '
-          span "#{vars[:emotion_index_current_period][0]} / #{vars[:emotion_index_all][0]}"
-        end
-
-        div do
-          strong 'Productivity Average: '
-          span "#{vars[:productivity_average_current_period]} / #{vars[:productivity_avg_all]}"
-        end
-      end
-
-      panel "Celebrations and Teammate Engagement for range #{current_period&.date_range}" do
-
-        div do
-          strong 'Celebrations Count: '
-          span "#{vars[:celebrations_count_current_period]} "
-        end
-
-        div do
-          strong 'Teammate Engagement Count: '
-          span "#{vars[:teammate_engagement_count_current_period]}"
-        end
-      end
-
-      unless vars[:productivity_verbatims] == "No productivity comment present"
+      unless vars[:productivity_verbatims] == 'No productivity comment present'
         panel 'Recent Productivity Comments' do
           div do
             ul do
@@ -58,15 +33,16 @@ ActiveAdmin.register_page 'Dashboard' do
               "#{user.full_name} (#{user.email})"
             end
 
-            column "Reminder Link" do |user|
+            column 'Reminder Link' do |user|
               if TimePeriod.current
-                general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: user.id, host: 'https://cp.vibereport.app' }))
-                
-                div class: "custom-textarea-style" do
+                general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: user.id,
+                                                   host: 'https://cp.vibereport.app' }))
+
+                div class: 'custom-textarea-style' do
                   text_node general_link
                 end
               else
-                text_node "No current TimePeriod available."
+                text_node 'No current TimePeriod available.'
               end
             end
 
@@ -92,8 +68,8 @@ ActiveAdmin.register_page 'Dashboard' do
         flash[:alert] = 'Alert: No unused questions left for upcoming check-in. Please add more questions.'
       end
       if not_viewed.present?
-        flash[:alert] = "NOTICE: #{not_viewed.count} new #{'notification'.pluralize(not_viewed.count)}" \
-                        " from #{'user'.pluralize(not_viewed.pluck(:user_id).uniq.count)}"
+        flash[:alert] = "NOTICE: #{not_viewed.count} new #{'notification'.pluralize(not_viewed.count)} " \
+                        "from #{'user'.pluralize(not_viewed.pluck(:user_id).uniq.count)}"
       end
       super
     end
