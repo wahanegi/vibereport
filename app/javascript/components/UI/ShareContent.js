@@ -72,7 +72,7 @@ export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
             <img src={line} alt="line" />
             {date.split(' - ')[1]}
           </div>:
-          <div className='mt-5 d-flex'>{date}</div>
+          <div className='mt-5 d-flex fs-7'>{date}</div>
         }
       </div>
       { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
@@ -119,10 +119,10 @@ export const Header = ({saveDataToDb, steps, draft, disabled, data, handleSaveDr
 </div>
 
 export const EditResponse = ({ hidden = false, onClick }) =>
-  !hidden && <div style={{width: 135}}>
-    <p className='mb-0 text-start'>Edit responses</p>
-    <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
-  </div>
+  !hidden && <button className='border-0 bg-transparent' onClick={onClick}>
+    <p className='m-0'>Edit responses</p>
+    <img className='pointer' src={editResponse} alt="edit response" />
+  </button>
 
 export const ResultsManager = ({ data, setData, steps, draft, service, nextTimePeriod}) => {
   const [showResultsManager, setShowResultsManager] = useState(false);
