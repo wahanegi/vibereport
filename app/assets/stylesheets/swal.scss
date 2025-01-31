@@ -1,5 +1,6 @@
 @import "colors";
 
+/*TODO: do not use*/
 body.swal2-shown > [aria-hidden="true"] {
   transition: 0.1s filter;
   background: white;
@@ -38,6 +39,7 @@ body.swal2-shown > [aria-hidden="true"] {
   border: none;
 }
 
+/*TODO: do not use*/
 .swal2-actions {
   column-gap: 3rem;
   row-gap: 1rem;

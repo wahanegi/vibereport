@@ -22,11 +22,13 @@
       }
     }
 
+    /*TODO: do not use */
     &.answer {
       background-color: $white;
       min-height: auto;
       word-break: break-word;
     }
+
     &.empty-answer {
       background-color: $white;
       min-height: auto;
@@ -37,12 +39,16 @@
         border: 3px solid $white;
       }
     }
+
+    /*TODO: do not use */
     .expand-icon {
       width: 26.6px;
       height: 26px;
       padding: 0
     }
   }
+
+  /*TODO: do not use */
   .edit-question {
     .form-control {
       box-shadow: none !important;
@@ -84,6 +90,7 @@
   z-index: 100
 }
 
+/*TODO: check is it should be margin or padding*/
 .padding-x4 {
   margin-left: 4px;
   margin-right: 4px;
@@ -97,6 +104,7 @@
   line-height: 22px !important;
 }
 
+/*TODO: do not use*/
 .word {
   --duration: 4s;
   animation: blinkAndScale var(--duration) ease 0s infinite alternate none;

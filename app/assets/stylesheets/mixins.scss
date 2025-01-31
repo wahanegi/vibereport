@@ -30,6 +30,7 @@
   }
 }
 
+/*TODO: do not use */
 @mixin intensive-edge{
   position:             relative;
   z-index:              1 !important;
@@ -39,6 +40,7 @@
   min-width:            $btn-width-intensity + .5rem !important;
 }
 
+/*TODO: do not use */
 @mixin element($name){
     background-color:       #{$name} ;
     &.active {
@@ -51,6 +53,7 @@
   }
 }
 
+/*TODO: do not use */
 @mixin row-quarter-circle($color1,$color2,$color3,$color4,$color5) {
   min-width:                 $btn-width-intensity !important;
   height:                    $btn-height-intensity !important;
@@ -87,6 +90,8 @@
     }
   }
 }
+
+/*TODO: do not use */
 @mixin row-semicircle($color1,$color2,$color3,$color4,$color5) {
   &.n1 {
     border-bottom-left-radius: 1.813rem !important;

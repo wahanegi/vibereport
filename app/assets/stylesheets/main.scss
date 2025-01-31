@@ -8,11 +8,12 @@ a {
   color: #0007A3;
 }
 
-* {
-  font-family: $font-family-base;
-  font-style: normal;
-  font-weight: $font-weight-bold !important;
-}
+/*TODO: duplicate with app/assets/stylesheets/typography.scss*/
+//* {
+//  font-family: $font-family-base;
+//  font-style: normal;
+//  font-weight: $font-weight-bold !important;
+//}
 
 /*TODO: do not use*/
 //.header {
@@ -41,7 +42,6 @@ a {
   height: 59px;
 }
 
-
 /*TODO: do not use*/
 .light-grey-text {
   color: $light-grey;
@@ -64,6 +64,7 @@ a {
   padding-left: 23px;
 }
 
+/*TODO: do not use*/
 .pb-45 {
   padding-bottom: 45px;
 }
@@ -100,6 +101,7 @@ a {
   color: $rose;
 }
 
+/*TODO: do not use*/
 .red-violet {
   color: $red-violet;
 }
@@ -122,6 +124,7 @@ a {
 }
 
 //new.html.erb
+/*TODO: do not use*/
 .welcome-field {
   width: 746px;
   height: 59px;

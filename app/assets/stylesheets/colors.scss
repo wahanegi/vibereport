@@ -54,21 +54,23 @@ $switch-grey: #D3D2D5;
 $light-violet: #9083A5;
 
 //BOOTSTRAP REPLACEMENT
-$primary: $red-violet; // TODO: use one time line 117 !!! but $red-violet - used
-$secondary: $pink; // TODO: do not use !!! but $pink - used
-$success: $sea-green; // TODO: do not use !!! but $sea-green - used
-$info: $navy-blue; // TODO: do not use !!! but $navy-blue - used
-$warning: $yellow-cub; // TODO: do not use !!! BOTH
-$danger: $red; // TODO: do not use !!! but $red - used
-$light: $gray-100; // TODO: do not use !!! but $gray-100 - used
-$dark: $gray-500; // TODO: do not use !!! but $gray-100 - used
+$primary: $red-violet;
+$secondary: $pink;
+$success: $sea-green;
+$info: $navy-blue;
+$warning: $yellow-cub;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-500;
 
 :root {
-  --bs-link-color: #000; // TODO: do not use
+  /*TODO: do not use*/
+  --bs-link-color: #000;
 }
 
 // Utility classes for custom colors
-.text-gray-200 { // TODO: do not use
+/*TODO: do not use*/
+.text-gray-200 {
   color: $gray-200;
 }
 
@@ -104,12 +106,15 @@ $dark: $gray-500; // TODO: do not use !!! but $gray-100 - used
   background-color: $gray-200;
 }
 
-.bg-gray-200-active:active { // TODO: do not use
+/*TODO: do not use*/
+.bg-gray-200-active:active {
   background-color: shift-color($gray-200, 30%);
 }
+
 .bg-light-gray {
   background-color: $light-grey;
 }
+
 .bg-green-200 {
   background-color: $green-200;
 }
@@ -129,9 +134,11 @@ $dark: $gray-500; // TODO: do not use !!! but $gray-100 - used
 .border-emerald {
   border-color: $emerald !important;
 }
+
 .border-light-gray {
   border-color: $light-grey !important;
 }
+
 .hover\:bg-primary-hover:hover {
   background-color: shift-color($primary, 30%) !important;
 }

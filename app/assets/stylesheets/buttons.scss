@@ -4,77 +4,84 @@
 @import "bootstrap/scss/_mixins";
 
 .btn {
-
   &:active {
     margin: 3px 0 -3px 0;
     border-color: transparent;
   }
-  @include button-variant( $royal-blue, $black, $white, shift-color($royal-blue, 30%), shift-color($royal-blue,30%),
-                           $white, shade-color($royal-blue, 20%), shade-color($royal-blue,20%), $black, $royal-blue,
-                           $royal-blue,$gray-100);
+
+  @include button-variant($royal-blue, $black, $white, shift-color($royal-blue, 30%), shift-color($royal-blue, 30%),
+          $white, shade-color($royal-blue, 20%), shade-color($royal-blue, 20%), $black, $royal-blue,
+          $royal-blue, $gray-100);
 
   // use with C1 text
-  &.btn-regular{
-    min-width:        15rem;
-    height:           3.75rem;
-    border:           1px solid $black;
-    box-shadow:       $btn-box-shadow-other !important;
+  &.btn-regular {
+    min-width: 15rem;
+    height: 3.75rem;
+    border: 1px solid $black;
+    box-shadow: $btn-box-shadow-other !important;
   }
 
-  &.btn-danger{
+  &.btn-danger {
     color: $white;
     background-color: $red;
   }
 
   // use with C2 or C3 text
-  &.btn-feature{
-    border:           2.5px solid $royal-blue;
-    box-shadow:       $btn-box-shadow-other;
+  &.btn-feature {
+    border: 2.5px solid $royal-blue;
+    box-shadow: $btn-box-shadow-other;
 
-    &.w-385{
+    &.w-385 {
       width: 24.06rem;
     }
   }
 
   // use with C1 or C2 text
   // Note: system interactions will pair with C1 text, whereas user actions will pair with C2.
-  &.btn-modal{
-    width:            15rem;
-    height:           4rem;
-    border-radius:    6px;
-    box-shadow:       $btn-box-shadow;
+  &.btn-modal {
+    width: 15rem;
+    height: 4rem;
+    border-radius: 6px;
+    box-shadow: $btn-box-shadow;
+
     &.active {
       box-shadow: 4px 2px 2px $gray-100;
     }
+
     &.back, &.delete, &.ok, &.btn-wide, &.btn-no {
       border-width: 0;
     }
+
     &.btn-wide {
       width: 300px;
     }
-    &.btn-no{
+
+    &.btn-no {
       width: 196px;
     }
   }
 
   // For the Special Components/Inputs
-  &.btn-bubbles{
-    border:           1px solid $black;
-    &.wb1{
+  &.btn-bubbles {
+    border: 1px solid $black;
+
+    &.wb1 {
       &.not-standart {
         min-width: 260px;
       }
+
       &.not-shadow {
         box-shadow: none;
       }
-      padding:        0 5px;
-      height:         2rem;
-      border-radius:  15px;
-      box-shadow:     $btn-box-shadow;
-      min-width:      7.3rem;
-      margin:         5px 0;
-      max-width:      175px;
-      overflow:       hidden;
+
+      padding: 0 5px;
+      height: 2rem;
+      border-radius: 15px;
+      box-shadow: $btn-box-shadow;
+      min-width: 7.3rem;
+      margin: 5px 0;
+      max-width: 175px;
+      overflow: hidden;
       @include emotion
     }
   }
@@ -82,28 +89,30 @@
 
   // For the Special buttons
   // ’More Shout-outs’ button (use with B3)
-  &.btn-more-shot-outs{
-    @include button-variant($primary, $primary, $white, shift-color($primary, 10%), shift-color($primary,10%),
-                            $white, shade-color($primary, 20%), shade-color($primary,20%), $white);
-    height:           3.75rem;
-    text-align:       left;
+
+  /*TODO: do not use*/
+  &.btn-more-shot-outs {
+    @include button-variant($primary, $primary, $white, shift-color($primary, 10%), shift-color($primary, 10%),
+            $white, shade-color($primary, 20%), shade-color($primary, 20%), $white);
+    height: 3.75rem;
+    text-align: left;
     background-color: $white;
-    border:           0.25rem solid $primary;
-    color:            $primary;
-    border-radius:    1.25rem;
-    box-shadow:       $btn-box-shadow;
+    border: 0.25rem solid $primary;
+    color: $primary;
+    border-radius: 1.25rem;
+    box-shadow: $btn-box-shadow;
   }
 
   // For Dropdown
   &.btn-item-menu {
-    @include button-variant($white, $primary, $primary, shift-color($white, 7%), shift-color($primary,10%),
-                            $primary, $primary, $primary, $white);
-    width:            238px;
-    height:           40px;
-    box-shadow:       0px 4px 4px $gray-300;
-    border-radius:    .5rem;
-    margin:           5px !important;
-    font-size:        20px !important;
+    @include button-variant($white, $primary, $primary, shift-color($white, 7%), shift-color($primary, 10%),
+            $primary, $primary, $primary, $white);
+    width: 238px;
+    height: 40px;
+    box-shadow: 0px 4px 4px $gray-300;
+    border-radius: .5rem;
+    margin: 5px !important;
+    font-size: 20px !important;
 
   }
 }
@@ -144,6 +153,7 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 24px;
+
     img {
       width: 36px;
       height: 36px;
