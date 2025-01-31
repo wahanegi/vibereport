@@ -71,30 +71,40 @@ const EmotionEntry = ({
         steps={steps}
         draft={draft}
       >
-        <div className="central-element">
-          <h1 className="emotion-entry">A new one! What’s up?</h1>
-          <h4 className="mt-3 text-gray-600">
-            What word best describes work, recently?
-          </h4>
-          <Form.Control
-            className={`${emotionClasses[selectedType]} email_field input-new-word mb-80 border-royal-blue`}
-            type="text"
-            maxLength={15}
-            autoComplete="off"
-            placeholder="Add a new word"
-            name="word"
-            value={emotion.word || ''}
-            onChange={onChangeEmotion}
-          />
-          <ToggleEmotionType
-            selectedType={selectedType}
-            handleEmotionType={handleEmotionType}
-          />
+      <div className="container-fluid">
+        <div className="row flex-column justify-content-center">
+          <div className="col-12 text-center mx-auto">
+            <h1 className="my-1 my-md-2">A new one! What’s up?</h1>
+            <h4 className="my-1 my-md-2 text-gray-600">
+              What word best describes work, recently?
+            </h4>
+          </div>
+          <div className="col-12 col-lg-6 col-md-8 mx-auto">
+            <Form.Control
+              className={`${emotionClasses[selectedType]} email_field input-new-word mb-5 mb-md-8 border-royal-blue`}
+              type="text"
+              maxLength={15}
+              autoComplete="off"
+              placeholder="Add a new word"
+              name="word"
+              value={emotion.word || ''}
+              onChange={onChangeEmotion}
+            />
+          </div>
+          <div className="col-12 col-md-6 mb-4 mx-auto">
+            <ToggleEmotionType
+              selectedType={selectedType}
+              handleEmotionType={handleEmotionType}
+            />
+          </div>
+          <div className="d-flex gap-3 flex-column flex-sm-row">
+            <BlockLowerBtns
+              nextHandling={handlingOnClickNext}
+              disabled={emotion.word.length < 2}
+            />
+          </div>
         </div>
-        <BlockLowerBtns
-          nextHandling={handlingOnClickNext}
-          disabled={emotion.word.length < 2}
-        />
+      </div>
       </Layout>
     )
   );
