@@ -39,8 +39,8 @@
   // use with C1 or C2 text
   // Note: system interactions will pair with C1 text, whereas user actions will pair with C2.
   &.btn-modal{
-    //width:            15rem;
-    //height:           4rem;
+    width:            15rem;
+    height:           4rem;
     border-radius:    6px;
     box-shadow:       $btn-box-shadow;
     &.active {
