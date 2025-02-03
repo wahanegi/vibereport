@@ -123,3 +123,17 @@ export function usersEmoji(users, current_user, emojiObject) {
 export function gifUrlWithId(id) {
   return 'https://media.giphy.com/media/' + id + '/giphy.gif'
 }
+
+export function getProductiveText(value) {
+    if (value === 0) {
+      return "No productivity"
+    } else if (value >= 1 && value <= 4) {
+      return "Weak productivity"
+    } else if (value >= 5 && value <= 7) {
+      return "Moderate productivity"
+    } else if (value >= 8 && value <= 10) {
+      return  "Strong productivity"
+    } else {
+      throw new Error("Invalid value: " + value);
+    }
+}
