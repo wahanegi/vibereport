@@ -35,22 +35,20 @@ const IntenseLine = ({
               {value}
             </label>))}
         </div>
-        <div>
-          {rating && (
-            <div
-              className="border border-4 rounded-4 p-1 border-royal-blue mb-2 mx-auto w-100 wrap-textarea"
-            >
-              <label className={"w-100 h-100"}>
-                <textarea
-                  className="form-control p-2 fs-6 border border-3 rounded-4 shadow-none w-100 h-100 textarea-resize-none"
-                  placeholder={isBlankGif ? "What's going on?" : 'Help us better understand why you chose this meme and intensity level!'}
-                  defaultValue={comment}
-                  onChange={handleCommentClick}
-                  maxLength={MAX_CHAR_LIMIT}
-                />
-              </label>
-            </div>)}
-        </div>
+
+        {rating && (
+          <div className='py-1 mx-auto wrap-textarea'>
+            <label className={"comment-label w-100 h-100"}>
+              <textarea
+                className="w-100 h-100 p-2 rounded-4 shadow-none textarea-resize-none"
+                placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
+                defaultValue={comment}
+                onChange={handleCommentClick}
+                maxLength={MAX_CHAR_LIMIT}
+              />
+            </label>
+          </div>
+        )}
       </form>
     </div>);
 };
