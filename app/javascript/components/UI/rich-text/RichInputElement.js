@@ -3,7 +3,6 @@ import Cursor from '../rich-text/cursor';
 import DropDownList from './DropDownList';
 import { userFullName } from '../../helpers/library';
 import RichText from './rich-text';
-import xClose from '../../../../assets/images/sys_svg/x-close.svg';
 import Button from '../Button';
 import RichTextArea from './RichTextArea';
 import SwitcherShoutouts from '../SwitcherShoutouts';
@@ -39,8 +38,8 @@ const RichInputElement = ({
   const MARKER = '@';
   const TAG_AT = '<span class="' + classAt + '">' + MARKER;
   const END_TAG_AT = '</span>';
-  const OFFSET_X = 0;
-  const OFFSET_Y = 40;
+  const OFFSET_X = -10;
+  const OFFSET_Y = 30;
   const LIMIT_CHARS = 700;
   const highlightSmbATUnknownUser = false;
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER;
@@ -55,7 +54,6 @@ const RichInputElement = ({
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates);
     setCursorPosition(Cursor.getCurrentCursorPosition(element));
   }, [caret, textHTML, currentSelection]);
-
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -574,6 +572,7 @@ const RichInputElement = ({
   const clickHandling = (event) => {
     const element = textAreaRef.current;
     const cursor = Cursor.getCurrentCursorPosition(element);
+
     if (
       element.textContent.includes(
         `Use "@"  to include Shoutouts to members of the team!`
@@ -663,8 +662,9 @@ const RichInputElement = ({
     const wordCount = textHTML
       .replace(/<span[^>]*>@[^<]*<\/span>/g, '')
       .trim()
-      .split(' ').filter((word) => word.length > 0).length;
-      setIsDisabled(wordCount <= 2);
+      .split(' ')
+      .filter((word) => word.length > 0).length;
+    setIsDisabled(wordCount <= 2);
   }, [textHTML]);
 
   return (
@@ -680,7 +680,11 @@ const RichInputElement = ({
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
         <div className="d-flex flex-column gap-3 justify-content-between flex-lg-row w-100">
-          {isDisabled && <p className='text-gray-300 mx-auto'>Please enter more information. The more detail the better.</p>}
+          {isDisabled && (
+            <p className="text-gray-300 mx-auto">
+              Please enter more information. The more detail the better.
+            </p>
+          )}
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
