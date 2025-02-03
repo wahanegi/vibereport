@@ -125,15 +125,16 @@ export function gifUrlWithId(id) {
 }
 
 export function getProductiveText(value) {
-    if (value === 0) {
-      return "No productivity"
-    } else if (value >= 1 && value <= 4) {
-      return "Weak productivity"
-    } else if (value >= 5 && value <= 7) {
-      return "Moderate productivity"
-    } else if (value >= 8 && value <= 10) {
-      return  "Strong productivity"
-    } else {
-      throw new Error("Invalid value: " + value);
+    switch (true) {
+        case value === 0:
+            return "No productivity";
+        case value >= 1 && value <= 4:
+            return "Weak productivity";
+        case value >= 5 && value <= 7:
+            return "Moderate productivity";
+        case value >= 8 && value <= 10:
+            return "Strong productivity";
+        default:
+            throw new Error(`Invalid value: ${value}`);
     }
 }
