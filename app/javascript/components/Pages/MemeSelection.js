@@ -133,7 +133,7 @@ const MemeSelection = ({
   }, [selectedFile]);
 
   const Navigation = () => (
-    <div className="d-flex gap-2 d-sm-flex justify-content-sm-evenly justify-content-lg-between">
+    <div className="d-flex gap-2 d-sm-flex justify-content-sm-evenly justify-content-lg-between justify-content-md-between">
       <div>
         <h5 className="mt-2 mb-0 text-muted">Share it in your way!</h5>
         <div>
@@ -167,8 +167,8 @@ const MemeSelection = ({
 
   const Header = () => (
     <div className="d-flex mx-3 mt-3">
-      <div className="mx-auto">
-        <h5 style={{ opacity: 0.6 }}>You picked:</h5>
+      <div className="d-flex mx-auto fs-4 fs-lg-1 fs-md-1">
+        <h3 className="opacity-50">You picked:</h3>
         <BigBtnEmotion emotion={emotion} onClick={backHandling} />
       </div>
     </div>
