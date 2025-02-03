@@ -402,9 +402,19 @@ input.email-input-new:focus-visible {
   //Productivity Bad Follow Up
   .wrap-textarea-bad-follow{
     height: 350px;
+    max-width: 660px;
     textarea {
       resize: none;
+      &:focus {
+        outline: none;
+        border: 6px solid;
+        box-shadow: none !important;
+      }
     }
+  }
+
+  .max-width-bad-follow {
+    max-width: 800px;
   }
 
 .comment-label {
@@ -1267,4 +1277,8 @@ input:checked + .slider-shoutout img {
   .textarea-resize-none {
     resize: none;
   }
+}
+
+.max-width-emotion-intensity, .max-width-recognition, .max-width-entry, .max-width-type {
+  max-width: 750px;
 }

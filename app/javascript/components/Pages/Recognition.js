@@ -112,8 +112,10 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
           </div>
         </div>
         }
+        <div className='max-width-recognition mx-auto'>
+          <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext={ !!numShoutOuts } />
+        </div>
       </div>
-        <BlockLowerBtns skipHandling={ skipHandling } nextHandling={ nextHandling } isNext={ !!numShoutOuts } />
 
       {!!numShoutOuts &&
         <div>

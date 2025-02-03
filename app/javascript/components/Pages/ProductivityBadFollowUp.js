@@ -45,13 +45,13 @@ const ProductivityBadFollowUp = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="w-100 m-2">
-          <h1 className="fs-3 fs-md-1">It's like that sometimes...</h1>
+        <div className="w-100 mx-sm-1">
+          <h1 className="fs-3 fs-md-1 mt-2">It's like that sometimes...</h1>
           <h2 className="text-black fs-4 fs-md-2">
             Reflect on what you think limited <br /> your productivity...
           </h2>
 
-          <form className="col-12 col-md-8 col-lg-7 mx-auto">
+          <form className="mx-2">
             <label className="w-100 wrap-textarea-bad-follow">
               <textarea
                 className="border-1 w-100 p-1 h-100"
@@ -64,7 +64,8 @@ const ProductivityBadFollowUp = ({
               />
             </label>
           </form>
-          <div className='mt-2'>
+
+          <div className="mt-2 mx-2 max-width-bad-follow mx-md-auto">
             <BlockLowerBtns nextHandling={handlingOnClickNext} />
           </div>
         </div>

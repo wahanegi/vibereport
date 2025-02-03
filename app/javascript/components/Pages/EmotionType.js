@@ -80,7 +80,7 @@ const EmotionType = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="central-element">
+        <div className="w-100">
           <div className="mt-1 mb-5 text-center">
             <BigBtnEmotion
               showPencil={false}
@@ -92,7 +92,7 @@ const EmotionType = ({
             selectedType={selectedType}
             handleEmotionType={handleEmotionType}
           />
-          <div className="mt-3">
+          <div className="max-width-type mx-auto mt-2">
             <BlockLowerBtns nextHandling={handlingOnClickNext} />
           </div>
         </div>

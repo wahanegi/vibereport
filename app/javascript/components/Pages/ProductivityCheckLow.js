@@ -130,7 +130,7 @@ const ProductivityCheckLow = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="col-10 col-md-8">
+        <div className="col-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
           <ProductivitySlider
             productivity={productivity}
             handleSliderChange={handleSliderChange}
