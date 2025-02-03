@@ -680,6 +680,7 @@ const RichInputElement = ({
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
         <div className="d-flex flex-column gap-3 justify-content-between flex-lg-row w-100">
+          {isDisabled && <p className='text-gray-300 mx-auto'>Please enter more information. The more detail the better.</p>}
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
