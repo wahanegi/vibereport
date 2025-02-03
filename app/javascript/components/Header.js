@@ -8,6 +8,7 @@ const Header = ({data, steps, draft, handleSaveDraft, saveDataToDb, isResult = f
       <div className="flex-shrink-1">
         <Logo/>
       </div>
+      {/*TODO: DELETE*/}
       <p className={"text-primary"}>Test colors</p>
       <div className="d-flex justify-content-end flex-grow-1">
         <Menu

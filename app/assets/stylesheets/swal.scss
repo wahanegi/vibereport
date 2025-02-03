@@ -1,11 +1,11 @@
 @import "colors";
 
-/*TODO: do not use*/
-body.swal2-shown > [aria-hidden="true"] {
-  transition: 0.1s filter;
-  background: white;
-  filter: blur(50px);
-}
+/*TODO: not used*/
+//body.swal2-shown > [aria-hidden="true"] {
+//  transition: 0.1s filter;
+//  background: white;
+//  filter: blur(50px);
+//}
 
 .swal2-close-button {
   position: absolute;
@@ -19,11 +19,11 @@ body.swal2-shown > [aria-hidden="true"] {
   color: $black !important;
 }
 
-/*TODO: do not use*/
-.swal2-container.swal2-center>.swal2-popup {
-  border: 4.01818px solid $royal-blue;
-  border-radius: 15px;
-}
+/*TODO: not used*/
+//.swal2-container.swal2-center>.swal2-popup {
+//  border: 4.01818px solid $royal-blue;
+//  border-radius: 15px;
+//}
 
 .btn.btn-logout-no{
   height: 40px;
@@ -39,8 +39,8 @@ body.swal2-shown > [aria-hidden="true"] {
   border: none;
 }
 
-/*TODO: do not use*/
-.swal2-actions {
-  column-gap: 3rem;
-  row-gap: 1rem;
-}
+/*TODO: not used*/
+//.swal2-actions {
+//  column-gap: 3rem;
+//  row-gap: 1rem;
+//}

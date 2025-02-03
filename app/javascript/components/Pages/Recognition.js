@@ -76,7 +76,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
         <span>
           <p className='fw-semibold mb-0  pt-1 pb-1 cut-text'>{parse(shoutOut.rich_text)}</p>
         </span>
-        <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" className='pencil' onClick={editHandling}/>
+        <img  id={ shoutOut.id } src={edit_pencil} alt="pencil" className='pointer' onClick={editHandling}/>
         <span className="expand-link" >
           <img  src={ trash } alt="trash" className='trash' onClick={trashHandling}/>
           <img  id={ 'trashRed'+shoutOut.id } src={trashRed} alt="trash" className='trashRed' onClick={trashHandling}/>

@@ -51,7 +51,7 @@ const ProductivityBadFollowUp = ({
             Reflect on what you think limited <br /> your productivity...
           </h2>
           <div className="rating-comment-container">
-            <div className="wrap-textarea wrap-textarea-bad-follow">
+            <div className="wrap-textarea-bad-follow">
               <form>
                 <div className="form-group">
                   <label className="comment-label">

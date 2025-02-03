@@ -1,16 +1,17 @@
 @import 'colors';
 @import 'design_system_vibereport';
 
-/*TODO: should be class as context-selector*/
+/*TODO: use BS-classes & should be class as context-selector*/
 .wrap-textarea {
   resize: none;
-  box-shadow: none !important;
+  //box-shadow: none !important;
   &:focus {
     outline: none;
     border: none !important;
     box-shadow: none !important;
   }
 }
+
 .costume-focus {
   &:focus-within {
     border: 6px solid $emerald !important;

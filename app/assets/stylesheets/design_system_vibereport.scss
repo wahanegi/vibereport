@@ -21,9 +21,9 @@
 //  line-height: 1.2;
 //}
 
-p {
-  line-height: 100%;
-}
+//p {
+//  line-height: 100%;
+//}
 
 h1, h2 {
   font-weight: 700 !important;
@@ -60,23 +60,23 @@ h1 {
 }
 
 /*TODO: do not use*/
-.u1 {
-  font: {
-    family: $font-family-italic, sans-serif !important;
-    weight: $font-weight-semi-bold !important;
-    size: 1rem !important; //16px
-  }
-}
+//.u1 {
+//  font: {
+//    family: $font-family-italic, sans-serif !important;
+//    weight: $font-weight-semi-bold !important;
+//    size: 1rem !important; //16px
+//  }
+//}
 
-/*TODO: wb1 should be replaced with fs-6 class*/
+/*TODO: use for button styles*/
 .wb1 {
   font-size: 1.25rem !important; //20px
 }
 
 /*TODO: do not use*/
-.wb2 {
-  font-size: 2.625rem !important; //42px
-}
+//.wb2 {
+//  font-size: 2.625rem !important; //42px
+//}
 
 // Use for regular buttons
 .c1 {
@@ -87,7 +87,7 @@ h1 {
   }
 }
 
-/*TODO: do not use*/
+/*TODO: check using in app/assets/stylesheets/buttons.scss*/
 .c2 {
   font: {
     family: $font-family-base !important;
@@ -106,14 +106,14 @@ h1 {
 
 // use with B1, B2, or B3 text
 /*TODO: do not use*/
-.form-control {
-  border: 3px solid $gray-100;
-
-  &:focus {
-    border: 3px solid $input-btn-border-color !important; //3px
-    box-shadow: none !important;
-  }
-}
+//.form-control {
+//  border: 3px solid $gray-100;
+//
+//  &:focus {
+//    border: 3px solid $input-btn-border-color !important; //3px
+//    box-shadow: none !important;
+//  }
+//}
 
 /*TODO: use in icebreaker-answer & causes-to-celebrate & emotion-intensity*/
 input, textarea {
@@ -148,72 +148,73 @@ input, textarea {
 }
 
 /*TODO: do not use*/
-textarea {
-  &.b1 {
-    height: calc(2.5rem * ($line-height-base * 6 - 1));
-  }
+//textarea {
+//&.b1 {
+//  height: calc(2.5rem * ($line-height-base * 6 - 1));
+//}
+//
+//&.b2 {
+//  height: calc(2rem * ($line-height-base * 6 - 0.95));
+//}
+//
+//&.b3 {
+//  height: calc(1.5rem * ($line-height-base * 6 - 0.8));
+//}
 
-  &.b2 {
-    height: calc(2rem * ($line-height-base * 6 - 0.95));
-  }
-
-  &.b3 {
-    height: calc(1.5rem * ($line-height-base * 6 - 0.8));
-  }
-
-  &:focus {
-    border-color: $royal-blue !important;
-  }
-}
+//TODO in USE for emotion-intensity!!!
+//&:focus {
+//  border-color: $royal-blue !important;
+//}
+//}
 
 
 // Using with the Special inputs
 // Intensity selection & follow-up field (use B3)
 
 /*TODO: do not use*/
-.follow-up-field {
-  textarea {
-    margin-top: 4px;
-    width: calc($btn-width-intensity * 5 - 1rem);
-    height: 18.875rem; //302px
-    border-top-left-radius: 29px !important;
-    border-top-right-radius: 29px !important;
-  }
-}
+//.follow-up-field {
+//  textarea {
+//    margin-top: 4px;
+//    width: calc($btn-width-intensity * 5 - 1rem);
+//    height: 18.875rem; //302px
+//    border-top-left-radius: 29px !important;
+//    border-top-right-radius: 29px !important;
+//  }
+//}
 
 /*TODO: do not use*/
-.question-field {
-  width: 46.625rem !important; //746px
-  min-height: 17.5rem; //280px
-  &.form-control {
-    border: 3px solid $emerald !important;;
-
-    &:focus {
-      border: 3px solid $sea-green !important;
-    }
-  }
-}
+//.question-field {
+//  width: 46.625rem !important; //746px
+//  min-height: 17.5rem; //280px
+//  &.form-control {
+//    border: 3px solid $emerald !important;;
+//
+//    &:focus {
+//      border: 3px solid $sea-green !important;
+//    }
+//  }
+//}
 
 // FOR DROPDOWN MENU
-/*TODO: do not use*/
 .dropdown-toggle {
   height: 80px;
   width: 80px;
   padding: 0 !important;
 }
 
-#dropdown-stick {
-  // TODO: The styles for "&.show" could be moved to ".dropdown-toggle," making "#dropdown-stick" unnecessary.
-  &.show {
-    .one-line-menu {
-      border-color: $primary;
-    }
-  }
-}
-
 .dropdown-toggle::after {
   visibility: hidden;
 }
+
+//#dropdown-stick {
+//  &.show {
+//    .one-line-menu {
+//      border-color: $primary;
+//    }
+//  }
+//}
+
+
 
 // END of DROPDOWN MENU
 
