@@ -26,7 +26,7 @@ ActiveAdmin.register Team do
 
       csv_data.each do |row|
         team = Team.find_or_create_by(name: row[:name])
-        
+
         if row[:user_emails].nil?
           user_emails = []
         else
@@ -88,25 +88,28 @@ ActiveAdmin.register Team do
       end
       panel 'Select Time Period' do
         form action: admin_team_path(team), method: :get do
-          select_tag :time_period, 
-                     options_from_collection_for_select(TimePeriod.all.order(end_date: :desc), :id, :date_range, params[:time_period]),
+          time_periods = TimePeriod.select(:id, :created_at)
+                                   .order(created_at: :desc)
+
+          select_tag :time_period,
+                     options_from_collection_for_select(time_periods, :id, :formatted_month, params[:time_period]),
                      include_blank: 'Select Time Period',
                      onchange: 'this.form.submit();'
         end
       end
 
-      time_period = TimePeriod.find_by(id: params[:time_period]) if params[:time_period].present?
+      time_period = TimePeriod.find(params[:time_period]) if params[:time_period].present?
       earliest_start_date = TimePeriod.minimum(:start_date)
       latest_end_date = TimePeriod.maximum(:end_date)
 
       if time_period
         previous_time_period = TimePeriod
-          .joins(responses: {user: :teams})
-          .where('end_date < ?', time_period.start_date)
-          .where('teams.id = ?', team.id)
-          .where('responses.not_working = ?', false)
-          .order(end_date: :desc)
-          .first
+                                 .joins(responses: { user: :teams })
+                                 .where('end_date < ?', time_period.start_date)
+                                 .where('teams.id = ?', team.id)
+                                 .where('responses.not_working = ?', false)
+                                 .order(end_date: :desc)
+                                 .first
       end
 
       vars = ActiveAdminHelpers.time_period_vars(
@@ -278,6 +281,14 @@ ActiveAdmin.register Team do
                   div verbatim_list
                 end
               end
+
+              row 'Shoutouts Count' do
+                ul class: 'bubble-list' do
+                  time_period.shoutouts.map { |shoutout| shoutout.user.full_name }.tally.each do |full_name, count|
+                    li "#{full_name} (#{count})", class: 'bubble'
+                  end
+                end
+              end
             end
           else
             div 'No data present for this time period.'
@@ -290,8 +301,7 @@ ActiveAdmin.register Team do
       end
 
       if earliest_start_date.nil? || latest_end_date.nil?
-        panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe do
-        end
+        panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe
       else
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
           all_time_periods = TimePeriod.all

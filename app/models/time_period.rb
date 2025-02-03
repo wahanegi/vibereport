@@ -67,6 +67,10 @@ class TimePeriod < ApplicationRecord
     end
   end
 
+  def formatted_month
+    created_at.strftime('%Y-%m')
+  end
+
   def date_range
     "#{start_date.strftime('%Y-%m-%d')} - #{end_date.strftime('%Y-%m-%d')}"
   end
