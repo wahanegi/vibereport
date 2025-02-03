@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import Layout from '../Layout';
 import { MAX_CHAR_LIMIT } from '../helpers/consts';
+import { Form } from 'react-bootstrap';
 
 const CausesToCelebrate = ({
   data,
@@ -57,33 +58,24 @@ const CausesToCelebrate = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="central-element">
-          <h1>
-            Are there any recent <br /> causes to celebrate?
-          </h1>
-          <div className="rating-comment-container">
-            <div className="wrap-textarea wrap-textarea-bad-follow">
-              <form>
-                <div className="form-group">
-                  <label className="comment-label">
-                    <textarea
-                      className="form-control w660-h350-br15"
-                      placeholder="Are you grateful for anything that happened at work recently?"
-                      defaultValue={celebrateComment}
-                      onChange={onCommentChange}
-                      maxLength={MAX_CHAR_LIMIT}
-                    />
-                  </label>
-                </div>
-              </form>
-            </div>
+        <div className="d-flex flex-column gap-5 py-1">
+          <h1>Are there any recent causes to celebrate?</h1>
+          <div className="comment-label px-1">
+            <textarea
+              className="shadow-none p-2 w-100 h-100 rounded-5"
+              placeholder="Are you grateful for anything that happened at work recently?"
+              defaultValue={celebrateComment}
+              onChange={onCommentChange}
+              maxLength={MAX_CHAR_LIMIT}
+              rows={10}
+            />
           </div>
+          <BlockLowerBtns
+            nextHandling={handlingOnClickNext}
+            skipHandling={onClickSkip}
+          />
         </div>
-        <BlockLowerBtns
-          nextHandling={handlingOnClickNext}
-          skipHandling={onClickSkip}
-        />
-      </Layout>
+      </Layout >
     )
   );
 };

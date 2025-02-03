@@ -44,12 +44,12 @@ export const BtnSendMoreShoutouts = ({ onClick }) =>
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-feature text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-feature btn-lg text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-lg btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -72,7 +72,7 @@ export const Calendar = ({ date, onClick, hidden = false, positionLeft = false,
             <img src={line} alt="line" />
             {date.split(' - ')[1]}
           </div>:
-          <div className='mt-5 d-flex'>{date}</div>
+          <div className='mt-5 d-flex fs-7'>{date}</div>
         }
       </div>
       { prevTimePeriod && positionLeft && <img className="position-absolute" style={{left: -26, top: 29}} src={polygonLeft} alt="polygon left" /> }
@@ -119,10 +119,10 @@ export const Header = ({saveDataToDb, steps, draft, disabled, data, handleSaveDr
 </div>
 
 export const EditResponse = ({ hidden = false, onClick }) =>
-  !hidden && <div style={{width: 135}}>
-    <p className='mb-0 text-start'>Edit responses</p>
-    <img className='pointer' src={editResponse} onClick={onClick} alt="edit response" />
-  </div>
+  !hidden && <button className='border-0 bg-transparent' onClick={onClick}>
+    <p className='m-0'>Edit responses</p>
+    <img className='pointer' src={editResponse} alt="edit response" />
+  </button>
 
 export const ResultsManager = ({ data, setData, steps, draft, service, nextTimePeriod}) => {
   const [showResultsManager, setShowResultsManager] = useState(false);
