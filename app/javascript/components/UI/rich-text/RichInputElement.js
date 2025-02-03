@@ -54,9 +54,6 @@ const RichInputElement = ({
     if (Cursor.getCurrentCursorPosition(element).focusOffset === 1)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates);
     setCursorPosition(Cursor.getCurrentCursorPosition(element));
-    element.innerText === undefined || element.innerText === '\x0A'
-      ? setIsDisabled(true)
-      : setIsDisabled(false);
   }, [caret, textHTML, currentSelection]);
 
   const handleCheckboxChange = () => {
@@ -662,6 +659,14 @@ const RichInputElement = ({
       });
   };
 
+  useEffect(() => {
+    const wordCount = textHTML
+      .replace(/<span[^>]*>@[^<]*<\/span>/g, '')
+      .trim()
+      .split(' ').filter((word) => word.length > 0).length;
+      setIsDisabled(wordCount <= 2);
+  }, [textHTML]);
+
   return (
     <>
       <div className="d-flex flex-column align-items-center">
@@ -674,7 +679,7 @@ const RichInputElement = ({
           className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
-        <div className='d-flex flex-column gap-3 justify-content-between flex-lg-row w-100'>
+        <div className="d-flex flex-column gap-3 justify-content-between flex-lg-row w-100">
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
