@@ -671,9 +671,26 @@ const RichInputElement = ({
           onKeyDown={handleKeyDown}
           onClick={clickHandling}
           cursorPos={Cursor.getCurrentCursorPosition(element)}
-          className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
+          className="c3 place-size-shout-out w-100 border-none text-start d-inline-block fs-3 lh-sm pt-2 position-relative"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
+        {isDropdownList &&
+          filteredUsers.length &&
+          indexOfSelection !== undefined && (
+            <DropDownList
+              dataList={filteredUsers}
+              coordX={coordinates.x + OFFSET_X}
+              coordY={coordinates.y + OFFSET_Y}
+              onClick={clickEnterTabHandling}
+              valSel={currentSelection}
+              changeIndexSel={(val) => {
+                setIndexOfSelection(val);
+              }}
+              changeValSel={(val) => {
+                setCurrentSelection(val);
+              }}
+            />
+          )}
         <div className='d-flex flex-column gap-3 justify-content-between flex-lg-row w-100'>
           <SwitcherShoutouts
             isChecked={isChecked}
@@ -689,23 +706,6 @@ const RichInputElement = ({
           </Button>
         </div>
       </div>
-      {isDropdownList &&
-        filteredUsers.length &&
-        indexOfSelection !== undefined && (
-          <DropDownList
-            dataList={filteredUsers}
-            coordX={coordinates.x + OFFSET_X}
-            coordY={coordinates.y + OFFSET_Y}
-            onClick={clickEnterTabHandling}
-            valSel={currentSelection}
-            changeIndexSel={(val) => {
-              setIndexOfSelection(val);
-            }}
-            changeValSel={(val) => {
-              setCurrentSelection(val);
-            }}
-          />
-        )}
     </>
   );
 };
