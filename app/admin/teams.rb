@@ -6,7 +6,7 @@ ActiveAdmin.register Team do
   form do |f|
     f.inputs 'Team Details' do
       f.input :name
-      f.input :users, as: :check_boxes, collection: User.all.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
+      f.input :users, as: :check_boxes, collection: User.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
     end
     f.actions
   end
@@ -29,11 +29,7 @@ ActiveAdmin.register Team do
       csv_data.each do |row|
         team = Team.find_or_create_by(name: row[:name])
 
-        user_emails = if row[:user_emails].nil?
-                        []
-                      else
-                        row[:user_emails].split(',')
-                      end
+        user_emails = row[:user_emails]&.split(',') || []
 
         UserTeam.where(team_id: team.id).destroy_all
 
@@ -89,7 +85,7 @@ ActiveAdmin.register Team do
       panel 'Select Time Period' do
         form action: admin_team_path(team), method: :get do
           select_tag :time_period,
-                     options_from_collection_for_select(TimePeriod.all.order(end_date: :desc), :id, :date_range,
+                     options_from_collection_for_select(TimePeriod.order(end_date: :desc), :id, :date_range,
                                                         params[:time_period]),
                      include_blank: 'Select Time Period',
                      onchange: 'this.form.submit();'
