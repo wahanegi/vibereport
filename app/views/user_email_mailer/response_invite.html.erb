@@ -3,7 +3,7 @@
 <head>
   <title>Email letter</title>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <style>
       * {
           margin: 0;
@@ -16,7 +16,10 @@
           line-height: 0;
       }
       .board{
-          min-width:1080px;
+          width: 100%;
+          max-width: 1080px; 
+          margin: 0 auto;
+          padding: 0 15px; 
       }
       .lnk-unsubscribe{
           text-align: left;
@@ -24,6 +27,61 @@
       .emotions-container {
           text-align: center;
       }
+
+      @media only screen and (max-width: 767px) {
+
+    .first-row {
+        margin: 0 auto;
+        height: auto !important;
+    }
+
+    .second-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: auto !important;
+    }
+
+    .calendar {
+        margin: 0 auto;
+        height: 100px;
+    }
+
+    .data {
+        text-align: center;
+        font-size: 1rem;
+        padding-top: 5px;
+    }
+
+      .ml-55 {
+        margin-left: 0 !important;
+      }
+    
+      .invitation {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+    }
+    
+    /* Уменьшаем размер вопроса */
+    .question {
+        font-size: 2rem;
+        line-height: 2rem;
+    }
+    
+    /* Корректируем размер кнопок эмоций */
+    .btn-emotion {
+        font-size: 0.9rem;
+        padding: 4px 8px;
+        margin: 3px;
+    }
+    
+    /* Уменьшаем размер большой кнопки */
+    .big-btn-text a {
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+  }
   </style>
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
 </head>

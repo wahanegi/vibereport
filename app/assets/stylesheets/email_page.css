@@ -163,7 +163,10 @@ font-weight:700;
 text-align: center;
 }
 .board{
-    min-width: 100%;
+    width: 100%;
+    max-width: 1080px; 
+    margin: 0 auto;
+    padding: 0 20px;
 }
 .mt-35{
     margin-top: 35px;
@@ -228,17 +231,19 @@ text-align: center;
     background-size: contain;
 }
 .invitation {
-    width: 453px;
+    width: 100%;
+    max-width: 453px;
     height: 55px;
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
     color: rgba(0, 0, 0, 0.7);
+    margin: 0 auto;
     padding: 8px;
 }
 .emotions{
+    width: 100%;
+    max-width: 720px;
     margin:  0 auto;
-    width: 720px;
-    min-width: 720px;
     padding-bottom: 6px;
 }
 .underline_list {
@@ -256,11 +261,14 @@ text-align: center;
     text-transform: capitalize;
 }
 .question {
-    font-size: 48px;
-    line-height: 48px;
+    width: 100%;
+    max-width: 735px;
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    margin: 0 auto;
     color: #000000;
-    white-space: pre-line;
-    min-height: 100px;
+    /* white-space: pre-line; */
+    /* min-height: 100px; */
 }
 .lnk-was-not a{
     font-size: 23px;
@@ -276,13 +284,16 @@ text-align: center;
     height: 7px;
 }
 .btn-emotion{
+    min-width: 100px;
     height: 31px;
-    font-size: 19px;
+    font-size: 1rem;
     line-height: 1.2;
     cursor: pointer;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border: 1px solid #000000;
     border-radius: 15px;
+    margin: 5px;
+    padding: 5px 10px;
 }
 .positive{
     color: #4F9B64;
@@ -316,10 +327,11 @@ text-align: center;
 }
 .big-btn{
     box-sizing: border-box;
-    width: 385px;
+    width: 100%;
+    max-width: 385px;
     height: 70px;
     background: #FFFFFF;
-    margin: 0 auto 24px auto;
+    margin: 0 auto 24px;
 }
 .big-btn-text a{
     display: inline-block;
@@ -332,6 +344,7 @@ text-align: center;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     text-decoration: none;
     white-space: nowrap;
+    margin: 0 auto;
 }
 
 @media (max-width: 767.98px) {
