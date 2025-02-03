@@ -39,7 +39,7 @@ const RichInputElement = ({
   const TAG_AT = '<span class="' + classAt + '">' + MARKER;
   const END_TAG_AT = '</span>';
   const OFFSET_X = -10;
-  const OFFSET_Y = 30;
+  const OFFSET_Y = -15;
   const LIMIT_CHARS = 700;
   const highlightSmbATUnknownUser = false;
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER;
@@ -680,11 +680,12 @@ const RichInputElement = ({
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
         <div className="d-flex flex-column gap-3 justify-content-between flex-lg-row w-100">
-          {isDisabled && (
-            <p className="text-gray-300 mx-auto">
-              Please enter more information. The more detail the better.
-            </p>
-          )}
+          <p
+            className="text-gray-300 mx-auto"
+            style={{ visibility: isDisabled ? 'visible' : 'hidden' }}
+          >
+            Please enter more information. The more detail the better.
+          </p>
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
