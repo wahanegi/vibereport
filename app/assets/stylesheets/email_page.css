@@ -139,7 +139,8 @@ Here styles for:
  }
 .link-text{
     display: block;
-    width: 385px;
+    width: 100%;
+    max-width: 385px;
     height: 70px;
     font-size: 36px;
     line-height: 36px;
@@ -283,6 +284,13 @@ text-align: center;
 .row-over-links{
     height: 7px;
 }
+
+.links-comtainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+}
 .btn-emotion{
     min-width: 100px;
     height: 31px;
@@ -308,7 +316,8 @@ text-align: center;
     color: #4C77CB;
 }
 .big-btn-tooltip{
-    width: 378px;
+    width: 100%;
+    max-width: 378px;
     height: 19px;
     font-size: 24px;
     line-height: 24px;
@@ -321,7 +330,8 @@ text-align: center;
 .neutral-area {
     margin: 0 auto;
     padding: 5px 0;
-    width: 550px;
+    width: 100% !important;
+    max-width: 550px !important;
     height: 55px;
     border-bottom: 3px solid #D2D2D2;
 }
