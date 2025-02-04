@@ -14,6 +14,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
     const dataFromServer = ({callback}) => {
       if (callback === 'success') {
         handleShowAlert()
+        setDetailsText('');
       }
     }
     const url = '/api/v1/notifications/'
@@ -24,9 +25,14 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, current_user, handleShowAl
     ref.current && ref.current.focus()
   }, [showHelpModal])
 
+  const handleCloseModal = () => {
+    setShowHelpModal(false);
+    setDetailsText('');
+  };
+
   return <Fragment>
-    <Modal size='lg' show={showHelpModal} onHide={() => {setShowHelpModal(false)}} className='modal modal-help lg'>
-      <img src={xClose} className='position-absolute x-close lg' onClick={() => {setShowHelpModal(false)}}/>
+    <Modal size='lg' show={showHelpModal} onHide={handleCloseModal} className='modal modal-help lg'>
+      <img src={xClose} className='position-absolute x-close lg' onClick={handleCloseModal}/>
       <Modal.Body>
         <div className="mb-1 px-2">
           <div className='fs-5'>
