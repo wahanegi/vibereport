@@ -1,11 +1,10 @@
 @import "colors";
 
-/*TODO: not used*/
-//body.swal2-shown > [aria-hidden="true"] {
-//  transition: 0.1s filter;
-//  background: white;
-//  filter: blur(50px);
-//}
+body.swal2-shown > [aria-hidden="true"] {
+  transition: 0.1s filter;
+  background: white;
+  filter: blur(50px);
+}
 
 .swal2-close-button {
   position: absolute;
@@ -19,11 +18,10 @@
   color: $black !important;
 }
 
-/*TODO: not used*/
-//.swal2-container.swal2-center>.swal2-popup {
-//  border: 4.01818px solid $royal-blue;
-//  border-radius: 15px;
-//}
+.swal2-container.swal2-center>.swal2-popup {
+  border: 4.01818px solid $royal-blue;
+  border-radius: 15px;
+}
 
 .btn.btn-logout-no{
   height: 40px;
@@ -39,8 +37,7 @@
   border: none;
 }
 
-/*TODO: not used*/
-//.swal2-actions {
-//  column-gap: 3rem;
-//  row-gap: 1rem;
-//}
+.swal2-actions {
+  column-gap: 3rem;
+  row-gap: 1rem;
+}
