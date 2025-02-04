@@ -29,27 +29,30 @@ const HelpModal = ({
     ref.current && ref.current.focus();
   }, [showHelpModal]);
 
+  const handleCloseModal = () => {
+    setShowHelpModal(false);
+    setDetailsText('');
+  };
+
   return (
     <Fragment>
       <Modal
         size="lg"
         show={showHelpModal}
-        onHide={() => {
-          setShowHelpModal(false);
-        }}
+        onHide={handleCloseModal}
         centered
         dialogClassName="px-1"
       >
         <img
           src={xClose}
           className="position-absolute top-0 start-100 translate-middle x-close"
-          onClick={() => {
-            setShowHelpModal(false);
-          }}
+          onClick={handleCloseModal}
         />
         <Modal.Body>
           <div className="mb-1 px-2">
-            <h4 className="modal-title fs-5 fs-md-3">Questions or issues? Let us know!</h4>
+            <h4 className="modal-title fs-5 fs-md-3">
+              Questions or issues? Let us know!
+            </h4>
             <h6 className="text-gray-600 mb-1 fs-7 fs-md-6">
               Your questions and insights help make Vibe Report better!
             </h6>
