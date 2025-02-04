@@ -124,18 +124,21 @@ export function gifUrlWithId(id) {
     return 'https://media.giphy.com/media/' + id + '/giphy.gif'
 }
 
-export function getProductiveText(value) {
-    if (value < 0 || value > 10)
-        throw new Error(`Invalid value: ${value}`);
+const productivityLevels = {
+    0: "No productivity",
+    4: "Weak productivity",
+    7: "Moderate productivity",
+    10: "Strong productivity",
+};
 
-    switch (true) {
-        case value === 0:
-            return "No productivity";
-        case value <= 4:
-            return "Weak productivity";
-        case value <= 7:
-            return "Moderate productivity";
-        case value <= 10:
-            return "Strong productivity";
+export function getProductiveText(value) {
+    const keys = Object.keys(productivityLevels)
+    const max = keys[keys.length - 1]
+    const min = keys[0]
+
+    if (value < min || value > max) {
+        throw new Error(`Invalid value: ${value}`);
     }
+
+    return productivityLevels[keys.find(max => value <= max)];
 }
