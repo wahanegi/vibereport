@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class Devise::Passwordless::SessionsController < Devise::SessionsController
-
   def create
-    self.resource = resource_class.find_by(email: create_params[:email])
+    self.resource = resource_class.find_by(email: create_params[:email].downcase)
     resource.send_magic_link(remember_me: true) if self.resource
 
     self.resource = resource_class.new(create_params)
