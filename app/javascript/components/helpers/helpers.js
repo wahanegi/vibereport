@@ -123,3 +123,11 @@ export function usersEmoji(users, current_user, emojiObject) {
 export function gifUrlWithId(id) {
   return 'https://media.giphy.com/media/' + id + '/giphy.gif'
 }
+
+export const calculateWordCount = (text) => {
+  return text
+    .replace(/<span[^>]*>@[^<]*<\/span>/g, '')
+    .trim()
+    .split(' ')
+    .filter((word) => word.length > 0).length;
+}

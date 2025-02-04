@@ -41,17 +41,18 @@ export default class Cursor {
                 }
             }
             if (selection.rangeCount) {
-                let range = selection.getRangeAt(0).cloneRange();
+                const range = selection.getRangeAt(0).cloneRange();
                 if (range.getClientRects) {
-                    range.collapse(true);
-                    let rects = range.getClientRects();
-                    if (rects.length > 0) {
-                        let rect = rects[0];
-                        coordinates.x = rect.left + window.scrollX ;
-                        coordinates.y = rect.top + window.scrollY ;
-                    }
+                  range.collapse(true);
+                  const rect = range.getBoundingClientRect();
+                  const modal = document.querySelector('.custom-modal');
+                  if (modal) {
+                    const modalRect = modal.getBoundingClientRect();
+                    coordinates.x = rect.x - modalRect.left;
+                    coordinates.y = rect.y - modalRect.top;
+                  }
                 }
-            }
+              }
             return {
                 charCount: charCount,
                 focusNode: focusNode,

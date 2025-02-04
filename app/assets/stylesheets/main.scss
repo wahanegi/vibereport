@@ -796,23 +796,14 @@ input.email-input-new:focus-visible {
     width: 16px;
   }
 
-  width: 200px;
   height: 155px;
-  border-radius: 8px;
-  border: 3px solid $primary;
-  padding: 8px 1px 7px;
-  padding-inline-start: 0px;
-  background-color: $white;
   overflow: auto;
 
   li {
-    list-style: none;
-    text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     padding-inline-start: 7px;
-    color: $gray-300;
 
     &:focus, &.highlight {
       cursor: pointer;

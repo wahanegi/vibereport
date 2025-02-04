@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Cursor from '../rich-text/cursor';
 import DropDownList from './DropDownList';
 import { userFullName } from '../../helpers/library';
+import { calculateWordCount } from '../../helpers/helpers';
 import RichText from './rich-text';
-import xClose from '../../../../assets/images/sys_svg/x-close.svg';
 import Button from '../Button';
 import RichTextArea from './RichTextArea';
 import SwitcherShoutouts from '../SwitcherShoutouts';
@@ -39,8 +39,8 @@ const RichInputElement = ({
   const MARKER = '@';
   const TAG_AT = '<span class="' + classAt + '">' + MARKER;
   const END_TAG_AT = '</span>';
-  const OFFSET_X = 0;
-  const OFFSET_Y = 40;
+  const OFFSET_X = -10;
+  const OFFSET_Y = -15;
   const LIMIT_CHARS = 700;
   const highlightSmbATUnknownUser = false;
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER;
@@ -54,11 +54,7 @@ const RichInputElement = ({
     if (Cursor.getCurrentCursorPosition(element).focusOffset === 1)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates);
     setCursorPosition(Cursor.getCurrentCursorPosition(element));
-    element.innerText === undefined || element.innerText === '\x0A'
-      ? setIsDisabled(true)
-      : setIsDisabled(false);
   }, [caret, textHTML, currentSelection]);
-
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -577,6 +573,7 @@ const RichInputElement = ({
   const clickHandling = (event) => {
     const element = textAreaRef.current;
     const cursor = Cursor.getCurrentCursorPosition(element);
+
     if (
       element.textContent.includes(
         `Use "@"  to include Shoutouts to members of the team!`
@@ -662,6 +659,10 @@ const RichInputElement = ({
       });
   };
 
+  useEffect(() => {
+    setIsDisabled(calculateWordCount(textHTML) <= 2);
+  }, [textHTML]);
+
   return (
     <>
       <div className="d-flex flex-column align-items-center">
@@ -674,7 +675,13 @@ const RichInputElement = ({
           className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
-        <div className='d-flex flex-column gap-3 justify-content-between flex-lg-row w-100'>
+        <div className="d-flex flex-column gap-3 justify-content-between flex-lg-row w-100">
+          <p
+            className="text-gray-300 mx-auto"
+            style={{ visibility: isDisabled ? 'visible' : 'hidden' }}
+          >
+            Please enter more information. The more detail the better.
+          </p>
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
