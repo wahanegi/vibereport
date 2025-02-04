@@ -19,6 +19,7 @@ const HelpModal = ({
     const dataFromServer = ({ callback }) => {
       if (callback === 'success') {
         handleShowAlert();
+        setDetailsText('');
       }
     };
     const url = '/api/v1/notifications/';
