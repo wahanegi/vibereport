@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Cursor from '../rich-text/cursor';
 import DropDownList from './DropDownList';
 import { userFullName } from '../../helpers/library';
+import { calculateWordCount } from '../../helpers/helpers';
 import RichText from './rich-text';
 import Button from '../Button';
 import RichTextArea from './RichTextArea';
@@ -659,12 +660,7 @@ const RichInputElement = ({
   };
 
   useEffect(() => {
-    const wordCount = textHTML
-      .replace(/<span[^>]*>@[^<]*<\/span>/g, '')
-      .trim()
-      .split(' ')
-      .filter((word) => word.length > 0).length;
-    setIsDisabled(wordCount <= 2);
+    setIsDisabled(calculateWordCount(textHTML) <= 2);
   }, [textHTML]);
 
   return (
