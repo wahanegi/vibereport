@@ -50,7 +50,7 @@ const HelpModal = ({
           onClick={handleCloseModal}
         />
         <Modal.Body>
-          <div className="mb-1 px-2">
+          <div className="mb-1 px-0 px-sm-2">
             <h4 className="modal-title fs-5 fs-md-3">
               Questions or issues? Let us know!
             </h4>
@@ -70,7 +70,7 @@ const HelpModal = ({
               {current_user.email}
             </h5>
           </div>
-          <div className="mb-1 px-2">
+          <div className="mb-1 px-0 px-sm-2">
             <h6 className="text-start mb-1 fs-7 fs-md-6">Details:</h6>
             <div className="w-100 border border-3 rounded rounded-4 border-royal-blue p-1">
               <form>
@@ -96,7 +96,7 @@ const HelpModal = ({
           </div>
           <div className="bg-light-gray border-light-gray border border-4 rounded rounded-4">
             <h6>Additional information about Vibe Report can be found at:</h6>
-            <Link to={'#'} className="fs-7 fs-md-6 text-decoration-none">
+            <Link to={'#'} className="fs-9 fs-sm-7 fs-md-6 text-decoration-none">
               https://samplenamerealsourcehere.com
             </Link>
           </div>
