@@ -102,16 +102,14 @@ h1 {
 }
 
 
-// use with B1, B2, or B3 text
-/*TODO: do not use*/
-//.form-control {
-//  border: 3px solid $gray-100;
-//
-//  &:focus {
-//    border: 3px solid $input-btn-border-color !important; //3px
-//    box-shadow: none !important;
-//  }
-//}
+.form-control {
+ border: 3px solid $gray-100;
+
+ &:focus {
+   border: 3px solid $input-btn-border-color !important; //3px
+   box-shadow: none !important;
+ }
+}
 
 /*TODO: use in icebreaker-answer & causes-to-celebrate & emotion-intensity*/
 input, textarea {
