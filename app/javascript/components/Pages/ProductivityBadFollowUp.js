@@ -45,32 +45,30 @@ const ProductivityBadFollowUp = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="central-element">
-          <h1>It's like that sometimes...</h1>
-          <h2 className="color-black">
+        <div className="w-100 mx-sm-1">
+          <h1 className="fs-3 fs-md-1 mt-2">It's like that sometimes...</h1>
+          <h2 className="text-black fs-4 fs-md-2">
             Reflect on what you think limited <br /> your productivity...
           </h2>
-          <div className="rating-comment-container">
-            <div className="wrap-textarea wrap-textarea-bad-follow">
-              <form>
-                <div className="form-group">
-                  <label className="comment-label">
-                    <textarea
-                      className="form-control w660-h350-br15"
-                      placeholder="Is there anything that we can do to help?"
-                      defaultValue={productivity_comment}
-                      onChange={(e) => {
-                        setComment(e.target.value);
-                      }}
-                      maxLength={MAX_CHAR_LIMIT}
-                    />
-                  </label>
-                </div>
-              </form>
-            </div>
+
+          <form className="mx-2">
+            <label className="w-100 wrap-textarea-bad-follow">
+              <textarea
+                className="border-1 w-100 p-1 h-100"
+                placeholder="Is there anything that we can do to help?"
+                defaultValue={productivity_comment}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+                maxLength={MAX_CHAR_LIMIT}
+              />
+            </label>
+          </form>
+
+          <div className="mt-2 mx-2 max-width-bad-follow mx-md-auto">
+            <BlockLowerBtns nextHandling={handlingOnClickNext} />
           </div>
         </div>
-        <BlockLowerBtns nextHandling={handlingOnClickNext} />
       </Layout>
     )
   );

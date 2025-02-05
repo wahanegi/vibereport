@@ -371,15 +371,23 @@ input.email-input-new:focus-visible {
   overflow-wrap: anywhere;
 }
 
-//IntenseLine
-.rating-comment-container {
   //Productivity Bad Follow Up
-  .wrap-textarea-bad-follow {
-    border-radius: 15px;
-    width: 660px;
+  .wrap-textarea-bad-follow{
     height: 350px;
+    max-width: 660px;
+    textarea {
+      resize: none;
+      &:focus {
+        outline: none;
+        border: 6px solid;
+        box-shadow: none !important;
+      }
+    }
   }
-}
+
+  .max-width-bad-follow {
+    max-width: 800px;
+  }
 
 .comment-label {
   textarea {
@@ -446,17 +454,7 @@ input.email-input-new:focus-visible {
 }
 
 //ProductivitySlider
-.productivity-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-
-  input {
-    width: 700px;
-    border: unset;
-    box-shadow: unset;
-  }
+.productivity-container{
 
   .form-range::-webkit-slider-thumb {
     height: 35px;
@@ -513,7 +511,7 @@ input.email-input-new:focus-visible {
   }
 
   .form-range.level-1::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $white 85%, #D7C2B8 85%);
+    background: linear-gradient(247deg, $white 86%, #D7C2B8 85%);
   }
 
   .form-range.level-2::-webkit-slider-runnable-track {
@@ -541,7 +539,7 @@ input.email-input-new:focus-visible {
   }
 
   .form-range.level-8::-webkit-slider-runnable-track {
-    background: linear-gradient(247deg, $white 15%, #E26D6D 15%);
+    background: linear-gradient(247deg, $white 13%, #E26D6D 15%);
   }
 
   .form-range.level-9::-webkit-slider-runnable-track {
@@ -558,10 +556,6 @@ input.email-input-new:focus-visible {
 
   .form-range.level-0 {
     margin-top: 311px;
-  }
-
-  .productivity-card {
-    margin: -84px;
   }
 
   p {
@@ -1252,4 +1246,8 @@ input:checked + .slider-shoutout img {
   .textarea-resize-none {
     resize: none;
   }
+}
+
+.max-width-emotion-intensity, .max-width-recognition, .max-width-entry, .max-width-type {
+  max-width: 750px;
 }

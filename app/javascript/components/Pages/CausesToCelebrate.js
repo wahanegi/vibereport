@@ -70,10 +70,12 @@ const CausesToCelebrate = ({
               rows={10}
             />
           </div>
+          <div className='mx-1'>
           <BlockLowerBtns
             nextHandling={handlingOnClickNext}
             skipHandling={onClickSkip}
           />
+          </div>
         </div>
       </Layout >
     )

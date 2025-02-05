@@ -12,7 +12,7 @@ const BlockLowerBtns = ({
   handlingOnClickNext = () => {},
 }) => {
   return (
-    <div className="d-flex d-sm-flex gap-3 justify-content-lg-around justify-content-sm-center">
+    <div className="d-flex flex-column flex-sm-row justify-content-sm-between align-items-center gap-2 gap-sm-0 max-width">
       <BtnBack onClick={backHandling} />
       {isNext && !isSubmit && (
         <BtnPrimary text="Next" onClick={nextHandling} disabled={disabled} />

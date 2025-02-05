@@ -151,7 +151,9 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
           </div>
         }
         {isModal && <ShoutoutDelete onClose={onClose} data={data} setData={setData} idShoutout={idShoutout}/>}
-        <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
+        <div className='max-width-recognition mx-auto'>
+          <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
+        </div>
       </div>
     </Layout>
   );
