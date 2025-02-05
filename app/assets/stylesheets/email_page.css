@@ -220,6 +220,7 @@ text-align: center;
     text-align: left;
     width: 102px;
     height: 115px;
+    margin-top: 20px;
     background-image: url("complete-by.png");
     background-repeat: no-repeat;
     background-size: contain;
@@ -431,7 +432,7 @@ text-align: center;
     color: #FFFFFF;
 }
 .btn-remind {
-    width: 16.688rem;
+    max-width: 16.688rem;
     height: 3.75rem;
     background: #D7007B;
     border: 0.0625rem solid #000000;
@@ -488,7 +489,6 @@ text-align: center;
     padding: 8px;
 }
 .text-check {
-    height: 32px;
     font-size: 20px;
     line-height: 25px;
     padding: 8px;
@@ -496,7 +496,6 @@ text-align: center;
 
 .text-shoutout {
     text-align: left;
-    height: 30px;
     font-size: 24px;
     line-height: 24px;
 }
@@ -510,7 +509,7 @@ html {
     line-height: 96px;
     color: #000000;
     white-space: pre-line;
-    width: 735px;
+    max-width: 735px;
 }
 
 .calendar-days {
