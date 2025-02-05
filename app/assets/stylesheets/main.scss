@@ -211,12 +211,6 @@ input.email-input-new:focus-visible {
   top: 35px;
 }
 
-//-----------------------------
-// for Recognition page
-.w-746 {
-  width: 746px;
-}
-
 .h-59 {
   height: 59px;
 }
@@ -238,13 +232,11 @@ input.email-input-new:focus-visible {
 }
 
 .expand-link .trashRed {
-  display: none;
   cursor: pointer;
 }
 
 .expand-link:hover .trash,
 .expand-link:active .trash {
-  display: none;
 }
 
 .expand-link:hover .trashRed,
@@ -328,12 +320,9 @@ input.email-input-new:focus-visible {
 }
 
 .field-shout-outs {
-  width: 884px !important;
-  height: 239px;
+  height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
-  border: 4px solid $primary;
-  border-radius: 18px;
 
   ul {
     list-style: none;
@@ -341,25 +330,8 @@ input.email-input-new:focus-visible {
   }
 
   li {
-    margin: 24px 20px;
-    margin-inline-start: 0;
-    width: 822px;
-    min-height: 83px;
-    background-color: $gray-100;
-    padding-inline-start: 19px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
-    border: 4px solid $primary;
-    border-radius: 18px;
 
     p {
-      font-weight: 600 !important;
-      text-align: left;
-      color: $black;
-
       &.cut-text {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -798,11 +770,8 @@ input.email-input-new:focus-visible {
 
   width: 200px;
   height: 155px;
-  border-radius: 8px;
-  border: 3px solid $primary;
   padding: 8px 1px 7px;
   padding-inline-start: 0px;
-  background-color: $white;
   overflow: auto;
 
   li {
