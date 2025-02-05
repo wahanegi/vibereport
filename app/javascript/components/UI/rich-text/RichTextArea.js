@@ -36,7 +36,7 @@ const RichTextArea = ({textHTML, refs ,  onKeyDown , onClick , className, cursor
                    ref = { refs }
            data-testid = "editable-div"
                     id = 'textArea'
-             className = {`c3 form-control text-start  inner-div scrolling  ${isPlaceholder && 'gray-300'}`}>
+             className = {`c3 form-control text-start fs-3 inner-div position-relative scrolling  ${isPlaceholder && 'gray-300'}`}>
             { parse( isPlaceholder ?   placeholder : textHTML + '\x0A') }
           </div>
           {children}
