@@ -43,7 +43,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         expect do
           post :create, params: { shoutout: { time_period_id: nil,
                                               rich_text: 'value2' },
-                                  recipients: [user2.id, user3.id, user4.id]  }
+                                  recipients: [user2.id, user3.id, user4.id] }
         end.not_to change(Shoutout, :count)
         expect(ShoutoutRecipient.all.length).to be(0)
       end
@@ -180,7 +180,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         patch :update, params: {  id: Shoutout.last.id,
                                   shoutout: { time_period_id: time_period.id,
                                               rich_text: '@Person1' },
-                                  recipients: [user5.id, user3.id, user4.id]  }
+                                  recipients: [user5.id, user3.id, user4.id] }
         shoutout.reload
         expect(shoutout.shoutout_recipients.length).to eq(3)
         expect(Shoutout.last.rich_text).not_to eq('@Person1 thanks')
@@ -202,7 +202,7 @@ RSpec.describe Api::V1::ShoutoutsController, type: :controller do
         patch :update, params: {  id: shoutout.id,
                                   shoutout: { time_period_id: time_period1.id,
                                               rich_text: nil },
-                                  recipients: [user2.id, user3.id, user4.id]  }
+                                  recipients: [user2.id, user3.id, user4.id] }
         shoutout.reload
         expect(shoutout.rich_text).to eq('<br>')
       end

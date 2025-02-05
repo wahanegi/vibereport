@@ -25,7 +25,7 @@ class UserTeam < ApplicationRecord
   belongs_to :team
 
   validates :user_id, uniqueness: { scope: :team_id }
-  enum role: { member: 0, manager: 1, observer: 2 }
+  enum :role, { member: 0, manager: 1, observer: 2 }
 
   scope :managers, -> { where(role: :manager) }
   scope :has_team_access, -> { where.not(role: :member) }
