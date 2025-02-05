@@ -170,10 +170,12 @@ const EmotionIntensity = ({
           />
         </div>
       </div>
+      <div className='max-width-emotion-intensity mx-auto'>
       <BlockLowerBtns
         nextHandling={handlingOnClickNext}
         disabled={isBlank(rating)}
       />
+      </div>
     </div>
   </Layout>));
 };

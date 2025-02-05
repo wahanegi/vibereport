@@ -97,13 +97,13 @@ const EmotionEntry = ({
               handleEmotionType={handleEmotionType}
             />
           </div>
-          <div className="d-flex gap-3 flex-column flex-sm-row">
+        </div>
+        <div className="max-width-entry mx-auto">
             <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={emotion.word.length < 2}
             />
           </div>
-        </div>
       </div>
       </Layout>
     )

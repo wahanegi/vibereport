@@ -14,11 +14,10 @@
           $royal-blue, $gray-100);
 
   // use with C1 text
-  &.btn-regular {
-    min-width: 15rem;
-    height: 3.75rem;
-    border: 1px solid $black;
-    box-shadow: $btn-box-shadow-other !important;
+  &.btn-regular{
+    min-width:        15rem;
+    height:           3.75rem;
+    box-shadow:       $btn-box-shadow-other !important;
   }
 
   &.btn-danger {
@@ -27,9 +26,9 @@
   }
 
   // use with C2 or C3 text
-  &.btn-feature {
-    border: 2.5px solid $royal-blue;
+  &.btn-feature{
     box-shadow: $btn-box-shadow-other;
+    height: 3.75rem;
 
     &.w-385 {
       width: 24.06rem;
@@ -127,21 +126,6 @@
     opacity: 0.5;
   }
 
-  &.emotion {
-    position: relative;
-    padding: 10px 40px;
-    height: 70px;
-    border: 2.25806px solid #000000;
-    box-shadow: 9.03226px 13.5484px 9.03226px rgba(0, 0, 0, 0.25);
-    border-radius: 33.871px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 43.81px;
-    line-height: 44px;
-    text-align: center;
-    cursor: default !important;
-  }
-
   &.shoutout {
     position: relative;
     padding: 5px;
@@ -159,16 +143,5 @@
       height: 36px;
       margin-left: 5px
     }
-  }
-
-  .edit-icon {
-    position: absolute;
-    bottom: 41px;
-    right: -11px;
-    width: 40px;
-    height: 40px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    cursor: pointer;
   }
 }

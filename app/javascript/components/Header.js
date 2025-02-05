@@ -4,12 +4,11 @@ import Menu from './UI/Menu';
 
 const Header = ({data, steps, draft, handleSaveDraft, saveDataToDb, isResult = false}) => {
   return (
-    <header className="container-fluid d-flex flex-wrap flex-md-nowrap align-items-center justify-content-between bg-light py-2">
+    <header
+      className="container-fluid d-flex flex-wrap flex-md-nowrap align-items-center justify-content-between bg-light py-2">
       <div className="flex-shrink-1">
         <Logo/>
       </div>
-      {/*TODO: DELETE*/}
-      <p className={"text-primary"}>Test colors</p>
       <div className="d-flex justify-content-end flex-grow-1">
         <Menu
           saveDataToDb={saveDataToDb}

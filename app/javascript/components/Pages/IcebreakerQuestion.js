@@ -142,35 +142,37 @@ const IcebreakerQuestion = ({
             </h1>
           </div>
           <div className="mb-2">
-            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow col-12 col-md-8">
+            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
               <p className="fs-5 text-gray-600">
                 <span className="text-primary">@</span>
                 {userName} asks:
               </p>
               {loaded && (
                 <div className="w-100">
-                  <div className='border border-3 rounded rounded-4 border-emerald p-1 costume-focus'>
-                  <form>
-                    <textarea
-                      className="w-100 p-1 border-0 shadow-none wrap-textarea"
-                      name="question_body"
-                      placeholder="What would you ask the team? You could be selected!"
-                      value={funQuestion?.question_body || ''}
-                      onChange={onChangQuestion}
-                      maxLength={MAX_CHAR_LIMIT}
-                      style={{ height: '295px' }}
-                    />
-                  </form>
+                  <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
+                    <form>
+                      <textarea
+                        className="w-100 p-1 border-0 wrap-textarea"
+                        name="question_body"
+                        placeholder="What would you ask the team? You could be selected!"
+                        value={funQuestion?.question_body || ''}
+                        onChange={onChangQuestion}
+                        maxLength={MAX_CHAR_LIMIT}
+                        style={{ height: '295px' }}
+                      />
+                    </form>
                   </div>
                 </div>
               )}
             </div>
           </div>
-          <BlockLowerBtns
-            isSubmit={true}
-            handlingOnClickNext={handlingOnClickNext}
-            stringBody={funQuestionBody}
-          />
+          <div className="max-width-icebreaker mx-auto">
+            <BlockLowerBtns
+              isSubmit={true}
+              handlingOnClickNext={handlingOnClickNext}
+              stringBody={funQuestionBody}
+            />
+          </div>
         </div>
       )}
     </Layout>

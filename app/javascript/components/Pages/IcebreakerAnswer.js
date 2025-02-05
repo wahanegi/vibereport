@@ -160,13 +160,17 @@ const IcebreakerAnswer = ({
           <div className="mb-3 d-flex flex-column">
             <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
             <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>
-            <h2 className={`${'text-black mb-0 fs-5 fs-md-3'} ${!user && 'd-none'}`}>
+            <h2
+              className={`${'text-black mb-0 fs-5 fs-md-3'} ${
+                !user && 'd-none'
+              }`}
+            >
               Brought to us by <span className="text-primary">@</span>
               {user}
             </h2>
           </div>
           <div className="mb-2">
-            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow col-12 col-md-8">
+            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
               {user && (
                 <p className="fs-5 text-gray-600">
                   <span className="text-primary">@</span>
@@ -175,27 +179,29 @@ const IcebreakerAnswer = ({
               )}
               <h5 id="question">{question_body}</h5>
               <div className="w-100">
-              <div className='border border-3 rounded rounded-4 border-emerald p-1 costume-focus'>
-                <form>
-                  <textarea
-                    className="w-100 p-1 border-0 shadow-none wrap-textarea"
-                    name="answer_body"
-                    style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
-                    placeholder="Tell us what you think!"
-                    value={answerFunQuestion?.answer_body || ''}
-                    onChange={onChangAnswer}
-                    maxLength={MAX_CHAR_LIMIT}
-                  />
-                </form>
+                <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
+                  <form>
+                    <textarea
+                      className="w-100 p-1 border-0 wrap-textarea"
+                      name="answer_body"
+                      style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
+                      placeholder="Tell us what you think!"
+                      value={answerFunQuestion?.answer_body || ''}
+                      onChange={onChangAnswer}
+                      maxLength={MAX_CHAR_LIMIT}
+                    />
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-          <BlockLowerBtns
-            isSubmit={true}
-            handlingOnClickNext={handlingOnClickNext}
-            stringBody={answerBody}
-          />
+          <div className="max-width-icebreaker mx-auto">
+            <BlockLowerBtns
+              isSubmit={true}
+              handlingOnClickNext={handlingOnClickNext}
+              stringBody={answerBody}
+            />
+          </div>
         </div>
       )}
     </Layout>
