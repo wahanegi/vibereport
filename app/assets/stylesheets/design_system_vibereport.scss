@@ -143,25 +143,11 @@ input, textarea {
   }
 }
 
-/*TODO: do not use*/
-//textarea {
-//&.b1 {
-//  height: calc(2.5rem * ($line-height-base * 6 - 1));
-//}
-//
-//&.b2 {
-//  height: calc(2rem * ($line-height-base * 6 - 0.95));
-//}
-//
-//&.b3 {
-//  height: calc(1.5rem * ($line-height-base * 6 - 0.8));
-//}
-
-//TODO in USE for emotion-intensity!!!
-//&:focus {
-//  border-color: $royal-blue !important;
-//}
-//}
+textarea {
+  &:focus {
+    border-color: $royal-blue !important;
+  }
+}
 
 
 // Using with the Special inputs

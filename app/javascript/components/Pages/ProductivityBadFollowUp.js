@@ -69,7 +69,6 @@ const ProductivityBadFollowUp = ({
             <BlockLowerBtns nextHandling={handlingOnClickNext} />
           </div>
         </div>
-        <BlockLowerBtns nextHandling={handlingOnClickNext} />
       </Layout>
     )
   );
