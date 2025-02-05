@@ -8,12 +8,14 @@ Here styles for:
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+    font-family: 'Josefin Sans', 'Arial', 'Ubuntu', sans-serif;
     font-style: normal;
 }
+
 .italic {
     font-style: italic;
 }
+
 .convert {
     width: 127px;
     height: 58px;
@@ -23,6 +25,7 @@ Here styles for:
     border: 1px solid #000000;
     box-shadow: 4px 4px 4px #8c8888;
 }
+
 .convert p {
     font-size: 12px;
     line-height: 12px;
@@ -30,6 +33,7 @@ Here styles for:
     padding-top: 1px;
     padding-left: 5px;
 }
+
 .color-primary {
     color: #D7007B;
 }
@@ -41,6 +45,7 @@ Here styles for:
     border-bottom: 1px solid #000000;
     transform: rotate(-155.83deg);
 }
+
 .line2 {
     width: 137px;
     margin-top: 0;
@@ -48,53 +53,65 @@ Here styles for:
     border-bottom: 1px solid #000000;
     transform: rotate(-23.42deg);
 }
-.offset-line2{
+
+.offset-line2 {
     width: 207.14px;
     margin-top: -1.5px;
     margin-left: -9.5px;
     transform: rotate(-24.4deg);
 }
-.offset-line1{
+
+.offset-line1 {
     width: 207.14px;
     margin-top: 29.3px;
     margin-left: -9.4px;
     transform: rotate(-155.6deg);
 }
+
 .bigger {
     width: 190px;
     height: 87px;
 }
-.ml-200{
+
+.ml-200 {
     margin-left: 200px;
 }
-.ml-240{
+
+.ml-240 {
     margin-left: 240px;
 }
-.mt-37{
-    margin-top:37px;
+
+.mt-37 {
+    margin-top: 37px;
 }
-.ml-41{
+
+.ml-41 {
     margin-left: 41px;
 }
-.mr-30{
+
+.mr-30 {
     margin-right: 30px;
 }
-.p-0{
-    padding:0;
+
+.p-0 {
+    padding: 0;
 }
-.h-40{
+
+.h-40 {
     height: 40px;
 }
-@media only screen and (max-width: 1380px){
-    .h-40{
+
+@media only screen and (max-width: 1380px) {
+    .h-40 {
         height: 57px;
     }
-    .mt-37{
-        margin-top:20px;
+
+    .mt-37 {
+        margin-top: 20px;
     }
 }
 
-.positive,.neutral,.negative{
+.positive, .neutral, .negative {
     height: 31px;
     font-size: 19px;
     line-height: 19px;
@@ -102,42 +119,51 @@ Here styles for:
     cursor: pointer;
     padding-top: 5.6px;
 }
-.positive-a,.neutral-a,.negative-a{
+
+.positive-a, .neutral-a, .negative-a {
     font-weight: bold;
     text-decoration: none;
     height: 31px;
     font-size: 19px;
 }
-.positive-a:hover,.neutral-a:hover,.negative-a:hover{
+
+.positive-a:hover, .neutral-a:hover, .negative-a:hover {
     text-decoration: #0a53be;
     font-weight: bold;
     height: 31px;
 }
+
 .positive {
     border: 1px solid #000000;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
 }
+
 .positive-a {
     color: #4F9B64;
 }
-.negative{
+
+.negative {
     border: 1px solid #000000;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
 }
+
 .negative-a {
-     color: #D1794E;
- }
-.neutral{
+    color: #D1794E;
+}
+
+.neutral {
     border: 1px solid #000000;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
 }
+
 .neutral-a {
     color: #4C77CB;
- }
-.link-text{
+}
+
+.link-text {
     display: block;
     width: 100%;
     max-width: 385px;
@@ -155,67 +181,80 @@ Here styles for:
 /*       BELLOW STYLES FOR EMAIL response_invite.html.erb. PLEASE DON'T CHANGE IT!!!        */
 
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
-font-style: normal;
-font-weight:700;
-text-align: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', 'Arial', 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
 }
-.board{
+
+.board {
     width: 100%;
-    max-width: 1080px; 
+    max-width: 1080px;
     margin: 0 auto;
     padding: 0 20px;
 }
-.mt-35{
+
+.mt-35 {
     margin-top: 35px;
 }
+
 .mx-auto {
     margin-left: auto;
     margin-right: auto
 }
+
 .my-0 {
     margin-top: 0;
     margin-bottom: 0
 }
+
 @media only screen and (min-width: 720px) {
     .emotions {
         width: 720px;
     }
 }
-.d-flex, .center-text{
+
+.d-flex, .center-text {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.first-row{
-    height:8px;
+
+.first-row {
+    height: 8px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
-.second-row{
-    height:50px;
+
+.second-row {
+    height: 50px;
     text-align: left;
 }
 
-.ml-55{
+.ml-55 {
     margin-left: 55px;
 }
-.mt-10{
+
+.mt-10 {
     margin-top: 10px;
 }
-.pt-20{
+
+.pt-20 {
     padding-top: 20px;
 }
-.pl-15{
+
+.pl-15 {
     padding-left: 15px;
 }
-.my-8{
+
+.my-8 {
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
 .calendar {
     text-align: left;
     width: 102px;
@@ -225,6 +264,7 @@ text-align: center;
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 .calendar-complete-by {
     width: 102px;
     height: 115px;
@@ -232,6 +272,7 @@ text-align: center;
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 .invitation {
     width: 100%;
     max-width: 453px;
@@ -242,16 +283,19 @@ text-align: center;
     margin: 0 auto;
     padding: 8px;
 }
-.emotions{
+
+.emotions {
     width: 100%;
     max-width: 720px;
-    margin:  0 auto;
+    margin: 0 auto;
     padding-bottom: 6px;
 }
+
 .underline_list {
     border-bottom: 3px solid #D2D2D2;
     margin: 0 auto;
 }
+
 .data {
     padding-top: 55px;
     width: 102px;
@@ -262,6 +306,7 @@ text-align: center;
     white-space: nowrap;
     text-transform: capitalize;
 }
+
 .question {
     width: 100%;
     max-width: 735px;
@@ -272,17 +317,20 @@ text-align: center;
     /* white-space: pre-line; */
     /* min-height: 100px; */
 }
-.lnk-was-not a{
+
+.lnk-was-not a {
     font-size: 23px;
     white-space: nowrap;
     text-decoration-line: underline;
     line-height: normal;
     color: #0007A3;
 }
+
 .lint-to-right {
     float: right;
 }
-.row-over-links{
+
+.row-over-links {
     height: 7px;
 }
 
@@ -292,7 +340,8 @@ text-align: center;
     justify-content: space-between;
     margin-top: 40px;
 }
-.btn-emotion{
+
+.btn-emotion {
     min-width: 100px;
     height: 31px;
     font-size: 1rem;
@@ -304,19 +353,23 @@ text-align: center;
     margin: 5px;
     padding: 5px 10px;
 }
-.positive{
+
+.positive {
     color: #4F9B64;
     background: #CCEDD5;
 }
-.negative{
+
+.negative {
     background: #FCDDCE;
     color: #D1794E;
 }
-.neutral{
+
+.neutral {
     background: rgba(86, 137, 235, 0.3);
     color: #4C77CB;
 }
-.big-btn-tooltip{
+
+.big-btn-tooltip {
     width: 100%;
     max-width: 378px;
     height: 19px;
@@ -325,9 +378,11 @@ text-align: center;
     color: rgba(0, 0, 0, 0.7);
     margin: 18px auto 14px auto;
 }
-.correct{
+
+.correct {
     height: 31px;
 }
+
 .neutral-area {
     margin: 0 auto;
     padding: 5px 0;
@@ -336,7 +391,8 @@ text-align: center;
     height: 55px;
     border-bottom: 3px solid #D2D2D2;
 }
-.big-btn{
+
+.big-btn {
     box-sizing: border-box;
     width: 100%;
     max-width: 385px;
@@ -344,7 +400,8 @@ text-align: center;
     background: #FFFFFF;
     margin: 0 auto 24px;
 }
-.big-btn-text a{
+
+.big-btn-text a {
     display: inline-block;
     padding: 13px 23px 13px 23px;
     font-size: 2.25rem;
@@ -365,6 +422,7 @@ text-align: center;
         line-height: 1.2;
     }
 }
+
 .lnk-unsubscribe a {
     font-size: 16px;
     line-height: 19px;
@@ -379,29 +437,35 @@ text-align: center;
     height: 3.7rem;
     margin-bottom: 2.125rem;
 }
-.logo-magic{
+
+.logo-magic {
     max-width: 100%;
     height: auto;
     color: #000;
 }
+
 .second-row-magic {
     width: 100%;
 }
+
 .greeting {
     font-weight: 700;
     font-size: 3rem;
     line-height: 3rem;
     color: #000000;
 }
+
 .welcome {
     font-size: 2rem;
     line-height: 2.5rem;
     margin-top: 15px;
 }
+
 .third-row-magic {
     width: 100%;
     margin-bottom: 0.875rem;
 }
+
 .submit-annotation {
     font-size: 1.5rem;
     font-weight: 700;
@@ -409,10 +473,12 @@ text-align: center;
     margin-top: 15px;
     color: #000000;
 }
+
 .fourth-row-magic {
     width: 100%;
     margin-top: 2rem;
 }
+
 .btn-magic {
     width: 14.688rem;
     height: 3.75rem;
@@ -422,11 +488,12 @@ text-align: center;
     border-radius: 0.75rem;
     font-weight: 700;
     font-size: 2rem;
-    font-family: 'Inter',  sans-serif;
+    font-family: 'Inter', sans-serif;
     line-height: 2.4rem;
     align-items: center;
     color: #FFFFFF;
 }
+
 .btn-remind {
     max-width: 16.688rem;
     height: 3.75rem;
@@ -436,15 +503,17 @@ text-align: center;
     border-radius: 0.75rem;
     font-weight: 700;
     font-size: 2rem;
-    font-family: 'Inter',  sans-serif;
+    font-family: 'Inter', sans-serif;
     line-height: 2.4rem;
     align-items: center;
     color: #FFFFFF;
 }
+
 .btn-text-remind {
     padding: .625rem 1.563rem .3125rem 1.563rem;
     height: 2.813rem;
 }
+
 .btn-text-remind a {
     color: white;
     font-family: 'Inter', sans-serif;
@@ -453,11 +522,13 @@ text-align: center;
     white-space: nowrap;
     text-decoration: none;
 }
+
 .btn-text-magic {
     padding: .625rem 1.563rem .3125rem 1.563rem;
     width: 11.563rem;
     height: 2.813rem;
 }
+
 .btn-text-magic a {
     color: white;
     font-family: 'Inter', sans-serif;
@@ -466,13 +537,14 @@ text-align: center;
     white-space: nowrap;
     text-decoration: none;
 }
-.btn-magic:hover{
+
+.btn-magic:hover {
     cursor: pointer;
 }
 
 /* send_results_email */
 
-  
+
 .random-word:hover {
     transform: scale(1.2);
 }
@@ -481,9 +553,10 @@ text-align: center;
     height: 55px;
     font-size: 24px;
     line-height: 24px;
-    color:       #454547;
+    color: #454547;
     padding: 8px;
 }
+
 .text-check {
     font-size: 20px;
     line-height: 25px;
@@ -519,13 +592,14 @@ html {
 
 .responses-words {
     position: relative;
-    width: 850px;
-    height: 325px;
-    overflow: inherit;
+    width: 100%;
+    max-width: 850px;
+    height: auto;
+    overflow: hidden;
     margin-bottom: 30px;
 }
 
-.link-text-results{
+.link-text-results {
     display: block;
     width: 385px;
     height: 70px;
@@ -557,19 +631,20 @@ html {
 }
 
 /* reminder_email */
-.first-row-reminder{
+.first-row-reminder {
     text-align: left;
 }
-.second-row-reminder{
+
+.second-row-reminder {
     margin-top: 15xpx;
-    max-height: 61 
+    max-height: 61
 }
 
-.mt-40{
+.mt-40 {
     margin-top: 40px;
 }
 
-.text-reminder{
+.text-reminder {
     width: 100%;
     max-width: 453px;
     color: rgba(0, 0, 0, 0.7);
