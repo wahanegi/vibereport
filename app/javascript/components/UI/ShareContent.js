@@ -28,8 +28,8 @@ export const BigBtnEmotion = ({ emotion, onClick, showPencil = true, addClass = 
 
   const appliedStyles = categoryStyles[categoryClass] || '';
 return(
-  <button className={`${addClass} btn-custom emotion ${appliedStyles}`}>
-    <span hidden={!showPencil} onClick={onClick} className="edit-icon">
+  <button className={`${addClass} container-fluid btn-custom fs-lg-2 fs-sm-3 p-1 px-auto rounded-pill emotion position-relative ${appliedStyles}`}>
+    <span hidden={!showPencil} onClick={onClick} className="position-absolute start-100 translate-middle">
       <img src={edit_pencil} alt="pencil"/>
     </span>
     {emotion.word}
@@ -44,12 +44,12 @@ export const BtnSendMoreShoutouts = ({ onClick }) =>
   </button>
 
 export const BtnOutline = ({ text, addClass = '', onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-feature btn-lg text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-feature btn-lg border border-3 border-royal-blue fs-lg-4 fs-sm-6 text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`} disabled={disabled}>
     {text}
   </button>
 
 export const BtnPrimary = ({ text, addClass = '', hidden, onClick, disabled }) =>
-  <button onClick={onClick} className={`btn btn-lg btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular fs-4 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
