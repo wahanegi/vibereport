@@ -182,7 +182,7 @@ const IcebreakerAnswer = ({
                 <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
                   <form>
                     <textarea
-                      className="w-100 p-1 border-0 wrap-textarea"
+                      className="w-100 p-1 border-0 wrap-textarea shadow-none"
                       name="answer_body"
                       style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
                       placeholder="Tell us what you think!"
