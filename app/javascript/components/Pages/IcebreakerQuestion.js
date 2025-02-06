@@ -1,25 +1,20 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import {
-  isBlank,
-  isEmptyStr,
-  isNotEmptyStr,
-  isPresent,
-} from '../helpers/helpers';
-import { apiRequest } from '../requests/axios_requests';
 import axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import {MAX_CHAR_LIMIT} from '../helpers/consts';
+import {isBlank, isEmptyStr, isNotEmptyStr, isPresent,} from '../helpers/helpers';
 import Layout from '../Layout';
+import {apiRequest} from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import { MAX_CHAR_LIMIT } from '../helpers/consts';
 
 const IcebreakerQuestion = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
-  const { isLoading, error } = service;
+                              data,
+                              setData,
+                              saveDataToDb,
+                              steps,
+                              service,
+                              draft,
+                            }) => {
+  const {isLoading, error} = service;
   const [loaded, setLoaded] = useState(false);
   const [prevStateQuestion, setPrevStateQuestion] = useState({});
   const [funQuestion, setFunQuestion] = useState({});
@@ -43,12 +38,13 @@ const IcebreakerQuestion = ({
 
   const handleSaveDraft = () => {
     const dataFromServer = (fun_question) => {
-      saveDataToDb(steps, { fun_question_id: fun_question.data.id });
+      saveDataToDb(steps, {fun_question_id: fun_question.data.id});
     };
-    const dataDraft = { dataRequest, draft: true };
+    const dataDraft = {dataRequest, draft: true};
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
-    saveDataQuestion(() => {}, dataFromServer);
+    saveDataQuestion(() => {
+    }, dataFromServer);
   };
 
   const handlingOnClickNext = () => {
@@ -78,15 +74,19 @@ const IcebreakerQuestion = ({
           'PATCH',
           dataRequest,
           dataFromServer,
-          () => {},
+          () => {
+          },
           `${url}${id}`
         ).then();
       } else if (isEmptyStr(funQuestionBody)) {
         apiRequest(
           'DELETE',
-          () => {},
-          () => {},
-          () => {},
+          () => {
+          },
+          () => {
+          },
+          () => {
+          },
           `${url}${id}`
         ).then(goToResultPage);
       } else {
@@ -99,7 +99,8 @@ const IcebreakerQuestion = ({
         'POST',
         dataRequest,
         dataFromServer,
-        () => {},
+        () => {
+        },
         `${url}`
       ).then();
     }
@@ -107,7 +108,7 @@ const IcebreakerQuestion = ({
 
   const onChangQuestion = (e) => {
     setFunQuestion(
-      Object.assign({}, funQuestion, { [e.target.name]: e.target.value })
+      Object.assign({}, funQuestion, {[e.target.name]: e.target.value})
     );
   };
 
@@ -115,11 +116,11 @@ const IcebreakerQuestion = ({
     const fun_question_id = data.response.attributes.fun_question_id;
     isBlank(fun_question_id) && setLoaded(true);
     fun_question_id &&
-      axios.get(`/api/v1/fun_questions/${fun_question_id}`).then((res) => {
-        setPrevStateQuestion(res.data.data?.attributes);
-        setFunQuestion(res.data.data?.attributes);
-        setLoaded(true);
-      });
+    axios.get(`/api/v1/fun_questions/${fun_question_id}`).then((res) => {
+      setPrevStateQuestion(res.data.data?.attributes);
+      setFunQuestion(res.data.data?.attributes);
+      setLoaded(true);
+    });
   }, []);
 
   if (!!error) return <p>{error.message}</p>;
@@ -142,7 +143,8 @@ const IcebreakerQuestion = ({
             </h1>
           </div>
           <div className="mb-2">
-            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
+            <div
+              className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
               <p className="fs-5 text-gray-600">
                 <span className="text-primary">@</span>
                 {userName} asks:
@@ -152,13 +154,13 @@ const IcebreakerQuestion = ({
                   <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
                     <form>
                       <textarea
-                        className="w-100 p-1 border-0 wrap-textarea shadow-none"
+                        className="w-100 p-1 border-0 shadow-none wrap-textarea textarea-resize-none"
                         name="question_body"
                         placeholder="What would you ask the team? You could be selected!"
                         value={funQuestion?.question_body || ''}
                         onChange={onChangQuestion}
                         maxLength={MAX_CHAR_LIMIT}
-                        style={{ height: '295px' }}
+                        style={{height: '295px'}}
                       />
                     </form>
                   </div>

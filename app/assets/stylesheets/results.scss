@@ -4,24 +4,26 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     background-color: $white;
+
     &.question {
       padding: 32px 27px 18px 27px;
       border: 3px solid $emerald;
       background: $tea-green;
+
       &.preview {
         height: 500px;
       }
     }
 
-    //TODO: not used
-    //&.shoutout {
-    //  padding: 32px 10px 18px 10px;
-    //  background: $pink;
-    //  border: 3px solid $red-violet;
-    //  &.preview {
-    //    height: 500px;
-    //  }
-    //}
+    &.shoutout {
+      padding: 32px 10px 18px 10px;
+      background: $pink;
+      border: 3px solid $red-violet;
+
+      &.preview {
+        height: 500px;
+      }
+    }
 
     &.answer {
       background-color: $white;
@@ -33,25 +35,19 @@
       background-color: $white;
       min-height: auto;
       color: $green-700;
+
       &.hover-event {
         background-color: $green-700;
         color: $white;
         border: 3px solid $white;
       }
     }
-
-    /*TODO: not used */
-    //.expand-icon {
-    //  width: 26.6px;
-    //  height: 26px;
-    //  padding: 0
-    //}
   }
 
   .edit-question {
     .form-control {
       box-shadow: none !important;
-      border:1px solid $gray-100 !important;
+      border: 1px solid $gray-100 !important;
     }
   }
 }
@@ -72,15 +68,18 @@
   max-width: 180px;
   white-space: normal;
 }
+
 .emoji-button {
   height: 22px;
   width: 22px;
   margin-left: 4px;
   background-image: url("reshot-icon-smile.svg");
+
   &:hover {
     background-image: url("reshot-icon-grinning.svg");
   }
 }
+
 .emoji-picker {
   font-size: 14px;
   position: absolute;
@@ -94,6 +93,7 @@
   margin-left: 4px;
   margin-right: 4px;
 }
+
 .padding-x2 {
   padding-left: 2px;
   padding-right: 2px;

@@ -1,10 +1,10 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
+import PoweredBy from '../../../assets/images/PoweredBy.svg';
+import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
 import {capitalizeFirstLetter, isBlank} from '../helpers/helpers';
 import Layout from '../Layout';
-import ButtonEmotion from '../UI/ButtonEmotion';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
-import PoweredBy from '../../../assets/images/PoweredBy.svg';
+import ButtonEmotion from '../UI/ButtonEmotion';
 
 const IntenseLine = ({
                        rating, setRating, comment, setComment, generateStyles, category, isBlankGif,
@@ -98,7 +98,7 @@ const EmotionIntensity = ({
           className={`small-image-powered-by align-top`}
         />
       </div>
-      <div className="emotion-small">
+      <div className="mb-2">
         <ButtonEmotion category={category}>{word}</ButtonEmotion>
       </div>
     </div>
@@ -171,10 +171,10 @@ const EmotionIntensity = ({
         </div>
       </div>
       <div className='max-width-emotion-intensity mx-auto'>
-      <BlockLowerBtns
-        nextHandling={handlingOnClickNext}
-        disabled={isBlank(rating)}
-      />
+        <BlockLowerBtns
+          nextHandling={handlingOnClickNext}
+          disabled={isBlank(rating)}
+        />
       </div>
     </div>
   </Layout>));

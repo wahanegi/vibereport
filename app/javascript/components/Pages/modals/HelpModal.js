@@ -1,28 +1,29 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
+import {Link} from 'react-router-dom';
 import xClose from '../../../../assets/images/sys_svg/x-close.svg';
-import { isBlank } from '../../helpers/helpers';
-import { Link } from 'react-router-dom';
-import { apiRequest } from '../../requests/axios_requests';
+import {isBlank} from '../../helpers/helpers';
+import {apiRequest} from '../../requests/axios_requests';
 
 const HelpModal = ({
-  showHelpModal,
-  setShowHelpModal,
-  current_user,
-  handleShowAlert,
-}) => {
+                     showHelpModal,
+                     setShowHelpModal,
+                     current_user,
+                     handleShowAlert,
+                   }) => {
   if (isBlank(current_user)) return;
   const [details, setDetailsText] = useState('');
   const ref = useRef(null);
   const createNotification = () => {
-    const dataSend = { details };
-    const dataFromServer = ({ callback }) => {
+    const dataSend = {details};
+    const dataFromServer = ({callback}) => {
       if (callback === 'success') {
         handleShowAlert();
       }
     };
     const url = '/api/v1/notifications/';
-    apiRequest('POST', dataSend, dataFromServer, () => {}, `${url}`).then();
+    apiRequest('POST', dataSend, dataFromServer, () => {
+    }, `${url}`).then();
   };
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const HelpModal = ({
       >
         <img
           src={xClose}
-          className="position-absolute top-0 start-100 translate-middle x-close"
+          className="position-absolute top-0 start-100 translate-middle pointer"
           onClick={() => {
             setShowHelpModal(false);
           }}
@@ -72,7 +73,7 @@ const HelpModal = ({
               <form>
                 <textarea
                   ref={ref}
-                  className="help-modal-textarea w-100 border-0 p-1 rounded-0 shadow-none"
+                  className="help-modal-textarea w-100 border-0 p-1 rounded-0 shadow-none textarea-resize-none x-close"
                   value={details}
                   placeholder="We will do our best to address your concern(s)."
                   onChange={(e) => setDetailsText(e.target.value)}

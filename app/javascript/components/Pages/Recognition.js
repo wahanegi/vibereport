@@ -1,13 +1,13 @@
-import React, {useState, useEffect, useRef} from 'react';
-import BlockLowerBtns from "../UI/BlockLowerBtns";
 import parse from 'html-react-parser'
+import React, {useEffect, useState} from 'react';
 import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
-import ShoutoutModal from './modals/ShoutoutModal';
-import trashRed from "../../../assets/images/sys_svg/frame-440.png"
 import trash from "../../../assets/images/sys_svg/frame-439.png"
-import ShoutoutDelete from "../UI/ShoutoutDelete";
+import trashRed from "../../../assets/images/sys_svg/frame-440.png"
 import Layout from "../Layout";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 import ShoutoutButton from "../UI/ShoutoutButton";
+import ShoutoutDelete from "../UI/ShoutoutDelete";
+import ShoutoutModal from './modals/ShoutoutModal';
 
 const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const [shoutOutForm, setShoutOutForm] = useState({status: false, editObj: {}})
@@ -70,7 +70,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
   const output = (shoutOuts) => {
     return (
-      <ul className='d-flex d-sm-flex flex-column gap-4 p-3'>
+      <ul className='d-flex d-sm-flex flex-column gap-4 p-3 list-unstyled'>
         {shoutOuts.map(shoutOut => (
           <li
             className='c3 bg-light fs-lg-2 fs-sm-4 position-relative align-middle border rounded-4 border-3 border-primary p-1 text-break'
@@ -140,7 +140,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
                              setData={setData}
                              editObj={shoutOutForm.editObj}/>}
             <div
-              className='container container-sm container-md justify-content-center field-shout-outs border border-4 rounded-4 border-primary'>
+              className='container container-sm container-md justify-content-center border border-4 rounded-4 border-primary field-shout-outs'>
               {output(shoutOuts)}
             </div>
             <div className='mb-6'>

@@ -1,25 +1,7 @@
-// TODO: fix file name "emOtion_entry.scss
-//@import "colors";
-//@import "design_system_vibereport";
-
-/*TODO: do not use*/
-//h4.emotion-entry {
-//  font-weight: 400;
-//  color: $gray-600;
-//  color: $gray-600;
-//}
-
-//TODO: use BS-classes
-.input-new-word{
-  border-radius: 15px;
-  font-size: 40px;
-  height: auto;
-  padding: 2px 12px;
-
-  &::placeholder{
-    font-size: clamp(25px, 4vw, 36px);
-    font-weight: 700;
-    max-width: 100%;
+/* TODO: DONE Pages/EmotionEntry.js */
+.input-new-word {
+  &::placeholder {
+    @extend .fs-2, .fw-bold;
+    opacity: 1;
   }
 }
-

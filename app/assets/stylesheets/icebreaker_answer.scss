@@ -1,14 +1,10 @@
 @import 'colors';
 @import 'design_system_vibereport';
 
-/*TODO: use BS-classes & should be class as context-selector*/
+/*TODO: DONE Pages/IcebreakerAnswer.js & /IcebreakerQuestion.js*/
 .wrap-textarea {
-  resize: none;
-  //box-shadow: none !important;
   &:focus {
     outline: none;
-    border: none !important;
-    box-shadow: none !important;
   }
 }
 
@@ -17,6 +13,7 @@
     border: 6px solid $emerald !important;
   }
 }
+
 .max-width-icebreaker {
   max-width: 800px;
 }

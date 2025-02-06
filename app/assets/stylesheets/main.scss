@@ -48,22 +48,23 @@
 //  color: $light-grey;
 //}
 
-.email_field {
-  box-sizing: border-box;
-  background: $white;
-  margin: 0 auto;
-}
-
-.email_field input {
-  height: 70px;
-  font-size: 40px;
-  line-height: 70px;
-  color: $gray-600;
-  margin: 13px 0;
-  border: 3px solid $light-blue;
-  border-radius: 15px;
-  padding-left: 23px;
-}
+/*TODO: not used*/
+//.email_field {
+//  box-sizing: border-box;
+//  background: $white;
+//  margin: 0 auto;
+//}
+/*TODO: not used*/
+//.email_field input {
+//  height: 70px;
+//  font-size: 40px;
+//  line-height: 70px;
+//  color: $gray-600;
+//  margin: 13px 0;
+//  border: 3px solid $light-blue;
+//  border-radius: 15px;
+//  padding-left: 23px;
+//}
 
 /*TODO: not used*/
 //.pb-45 {
@@ -186,41 +187,43 @@
 //  outline: none;
 //}
 
+/*TODO: not used*/
 //create.html.erb
-.placement-area {
-  margin-top: 160px;
-  min-width: 750px;
-}
+//.placement-area {
+//  min-width: 750px;
+//}
 
 /*TODO: not used*/
 //.mb-negative-17 {
 //  margin-bottom: -17px;
 //}
 
-// TODO: use BS-classes: mb-*
-.mb-28 {
-  margin-bottom: 28px !important;
-}
+/*TODO: not used*/
+//.mb-28 {
+//  margin-bottom: 28px !important;
+//}
 
-// TODO: use BS-classes: mb-*
-.mt-64 {
-  margin-top: 63px;
-}
+/*TODO: not used*/
+//.mt-64 {
+//  margin-top: 63px;
+//}
 
-.size-message {
-  width: 746px;
-  height: 49px;
-}
+/*TODO: not used*/
+//.size-message {
+//  width: 746px;
+//  height: 49px;
+//}
 
-// TODO: use BS-classes: mb-*
-.mt-85 {
-  margin-top: 85px;
-}
+/*TODO: not used*/
+//.mt-85 {
+//  margin-top: 85px;
+//}
 
-.size-resolve-issue {
-  width: 500px;
-  height: 59px;
-}
+/*TODO: not used*/
+//.size-resolve-issue {
+//  width: 500px;
+//  height: 59px;
+//}
 
 /*TODO: not used*/
 //.placement-size-link {
@@ -239,18 +242,20 @@
 //  top: 35px;
 //}
 
-.h-59 {
-  height: 59px;
-}
+/*TODO: not used*/
+//.h-59 {
+//  height: 59px;
+//}
 
 /*TODO: not used*/
 //.mt-180 {
 //  margin-top: 180px;
 //}
 
-.pb-52 {
-  padding-bottom: 52px;
-}
+/*TODO: not used*/
+//.pb-52 {
+//  padding-bottom: 52px;
+//}
 
 /*TODO: del and use .pointer"*/
 //.pencil {
@@ -353,19 +358,18 @@
 //  }
 //}
 
-//TODO: use BS-classes
 .field-shout-outs {
   height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
 
-  ul {
-    list-style: none;
-    padding-inline-start: 20px !important;
-  }
+  //TODO: DEL -- use BS-classes
+  //ul {
+  //list-style: none;
+  //padding-inline-start: 20px !important;
+  //}
 
   li {
-
     p {
       &.cut-text {
         text-overflow: ellipsis;
@@ -406,37 +410,26 @@
   overflow-wrap: anywhere;
 }
 
-  //Productivity Bad Follow Up
-  .wrap-textarea-bad-follow{
-    height: 350px;
-    max-width: 660px;
-    textarea {
-      resize: none;
-      &:focus {
-        outline: none;
-        border: 6px solid;
-        box-shadow: none !important;
-      }
+//Productivity Bad Follow Up
+.wrap-textarea-bad-follow {
+  height: 350px;
+  max-width: 660px;
+
+  textarea {
+    &:focus {
+      outline: none;
+      border: 6px solid;
+      box-shadow: none !important;
     }
   }
+}
 
-  .max-width-bad-follow {
-    max-width: 800px;
-  }
+.max-width-bad-follow {
+  max-width: 800px;
+}
 
 .comment-label {
   textarea {
-    //TODO: use BS-classes
-    &.w660-h350-br15 {
-      padding: 5px 15px;
-      border: none !important;
-      border-radius: 0;
-
-      //TODO: use one for all textarea
-      width: 642px;
-      height: 315px !important;
-    }
-
     //TODO: do not DELETE
     &:focus {
       border: 6px solid $royal-blue !important;
@@ -455,8 +448,6 @@
 }
 
 .help-modal-textarea {
-  text-align: justify;
-  resize: none;
   height: 180px;
 
   &:focus {
@@ -467,7 +458,6 @@
 }
 
 .x-close {
-  cursor: pointer;
   z-index: 31;
 }
 
@@ -477,10 +467,10 @@
 //}
 
 /*TODO: should use BS-classes*/
-.emotion-small {
-  margin: 0px 0px 30px;
-  margin-top: -6px;
-}
+//.emotion-small {
+//margin: 0px 0px 30px;
+//margin-top: -6px;
+//}
 
 .pointer {
   cursor: pointer;
@@ -500,7 +490,7 @@
 //}
 
 //ProductivitySlider
-.productivity-container{
+.productivity-container {
 
   .form-range::-webkit-slider-thumb {
     height: 35px;
@@ -608,7 +598,8 @@
     font-family: $font-family-italic
   }
 
-  input:focus, textarea:focus {
+  input:focus,
+  textarea:focus {
     border: unset;
   }
 }
@@ -722,11 +713,6 @@
   z-index: 20;
   background: $medium-grey;
   filter: blur(50px);
-
-  /*TODO: not used*/
-  //&.celebrate-modal {
-  //  height: 140vh;
-  //}
 }
 
 
@@ -746,71 +732,75 @@
 
 .modal-help {
   z-index: 30;
-  top: 0;
+  //top: 0;
 
-  &.padding-placement {
-    padding-top: 15vh;
-  }
+  //&.padding-placement {
+  //padding-top: 15vh;
+  //}
 
   /*TODO: not used*/
-  &.lg {
-    //border-radius: 15px;
-    //textarea {
-    //  border: 4px solid $royal-blue !important;
-    //}
-  }
+  //&.lg {
+  //  border-radius: 15px;
+  //
+  //  textarea {
+  //    border: 4px solid $royal-blue !important;
+  //  }
+  //}
 
-  .x-close {
-    z-index: 31;
-    cursor: pointer;
-    margin-top: -45px;
-    @media (max-width: 991px) {
-      margin-left: 219px;
-    }
-    @media (min-width: 992px) {
-      margin-left: 371px;
-    }
+  //.x-close {
+  //  z-index: 31;
+  //cursor: pointer;
+  //margin-top: -45px;
 
-    /*TODO: not used*/
-    //&.lg {
-    //  margin-top: -31px;
-    //  @media (max-width: 991px) {
-    //    margin-left: 471px;
-    //  }
-    //  @media (min-width: 992px) {
-    //    margin-left: 765px;
-    //  }
-    //}
-  }
+  //@media (max-width: 991px) {
+  //  margin-left: 219px;
+  //}
+  //@media (min-width: 992px) {
+  //  margin-left: 371px;
+  //}
+
+  /*TODO: not used*/
+  //&.lg {
+  //  margin-top: -31px;
+  //  @media (max-width: 991px) {
+  //    margin-left: 471px;
+  //  }
+  //  @media (min-width: 992px) {
+  //    margin-left: 765px;
+  //  }
+  //}
+  //}
 }
 
 .place-size-shout-out {
-  height: 514px;
-  border-radius: 20px !important;
+  //height: 514px;
+  //border-radius: 20px !important;
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
-  overflow: auto;
+  //overflow: auto;
 
   .inner-div {
-   height: 390px;
-   z-index: 31;
-   overflow: auto;
-   border-color: transparent;
-  
-   &.form-control {
-     border-color: transparent !important;
-  
-     &:focus {
-       border-color: transparent !important;
-     }
-   }
+    height: 390px;
+    z-index: 31;
+    overflow: auto;
+    //border-color: transparent;
+
+    &.form-control {
+      border-color: transparent !important;
+
+      //&:focus {
+      //border-color: transparent !important;
+      //}
+    }
   }
 }
 
+//TODO: border not blue but pink !!!
 .custom-modal .modal-content {
   border: 4px solid $primary !important;
 }
 
+// TODO: STOP 06-02-2025
 //DropDownList
 .drop-down-block {
   &::-webkit-scrollbar {
@@ -1312,10 +1302,10 @@ input:checked + .slider-shoutout img {
       transform: scale(1.1);
     }
   }
+}
 
-  .textarea-resize-none {
-    resize: none;
-  }
+.textarea-resize-none {
+  resize: none;
 }
 
 .max-width-emotion-intensity, .max-width-recognition, .max-width-entry, .max-width-type {
