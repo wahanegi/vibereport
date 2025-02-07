@@ -749,15 +749,32 @@
 
   //.x-close {
   //  z-index: 31;
-  //cursor: pointer;
-  //margin-top: -45px;
-
-  //@media (max-width: 991px) {
+  //  cursor: pointer;
+  //  margin-top: -45px;
   //  margin-left: 219px;
+  //
+  //  @media (max-width: 991px) {
+  //    margin-left: 219px;
+  //  }
+  //  @media (min-width: 992px) {
+  //    margin-left: 371px;
+  //  }
   //}
-  //@media (min-width: 992px) {
-  //  margin-left: 371px;
-  //}
+
+  .x-close {
+    z-index: 31;
+    top: -25px;
+    right: -25px;
+
+    //@media (min-width: 576px) {
+    //  left: 219px; // Зміщення для середніх екранів
+    //}
+    //
+    //@media (min-width: 992px) {
+    //  left: 371px; // Зміщення для великих екранів
+    //}
+  }
+
 
   /*TODO: not used*/
   //&.lg {
@@ -768,7 +785,6 @@
   //  @media (min-width: 992px) {
   //    margin-left: 765px;
   //  }
-  //}
   //}
 }
 
