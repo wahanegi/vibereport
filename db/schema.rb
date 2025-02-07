@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_17_173020) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_07_121456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +91,15 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_17_173020) do
     t.bigint "user_id", null: false
     t.boolean "viewed", default: false, null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "code"
+    t.string "company"
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_projects_on_code", unique: true
   end
 
   create_table "responses", force: :cascade do |t|
