@@ -39,6 +39,6 @@ class FunQuestion < ApplicationRecord
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    %w[created_at id id_value public question_body time_period_id updated_at used user_id]
+    %w[fun_question_answers response time_period user]
   end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Api::V1::ResponseFlowFromEmail do
-  let!(:user) { create :user}
+  let!(:user) { create :user }
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
   let(:service) { create :emotion }

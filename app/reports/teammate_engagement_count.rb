@@ -36,7 +36,7 @@ class TeammateEngagementCount < AdminReport
   def filter_comments(comments, team_member_ids, team_member_names)
     comments.select do |comment|
       user_ids = Response.celebrate_user_ids_from_comment(comment)
-      (user_ids & team_member_ids).any? || team_member_names.any? { |name| comment.include?(name) }
+      user_ids.intersect?(team_member_ids) || team_member_names.any? { |name| comment.include?(name) }
     end
   end
 end
