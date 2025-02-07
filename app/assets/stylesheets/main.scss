@@ -938,31 +938,29 @@
 //  border: none !important;
 //}
 
+/*TODO: use BS -- DONE*/
 //RatherNotSay
-.rather-not-say-first-row {
-  margin-top: 240px;
-
-  div.row2 {
-    margin-top: -1rem;
-    max-width: 600px;
-    height: 75px;
-    white-space: pre-wrap;
-  }
-
-  div.row3 {
-    margin-top: 75px;
-  }
-
-  div.row4 {
-    margin-top: 94px;
-  }
-}
+//.rather-not-say-first-row {
+//  margin-top: 240px;
+//
+//  div.row2 {
+//    margin-top: -1rem;
+//    max-width: 600px;
+//    height: 75px;
+//    white-space: pre-wrap;
+//  }
+//
+//  div.row3 {
+//    margin-top: 75px;
+//  }
+//
+//  div.row4 {
+//    margin-top: 94px;
+//  }
+//}
 
 // Toggle emotion type
-.toggle-category {
-  position: relative;
-  z-index: 3;
-}
+
 
 .btn-group.wrap-toggle::before {
   content: "";
@@ -997,11 +995,18 @@
   box-shadow: 0 4px 4px 0 $gray-250;
 }
 
+/*TODO: use BS -- DONE*/
+//.toggle-category {
+//position: relative;
+//}
+
+/*TODO: use BS -- DONE*/
 .btn.toggle-category {
   max-width: 185px;
-  font-size: 16px;
-  color: $black;
-  border: none;
+  z-index: 3;
+  //font-size: 16px;
+  //color: $black;
+  //border: none;
   --bs-btn-border-color: none;
   background-color: transparent;
   border-radius: 100px !important;
@@ -1055,7 +1060,7 @@
 }
 
 
-/*TODO: not used*/
+/*TODO: not used -- DONE*/
 //.celebrate__suggestions__list {
 //  &::-webkit-scrollbar {
 //    width: 8px;
@@ -1098,12 +1103,14 @@
   height: 0 !important;
 }
 
+
+/*TODO: DONE*/
 .slider-shoutout {
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  //cursor: pointer;
+  //top: 0;
+  //left: 0;
+  //bottom: 0;
+  //right: 0;
   background-color: $switch-grey;
   box-shadow: 3px 4.5px 3px 0px $gray-250;
   border-radius: 100px;
@@ -1312,7 +1319,7 @@ input:checked + .slider-shoutout img {
   }
 }
 
-.textarea-resize-none {
+.resize-none {
   resize: none;
 }
 

@@ -40,7 +40,7 @@ const IntenseLine = ({
           <div className='py-1 mx-auto wrap-textarea'>
             <label className={"comment-label w-100 h-100"}>
               <textarea
-                className="w-100 h-100 p-2 rounded-4 shadow-none textarea-resize-none"
+                className="w-100 h-100 p-2 rounded-4 shadow-none resize-none"
                 placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
                 defaultValue={comment}
                 onChange={handleCommentClick}

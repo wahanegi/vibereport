@@ -154,7 +154,7 @@ const IcebreakerQuestion = ({
                   <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
                     <form>
                       <textarea
-                        className="w-100 p-1 border-0 shadow-none wrap-textarea textarea-resize-none"
+                        className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none"
                         name="question_body"
                         placeholder="What would you ask the team? You could be selected!"
                         value={funQuestion?.question_body || ''}

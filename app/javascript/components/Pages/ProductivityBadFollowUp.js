@@ -52,7 +52,7 @@ const ProductivityBadFollowUp = ({
           </h2>
 
           <form className="mx-2">
-            <label className="w-100 wrap-textarea-bad-follow textarea-resize-none">
+            <label className="w-100 wrap-textarea-bad-follow resize-none">
               <textarea
                 className="border-1 w-100 p-1 h-100"
                 placeholder="Is there anything that we can do to help?"

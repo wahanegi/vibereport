@@ -73,7 +73,7 @@ const HelpModal = ({
               <form>
                 <textarea
                   ref={ref}
-                  className="help-modal-textarea w-100 border-0 p-1 rounded-0 shadow-none textarea-resize-none x-close"
+                  className="help-modal-textarea w-100 border-0 p-1 rounded-0 shadow-none resize-none x-close"
                   value={details}
                   placeholder="We will do our best to address your concern(s)."
                   onChange={(e) => setDetailsText(e.target.value)}
