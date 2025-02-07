@@ -118,7 +118,7 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
         </Dropdown.Menu>
       </Dropdown>
       {!isStepUnsubscribe && (
-        <div className='fs-6 text-primary text-complete'>{getSrcMenu(lastSegment).percent}% complete</div>
+        <div className='fs-6 text-primary mt-1'>{getSrcMenu(lastSegment).percent}% complete</div>
       )}
       {showModal && (
         <SweetAlert

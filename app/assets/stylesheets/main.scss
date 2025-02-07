@@ -730,6 +730,7 @@
 //  }
 //}
 
+/*TODO: DONE*/
 .modal-help {
   z-index: 30;
   //top: 0;
@@ -738,7 +739,6 @@
   //padding-top: 15vh;
   //}
 
-  /*TODO: not used*/
   //&.lg {
   //  border-radius: 15px;
   //
@@ -760,7 +760,7 @@
   //    margin-left: 371px;
   //  }
   //}
-
+  /*TODO: DONE*/
   .x-close {
     z-index: 31;
     top: -25px;
@@ -776,7 +776,7 @@
   }
 
 
-  /*TODO: not used*/
+  /*TODO: DONE*/
   //&.lg {
   //  margin-top: -31px;
   //  @media (max-width: 991px) {
@@ -788,6 +788,7 @@
   //}
 }
 
+/*TODO: DONE*/
 .place-size-shout-out {
   //height: 514px;
   //border-radius: 20px !important;
@@ -813,7 +814,7 @@
 
 //TODO: border not blue but pink !!!
 .custom-modal .modal-content {
-  border: 4px solid $primary !important;
+  //border: 4px solid $primary !important;
 }
 
 //DropDownList
@@ -851,7 +852,7 @@
   padding-inline-end: 1.375rem !important;
 }
 
-/*TODO: not used*/
+/*TODO: not used DONE*/
 //.celebrate textarea {
 //  &::-webkit-scrollbar-track {
 //    margin-top: 10px;
@@ -859,13 +860,13 @@
 //  }
 //}
 
-/*TODO: use BS-classes*/
+/*TODO: use BS-classes DONE*/
 .modal-content {
   border-radius: 15px !important;
   border: 3px solid $royal-blue !important;
 }
 
-/*TODO: not used*/
+/*TODO: not used DONE*/
 //.celebrate-placeholder::before {
 //  position: absolute;
 //  top: 108px;
@@ -896,27 +897,27 @@
   opacity: 0.6;
 }
 
-/*TODO: not used*/
+/*TODO: not used DONE*/
 //a.dropdown-item {
 //  cursor: initial;
 //}
 
-/*TODO: use BS-classes*/
-.text-complete {
-  margin: 19px 0 0 0;
-}
+/*TODO: DONE*/
+//.text-complete {
+//  margin: 19px 0 0 0;
+//}
 
-.badge-secondary {
-  background: $light-grey;
-  border: 4px solid $light-grey;
-  border-radius: 15px;
+//.badge-secondary {
+//background: $light-grey;
+//border: 4px solid $light-grey;
+//border-radius: 15px;
 
-  a {
-    text-decoration: none;
-  }
-}
+//a {
+//  text-decoration: none;
+//}
+//}
 
-/*TODO: not used*/
+/*TODO: not used DONE*/
 //.form-check-input[type=checkbox] {
 //  background-color: $light-grey;
 //  border: none;
@@ -924,7 +925,7 @@
 //  color: $royal-blue;
 //}
 
-/*TODO: not used*/
+/*TODO: not used DONE*/
 //.modal-backdrop {
 //  z-index: 20 !important;
 //  background: $medium-grey !important;
@@ -932,7 +933,7 @@
 //  opacity: 1 !important;
 //}
 
-/*TODO: not used*/
+/*TODO: not used DONE*/
 //.modal-help.lg textarea {
 //  border: none !important;
 //}

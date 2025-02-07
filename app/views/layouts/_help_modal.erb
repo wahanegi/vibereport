@@ -9,9 +9,10 @@
 				<div class="d-flex align-items-center my-2">
 					<%= link_to "Send us an email", "mailto: support@#{ENV.fetch('EMAIL_DOMAIN')}", class: "btn btn-regular c1 d-flex align-items-center border-0" %>
 				</div>
-				<div class="badge-secondary">
-					<h6>Additional information about Vibe Report can be found at:</h6>
-					<%= link_to "https://samplenamerealsourcehere.com", "#", class: "h6" %>
+				<div class="bg-light-gray rounded-4 p-1 ">
+					<h6 class="text-start">Additional information about Vibe Report can be found at:</h6>
+					<%= link_to "https://samplenamerealsourcehere.com", "#", class: "h6 d-block text-wrap w-100 text-start
+					text-decoration-none" %>
 				</div>
 			</div>
 		</div>
