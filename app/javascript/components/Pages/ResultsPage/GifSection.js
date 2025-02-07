@@ -1,6 +1,6 @@
-import React from "react"
-import isEmpty from "ramda/src/isEmpty";
 import Tippy from '@tippyjs/react';
+import isEmpty from "ramda/src/isEmpty";
+import React from "react"
 import PoweredBy from "../../../../assets/images/PoweredBy.svg";
 
 const PreviewGifSection = () => {
@@ -15,17 +15,18 @@ const PreviewGifSection = () => {
   </div>)
 }
 
-const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
+const GifSection = ({gifs, nextTimePeriod, isMinUsersResponses}) => {
   const showPreview = !nextTimePeriod && isMinUsersResponses
-  
-  if (showPreview) return <PreviewGifSection />
+
+  if (showPreview) return <PreviewGifSection/>
 
   if (isEmpty(gifs)) return null
 
   const gifItems = gifs.sort((a, b) => a.image.height - b.image.height).map((gif, index) => {
-    return <div className='col align-items-center p-1' key={index}>
-      <Tippy content={<div className={`btn btn-bubbles wb1 not-shadow tippy ${gif.emotion.category}`}>{gif.emotion.word}</div>}>
-        <img src={gif.image.src} className="img-fluid" alt={`gif ${index}`} />
+    return <div className='col align-items-center p-1 gif-container' key={index}>
+      <Tippy content={<div
+        className={`btn btn-bubbles wb1 not-shadow tippy ${gif.emotion.category}`}>{gif.emotion.word}</div>}>
+        <img src={gif.image.src} className="img-fluid" alt={`gif ${index}`}/>
       </Tippy>
     </div>
   });
@@ -36,7 +37,7 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses }) => {
         {gifItems}
       </div>
     </div>
-    <img src={PoweredBy} alt='PoweredBy' className="big image-powered-by align-top" />
+    <img src={PoweredBy} alt='PoweredBy' className="big image-powered-by align-top"/>
   </>
 };
 

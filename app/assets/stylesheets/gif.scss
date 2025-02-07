@@ -17,6 +17,7 @@
   position: relative;
   border: 8px solid $sea-green;
   border-radius: 6px;
+
   img {
     width: 100%;
     height: 100%;
@@ -31,6 +32,7 @@
   width: 19%;
   border: 8px solid $steel-blue;
   border-radius: 6px;
+
   img {
     width: 100%;
     height: 100%;
@@ -44,6 +46,7 @@
   position: relative;
   border: 8px solid $cinnamon;
   border-radius: 6px;
+
   img {
     width: 100%;
     height: 100%;
@@ -79,15 +82,19 @@
 
   .card-header input {
     box-shadow: none;
+
     &.positive-input {
       color: $sea-green !important;
     }
+
     &.neutral-input {
       color: $steel-blue !important;
     }
+
     &.negative-input {
       color: $cinnamon;
     }
+
     &.other-input {
       color: $gray-500 !important;
     }
@@ -112,15 +119,16 @@
 }
 
 /*TODO: should replace with BS-class="border border-0"*/
-.border-none {
-  border: none !important;
-}
+//.border-none {
+//  border: none !important;
+//}
 
 .gif img {
   &.small {
     max-width: 312px;
     max-height: 170px;
   }
+
   &.big {
     max-width: 370px;
     max-height: 40vh;
@@ -128,15 +136,19 @@
 
   padding: 0;
   border-radius: 6px;
+
   &.image-positive {
     border: 6px solid $sea-green !important;
   }
+
   &.image-neutral {
     border: 6px solid $steel-blue !important;
   }
+
   &.image-negative {
     border: 6px solid $cinnamon !important;
   }
+
   &.image-powered-by {
     top: 0;
     right: 0;
@@ -145,6 +157,7 @@
     margin-top: 6px;
   }
 }
+
 .small-image-powered-by {
   position: initial;
   top: 0;
@@ -155,6 +168,15 @@
 }
 
 /*TODO: do not use*/
-.card-colors {
-  --bs-card-bg: unset !important;
+//.card-colors {
+//  --bs-card-bg: unset !important;
+//}
+
+.gif-container img {
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  max-height: 180px;
+  object-fit: cover;
 }
+
