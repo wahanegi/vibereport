@@ -49,8 +49,8 @@ module ActiveAdminHelpers
   end
 
   def trend_direction(value1, value2)
-    value1 = value1.is_a?(Array) ? value1[0] : value1
-    value2 = value2.is_a?(Array) ? value2[0] : value2
+    value1 = value1[0] if value1.is_a?(Array)
+    value2 = value2[0] if value2.is_a?(Array)
 
     trend = calculate_trend(value1.to_f, value2.to_f)
     trend_style = calculate_trend_style(trend)
@@ -72,8 +72,8 @@ module ActiveAdminHelpers
   private
 
   def float_lesser_than?(value1, value2)
-    value1 = value1.is_a?(Array) ? value1[0] : value1
-    value2 = value2.is_a?(Array) ? value2[0] : value2
+    value1 = value1[0] if value1.is_a?(Array)
+    value2 = value2[0] if value2.is_a?(Array)
     value1.to_f < value2.to_f
   end
 

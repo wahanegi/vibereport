@@ -12,7 +12,6 @@ ActiveAdmin.register UserTeam do
     actions
   end
 
-
   form do |f|
     f.inputs 'UserTeam' do
       f.input :user, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }

@@ -28,7 +28,7 @@ ActiveAdmin.register User do
       row :created_at
       row :updated_at
       row :team do |user|
-        user.user_teams.map(&:team).map(&:name).join(', ')
+        user.user_teams.map { |x| x.team.name }.join(', ')
       end
     end
 

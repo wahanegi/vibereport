@@ -34,9 +34,9 @@ RSpec.describe 'Admin::Teams', type: :request do
     let!(:team) { create(:team) }
 
     it 'deletes the team' do
-      expect {
+      expect do
         delete admin_team_path(team)
-      }.to change(Team, :count).by(-1)
+      end.to change(Team, :count).by(-1)
     end
 
     it 'redirects to the teams' do
@@ -53,9 +53,9 @@ RSpec.describe 'Admin::Teams', type: :request do
       UserTeam.create(user: user1, team: team)
       UserTeam.create(user: user2, team: team)
 
-      expect {
+      expect do
         delete admin_team_path(team)
-      }.to change(UserTeam, :count).by(-2)
+      end.to change(UserTeam, :count).by(-2)
     end
   end
 
