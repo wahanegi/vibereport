@@ -10,7 +10,7 @@ ActiveAdmin.register FunQuestionAnswer do
     end
     column 'User Name who answered it' do |fun_question_answer|
       user = fun_question_answer.user
-      "#{user.full_name}"
+      user.full_name.to_s
     end
     column :answer_body
     column :created_at
@@ -20,14 +20,12 @@ ActiveAdmin.register FunQuestionAnswer do
   filter :user, as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
   filter :fun_question, as: :select, collection: proc { FunQuestion.pluck(:question_body, :id) }, label: 'Question Body'
 
-  show do |fun_question|
-    answer = FunQuestionAnswer.find_by(id: fun_question.id)
-    fun_question = fun_question_answer.fun_question
+  show do
     columns do
       column do
         attributes_table do
           row 'Question Body' do
-            fun_question.question_body
+            fun_question_answer.fun_question.question_body
           end
           row :answer_body
           row :created_at

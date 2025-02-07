@@ -25,12 +25,16 @@ class UserTeam < ApplicationRecord
   belongs_to :team
 
   validates :user_id, uniqueness: { scope: :team_id }
-  enum role: { member: 0, manager: 1, observer: 2 }
+  enum :role, { member: 0, manager: 1, observer: 2 }
 
   scope :managers, -> { where(role: :manager) }
   scope :has_team_access, -> { where.not(role: :member) }
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[created_at id id_value role team_id updated_at user_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["team", "user"]
   end
 end
