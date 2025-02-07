@@ -800,19 +800,18 @@
   border: 4px solid $primary !important;
 }
 
-// TODO: STOP 06-02-2025
 //DropDownList
 .drop-down-block {
-  &::-webkit-scrollbar {
-    width: 16px;
-  }
-
   /*TODO: use BS-classes*/
   width: 200px;
   height: 155px;
   padding: 8px 1px 7px;
   padding-inline-start: 0px;
-  overflow: auto;
+  //overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
 
   li {
     list-style: none;
@@ -831,12 +830,12 @@
   }
 }
 
-/*TODO: not used*/
 .email-input {
   padding-inline-start: 1.375rem !important;
   padding-inline-end: 1.375rem !important;
 }
 
+/*TODO: not used*/
 //.celebrate textarea {
 //  &::-webkit-scrollbar-track {
 //    margin-top: 10px;
@@ -862,18 +861,10 @@
 //  background-color: $white;
 //}
 
-/*TODO: use BS-classes*/
 .placement-modal-message {
   z-index: 22;
-  position: fixed;
-  background-color: $white;
-  width: 595px;
-  height: 282px;
-  border: 4px solid $royal-blue;
-  border-radius: 20px;
-  left: calc((100vw - 595px) / 2);
-  top: calc((100vh - 282px) / 2);
-  font-size: 40px;
+  max-width: 595px;
+  min-height: 282px;
 
   div, .text-block {
     display: block;
