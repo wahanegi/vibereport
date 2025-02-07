@@ -84,7 +84,7 @@ ActiveAdmin.register Team do
           team.users.map { |user| user.email }.sort.join('<br>').html_safe
         end
       end
-      panel 'Select Time Period' do
+      panel 'Select Month' do
         form action: admin_team_path(team), method: :get do
           time_periods = TimePeriod.joins(responses: { user: :teams })
                                    .select("DISTINCT DATE_TRUNC('month', start_date) as month_start")
@@ -93,7 +93,7 @@ ActiveAdmin.register Team do
                                    .map { |tp| [tp.month_start.strftime('%Y-%m'), tp.month_start.strftime('%Y-%m-%d')] }
           select_tag :time_period,
                      options_for_select(time_periods, params[:time_period]),
-                     include_blank: 'Select Time Period',
+                     include_blank: 'Select Month',
                      onchange: 'this.form.submit();'
         end
       end
@@ -291,12 +291,12 @@ ActiveAdmin.register Team do
               end
 
               row 'Shoutouts Count' do
-                total_shourouts_per_user = time_periods.includes(shoutouts: :user)
+                total_shoutouts_per_user = time_periods.includes(shoutouts: :user)
                                                        .flat_map(&:shoutouts)
 
-                if total_shourouts_per_user.present?
+                if total_shoutouts_per_user.present?
                   ul class: 'bubble-list' do
-                    total_shourouts_per_user.map { |s| s.user.full_name }
+                    total_shoutouts_per_user.map { |s| s.user.full_name }
                                             .tally
                                             .each do |full_name, count|
                       li "#{full_name} (#{count})", class: 'bubble'
