@@ -88,39 +88,49 @@ ActiveAdmin.register Team do
       end
       panel 'Select Time Period' do
         form action: admin_team_path(team), method: :get do
-          time_periods = TimePeriod.select(:id, :created_at)
-                                   .order(created_at: :desc)
-
+          time_periods = TimePeriod.joins(responses: { user: :teams })
+                                   .select("DISTINCT DATE_TRUNC('month', start_date) as month_start")
+                                   .where(teams: { id: team.id })
+                                   .order(month_start: :desc)
+                                   .map { |tp| [tp.month_start.strftime('%Y-%m'), tp.month_start.strftime('%Y-%m-%d')] }
           select_tag :time_period,
-                     options_from_collection_for_select(time_periods, :id, :formatted_month, params[:time_period]),
+                     options_for_select(time_periods, params[:time_period]),
                      include_blank: 'Select Time Period',
                      onchange: 'this.form.submit();'
         end
       end
 
-      time_period = TimePeriod.find(params[:time_period]) if params[:time_period].present?
-      earliest_start_date = TimePeriod.minimum(:start_date)
-      latest_end_date = TimePeriod.maximum(:end_date)
+      if params[:time_period].present?
+        selected_month = Date.parse(params[:time_period])
+        time_periods = TimePeriod.distinct
+                                 .joins(responses: { user: :teams })
+                                 .where("DATE_TRUNC('month', start_date) = ?", selected_month)
+                                 .where(teams: { id: team.id })
+        time_period = time_periods.order(:start_date).first
+      else
+        time_periods = TimePeriod.none
+        time_period = nil
+      end
 
       if time_period
-        previous_time_period = TimePeriod
-                                 .joins(responses: { user: :teams })
-                                 .where('end_date < ?', time_period.start_date)
-                                 .where('teams.id = ?', team.id)
-                                 .where('responses.not_working = ?', false)
-                                 .order(end_date: :desc)
-                                 .first
+        previous_time_periods = TimePeriod.joins(responses: { user: :teams })
+                                          .where('end_date < ?', time_period.start_date)
+                                          .where('teams.id = ?', team.id)
+                                          .where('responses.not_working = ?', false)
+                                          .order(end_date: :desc)
       end
 
       vars = ActiveAdminHelpers.time_period_vars(
         team: team,
-        time_period: time_period,
-        previous_time_period: previous_time_period
+        time_period: time_periods,
+        previous_time_period: previous_time_periods
       )
 
-      if time_period
-        panel "Time Period: <span style='color: #007bff; font-weight: bold;'>#{time_period.date_range}</span>".html_safe do
-          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: time_period, not_working: false).count
+      if time_periods.present?
+        panel "Time Period: <span style='color: #007BFF; font-weight: bold;'>#{selected_month.strftime('%B %Y')}</span>".html_safe do
+          responses_count = Response.joins(user: :teams)
+                                    .where(teams: { id: team.id }, time_period: time_periods, not_working: false)
+                                    .count
           verbatim_list = vars[:verbatim_list]
           teammate_engagement_count = vars[:teammate_engagement_count]
 
@@ -168,7 +178,7 @@ ActiveAdmin.register Team do
 
             attributes_table_for team do
               row :Emotion_Index do
-                if previous_time_period.present?
+                if previous_time_periods.present?
                   trend_data = trend_direction(previous_period_emotion_index, formatted_result)
 
                   div do
@@ -186,7 +196,7 @@ ActiveAdmin.register Team do
               end
 
               row :Productivity_Average do
-                if previous_time_period.present? && productivity_avg != 'No productivity present'
+                if previous_time_periods.present? && productivity_avg != 'No productivity present'
                   trend_data = trend_direction(previous_period_productivity_avg, productivity_avg)
 
                   div do
@@ -201,7 +211,7 @@ ActiveAdmin.register Team do
               end
 
               row :Participation_Percentage do
-                if previous_time_period.present? && participation_percentage.is_a?(String) || previous_period_participation_percentage.nil?
+                if previous_time_periods.present? && participation_percentage.is_a?(String) || previous_period_participation_percentage.nil?
                   span participation_percentage
                 else
                   trend_data = trend_direction(previous_period_participation_percentage, participation_percentage)
@@ -227,7 +237,7 @@ ActiveAdmin.register Team do
               end
 
               row :Celebrations_Count do
-                if previous_time_period.present? && celebrate_comments_count.is_a?(String) || previous_period_celebrate_comments_count.nil?
+                if previous_time_periods.present? && celebrate_comments_count.is_a?(String) || previous_period_celebrate_comments_count.nil?
                   span celebrate_comments_count
                 else
                   trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count)
@@ -255,7 +265,7 @@ ActiveAdmin.register Team do
               end
 
               row :Teammate_Engagement_Count do
-                if previous_time_period.present? && teammate_engagement_count.is_a?(String) || previous_teammate_engagement_count.nil?
+                if previous_time_periods.present? && teammate_engagement_count.is_a?(String) || previous_teammate_engagement_count.nil?
                   span teammate_engagement_count
                 else
                   trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count)
@@ -283,10 +293,19 @@ ActiveAdmin.register Team do
               end
 
               row 'Shoutouts Count' do
-                ul class: 'bubble-list' do
-                  time_period.shoutouts.map { |shoutout| shoutout.user.full_name }.tally.each do |full_name, count|
-                    li "#{full_name} (#{count})", class: 'bubble'
+                total_shourouts_per_user = time_periods.includes(shoutouts: :user)
+                                                       .flat_map(&:shoutouts)
+
+                if total_shourouts_per_user.present?
+                  ul class: 'bubble-list' do
+                    total_shourouts_per_user.map { |s| s.user.full_name }
+                                            .tally
+                                            .each do |full_name, count|
+                      li "#{full_name} (#{count})", class: 'bubble'
+                    end
                   end
+                else
+                  div 'No shoutouts available for this month.'
                 end
               end
             end
@@ -299,6 +318,9 @@ ActiveAdmin.register Team do
           'Please select a time period to view the report.'
         end
       end
+
+      earliest_start_date = TimePeriod.minimum(:start_date)
+      latest_end_date = TimePeriod.maximum(:end_date)
 
       if earliest_start_date.nil? || latest_end_date.nil?
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe
