@@ -6,7 +6,7 @@ ActiveAdmin.register Team do
   form do |f|
     f.inputs 'Team Details' do
       f.input :name
-      f.input :users, as: :check_boxes, collection: User.all.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
+      f.input :users, as: :check_boxes, collection: User.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
     end
     f.actions
   end
@@ -27,19 +27,17 @@ ActiveAdmin.register Team do
       csv_data.each do |row|
         team = Team.find_or_create_by(name: row[:name])
 
-        if row[:user_emails].nil?
-          user_emails = []
-        else
-          user_emails = row[:user_emails].split(',')
-        end
+        user_emails = if row[:user_emails].nil?
+                        []
+                      else
+                        row[:user_emails].split(',')
+                      end
 
         UserTeam.where(team_id: team.id).destroy_all
 
         user_emails.each do |email|
           user = User.find_by(email: email.strip.downcase)
-          if user
-            UserTeam.create(user_id: user.id, team_id: team.id)
-          end
+          UserTeam.create(user_id: user.id, team_id: team.id) if user
         end
       end
 
@@ -134,17 +132,17 @@ ActiveAdmin.register Team do
           verbatim_list = vars[:verbatim_list]
           teammate_engagement_count = vars[:teammate_engagement_count]
 
-          if responses_count == 0
+          if responses_count.zero?
             if verbatim_list.present? && verbatim_list != 'No teammate engagement verbatims present'
               attributes_table_for team do
                 row :Teammate_Engagement_Verbatims do
                   if verbatim_list.is_a?(Array)
                     ul class: 'bubble-list' do
                       verbatim_list.each do |comment|
-                        unless comment.blank?
-                          li class: 'bubble' do
-                            span strip_tags(comment)
-                          end
+                        next if comment.blank?
+
+                        li class: 'bubble' do
+                          span strip_tags(comment)
                         end
                       end
                     end
@@ -156,7 +154,7 @@ ActiveAdmin.register Team do
             else
               div 'No data present for this time period.'
             end
-          elsif responses_count > 0
+          elsif responses_count.positive?
             formatted_result = vars[:emotion_index][0]
             chart = vars[:emotion_index][1]
             previous_period_emotion_index = vars[:previous_emotion_index]
@@ -211,7 +209,7 @@ ActiveAdmin.register Team do
               end
 
               row :Participation_Percentage do
-                if previous_time_periods.present? && participation_percentage.is_a?(String) || previous_period_participation_percentage.nil?
+                if (previous_time_periods.present? && participation_percentage.is_a?(String)) || previous_period_participation_percentage.nil?
                   span participation_percentage
                 else
                   trend_data = trend_direction(previous_period_participation_percentage, participation_percentage)
@@ -237,7 +235,7 @@ ActiveAdmin.register Team do
               end
 
               row :Celebrations_Count do
-                if previous_time_periods.present? && celebrate_comments_count.is_a?(String) || previous_period_celebrate_comments_count.nil?
+                if (previous_time_periods.present? && celebrate_comments_count.is_a?(String)) || previous_period_celebrate_comments_count.nil?
                   span celebrate_comments_count
                 else
                   trend_data = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count)
@@ -252,10 +250,10 @@ ActiveAdmin.register Team do
                 if celebrate_verbatims.is_a?(Array)
                   ul class: 'bubble-list' do
                     celebrate_verbatims.each do |comment|
-                      unless comment.blank?
-                        li class: 'bubble' do
-                          span strip_tags(comment)
-                        end
+                      next if comment.blank?
+
+                      li class: 'bubble' do
+                        span strip_tags(comment)
                       end
                     end
                   end
@@ -265,7 +263,7 @@ ActiveAdmin.register Team do
               end
 
               row :Teammate_Engagement_Count do
-                if previous_time_periods.present? && teammate_engagement_count.is_a?(String) || previous_teammate_engagement_count.nil?
+                if (previous_time_periods.present? && teammate_engagement_count.is_a?(String)) || previous_teammate_engagement_count.nil?
                   span teammate_engagement_count
                 else
                   trend_data = trend_direction(previous_teammate_engagement_count, teammate_engagement_count)
@@ -280,10 +278,10 @@ ActiveAdmin.register Team do
                 if verbatim_list.is_a?(Array)
                   ul class: 'bubble-list' do
                     verbatim_list.each do |comment|
-                      unless comment.blank?
-                        li class: 'bubble' do
-                          span strip_tags(comment)
-                        end
+                      next if comment.blank?
+
+                      li class: 'bubble' do
+                        span strip_tags(comment)
                       end
                     end
                   end
@@ -329,7 +327,7 @@ ActiveAdmin.register Team do
           all_time_periods = TimePeriod.all
           responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods, not_working: false).count
 
-          if responses_count == 0
+          if responses_count.zero?
             div 'No data present for the all time period.'
           else
             responses_data = vars[:responses_data_all]
@@ -374,7 +372,7 @@ ActiveAdmin.register Team do
       @team = Team.new(permitted_params[:team].except(:user_ids))
 
       if @team.save
-        user_ids = permitted_params[:team][:user_ids].reject(&:blank?)
+        user_ids = permitted_params[:team][:user_ids].compact_blank
         user_ids.each { |user_id| UserTeam.create(user_id: user_id, team_id: @team.id) }
         redirect_to admin_team_path(@team), notice: 'Team was successfully created.'
       else
