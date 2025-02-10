@@ -1,28 +1,29 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
+import {Link} from 'react-router-dom';
 import xClose from '../../../../assets/images/sys_svg/x-close.svg';
-import { isBlank } from '../../helpers/helpers';
-import { Link } from 'react-router-dom';
-import { apiRequest } from '../../requests/axios_requests';
+import {isBlank} from '../../helpers/helpers';
+import {apiRequest} from '../../requests/axios_requests';
 
 const HelpModal = ({
-  showHelpModal,
-  setShowHelpModal,
-  current_user,
-  handleShowAlert,
-}) => {
+                     showHelpModal,
+                     setShowHelpModal,
+                     current_user,
+                     handleShowAlert,
+                   }) => {
   if (isBlank(current_user)) return;
   const [details, setDetailsText] = useState('');
   const ref = useRef(null);
   const createNotification = () => {
-    const dataSend = { details };
-    const dataFromServer = ({ callback }) => {
+    const dataSend = {details};
+    const dataFromServer = ({callback}) => {
       if (callback === 'success') {
         handleShowAlert();
       }
     };
     const url = '/api/v1/notifications/';
-    apiRequest('POST', dataSend, dataFromServer, () => {}, `${url}`).then();
+    apiRequest('POST', dataSend, dataFromServer, () => {
+    }, `${url}`).then();
   };
 
   useEffect(() => {
@@ -42,13 +43,13 @@ const HelpModal = ({
       >
         <img
           src={xClose}
-          className="position-absolute top-0 start-100 translate-middle x-close"
+          className="position-absolute top-0 start-100 translate-middle pointer"
           onClick={() => {
             setShowHelpModal(false);
           }}
         />
         <Modal.Body>
-          <div className="mb-1 px-2">
+          <div className="mb-1 px-0 px-sm-2">
             <h4 className="modal-title fs-5 fs-md-3">Questions or issues? Let us know!</h4>
             <h6 className="text-gray-600 mb-1 fs-7 fs-md-6">
               Your questions and insights help make Vibe Report better!
@@ -66,13 +67,13 @@ const HelpModal = ({
               {current_user.email}
             </h5>
           </div>
-          <div className="mb-1 px-2">
+          <div className="mb-1 px-0 px-sm-2">
             <h6 className="text-start mb-1 fs-7 fs-md-6">Details:</h6>
             <div className="w-100 border border-3 rounded rounded-4 border-royal-blue p-1">
               <form>
                 <textarea
                   ref={ref}
-                  className="help-modal-textarea w-100 border-0 p-1 rounded-0 shadow-none"
+                  className="help-modal-textarea w-100 border-0 p-1 rounded-0 shadow-none resize-none x-close"
                   value={details}
                   placeholder="We will do our best to address your concern(s)."
                   onChange={(e) => setDetailsText(e.target.value)}
@@ -92,7 +93,7 @@ const HelpModal = ({
           </div>
           <div className="bg-light-gray border-light-gray border border-4 rounded rounded-4">
             <h6>Additional information about Vibe Report can be found at:</h6>
-            <Link to={'#'} className="fs-7 fs-md-6 text-decoration-none">
+            <Link to={'#'} className="fs-9 fs-sm-7 fs-md-6 text-decoration-none">
               https://samplenamerealsourcehere.com
             </Link>
           </div>

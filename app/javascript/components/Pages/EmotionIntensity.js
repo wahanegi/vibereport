@@ -1,10 +1,10 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
+import PoweredBy from '../../../assets/images/PoweredBy.svg';
+import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
 import {capitalizeFirstLetter, isBlank} from '../helpers/helpers';
 import Layout from '../Layout';
-import ButtonEmotion from '../UI/ButtonEmotion';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
-import PoweredBy from '../../../assets/images/PoweredBy.svg';
+import ButtonEmotion from '../UI/ButtonEmotion';
 
 const IntenseLine = ({
                        rating, setRating, comment, setComment, generateStyles, category, isBlankGif,
@@ -35,22 +35,20 @@ const IntenseLine = ({
               {value}
             </label>))}
         </div>
-        <div>
-          {rating && (
-            <div
-              className="border border-4 rounded-4 p-1 border-royal-blue mb-2 mx-auto w-100 wrap-textarea"
-            >
-              <label className={"w-100 h-100"}>
-                <textarea
-                  className="form-control p-2 fs-6 border border-3 rounded-4 shadow-none w-100 h-100 textarea-resize-none"
-                  placeholder={isBlankGif ? "What's going on?" : 'Help us better understand why you chose this meme and intensity level!'}
-                  defaultValue={comment}
-                  onChange={handleCommentClick}
-                  maxLength={MAX_CHAR_LIMIT}
-                />
-              </label>
-            </div>)}
-        </div>
+
+        {rating && (
+          <div className='py-1 mx-auto wrap-textarea'>
+            <label className={"comment-label w-100 h-100"}>
+              <textarea
+                className="w-100 h-100 p-2 rounded-4 shadow-none resize-none"
+                placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
+                defaultValue={comment}
+                onChange={handleCommentClick}
+                maxLength={MAX_CHAR_LIMIT}
+              />
+            </label>
+          </div>
+        )}
       </form>
     </div>);
 };
@@ -100,7 +98,7 @@ const EmotionIntensity = ({
           className={`small-image-powered-by align-top`}
         />
       </div>
-      <div className="emotion-small">
+      <div className="mb-2">
         <ButtonEmotion category={category}>{word}</ButtonEmotion>
       </div>
     </div>
@@ -173,10 +171,10 @@ const EmotionIntensity = ({
         </div>
       </div>
       <div className='max-width-emotion-intensity mx-auto'>
-      <BlockLowerBtns
-        nextHandling={handlingOnClickNext}
-        disabled={isBlank(rating)}
-      />
+        <BlockLowerBtns
+          nextHandling={handlingOnClickNext}
+          disabled={isBlank(rating)}
+        />
       </div>
     </div>
   </Layout>));

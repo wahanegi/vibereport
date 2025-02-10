@@ -544,7 +544,6 @@ Here styles for:
 
 /* send_results_email */
 
-
 .random-word:hover {
     transform: scale(1.2);
 }
@@ -636,8 +635,8 @@ html {
 }
 
 .second-row-reminder {
-    margin-top: 15xpx;
-    max-height: 61
+    margin-top: 15px;
+    max-height: 61px;
 }
 
 .mt-40 {

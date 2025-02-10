@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { isEmpty } from '../../helpers/helpers';
-import { apiRequest } from '../../requests/axios_requests';
 import xClose from '../../../../assets/images/sys_svg/x-close.svg';
-import RichInputElement from '../../UI/rich-text/RichInputElement';
+import {isEmpty} from '../../helpers/helpers';
+import {apiRequest} from '../../requests/axios_requests';
 import Alert from '../../UI/modal/Alert';
+import RichInputElement from '../../UI/rich-text/RichInputElement';
 
 const ShoutoutModal = ({
-  shoutOutForm,
-  setShoutOutForm,
-  data,
-  setData: setDataInDB,
-  editObj = {},
-}) => {
+                         shoutOutForm,
+                         setShoutOutForm,
+                         data,
+                         setData: setDataInDB,
+                         editObj = {},
+                       }) => {
   const [isNotAlert, setIsNotAlert] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [richText, setRichText] = useState(
@@ -20,7 +20,7 @@ const ShoutoutModal = ({
   );
   const idEditText = isEmpty(editObj) ? null : editObj.id;
 
-  const submitHandling = ({ richText, chosenUsers, isPublic }) => {
+  const submitHandling = ({richText, chosenUsers, isPublic}) => {
     const dataSend = {
       shoutout: {
         user_id: data.current_user_id,
@@ -51,19 +51,21 @@ const ShoutoutModal = ({
 
     idEditText === null
       ? apiRequest(
-          'POST',
-          dataSend,
-          dataFromServer,
-          () => {},
-          '/api/v1/shoutouts'
-        ).catch(handlingErrors)
+        'POST',
+        dataSend,
+        dataFromServer,
+        () => {
+        },
+        '/api/v1/shoutouts'
+      ).catch(handlingErrors)
       : apiRequest(
-          'PATCH',
-          dataSend,
-          dataFromServer,
-          () => {},
-          '/api/v1/shoutouts/' + idEditText
-        ).catch(handlingErrors);
+        'PATCH',
+        dataSend,
+        dataFromServer,
+        () => {
+        },
+        '/api/v1/shoutouts/' + idEditText
+      ).catch(handlingErrors);
   };
 
   const handlingErrors = (errors) => {
@@ -90,7 +92,7 @@ const ShoutoutModal = ({
       >
         <img
           src={xClose}
-          className="position-absolute top-0 start-100 translate-middle x-close"
+          className="position-absolute top-0 start-100 translate-middle x-close pointer"
           onClick={() => {
             setShoutOutForm(false);
           }}
@@ -107,7 +109,7 @@ const ShoutoutModal = ({
         </Modal.Body>
       </Modal>
       {!isNotAlert && (
-        <Alert onClose={closeAlert} errorMessage={errorMessage} />
+        <Alert onClose={closeAlert} errorMessage={errorMessage}/>
       )}
     </>
   );

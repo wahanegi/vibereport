@@ -14,7 +14,7 @@ const PreviewShoutoutSection = () =>
 
 const ShoutoutSection = ({ nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts,
   recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user }) => {
-  const [showModal, setShowModal] = useState(false)
+  const [shoutOutForm, setShoutOutForm] = useState(false);
   const emptyCurrentUserShoutouts = isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
   const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
 
@@ -46,7 +46,7 @@ const ShoutoutSection = ({ nextTimePeriod, timePeriod, sentShoutouts, receivedSh
   return <>
     <div className='results container' hidden={emptyShoutouts}>
       <div className='row wrap shoutout mb-1'>
-        <ShoutoutAwards {...{ timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, showModal, setShowModal, currentUserShoutouts, emptyShoutouts }} />
+        <ShoutoutAwards {...{ timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, shoutOutForm, setShoutOutForm, currentUserShoutouts, emptyShoutouts }} />
         <div className='d-flex justify-content-start ps-2 mb-1'>
           {
             !isEmpty(currentUserShoutouts.received) && <h5 className='fw-semibold'>
@@ -63,8 +63,10 @@ const ShoutoutSection = ({ nextTimePeriod, timePeriod, sentShoutouts, receivedSh
       </div>
     </div>
     {
-      showModal && <ShoutoutModal onClose={() => { setShowModal(false) }}
-        data={data} setData={setData} />
+      shoutOutForm && <ShoutoutModal shoutOutForm={shoutOutForm}
+                                     setShoutOutForm={setShoutOutForm}
+                                     data={data} 
+                                     setData={setData} />
     }
   </>
 }

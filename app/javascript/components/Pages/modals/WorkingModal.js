@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Button from '../../UI/Button';
+import {useNavigate} from 'react-router-dom';
 import xClose from '../../../../assets/images/sys_svg/x-close.svg';
-import { useNavigate } from 'react-router-dom';
-import { updateResponse } from '../../requests/axios_requests';
+import {updateResponse} from '../../requests/axios_requests';
+import Button from '../../UI/Button';
 
-const WorkingModal = ({ show, setShow, data, setData, steps }) => {
+const WorkingModal = ({show, setShow, data, setData, steps}) => {
   const navigate = useNavigate();
   const onClickNotWorking = () => {
     const index = steps.indexOf('emotion-selection-web');
@@ -13,7 +13,7 @@ const WorkingModal = ({ show, setShow, data, setData, steps }) => {
 
     const dataRequest = {
       response: {
-        attributes: { not_working: false, draft: false, steps: new_steps },
+        attributes: {not_working: false, draft: false, steps: new_steps},
       },
     };
     updateResponse(
@@ -38,7 +38,7 @@ const WorkingModal = ({ show, setShow, data, setData, steps }) => {
       >
         <img
           src={xClose}
-          className="position-absolute top-0 start-100 translate-middle x-close"
+          className="position-absolute top-0 start-100 translate-middle x-close pointer"
           onClick={() => {
             setShow(false);
           }}
@@ -46,14 +46,14 @@ const WorkingModal = ({ show, setShow, data, setData, steps }) => {
         <Modal.Body>
           <div className="fs-5 fw-bold px-3 mb-2 mt-1">Just to confirm...</div>
           <div className="fs-4 fw-bold mb-2">
-            Did you work during this <br /> check-in period?
-            <br />
+            Did you work during this <br/> check-in period?
+            <br/>
           </div>
           <div className="fs-5 fw-bold mb-2">
             You previously indicated that you weren't
-            <br /> working during this check-in period.
-            <br />
-            <br />
+            <br/> working during this check-in period.
+            <br/>
+            <br/>
           </div>
           <div className="fs-5 fw-bold mb-2">
             Skip this check-in if you weren't working.

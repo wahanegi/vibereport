@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { isEmptyStr, isNotEmptyStr, isPresent } from '../helpers/helpers';
-import { apiRequest } from '../requests/axios_requests';
 import axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import {MAX_CHAR_LIMIT} from '../helpers/consts';
+import {isEmptyStr, isNotEmptyStr, isPresent} from '../helpers/helpers';
 import Layout from '../Layout';
+import {apiRequest} from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import { MAX_CHAR_LIMIT } from '../helpers/consts';
 
 const FULL_PRIMARY_HEIGHT = 401;
 const MARGIN_BOTTOM = 17;
@@ -12,21 +12,21 @@ const HEIGHT_ROW_USER = 40;
 const SUM_EDGE_DOWN_UP = 26;
 
 const IcebreakerAnswer = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
-  const { isLoading, error } = service;
+                            data,
+                            setData,
+                            saveDataToDb,
+                            steps,
+                            service,
+                            draft,
+                          }) => {
+  const {isLoading, error} = service;
   const [loaded, setLoaded] = useState(false);
   const [prevStateAnswer, setPrevStateAnswer] = useState({});
   const [answerFunQuestion, setAnswerFunQuestion] = useState({});
   const [computedHeight, setComputedHeight] = useState(260);
   const prevAnswerBody = prevStateAnswer?.answer_body;
   const answerBody = answerFunQuestion?.answer_body;
-  const { user_name, question_body } = data.fun_question;
+  const {user_name, question_body} = data.fun_question;
   const user = user_name;
   const current_user_id = data.current_user.id;
   const [isDraft, setIsDraft] = useState(draft);
@@ -51,10 +51,11 @@ const IcebreakerAnswer = ({
       });
     };
 
-    const dataDraft = { dataRequest, draft: true };
+    const dataDraft = {dataRequest, draft: true};
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
-    saveDataAnswer(dataFromServer, () => {}, true);
+    saveDataAnswer(dataFromServer, () => {
+    }, true);
   };
 
   const handlingOnClickNext = () => {
@@ -83,20 +84,24 @@ const IcebreakerAnswer = ({
           'PATCH',
           dataRequest,
           dataFromServer,
-          () => {},
+          () => {
+          },
           `${url}${id}`
         ).then();
       } else if (isEmptyStr(answerBody)) {
         apiRequest(
           'DELETE',
-          () => {},
-          () => {},
-          () => {},
+          () => {
+          },
+          () => {
+          },
+          () => {
+          },
           `${url}${id}`
         ).then(goToResultPage);
       } else {
         !isDraft && steps.push('icebreaker-question');
-        saveDataToDb(steps, { draft: false });
+        saveDataToDb(steps, {draft: false});
       }
     } else if (isEmptyStr(answerBody)) {
       if (isDraft) {
@@ -110,7 +115,8 @@ const IcebreakerAnswer = ({
         'POST',
         dataRequest,
         dataFromServer,
-        () => {},
+        () => {
+        },
         `${url}`
       ).then();
     }
@@ -118,7 +124,7 @@ const IcebreakerAnswer = ({
 
   const onChangAnswer = (e) => {
     setAnswerFunQuestion(
-      Object.assign({}, answerFunQuestion, { [e.target.name]: e.target.value })
+      Object.assign({}, answerFunQuestion, {[e.target.name]: e.target.value})
     );
   };
 
@@ -140,8 +146,8 @@ const IcebreakerAnswer = ({
       const style = el.getBoundingClientRect();
       setComputedHeight(
         FULL_PRIMARY_HEIGHT -
-          (style.height + MARGIN_BOTTOM) -
-          (user ? HEIGHT_ROW_USER : 0)
+        (style.height + MARGIN_BOTTOM) -
+        (user ? HEIGHT_ROW_USER : 0)
       );
     }, 1);
   });
@@ -170,7 +176,8 @@ const IcebreakerAnswer = ({
             </h2>
           </div>
           <div className="mb-2">
-            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
+            <div
+              className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
               {user && (
                 <p className="fs-5 text-gray-600">
                   <span className="text-primary">@</span>
@@ -182,9 +189,9 @@ const IcebreakerAnswer = ({
                 <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
                   <form>
                     <textarea
-                      className="w-100 p-1 border-0 wrap-textarea"
+                      className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none"
                       name="answer_body"
-                      style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
+                      style={{height: computedHeight - SUM_EDGE_DOWN_UP}}
                       placeholder="Tell us what you think!"
                       value={answerFunQuestion?.answer_body || ''}
                       onChange={onChangAnswer}

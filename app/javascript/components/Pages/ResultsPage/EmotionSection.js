@@ -8,6 +8,7 @@ const AnimatedEmotion = ({ word}) => {
   const animatedStyles = {
     marginTop: `${shift * 30}px`,
     fontSize: `${shift + 0.8}rem`,
+    '--duration': `${shift * 5}s`
   }
 
   return (

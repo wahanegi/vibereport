@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { BigBtnEmotion } from '../UI/ShareContent';
-import BlockLowerBtns from '../UI/BlockLowerBtns';
+import React, {useEffect, useState} from 'react';
+import {fetchEmotions, handleOnClickNext, saveDataEmotion,} from '../helpers/emotionTypeUtils';
 import Layout from '../Layout';
+import BlockLowerBtns from '../UI/BlockLowerBtns';
+import {BigBtnEmotion} from '../UI/ShareContent';
 import ToggleEmotionType from '../UI/ToggleEmotionType';
-import {
-  handleOnClickNext,
-  fetchEmotions,
-  saveDataEmotion,
-} from '../helpers/emotionTypeUtils';
 
 
 const EmotionType = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
-  const { isLoading, error } = service;
-  const { category } = data.emotion;
+                       data,
+                       setData,
+                       saveDataToDb,
+                       steps,
+                       service,
+                       draft,
+                     }) => {
+  const {isLoading, error} = service;
+  const {category} = data.emotion;
   const [selectedType, setSelectedType] = useState(category);
   const [emotion, setEmotion] = useState({
     word: data.emotion.word,
@@ -29,26 +25,26 @@ const EmotionType = ({
   const [isDraft, setIsDraft] = useState(draft);
 
   const dataRequest = {
-    emotion: { word: emotion.word, category: emotion.category },
+    emotion: {word: emotion.word, category: emotion.category},
   };
 
   const handleEmotionType = (type) => {
     setSelectedType(type);
-    setEmotion((prevState) => ({ ...prevState, category: type }));
+    setEmotion((prevState) => ({...prevState, category: type}));
   };
 
   const handleSaveDraft = () => {
-    const { word, category } = emotion;
+    const {word, category} = emotion;
     const existingEmotion = emotions.find(
       (emotion) =>
         emotion.attributes.word === word &&
         emotion.attributes.category === category
     );
     if (existingEmotion) {
-      saveDataToDb(steps, { emotion_id: existingEmotion.id, draft: true });
+      saveDataToDb(steps, {emotion_id: existingEmotion.id, draft: true});
     } else {
       saveDataEmotion(dataRequest, (word) => {
-        saveDataToDb(steps, { emotion_id: word.data.id, draft: true });
+        saveDataToDb(steps, {emotion_id: word.data.id, draft: true});
       });
     }
     setIsDraft(true);
@@ -80,22 +76,35 @@ const EmotionType = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="w-100">
-          <div className="mt-1 mb-5 text-center">
-            <BigBtnEmotion
-              showPencil={false}
-              emotion={data.emotion}
-              selectedType={selectedType}
-            />
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-auto">
+              <div className="text-center mt-1 mb-5">
+                <BigBtnEmotion
+                  showPencil={false}
+                  emotion={data.emotion}
+                  selectedType={selectedType}
+                />
+              </div>
+            </div>
           </div>
-          <ToggleEmotionType
-            selectedType={selectedType}
-            handleEmotionType={handleEmotionType}
-          />
-          <div className="max-width-type mx-auto mt-2">
-            <BlockLowerBtns nextHandling={handlingOnClickNext} />
+
+          <div className="row justify-content-center">
+            <div className="col-auto">
+              <ToggleEmotionType
+                selectedType={selectedType}
+                handleEmotionType={handleEmotionType}
+              />
+            </div>
+          </div>
+
+          <div className="row justify-content-center mt-2">
+            <div className="col-12">
+              <BlockLowerBtns nextHandling={handlingOnClickNext}/>
+            </div>
           </div>
         </div>
+
       </Layout>
     )
   );

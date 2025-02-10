@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Form from 'react-bootstrap/Form';
-import BlockLowerBtns from '../UI/BlockLowerBtns';
+import {fetchEmotions, handleOnClickNext} from '../helpers/emotionTypeUtils';
 import Layout from '../Layout';
+import BlockLowerBtns from '../UI/BlockLowerBtns';
 import ToggleEmotionType from '../UI/ToggleEmotionType';
-import { handleOnClickNext, fetchEmotions } from '../helpers/emotionTypeUtils';
 
 
 const EmotionEntry = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
-  const { isLoading, error } = service;
+                        data,
+                        setData,
+                        saveDataToDb,
+                        steps,
+                        service,
+                        draft,
+                      }) => {
+  const {isLoading, error} = service;
   const [selectedType, setSelectedType] = useState(
     data.emotion?.category || 'positive'
   );
@@ -26,21 +26,21 @@ const EmotionEntry = ({
 
   const handleEmotionType = (type) => {
     setSelectedType(type);
-    setEmotion((prevState) => ({ ...prevState, category: type }));
+    setEmotion((prevState) => ({...prevState, category: type}));
   };
 
   const onChangeEmotion = (e) => {
     e.preventDefault();
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     const trimStartValue = value.trimStart();
-    setEmotion({ ...emotion, [name]: trimStartValue });
+    setEmotion({...emotion, [name]: trimStartValue});
   };
 
   const handlingOnClickNext = () => {
     const trimmedWord = emotion.word.toLowerCase().trim();
-    const updatedEmotion = { ...emotion, word: trimmedWord };
+    const updatedEmotion = {...emotion, word: trimmedWord};
     const dataRequest = {
-      emotion: { word: updatedEmotion.word, category: updatedEmotion.category },
+      emotion: {word: updatedEmotion.word, category: updatedEmotion.category},
     };
     handleOnClickNext(
       updatedEmotion,
@@ -59,7 +59,7 @@ const EmotionEntry = ({
     positive: 'bg-green-200 text-placeholder-green-700 text-green-700 text-focus-green-700',
     negative: 'bg-apricot text-placeholder-orange-700 text-orange-700 text-focus-orange-700',
   };
-  
+
   if (!!error) return <p>{error.message}</p>;
 
   return (
@@ -71,40 +71,40 @@ const EmotionEntry = ({
         steps={steps}
         draft={draft}
       >
-      <div className="container-fluid">
-        <div className="row flex-column justify-content-center">
-          <div className="col-12 text-center mx-auto">
-            <h1 className="my-1 my-md-2">A new one! What’s up?</h1>
-            <h4 className="my-1 my-md-2 text-gray-600">
-              What word best describes work, recently?
-            </h4>
+        <div className="container-fluid">
+          <div className="row flex-column justify-content-center">
+            <div className="col-12 text-center mx-auto">
+              <h1 className="my-1 my-md-2">A new one! What’s up?</h1>
+              <h4 className="my-1 my-md-2 text-gray-600">
+                What word best describes work, recently?
+              </h4>
+            </div>
+            <div className="col-12 col-lg-6 col-md-8 mx-auto">
+              <Form.Control
+                className={`${emotionClasses[selectedType]} email_field input-new-word fs-2 rounded-4 mb-5 mb-md-8 border-royal-blue`}
+                type="text"
+                maxLength={15}
+                autoComplete="off"
+                placeholder="Add a new word"
+                name="word"
+                value={emotion.word || ''}
+                onChange={onChangeEmotion}
+              />
+            </div>
+            <div className="col-12 col-md-6 mb-4 mx-auto">
+              <ToggleEmotionType
+                selectedType={selectedType}
+                handleEmotionType={handleEmotionType}
+              />
+            </div>
           </div>
-          <div className="col-12 col-lg-6 col-md-8 mx-auto">
-            <Form.Control
-              className={`${emotionClasses[selectedType]} email_field input-new-word mb-5 mb-md-8 border-royal-blue`}
-              type="text"
-              maxLength={15}
-              autoComplete="off"
-              placeholder="Add a new word"
-              name="word"
-              value={emotion.word || ''}
-              onChange={onChangeEmotion}
-            />
-          </div>
-          <div className="col-12 col-md-6 mb-4 mx-auto">
-            <ToggleEmotionType
-              selectedType={selectedType}
-              handleEmotionType={handleEmotionType}
-            />
-          </div>
-        </div>
-        <div className="max-width-entry mx-auto">
+          <div className="max-width-entry mx-auto">
             <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={emotion.word.length < 2}
             />
           </div>
-      </div>
+        </div>
       </Layout>
     )
   );

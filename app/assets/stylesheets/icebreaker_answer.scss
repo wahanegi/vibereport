@@ -2,19 +2,17 @@
 @import 'design_system_vibereport';
 
 .wrap-textarea {
-  resize: none;
-  box-shadow: none !important;
   &:focus {
     outline: none;
-    border: none !important;
-    box-shadow: none !important;
   }
 }
+
 .costume-focus {
   &:focus-within {
     border: 6px solid $emerald !important;
   }
 }
+
 .max-width-icebreaker {
   max-width: 800px;
 }
