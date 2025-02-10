@@ -118,7 +118,7 @@ ActiveAdmin.register Team do
                                                                not_working: false).count
           verbatim_list = vars[:verbatim_list]
 
-          if responses_count == 0
+          if responses_count.zero?
             if verbatim_list.present? && verbatim_list != 'No teammate engagement verbatims present'
               attributes_table_for team do
                 row :Teammate_Engagement_Verbatims do
@@ -219,15 +219,14 @@ ActiveAdmin.register Team do
       end
 
       if earliest_start_date.nil? || latest_end_date.nil?
-        panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe do
-        end
+        panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe
       else
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
           all_time_periods = TimePeriod.all
           responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods,
                                                                not_working: false).count
 
-          if responses_count == 0
+          if responses_count.zero?
             div 'No data present for the all time period.'
           else
             responses_data = vars[:responses_data_all]
@@ -253,7 +252,7 @@ ActiveAdmin.register Team do
       @team = Team.new(permitted_params[:team].except(:user_ids))
 
       if @team.save
-        user_ids = permitted_params[:team][:user_ids].reject(&:blank?)
+        user_ids = permitted_params[:team][:user_ids].compact_blank
         user_ids.each { |user_id| UserTeam.create(user_id: user_id, team_id: @team.id) }
         redirect_to admin_team_path(@team), notice: 'Team was successfully created.'
       else

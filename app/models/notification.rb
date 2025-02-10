@@ -23,7 +23,15 @@ class Notification < ApplicationRecord
 
   scope :not_viewed, -> { where(viewed: false) }
 
+  def self.ransackable_associations(_auth_object = nil)
+    ["user"]
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at details id id_value updated_at user_id viewed]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
     %w[created_at details id id_value updated_at user_id viewed]
   end
 end
