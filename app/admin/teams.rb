@@ -12,13 +12,15 @@ ActiveAdmin.register Team do
   end
 
   filter :name, as: :string, label: 'Team name'
-  filter :user_teams_user_id, as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }, label: 'User'
+  filter :user_teams_user_id, as: :select, collection: User.order(:email).map { |u|
+    ["#{u.email} (#{u.first_name} #{u.last_name})", u.id]
+  }, label: 'User'
 
   action_item :import_csv, only: :index do
     link_to 'Import CSV', import_csv_admin_teams_path
   end
 
-  collection_action :import_csv, method: [:get, :post] do
+  collection_action :import_csv, method: %i[get post] do
     if request.post?
       file = params[:file].tempfile
       options = { header_transformations: [:downcase], col_sep: ',', row_sep: :auto }
@@ -292,6 +294,7 @@ ActiveAdmin.register Team do
 
               row 'Shoutouts Count' do
                 total_shoutouts_per_user = time_periods.includes(shoutouts: :user)
+                                                       .where(shoutouts: { user_id: team.users.ids })
                                                        .flat_map(&:shoutouts)
 
                 if total_shoutouts_per_user.present?
@@ -325,7 +328,8 @@ ActiveAdmin.register Team do
       else
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
           all_time_periods = TimePeriod.all
-          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods, not_working: false).count
+          responses_count = Response.joins(user: :teams).where(teams: { id: team.id }, time_period: all_time_periods,
+                                                               not_working: false).count
 
           if responses_count.zero?
             div 'No data present for the all time period.'
