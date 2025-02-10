@@ -6,25 +6,6 @@
 ////////////////////////////////////////////
 // START OF DESIGN SYSTEM VIBEREPORT AREA //
 
-/*TODO: duplicate with app/assets/stylesheets/main.scss*/
-//a {
-//  font-size: 1.438rem; //23px
-//}
-
-/*TODO: duplicate with app/assets/stylesheets/typography.scss*/
-//body {
-//  font: {
-//    family: $font-family-base;
-//    style: normal;
-//  }
-//  text-align: center;
-//  line-height: 1.2;
-//}
-
-//p {
-//  line-height: 100%;
-//}
-
 h1, h2 {
   font-weight: 700 !important;
   line-height: 100% !important;
@@ -51,23 +32,9 @@ h1 {
   font-size: 2rem !important; //32px
 }
 
-/*TODO: do not use*/
-//.u1 {
-//  font: {
-//    family: $font-family-italic, sans-serif !important;
-//    weight: $font-weight-semi-bold !important;
-//    size: 1rem !important; //16px
-//  }
-//}
-
 .wb1 {
   font-size: 1.25rem !important; //20px
 }
-
-/*TODO: DEL do not use*/
-//.wb2 {
-//  font-size: 2.625rem !important; //42px
-//}
 
 // Use for regular buttons
 .c1 {
@@ -137,34 +104,6 @@ textarea {
   }
 }
 
-
-// Using with the Special inputs
-// Intensity selection & follow-up field (use B3)
-
-/*TODO: DEL do not use*/
-//.follow-up-field {
-//  textarea {
-//    margin-top: 4px;
-//    width: calc($btn-width-intensity * 5 - 1rem);
-//    height: 18.875rem; //302px
-//    border-top-left-radius: 29px !important;
-//    border-top-right-radius: 29px !important;
-//  }
-//}
-
-/*TODO: DEL do not use*/
-//.question-field {
-//  width: 46.625rem !important; //746px
-//  min-height: 17.5rem; //280px
-//  &.form-control {
-//    border: 3px solid $emerald !important;;
-//
-//    &:focus {
-//      border: 3px solid $sea-green !important;
-//    }
-//  }
-//}
-
 // FOR DROPDOWN MENU
 .dropdown-toggle {
   height: 80px;
@@ -176,7 +115,6 @@ textarea {
   visibility: hidden;
 }
 
-/*TODO: CHECK again*/
 #dropdown-stick {
   &.show {
     .one-line-menu {

@@ -52,12 +52,6 @@
   }
 }
 
-/*TODO: not used*/
-//.header-position {
-//  position: relative;
-//  top: 137px;
-//}
-
 .emoji-tooltip {
   background-color: $black;
   color: $white;
@@ -81,15 +75,12 @@
 }
 
 .emoji-picker {
-  font-size: 14px;
-  position: absolute;
   right: 20px;
-  //top: 20px;
+  top: 20px;
   z-index: 100
 }
 
-/*TODO: check is it should be margin or padding*/
-.padding-x4 {
+.margin-x4 {
   margin-left: 4px;
   margin-right: 4px;
 }
@@ -99,7 +90,6 @@
   padding-right: 2px;
 }
 
-//TODO: use BS-classes
 .emoji-container {
   font-size: 22px !important;
   line-height: 22px !important;

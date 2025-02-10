@@ -7,12 +7,10 @@ $gray-100: #D2D2D2; // For Muted text and input placeholders depending on contex
 $gray-200: #9E9E9E; // For Muted text and input placeholders depending on context
 $gray-250: rgba(0, 0, 0, 0.25); //for shadow
 $gray-300: #666666; // For Muted text and input placeholders depending on context
-$gray-400: #4D4D4D; // For Muted text and input placeholders depending on context TODO: do not use
+$gray-400: #4D4D4D; // For Muted text and input placeholders depending on context
 $gray-500: #454547; // For Text and headers
 $gray-600: rgba(0, 0, 0, 0.6);
 $gray-700: rgba(0, 0, 0, 0.7);
-$gray-800: rgba(0, 0, 0, 0.8); // TODO: do not use
-$gray-900: rgba(0, 0, 0, 0.9); // TODO: do not use
 
 $apricot: #FCDDCE; // For negative background color
 $cinnamon: #D1794E; // For negative color
@@ -27,21 +25,12 @@ $steel-blue: #4C77CB; // For neutral color
 $tea-green: #DEF1E3; // Positive background color
 $soft-blue: #6593EB; // Secondary links or accents
 
-$orange-100: #FADFD1; // TODO: do not use BUT in export const EMOTION_COLORS
-$orange-200: #F7CDB8; // TODO: do not use BUT in export const EMOTION_COLORS
-$orange-300: #F5C1A6; // TODO: do not use BUT in export const EMOTION_COLORS
-$orange-400: #F09D74; // TODO: do not use BUT in export const EMOTION_COLORS
-$orange-500: #F18C59; // TODO: do not use BUT in export const EMOTION_COLORS
 $orange-700: #F68E5B;
 
-$green-100: #D9F1E0; // TODO: do not use BUT in export const EMOTION_COLORS
 $green-200: #CCEDD5;
-$green-300: #B9E6C6; // TODO: do not use BUT in export const EMOTION_COLORS
-$green-400: #A6DFB6; // TODO: do not use BUT in export const EMOTION_COLORS
-$green-500: #80D197; // TODO: do not use BUT in export const EMOTION_COLORS
 $green-700: #5DAA73;
 
-$yellow-cub: #FFC93D; // TODO only in $warning: $yellow-cub; - del
+$yellow-cub: #FFC93D;
 $red: #EB4848;
 $rose: #E02AA4;
 $bright-green: #02A32F;
@@ -63,16 +52,7 @@ $danger: $red;
 $light: $gray-100;
 $dark: $gray-500;
 
-:root {
-  /*TODO: do not use*/
-  --bs-link-color: #000;
-}
-
 // Utility classes for custom colors
-/*TODO: do not use*/
-.text-gray-200 {
-  color: $gray-200;
-}
 
 .text-gray-300, .text-gray-300-hover:hover {
   color: $gray-300;
@@ -104,11 +84,6 @@ $dark: $gray-500;
 
 .bg-gray-200, .bg-gray-hover-200:hover {
   background-color: $gray-200;
-}
-
-/*TODO: do not use*/
-.bg-gray-200-active:active {
-  background-color: shift-color($gray-200, 30%);
 }
 
 .bg-light-gray {

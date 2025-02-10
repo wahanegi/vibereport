@@ -118,11 +118,6 @@
   }
 }
 
-/*TODO: should replace with BS-class="border border-0"*/
-//.border-none {
-//  border: none !important;
-//}
-
 .gif img {
   &.small {
     max-width: 312px;
@@ -166,11 +161,6 @@
   height: 10px;
   margin-top: 6px;
 }
-
-/*TODO: do not use*/
-//.card-colors {
-//  --bs-card-bg: unset !important;
-//}
 
 .gif-container img {
   width: 100%;

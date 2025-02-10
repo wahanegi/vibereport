@@ -4,72 +4,9 @@
 // DEVELOPERS AREA //|
 /////////////////////|
 
-//a {
-//  font-size: 23px;
-//  color: #0007A3;
-//}
-
-/*TODO: duplicate with app/assets/stylesheets/typography.scss*/
-//* {
-//  font-family: $font-family-base;
-//  font-style: normal;
-//  font-weight: $font-weight-bold !important;
-//}
-
-/*TODO: not used*/
-//.header {
-//  font-weight: 700;
-//  font-size: 48px;
-//  line-height: 48px;
-//  color: $black;
-//  white-space: pre-line;
-//}
-
-/*TODO: not used*/
-//.sub-header {
-//  font-weight: 700;
-//  font-size: 36px;
-//  line-height: 36px;
-//  color: $black;
-//}
-
 .muted {
   color: $gray-600;
 }
-
-/*TODO: not used*/
-//.text-field-new-html {
-//  width: 588px !important;
-//  height: 59px;
-//}
-
-/*TODO: not used*/
-//.light-grey-text {
-//  color: $light-grey;
-//}
-
-/*TODO: not used*/
-//.email_field {
-//  box-sizing: border-box;
-//  background: $white;
-//  margin: 0 auto;
-//}
-/*TODO: not used*/
-//.email_field input {
-//  height: 70px;
-//  font-size: 40px;
-//  line-height: 70px;
-//  color: $gray-600;
-//  margin: 13px 0;
-//  border: 3px solid $light-blue;
-//  border-radius: 15px;
-//  padding-left: 23px;
-//}
-
-/*TODO: not used*/
-//.pb-45 {
-//  padding-bottom: 45px;
-//}
 
 //<ListEmotion>
 .big-btn-text a {
@@ -85,11 +22,6 @@
   filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
 }
 
-/*TODO: not used*/
-//.width-block {
-//  width: 180px;
-//}
-
 //</ListEmotion
 
 .color-primary {
@@ -104,11 +36,6 @@
   color: $rose;
 }
 
-/*TODO: not used*/
-//.red-violet {
-//  color: $red-violet;
-//}
-
 .gray-600 {
   color: $gray-600
 }
@@ -121,59 +48,6 @@
   color: $gray-200 !important;
 }
 
-// TODO: not used
-//.transparent {
-//  color: transparent;
-//}
-
-//new.html.erb
-/*TODO: not used => code is commented*/
-//.welcome-field {
-//  width: 746px;
-//  height: 59px;
-//}
-
-//.mt-123 {
-//  margin-top: 123px;
-//}
-
-
-/*TODO: not used*/
-//.mt-negative-17 {
-//  margin-top: -17px !important;
-//}
-
-/*TODO: not used => code is commented */
-//.mb-115 {
-//  margin-bottom: 115px;
-//}
-
-// TODO: change to BS: mb-*
-//.mb-80 {
-//  margin-bottom: 80px;
-//}
-
-/*TODO: not used*/
-//.input-label {
-//  width: 588px;
-//  height: 59px;
-//}
-
-/*TODO: not used*/
-//.w-660 {
-//  width: 660px;
-//}
-
-/*TODO: not used*/
-//.mt-162 {
-//  margin-top: 162px;
-//}
-
-/*TODO: not used*/
-//.minW-675 {
-//  min-width: 675px
-//}
-
 .minW-280 {
   min-width: 280px
 }
@@ -181,86 +55,6 @@
 .w-82 {
   width: 82px;
 }
-
-/*TODO: not used*/
-//input.email-input-new:focus-visible {
-//  outline: none;
-//}
-
-/*TODO: not used*/
-//create.html.erb
-//.placement-area {
-//  min-width: 750px;
-//}
-
-/*TODO: not used*/
-//.mb-negative-17 {
-//  margin-bottom: -17px;
-//}
-
-/*TODO: not used*/
-//.mb-28 {
-//  margin-bottom: 28px !important;
-//}
-
-/*TODO: not used*/
-//.mt-64 {
-//  margin-top: 63px;
-//}
-
-/*TODO: not used*/
-//.size-message {
-//  width: 746px;
-//  height: 49px;
-//}
-
-/*TODO: not used*/
-//.mt-85 {
-//  margin-top: 85px;
-//}
-
-/*TODO: not used*/
-//.size-resolve-issue {
-//  width: 500px;
-//  height: 59px;
-//}
-
-/*TODO: not used*/
-//.placement-size-link {
-//  top: 767px;
-//  min-width: 650px;
-//}
-
-/*TODO: not used*/
-//.h-0 {
-//  height: 0;
-//}
-
-// for drawing envelope -------
-/*TODO: not used*/
-//.t-35 {
-//  top: 35px;
-//}
-
-/*TODO: not used*/
-//.h-59 {
-//  height: 59px;
-//}
-
-/*TODO: not used*/
-//.mt-180 {
-//  margin-top: 180px;
-//}
-
-/*TODO: not used*/
-//.pb-52 {
-//  padding-bottom: 52px;
-//}
-
-/*TODO: del and use .pointer"*/
-//.pencil {
-//  cursor: pointer;
-//}
 
 .expand-link .trashRed {
   display: none;
@@ -277,97 +71,10 @@
   display: block;
 }
 
-/*TODO: not used*/
-//.left-bottom-corner {
-//  position: absolute;
-//  left: 45px;
-//  top: 756px;
-//  border-radius: 50%;
-//
-//  &.circle {
-//    border: 1px solid $gray-500;
-//    width: 98px;
-//    height: 98px;
-//  }
-//}
-
-
-/*TODO: not used*/
-//.into-centerX2_5 {
-//  animation-name: moveIntoCenterX2_5;
-//  animation-duration: 2s;
-//  animation-fill-mode: forwards;
-//  @keyframes moveIntoCenterX2_5 {
-//    0% {
-//      left: 45px;
-//      top: 756px;
-//    }
-//    100% {
-//      scale: 2.384;
-//      top: 465px;
-//      left: calc(50vw - 50px);
-//    }
-//  }
-//}
-
-/*TODO: not used*/
-//.into-centerX {
-//  animation-name: moveIntoCenter;
-//  animation-duration: 2s;
-//  animation-fill-mode: forwards;
-//  @keyframes moveIntoCenter {
-//    0% {
-//      left: 45px;
-//      top: 756px;
-//    }
-//    100% {
-//      scale: 1.06;
-//      top: 606px;
-//      left: calc(50vw - 50px);
-//      filter: drop-shadow(1.744px 2.616px 1.744px rgba(0, 0, 0, 0.25));
-//    }
-//  }
-//}
-
-
-/*TODO: not used*/
-//.blink {
-//  top: 459px;
-//  left: calc(50vw - 54px);
-//  width: 106px;
-//  height: 106px;
-//  border-radius: 50%;
-//  border: 3px solid transparent;
-//  animation-name: blinking;
-//  animation-iteration-count: infinite;
-//  animation-timing-function: linear;
-//  box-shadow: 2px 3px 2px $gray-250;
-//  scale: 2.5;
-//  @keyframes blinking {
-//    0% {
-//      border: 3px solid $gray-100;
-//    }
-//    50% {
-//      scale: 2.4;
-//      border: 3px solid $primary;
-//    }
-//    100% {
-//      border: 3px solid $gray-100;;
-//      background-color: $gray-100;
-//    }
-//  }
-//}
-
 .field-shout-outs {
   height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
-
-  //TODO: DEL -- use BS-classes
-  //ul {
-  //list-style: none;
-  //padding-inline-start: 20px !important;
-  //}
 
   li {
     p {
@@ -406,7 +113,7 @@
 
 .scrolling {
   white-space: break-spaces;
-  scroll-behavior: smooth; // TODO: remove to html {}
+  scroll-behavior: smooth;
   overflow-wrap: anywhere;
 }
 
@@ -430,7 +137,6 @@
 
 .comment-label {
   textarea {
-    //TODO: do not DELETE
     &:focus {
       border: 6px solid $royal-blue !important;
       padding: calc(1.5rem - 3px) !important;
@@ -461,33 +167,11 @@
   z-index: 31;
 }
 
-//TODO: not used
-//.gif-productivity {
-//  margin-top: -41px;
-//}
-
-/*TODO: should use BS-classes*/
-//.emotion-small {
-//margin: 0px 0px 30px;
-//margin-top: -6px;
-//}
-
 .pointer {
   cursor: pointer;
 }
 
 //IntenseLine
-
-
-//QuestionButton
-/*TODO: not used*/
-//.placement-question-btn {
-//  position: absolute;
-//  right: 47px;
-//  top: 756px;
-//  border-radius: 50%;
-//  z-index: 21;
-//}
 
 //ProductivitySlider
 .productivity-container {
@@ -604,13 +288,6 @@
   }
 }
 
-/*TODO: not used*/
-//.mentions-mention {
-//  z-index: 1;
-//  position: relative;
-//  color: $red-violet;
-//}
-
 /* ProductivitySlider to Firefox */
 .productivity-container input[type=range]::-moz-range-thumb {
   height: 35px;
@@ -715,116 +392,37 @@
   filter: blur(50px);
 }
 
-
-/*TODO: not used*/
-//.modal-dialog-celebrate {
-//  z-index: 30;
-//  margin-top: 25vh;
-//  top: 0;
-//
-//  .x-close {
-//    z-index: 31;
-//    margin-top: -25px;
-//    margin-left: 470px;
-//    cursor: pointer;
-//  }
-//}
-
-/*TODO: DONE*/
 .modal-help {
   z-index: 30;
-  //top: 0;
 
-  //&.padding-placement {
-  //padding-top: 15vh;
-  //}
-
-  //&.lg {
-  //  border-radius: 15px;
-  //
-  //  textarea {
-  //    border: 4px solid $royal-blue !important;
-  //  }
-  //}
-
-  //.x-close {
-  //  z-index: 31;
-  //  cursor: pointer;
-  //  margin-top: -45px;
-  //  margin-left: 219px;
-  //
-  //  @media (max-width: 991px) {
-  //    margin-left: 219px;
-  //  }
-  //  @media (min-width: 992px) {
-  //    margin-left: 371px;
-  //  }
-  //}
-  /*TODO: DONE*/
   .x-close {
     z-index: 31;
     top: -25px;
     right: -25px;
-
-    //@media (min-width: 576px) {
-    //  left: 219px; // Зміщення для середніх екранів
-    //}
-    //
-    //@media (min-width: 992px) {
-    //  left: 371px; // Зміщення для великих екранів
-    //}
   }
-
-
-  /*TODO: DONE*/
-  //&.lg {
-  //  margin-top: -31px;
-  //  @media (max-width: 991px) {
-  //    margin-left: 471px;
-  //  }
-  //  @media (min-width: 992px) {
-  //    margin-left: 765px;
-  //  }
-  //}
 }
 
-/*TODO: DONE*/
 .place-size-shout-out {
-  //height: 514px;
-  //border-radius: 20px !important;
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
-  //overflow: auto;
 
   .inner-div {
     height: 390px;
     z-index: 31;
     overflow: auto;
-    //border-color: transparent;
 
     &.form-control {
       border-color: transparent !important;
-
-      //&:focus {
-      //border-color: transparent !important;
-      //}
     }
   }
 }
 
-//TODO: border not blue but pink !!!
-.custom-modal .modal-content {
-  //border: 4px solid $primary !important;
-}
-
 //DropDownList
 .drop-down-block {
-  /*TODO: use BS-classes*/
   width: 200px;
   height: 155px;
   padding: 8px 1px 7px;
   padding-inline-start: 0px;
-  //overflow: auto;
 
   &::-webkit-scrollbar {
     width: 16px;
@@ -852,31 +450,11 @@
   padding-inline-end: 1.375rem !important;
 }
 
-/*TODO: not used DONE*/
-//.celebrate textarea {
-//  &::-webkit-scrollbar-track {
-//    margin-top: 10px;
-//    margin-bottom: 10px;
-//  }
-//}
 
-/*TODO: use BS-classes DONE*/
 .modal-content {
   border-radius: 15px !important;
   border: 3px solid $royal-blue !important;
 }
-
-/*TODO: not used DONE*/
-//.celebrate-placeholder::before {
-//  position: absolute;
-//  top: 108px;
-//  left: 82px;
-//  z-index: 30;
-//  color: $red-violet;;
-//  content: "@";
-//  font-size: 22px;
-//  background-color: $white;
-//}
 
 .placement-modal-message {
   z-index: 22;
@@ -897,70 +475,7 @@
   opacity: 0.6;
 }
 
-/*TODO: not used DONE*/
-//a.dropdown-item {
-//  cursor: initial;
-//}
-
-/*TODO: DONE*/
-//.text-complete {
-//  margin: 19px 0 0 0;
-//}
-
-//.badge-secondary {
-//background: $light-grey;
-//border: 4px solid $light-grey;
-//border-radius: 15px;
-
-//a {
-//  text-decoration: none;
-//}
-//}
-
-/*TODO: not used DONE*/
-//.form-check-input[type=checkbox] {
-//  background-color: $light-grey;
-//  border: none;
-//  box-shadow: none;
-//  color: $royal-blue;
-//}
-
-/*TODO: not used DONE*/
-//.modal-backdrop {
-//  z-index: 20 !important;
-//  background: $medium-grey !important;
-//  filter: blur(50px) !important;
-//  opacity: 1 !important;
-//}
-
-/*TODO: not used DONE*/
-//.modal-help.lg textarea {
-//  border: none !important;
-//}
-
-/*TODO: use BS -- DONE*/
-//RatherNotSay
-//.rather-not-say-first-row {
-//  margin-top: 240px;
-//
-//  div.row2 {
-//    margin-top: -1rem;
-//    max-width: 600px;
-//    height: 75px;
-//    white-space: pre-wrap;
-//  }
-//
-//  div.row3 {
-//    margin-top: 75px;
-//  }
-//
-//  div.row4 {
-//    margin-top: 94px;
-//  }
-//}
-
 // Toggle emotion type
-
 
 .btn-group.wrap-toggle::before {
   content: "";
@@ -973,11 +488,6 @@
   border-radius: 100px;
   z-index: 1;
 }
-
-//TODO: class btn already used
-//.wrap-icon {
-//  cursor: pointer;
-//}
 
 .wrap-icon img {
   max-width: 75px;
@@ -995,18 +505,9 @@
   box-shadow: 0 4px 4px 0 $gray-250;
 }
 
-/*TODO: use BS -- DONE*/
-//.toggle-category {
-//position: relative;
-//}
-
-/*TODO: use BS -- DONE*/
 .btn.toggle-category {
   max-width: 185px;
   z-index: 3;
-  //font-size: 16px;
-  //color: $black;
-  //border: none;
   --bs-btn-border-color: none;
   background-color: transparent;
   border-radius: 100px !important;
@@ -1059,36 +560,6 @@
   color: $bright-green;
 }
 
-
-/*TODO: not used -- DONE*/
-//.celebrate__suggestions__list {
-//  &::-webkit-scrollbar {
-//    width: 8px;
-//    border-radius: 12px;
-//    border: 3px solid $white;
-//    padding-right: 10px;
-//    margin-top: 10px;
-//    margin-bottom: 10px;
-//  }
-//
-//  &::-webkit-scrollbar-thumb {
-//    background-color: $gray-300;
-//    border-radius: 6px;
-//    border: 2px solid $gray-300;
-//    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-//  }
-//
-//  &::-webkit-scrollbar-track {
-//    background-color: $gray-100;
-//    border-radius: 6px;
-//  }
-//
-//  &::-webkit-scrollbar-thumb:hover {
-//    background: shade-color($gray-300, 10%);
-//  }
-//}
-
-
 // Toggle shoutouts
 
 .switcher-shoutout {
@@ -1103,14 +574,7 @@
   height: 0 !important;
 }
 
-
-/*TODO: DONE*/
 .slider-shoutout {
-  //cursor: pointer;
-  //top: 0;
-  //left: 0;
-  //bottom: 0;
-  //right: 0;
   background-color: $switch-grey;
   box-shadow: 3px 4.5px 3px 0px $gray-250;
   border-radius: 100px;
@@ -1243,16 +707,6 @@ input:checked + .slider-shoutout img {
   border-bottom: 4px solid white;
 }
 
-/*TODO: not used*/
-//.position {
-//  position: absolute;
-//  top: -40px;
-//  left: 50%;
-//  transform: translateX(-50%);
-//  z-index: 2;
-//  color: $soft-blue;
-//}
-
 .position-result {
   position: relative;
   top: 30px;
@@ -1269,12 +723,6 @@ input:checked + .slider-shoutout img {
   background: $white;
   border: 3px solid $soft-blue;
   border-radius: 20px;
-
-  /*TODO: not used*/
-  //&.preview {
-  //  height: 500px;
-  //  filter: blur(8px);
-  //}
 }
 
 .calculate .team-name {
@@ -1301,7 +749,6 @@ input:checked + .slider-shoutout img {
   outline: none;
 }
 
-// TODO: Do not delete - Updated classes for EmotionIntensity
 .emotion-intensity {
   .wrap-textarea {
     max-width: 560px;
