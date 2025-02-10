@@ -20,7 +20,7 @@
 
 FactoryBot.define do
   factory :emoji do
-    emoji_code { Faker::SlackEmoji.people }
+    emoji_code { Faker::SlackEmoji.unique.people }
     emoji_name { Faker::SlackEmoji.name }
   end
 end

@@ -45,6 +45,9 @@ class Api::V1::FunQuestionAnswersController < ApplicationController
 
   def update_question(answer)
     question = answer.fun_question
-    question.update(used: true, time_period_id: TimePeriod.current.id) if question.time_period_id.nil? || question.time_period_id != TimePeriod.current.id
+    return unless question.time_period_id.nil? || question.time_period_id != TimePeriod.current.id
+
+    question.update(used: true,
+                    time_period_id: TimePeriod.current.id)
   end
 end

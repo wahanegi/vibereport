@@ -22,8 +22,8 @@ RSpec.describe TimePeriod, type: :model do
 
   context 'Create multiple factories' do
     it 'multiple factories being instantiated works' do
-      expect(create :time_period).to be_valid
-      expect(create :time_period).to be_valid
+      expect(create(:time_period)).to be_valid
+      expect(create(:time_period)).to be_valid
     end
   end
 
