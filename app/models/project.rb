@@ -17,4 +17,14 @@ class Project < ApplicationRecord
   validates :company, presence: true
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true
+
+  has_many :time_sheet_entries, dependent: :destroy
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id code company name]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[time_sheet_entries]
+  end
 end
