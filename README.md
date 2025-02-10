@@ -10,11 +10,9 @@
 Vibe Report is a free weekly check-in and employee recognition tool that is easily customizable, providing an engaging, user-friendly experience that your team will be thankful for. Check-in, elicit feedback, and retain your team with actionable insights. Allow your team members to share, express themselves creatively, and recognize each other no matter where they are for a thriving, collaborative, and supportive culture.
 
 The Vibe Report App is built on:
-
 * Ruby 3.2.6
-* Rails 7.1.5.1
+* Rails 7.2
 * postgresql 10.0 or higher
-
 
 ---
 ## Table of Contents
