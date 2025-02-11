@@ -128,7 +128,7 @@ const productivityLevels = {
     0: "No productivity",
     4: "Weak productivity",
     7: "Moderate productivity",
-    10: "Strong productivity",
+    9: "Strong productivity",
 };
 
 export function getProductiveText(value) {
