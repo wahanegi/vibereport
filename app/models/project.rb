@@ -14,19 +14,13 @@
 #  index_projects_on_code  (code) UNIQUE
 #
 class Project < ApplicationRecord
-  before_save :normalize_code
+  normalizes :code, with: ->(code) { code.strip.upcase }
 
   validates :company, presence: true
-  validates :code, presence: true, uniqueness: true
+  validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[company code name]
-  end
-
-  private
-
-  def normalize_code
-    self.code = code.upcase.strip if code.present?
   end
 end
