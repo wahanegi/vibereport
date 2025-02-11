@@ -17,4 +17,9 @@ class Project < ApplicationRecord
   validates :company, presence: true
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[company code name]
+  end
+
 end
