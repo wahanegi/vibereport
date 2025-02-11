@@ -90,9 +90,8 @@ ActiveAdmin.register Team do
       end
       panel 'Select Month' do
         form action: admin_team_path(team), method: :get do
-          time_periods = TimePeriod.joins(responses: { user: :teams })
+          time_periods = TimePeriod.with_responses_by_team(team)
                                    .select("DISTINCT DATE_TRUNC('month', start_date) as month_start")
-                                   .where(responses: { user: { teams: team } })
                                    .order(month_start: :desc)
                                    .map { |tp| [tp.month_start.strftime('%Y-%m'), tp.month_start.strftime('%Y-%m-%d')] }
           select_tag :time_period,
@@ -104,10 +103,9 @@ ActiveAdmin.register Team do
 
       if params[:time_period].present?
         selected_month = Date.parse(params[:time_period])
-        time_periods = TimePeriod.distinct
-                                 .joins(responses: { user: :teams })
+        time_periods = TimePeriod.with_responses_by_team(team)
                                  .where("DATE_TRUNC('month', start_date) = ?", selected_month)
-                                 .where(responses: { user: { teams: team } })
+                                 .distinct
         time_period = time_periods.order(:start_date).first
       else
         time_periods = TimePeriod.none
@@ -115,9 +113,8 @@ ActiveAdmin.register Team do
       end
 
       if time_period
-        previous_time_periods = TimePeriod.joins(responses: { user: :teams })
+        previous_time_periods = TimePeriod.with_responses_by_team(team)
                                           .where('end_date < ?', time_period.start_date)
-                                          .where(responses: { user: { teams: team } })
                                           .where('responses.not_working = ?', false)
                                           .order(end_date: :desc)
       end
@@ -296,7 +293,6 @@ ActiveAdmin.register Team do
 
               row 'Shoutouts Count' do
                 total_shoutouts_per_user = time_periods.includes(shoutouts: :user)
-                                                       .where(shoutouts: { user_id: team.users.ids })
                                                        .flat_map(&:shoutouts)
 
                 if total_shoutouts_per_user.present?
@@ -322,19 +318,18 @@ ActiveAdmin.register Team do
         end
       end
 
-      earliest_start_date = TimePeriod.joins(responses: { user: :teams })
-                                      .where(responses: { user: { teams: team } })
-                                      .minimum(:start_date)
-      latest_end_date = TimePeriod.joins(responses: { user: :teams })
-                                  .where(responses: { user: { teams: team } })
-                                  .maximum(:end_date)
+      result = TimePeriod.with_responses_by_team(team)
+                         .pick(Arel.sql('MIN(start_date), MAX(end_date)'))
+
+      earliest_start_date, latest_end_date = result
 
       if earliest_start_date.nil? || latest_end_date.nil?
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe
       else
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
           responses_count = Response.joins(user: :teams)
-                                    .where(user: { teams: team }, not_working: false)
+                                    .where(user: { teams: team })
+                                    .working
                                     .count
 
           if responses_count.zero?
