@@ -14,6 +14,8 @@
 #  index_projects_on_code  (code) UNIQUE
 #
 class Project < ApplicationRecord
+  before_save :normalize_code
+
   validates :company, presence: true
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true
@@ -22,4 +24,9 @@ class Project < ApplicationRecord
     %w[company code name]
   end
 
+  private
+
+  def normalize_code
+    self.code = code.upcase.strip if code.present?
+  end
 end

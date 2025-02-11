@@ -41,4 +41,23 @@ RSpec.describe Project, type: :model do
       it { is_expected.to allow_value('Marketing Campaign').for(:name) }
     end
   end
+
+  context 'Callbacks' do
+    describe 'before save normalize code' do
+      it 'converts the code to uppercase before saving' do
+        project = create(:project, code: 'abcd-1234')
+        expect(project.code).to eq('ABCD-1234')
+      end
+
+      it 'does not change an already uppercase code' do
+        project = create(:project, code: 'ABCD-1234')
+        expect(project.code).to eq('ABCD-1234')
+      end
+
+      it 'removes leading and trailing spaces from code' do
+        project = create(:project, code: '  abc-789  ')
+        expect(project.code).to eq('ABC-789')
+      end
+    end
+  end
 end

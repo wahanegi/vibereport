@@ -16,7 +16,7 @@
 FactoryBot.define do
   factory :project do
     company { Faker::Company.name }
-    code { Faker::Alphanumeric.alphanumeric(number: 8).upcase }
+    code { Faker::Alphanumeric.alphanumeric(number: 8) }
     name { Faker::Commerce.product_name }
   end
 end
