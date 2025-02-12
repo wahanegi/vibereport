@@ -131,7 +131,6 @@ ActiveAdmin.register Team do
                                     .where(teams: { id: team.id }, time_period: time_periods, not_working: false)
                                     .count
           verbatim_list = vars[:verbatim_list]
-          teammate_engagement_count = vars[:teammate_engagement_count]
 
           if responses_count.zero?
             if verbatim_list.present? && verbatim_list != 'No teammate engagement verbatims present'
@@ -172,8 +171,6 @@ ActiveAdmin.register Team do
             previous_period_celebrate_comments_count = vars[:previous_celebrate_comments_count]
 
             celebrate_verbatims = vars[:celebrate_verbatims]
-
-            previous_teammate_engagement_count = vars[:previous_teammate_engagement_count]
 
             attributes_table_for team do
               row :Emotion_Index do
@@ -260,18 +257,6 @@ ActiveAdmin.register Team do
                   end
                 else
                   div celebrate_verbatims
-                end
-              end
-
-              row :Teammate_Engagement_Count do
-                if (previous_time_periods.present? && teammate_engagement_count.is_a?(String)) || previous_teammate_engagement_count.nil?
-                  span teammate_engagement_count
-                else
-                  trend, trend_style = trend_direction(previous_teammate_engagement_count, teammate_engagement_count)
-                  div do
-                    span teammate_engagement_count
-                    span trend.html_safe, style: trend_style
-                  end
                 end
               end
 
