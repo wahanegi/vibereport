@@ -1,19 +1,34 @@
-<div class="mx-auto placement-area">
-  <%= render 'layouts/logo', height: 87 %>
-  <div class="mt-64 size-message mx-auto">
-    <h2 class="color-black mb-28">Check your inbox!</h2>
-    <p class="b3 color-black">Look for a unique access link in your inbox at:</p>
-  </div>
-  <% if params.dig("passwordless", "email").present? %>
-    <div class="b1 gray-600 mt-85"><%= params.dig("passwordless", "email") %></div>
-  <% end %>
-  <div class="size-resolve-issue gray-600 my-6 mx-auto b3">
-    <p>If you have any issues, use the help<br>
-    button at the bottom right of this window<br>
-    to contact an administrator.</p>
-  </div>
-  <div class="hud help pointer d-flex justify-content-end h-0 pb-52 mb-3">
-    <%= link_to image_tag("help.svg"), '#', class: 'help-icon',  data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
-  </div>
-  <%= render 'layouts/help_modal' %>
+<div class="container py-4">
+	<!-- Logo -->
+	<div class="d-flex justify-content-center pt-10">
+		<%= image_tag 'logo.png', class: 'img-fluid', height: 87 %>
+	</div>
+
+	<!-- Title -->
+	<div class="text-center mt-5 mx-auto">
+		<h2 class="text-dark mb-2">Check your inbox!</h2>
+		<p class="b3 text-dark">Look for a unique access link in your inbox at:</p>
+	</div>
+
+	<!-- Email -->
+	<% if params.dig("passwordless", "email").present? %>
+		<div class="b1 text-muted mt-5 text-center">
+			<%= params.dig("passwordless", "email") %>
+		</div>
+	<% end %>
+
+	<!-- Help Text -->
+	<div class="text-muted my-6 mx-auto text-center b3">
+		<p>If you have any issues, use the help
+			button at the bottom right of this window
+			to contact an administrator.</p>
+	</div>
+
+	<!-- Icon -->
+	<div class="d-flex justify-content-end px-3">
+		<%= link_to image_tag("help.svg"), '#', class: 'help-icon', data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
+	</div>
+
+	<!-- Modal -->
+	<%= render 'layouts/help_modal' %>
 </div>
