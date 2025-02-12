@@ -8,6 +8,7 @@ module ActiveAdminHelpers
     current_period: nil
   )
     all_time_periods = team ? TimePeriod.with_responses_by_team(team).distinct : TimePeriod.all
+    time_period = [time_period] if time_period.is_a?(TimePeriod)
     vars = {}
 
     vars[:emotion_index] = EmotionIndex.new(team, time_period).generate

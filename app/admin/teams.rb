@@ -291,21 +291,30 @@ ActiveAdmin.register Team do
                 end
               end
 
-              row 'Shoutouts Count' do
-                total_shoutouts_per_user = Shoutout.includes(:user)
-                                                   .where(user: team.users)
-                                                   .where(time_period: time_periods)
+              total_shoutouts, previous_total_shoutouts, shoutout_user_names = ShoutoutAuthor.new(team, time_periods, previous_time_periods).generate
 
-                if total_shoutouts_per_user.present?
+              row 'Shoutouts per Person' do
+                if shoutout_user_names.present?
                   ul class: 'bubble-list' do
-                    total_shoutouts_per_user.map { |s| s.user.full_name }
-                                            .tally
-                                            .each do |full_name, count|
+                    shoutout_user_names.each do |full_name, count|
                       li "#{full_name} (#{count})", class: 'bubble'
                     end
                   end
                 else
-                  div 'No shoutouts available for this month.'
+                  div 'No shoutouts per person available for this month.'
+                end
+              end
+
+              row 'Shoutouts Count' do
+                unless total_shoutouts.nil? || previous_total_shoutouts.nil?
+                  trend, trend_style = trend_direction(previous_total_shoutouts, total_shoutouts)
+
+                  div do
+                    span shoutout_user_names.size
+                    span trend.html_safe, style: trend_style
+                  end
+                else
+                  span 'No total shoutouts available for this month.'
                 end
               end
             end
