@@ -33,8 +33,8 @@ class ParticipationPercentage < AdminReport
   end
 
   def specific_period_values(total_users)
-    total_possible_responses = total_users
-    responding_users = responding_users_count(@time_periods)
+    total_possible_responses = total_users * @time_periods.size
+    responding_users = responding_users_count(@time_periods.pluck(:id))
     [total_possible_responses, responding_users]
   end
 

@@ -48,6 +48,10 @@ class User < ApplicationRecord
   scope :opt_in, -> { where(opt_out: false) }
   scope :ordered, -> { order(first_name: :asc) }
 
+  def email_with_full_name
+    "#{email} (#{full_name})"
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end
