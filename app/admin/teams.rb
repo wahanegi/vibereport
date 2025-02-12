@@ -292,8 +292,9 @@ ActiveAdmin.register Team do
               end
 
               row 'Shoutouts Count' do
-                total_shoutouts_per_user = time_periods.includes(shoutouts: :user)
-                                                       .flat_map(&:shoutouts)
+                total_shoutouts_per_user = Shoutout.includes(:user)
+                                                   .where(user: team.users)
+                                                   .where(time_period: time_periods)
 
                 if total_shoutouts_per_user.present?
                   ul class: 'bubble-list' do
