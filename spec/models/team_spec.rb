@@ -4,7 +4,7 @@
 #
 #  id                :bigint           not null, primary key
 #  name              :string(100)      not null
-#  timesheet_enabled :boolean
+#  timesheet_enabled :boolean          default(FALSE), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
