@@ -7,9 +7,7 @@ module ActiveAdminHelpers
     previous_time_period: [],
     current_period: nil
   )
-    all_time_periods = TimePeriod.distinct
-                                 .joins(responses: { user: :teams })
-                                 .where(responses: { user: { teams: team } })
+    all_time_periods = team ? TimePeriod.with_responses_by_team(team).distinct : TimePeriod.all
     vars = {}
 
     vars[:emotion_index] = EmotionIndex.new(team, time_period).generate
@@ -21,7 +19,7 @@ module ActiveAdminHelpers
     vars[:productivity_average_current_period] = ProductivityAverage.new(team, current_period).generate
 
     vars[:participation_percentage] = ParticipationPercentage.new(team, time_period).generate
-    vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate(for_all_periods: true)
+    vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate
 
     vars[:productivity_verbatims] = ProductivityVerbatims.new(team, team.nil? ? current_period : time_period).generate
 
