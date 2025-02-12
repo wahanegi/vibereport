@@ -3,9 +3,9 @@
 # Table name: projects
 #
 #  id         :bigint           not null, primary key
-#  code       :string           not null
-#  company    :string           not null
-#  name       :string           not null
+#  code       :string
+#  company    :string
+#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -32,8 +32,37 @@ RSpec.describe Project, type: :model do
 
     describe 'code' do
       it { is_expected.to validate_presence_of(:code) }
-      it { is_expected.to validate_uniqueness_of(:code) }
+      it { is_expected.to validate_uniqueness_of(:code).case_insensitive }
       it { is_expected.to allow_value('2024-PROJ-01').for(:code) }
+
+      context 'edge cases for uniqueness' do
+        let!(:project1) { create(:project, code: 'ABC-321') }
+        let!(:project2) { build(:project) }
+
+        it 'does not allow duplicate codes even with different letter cases' do
+          project2.code = 'aBc-321'
+          expect(project2.valid?).to be_falsey
+          expect(project2.save).to be_falsey
+          expect(project2.errors[:code]).to include('has already been taken')
+        end
+
+        it 'does not allow duplicate codes even with extra spaces' do
+          project2.code = '  ABC-321  '
+          expect(project2.valid?).to be_falsey
+          expect(project2.save).to be_falsey
+          expect(project2.errors[:code]).to include('has already been taken')
+        end
+
+        it 'allows codes that have a different structure but similar characters' do
+          project2.code = 'ABCD-321'
+          expect(project2.valid?).to be_truthy
+        end
+
+        it 'allows different codes if numbers are at different positions' do
+          project2.code = '321-ABC'
+          expect(project2.valid?).to be_truthy
+        end
+      end
     end
 
     describe 'name' do
@@ -42,7 +71,7 @@ RSpec.describe Project, type: :model do
     end
   end
 
-  context 'Callbacks' do
+  context 'Normalizes' do
     describe 'before save normalize code' do
       it 'converts the code to uppercase before saving' do
         project = create(:project, code: 'abcd-1234')

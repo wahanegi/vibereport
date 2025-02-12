@@ -3,9 +3,9 @@
 # Table name: projects
 #
 #  id         :bigint           not null, primary key
-#  code       :string           not null
-#  company    :string           not null
-#  name       :string           not null
+#  code       :string
+#  company    :string
+#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -16,7 +16,7 @@
 FactoryBot.define do
   factory :project do
     company { Faker::Company.name }
-    code { Faker::Alphanumeric.alphanumeric(number: 8) }
+    code { Faker::Alphanumeric.unique.alphanumeric(number: 8) }
     name { Faker::Commerce.product_name }
   end
 end
