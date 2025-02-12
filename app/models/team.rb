@@ -2,10 +2,11 @@
 #
 # Table name: teams
 #
-#  id         :bigint           not null, primary key
-#  name       :string(100)      not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :bigint           not null, primary key
+#  name              :string(100)      not null
+#  timesheet_enabled :boolean
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 # Indexes
 #
@@ -17,9 +18,10 @@ class Team < ApplicationRecord
   before_validation :strip_name
 
   validates :name, presence: true, length: { maximum: 100 }, uniqueness: true
+  validates :timesheet_enabled, inclusion: { in: [true, false] }
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[id name]
+    %w[id name timesheet_enabled]
   end
 
   def self.ransackable_associations(_auth_object = nil)

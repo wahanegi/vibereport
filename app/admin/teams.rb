@@ -1,11 +1,17 @@
 include ActiveAdminHelpers
 
 ActiveAdmin.register Team do
-  permit_params :name, user_ids: []
+  permit_params :name, :timesheet_enabled, user_ids: []
 
   form do |f|
     f.inputs 'Team Details' do
       f.input :name
+
+      div class: "timesheet-wrap" do
+        label 'Timesheets Enabled', for: :team_timesheet_enabled, class: "timesheet-label"
+        f.input :timesheet_enabled, as: :boolean, label: "", required: false
+      end
+
       f.input :users, as: :check_boxes, collection: User.order(:email).pluck(:email, :id).map { |email, id| [email, id] }
     end
     f.actions
@@ -68,6 +74,9 @@ ActiveAdmin.register Team do
   show do |team|
     attributes_table do
       row :name
+      row "Timesheets" do
+        team.timesheet_enabled ? "Enabled" : "Disabled"
+      end
       row 'Managers' do
         managers = team.user_teams.managers.map { |ut| ut.user.email }
         if managers.empty?
@@ -99,12 +108,12 @@ ActiveAdmin.register Team do
 
       if time_period
         previous_time_period = TimePeriod
-                               .joins(responses: { user: :teams })
-                               .where('end_date < ?', time_period.start_date)
-                               .where(teams: { id: team.id })
-                               .where(responses: { not_working: false })
-                               .order(end_date: :desc)
-                               .first
+                                 .joins(responses: { user: :teams })
+                                 .where('end_date < ?', time_period.start_date)
+                                 .where(teams: { id: team.id })
+                                 .where(responses: { not_working: false })
+                                 .order(end_date: :desc)
+                                 .first
       end
 
       vars = ActiveAdminHelpers.time_period_vars(

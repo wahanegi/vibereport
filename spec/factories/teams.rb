@@ -2,10 +2,11 @@
 #
 # Table name: teams
 #
-#  id         :bigint           not null, primary key
-#  name       :string(100)      not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :bigint           not null, primary key
+#  name              :string(100)      not null
+#  timesheet_enabled :boolean
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 # Indexes
 #
