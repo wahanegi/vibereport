@@ -1,22 +1,22 @@
 # PostgreSQL. Versions 9.3 and up are supported.
 
 default: &default
-  adapter: postgresql
-  encoding: unicode
-  username: fsdev
-  password: fsdev
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+	adapter: postgresql
+	encoding: unicode
+	username: postgres
+	password:
+	pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: vibereport_development
+	<<: *default
+	database: vibereport_development
 
 test:
-  <<: *default
-  database: vibereport_test
-  url: <%= ENV['DATABASE_URL'] %>
+	<<: *default
+	database: vibereport_test
+	url: <%= ENV['DATABASE_URL'] %>
 
 production:
-  <<: *default
-  database: vibereport_production
-  url: <%= ENV['DATABASE_URL'] %>
+	<<: *default
+	database: vibereport_production
+	url: <%= ENV['DATABASE_URL'] %>
