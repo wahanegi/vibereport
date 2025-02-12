@@ -2,31 +2,42 @@ class Api::V1::ProjectsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def sync
-    begin
-      projects_data = JSON.parse(request.body.read)['projects']
-    rescue JSON::ParserError
-      return render json: { error: 'Invalid JSON format' }, status: :bad_request
-    end
+    projects_data = project_params[:projects]
     incoming_codes = projects_data.map { |data| data['code'].upcase.strip }
-    duplicate_codes = incoming_codes.group_by(&:itself).select { |_, value| value.size > 1 }.keys
+    duplicate_codes = find_duplicates_codes(incoming_codes)
 
     if duplicate_codes.any?
       return render json: { error: "Duplicate codes in request: #{duplicate_codes.join(', ')}" },
                     status: :unprocessable_entity
     end
 
-    Project.where.not(code: incoming_codes).destroy_all
+    errors = sync_projects(projects_data, incoming_codes)
 
-    projects_data.each do |project|
-      existing_project = Project.find_or_initialize_by(code: project['code'])
-      existing_project.company = project['company']
-      existing_project.name = project['name']
-      unless existing_project.save
-        return render json: { error: "Failed to save project: #{existing_project.errors.full_messages.join(', ')}" },
-                      status: :unprocessable_entity
-      end
-    end
+    return render json: { error: errors.join('; ') }, status: :unprocessable_entity if errors.any?
 
     render json: { message: 'Projects synchronized successfully!' }, status: :ok
+  end
+
+  private
+
+  def project_params
+    params.permit(projects: %i[company code name])
+  end
+
+  def find_duplicates_codes(incoming_codes)
+    incoming_codes.group_by(&:itself).select { |_, value| value.size > 1 }.keys
+  end
+
+  def sync_projects(projects_data, incoming_codes)
+    Project.where.not(code: incoming_codes).destroy_all
+    errors = []
+    projects_data.each do |project_data|
+      project = Project.find_or_initialize_by(code: project_data['code'])
+      project.assign_attributes(company: project_data['company'], name: project_data['name'])
+      unless project.save
+        errors << "Failed to save project #{project_data['code']}: #{project.errors.full_messages.join(', ')}"
+      end
+    end
+    errors
   end
 end

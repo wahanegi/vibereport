@@ -18,15 +18,6 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       end
     end
 
-    context 'when request contains invalid JSON' do
-      it 'returns a bad request error' do
-        post '/api/v1/projects', params: '{invalid_json:', headers: headers
-
-        expect(response).to have_http_status(:bad_request)
-        expect(json_response['error']).to eq('Invalid JSON format')
-      end
-    end
-
     context 'when request contains duplicate codes' do
       let(:duplicate_projects_data) do
         {
