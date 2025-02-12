@@ -7,7 +7,7 @@ class Api::V1::ProjectsController < ApplicationController
     rescue JSON::ParserError
       return render json: { error: 'Invalid JSON format' }, status: :bad_request
     end
-    incoming_codes = projects_data.pluck('code')
+    incoming_codes = projects_data.map { |data| data['code'].upcase.strip }
     duplicate_codes = incoming_codes.group_by(&:itself).select { |_, value| value.size > 1 }.keys
 
     if duplicate_codes.any?

@@ -47,6 +47,24 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       end
     end
 
+    context 'when project codes differ only in case' do
+      let(:case_sensitive_projects_data) do
+        {
+          projects: [
+            { company: 'Tech Corp', code: 'ABC-123', name: 'Project Alpha' },
+            { company: 'Industrial Corp', code: 'abc-123', name: 'Project Beta' }
+          ]
+        }.to_json
+      end
+
+      it 'treats codes as case-insensitive and prevents duplicates' do
+        post '/api/v1/projects', params: case_sensitive_projects_data, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to include('Duplicate codes in request')
+      end
+    end
+
     context 'when a project fails to save due to missing required fields' do
       let(:invalid_projects_data) do
         {
