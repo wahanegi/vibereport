@@ -138,9 +138,7 @@ ActiveAdmin.register Team do
                 row "Shoutouts" do
                   if verbatim_list.is_a?(Array)
                     ul class: 'bubble-list' do
-                      verbatim_list.each do |comment|
-                        next if comment.blank?
-
+                      verbatim_list.compact_blank.each do |comment|
                         li class: 'bubble' do
                           span strip_tags(comment)
                         end
@@ -152,7 +150,7 @@ ActiveAdmin.register Team do
                 end
               end
             else
-              div 'No data present for this time period.'
+              div 'No data present for this month.'
             end
           elsif responses_count.positive?
             formatted_result, chart = vars[:emotion_index]
@@ -247,9 +245,7 @@ ActiveAdmin.register Team do
               row :Celebration_Verbatims do
                 if celebrate_verbatims.is_a?(Array)
                   ul class: 'bubble-list' do
-                    celebrate_verbatims.each do |comment|
-                      next if comment.blank?
-
+                    celebrate_verbatims.compact_blank.each do |comment|
                       li class: 'bubble' do
                         span strip_tags(comment)
                       end
@@ -263,9 +259,7 @@ ActiveAdmin.register Team do
               row :Teammate_Engagement_Verbatims do
                 if verbatim_list.is_a?(Array)
                   ul class: 'bubble-list' do
-                    verbatim_list.each do |comment|
-                      next if comment.blank?
-
+                    verbatim_list.compact_blank.each do |comment|
                       li class: 'bubble' do
                         span strip_tags(comment)
                       end
