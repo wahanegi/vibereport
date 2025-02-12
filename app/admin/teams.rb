@@ -135,7 +135,7 @@ ActiveAdmin.register Team do
           if responses_count.zero?
             if verbatim_list.present? && verbatim_list != 'No teammate engagement verbatims present'
               attributes_table_for team do
-                row :Teammate_Engagement_Verbatims do
+                row "Shoutouts" do
                   if verbatim_list.is_a?(Array)
                     ul class: 'bubble-list' do
                       verbatim_list.each do |comment|
