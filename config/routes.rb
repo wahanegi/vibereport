@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       resources :fun_questions, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug
       resources :shoutouts, only: %i[show create update destroy]
-      resources :notifications, only: %i[create]
+      # TODO: DONE
       resources :users, only: %i[update]
       resources :emojis, only: %i[create destroy]
       resources :result_managers, controller: 'results', only: %i[show results_email], param: :slug
