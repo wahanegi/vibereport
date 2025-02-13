@@ -56,12 +56,12 @@ Rails.application.routes.draw do
         post '/projects', to: 'projects#sync'
       end
     
-      get '*path', to: 'home#app', constraints: lambda { |req|
-        req.path.exclude? 'rails/active_storage'
-      }
     end
   end
-
+  
+  get '*path', to: 'home#app', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 
   root to: 'home#index'
 end
