@@ -34,7 +34,7 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
         end.not_to change(Project, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['error']).to include('Duplicate codes in request')
+        expect(json_response['error']).to include('Duplicate project codes found')
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
         post '/api/v1/projects', params: case_sensitive_projects_data, headers: headers
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['error']).to include('Duplicate codes in request')
+        expect(json_response['error']).to include('Duplicate project codes found')
       end
     end
 
@@ -109,6 +109,30 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(Project.find_by(code: '2025-TEC-01').name).to eq('Project Alpha')
+      end
+    end
+
+    context 'when a project fails to save due to validation error during sync' do
+      let!(:existing_project) { create(:project, company: 'Existing Corp', code: 'EXIST-001', name: 'Existing Project') }
+
+      let(:invalid_projects_data) do
+        {
+          projects: [
+            { company: 'New Corp', code: 'NEW-001', name: 'New Project' },
+            { company: '', code: 'NEW-002', name: 'Invalid Project' }
+          ]
+        }.to_json
+      end
+
+      it 'does not persist any changes when a validation error occurs' do
+        expect do
+          post '/api/v1/projects', params: invalid_projects_data, headers: headers
+        end.not_to change(Project, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to include("Company can't be blank")
+        expect(Project.find_by(code: 'EXIST-001').name).to eq('Existing Project')
+        expect(Project.find_by(code: 'NEW-001')).to be_nil
       end
     end
   end
