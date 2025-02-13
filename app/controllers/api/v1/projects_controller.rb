@@ -7,7 +7,7 @@ class Api::V1::ProjectsController < ApplicationController
     duplicate_codes = find_duplicates_codes(incoming_codes)
 
     if duplicate_codes.any?
-      return render json: { error: "Duplicate codes in request: #{duplicate_codes.join(', ')}" },
+      return render json: { error: "Duplicate project codes found (#{duplicate_codes.join(', ')}). Please remove redundancies and try again." },
                     status: :unprocessable_entity
     end
 
@@ -29,13 +29,15 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def sync_projects(projects_data, incoming_codes)
-    Project.where.not(code: incoming_codes).destroy_all
     errors = []
-    projects_data.each do |project_data|
-      project = Project.find_or_initialize_by(code: project_data['code'])
-      project.assign_attributes(company: project_data['company'], name: project_data['name'])
-      unless project.save
-        errors << "Failed to save project #{project_data['code']}: #{project.errors.full_messages.join(', ')}"
+    ActiveRecord::Base.transaction do
+      Project.where.not(code: incoming_codes).destroy_all
+      projects_data.each do |project_data|
+        project = Project.find_or_initialize_by(code: project_data['code'])
+        unless project.update(company: project_data['company'], name: project_data['name'])
+          errors << "Please fill in all fields for project #{project_data['code']}: #{project.errors.full_messages.join(', ')}"
+          raise ActiveRecord::Rollback
+        end
       end
     end
     errors
