@@ -25,7 +25,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def find_duplicates_codes(incoming_codes)
-    incoming_codes.group_by(&:itself).select { |_, value| value.size > 1 }.keys
+    incoming_codes.tally.select { |_, count| count > 1 }.keys
   end
 
   def sync_projects(projects_data, incoming_codes)
