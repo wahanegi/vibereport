@@ -9,7 +9,7 @@ module ActiveAdminHelpers
   )
     all_time_periods = TimePeriod.all
     vars = {}
-
+    vars[:emotion_index] = EmotionIndex.new(team, time_period).generate
     vars[:emotion_index_all] = EmotionIndex.new(team, all_time_periods).generate
     vars[:emotion_index_current_period] = EmotionIndex.new(team, current_period).generate
 

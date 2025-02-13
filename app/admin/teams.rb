@@ -140,8 +140,8 @@ ActiveAdmin.register Team do
             else
               div 'No data present for this time period.'
             end
-          elsif responses_count > 0
-
+          elsif responses_count.positive?
+            chart = vars[:emotion_index][1]
             productivity_verbatims = vars[:productivity_verbatims]
 
             celebrate_comments_count = vars[:celebrate_comments_count]
@@ -150,6 +150,9 @@ ActiveAdmin.register Team do
             celebrate_verbatims = vars[:celebrate_verbatims]
 
             attributes_table_for team do
+              row :Emotion_Chart do
+                chart
+              end
               row :Productivity_Verbatims do
                 if productivity_verbatims.is_a?(Array)
                   ul class: 'bubble-list' do
@@ -232,6 +235,9 @@ ActiveAdmin.register Team do
             responses_data = vars[:responses_data_all]
 
             attributes_table_for team do
+              row :Emotion_Chart do
+                vars[:emotion_index_all][1]
+              end
               row :Responses_Report do
                 raw responses_data[0]
               end
