@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import {BtnOutline, Wrapper} from "../UI/ShareContent";
-import QuestionButton from "../UI/QuestionButton";
 import {rangeFormat} from "../helpers/helpers";
 import {Link} from "react-router-dom";
 import Logo from "../UI/Logo";
@@ -23,7 +22,6 @@ const CheckInClosed = ({ data }) => {
         </Link>
       </div>
     </Wrapper>
-    <QuestionButton data={data} />
   </Fragment>
 };
 
