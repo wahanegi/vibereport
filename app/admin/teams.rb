@@ -289,7 +289,7 @@ ActiveAdmin.register Team do
                   trend, trend_style = trend_direction(previous_total_shoutouts, total_shoutouts)
 
                   div do
-                    span shoutout_user_names.size
+                    span total_shoutouts
                     span trend.html_safe, style: trend_style
                   end
                 else
