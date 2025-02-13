@@ -1,5 +1,6 @@
 module ActiveAdminHelpers
   URL = { controller: 'api/v1/responses', action: 'response_flow_from_email' }.freeze
+  VISIBLE_BUBBLES = 3
 
   def self.time_period_vars(
     team: nil,

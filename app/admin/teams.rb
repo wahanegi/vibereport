@@ -239,12 +239,19 @@ ActiveAdmin.register Team do
 
               row :Celebration_Verbatims do
                 if celebrate_verbatims.is_a?(Array)
-                  ul class: 'bubble-list' do
-                    celebrate_verbatims.compact_blank.each do |comment|
-                      li class: 'bubble' do
+
+                  celebrate_verbatims.compact_blank!
+
+                  ul class: 'bubble-list', id: 'celebration-list' do
+                    celebrate_verbatims.each_with_index do |comment, index|
+                      li class: "bubble #{index > (VISIBLE_BUBBLES - 1) ? 'display-none' : ''}" do
                         span strip_tags(comment)
                       end
                     end
+                  end
+
+                  if celebrate_verbatims.size > VISIBLE_BUBBLES
+                    button 'More', class: 'margin-top-1', onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div celebrate_verbatims
@@ -253,12 +260,19 @@ ActiveAdmin.register Team do
 
               row :Teammate_Engagement_Verbatims do
                 if verbatim_list.is_a?(Array)
-                  ul class: 'bubble-list' do
-                    verbatim_list.compact_blank.each do |comment|
-                      li class: 'bubble' do
+
+                  verbatim_list.compact_blank!
+
+                  ul class: 'bubble-list', id: 'teammate-engagement-list' do
+                    verbatim_list.each_with_index do |comment, index|
+                      li class: "bubble #{index > (VISIBLE_BUBBLES - 1) ? 'display-none' : ''}" do
                         span strip_tags(comment)
                       end
                     end
+                  end
+
+                  if verbatim_list.size > VISIBLE_BUBBLES
+                    button 'More', class: 'margin-top-1', onclick: "showMore(event, \"teammate-engagement-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div verbatim_list
