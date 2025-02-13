@@ -51,9 +51,9 @@ Rails.application.routes.draw do
       auth_key = ENV['TIMESHEET_PROJECT_SYNC_AUTH_KEY']
     
       if auth_key.present?
-        post "projects/#{auth_key}", to: 'projects#sync'
+        post "/projects/#{auth_key}", to: 'projects#sync'
       else
-        post 'projects', to: 'projects#sync'
+        post '/projects', to: 'projects#sync'
       end
     
       get '*path', to: 'home#app', constraints: lambda { |req|
