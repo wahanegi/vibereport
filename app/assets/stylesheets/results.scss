@@ -63,7 +63,6 @@
   top: 120px;
 }
 
-//TODO: ShoutoutButton
 .hud {
   position: fixed;
   bottom: 30px;
@@ -72,9 +71,7 @@
     bottom: 45px;
     z-index: 30;
   }
-  //TODO: ShoutoutButton
   &.shoutout {
-    //left: 40px;
     right: 40px;
     z-index: 2;
   }
@@ -102,7 +99,6 @@
   font-size: 14px;
   position: absolute;
   right: 20px;
-  //top: 20px;
   z-index: 100
 }
 .padding-x4 {

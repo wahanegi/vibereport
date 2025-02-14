@@ -213,10 +213,8 @@ input.email-input-new:focus-visible{
     display: block;
 }
 
-//TODO: ShoutoutButton
 .right-bottom-corner {
   position: absolute;
-  //left: 45px;
   right: 45px;
   top: 756px;
   border-radius: 50%;
@@ -232,14 +230,12 @@ input.email-input-new:focus-visible{
   animation-fill-mode: forwards;
   @keyframes moveIntoCenterX2_5 {
     0%{
-      //left: 45px;
       right: 45px;
       top:  756px;
     }
     100% {
       scale: 2.384;
       top:   465px;
-      //left: calc(50vw - 50px);
       right: calc(50vw - 50px);
     }
   }
@@ -251,14 +247,12 @@ input.email-input-new:focus-visible{
   animation-fill-mode: forwards;
   @keyframes moveIntoCenter {
     0% {
-      //left: 45px;
       right: 45px;
       top:  756px;
     }
     100% {
       scale:1.06;
       top:   606px;
-      //left: calc(50vw - 50px);
       right: calc(50vw - 50px);
       filter: drop-shadow(1.744px 2.616px 1.744px rgba(0, 0, 0, 0.25));
     }
@@ -267,7 +261,6 @@ input.email-input-new:focus-visible{
 
 .blink {
   top:  459px;
-  //left: calc(50vw - 54px);
   right: calc(50vw - 54px);
   width: 106px;
   height: 106px;
