@@ -8,6 +8,14 @@ class TimeSheetResultsEmailWorker
     return if @time_sheet_entries.empty?
     return unless Date.current.strftime('%A').casecmp?(ENV.fetch('DAY_TO_SEND_RESULTS_EMAIL', nil))
 
-    TimeSheetMailer.time_sheet_results_email(@time_sheet_entries, @time_period).deliver_now
+    grouped_entries = group_and_sort_entries(@time_sheet_entries)
+
+    TimeSheetMailer.time_sheet_results_email(grouped_entries, @time_period).deliver_now
+  end
+
+  private
+
+  def group_and_sort_entries(entries)
+    entries.group_by(&:project).sort_by { |project, _| project.code }
   end
 end
