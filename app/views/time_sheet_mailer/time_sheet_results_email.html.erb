@@ -1,0 +1,12 @@
+<h2>Timesheet Entries for <%= @time_period %></h2>
+
+<p>The master project codes are located at: <a href="<%= @doc_location %>">Vibereport Timesheet Codes</a></p>
+
+<% @time_sheet_entries.group_by(&:project).sort_by { |project, _| project.code }.each do |project, entries| %>
+  <h3><%= project.code %>: Total <%= entries.sum(&:total_hours) %> hours</h3>
+  <ul>
+    <% entries.each do |entry| %>
+      <li><%= entry.user.first_name  entry.user.last_name%>: <%= entry.total_hours %> hours</li>
+    <% end %>
+  </ul>
+<% end %>
