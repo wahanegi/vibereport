@@ -12,7 +12,11 @@ ActiveAdmin.register Team do
   end
 
   filter :name, as: :string, label: 'Team name'
-  filter :user_teams_user_id, as: :select, collection: User.order(:email).map { |u| [u.email_with_full_name, u.id] }, label: 'User'
+  filter :user_teams_user_id,
+         as: :select,
+         collection: User.order(:email)
+                         .pluck(Arel.sql("first_name || ' ' || last_name || ' (' || email || ')'"), :id),
+         label: 'User'
 
   action_item :import_csv, only: :index do
     link_to 'Import CSV', import_csv_admin_teams_path
@@ -119,14 +123,42 @@ ActiveAdmin.register Team do
                                           .order(end_date: :desc)
       end
 
+      vars = ActiveAdminHelpers.time_period_vars(
+        team: team,
+        time_period: time_periods,
+        previous_time_period: previous_time_periods,
+        only: %i[
+          emotion_index
+          previous_emotion_index
+          productivity_avg
+          previous_productivity_avg
+          participation_percentage
+          previous_participation_percentage
+          productivity_verbatims
+          celebrate_comments_count
+          previous_celebrate_comments_count
+          celebrate_verbatims
+          verbatim_list
+          emotion_index_all
+          productivity_avg_all
+          participation_percentage_all
+          celebrate_comments_count_all
+          teammate_engagement_count_all
+          responses_data_all
+          shoutout_user_names
+          previous_shoutouts_count
+        ]
+      )
+
       if time_periods.present?
         panel "Month: <span style='color: #007BFF; font-weight: bold;'>#{selected_month.strftime('%B %Y')}</span>".html_safe do
           responses_count = Response.joins(user: :teams)
                                     .where(teams: { id: team.id }, time_period: time_periods, not_working: false)
                                     .count
-          verbatim_list = TeammateEngagementVerbatims.new(team, time_periods).generate
+          verbatim_list = vars[:verbatim_list]
 
           if responses_count.zero?
+
             if verbatim_list.present? && verbatim_list != 'No teammate engagement verbatims present'
               attributes_table_for team do
                 row "Shoutouts" do
@@ -147,22 +179,27 @@ ActiveAdmin.register Team do
               div 'No data present for this month.'
             end
           elsif responses_count.positive?
-            emotion_index_formatted_result, emotion_index_chart = EmotionIndex.new(team, time_periods).generate #  vars[:emotion_index]
+            emotion_index_formatted_result, emotion_index_chart = vars[:emotion_index]
 
-            previous_period_emotion_index_formatted_result, = EmotionIndex.new(team, previous_time_periods).generate # vars[:previous_emotion_index]
+            previous_period_emotion_index_formatted_result, = vars[:previous_emotion_index]
 
-            productivity_avg = ProductivityAverage.new(team, time_periods).generate # vars[:productivity_avg]
-            previous_period_productivity_avg = ProductivityAverage.new(team, previous_time_periods).generate # vars[:previous_productivity_avg]
+            productivity_avg = vars[:productivity_avg]
+            previous_period_productivity_avg = vars[:previous_productivity_avg]
 
-            participation_percentage = ParticipationPercentage.new(team, time_periods).generate # vars[:participation_percentage]
-            previous_period_participation_percentage = ParticipationPercentage.new(team, previous_time_periods).generate # vars[:previous_participation_percentage]
+            participation_percentage = vars[:participation_percentage]
+            previous_period_participation_percentage = vars[:previous_participation_percentage]
 
-            productivity_verbatims = ProductivityVerbatims.new(team, time_periods).generate # vars[:productivity_verbatims]
+            productivity_verbatims = vars[:productivity_verbatims]
 
-            celebrate_comments_count = CelebrationsCount.new(team, time_periods).generate # vars[:celebrate_comments_count]
-            previous_period_celebrate_comments_count = CelebrationsCount.new(team, previous_time_periods).generate # vars[:previous_celebrate_comments_count]
+            celebrate_comments_count = vars[:celebrate_comments_count]
+            previous_period_celebrate_comments_count = vars[:previous_celebrate_comments_count]
 
-            celebrate_verbatims = CelebrationVerbatims.new(team, time_periods).generate # vars[:celebrate_verbatims]
+            celebrate_verbatims = vars[:celebrate_verbatims]
+
+            shoutout_user_names = vars[:shoutout_user_names]
+
+            shoutouts_count = shoutout_user_names.values.sum
+            previous_shoutouts_count = vars[:previous_shoutouts_count]
 
             attributes_table_for team do
               row :Emotion_Index do
@@ -279,8 +316,6 @@ ActiveAdmin.register Team do
                 end
               end
 
-              total_shoutouts, previous_total_shoutouts, shoutout_user_names = ShoutoutAuthor.new(team, time_periods, previous_time_periods).generate
-
               row :Shoutouts_Per_Person do
                 if shoutout_user_names.present?
                   ul class: 'bubble-list' do
@@ -294,15 +329,15 @@ ActiveAdmin.register Team do
               end
 
               row :Shoutouts_Count do
-                unless total_shoutouts.nil? || previous_total_shoutouts.nil?
-                  trend, trend_style = trend_direction(previous_total_shoutouts, total_shoutouts)
+                if shoutouts_count.nil? || previous_shoutouts_count.nil?
+                  span 'No total shoutouts available for this month.'
+                else
+                  trend, trend_style = trend_direction(previous_shoutouts_count, shoutouts_count)
 
                   div do
-                    span total_shoutouts
+                    span shoutouts_count
                     span trend.html_safe, style: trend_style
                   end
-                else
-                  span 'No total shoutouts available for this month.'
                 end
               end
             end
@@ -331,42 +366,41 @@ ActiveAdmin.register Team do
           if responses_count.zero?
             div 'No data present for the all time period.'
           else
-            all_time_periods = TimePeriod.with_responses_by_team(team).distinct
 
-            responses_data_all, = ResponsesReport.new(team, all_time_periods).generate # vars[:responses_data_all]
-            emotion_index_all, emotion_index_chart_all = EmotionIndex.new(team, all_time_periods).generate
-            productivity_avg_all = ProductivityAverage.new(team, all_time_periods).generate
-            participation_percentage_all = ParticipationPercentage.new(team, all_time_periods).generate
-            celebrate_comments_count_all = CelebrationsCount.new(team, all_time_periods).generate
-            teammate_engagement_count_all = TeammateEngagementCount.new(team, all_time_periods).generate
+            responses_data_all, = vars[:responses_data_all]
+            emotion_index_all, emotion_index_chart_all = vars[:emotion_index_all]
+            productivity_avg_all = vars[:productivity_avg_all]
+            participation_percentage_all = vars[:participation_percentage_all]
+            celebrate_comments_count_all = vars[:celebrate_comments_count_all]
+            teammate_engagement_count_all = vars[:teammate_engagement_count_all]
 
             attributes_table_for team do
               row :Emotion_Index do
-                span emotion_index_all # vars[:emotion_index_all][0]
+                span emotion_index_all
               end
 
               row :Emotion_Chart do
-                emotion_index_chart_all # vars[:emotion_index_all][1]
+                emotion_index_chart_all
               end
 
               row :Productivity_Average do
-                span productivity_avg_all # vars[:productivity_avg_all]
+                span productivity_avg_all
               end
 
               row :Participation_Percentage do
-                span participation_percentage_all # vars[:participation_percentage_all]
+                span participation_percentage_all
               end
 
               row :Responses_Report do
-                raw responses_data_all # responses_data[0]
+                raw responses_data_all
               end
 
               row :Celebrations_Count do
-                celebrate_comments_count_all # vars[:celebrate_comments_count_all]
+                celebrate_comments_count_all
               end
 
               row :Teammate_Engagement_Count do
-                teammate_engagement_count_all # vars[:teammate_engagement_count_all]
+                teammate_engagement_count_all
               end
             end
           end

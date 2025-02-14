@@ -33,9 +33,9 @@ class ResponsesReport < AdminReport
                              .where(id: response_counts.keys)
 
     response_counts.map do |time_period_id, count|
-      time_period = time_periods.find {|tp| tp.id == time_period_id }
-      period = time_period.date_range
-      [period, count]
+      time_period = time_periods.find { |tp| tp.id == time_period_id }
+                                .date_range
+      [time_period, count]
     end
   end
 
