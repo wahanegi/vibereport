@@ -7,6 +7,6 @@ class TimeSheetMailer < ApplicationMailer
     recipients = ENV.fetch('TIMESHEETS_RESULTS_EMAILS', '').split(',')
     @doc_location = ENV.fetch('TIMESHEETS_DOC_LOCATION', nil)
 
-    mail(to: recipients, subject: "Timesheet Entries for #{@time_period}")
+    mail(to: recipients, subject: "Timesheet Entries for #{@time_period.date_range_str}")
   end
 end

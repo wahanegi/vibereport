@@ -1,4 +1,4 @@
-<h2>Timesheet Entries for <%= @time_period %></h2>
+<h2>Timesheet Entries for <%= @time_period.date_range_str %></h2>
 
 <p>The master project codes are located at: <a href="<%= @doc_location %>">Vibereport Timesheet Codes</a></p>
 
@@ -6,7 +6,7 @@
   <h3><%= project.code %>: Total <%= entries.sum(&:total_hours) %> hours</h3>
   <ul>
     <% entries.each do |entry| %>
-      <li><%= entry.user.first_name  entry.user.last_name%>: <%= entry.total_hours %> hours</li>
+      <li><%= entry.user.first_name %>: <%= entry.total_hours %> hours</li>
     <% end %>
   </ul>
 <% end %>
