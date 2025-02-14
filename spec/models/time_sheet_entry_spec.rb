@@ -25,5 +25,26 @@
 require 'rails_helper'
 
 RSpec.describe TimeSheetEntry, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:project) }
+    it { is_expected.to belong_to(:time_period) }
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:total_hours) }
+    it { is_expected.to validate_numericality_of(:total_hours).only_integer.is_greater_than_or_equal_to(0) }
+  end
+
+  describe 'ransackable_attributes' do
+    it 'returns the expected attributes' do
+      expect(described_class.ransackable_attributes).to eq(%w[id total_hours project_id time_period_id user_id])
+    end
+  end
+
+  describe 'ransackable_associations' do
+    it 'returns the expected associations' do
+      expect(described_class.ransackable_associations).to eq(%w[project time_period user])
+    end
+  end
 end
