@@ -9,17 +9,12 @@ module ActiveAdminHelpers
   )
     all_time_periods = TimePeriod.all
     vars = {}
-
     vars[:emotion_index] = EmotionIndex.new(team, time_period).generate
     vars[:emotion_index_all] = EmotionIndex.new(team, all_time_periods).generate
     vars[:emotion_index_current_period] = EmotionIndex.new(team, current_period).generate
 
-    vars[:productivity_avg] = ProductivityAverage.new(team, time_period).generate
     vars[:productivity_avg_all] = ProductivityAverage.new(team, all_time_periods).generate
     vars[:productivity_average_current_period] = ProductivityAverage.new(team, current_period).generate
-
-    vars[:participation_percentage] = ParticipationPercentage.new(team, time_period).generate
-    vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate(for_all_periods: true)
 
     vars[:productivity_verbatims] = ProductivityVerbatims.new(team, team.nil? ? current_period : time_period).generate
 
@@ -28,10 +23,6 @@ module ActiveAdminHelpers
     vars[:celebrations_count_current_period] = CelebrationsCount.new(team, current_period).generate
 
     vars[:celebrate_verbatims] = CelebrationVerbatims.new(team, time_period).generate
-
-    vars[:teammate_engagement_count] = TeammateEngagementCount.new(team, time_period).generate
-    vars[:teammate_engagement_count_all] = TeammateEngagementCount.new(team, all_time_periods).generate
-    vars[:teammate_engagement_count_current_period] = TeammateEngagementCount.new(team, current_period).generate
 
     vars[:verbatim_list] = TeammateEngagementVerbatims.new(team, time_period).generate
 
