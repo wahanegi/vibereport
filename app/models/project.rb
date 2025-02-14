@@ -14,8 +14,10 @@
 #  index_projects_on_code  (code) UNIQUE
 #
 class Project < ApplicationRecord
+  normalizes :code, with: ->(code) { code.strip.upcase }
+
   validates :company, presence: true
-  validates :code, presence: true, uniqueness: true
+  validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
   has_many :time_sheet_entries, dependent: :destroy
