@@ -18,7 +18,7 @@ ActiveAdmin.register TimeSheetEntry do
   form do |f|
     f.inputs do
       f.input :user, as: :select, collection: User.opt_in.map { |user| [user.full_name, user.id] }, include_blank: false
-      f.input :project, as: :select, collection: Project.all.map { |project| [project.name, project.id] }, include_blank: false
+      f.input :project, as: :select, collection: Project.all.map { |project| [project.code, project.id] }, include_blank: false
       f.input :time_period, as: :select, collection: TimePeriod.all.map { |time_period|
         [time_period.date_range_str, time_period.id]
       }, include_blank: false
