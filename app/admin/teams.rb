@@ -135,8 +135,8 @@ ActiveAdmin.register Team do
           participation_percentage
           previous_participation_percentage
           productivity_verbatims
-          celebrate_comments_count
-          previous_celebrate_comments_count
+          teammate_engagement_count
+          previous_teammate_engagement_count
           celebrate_verbatims
           verbatim_list
           emotion_index_all
@@ -191,8 +191,8 @@ ActiveAdmin.register Team do
 
             productivity_verbatims = vars[:productivity_verbatims]
 
-            celebrate_comments_count = vars[:celebrate_comments_count]
-            previous_period_celebrate_comments_count = vars[:previous_celebrate_comments_count]
+            teammate_engagement_count = vars[:teammate_engagement_count]
+            previous_teammate_engagement_count = vars[:previous_teammate_engagement_count]
 
             celebrate_verbatims = vars[:celebrate_verbatims]
 
@@ -262,18 +262,6 @@ ActiveAdmin.register Team do
                 end
               end
 
-              row :Celebrations_Count do
-                if (previous_time_periods.present? && celebrate_comments_count.is_a?(String)) || previous_period_celebrate_comments_count.nil?
-                  span celebrate_comments_count
-                else
-                  trend, trend_style = trend_direction(previous_period_celebrate_comments_count, celebrate_comments_count)
-                  div do
-                    span celebrate_comments_count
-                    span trend.html_safe, style: trend_style
-                  end
-                end
-              end
-
               row :Celebration_Verbatims do
                 if celebrate_verbatims.is_a?(Array)
 
@@ -292,6 +280,18 @@ ActiveAdmin.register Team do
                   end
                 else
                   div celebrate_verbatims
+                end
+              end
+
+              row :Teammate_Engagement_Count do
+                if (previous_time_periods.present? && teammate_engagement_count.is_a?(String)) || previous_teammate_engagement_count.nil?
+                  span teammate_engagement_count
+                else
+                  trend, trend_style = trend_direction(previous_teammate_engagement_count, teammate_engagement_count)
+                  div do
+                    span teammate_engagement_count
+                    span trend.html_safe, style: trend_style
+                  end
                 end
               end
 
