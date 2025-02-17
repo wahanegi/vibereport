@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  code       :string
 #  company    :string
+#  deleted_at :datetime
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -19,6 +20,18 @@ class Project < ApplicationRecord
   validates :company, presence: true
   validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
+
+  before_destroy :handle_soft_delete
+
+  scope :active, -> { where(deleted_at: nil) }
+
+  def soft_delete!
+    update(deleted_at: Time.current)
+  end
+
+  def deleted?
+    deleted_at.present?
+  end
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[company code name]

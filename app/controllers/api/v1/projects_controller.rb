@@ -31,9 +31,10 @@ class Api::V1::ProjectsController < ApplicationController
   def sync_projects(projects_data, incoming_codes)
     errors = []
     ActiveRecord::Base.transaction do
-      Project.where.not(code: incoming_codes).destroy_all
+      Project.where.not(code: incoming_codes).where(deleted_at: nil).find_each(&:soft_delete!)
       projects_data.each do |project_data|
         project = Project.find_or_initialize_by(code: project_data['code'])
+        project.deleted_at = nil if project.deleted?
         unless project.update(company: project_data['company'], name: project_data['name'])
           errors << "Please fill in all fields for project #{project_data['code']}: #{project.errors.full_messages.join(', ')}"
           raise ActiveRecord::Rollback
