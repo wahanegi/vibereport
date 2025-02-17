@@ -5,18 +5,16 @@ class ShoutoutAuthorReport < AdminReport
   end
 
   def generate
-    shoutout_user_names.tally
+    shoutout_user_names.reduce({}) { |hash, shoutout| hash.merge({ shoutout.user_full_name => shoutout.total_shoutouts }) }
   end
 
   private
 
   def shoutout_user_names
-    users = @team.users.select(:id, :first_name, :last_name).to_a
-
     Shoutout.joins(user: { user_teams: :team })
-            .where(user: { user_teams: { team_id: @team.id } })
+            .where(user_teams: { team_id: @team.id })
             .where(time_period: @time_periods)
-            .pluck(:user_id)
-            .map { |id| users.find { |u| u.id == id }.full_name }
+            .select("users.first_name || ' ' || users.last_name AS user_full_name, COUNT(*) AS total_shoutouts")
+            .group("users.first_name, users.last_name")
   end
 end
