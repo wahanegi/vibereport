@@ -54,9 +54,27 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
   const saveDataQuestion = (goToResultPage, dataFromServer) =>{
     const url = '/api/v1/fun_questions/'
     const id = prevStateQuestion?.id
+
+    const handleApiError = (error) => {
+      if (error.response && error.response.status === 422) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'This question already exists. Please enter a different question.',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Unexpected Error',
+          text: 'An error occurred while submitting the question. Please try again.',
+        });
+        console.error('Error submitting question:', error);
+      }
+    };
+
     if(isPresent(prevQuestionBody)) {
       if(prevQuestionBody !== funQuestionBody && isNotEmptyStr(funQuestionBody)) {
-        apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
+        apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`, handleApiError).then();
       } else if(isEmptyStr(funQuestionBody)) {
         apiRequest("DELETE", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
@@ -65,7 +83,7 @@ const IcebreakerQuestion = ({data, setData, saveDataToDb, steps, service, draft}
     } else if (isEmptyStr(funQuestionBody)) {
       goToResultPage()
     } else {
-      apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`).then();
+      apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`, handleApiError).then();
     }
   }
 
