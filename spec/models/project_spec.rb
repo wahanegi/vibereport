@@ -25,6 +25,12 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  context 'Associations' do
+    describe 'has_many time_sheet_entries' do
+      it { is_expected.to have_many(:time_sheet_entries).dependent(:destroy) }
+    end
+  end
+
   context 'Validations' do
     describe 'company' do
       it { is_expected.to validate_presence_of(:company) }
