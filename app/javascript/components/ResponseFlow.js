@@ -3,9 +3,10 @@ import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
 import EmotionEntry from "./Pages/EmotionEntry";
 import EmotionIntensity from "./Pages/EmotionIntensity";
+import TimesheetPage from "./Pages/TimesheetPage";
 import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
@@ -17,7 +18,6 @@ import EmotionType from "./Pages/EmotionType";
 import RatherNotSay from "./Pages/RatherNotSay/RatherNotSay";
 import SkipAhead from "./Pages/RatherNotSay/SkipAhead";
 import ResultsManager from "./Pages/ResultsPageManager";
-import TimesheetPage from "./Pages/TimesheetPage";
 
 const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -30,8 +30,6 @@ const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
   const mainPage = 'emotion-selection-web'
   const [go, setGo] = useState(null)
   const [isCustomGif, setIsCustomGif] = useState(false)
-  const location = useLocation();
-  const { pathname } = location;
 
   useEffect(()=>{
     //a block to give permission to transition on a page which was point the browser address bar
@@ -41,12 +39,9 @@ const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
     if ( stepsArr[0] !== mainPage ) {
       saveDataToDb([mainPage])
     }
-    // TODO: update this logic for timesheet
-    if (index === -1 && pathname !== '/timesheet') {
+    if (index === -1) {
       navigate(`/${lastStep}`)
       setGo(lastStep)
-    } else if (pathname === '/timesheet') {
-      setGo('timesheet');
     } else if (index !== stepsArr.length-1) {
       saveDataToDb(stepsArr.slice(0, stepsArr.indexOf(step) + 1))
     } else {

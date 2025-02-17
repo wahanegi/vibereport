@@ -8,12 +8,12 @@ export const ALL_STEPS = [
     {id:"2.0", step: "meme-selection"},
     {id:"3.1", step:"emotion-intensity"},
     {id:"4.1", step:"productivity-check"},
-    {id:"4.15", step:"timesheet"},
     {id:"4.25", step:"productivity-bad-follow-up"},
-    {id:"5", step:"causes-to-celebrate"},
-    {id:"6", step:"recognition"},
-    {id:"7v2", step:"icebreaker-answer"},
-    {id:"7v3", step:"icebreaker-question"},
-    {id:"7", step:"results"},
-    {id:"8", step:"result-managers"}
+    {id:"5", step:"timesheet"},
+    {id:"6", step:"causes-to-celebrate"},
+    {id:"7", step:"recognition"},
+    {id:"8v2", step:"icebreaker-answer"},
+    {id:"8v3", step:"icebreaker-question"},
+    {id:"8", step:"results"},
+    {id:"9", step:"result-managers"}
   ];
