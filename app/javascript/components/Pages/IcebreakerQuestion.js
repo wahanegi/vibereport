@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
+import Swal from 'sweetalert2';
 import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../helpers/helpers";
 import {apiRequest} from "../requests/axios_requests";
 import axios from "axios";
