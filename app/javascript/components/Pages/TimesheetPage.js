@@ -37,8 +37,6 @@ const TimesheetPage = ({
           <div className="max-width-entry mx-auto">
             <BlockLowerBtns
               nextHandling={handlingOnClickNext}
-              isNext={false}
-              isSubmit={false}
             />
           </div>
         </div>
