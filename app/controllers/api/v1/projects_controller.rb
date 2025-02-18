@@ -4,6 +4,10 @@ class Api::V1::ProjectsController < ApplicationController
   def index
     projects = Project.order(:code)
     render json: ProjectSerializer.new(projects).serializable_hash.to_json
+  rescue StandardError => e
+    Rails.logger.error "Unexpected error in ProjectsController#index: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    render json: { error: 'An unexpected error occurred' }, status: :internal_server_error
   end
 
   def sync
