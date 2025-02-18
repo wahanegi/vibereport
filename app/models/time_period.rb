@@ -21,9 +21,6 @@ class TimePeriod < ApplicationRecord
   has_many :shoutouts, dependent: :destroy
 
   before_create :slugify
-  after_initialize do
-
-  end
 
   validates :end_date, :start_date, presence: true
   validates :end_date, comparison: { greater_than: :start_date }
@@ -70,6 +67,14 @@ class TimePeriod < ApplicationRecord
     end
   end
 
+  def first_working_day
+    start_date.beginning_of_week
+  end
+
+  def last_working_day
+    start_date.end_of_week(:saturday)
+  end
+
   def date_range
     work_week_range('%Y-%m-%d')
   end
@@ -85,9 +90,6 @@ class TimePeriod < ApplicationRecord
   private
 
   def work_week_range(format_string)
-    monday = start_date.beginning_of_week
-    friday = monday + 4.days
-
-    "#{monday.strftime(format_string)} - #{friday.strftime(format_string)}"
+    "#{start_date.beginning_of_week.strftime(format_string)} - #{start_date.end_of_week.strftime(format_string)}"
   end
 end

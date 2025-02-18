@@ -80,10 +80,10 @@ RSpec.describe TimePeriod, type: :model do
 
     context '#date_range' do
       it 'returns the correct date range string' do
-        monday = time_period1.start_date.beginning_of_week
-        friday = monday + 4.days
+        start_date = time_period1.start_date.beginning_of_week.strftime('%Y-%m-%d')
+        end_date = time_period1.start_date.end_of_week.strftime('%Y-%m-%d')
 
-        expect(time_period1.date_range).to eq("#{monday.strftime('%Y-%m-%d')} - #{friday.strftime('%Y-%m-%d')}")
+        expect(time_period1.date_range).to eq("#{start_date} - #{end_date}")
       end
     end
 

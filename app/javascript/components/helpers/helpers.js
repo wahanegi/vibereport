@@ -18,13 +18,8 @@ export const backHandling = () => {
 export const rangeFormat = (tp) => {
   if (isBlank(tp)) return null
 
-  const baseDate = new Date(tp.start_date)
-
-  const start_date = new Date(baseDate)
-  start_date.setDate(baseDate.getDate() - (baseDate.getDay() - 1)) // move back to Monday
-
-  const end_date = new Date(start_date)
-  end_date.setDate(start_date.getDate() + 4) // move forward to Friday
+  const start_date = new Date(tp.first_working_day)
+  const end_date = new Date(tp.last_working_day)
 
   const month_start = shortMonth(start_date)
   const month_end = shortMonth(end_date)
