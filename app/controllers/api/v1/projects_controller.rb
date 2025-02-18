@@ -1,6 +1,11 @@
 class Api::V1::ProjectsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def index
+    projects = Project.order(:code)
+    render json: ProjectSerializer.new(projects).serializable_hash.to_json
+  end
+
   def sync
     projects_data = project_params[:projects]
     incoming_codes = projects_data.map { |data| data['code'].upcase.strip }
