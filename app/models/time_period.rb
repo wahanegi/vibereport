@@ -21,6 +21,9 @@ class TimePeriod < ApplicationRecord
   has_many :shoutouts, dependent: :destroy
 
   before_create :slugify
+  after_initialize do
+
+  end
 
   validates :end_date, :start_date, presence: true
   validates :end_date, comparison: { greater_than: :start_date }
@@ -68,14 +71,23 @@ class TimePeriod < ApplicationRecord
   end
 
   def date_range
-    "#{start_date.strftime('%Y-%m-%d')} - #{end_date.strftime('%Y-%m-%d')}"
+    work_week_range('%Y-%m-%d')
   end
 
   def date_range_str
-    "#{start_date.strftime('%b %d')} - #{end_date.strftime('%b %d')}"
+    work_week_range('%b %d')
   end
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[due_date end_date slug start_date]
+  end
+
+  private
+
+  def work_week_range(format_string)
+    monday = start_date.beginning_of_week
+    friday = monday + 4.days
+
+    "#{monday.strftime(format_string)} - #{friday.strftime(format_string)}"
   end
 end
