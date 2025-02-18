@@ -11,7 +11,9 @@ ActiveAdmin.register TimeSheetEntry do
     actions
   end
 
-  filter :time_period, as: :select, label: 'Week of', collection: TimePeriod.all.map { |time_period| [time_period.date_range_str, time_period.id] }
+  filter :time_period, as: :select, label: 'Week of', collection: TimePeriod.select(:id, :start_date, :end_date).map do |time_period|
+    [time_period.date_range_str, time_period.id]
+  end
   filter :project, as: :select, label: 'Project code', collection: Project.all.map { |project| [project.code, project.id] }
   filter :user, as: :select, label: 'Person', collection: User.opt_in.map { |user| [user.full_name, user.id] }
 
