@@ -21,7 +21,7 @@ class Project < ApplicationRecord
   validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
-  has_many :time_sheet_entries, dependent: :nullify
+  has_many :time_sheet_entries
 
   before_destroy :handle_soft_delete
 
@@ -39,13 +39,13 @@ class Project < ApplicationRecord
 
   def handle_soft_delete
     if time_sheet_entries.any?
-      update_column(:deleted_at, Time.current) 
+      soft_delete!
       throw :abort 
     end
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[id code company name]
+    %w[id code company name deleted_at]
   end
 
   def self.ransackable_associations(_auth_object = nil)

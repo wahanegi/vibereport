@@ -31,7 +31,13 @@ class Api::V1::ProjectsController < ApplicationController
   def sync_projects(projects_data, incoming_codes)
     errors = []
     ActiveRecord::Base.transaction do
-      Project.where.not(code: incoming_codes).find_each(&:soft_delete!)
+      Project.where.not(code: incoming_codes).each do |project|
+        if project.time_sheet_entries.any?
+          project.soft_delete!
+        else
+          project.destroy!
+        end
+      end
       projects_data.each do |project_data|
         project = Project.find_or_initialize_by(code: project_data['code'])
         project.deleted_at = nil if project.deleted?

@@ -135,5 +135,30 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
         expect(Project.find_by(code: 'NEW-001')).to be_nil
       end
     end
+
+    context 'when syncing projects' do
+      let!(:project_without_entries) { create(:project) }
+      let!(:project_with_entries) { create(:project) }
+      let!(:time_entry) { create(:time_sheet_entry, project: project_with_entries) }
+      let!(:deleted_project) { create(:project, deleted_at: Time.current) }
+
+      let(:sync_data) do
+        {
+          projects: [
+            { company: deleted_project.company, code: deleted_project.code, name: deleted_project.name }
+          ]
+        }.to_json
+      end
+
+      it 'removes projects with no time sheet entries, marks others as deleted, and restores re-added projects' do
+        expect do
+          post '/api/v1/projects', params: sync_data, headers: headers
+        end.to change(Project, :count).by(-1)
+
+        expect(Project.find_by(id: project_without_entries.id)).to be_nil, "Expected project_without_entries to be deleted"
+        expect(project_with_entries.reload.deleted_at).not_to be_nil, "Expected project_with_entries to be soft deleted"
+        expect(deleted_project.reload.deleted_at).to be_nil, "Expected deleted_project to be restored"
+      end
+    end
   end
 end
