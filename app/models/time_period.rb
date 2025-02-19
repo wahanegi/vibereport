@@ -19,6 +19,7 @@ class TimePeriod < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :emotions, through: :responses
   has_many :shoutouts, dependent: :destroy
+  has_many :time_sheet_entries, dependent: :destroy
 
   before_create :slugify
 
@@ -73,6 +74,10 @@ class TimePeriod < ApplicationRecord
 
   def date_range_str
     "#{start_date.strftime('%b %d')} - #{end_date.strftime('%b %d')}"
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[time_sheet_entries]
   end
 
   def self.ransackable_attributes(_auth_object = nil)
