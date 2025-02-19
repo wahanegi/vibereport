@@ -126,7 +126,7 @@
     &:focus {
       outline: none;
       border: 6px solid;
-      box-shadow: none !important;
+      padding: calc(1rem - 3px) !important;
     }
   }
 }
