@@ -184,12 +184,12 @@ const IcebreakerAnswer = ({
                   {user} asks:
                 </p>
               )}
-              <h5 id="question">{question_body}</h5>
+              <div id="question" className='fs-4 text-start mb-1'>{question_body}</div>
               <div className="w-100">
                 <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
                   <form>
                     <textarea
-                      className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none"
+                      className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none fs-4"
                       name="answer_body"
                       style={{height: computedHeight - SUM_EDGE_DOWN_UP}}
                       placeholder="Tell us what you think!"
