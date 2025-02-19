@@ -9,7 +9,7 @@ import BlockLowerBtns from '../UI/BlockLowerBtns';
 const FULL_PRIMARY_HEIGHT = 401;
 const MARGIN_BOTTOM = 17;
 const HEIGHT_ROW_USER = 40;
-const SUM_EDGE_DOWN_UP = 26;
+const SUM_EDGE_DOWN_UP = 41;
 
 const IcebreakerAnswer = ({
                             data,
@@ -175,9 +175,9 @@ const IcebreakerAnswer = ({
               {user}
             </h2>
           </div>
-          <div className="mb-2">
+          <div className="mb-5">
             <div
-              className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
+              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
               {user && (
                 <p className="fs-5 text-gray-600">
                   <span className="text-primary">@</span>
