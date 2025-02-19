@@ -88,12 +88,6 @@ const HelpModal = ({
                             </button>
                         </div>
                     </div>
-                    <div className="bg-light-gray border-light-gray border border-4 rounded rounded-4">
-                        <h6>Additional information about Vibe Report can be found at:</h6>
-                        <Link to={'#'} className="fs-9 fs-sm-7 fs-md-6 text-decoration-none">
-                            https://samplenamerealsourcehere.com
-                        </Link>
-                    </div>
                 </Modal.Body>
             </Modal>
         </Fragment>
