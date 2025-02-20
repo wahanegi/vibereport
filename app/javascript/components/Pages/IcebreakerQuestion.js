@@ -135,7 +135,7 @@ const IcebreakerQuestion = ({
       handleSaveDraft={handleSaveDraft}
     >
       {!isLoading && !error && (
-        <div className="w-100 m-2">
+        <div className="w-100 mx-1">
           <div className="mb-3 d-flex flex-column">
             <div className="mb-1 fs-3">Thanks for answering!</div>
             <div className="lh-1 fs-3 fs-md-1 col-12 col-lg-6 mx-auto text-black">

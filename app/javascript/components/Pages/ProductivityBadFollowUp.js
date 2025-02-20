@@ -46,7 +46,7 @@ const ProductivityBadFollowUp = ({
         handleSaveDraft={handleSaveDraft}
       >
         <div className="w-100 mx-sm-1">
-          <h1 className="fs-3 fs-md-1 mt-2 mb-5">It's like that sometimes...</h1>
+          <h1 className="fs-3 fs-md-1 mb-5">It's like that sometimes...</h1>
           <h2 className="text-black fs-4 fs-md-3 mb-4">
             Reflect on what you think limited <br/> your productivity...
           </h2>
