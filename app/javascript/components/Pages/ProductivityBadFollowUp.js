@@ -65,7 +65,7 @@ const ProductivityBadFollowUp = ({
             </label>
           </form>
 
-          <div className="mt-2 mx-2 max-width-bad-follow mx-md-auto">
+          <div className="mt-4">
             <BlockLowerBtns nextHandling={handlingOnClickNext}/>
           </div>
         </div>

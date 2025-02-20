@@ -168,13 +168,11 @@ const IcebreakerQuestion = ({
               )}
             </div>
           </div>
-          <div className="max-width-icebreaker mx-auto">
             <BlockLowerBtns
               isSubmit={true}
               handlingOnClickNext={handlingOnClickNext}
               stringBody={funQuestionBody}
             />
-          </div>
         </div>
       )}
     </Layout>

@@ -202,13 +202,11 @@ const IcebreakerAnswer = ({
               </div>
             </div>
           </div>
-          <div className="max-width-icebreaker mx-auto">
             <BlockLowerBtns
               isSubmit={true}
               handlingOnClickNext={handlingOnClickNext}
               stringBody={answerBody}
             />
-          </div>
         </div>
       )}
     </Layout>
