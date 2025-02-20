@@ -23,7 +23,7 @@ const ShoutoutButton = ({ data, setData,  num = 0, isMove = false, hideShoutout}
     const closeHandling = () => {
         setShoutOutForm(false)
     }
-    const style = isMove ? `left-bottom-corner ${ isMove && ('into-centerX' + (!num ? '2_5' : '')) } ${blink}` : 'hud shoutout'
+    const style = isMove ? `right-bottom-corner ${ isMove && ('into-centerX' + (!num ? '2_5' : '')) } ${blink}` : 'hud shoutout'
 
     return (
         <div>
