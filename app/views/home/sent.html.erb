@@ -1,34 +1,35 @@
-<div class="container py-4">
-	<!-- Logo -->
-	<div class="d-flex justify-content-center pt-10">
-		<%= image_tag 'logo.png', class: 'img-fluid', height: 87 %>
-	</div>
+<div class="d-flex flex-column justify-content-center align-items-center flex-nowrap vh-100 p-1">
+  <!-- Logo -->
+  <div class="mb-5">
+    <%= image_tag 'logo.png', class: 'img-fluid', width: 405 %>
+  </div>
 
-	<!-- Title -->
-	<div class="text-center mt-5 mx-auto">
-		<h2 class="text-dark mb-2">Check your inbox!</h2>
-		<p class="b3 text-dark">Look for a unique access link in your inbox at:</p>
-	</div>
+  <!-- Title -->
+  <div class="mb-5">
+    <h1 class="fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-2 fs-sm-3 fs-4 mb-2 text-black">Check your inbox!</h1>
+    <p class="fs-xxl-4 fs-xl-4 fs-lg-4 fs-md-4 fs-sm-6 fs-6 text-black">Look for a unique access link in your inbox at:</p>
+  </div>
 
-	<!-- Email -->
-	<% if params.dig("passwordless", "email").present? %>
-		<div class="b1 text-muted mt-5 text-center">
-			<%= params.dig("passwordless", "email") %>
-		</div>
-	<% end %>
+  <!-- Email -->
+  <% if @email %>
+    <div class="fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-2 fs-sm-3 fs-4 text-muted mb-6 text-break">
+      <%= @email %>
+    </div>
+  <% end %>
 
-	<!-- Help Text -->
-	<div class="text-muted my-6 mx-auto text-center b3">
-		<p>If you have any issues, use the help
-			button at the bottom right of this window
-			to contact an administrator.</p>
-	</div>
+  <!-- Help Text -->
+  <div class="text-muted fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-5 fs-sm-6 fs-6" style="max-width: 500px;">
+    If you have any issues, use the help
+    button at the bottom right of this window
+    to contact an administrator.
+  </div>
 
-	<!-- Icon -->
-	<div class="d-flex justify-content-end px-3">
-		<%= link_to image_tag("help.svg"), '#', class: 'help-icon', data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
-	</div>
-
-	<!-- Modal -->
-	<%= render 'layouts/help_modal' %>
+  <!-- Icon -->
+  <div class="align-self-end pe-xxl-3 pe-xl-3 pe-lg-3 pe-md-3 p-sm-3 p-2">
+    <%= button_tag image_tag("help.svg"), class: 'help-icon bg-transparent border-0', data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
+  </div>
 </div>
+
+
+<!-- Modal -->
+<%= render 'layouts/help_modal' %>
