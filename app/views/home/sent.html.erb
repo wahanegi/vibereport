@@ -1,4 +1,4 @@
-<div class="d-flex flex-column justify-content-center align-items-center flex-nowrap vh-100 p-1">
+<div class="d-flex flex-column justify-content-center align-items-center flex-nowrap min-vh-100 p-1">
   <!-- Logo -->
   <div class="mb-5">
     <%= image_tag 'logo.png', class: 'img-fluid', width: 405 %>
@@ -7,12 +7,14 @@
   <!-- Title -->
   <div class="mb-5">
     <h1 class="fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-2 fs-sm-3 fs-4 mb-2 text-black">Check your inbox!</h1>
-    <p class="fs-xxl-4 fs-xl-4 fs-lg-4 fs-md-4 fs-sm-6 fs-6 text-black">Look for a unique access link in your inbox at:</p>
+    <p class="fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-5 fs-sm-6 fs-6 text-black">
+      Look for a unique access link in your inbox at:
+    </p>
   </div>
 
   <!-- Email -->
   <% if @email %>
-    <div class="fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-2 fs-sm-3 fs-4 text-muted mb-6 text-break">
+    <div class="fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-2 fs-sm-3 fs-4 text-muted mb-7 text-break">
       <%= @email %>
     </div>
   <% end %>
@@ -29,7 +31,6 @@
     <%= button_tag image_tag("help.svg"), class: 'help-icon bg-transparent border-0', data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
   </div>
 </div>
-
 
 <!-- Modal -->
 <%= render 'layouts/help_modal' %>
