@@ -1,23 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {userFullName} from '../../helpers/library';
-import Button from '../Button';
+import React, { useEffect, useRef, useState } from 'react';
 import Cursor from '../rich-text/cursor';
-import SwitcherShoutouts from '../SwitcherShoutouts';
 import DropDownList from './DropDownList';
+import { userFullName } from '../../helpers/library';
 import RichText from './rich-text';
+import Button from '../Button';
 import RichTextArea from './RichTextArea';
+import SwitcherShoutouts from '../SwitcherShoutouts';
 
 const RichInputElement = ({
-                            richText = '',
-                            listUsers: listAllUsers,
-                            setChosenUsers = () => {
-                            },
-                            onSubmit,
-                            classAt = 'color-primary',
-                            editObj,
-                          }) => {
+  richText = '',
+  listUsers: listAllUsers,
+  setChosenUsers = () => {},
+  onSubmit,
+  classAt = 'color-primary',
+  editObj,
+}) => {
   const calculateInitX = (window.innerWidth - 884) / 2 + 69;
-  const initCoordinates = {x: calculateInitX, y: 373};
+  const initCoordinates = { x: calculateInitX, y: 373 };
   const [textHTML, setTextHTML] = useState(richText);
   const textAreaRef = useRef(richText);
   const [filteredUsers, setFilteredUsers] = useState(
@@ -39,8 +38,8 @@ const RichInputElement = ({
   const MARKER = '@';
   const TAG_AT = '<span class="' + classAt + '">' + MARKER;
   const END_TAG_AT = '</span>';
-  const OFFSET_X = 0;
-  const OFFSET_Y = 40;
+  const OFFSET_X = -10;
+  const OFFSET_Y = -40;
   const LIMIT_CHARS = 700;
   const highlightSmbATUnknownUser = false;
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER;
@@ -145,7 +144,7 @@ const RichInputElement = ({
             cursorPos.focusOffset - 1 !== searchString.length ||
             RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
               .length !==
-            cursorPos.focusOffset - 1
+              cursorPos.focusOffset - 1
           )
             return 0;
           const newSearchString = (searchString + char).toLowerCase();
@@ -464,11 +463,11 @@ const RichInputElement = ({
               const userFromNode = cursorPos.isSPAN
                 ? node
                 : RichText.findUsersInText(
-                  TAG_AT,
-                  END_TAG_AT,
-                  RichText.decodeSpace(node),
-                  listAllUsers
-                );
+                    TAG_AT,
+                    END_TAG_AT,
+                    RichText.decodeSpace(node),
+                    listAllUsers
+                  );
               if (userFromNode?.length) {
                 const filtratedUsersByName = RichText.filtrationByName(
                   userFullName(userFromNode[0]),
@@ -549,7 +548,7 @@ const RichInputElement = ({
     );
     const hadSelectedUsers = [
       ...chosenUsersWithoutNemo,
-      {...filteredUsers[i]},
+      { ...filteredUsers[i] },
     ];
     setCopyChosenUsers(hadSelectedUsers);
     setChosenUsers(hadSelectedUsers);
@@ -577,6 +576,7 @@ const RichInputElement = ({
   const clickHandling = (event) => {
     const element = textAreaRef.current;
     const cursor = Cursor.getCurrentCursorPosition(element);
+
     if (
       element.textContent.includes(
         `Use "@"  to include Shoutouts to members of the team!`
@@ -644,8 +644,7 @@ const RichInputElement = ({
     if (inputValue) {
       navigator.clipboard
         .writeText(inputValue)
-        .then(() => {
-        })
+        .then(() => {})
         .catch((err) => {
           console.log('Something went wrong', err);
         });
@@ -672,7 +671,7 @@ const RichInputElement = ({
           onKeyDown={handleKeyDown}
           onClick={clickHandling}
           cursorPos={Cursor.getCurrentCursorPosition(element)}
-          className="c3 place-size-shout-out w-100 text-start d-inline-block fs-3 lh-sm pt-2 position-relative"
+          className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
         {isDropdownList &&
