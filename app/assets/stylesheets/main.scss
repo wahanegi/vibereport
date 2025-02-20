@@ -770,6 +770,10 @@ input:checked + .slider-shoutout img {
   resize: none;
 }
 
-.max-width-emotion-intensity, .max-width-recognition, .max-width-entry, .max-width-type {
+.max-width-emotion-intensity, .max-width-recognition, .max-width-type {
   max-width: 750px;
+}
+
+.max-width-entry {
+  max-width: 100%;
 }

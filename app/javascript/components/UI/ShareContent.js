@@ -28,7 +28,7 @@ export const BigBtnEmotion = ({emotion, onClick, showPencil = true, addClass = '
   const appliedStyles = categoryStyles[categoryClass] || '';
   return (
     <button
-      className={`${addClass} container-fluid btn-custom fs-lg-2 fs-sm-3 p-1 px-auto rounded-pill emotion position-relative ${appliedStyles}`}>
+      className={`${addClass} container-fluid btn-custom fs-lg-2 fs-sm-3 p-1 px-auto rounded-pill emotion position-relative ${appliedStyles}`} style={{ height: '70px', lineHeight: '1' }}>
     <span hidden={!showPencil} onClick={onClick} className="position-absolute start-100 translate-middle">
       <img src={edit_pencil} alt="pencil"/>
     </span>

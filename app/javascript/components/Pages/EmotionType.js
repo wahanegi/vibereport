@@ -98,10 +98,10 @@ const EmotionType = ({
             </div>
           </div>
 
-          <div className="row justify-content-center mt-2">
-            <div className="col-12">
+          <div className="row justify-content-center mt-2 mx-auto">
+            <div  style={{ maxWidth: '800px', padding: 0 }}>
               <BlockLowerBtns nextHandling={handlingOnClickNext}/>
-            </div>
+            </div>  
           </div>
         </div>
 
