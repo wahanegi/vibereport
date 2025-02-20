@@ -46,15 +46,15 @@ const ProductivityBadFollowUp = ({
         handleSaveDraft={handleSaveDraft}
       >
         <div className="w-100 mx-sm-1">
-          <h1 className="fs-3 fs-md-1 mt-2">It's like that sometimes...</h1>
-          <h2 className="text-black fs-4 fs-md-2">
+          <h1 className="fs-3 fs-md-1 mt-2 mb-5">It's like that sometimes...</h1>
+          <h2 className="text-black fs-4 fs-md-3 mb-4">
             Reflect on what you think limited <br/> your productivity...
           </h2>
 
           <form className="mx-2">
             <label className="w-100 wrap-textarea-bad-follow resize-none">
               <textarea
-                className="border-1 w-100 p-1 h-100"
+                className="border-1 w-100 p-1 h-100 fs-5"
                 placeholder="Is there anything that we can do to help?"
                 defaultValue={productivity_comment}
                 onChange={(e) => {
