@@ -5,18 +5,19 @@ class TeammateEngagementCount < AdminReport
   end
 
   def generate
-    receive_teammate_engagement_count.zero? ? 'No teammate engagement count present' : receive_teammate_engagement_count
+    receive_count = receive_teammate_engagement_count
+    receive_count.zero? ? 'No teammate engagement count present' : receive_count
   end
 
   private
 
   def receive_teammate_engagement_count
-    team_member_ids = receive_team_members.map { |member| member[0] }
-    team_member_names = receive_team_members.map { |member| member[1] }
+    team_members = receive_team_members
+    team_member_ids = team_members.pluck(0)
+    team_member_names = team_members.pluck(1)
+    comments = receive_shoutouts
 
-    teammate_engagement_all = filter_comments(receive_shoutouts, team_member_ids, team_member_names)
-
-    teammate_engagement_all.count
+    filter_comments(comments, team_member_ids, team_member_names).count
   end
 
   def receive_shoutouts
@@ -27,9 +28,7 @@ class TeammateEngagementCount < AdminReport
     if @team.nil?
       User.pluck(:id, Arel.sql("first_name || ' ' || last_name"))
     else
-      User.joins(:user_teams)
-          .where(user_teams: { team_id: @team.id })
-          .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
+      @team.users.pluck(:id, Arel.sql("first_name || ' ' || last_name"))
     end
   end
 

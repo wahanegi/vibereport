@@ -7,7 +7,16 @@ ActiveAdmin.register_page 'Dashboard' do
     columns do
       current_period = TimePeriod.current
       vars = ActiveAdminHelpers.time_period_vars(
-        current_period: current_period
+        current_period: current_period,
+        only: %i[
+          emotion_index_all
+          emotion_index_current_period
+          productivity_average_current_period
+          productivity_avg_all
+          celebrations_count_current_period
+          teammate_engagement_count_current_period
+          productivity_verbatims
+        ]
       )
 
       panel "Average for range #{current_period&.date_range} / Average for all time periods" do
@@ -90,7 +99,7 @@ ActiveAdmin.register_page 'Dashboard' do
       flash[:alert] = 'Alert: No unused questions left for upcoming check-in. Please add more questions.' if alert_questions_needed?
       if not_viewed.present?
         flash[:alert] = "NOTICE: #{not_viewed.count} new #{'notification'.pluralize(not_viewed.count)} " \
-                        "from #{'user'.pluralize(not_viewed.pluck(:user_id).uniq.count)}"
+          "from #{'user'.pluralize(not_viewed.pluck(:user_id).uniq.count)}"
       end
       super
     end
