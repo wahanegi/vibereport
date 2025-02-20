@@ -47,9 +47,18 @@ Rails.application.routes.draw do
       get '/result', to: 'results#show'
       get '/unsubscribe', to: 'users#unsubscribe'
       get '/result_manager', to: 'results#show'
-      post '/projects', to: 'projects#sync'
+      # Dynamically sets the route for project codes sync based on the ENV key for security
+      auth_key = ENV['TIMESHEET_PROJECT_SYNC_AUTH_KEY']
+    
+      if auth_key.present?
+        post "/projects/#{auth_key}", to: 'projects#sync'
+      else
+        post '/projects', to: 'projects#sync'
+      end
+    
     end
   end
+  
   get '*path', to: 'home#app', constraints: lambda { |req|
     req.path.exclude? 'rails/active_storage'
   }
