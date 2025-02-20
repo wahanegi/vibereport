@@ -9,4 +9,8 @@ class HomeController < ApplicationController
   end
 
   def app; end
+
+  def sent
+    @email = params[:email]
+  end
 end
