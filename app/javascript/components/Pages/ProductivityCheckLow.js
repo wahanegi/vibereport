@@ -26,7 +26,7 @@ const ProductivitySlider = ({
         <h1 className="mx-auto my-0 lh-1 text-black fs-3 fs-md-1">
           How productive have you been feeling recently?
         </h1>
-        <div className='mx-1 mx-md-0'>
+        <div className="mx-1 mx-md-0">
           {productivity > 0 && (
             <div>
               <img
@@ -138,13 +138,12 @@ const ProductivityCheckLow = ({
             generateStyles={generateStyles}
             imageSizes={imageSizes}
           />
-          <div className='mt-10'>
-          <BlockLowerBtns
-            nextHandling={handlingOnClickNext}
-            disabled={isBlank(productivity) || productivity === 0}
-          />
+          <div className="mt-10">
+            <BlockLowerBtns
+              nextHandling={handlingOnClickNext}
+              disabled={isBlank(productivity) || productivity === 0}
+            />
           </div>
-          
         </div>
       </Layout>
     )
