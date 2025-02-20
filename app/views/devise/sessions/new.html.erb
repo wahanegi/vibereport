@@ -18,10 +18,6 @@
     <div class="d-flex align-items-center mt-85 pb-52">
       <%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
     </div>
-    <div class="hud help pointer d-flex justify-content-end h-0 pb-52 mb-3">
-      <%= link_to image_tag("help.svg"), '#', class: 'help-icon',  data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
-    </div>
-    <%= render 'layouts/help_modal' %>
   </div>
 <% end %>
 
