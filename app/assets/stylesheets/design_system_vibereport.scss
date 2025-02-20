@@ -121,6 +121,24 @@ textarea {
       border-color: $primary;
     }
   }
+
+  .dropdown-img {
+    height: 87px;
+    width: 87px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 15vw;
+    max-height: 15vw;
+  }
+}
+
+.img-close {
+  width: 87px !important;
+  height: 87px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  maxWidth: "15vw";
+  maxHeight: "15vw";
 }
 
 

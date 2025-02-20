@@ -99,8 +99,8 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
   return (
     <div className={`${className}`}>
       <Dropdown onClick={handleChangeImg} ref={dropdownRef}>
-        <Dropdown.Toggle id='dropdown-stick' className={"rounded-circle bg-light border-0"}>
-          <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete'/>
+        <Dropdown.Toggle id='dropdown-stick' className={"rounded-circle bg-white border-0 p-0"}>
+          <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' className = {"dropdown-img"}/>
         </Dropdown.Toggle>
         <Dropdown.Menu className={"mt-5 border border-1 border-color"}>
           <Dropdown.Item href="#">
@@ -118,7 +118,11 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
         </Dropdown.Menu>
       </Dropdown>
       {!isStepUnsubscribe && (
-        <div className='fs-6 text-primary mt-1'>{getSrcMenu(lastSegment).percent}% complete</div>
+        <div className='fs-6 text-primary text-nowrap'>
+          <span className="fs-8 fs-sm-7 fs-md-6">
+            {getSrcMenu(lastSegment).percent}% complete
+          </span>
+        </div>
       )}
       {showModal && (
         <SweetAlert
