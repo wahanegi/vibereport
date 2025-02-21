@@ -15,9 +15,10 @@
 
   // use with C1 text
   &.btn-regular {
-    min-width: 15rem;
+    min-width: 14.688rem;
     height: 3.75rem;
     box-shadow: $btn-box-shadow-other !important;
+    border-radius: 0.75rem ;
   }
 
   &.btn-danger {

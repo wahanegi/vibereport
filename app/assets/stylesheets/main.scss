@@ -16,12 +16,9 @@
 .central-element {
   min-height: 60vh;
 }
-
-.help-icon {
-  z-index: 21;
-  filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
+.width-block {
+  width: 180px;
 }
-
 //</ListEmotion
 
 .color-primary {
@@ -775,4 +772,12 @@ input:checked + .slider-shoutout img {
 
 .max-width-emotion-intensity, .max-width-recognition, .max-width-entry, .max-width-type {
   max-width: 750px;
+}
+
+.max-width-logo {
+  max-width: 382px;
+}
+
+.max-width-sign-in-input {
+  max-width: 660px;
 }

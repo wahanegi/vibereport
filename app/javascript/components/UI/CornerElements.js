@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import QuestionButton from "./QuestionButton";
 import ShoutoutButton from "./ShoutoutButton";
 import Menu from "./Menu";
 
@@ -21,7 +20,6 @@ const CornerElements = ({
       {
         !hideBottom ?
           <Fragment>
-            <QuestionButton data={data} />
             <ShoutoutButton data={data}
                             setData={setData}
                             num={numShoutouts}
