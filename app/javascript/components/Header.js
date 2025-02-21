@@ -5,7 +5,7 @@ import Menu from './UI/Menu';
 const Header = ({data, steps, draft, handleSaveDraft, saveDataToDb, isResult = false}) => {
   return (
     <header
-      className="container-fluid d-flex flex-wrap flex-md-nowrap align-items-center justify-content-between bg-light py-2">
+      className="container-fluid d-flex flex-wrap flex-md-nowrap align-items-center justify-content-between py-2">
       <div className="flex-shrink-1">
         <Logo/>
       </div>

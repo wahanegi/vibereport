@@ -99,7 +99,7 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
   return (
     <div className={`${className}`}>
       <Dropdown onClick={handleChangeImg} ref={dropdownRef}>
-        <Dropdown.Toggle id='dropdown-stick' className={"rounded-circle bg-light border-0"}>
+        <Dropdown.Toggle id='dropdown-stick' className={"rounded-circle bg-white border-0"}>
           <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete'/>
         </Dropdown.Toggle>
         <Dropdown.Menu className={"mt-5 border border-1 border-color"}>
