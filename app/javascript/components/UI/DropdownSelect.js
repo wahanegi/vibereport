@@ -8,10 +8,12 @@ const DropdownSelect = ({
     onChange, // Function to handle selection changes, receives an array of selected values
     disabled,
     isLoading,
-    placeholder= "Select an option..." }) => {
+    placeholder= "Select an option...",
+    className
+}) => {
 
   return (
-    <div className="dropdown-container">
+    <div className={`dropdown-container ${className}`}>
       <Typeahead
         id={id}
         options={options}
