@@ -424,23 +424,23 @@
 }
 //DropDownList
 .drop-down-block {
-  &::-webkit-scrollbar {
-    width: 16px;
-  }
-  width:                180px;
-  height:               155px;
-  border-radius:        8px;
-  border:               3px solid $primary;
-  padding:              8px 1px 7px;
+  width: 180px;
+  height: 155px;
+  border-radius: 8px;
+  border: 3px solid $primary;
+  padding: 8px 1px 7px;
   padding-inline-start: 0px;
   background-color: $white;
   overflow: auto;
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
   li {
-    list-style:         none;
-    text-align:         left;
-    text-overflow:      ellipsis;
-    white-space:        nowrap;
-    overflow:           hidden;
+    list-style: none;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     padding-inline-start: 7px;
     color: $gray-300;
     &:focus, &.highlight   {

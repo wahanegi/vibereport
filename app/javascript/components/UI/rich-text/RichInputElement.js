@@ -697,7 +697,7 @@ const RichInputElement = ({
             handleCheckboxChange={handleCheckboxChange}
           />
           <Button
-            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-3 p-0 ${
+            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-md-3 fs-4 p-0 ${
               isDisabled ? 'disabled' : ''
             }`}
             onClick={submitHandling}
