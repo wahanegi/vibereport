@@ -1,7 +1,6 @@
 @import 'colors';
 @import 'bootstrap/scss/_variables';
 
-
 // Variables
 // For Components
 $bg-color:               $white;
@@ -10,44 +9,19 @@ $border-element:         .1875rem solid $royal-blue;//for intensity elements
 
 // For Typography
 $font-family-base:       'Josefin Sans', sans-serif;
-$font-size-base:          1rem ;
 $line-height-base:        1.2;
-$font-weight-bold:        700;
 $font-weight-semi-bold:   600;
-
 $font-family-italic:      'Josefin Sans Italic', sans-serif;
 $font-family-second:      'Inter', sans-serif;
-
-$h1-font-size:            3rem !important;    //48px
-$h2-font-size:            2.25rem !important; //36px
-//dynamic fonts
-$h3-font-size:            calc($font-size-base * 1.924 + 0.9vw) ;//40px
-$h4-font-size:            calc($font-size-base * 1.424 + 0.9vw) ;//32px
-$h5-font-size:            calc($font-size-base * 0.924 + 0.9vw) ;//24px
-$h6-font-size:            calc($font-size-base * 0.424 + 0.9vw) ;//16px
-
-$font-sizes: (
-1: $h1-font-size,
-2: $h2-font-size,
-3: $h3-font-size,
-4: $h4-font-size,
-5: 1.5rem,
-6: 1rem,
-7: 0.75rem
-) ;
 
 //For input-btn-variables
 $input-btn-padding-y:         1.375rem          !default;//22px
 $input-btn-padding-x:         1.375rem          !default;//22px
-$input-btn-font-family:       null              !default;
-$input-btn-font-size:         $font-size-base   !default;
 $input-btn-line-height:       4.375rem          !default;
 $input-btn-border-width:      .1875rem          !default;
-$input-btn-border-radius:     .9375rem          !default;
 $input-btn-border-color:      $royal-blue       !default;
 
 //For Buttons
-
 $btn-padding-y:               0                !global;
 $btn-padding-x:               .5rem            !global;
 $btn-font-family:             $font-family-base;
@@ -58,25 +32,22 @@ $btn-width-intensity:         7.25rem;//116px
 $btn-height-intensity:        3.4375rem;//55px
 $btn-border-width:            1px              !global;
 $btn-disabled-opacity:        50%              !global;
-$btn-disabled-color:          $white           !important;
 
 // For Links
 $link-color:                  $navy-blue       !important;
 $link-primary:                $navy-blue       !important;
 
 // Dropdown menu container and contents.
-$dropdown-min-width:          260px            !global;
 $dropdown-padding-x:          11px             !global;
 $dropdown-padding-y:          9px              !global;
 $dropdown-spacer:             .625rem          !global;
 $dropdown-bg:                 $gray-100        !global;
-$dropdown-border-color:       1px solid $black !global;
+$dropdown-border-color:       $black !global;
 $dropdown-border-width:       1px              !global;
 $dropdown-border-radius:      8px              !global;
 $dropdown-item-padding-y:     5px              !global;
 $dropdown-item-padding-x:     0                !global;
 $dropdown-link-hover-bg:      $gray-100        !global;
-$dropdown-link-active-bg:     transparent;
 
 // For margin and padding
 $spacer: 2rem ;
@@ -89,5 +60,7 @@ $spacers: (
         5: $spacer * 1.5,
         6: $spacer * 1.75,
         7: $spacer * 2,
-        8: $spacer * 2.25
+        8: $spacer * 2.25,
+        9: $spacer * 2.5,
+        10: $spacer * 3
 ) ;
