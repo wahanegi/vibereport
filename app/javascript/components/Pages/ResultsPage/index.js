@@ -11,7 +11,6 @@ import ShoutoutSection from "./ShoutoutSection";
 import { MIN_USERS_RESPONSES } from "../../helpers/consts";
 import Layout from '../../Layout';
 import ShoutoutModal from '../modals/ShoutoutModal';
-import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import { apiRequest, updateResponse } from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
