@@ -61,7 +61,7 @@ const CausesToCelebrate = ({
                         Are there any recent <br/> causes to celebrate?
                     </h1>
                     <form className="mx-auto w-100 wrap-textarea-bad-follow">
-                          <textarea className="border-1 w-100 p-1 h-100 shadow-none resize-none fs-5"
+                          <textarea className="border-1 w-100 p-1 h-100 shadow-none resize-none"
                                     placeholder="Are you grateful for anything that happened at work recently?"
                                     defaultValue={celebrateComment}
                                     onChange={onCommentChange}
