@@ -6,7 +6,7 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
       time_sheet_entry = TimeSheetEntry.new(time_sheet_entry_params)
   
       if time_sheet_entry.save
-        render json: { data: time_sheet_entry }, status: :created
+        render json: TimeSheetEntrySerializer.new(time_sheet_entry).serializable_hash, status: :created
       else
         render json: { errors: time_sheet_entry.errors.full_messages }, status: :unprocessable_entity
       end
