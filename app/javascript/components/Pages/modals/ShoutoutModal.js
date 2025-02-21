@@ -87,8 +87,7 @@ const ShoutoutModal = ({
         onHide={() => {
           setShoutOutForm(false);
         }}
-        centered
-        dialogClassName="px-1 custom-modal"
+        dialogClassName="px-1 custom-modal py-2"
       >
         <img
           src={xClose}
