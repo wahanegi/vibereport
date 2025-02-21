@@ -9,8 +9,8 @@ import flame8 from '../../../assets/images/flame8.svg';
 import flame9 from '../../../assets/images/flame9.svg';
 import flame10 from '../../../assets/images/flame10.svg';
 import { FLAME_IMAGE_SIZES } from '../helpers/consts';
-import { isBlank } from '../helpers/helpers';
-import BlockLowerBtns from '../UI/BlockLowerBtns';
+import {getProductiveText, isBlank} from "../helpers/helpers";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 import Layout from '../Layout';
 
 const ProductivitySlider = ({
@@ -47,8 +47,8 @@ const ProductivitySlider = ({
               id="productivity-slider"
               className={`border-0 shadow-none form-range level-${productivity}`}
             />
-            <p>Use the slider</p>
-          </div>
+            <p>{getProductiveText(productivity)}</p>
+          </div>      
         </div>
       </form>
     </div>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {MAX_CHAR_LIMIT} from '../helpers/consts';
+import Swal from 'sweetalert2';
 import {isBlank, isEmptyStr, isNotEmptyStr, isPresent,} from '../helpers/helpers';
 import Layout from '../Layout';
 import {apiRequest} from '../requests/axios_requests';
@@ -62,47 +63,39 @@ const IcebreakerQuestion = ({
     saveDataQuestion(goToResultPage, dataFromServer);
   };
 
-  const saveDataQuestion = (goToResultPage, dataFromServer) => {
-    const url = '/api/v1/fun_questions/';
-    const id = prevStateQuestion?.id;
-    if (isPresent(prevQuestionBody)) {
-      if (
-        prevQuestionBody !== funQuestionBody &&
-        isNotEmptyStr(funQuestionBody)
-      ) {
-        apiRequest(
-          'PATCH',
-          dataRequest,
-          dataFromServer,
-          () => {
-          },
-          `${url}${id}`
-        ).then();
-      } else if (isEmptyStr(funQuestionBody)) {
-        apiRequest(
-          'DELETE',
-          () => {
-          },
-          () => {
-          },
-          () => {
-          },
-          `${url}${id}`
-        ).then(goToResultPage);
+  const saveDataQuestion = (goToResultPage, dataFromServer) =>{
+    const url = '/api/v1/fun_questions/'
+    const id = prevStateQuestion?.id
+
+    const handleApiError = (error) => {
+      if (error.response && error.response.status === 422) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'This question already exists. Please enter a different question.',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Unexpected Error',
+          text: 'An error occurred while submitting the question. Please try again.',
+        });
+        console.error('Error submitting question:', error);
+      }
+    };
+
+    if(isPresent(prevQuestionBody)) {
+      if(prevQuestionBody !== funQuestionBody && isNotEmptyStr(funQuestionBody)) {
+        apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`, handleApiError).then();
+      } else if(isEmptyStr(funQuestionBody)) {
+        apiRequest("DELETE", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
       } else {
         goToResultPage();
       }
     } else if (isEmptyStr(funQuestionBody)) {
       goToResultPage();
     } else {
-      apiRequest(
-        'POST',
-        dataRequest,
-        dataFromServer,
-        () => {
-        },
-        `${url}`
-      ).then();
+      apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`, handleApiError).then();
     }
   };
 
