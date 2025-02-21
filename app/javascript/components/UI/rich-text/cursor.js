@@ -47,8 +47,6 @@ export default class Cursor {
                   const modal = document.querySelector('.custom-modal');
                   if (modal) {
                     const modalRect = modal.getBoundingClientRect();
-                    console.log('modalRect', modalRect);
-                    console.log(rect)
                     coordinates.x = rect.x - modalRect.left;
                     coordinates.y = rect.y - modalRect.top;
                   }
