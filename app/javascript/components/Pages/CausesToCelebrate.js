@@ -58,7 +58,7 @@ const CausesToCelebrate = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="d-flex flex-column gap-5 py-1">
+        <div className="d-flex flex-column gap-5">
           <h1>Are there any recent causes to celebrate?</h1>
           <div className="comment-label px-1">
             <textarea

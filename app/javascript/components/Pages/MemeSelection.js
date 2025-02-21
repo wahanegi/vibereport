@@ -166,7 +166,7 @@ const MemeSelection = ({
   );
 
   const Header = () => (
-    <div className="d-flex mx-3 mt-3">
+    <div className="d-flex mx-3">
       <div className="d-flex mx-auto fs-4 fs-lg-1 fs-md-1">
         <h3 className="opacity-50">You picked:</h3>
         <BigBtnEmotion emotion={emotion} onClick={backHandling} />

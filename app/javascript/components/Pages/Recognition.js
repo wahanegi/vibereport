@@ -107,7 +107,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      <div className='container-fluid mt-6'>
+      <div className='container-fluid'>
         <h1 className='text-black'>Recognition is important!</h1>
 
         {!numShoutOuts &&

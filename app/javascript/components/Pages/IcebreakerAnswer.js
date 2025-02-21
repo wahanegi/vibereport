@@ -162,7 +162,7 @@ const IcebreakerAnswer = ({
       handleSaveDraft={handleSaveDraft}
     >
       {loaded && !isLoading && !error && (
-        <div className="w-100 m-2">
+        <div className="w-100 mx-2">
           <div className="mb-3 d-flex flex-column">
             <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
             <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>

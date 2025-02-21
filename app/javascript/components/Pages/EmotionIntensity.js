@@ -21,7 +21,7 @@ const IntenseLine = ({
           {[1, 2, 3, 4, 5].map((value) => (
             <label
               key={value}
-              className="d-inline-block fs-2 lh-base text-center text-black mb-2 rating-label"
+              className="d-inline-block fs-1 text-center text-black rating-label"
               style={generateStyles(value, rating === value, category)}
             >
               <input
@@ -40,7 +40,7 @@ const IntenseLine = ({
           <div className='py-1 mx-auto wrap-textarea'>
             <label className={"comment-label w-100 h-100"}>
               <textarea
-                className="w-100 h-100 p-2 rounded-4 shadow-none resize-none"
+                className="w-100 h-100 p-2 rounded-5 shadow-none resize-none"
                 placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
                 defaultValue={comment}
                 onChange={handleCommentClick}
@@ -109,11 +109,11 @@ const EmotionIntensity = ({
       <h1 className="mb-2">
         “{capitalizeFirstLetter(word)}” — Most excellent!
       </h1>
-      <h2 className="color-black">Select how intense the feeling is</h2>
+      <h2 className="text-black mb-3 fs-2">Select how intense the feeling is</h2>
       <br/>
     </Fragment>) : (<Fragment>
       <EmotionGif/>
-      <h2 className="color-black">Select how intense the feeling is</h2>
+      <h2 className="text-black mb-3 fs-2">Select how intense the feeling is</h2>
     </Fragment>)}
   </Fragment>);
 
@@ -151,13 +151,13 @@ const EmotionIntensity = ({
     draft={isDraft}
     handleSaveDraft={handleSaveDraft}
   >
-    <div className="container-fluid py-2">
+    <div className="container-fluid">
       <div className="row">
         <div className="col-12">
           <EmotionSection/>
         </div>
       </div>
-      <div className="row">
+      <div className="row mb-5">
         <div className="col-12">
           <IntenseLine
             rating={rating}
