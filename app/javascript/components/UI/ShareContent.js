@@ -4,7 +4,6 @@ import BackRevert from '../../../assets/images/BackToResultsButton.svg';
 import calendar from "../../../assets/images/calendar.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
-import help_icon from "../../../assets/images/help.svg"
 import line from "../../../assets/images/line.svg"
 import LeaderVector from '../../../assets/images/OpenLeaderPanelButton.svg';
 import polygonLeft from "../../../assets/images/polygon-left.svg"
@@ -108,13 +107,7 @@ export const ShoutOutIcon = ({addClass = '', onClick}) =>
     <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}}/>
   </div>
 
-
-export const HelpIcon = ({addClass = ''}) =>
-  <NavLink to="mailto: support@vibereport.app" className={`${addClass} d-flex align-self-center`}>
-    <img src={help_icon} alt="shout out" className='help-icon'/>
-  </NavLink>
-
-export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true,}) =>
+export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true, }) =>
   <div className='d-flex justify-content-between m-3'>
     <BtnBack onClick={backHandling} addClass='m-1 align-self-center'/>
     <BtnNext onClick={nextClick} disabled={disabled} hidden={hideNext} addClass='m-1 align-self-center'/>

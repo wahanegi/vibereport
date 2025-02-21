@@ -19,12 +19,7 @@
 			<div class="mt-8">
 				<%= f.submit 'Next', class: "btn btn-regular c1 fs-3 text-white border", id: "next-button", disabled: true %>
 			</div>
-			<div class="hud help pointer d-flex justify-content-end h-0 mt-4 mx-0 mx-md-2">
-				<%= link_to image_tag("help.svg"), '#', class: 'help-icon', data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
-			</div>
-			<%= render 'layouts/help_modal' %>
 		</div>
-	</div>
 	</div>
 <% end %>
 

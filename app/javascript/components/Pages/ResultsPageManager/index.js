@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import SweetAlert from "../../UI/SweetAlert";
 import {isBlank, rangeFormat} from "../../helpers/helpers";
 import {
@@ -7,7 +7,6 @@ import {
 } from "../../UI/ShareContent";
 import NavigationBar from "./NavigationBar";
 import Layout from '../../Layout';
-import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import LeaderVector from '../../../../assets/images/LeaderVector.svg';
 import EmotionIndex from "../ResultsPageManager/EmotionIndex"
@@ -86,7 +85,6 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
   scrollTopModalCallback(showModal)
 
   const Footer = () => <Fragment>
-    <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
       nextTimePeriod && isBlank(data.prev_results_path) ?
