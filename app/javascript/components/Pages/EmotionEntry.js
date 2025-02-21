@@ -74,12 +74,12 @@ const EmotionEntry = ({
         <div className="container-fluid">
           <div className="row flex-column justify-content-center">
             <div className="col-12 text-center mx-auto">
-              <h1 className="my-1 my-md-2">A new one! What’s up?</h1>
-              <h4 className="my-1 my-md-2 text-gray-600">
+              <h1 className="my-1 my-md-2" style={{fontSize: '48px'}}>A new one! What’s up?</h1>
+              <h4 className="my-1 my-md-2 text-gray-600" style={{fontSize: '38px'}}>
                 What word best describes work, recently?
               </h4>
             </div>
-            <div className="col-12 col-lg-6 col-md-8 mx-auto">
+            <div className="col-12 col-md-8 mx-auto" style={{ maxWidth: '700px', padding: 0 }}>
               <Form.Control
                 className={`${emotionClasses[selectedType]} email_field input-new-word fs-2 rounded-4 mb-5 mb-md-8 border-royal-blue`}
                 type="text"
@@ -89,6 +89,7 @@ const EmotionEntry = ({
                 name="word"
                 value={emotion.word || ''}
                 onChange={onChangeEmotion}
+                style={{maxWidth: '700px'}}
               />
             </div>
             <div className="col-12 col-md-6 mb-4 mx-auto">
@@ -98,7 +99,7 @@ const EmotionEntry = ({
               />
             </div>
           </div>
-          <div className="max-width-entry mx-auto">
+          <div className="mx-auto" style={{ maxWidth: '800px', padding: 0 }}>
             <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={emotion.word.length < 2}
