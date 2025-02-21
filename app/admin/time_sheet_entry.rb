@@ -14,14 +14,16 @@ ActiveAdmin.register TimeSheetEntry do
   filter :time_period, as: :select, label: 'Week of', collection: TimePeriod.select(:id, :start_date, :end_date).map do |time_period|
     [time_period.date_range_str, time_period.id]
   end
-  filter :project, as: :select, label: 'Project code', collection: Project.all.map { |project| [project.code, project.id] }
-  filter :user, as: :select, label: 'Person', collection: User.opt_in.map { |user| [user.full_name, user.id] }
+  filter :project, as: :select, label: 'Project code', collection: Project.pluck(:code, :id)
+  filter :user, as: :select, label: 'Person', collection: User.opt_in.select(:id, :first_name, :last_name).map do |user|
+    [user.full_name, user.id]
+  end
 
   form do |f|
     f.inputs do
-      f.input :user, as: :select, collection: User.opt_in.map { |user| [user.full_name, user.id] }, include_blank: false
-      f.input :project, as: :select, collection: Project.all.map { |project| [project.code, project.id] }, include_blank: false
-      f.input :time_period, as: :select, collection: TimePeriod.all.map { |time_period|
+      f.input :user, as: :select, collection: User.opt_in.select(:id, :first_name, :last_name).map { |user| [user.full_name, user.id] }, include_blank: false
+      f.input :project, as: :select, collection: Project.pluck(:code, :id), include_blank: false
+      f.input :time_period, as: :select, collection: TimePeriod.all.select(:id, :start_date, :end_date).map { |time_period|
         [time_period.date_range_str, time_period.id]
       }, include_blank: false
       f.input :total_hours
