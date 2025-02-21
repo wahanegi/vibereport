@@ -1,7 +1,7 @@
 class TimeSheetEntrySerializer
     include JSONAPI::Serializer
   
-    attributes :id, :total_hours, :created_at, :updated_at
+    attributes :id, :user_id, :project_id, :time_period_id, :total_hours
   
     belongs_to :user
     belongs_to :project
