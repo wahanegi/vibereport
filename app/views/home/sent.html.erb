@@ -18,19 +18,4 @@
       <%= @email %>
     </div>
   <% end %>
-
-  <!-- Help Text -->
-  <div class="text-muted fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-5 fs-sm-6 fs-6" style="max-width: 500px;">
-    If you have any issues, use the help
-    button at the bottom right of this window
-    to contact an administrator.
-  </div>
-
-  <!-- Icon -->
-  <div class="align-self-end pe-xxl-3 pe-xl-3 pe-lg-3 pe-md-3 p-sm-3 p-2">
-    <%= button_tag image_tag("help.svg"), class: 'help-icon bg-transparent border-0', data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
-  </div>
 </div>
-
-<!-- Modal -->
-<%= render 'layouts/help_modal' %>
