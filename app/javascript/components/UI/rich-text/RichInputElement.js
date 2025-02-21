@@ -39,7 +39,7 @@ const RichInputElement = ({
   const TAG_AT = '<span class="' + classAt + '">' + MARKER;
   const END_TAG_AT = '</span>';
   const OFFSET_X = -10;
-  const OFFSET_Y = -40;
+  const OFFSET_Y = 10;
   const LIMIT_CHARS = 700;
   const highlightSmbATUnknownUser = false;
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER;
