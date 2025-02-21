@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2023_10_17_173020) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_12_134705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,6 +93,15 @@ ActiveRecord::Schema[7.2].define(version: 2023_10_17_173020) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.string "code"
+    t.string "company"
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_projects_on_code", unique: true
+  end
+
   create_table "responses", force: :cascade do |t|
     t.string "celebrate_comment"
     t.text "comment"
@@ -147,6 +156,7 @@ ActiveRecord::Schema[7.2].define(version: 2023_10_17_173020) do
   create_table "teams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", limit: 100, null: false
+    t.boolean "timesheet_enabled", default: false, null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_teams_on_name", unique: true
   end
