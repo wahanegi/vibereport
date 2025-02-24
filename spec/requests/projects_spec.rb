@@ -135,5 +135,31 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
         expect(Project.find_by(code: 'NEW-001')).to be_nil
       end
     end
+
+
+    
+    context 'TIMESHEET_PROJECT_SYNC_AUTH_KEY is set in ENV' do
+      let(:auth_key) { 'test_sync_key' }
+      let(:valid_payload) do
+        {
+          projects: [
+            { company: 'Company A', code: 'PRJ-001', name: 'Project Alpha' },
+            { company: 'Company B', code: 'PRJ-002', name: 'Project Beta' }
+          ]
+        }.to_json
+      end
+
+      before do
+        allow(ENV).to receive(:[]).with('TIMESHEET_PROJECT_SYNC_AUTH_KEY').and_return(auth_key)
+        Rails.application.reload_routes! 
+      end
+
+      it 'syncs projects successfully when auth_key is correct' do
+        post "/api/v1/projects/#{auth_key}", params: valid_payload, headers: headers
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response['message']).to eq('Projects synchronized successfully!')
+      end
+    end
   end
 end
