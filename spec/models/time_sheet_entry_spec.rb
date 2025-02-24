@@ -26,9 +26,9 @@ require 'rails_helper'
 
 RSpec.describe TimeSheetEntry, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:project) }
-    it { is_expected.to belong_to(:time_period) }
+    it { is_expected.to belong_to(:user).required }
+    it { is_expected.to belong_to(:project).required }
+    it { is_expected.to belong_to(:time_period).required }
   end
 
   describe 'validations' do
