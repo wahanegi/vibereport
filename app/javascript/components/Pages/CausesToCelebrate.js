@@ -75,8 +75,7 @@ const CausesToCelebrate = ({
                 </div>
             </Layout>
         )
-    )
-        ;
+     );
 };
 
 export default CausesToCelebrate;

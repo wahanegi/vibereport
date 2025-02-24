@@ -147,8 +147,11 @@
       font-size: map-get($map: $font-sizes, $key: 4);
       text-align: initial;
     }
-  }
 
+    &::-webkit-scrollbar-track {
+      margin: 20px 0;
+    }
+  }
 }
 
 .help-modal-textarea {
@@ -173,7 +176,7 @@
 
 //ProductivitySlider
 .productivity-container {
-
+  max-width: 705px;
   .form-range::-webkit-slider-thumb {
     height: 35px;
     width: 35px;
@@ -750,7 +753,7 @@ input:checked + .slider-shoutout img {
 .emotion-intensity {
   .wrap-textarea {
     max-width: 560px;
-    height: 300px;
+    height: 220px;
   }
 
   .rating-label {
