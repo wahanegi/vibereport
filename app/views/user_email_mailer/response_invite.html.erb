@@ -3,7 +3,7 @@
 <head>
   <title>Email letter</title>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <style>
       * {
           margin: 0;
@@ -16,7 +16,10 @@
           line-height: 0;
       }
       .board{
-          min-width:1080px;
+          width: 100%;
+          max-width: 1080px; 
+          margin: 0 auto;
+          padding: 0 15px; 
       }
       .lnk-unsubscribe{
           text-align: left;
@@ -24,6 +27,72 @@
       .emotions-container {
           text-align: center;
       }
+
+      @media only screen and (max-width: 767px) {
+
+    .first-row {
+        margin: 0 auto;
+        height: auto !important;
+    }
+
+    .second-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: auto !important;
+    }
+
+    .calendar {
+        margin: 0 auto;
+        height: 100px;
+    }
+    .data {
+      text-align: center;
+      font-size: 1rem;
+      padding-top: 5px;
+    }
+    .ml-55 {
+      margin-left: 0 !important;
+    }
+    .emotions {
+      max-width: 500px !important;
+    }
+    .neutral-area {
+      height: auto !important;
+    }
+    .neutral-area .btn-emotion:nth-child(2) {
+      margin-top: 10px !important; 
+    }
+    .neutral-btns {
+      flex-direction: column;
+    }
+    .link-text {
+      margin-top: 20px !important;
+      font-size: 1.25rem !important;
+    }
+    .lnk-was-not a{
+      font-size: 1.25rem !important;
+      margin-top: 15px !important;
+    }
+    .links-comtainer {
+      display: flex;
+      align-items: center !important;
+      flex-direction: column !important;
+      margin-top: 40px !important;
+    }
+    .lnk-unsubscribe{
+      margin-top: 20px !important; 
+    }
+    .invitation {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+    }
+    .question {
+      font-size: 2rem;
+      line-height: 2rem;
+    }    
+  }
   </style>
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
 </head>
@@ -74,7 +143,7 @@
   </div>
   <div class="underline_list"></div>
   <div class='neutral-area' style="padding: 10px 0;">
-    <div style="display: flex">
+    <div class="neutral-btns" style="display: flex">
       <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin:0 auto; padding: 5px 0; line-height:1;">
         <%= link_to "Show me different words",{ controller: 'api/v1/responses',
                                                 action: 'sign_in_from_email',
@@ -91,17 +160,15 @@
       <%= link_to "Add your own word", @link_for_own_word, class: "link-text" %>
     </div>
   </div>
-  <div class="row-over-links">
-    <div class="lint-to-right">
-      <div class="lnk-was-not" style="width: max-content">
-        <%= link_to "I was not working recently", @link_for_was_not %>
-      </div>
+  <div class="links-comtainer">
+    <div class="lnk-was-not" style="width: max-content">
+      <%= link_to "I was not working recently", @link_for_was_not %>
     </div>
-  </div>
-  <div class="lnk-unsubscribe" style="text-align: left">
-    <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
-                                                       action: "unsubscribe",
-                                                       user_id: @user.id } %>
+    <div class="lnk-unsubscribe" style="text-align: left">
+      <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
+                                                        action: "unsubscribe",
+                                                        user_id: @user.id } %>
+    </div>
   </div>
 </div>
 </body>
