@@ -16,12 +16,9 @@
 .central-element {
   min-height: 60vh;
 }
-
-.help-icon {
-  z-index: 21;
-  filter: drop-shadow(0px 5.88679px 5.88679px rgba(0, 0, 0, 0.25));
+.width-block {
+  width: 180px;
 }
-
 //</ListEmotion
 
 .color-primary {
@@ -149,8 +146,11 @@
       font-size: map-get($map: $font-sizes, $key: 4);
       text-align: initial;
     }
-  }
 
+    &::-webkit-scrollbar-track {
+      margin: 20px 0;
+    }
+  }
 }
 
 .help-modal-textarea {
@@ -175,7 +175,7 @@
 
 //ProductivitySlider
 .productivity-container {
-
+  max-width: 705px;
   .form-range::-webkit-slider-thumb {
     height: 35px;
     width: 35px;
@@ -752,7 +752,7 @@ input:checked + .slider-shoutout img {
 .emotion-intensity {
   .wrap-textarea {
     max-width: 560px;
-    height: 300px;
+    height: 220px;
   }
 
   .rating-label {
@@ -772,4 +772,12 @@ input:checked + .slider-shoutout img {
 
 .max-width-emotion-intensity, .max-width-recognition, .max-width-type {
   max-width: 750px;
+}
+
+.max-width-logo {
+  max-width: 382px;
+}
+
+.max-width-sign-in-input {
+  max-width: 660px;
 }

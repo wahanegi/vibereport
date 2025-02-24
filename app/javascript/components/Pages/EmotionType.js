@@ -76,7 +76,7 @@ const EmotionType = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="container">
+        <div className="container pt-10">
           <div className="row justify-content-center">
             <div className="col-auto">
               <div className="text-center mt-1 mb-5">
@@ -88,7 +88,6 @@ const EmotionType = ({
               </div>
             </div>
           </div>
-
           <div className="row justify-content-center">
             <div className="col-auto">
               <ToggleEmotionType
