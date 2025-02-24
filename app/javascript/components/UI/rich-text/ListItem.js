@@ -42,7 +42,6 @@ const ListItem = ( props ) => {
         onClick={ onClickHandling }
         onKeyDown = { handleKeyDown }
         onMouseMove={ handleOnMouseMove }
-
     >
       {props.children}
     </li>

@@ -1,17 +1,21 @@
-import React, {Fragment} from "react";
-import {Calendar, EditResponse, ResultsManager} from "../../UI/ShareContent";
-import {datePrepare, isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
+import React from "react";
+import { Calendar, EditResponse, ResultsManager } from "../../UI/ShareContent";
+import { datePrepare, isBlank, isPresent, rangeFormat } from "../../helpers/helpers";
 import isEmpty from "ramda/src/isEmpty";
-import {useNavigate} from "react-router-dom";
-import {updateResponse} from "../../requests/axios_requests";
+import { useNavigate } from "react-router-dom";
+import { updateResponse } from "../../requests/axios_requests";
 
-const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod,
-                        nextTimePeriod, steps, emotions, data, setShowWorkingModal, setData}) => {
-  if(isEmpty(time_periods)) return null;
+const NavigationBar = ({ timePeriod, showPrevTimePeriod, showNextTimePeriod, 
+  time_periods, prevTimePeriod, nextTimePeriod, 
+  steps, emotions, data, setShowWorkingModal, setData }) => {
+  
+  if (isEmpty(time_periods)) return null;
 
   const notWorking = data.response.attributes.not_working
   const hasTeamAccess = data.has_team_access;
+
   const navigate = useNavigate()
+
   const handlingBack = () => {
     if (isPresent(data.prev_results_path)) return;
 
@@ -36,16 +40,16 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
 
-  return <Fragment>
-    <div className='d-flex justify-content-between position-relative' style={{marginLeft: 172, marginRight: 172, top: 40}}>
+  return (
+    <div className='d-flex justify-content-between px-5 w-100'>
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
-                positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
+        positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
       {hasTeamAccess && <ResultsManager data={data} setData={setData} steps={steps} nextTimePeriod={nextTimePeriod} />}
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
-                positionRight={true} hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
+        positionRight={true} hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))} prevTimePeriod={prevTimePeriod} emotions={emotions} />
       <EditResponse onClick={handlingBack} hidden={nextTimePeriod} />
     </div>
-  </Fragment>
+  )
 }
 
 export default NavigationBar
