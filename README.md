@@ -1,6 +1,6 @@
 ## Welcome to the Vibe Report App 
 
-### Badges
+### Badges 
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/9f965e3fb37ee200760e/maintainability)](https://codeclimate.com/github/wahanegi/vibereport/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/9f965e3fb37ee200760e/test_coverage)](https://codeclimate.com/github/wahanegi/vibereport/test_coverage)

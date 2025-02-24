@@ -16,7 +16,22 @@
           line-height: 0;
       }
       .board{
-          min-width:1080px;
+          width:auto;
+          max-width:1080px;
+      }
+
+      @media only screen and (max-width: 767px) {
+        .calendar {
+          margin: 0, auto !important;
+        }
+        .big-btn-text{
+          font-size: 1.75rem !important;
+        }
+
+        .big-btn-text a{
+          font-size: 1.5rem !important;
+          padding: 10px 10px !important;
+        }
       }
   </style>
   <%= stylesheet_link_tag 'email_page' , media: 'all' %>
@@ -40,13 +55,13 @@
   <![endif]-->
   <!--[if !mso]><!-->
   <div class="first-row-reminder">
-    <div class="calendar ml-55">
+    <div class="calendar">
       <div class="data"><%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
     </div>
   </div>
   <!--<![endif]-->
   <div>
-    <div class="second-row-reminder mt-182">
+    <div class="second-row-reminder">
       <div class="mx-auto">
         <%= render 'layouts/logo', height: 61 %>
       </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_12_134705) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_14_101305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,15 +82,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_12_134705) do
     t.index ["question_body"], name: "index_fun_questions_on_question_body", unique: true
     t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.text "details"
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.boolean "viewed", default: false, null: false
-    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -171,6 +162,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_12_134705) do
     t.index ["slug"], name: "index_time_periods_on_slug", unique: true
   end
 
+  create_table "time_sheet_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "project_id", null: false
+    t.bigint "time_period_id", null: false
+    t.integer "total_hours", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["project_id"], name: "index_time_sheet_entries_on_project_id"
+    t.index ["time_period_id"], name: "index_time_sheet_entries_on_time_period_id"
+    t.index ["user_id"], name: "index_time_sheet_entries_on_user_id"
+  end
+
   create_table "user_teams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "role", default: 0, null: false
@@ -204,7 +207,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_12_134705) do
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
-  add_foreign_key "notifications", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"
@@ -215,6 +217,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_12_134705) do
   add_foreign_key "shoutout_recipients", "users"
   add_foreign_key "shoutouts", "time_periods"
   add_foreign_key "shoutouts", "users"
+  add_foreign_key "time_sheet_entries", "projects"
+  add_foreign_key "time_sheet_entries", "time_periods"
+  add_foreign_key "time_sheet_entries", "users"
   add_foreign_key "user_teams", "teams"
   add_foreign_key "user_teams", "users"
 end
