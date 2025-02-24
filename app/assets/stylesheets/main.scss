@@ -403,31 +403,41 @@
 }
 
 .place-size-shout-out {
+  height: 514px;
+  border-radius: 20px !important;
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
-
+  overflow: auto;
   .inner-div {
-    height: 390px;
-    z-index: 31;
+    height:390px;
+    z-index:31;
     overflow: auto;
-
-    &.form-control {
+    border-color: transparent;
+    &.form-control{
       border-color: transparent !important;
+      &:focus {
+        border-color: transparent !important;
+      }
     }
   }
 }
 
+.custom-modal .modal-content {
+  border: 4px solid $primary !important;
+}
 //DropDownList
 .drop-down-block {
-  width: 200px;
+  width: 180px;
   height: 155px;
+  border-radius: 8px;
+  border: 3px solid $primary;
   padding: 8px 1px 7px;
   padding-inline-start: 0px;
-
+  background-color: $white;
+  overflow: auto;
   &::-webkit-scrollbar {
     width: 16px;
   }
-
   li {
     list-style: none;
     text-align: left;
@@ -436,8 +446,7 @@
     overflow: hidden;
     padding-inline-start: 7px;
     color: $gray-300;
-
-    &:focus, &.highlight {
+    &:focus, &.highlight   {
       cursor: pointer;
       background-color: $gray-100;
       color: $black;
@@ -473,6 +482,13 @@
   pointer-events: none;
   overflow: hidden;
   opacity: 0.6;
+}
+
+.modal-backdrop {
+  z-index: 20 !important;
+  background: $medium-grey !important;
+  filter: blur(50px) !important;
+  opacity: 1 !important;
 }
 
 // Toggle emotion type
