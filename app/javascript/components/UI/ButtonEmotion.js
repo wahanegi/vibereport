@@ -7,7 +7,7 @@ const ButtonEmotion = (props) => {
   }
 
   return (
-      <button type='button' className={`btn btn-bubbles wb1 ${props.category}`} onClick={clickHandling}>
+      <button type='button' className={`btn btn-bubbles wb1 fw-bold ${props.category}`} onClick={clickHandling}>
         {props.children}
       </button>
   );

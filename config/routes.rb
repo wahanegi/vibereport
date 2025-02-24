@@ -35,7 +35,6 @@ Rails.application.routes.draw do
       resources :fun_questions, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug
       resources :shoutouts, only: %i[show create update destroy]
-      resources :notifications, only: %i[create]
       resources :users, only: %i[update]
       resources :emojis, only: %i[create destroy]
       resources :result_managers, controller: 'results', only: %i[show results_email], param: :slug
@@ -47,8 +46,18 @@ Rails.application.routes.draw do
       get '/result', to: 'results#show'
       get '/unsubscribe', to: 'users#unsubscribe'
       get '/result_manager', to: 'results#show'
+      # Dynamically sets the route for project codes sync based on the ENV key for security
+      auth_key = ENV['TIMESHEET_PROJECT_SYNC_AUTH_KEY']
+    
+      if auth_key.present?
+        post "/projects/#{auth_key}", to: 'projects#sync'
+      else
+        post '/projects', to: 'projects#sync'
+      end
+    
     end
   end
+  
   get '*path', to: 'home#app', constraints: lambda { |req|
     req.path.exclude? 'rails/active_storage'
   }
