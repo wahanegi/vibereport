@@ -88,7 +88,6 @@ const EmotionType = ({
               </div>
             </div>
           </div>
-
           <div className="row justify-content-center">
             <div className="col-auto">
               <ToggleEmotionType
@@ -97,12 +96,10 @@ const EmotionType = ({
               />
             </div>
           </div>
-
-          <div className="mt-4">
+            <div className="row justify-content-center mt-2 mx-auto p-0 mw-lower-buttons">
               <BlockLowerBtns nextHandling={handlingOnClickNext}/>
-          </div>
+            </div>  
         </div>
-
       </Layout>
     )
   );
