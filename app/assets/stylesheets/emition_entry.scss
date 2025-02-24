@@ -1,45 +1,6 @@
-@import "colors";
-@import "design_system_vibereport";
-
-h1.emotion-entry{
-  margin-bottom: 32px !important;
-}
-
-h4.emotion-entry {
-  font-weight: 400;
-  color: $gray-600;
-}
-
-.input-new-word{
-  width: 700px;
-  border-radius: 15px;
-  font-size: 40px;
-  height: auto;
-  padding: 2px 12px;
-
-  &::placeholder{
-    font-size: 36px;
-    font-weight: 700;
-  }
-}
-
-.form-control {
-  &.input-positive {
-    background-color: $gray-tea-green;
-    color: $green-700;
-    border-color: $dark-blue !important;
-
-    &::placeholder{
-      color: $green-700;
-    }
-  }
-  &.input-negative {
-    background-color: $light-red;
-    color: $orange-700;
-    border-color: $dark-blue !important;
-
-    &::placeholder{
-      color: $orange-700;
-    }
+.input-new-word {
+  &::placeholder {
+    @extend .fs-2, .fw-bold;
+    opacity: 1;
   }
 }
