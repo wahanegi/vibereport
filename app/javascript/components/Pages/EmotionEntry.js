@@ -74,14 +74,14 @@ const EmotionEntry = ({
         <div className="container-fluid">
           <div className="row flex-column justify-content-center">
             <div className="col-12 text-center mx-auto">
-              <h1 className="my-1 my-md-2" style={{fontSize: '48px'}}>A new one! What’s up?</h1>
-              <h4 className="my-1 my-md-2 text-gray-600" style={{fontSize: '38px'}}>
+              <h1 className="my-1 my-md-2 fs-1">A new one! What’s up?</h1>
+              <h4 className="my-1 my-md-2 text-gray-600 fs-2">
                 What word best describes work, recently?
               </h4>
             </div>
-            <div className="col-12 col-md-8 mx-auto" style={{ maxWidth: '700px', padding: 0 }}>
+            <div className="col-12 col-md-8 mx-auto p-0 mw-form">
               <Form.Control
-                className={`${emotionClasses[selectedType]} email_field input-new-word fs-2 rounded-4 mb-5 mb-md-8 border-royal-blue`}
+                className={`${emotionClasses[selectedType]} email_field input-new-word fs-2 rounded-4 mb-5 mb-md-8 border-royal-blue mw-form`}
                 type="text"
                 maxLength={15}
                 autoComplete="off"
@@ -89,7 +89,6 @@ const EmotionEntry = ({
                 name="word"
                 value={emotion.word || ''}
                 onChange={onChangeEmotion}
-                style={{maxWidth: '700px'}}
               />
             </div>
             <div className="col-12 col-md-6 mb-4 mx-auto">
@@ -99,7 +98,7 @@ const EmotionEntry = ({
               />
             </div>
           </div>
-          <div className="mx-auto" style={{ maxWidth: '800px', padding: 0 }}>
+          <div className="mx-auto p-0 mw-lower-buttons">
             <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={emotion.word.length < 2}
