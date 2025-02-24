@@ -136,8 +136,6 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       end
     end
 
-
-    
     context 'TIMESHEET_PROJECT_SYNC_AUTH_KEY is set in ENV' do
       let(:auth_key) { 'test_sync_key' }
       let(:valid_payload) do
@@ -150,8 +148,13 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       end
 
       before do
-        allow(ENV).to receive(:[]).with('TIMESHEET_PROJECT_SYNC_AUTH_KEY').and_return(auth_key)
-        Rails.application.reload_routes! 
+        ENV['TIMESHEET_PROJECT_SYNC_AUTH_KEY'] = auth_key
+        Rails.application.reload_routes!
+      end
+
+      after do
+        ENV.delete('TIMESHEET_PROJECT_SYNC_AUTH_KEY')
+        Rails.application.reload_routes!
       end
 
       it 'syncs projects successfully when auth_key is correct' do
