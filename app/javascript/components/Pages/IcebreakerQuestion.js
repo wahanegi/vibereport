@@ -128,16 +128,16 @@ const IcebreakerQuestion = ({
       handleSaveDraft={handleSaveDraft}
     >
       {!isLoading && !error && (
-        <div className="w-100 m-2">
+        <div className="w-100 mx-1">
           <div className="mb-3 d-flex flex-column">
-            <h4 className="mb-0">Thanks for answering!</h4>
-            <h1 className="mb-3 lh-1 fs-3 fs-md-1 col-8 mx-auto">
+            <div className="mb-1 fs-3">Thanks for answering!</div>
+            <div className="lh-1 fs-3 fs-md-1 col-12 col-lg-6 mx-auto text-black">
               Interested in submitting your own question to the team?
-            </h1>
+            </div>
           </div>
-          <div className="mb-2">
+          <div className="mb-5">
             <div
-              className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
+              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
               <p className="fs-5 text-gray-600">
                 <span className="text-primary">@</span>
                 {userName} asks:
@@ -147,13 +147,13 @@ const IcebreakerQuestion = ({
                   <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
                     <form>
                       <textarea
-                        className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none"
+                        className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none fs-5"
                         name="question_body"
                         placeholder="What would you ask the team? You could be selected!"
                         value={funQuestion?.question_body || ''}
                         onChange={onChangQuestion}
                         maxLength={MAX_CHAR_LIMIT}
-                        style={{height: '295px'}}
+                        style={{height: '275px'}}
                       />
                     </form>
                   </div>
@@ -161,13 +161,11 @@ const IcebreakerQuestion = ({
               )}
             </div>
           </div>
-          <div className="max-width-icebreaker mx-auto">
             <BlockLowerBtns
               isSubmit={true}
               handlingOnClickNext={handlingOnClickNext}
               stringBody={funQuestionBody}
             />
-          </div>
         </div>
       )}
     </Layout>
