@@ -97,14 +97,10 @@ const EmotionType = ({
               />
             </div>
           </div>
-
-          <div className="row justify-content-center mt-2 mx-auto">
             <div className="row justify-content-center mt-2 mx-auto p-0 mw-lower-buttons">
               <BlockLowerBtns nextHandling={handlingOnClickNext}/>
             </div>  
-          </div>
         </div>
-
       </Layout>
     )
   );
