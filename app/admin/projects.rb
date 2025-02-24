@@ -4,6 +4,25 @@ ActiveAdmin.register Project do
   filter :company, as: :string
   filter :code, as: :string, label: 'Project code'
   filter :name, as: :string, label: 'Project name'
+  filter :deleted_at_null, as: :boolean, label: 'Active'
+
+  scope :all
+  scope :active, -> { Project.where(deleted_at: nil) }, default: true
+  scope("Deleted") { |scope| scope.where.not(deleted_at: nil) }
+
+  index do  
+    selectable_column
+    id_column
+    column :company
+    column :code
+    column :name
+    column :deleted_at
+    actions do |project|
+      if project.deleted?
+        link_to "Restore", restore_admin_project_path(project), method: :put, class: "member_link"
+      end
+    end
+  end
 
   show do
     attributes_table do
@@ -12,6 +31,12 @@ ActiveAdmin.register Project do
       row :name
       row :created_at
       row :updated_at
+      row :deleted_at
+    end
+    if project.deleted?
+      div do
+        link_to "Restore Project", restore_admin_project_path(project), method: :put, class: "button"
+      end
     end
   end
 
@@ -22,5 +47,31 @@ ActiveAdmin.register Project do
       f.input :name, label: 'Project name'
     end
     f.actions
+  end
+
+  controller do
+    def destroy
+      project = Project.find(params[:id])
+
+      if project.time_sheet_entries.any?
+        project.soft_delete!
+        redirect_to admin_projects_path, notice: "Project was soft deleted!"
+      else
+        project.destroy!
+        redirect_to admin_projects_path, notice: "Project was permanently deleted!"
+      end
+    end
+  end
+
+  member_action :restore, method: :put do
+    project = Project.find(params[:id])
+    project.update!(deleted_at: nil)
+    redirect_to admin_projects_path, notice: "Project restored!"
+  end
+
+  action_item :restore, only: :show do
+    if project.deleted?
+      link_to "Restore Project", restore_admin_project_path(project), method: :put
+    end
   end
 end
