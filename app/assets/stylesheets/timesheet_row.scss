@@ -1,0 +1,28 @@
+.timesheet-row {
+  border-radius: 20px;
+  padding: 15px 29px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  &-input-time {
+    width: 200px;
+    outline: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+  }
+
+  &-select-company {
+   width: 293px;
+  }
+
+  &-select-project-id {
+    width: 200px;
+  }
+
+  &-select-project-name {
+    width: 400px;
+  }
+
+  &-button-delete {
+    padding: 7px 6px 6px 7px;
+  }
+}
