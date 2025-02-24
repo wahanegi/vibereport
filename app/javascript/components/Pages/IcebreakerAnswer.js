@@ -9,7 +9,7 @@ import BlockLowerBtns from '../UI/BlockLowerBtns';
 const FULL_PRIMARY_HEIGHT = 401;
 const MARGIN_BOTTOM = 17;
 const HEIGHT_ROW_USER = 40;
-const SUM_EDGE_DOWN_UP = 26;
+const SUM_EDGE_DOWN_UP = 41;
 
 const IcebreakerAnswer = ({
                             data,
@@ -162,7 +162,7 @@ const IcebreakerAnswer = ({
       handleSaveDraft={handleSaveDraft}
     >
       {loaded && !isLoading && !error && (
-        <div className="w-100 mx-2">
+        <div className="w-100 mx-1">
           <div className="mb-3 d-flex flex-column">
             <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
             <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>
@@ -175,21 +175,21 @@ const IcebreakerAnswer = ({
               {user}
             </h2>
           </div>
-          <div className="mb-2">
+          <div className="mb-5">
             <div
-              className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
+              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
               {user && (
                 <p className="fs-5 text-gray-600">
                   <span className="text-primary">@</span>
                   {user} asks:
                 </p>
               )}
-              <h5 id="question">{question_body}</h5>
+              <div id="question" className='fs-5 fs-md-4 text-start mb-1'>{question_body}</div>
               <div className="w-100">
                 <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
                   <form>
                     <textarea
-                      className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none"
+                      className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none fs-5 fs-md-4"
                       name="answer_body"
                       style={{height: computedHeight - SUM_EDGE_DOWN_UP}}
                       placeholder="Tell us what you think!"
@@ -202,13 +202,11 @@ const IcebreakerAnswer = ({
               </div>
             </div>
           </div>
-          <div className="max-width-icebreaker mx-auto">
             <BlockLowerBtns
               isSubmit={true}
               handlingOnClickNext={handlingOnClickNext}
               stringBody={answerBody}
             />
-          </div>
         </div>
       )}
     </Layout>

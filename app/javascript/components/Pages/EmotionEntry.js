@@ -98,7 +98,7 @@ const EmotionEntry = ({
               />
             </div>
           </div>
-          <div className="max-width-entry mx-auto">
+          <div className="mt-4">
             <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={emotion.word.length < 2}

@@ -170,7 +170,7 @@ const EmotionIntensity = ({
           />
         </div>
       </div>
-      <div className='max-width-emotion-intensity mx-auto'>
+      <div className='mt-4'>
         <BlockLowerBtns
           nextHandling={handlingOnClickNext}
           disabled={isBlank(rating)}

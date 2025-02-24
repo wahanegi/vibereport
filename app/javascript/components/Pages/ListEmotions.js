@@ -177,7 +177,7 @@ function ListEmotions({
             </div>
             <div className="d-flex mx-auto py-2">
               <NavLink
-                className="mx-auto my-1"
+                className="mx-auto my-1 fs-5"
                 onClick={onClickNotWorking}
                 to={''}
               >
