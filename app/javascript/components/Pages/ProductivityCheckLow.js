@@ -9,8 +9,8 @@ import flame8 from '../../../assets/images/flame8.svg';
 import flame9 from '../../../assets/images/flame9.svg';
 import flame10 from '../../../assets/images/flame10.svg';
 import { FLAME_IMAGE_SIZES } from '../helpers/consts';
-import { isBlank } from '../helpers/helpers';
-import BlockLowerBtns from '../UI/BlockLowerBtns';
+import {getProductiveText, isBlank} from "../helpers/helpers";
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 import Layout from '../Layout';
 
 const ProductivitySlider = ({
@@ -21,12 +21,12 @@ const ProductivitySlider = ({
   imageSizes,
 }) => (
   <Fragment>
-    <div className="d-flex flex-column align-items-center p-2 mx-auto productivity-container">
+    <div className="d-flex flex-column align-items-center mt-2 mx-auto productivity-container">
       <form>
         <h1 className="mx-auto my-0 lh-1 text-black fs-3 fs-md-1">
           How productive have you been feeling recently?
         </h1>
-        <div>
+        <div className="mx-1 mx-md-0">
           {productivity > 0 && (
             <div>
               <img
@@ -47,8 +47,8 @@ const ProductivitySlider = ({
               id="productivity-slider"
               className={`border-0 shadow-none form-range level-${productivity}`}
             />
-            <p>Use the slider</p>
-          </div>
+            <p>{getProductiveText(productivity)}</p>
+          </div>      
         </div>
       </form>
     </div>
@@ -130,7 +130,7 @@ const ProductivityCheckLow = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="col-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+        <div className="mx-auto w-100">
           <ProductivitySlider
             productivity={productivity}
             handleSliderChange={handleSliderChange}
@@ -138,11 +138,12 @@ const ProductivityCheckLow = ({
             generateStyles={generateStyles}
             imageSizes={imageSizes}
           />
-
-          <BlockLowerBtns
-            nextHandling={handlingOnClickNext}
-            disabled={isBlank(productivity) || productivity === 0}
-          />
+          <div className="mt-10">
+            <BlockLowerBtns
+              nextHandling={handlingOnClickNext}
+              disabled={isBlank(productivity) || productivity === 0}
+            />
+          </div>
         </div>
       </Layout>
     )

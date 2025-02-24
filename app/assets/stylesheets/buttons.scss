@@ -15,9 +15,11 @@
 
   // use with C1 text
   &.btn-regular {
-    min-width: 15rem;
+    min-width: 14.688rem;
     height: 3.75rem;
     box-shadow: $btn-box-shadow-other !important;
+    border-radius: 0.75rem;
+    padding: 0 20px;
   }
 
   &.btn-danger {
@@ -127,4 +129,8 @@
       margin-left: 5px
     }
   }
+}
+
+.max-width-btns {
+  max-width: 800px;
 }

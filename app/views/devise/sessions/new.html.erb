@@ -1,30 +1,25 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 	<div class="container-fluid py-3">
-		<div class="row justify-content-center">
-			<div class="col-lg-8 col-md-10 col-12 text-center mb-4 mb-md-8">
-				<h1 class="text-black mt-2 mt-md-6 mb-0">Oh, hi there!</h1>
-				<p class="gray-600 mt-0 fs-3">Welcome to</p>
+		<div class="mx-1 mx-md-0">
+			<div class="mb-4 mb-md-7">
+				<h1 class="text-black mt-2 mt-md-6 mb-0 fs-2 fs-md-1">Oh, hi there!</h1>
+				<p class="gray-600 mt-2 fs-3">Welcome to</p>
 			</div>
-			<div class="col-12 col-md-8 col-lg-6 d-flex justefy-contnt-center align-items-center mt-1 ">
+			<div class="max-width-logo mx-auto">
 				<%= image_tag 'logo.png', class: 'img-fluid' %>
 			</div>
-			<div class="col-12 col-lg-10 mt-3 mx-auto pt-3">
-				<p class="gray-600 fs-5">Enter your email address and we’ll send you a link
+			<div class="mt-3 mx-auto pt-3">
+				<p class="gray-600 fs-md-5 fs-6 lh-1">Enter your email address and we’ll send you a link
 					<br>
 					to access your check-in and profile</p>
 			</div>
-			<div class="fs-2 mt-1">
-				<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter email here", id: "email-input", class: "col-12 col-lg-8 col-md-8 mt-2 px-1 outline-focus-none fs-3" %>
+			<div class="fs-2 mt-2 max-width-sign-in-input mx-auto">
+				<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter email here", id: "email-input", class: "mt-2 px-1 outline-focus-none fs-md-2 fs-5 w-100" %>
 			</div>
 			<div class="mt-8">
-				<%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
+				<%= f.submit 'Next', class: "btn btn-regular c1 fs-3 text-white border", id: "next-button", disabled: true %>
 			</div>
-			<div class="hud help pointer d-flex justify-content-end h-0 pb-3 mt-4">
-				<%= link_to image_tag("help.svg"), '#', class: 'help-icon', data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
-			</div>
-			<%= render 'layouts/help_modal' %>
 		</div>
-	</div>
 	</div>
 <% end %>
 
