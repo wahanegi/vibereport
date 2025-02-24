@@ -81,8 +81,8 @@
 
 .left-bottom-corner {
   position: absolute;
-  left: 45px;
-  top: 756px;
+  right: 0;
+  bottom: 0;
   border-radius: 50%;
   &.circle {
     border: 1px solid $gray-500;
@@ -97,14 +97,14 @@
   animation-fill-mode: forwards;
   @keyframes moveIntoCenterX2_5 {
     0%{
-      left: -75%;
-      bottom:  0;
+      right: 0;
+      bottom: -100px;
     }
     100% {
       scale: 2.384;
-      top: calc(50% + 53px + 24px);
-      left: calc(50% + 53px + 24px);
-      transform: translate(calc(-50%), calc(-50%));
+      right: 50%;
+      bottom: 50%;
+      transform: translate(calc(50% - 53px + 24px), calc(50% - 53px + 24px));
     }
   }
 }
@@ -115,14 +115,14 @@
   animation-fill-mode: forwards;
   @keyframes moveIntoCenter {
     0% {
-      left: -75%;
-      bottom:  0;
+      right: 0;
+      bottom: -100px;
     }
     100% {
       scale: 1.06;
-      top: calc(50%);
-      left: calc(50%);
-      transform: translate(calc(-50%), calc(-50%));
+      right: 50%;
+      bottom: 50%;
+      transform: translate(50%, 50%);
       filter: drop-shadow(1.744px 2.616px 1.744px rgba(0, 0, 0, 0.25));
     }
   }

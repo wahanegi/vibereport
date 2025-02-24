@@ -107,16 +107,16 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      <div className='container-fluid mt-6'>
-        <h1 className='text-black'>Recognition is important!</h1>
+      <div className='container-fluid'>
+        <h1 className='text-black mb-4'>Recognition is important!</h1>
 
         {!numShoutOuts &&
           <div className='mb-6'>
-            <h2 className='text-black'>
+            <h2 className='text-black mb-2'>
               Consider giving members of your team a <br/>
               Shoutout to show your appreciation.
             </h2>
-            <div className='shoutout-container position-relative pt-2'>
+            <div className='shoutout-container position-relative'>
               <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps}
                               draft={isDraft} handleSaveDraft={handleSaveDraft} isMove={true}/>
             </div>
