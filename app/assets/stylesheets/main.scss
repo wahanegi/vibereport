@@ -68,6 +68,105 @@
   display: block;
 }
 
+// Shoutouts
+.shoutout-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+
+  &-small {
+    height: 150px;
+  }
+}
+
+.left-bottom-corner {
+  position: absolute;
+  left: 45px;
+  top: 756px;
+  border-radius: 50%;
+  &.circle {
+    border: 1px solid $gray-500;
+    width: 98px;
+    height: 98px;
+  }
+}
+
+.into-centerX2_5 {
+  animation-name: moveIntoCenterX2_5;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  @keyframes moveIntoCenterX2_5 {
+    0%{
+      left: -75%;
+      bottom:  0;
+    }
+    100% {
+      scale: 2.384;
+      top: calc(50% + 53px + 24px);
+      left: calc(50% + 53px + 24px);
+      transform: translate(calc(-50%), calc(-50%));
+    }
+  }
+}
+
+.into-centerX {
+  animation-name: moveIntoCenter;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  @keyframes moveIntoCenter {
+    0% {
+      left: -75%;
+      bottom:  0;
+    }
+    100% {
+      scale: 1.06;
+      top: calc(50%);
+      left: calc(50%);
+      transform: translate(calc(-50%), calc(-50%));
+      filter: drop-shadow(1.744px 2.616px 1.744px rgba(0, 0, 0, 0.25));
+    }
+  }
+}
+
+.blink {
+  position: absolute;
+  top: calc(50% + 53px + 24px);
+  left: calc(50% + 53px + 24px);
+  transform: translate(-50%, -50%);
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  animation-name: blinking;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  box-shadow: 2px 3px 2px $gray-250;
+  scale: 2.5;
+  @keyframes blinking {
+    0% {
+      border: 3px solid $gray-100;
+    }
+    50% {
+      scale: 2.4;
+      border: 3px solid $primary;
+    }
+    100% {
+      border: 3px solid $gray-100;;
+      background-color: $gray-100;
+    }
+  }
+}
+
+.shoutout-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+
+  &-small {
+    height: 150px;
+  }
+}
+
 .field-shout-outs {
   height: 300px;
   overflow-y: scroll;
@@ -84,6 +183,7 @@
     }
   }
 }
+
 
 //system scroll
 .field-shout-outs,
