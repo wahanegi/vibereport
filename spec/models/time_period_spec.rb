@@ -35,6 +35,10 @@ RSpec.describe TimePeriod, type: :model do
     it 'has many emotions trough responses' do
       expect(time_period1).to have_many(:emotions)
     end
+
+    it 'has many time_sheet_entries' do
+      expect(time_period1).to have_many(:time_sheet_entries).dependent(:destroy)
+    end
   end
 
   context 'Validations' do

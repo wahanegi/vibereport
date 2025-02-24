@@ -45,6 +45,10 @@ RSpec.describe User, type: :model do
     it 'has many teams through user_teams' do
       expect(user).to have_many(:teams).through(:user_teams)
     end
+
+    it 'has many time_sheet_entries' do
+      expect(user).to have_many(:time_sheet_entries).dependent(:destroy)
+    end
   end
 
   context 'Validations' do
