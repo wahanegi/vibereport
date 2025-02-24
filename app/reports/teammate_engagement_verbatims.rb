@@ -6,12 +6,12 @@ class TeammateEngagementVerbatims < AdminReport
 
   def generate
     return 'No team provided' unless @team
-
-    team_member_ids = receive_team_members.map { |member| member[0] }
-    team_member_names = receive_team_members.map { |member| member[1] }
+    team_members = receive_team_members
+    team_member_ids = team_members.pluck(0)
+    team_member_names = team_members.pluck(1)
 
     shoutouts = filter_comments(receive_shoutouts, team_member_ids, team_member_names)
-    celebrate_comments = filter_comments(receive_celebrate_comments, team_member_ids, team_member_names)
+    celebrate_comments = filter_comments(receive_shoutouts('CelebrateShoutout'), team_member_ids, team_member_names)
 
     verbatim_list = format_comments(shoutouts + celebrate_comments)
 
@@ -20,18 +20,12 @@ class TeammateEngagementVerbatims < AdminReport
 
   private
 
-  def receive_shoutouts
-    Shoutout.where(time_period_id: @time_periods, type: nil).pluck(:rich_text)
-  end
-
-  def receive_celebrate_comments
-    Shoutout.where(time_period_id: @time_periods, type: 'CelebrateShoutout').pluck(:rich_text)
+  def receive_shoutouts(type = nil)
+    Shoutout.where(time_period_id: @time_periods, type: type).pluck(:rich_text)
   end
 
   def receive_team_members
-    User.joins(:user_teams)
-        .where(user_teams: { team_id: @team.id })
-        .pluck(:id, Arel.sql("first_name || ' ' || last_name"))
+    @team.users.pluck(:id, Arel.sql("first_name || ' ' || last_name"))
   end
 
   def filter_comments(comments, team_member_ids, team_member_names)
