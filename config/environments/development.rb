@@ -84,6 +84,7 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   config.asset_host = 'http://localhost:3000'
   Rails.application.routes.default_url_options = { host: 'http://localhost:3000' }
+  config.hosts.clear
 end
 
 # For seeding
