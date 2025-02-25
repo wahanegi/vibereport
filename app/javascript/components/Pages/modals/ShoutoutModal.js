@@ -89,13 +89,10 @@ const ShoutoutModal = ({
         }}
         dialogClassName="px-1 custom-modal py-2"
       >
-        <img
-          src={xClose}
-          className="position-absolute top-0 start-100 translate-middle x-close pointer"
-          onClick={() => {
-            setShoutOutForm(false);
-          }}
-        />
+        <button onClick={() => setShoutOutForm(false)}
+                className="position-absolute top-0 start-100 translate-middle x-close bg-transparent border-0">
+          <img src={xClose} alt="close"/>
+        </button>
         <Modal.Body>
           <RichInputElement
             richText={richText}

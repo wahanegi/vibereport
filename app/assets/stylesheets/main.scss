@@ -118,12 +118,13 @@
 .wrap-textarea-bad-follow {
   height: 350px;
   max-width: 660px;
+  font-size: 23px;
 
   textarea {
     &:focus {
       outline: none;
       border: 6px solid;
-      box-shadow: none !important;
+      padding: calc(1rem - 3px) !important;
     }
   }
 }
