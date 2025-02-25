@@ -107,7 +107,7 @@ function ListEmotions({
       {!!error && <p>{error.message}</p>}
       {!isLoading && !error && (
         <div className="col-12 col-md-10 col-lg-8 mx-auto">
-          <div className="container-fluid pt-8">
+          <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-12 col-md-auto mb-3 d-flex">
                 <div className="calendar-complete-by">
@@ -177,7 +177,7 @@ function ListEmotions({
             </div>
             <div className="d-flex mx-auto py-2">
               <NavLink
-                className="mx-auto my-1"
+                className="mx-auto my-1 fs-5"
                 onClick={onClickNotWorking}
                 to={''}
               >

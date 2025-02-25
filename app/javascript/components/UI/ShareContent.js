@@ -4,7 +4,6 @@ import BackRevert from '../../../assets/images/BackToResultsButton.svg';
 import calendar from "../../../assets/images/calendar.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
 import editResponse from "../../../assets/images/editresponse.svg"
-import help_icon from "../../../assets/images/help.svg"
 import line from "../../../assets/images/line.svg"
 import LeaderVector from '../../../assets/images/OpenLeaderPanelButton.svg';
 import polygonLeft from "../../../assets/images/polygon-left.svg"
@@ -52,7 +51,7 @@ export const BtnOutline = ({text, addClass = '', onClick, disabled}) =>
   </button>
 
 export const BtnPrimary = ({text, addClass = '', hidden, onClick, disabled}) =>
-  <button onClick={onClick} className={`btn btn-regular fs-4 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular fs-5 fs-md-3 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -98,7 +97,7 @@ export const BtnSkip = ({addClass = '', hidden = true, onClick, disabled}) =>
   </button>
 
 export const BtnBack = ({addClass = '', hidden, onClick, disabled, text = 'Back'}) =>
-  <button onClick={onClick} className={`btn btn-regular c1 bg-gray-200 bg-gray-hover-200 fs-4 ${addClass}`}
+  <button onClick={onClick} className={`btn btn-regular c1 bg-gray-200 bg-gray-hover-200 fs-5 fs-md-3 ${addClass}`}
           hidden={hidden} disabled={disabled}>
     {text}
   </button>
@@ -108,13 +107,7 @@ export const ShoutOutIcon = ({addClass = '', onClick}) =>
     <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}}/>
   </div>
 
-
-export const HelpIcon = ({addClass = ''}) =>
-  <NavLink to="mailto: support@vibereport.app" className={`${addClass} d-flex align-self-center`}>
-    <img src={help_icon} alt="shout out" className='help-icon'/>
-  </NavLink>
-
-export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true,}) =>
+export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true, }) =>
   <div className='d-flex justify-content-between m-3'>
     <BtnBack onClick={backHandling} addClass='m-1 align-self-center'/>
     <BtnNext onClick={nextClick} disabled={disabled} hidden={hideNext} addClass='m-1 align-self-center'/>
