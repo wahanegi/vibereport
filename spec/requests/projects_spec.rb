@@ -136,8 +136,6 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       end
     end
 
-
-    
     context 'TIMESHEET_PROJECT_SYNC_AUTH_KEY is set in ENV' do
       let(:auth_key) { 'test_sync_key' }
       let(:valid_payload) do
@@ -150,8 +148,13 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       end
 
       before do
-        allow(ENV).to receive(:[]).with('TIMESHEET_PROJECT_SYNC_AUTH_KEY').and_return(auth_key)
-        Rails.application.reload_routes! 
+        ENV['TIMESHEET_PROJECT_SYNC_AUTH_KEY'] = auth_key
+        Rails.application.reload_routes!
+      end
+
+      after do
+        ENV.delete('TIMESHEET_PROJECT_SYNC_AUTH_KEY')
+        Rails.application.reload_routes!
       end
 
       it 'syncs projects successfully when auth_key is correct' do
@@ -159,6 +162,50 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(json_response['message']).to eq('Projects synchronized successfully!')
+      end
+    end
+  end
+
+  describe 'GET /api/v1/projects' do
+    let!(:project1) { create(:project, code: '2025-XYZ-02') }
+    let!(:project2) { create(:project, code: '2020-ABC-02') }
+    let(:json_response) { response.parsed_body }
+
+    before { get '/api/v1/projects' }
+
+    it 'returns a success response' do
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'has correct data size' do
+      expect(json_response['data'].length).to eq(2)
+    end
+
+    it 'returns proper JSON API format' do
+      expect(json_response).to include('data')
+      expect(json_response['data'][0]).to include('type', 'id', 'attributes')
+      expect(json_response['data'][0]['type']).to eq('project')
+    end
+
+    it 'returns a list of projects sorted by code' do
+      expect(json_response['data'][0]['attributes']['code']).to eq('2020-ABC-02')
+      expect(json_response['data'][1]['attributes']['code']).to eq('2025-XYZ-02')
+
+      expect(json_response['data'][0]['attributes']['name']).to eq(project2.name)
+      expect(json_response['data'][1]['attributes']['name']).to eq(project1.name)
+
+      expect(json_response['data'][0]['attributes']['company']).to eq(project2.company)
+      expect(json_response['data'][1]['attributes']['company']).to eq(project1.company)
+    end
+
+    context 'when no projects exist' do
+      before do
+        Project.destroy_all
+        get '/api/v1/projects'
+      end
+
+      it 'returns an empty list' do
+        expect(json_response['data']).to be_empty
       end
     end
   end
