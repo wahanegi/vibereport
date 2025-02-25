@@ -108,11 +108,11 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
       handleSaveDraft={handleSaveDraft}
     >
       <div className='container-fluid'>
-        <h1 className='text-black mb-4'>Recognition is important!</h1>
+        <h1 className='text-black mb-4 fs-1'>Recognition is important!</h1>
 
         {!numShoutOuts &&
           <div className='mb-6'>
-            <h2 className='text-black mb-2'>
+            <h2 className='text-black mb-2 fs-2'>
               Consider giving members of your team a <br/>
               Shoutout to show your appreciation.
             </h2>
@@ -147,13 +147,13 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
             <p className='fs-5 mt-4 lh-base'>Any more shoutouts to give?</p>
             <div className={"shoutout-container-small position-relative"}>
               <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps}
-                              draft={isDraft} handleSaveDraft={handleSaveDraft} num={numShoutOuts} isMove={true} />
+                              draft={isDraft} handleSaveDraft={handleSaveDraft} num={numShoutOuts} isMove={true}/>
             </div>
           </div>
         }
 
         {isModal && <ShoutoutDelete onClose={onClose} data={data} setData={setData} idShoutout={idShoutout}/>}
-          <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
+        <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
       </div>
     </Layout>
   );
