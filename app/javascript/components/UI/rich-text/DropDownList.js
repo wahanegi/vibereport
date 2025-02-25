@@ -5,9 +5,9 @@ import {userFullName} from "../../helpers/library";
 const DropDownList = ({ dataList,  coordX, coordY, onClick, valSel, changeIndexSel, changeValSel }) => {
 
   return (
-    <div className='d-flex position-absolute translate-middle-y start-1 top-1' style={{zIndex:350}}>
-      <ul className="drop-down-block lh-base border border-3 border-primary rounded-4 bg-white">
-        {dataList.map(( item, index ) => (
+    <div className='position-absolute' style={{zIndex:350,  top: coordY, left: coordX }}>
+      <ul className="drop-down-block lh-base">
+        {dataList.map(( item ,index ) => (
           <ListItem
             key = { item.id }
             id = { item.id }
