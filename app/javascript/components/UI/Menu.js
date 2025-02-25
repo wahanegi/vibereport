@@ -35,7 +35,7 @@ const Menu = ({ className = '', data, steps, draft, handleSaveDraft, isResult = 
   const lastStep = isResult
       ? 'results'
       : Array.isArray(steps) && steps.length > 0
-          ? steps[steps.length - 1]
+          ? steps.at(-1)
           : '';
   const isLastStepDisabled = ['emotion-entry', 'emotion-selection-web', 'results', 'rather-not-say', 'skip-ahead'].includes(lastStep);
 
