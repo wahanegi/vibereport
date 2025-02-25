@@ -84,15 +84,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101806) do
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.text "details"
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.boolean "viewed", default: false, null: false
-    t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
-
   create_table "projects", force: :cascade do |t|
     t.string "code"
     t.string "company"
@@ -157,6 +148,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101806) do
   create_table "teams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", limit: 100, null: false
+    t.boolean "timesheet_enabled", default: false, null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_teams_on_name", unique: true
   end
@@ -216,7 +208,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101806) do
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
-  add_foreign_key "notifications", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"

@@ -6,9 +6,9 @@ const SweetAlert = ({onConfirmAction = () => {}, onDeclineAction = () => {}, ale
                       showDenyButton = false, showCancelButton = true, showConfirmButton = true}) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
-      confirmButton: `btn ${confirmButtonClass || 'btn-primary'}  ms-5 fs-5`,
+      confirmButton: `btn fs-5 ${confirmButtonClass || 'btn-primary'}`,
       cancelButton: `btn fs-5 ${cancelButtonClass || 'btn-danger'}`,
-      denyButton: `btn btn-regular c1 back border-0 mb-2`,
+      denyButton: `btn btn-regular btn-lg c1 bg-gray-200 bg-gray-hover-200 border-0 mb-2`,
       closeButton: 'swal2-close-button',
     },
     buttonsStyling: false

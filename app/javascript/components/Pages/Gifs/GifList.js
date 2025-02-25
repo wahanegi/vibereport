@@ -15,7 +15,7 @@ const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifInde
                     index={index} />
   });
 
-  return <div className='card-body card-scroll'>
+  return <div className='card-body pt-0 card-scroll'>
     {
       isCustomGif ?
         <div className='gif'>

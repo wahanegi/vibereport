@@ -1,17 +1,12 @@
 import React from "react";
-import {ColorRing} from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 
 const Loader = () => {
-  const centeredStyle = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
-  };
-
-  return <div style={centeredStyle}>
-    <ColorRing />
-  </div>
+  return (
+    <div className="position-fixed top-50 start-50 translate-middle">
+      <ColorRing />
+    </div>
+  )
 }
 
 export default Loader
