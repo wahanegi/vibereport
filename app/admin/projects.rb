@@ -7,8 +7,8 @@ ActiveAdmin.register Project do
   filter :deleted_at_null, as: :boolean, label: 'Active'
 
   scope :all
-  scope :active, -> { Project.where(deleted_at: nil) }, default: true
-  scope("Deleted") { |scope| scope.where.not(deleted_at: nil) }
+  scope :active, default: true
+  scope :deleted   
 
   index do  
     selectable_column
@@ -18,9 +18,7 @@ ActiveAdmin.register Project do
     column :name
     column :deleted_at
     actions do |project|
-      if project.deleted?
-        link_to "Restore", restore_admin_project_path(project), method: :put, class: "member_link"
-      end
+        link_to "Restore", restore_admin_project_path(project), method: :put, class: "member_link" if project.deleted?
     end
   end
 
@@ -33,11 +31,8 @@ ActiveAdmin.register Project do
       row :updated_at
       row :deleted_at
     end
-    if project.deleted?
-      div do
-        link_to "Restore Project", restore_admin_project_path(project), method: :put, class: "button"
-      end
-    end
+    div { link_to "Restore Project", restore_admin_project_path(project), method: :put, class: "button" } if project.deleted?
+
   end
 
   form do |f|

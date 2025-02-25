@@ -5,7 +5,7 @@
 #  id         :bigint           not null, primary key
 #  code       :string
 #  company    :string
-#  deleted_at :datetime
+#  deleted_at :date
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -26,6 +26,7 @@ class Project < ApplicationRecord
   before_destroy :handle_soft_delete
 
   scope :active, -> { where(deleted_at: nil) }
+  scope :deleted, -> { where.not(deleted_at: nil) }
 
   def soft_delete!
     update(deleted_at: Time.current)
@@ -35,15 +36,6 @@ class Project < ApplicationRecord
     deleted_at.present?
   end
 
-  private
-
-  def handle_soft_delete
-    if time_sheet_entries.any?
-      soft_delete!
-      throw :abort 
-    end
-  end
-
   def self.ransackable_attributes(_auth_object = nil)
     %w[id code company name deleted_at]
   end
@@ -51,4 +43,14 @@ class Project < ApplicationRecord
   def self.ransackable_associations(_auth_object = nil)
     %w[time_sheet_entries]
   end
+
+  private
+
+  def handle_soft_delete
+    return unless time_sheet_entries.any?
+
+    soft_delete!
+    throw :abort
+  end
+
 end

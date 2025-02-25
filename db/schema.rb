@@ -88,7 +88,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101806) do
     t.string "code"
     t.string "company"
     t.datetime "created_at", null: false
-    t.datetime "deleted_at"
+    t.date "deleted_at"
     t.string "name"
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_projects_on_code", unique: true
