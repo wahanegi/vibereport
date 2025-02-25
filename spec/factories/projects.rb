@@ -19,5 +19,10 @@ FactoryBot.define do
     company { Faker::Company.name }
     code { Faker::Alphanumeric.unique.alphanumeric(number: 8) }
     name { Faker::Commerce.product_name }
+    deleted_at { nil }
+
+    trait :deleted do
+      deleted_at { Time.current }
+    end
   end
 end
