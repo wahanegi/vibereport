@@ -31,11 +31,7 @@ ActiveAdmin.register Team do
       csv_data.each do |row|
         team = Team.find_or_create_by(name: row[:name])
 
-        user_emails = if row[:user_emails].nil?
-                        []
-                      else
-                        row[:user_emails].split(',')
-                      end
+        user_emails = row[:user_emails]&.split(',') || []
 
         UserTeam.where(team_id: team.id).destroy_all
 
@@ -129,21 +125,11 @@ ActiveAdmin.register Team do
         previous_time_period: previous_time_periods,
         only: %i[
           emotion_index
-          previous_emotion_index
-          productivity_avg
-          previous_productivity_avg
-          participation_percentage
-          previous_participation_percentage
           productivity_verbatims
-          teammate_engagement_count
-          previous_teammate_engagement_count
           celebrate_verbatims
           verbatim_list
           emotion_index_all
-          productivity_avg_all
-          participation_percentage_all
           celebrate_comments_count_all
-          teammate_engagement_count_all
           responses_data_all
           shoutout_user_names
           previous_shoutouts_count
@@ -179,20 +165,9 @@ ActiveAdmin.register Team do
               div 'No data present for this month.'
             end
           elsif responses_count.positive?
-            emotion_index_formatted_result, emotion_index_chart = vars[:emotion_index]
-
-            previous_period_emotion_index_formatted_result, = vars[:previous_emotion_index]
-
-            productivity_avg = vars[:productivity_avg]
-            previous_period_productivity_avg = vars[:previous_productivity_avg]
-
-            participation_percentage = vars[:participation_percentage]
-            previous_period_participation_percentage = vars[:previous_participation_percentage]
+            _, emotion_index_chart = vars[:emotion_index]
 
             productivity_verbatims = vars[:productivity_verbatims]
-
-            teammate_engagement_count = vars[:teammate_engagement_count]
-            previous_teammate_engagement_count = vars[:previous_teammate_engagement_count]
 
             celebrate_verbatims = vars[:celebrate_verbatims]
 
@@ -202,50 +177,8 @@ ActiveAdmin.register Team do
             previous_shoutouts_count = vars[:previous_shoutouts_count]
 
             attributes_table_for team do
-              row :Emotion_Index do
-                if previous_time_periods.present?
-                  trend, trend_style = trend_direction(previous_period_emotion_index_formatted_result, emotion_index_formatted_result)
-
-                  div do
-                    span emotion_index_formatted_result
-                    span trend.html_safe, style: trend_style
-                  end
-                else
-                  div do
-                    span emotion_index_formatted_result
-                  end
-                end
-              end
-
               row :Emotion_Chart do
                 emotion_index_chart
-              end
-
-              row :Productivity_Average do
-                if previous_time_periods.present? && productivity_avg != 'No productivity present'
-                  trend, trend_style = trend_direction(previous_period_productivity_avg, productivity_avg)
-
-                  div do
-                    span productivity_avg
-                    span trend.html_safe, style: trend_style
-                  end
-                else
-                  div do
-                    span productivity_avg
-                  end
-                end
-              end
-
-              row :Participation_Percentage do
-                if (previous_time_periods.present? && participation_percentage.is_a?(String)) || previous_period_participation_percentage.nil?
-                  span participation_percentage
-                else
-                  trend, trend_style = trend_direction(previous_period_participation_percentage, participation_percentage)
-                  div do
-                    span participation_percentage
-                    span trend.html_safe, style: trend_style
-                  end
-                end
               end
 
               row :Productivity_Verbatims do
@@ -276,22 +209,11 @@ ActiveAdmin.register Team do
                   end
 
                   if celebrate_verbatims.size > VISIBLE_BUBBLES
-                    button 'More', class: 'margin-top-1', onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
+                    button 'More', class: 'margin-top-1',
+                                   onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div celebrate_verbatims
-                end
-              end
-
-              row :Teammate_Engagement_Count do
-                if (previous_time_periods.present? && teammate_engagement_count.is_a?(String)) || previous_teammate_engagement_count.nil?
-                  span teammate_engagement_count
-                else
-                  trend, trend_style = trend_direction(previous_teammate_engagement_count, teammate_engagement_count)
-                  div do
-                    span teammate_engagement_count
-                    span trend.html_safe, style: trend_style
-                  end
                 end
               end
 
@@ -309,7 +231,8 @@ ActiveAdmin.register Team do
                   end
 
                   if verbatim_list.size > VISIBLE_BUBBLES
-                    button 'More', class: 'margin-top-1', onclick: "showMore(event, \"teammate-engagement-list\", #{VISIBLE_BUBBLES});"
+                    button 'More', class: 'margin-top-1',
+                                   onclick: "showMore(event, \"teammate-engagement-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div verbatim_list
@@ -368,27 +291,12 @@ ActiveAdmin.register Team do
           else
 
             responses_data_all, = vars[:responses_data_all]
-            emotion_index_all, emotion_index_chart_all = vars[:emotion_index_all]
-            productivity_avg_all = vars[:productivity_avg_all]
-            participation_percentage_all = vars[:participation_percentage_all]
+            _, emotion_index_chart_all = vars[:emotion_index_all]
             celebrate_comments_count_all = vars[:celebrate_comments_count_all]
-            teammate_engagement_count_all = vars[:teammate_engagement_count_all]
 
             attributes_table_for team do
-              row :Emotion_Index do
-                span emotion_index_all
-              end
-
               row :Emotion_Chart do
                 emotion_index_chart_all
-              end
-
-              row :Productivity_Average do
-                span productivity_avg_all
-              end
-
-              row :Participation_Percentage do
-                span participation_percentage_all
               end
 
               row :Responses_Report do
@@ -397,10 +305,6 @@ ActiveAdmin.register Team do
 
               row :Celebrations_Count do
                 celebrate_comments_count_all
-              end
-
-              row :Teammate_Engagement_Count do
-                teammate_engagement_count_all
               end
             end
           end
