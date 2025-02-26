@@ -7,7 +7,16 @@ ActiveAdmin.register_page 'Dashboard' do
     columns do
       current_period = TimePeriod.current
       vars = ActiveAdminHelpers.time_period_vars(
-        current_period: current_period
+        current_period: current_period,
+        only: %i[
+          emotion_index_all
+          emotion_index_current_period
+          productivity_average_current_period
+          productivity_avg_all
+          celebrations_count_current_period
+          teammate_engagement_count_current_period
+          productivity_verbatims
+        ]
       )
 
       unless vars[:productivity_verbatims] == 'No productivity comment present'

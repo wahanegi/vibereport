@@ -15,7 +15,6 @@ import ShoutoutSection from "./ShoutoutSection";
 import {MIN_USERS_RESPONSES} from "../../helpers/consts";
 import CornerElements from "../../UI/CornerElements";
 import ShoutoutModal from "../../UI/ShoutoutModal";
-import QuestionButton from "../../UI/QuestionButton";
 import WorkingModal from "../modals/WorkingModal";
 import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
@@ -141,7 +140,6 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   changeTimePeriodCallback(time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex)
 
   const Footer = () => <Fragment>
-    <QuestionButton data={data} />
     <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick = {() => {setShowModal(true)}} />
     {
       nextTimePeriod && isBlank(data.prev_results_path) ?
