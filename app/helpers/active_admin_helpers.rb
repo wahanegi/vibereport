@@ -30,15 +30,6 @@ module ActiveAdminHelpers
         ProductivityAverage.new(team, current_period).generate
     end
 
-    if only.include?(:participation_percentage)
-      vars[:participation_percentage] =
-        ParticipationPercentage.new(team, time_period).generate
-    end
-    if only.include?(:participation_percentage_all)
-      vars[:participation_percentage_all] =
-        ParticipationPercentage.new(team, all_time_periods).generate
-    end
-
     if only.include?(:productivity_verbatims)
       vars[:productivity_verbatims] =
         ProductivityVerbatims.new(team,
@@ -91,10 +82,6 @@ module ActiveAdminHelpers
       if only.include?(:previous_productivity_avg)
         vars[:previous_productivity_avg] =
           ProductivityAverage.new(team, previous_time_period).generate
-      end
-      if only.include?(:previous_participation_percentage)
-        vars[:previous_participation_percentage] =
-          ParticipationPercentage.new(team, previous_time_period).generate
       end
       if only.include?(:previous_celebrate_comments_count)
         vars[:previous_celebrate_comments_count] =
