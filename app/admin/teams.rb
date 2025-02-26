@@ -165,7 +165,7 @@ ActiveAdmin.register Team do
               div 'No data present for this month.'
             end
           elsif responses_count.positive?
-            emotion_index_chart = vars[:emotion_index]
+            _, emotion_index_chart = vars[:emotion_index]
 
             productivity_verbatims = vars[:productivity_verbatims]
 
@@ -178,7 +178,7 @@ ActiveAdmin.register Team do
 
             attributes_table_for team do
               row :Emotion_Chart do
-                emotion_index_chart[1]
+                emotion_index_chart
               end
 
               row :Productivity_Verbatims do
@@ -291,12 +291,12 @@ ActiveAdmin.register Team do
           else
 
             responses_data_all, = vars[:responses_data_all]
-            emotion_index_chart_all = vars[:emotion_index_all]
+            _, emotion_index_chart_all = vars[:emotion_index_all]
             celebrate_comments_count_all = vars[:celebrate_comments_count_all]
 
             attributes_table_for team do
               row :Emotion_Chart do
-                emotion_index_chart_all[1]
+                emotion_index_chart_all
               end
 
               row :Responses_Report do
