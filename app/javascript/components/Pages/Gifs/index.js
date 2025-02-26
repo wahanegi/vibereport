@@ -69,12 +69,12 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
       .catch((error) => console.error('Error fetching image data:', error));
   }
 
-  const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className={`mt-1 big image-powered-by`}/>
+  const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className={`mt-1`}/>
 
   return  loaded && <Fragment>
     <GiphyLogo />
-    <div className='gif-card' >
-      <div className='gif-card card' onKeyDown={handleKeyDown}>
+    <div className='gif-card rounded-4' >
+      <div className='gif-card card pb-1 rounded-4' onKeyDown={handleKeyDown}>
         <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
         <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category,
                             isCustomGif, apiGiphyKey, uploading, uploadingError}} />

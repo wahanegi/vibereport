@@ -11,7 +11,7 @@ export const createCsrfToken = () => {
 //*** setData - this is Hook for saving data of answer of the controller
 //***   redirect - the name of the function for navigation in browser. By default is empty
 //*** url - route. By default '/api/v1/responses'
-export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url = '/api/v1/responses')  =>{
+export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url = '/api/v1/responses', onError = () => {})  =>{
   createCsrfToken()
 
     const saveDate = (response) => {
@@ -24,24 +24,28 @@ export const apiRequest = async ( method, data, setData, redirect = ()=>{}, url 
         .then(response => {
             saveDate(response)
         })
+        .catch(error => onError(error));
       break
     case "PATCH":
       await axios.patch(url, data) //"1"-??? need to make a little rectify in controller
         .then(response => {
             saveDate(response)
         })
+        .catch(error => onError(error));
       break
     case "GET":
       await axios.get(url)
         .then(response => {
             saveDate(response)
         })
+        .catch(error => onError(error));
       break
     case "DELETE":
       await axios.delete(url)
         .then(response => {
             saveDate(response)
         })
+        .catch(error => onError(error));
       break
     default:
   }
