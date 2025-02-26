@@ -29,17 +29,14 @@ class ResponsesReport < AdminReport
   end
 
   def response_data(response_counts)
-    response_counts.map do |time_period_id, count|
-      time_period = TimePeriod.find(time_period_id)
-      period = format_period(time_period)
-      [period, count]
-    end
-  end
+    time_periods = TimePeriod.select(:id, :start_date, :end_date)
+                             .where(id: response_counts.keys)
 
-  def format_period(time_period)
-    period_start_date = time_period.start_date.strftime('%Y-%m-%d')
-    period_end_date = time_period.end_date.strftime('%Y-%m-%d')
-    "#{period_start_date} - #{period_end_date}"
+    response_counts.map do |time_period_id, count|
+      time_period = time_periods.find { |tp| tp.id == time_period_id }
+                                .date_range
+      [time_period, count]
+    end
   end
 
   def create_chart(data, chart_id)
