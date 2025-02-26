@@ -106,8 +106,8 @@ function ListEmotions({
     >
       {!!error && <p>{error.message}</p>}
       {!isLoading && !error && (
-        <div className="d-flex">
-          <div className="calendar-complete-by mt-lg-8 me-lg-4 mt-0 me-0">
+        <div className="d-flex flex-column flex-lg-row me-0 me-lg-10">
+          <div className="calendar-complete-by mt-lg-8 me-lg-4 mt-0 mx-auto">
             <div className="data">{rangeFormat(timePeriod)}</div>
           </div>
           <div className="mx-auto max-width-emotion-selection">
