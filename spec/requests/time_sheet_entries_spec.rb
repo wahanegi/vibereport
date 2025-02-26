@@ -18,15 +18,15 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
 
   before { sign_in(user) }
 
-  describe 'POST /api/v1/time_sheet_entries' do
+  describe 'POST /api/v1/time_sheet_entries tests' do
     context 'with valid parameters' do
       it 'creates a record in the database and returns 201 Created' do
-        expect {
+        expect do
           post '/api/v1/time_sheet_entries', params: valid_params
-        }.to change(TimeSheetEntry, :count).by(1)
+        end.to change(TimeSheetEntry, :count).by(1)
 
         expect(response).to have_http_status(:created)
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json['data']).not_to be_empty
       end
     end
@@ -38,8 +38,44 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         post '/api/v1/time_sheet_entries', params: invalid_params
 
         expect(response).to have_http_status(:not_found)
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json['error']).to eq('User not found')
+      end
+    end
+
+    context 'if project_id is missing' do
+      it 'returns 404 Not Found' do
+        invalid_params = valid_params.deep_merge(time_sheet_entry: { project_id: nil })
+
+        post '/api/v1/time_sheet_entries', params: invalid_params
+
+        expect(response).to have_http_status(:not_found)
+        json = response.parsed_body
+        expect(json['error']).to eq('Project not found')
+      end
+    end
+
+    context 'if time_period_id is missing' do
+      it 'returns 404 Not Found' do
+        invalid_params = valid_params.deep_merge(time_sheet_entry: { time_period_id: nil })
+
+        post '/api/v1/time_sheet_entries', params: invalid_params
+
+        expect(response).to have_http_status(:not_found)
+        json = response.parsed_body
+        expect(json['error']).to eq('Time Period not found')
+      end
+    end
+
+    context 'if total_hours is missing' do
+      it 'возвращает 422 Unprocessable Entity' do
+        invalid_params = valid_params.deep_merge(time_sheet_entry: { total_hours: nil })
+
+        post '/api/v1/time_sheet_entries', params: invalid_params
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        json = response.parsed_body
+        expect(json['errors']).to include("Total hours can't be blank")
       end
     end
 
@@ -50,8 +86,44 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         post '/api/v1/time_sheet_entries', params: invalid_params
 
         expect(response).to have_http_status(:unprocessable_entity)
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json['errors']).to include('Total hours must be greater than or equal to 0')
+      end
+    end
+
+    context 'if a non-existent user_id is passed' do
+      it 'возвращает 404 Not Found' do
+        invalid_params = valid_params.deep_merge(time_sheet_entry: { user_id: 99_999 })
+
+        post '/api/v1/time_sheet_entries', params: invalid_params
+
+        expect(response).to have_http_status(:not_found)
+        json = response.parsed_body
+        expect(json['error']).to eq('User not found')
+      end
+    end
+
+    context 'if a non-existent project_id is passed' do
+      it 'возвращает 404 Not Found' do
+        invalid_params = valid_params.deep_merge(time_sheet_entry: { project_id: 99_999 })
+
+        post '/api/v1/time_sheet_entries', params: invalid_params
+
+        expect(response).to have_http_status(:not_found)
+        json = response.parsed_body
+        expect(json['error']).to eq('Project not found')
+      end
+    end
+
+    context 'if a non-existent time_period_id is passed' do
+      it 'возвращает 404 Not Found' do
+        invalid_params = valid_params.deep_merge(time_sheet_entry: { time_period_id: 99_999 })
+
+        post '/api/v1/time_sheet_entries', params: invalid_params
+
+        expect(response).to have_http_status(:not_found)
+        json = response.parsed_body
+        expect(json['error']).to eq('Time Period not found')
       end
     end
   end
