@@ -108,19 +108,19 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
       handleSaveDraft={handleSaveDraft}
     >
       <div className='container-fluid'>
-        <h1 className='text-black'>Recognition is important!</h1>
+        <h1 className='text-black mb-4 fs-1'>Recognition is important!</h1>
 
         {!numShoutOuts &&
           <div className='mb-6'>
-            <h2 className='text-black'>
+            <h2 className='text-black mb-2 fs-2'>
               Consider giving members of your team a <br/>
               Shoutout to show your appreciation.
             </h2>
-            <div className='pt-2'>
+            <div className='shoutout-container position-relative'>
               <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps}
-                              draft={isDraft} handleSaveDraft={handleSaveDraft}/>
-              <div className='gray-600 fs-7 mt-1'>Click to give a Shoutout!</div>
+                              draft={isDraft} handleSaveDraft={handleSaveDraft} isMove={true}/>
             </div>
+            <p className='gray-600 fs-7 mt-1'>Click to give a Shoutout!</p>
           </div>
         }
 
@@ -131,6 +131,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
             </h2>
           </div>
         }
+
         {!!numShoutOuts &&
           <div className='d-flex d-sm-flex flex-column'>
             {shoutOutForm.status &&
@@ -143,15 +144,16 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
               className='container container-sm container-md justify-content-center border border-4 rounded-4 border-primary field-shout-outs'>
               {output(shoutOuts)}
             </div>
-            <div className='mb-6'>
-              <p className='fs-5 mt-4 lh-base'>Any more shoutouts to give?</p>
+            <p className='fs-5 mt-4 lh-base'>Any more shoutouts to give?</p>
+            <div className={"shoutout-container-small position-relative"}>
               <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps}
-                              draft={isDraft} handleSaveDraft={handleSaveDraft}/>
+                              draft={isDraft} handleSaveDraft={handleSaveDraft} num={numShoutOuts} isMove={true}/>
             </div>
           </div>
         }
+
         {isModal && <ShoutoutDelete onClose={onClose} data={data} setData={setData} idShoutout={idShoutout}/>}
-          <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
+        <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
       </div>
     </Layout>
   );
