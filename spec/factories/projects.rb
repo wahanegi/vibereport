@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  code       :string
 #  company    :string
+#  deleted_at :date
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -18,5 +19,10 @@ FactoryBot.define do
     company { Faker::Company.name }
     code { Faker::Alphanumeric.unique.alphanumeric(number: 8) }
     name { Faker::Commerce.product_name }
+    deleted_at { nil }
+
+    trait :deleted do
+      deleted_at { Time.current }
+    end
   end
 end

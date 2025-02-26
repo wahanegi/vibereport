@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  code       :string
 #  company    :string
+#  deleted_at :date
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -17,16 +18,12 @@ require 'rails_helper'
 
 RSpec.describe Project, type: :model do
   let!(:project) { create :project }
+  let!(:project_with_entries) { create(:project) }
+  let!(:time_entry) { create(:time_sheet_entry, project: project_with_entries) }
 
   context 'factory' do
     it 'is expected to have a valid factory' do
       expect(project).to be_valid
-    end
-  end
-
-  context 'Associations' do
-    describe 'has_many time_sheet_entries' do
-      it { is_expected.to have_many(:time_sheet_entries).dependent(:destroy) }
     end
   end
 
@@ -93,6 +90,26 @@ RSpec.describe Project, type: :model do
         project = create(:project, code: '  abc-789  ')
         expect(project.code).to eq('ABC-789')
       end
+    end
+  end
+
+  context 'Soft delete functionality' do
+    it 'soft deletes a project by setting deleted_at' do
+      expect { project.soft_delete! }.to change { project.reload.deleted_at }.from(nil)
+    end
+
+    it 'permanently deletes a project with no time sheet entries' do
+      expect { project.destroy! }.to change(Project, :count).by(-1)
+    end
+  
+    it 'marks project as deleted instead of destroying if it has time sheet entries' do
+      expect { project_with_entries.destroy }.not_to change(Project, :count)
+      expect(project_with_entries.deleted_at).not_to be_nil
+    end
+  
+    it 'restores a soft deleted project by clearing deleted_at' do
+      project.soft_delete!
+      expect { project.update!(deleted_at: nil) }.to change { project.reload.deleted_at }.to(nil)
     end
   end
 end
