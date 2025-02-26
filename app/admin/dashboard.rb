@@ -5,9 +5,9 @@ ActiveAdmin.register_page 'Dashboard' do
 
   content title: proc { I18n.t('active_admin.dashboard') } do
     columns do
-      current_period = TimePeriod.current
+      current_time_period = TimePeriod.current
       vars = ActiveAdminHelpers.time_period_vars(
-        current_period: current_period,
+        current_period: current_time_period,
         only: %i[productivity_verbatims]
       )
 
@@ -25,9 +25,9 @@ ActiveAdmin.register_page 'Dashboard' do
         end
       end
 
-      unless TimePeriod.current.nil?
-        panel "Nag Emails for Current Time Period (ending #{current_period&.end_date} )" do
-          users_without_responses = User.where.not(id: Response.where(time_period_id: current_period&.id).select(:user_id))
+      if current_time_period
+        panel "Nag Emails for Current Time Period (ending #{current_time_period.end_date} )" do
+          users_without_responses = User.where.not(id: Response.where(time_period_id: current_time_period.id).select(:user_id))
 
           table_for users_without_responses do
             column :name do |user|
@@ -35,12 +35,9 @@ ActiveAdmin.register_page 'Dashboard' do
             end
 
             column 'Reminder Link' do |user|
-              if TimePeriod.current
-                general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: user.id,
-                                                   host: 'https://cp.vibereport.app' }))
-
+              if current_time_period
                 div class: 'custom-textarea-style' do
-                  text_node general_link
+                  text_node api_v1_response_flow_from_email_url(time_period_id: current_time_period.id, user_id: user.id)
                 end
               else
                 text_node 'No current TimePeriod available.'
