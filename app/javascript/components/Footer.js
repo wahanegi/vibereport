@@ -6,7 +6,7 @@ const Footer = ({ data, setData, hideShoutout, numShoutouts }) => {
   const location = useLocation();
   const isRecognitionPage = location.pathname.match("recognition");
 
-  return <footer className='d-flex justify-content-between p-1 w-100 align-items-center'>
+  return <footer className='d-flex p-1 w-100 justify-content-end'>
     {!isRecognitionPage && <ShoutoutButton data={data} setData={setData} hideShoutout={hideShoutout} num={numShoutouts} />}
   </footer>
 };
