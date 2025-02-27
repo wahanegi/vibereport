@@ -20,7 +20,7 @@ RSpec.describe RemindCheckInEmailWorker do
       expect(worker.users).to match_array([user_with_response, user_without_response])
     end
     it 'fetch time_period' do
-      expect(worker.time_period).to eq(TimePeriod.current_time_period)
+      expect(worker.time_period).to eq(TimePeriod.current)
     end
   end
 
