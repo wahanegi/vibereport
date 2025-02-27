@@ -56,8 +56,8 @@ const EmotionEntry = ({
   }, []);
 
   const emotionClasses = {
-    positive: 'bg-green-200 text-placeholder-green-700 text-green-700 text-focus-green-700',
-    negative: 'bg-apricot text-placeholder-orange-700 text-orange-700 text-focus-orange-700',
+    positive: 'bg-green-200 bg-green-200-focus text-placeholder-green-700 text-green-700 text-focus-green-700',
+    negative: 'bg-apricot bg-apricot-focus text-placeholder-orange-700 text-orange-700 text-focus-orange-700',
   };
 
   if (!!error) return <p>{error.message}</p>;
@@ -81,7 +81,7 @@ const EmotionEntry = ({
             </div>
             <div className="col-12 col-lg-6 col-md-8 mx-auto">
               <Form.Control
-                className={`${emotionClasses[selectedType]} email_field input-new-word fs-2 rounded-4 mb-5 mb-md-8 border-royal-blue`}
+                className={`${emotionClasses[selectedType]} input-new-word fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-3 fs-sm-3 fs-3 rounded-4 mb-5 mb-md-8 fw-bold border-royal-blue`}
                 type="text"
                 maxLength={15}
                 autoComplete="off"
