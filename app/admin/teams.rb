@@ -129,7 +129,6 @@ ActiveAdmin.register Team do
           celebrate_verbatims
           verbatim_list
           emotion_index_all
-          celebrate_comments_count_all
           responses_data_all
           shoutout_user_names
           previous_shoutouts_count
@@ -292,7 +291,6 @@ ActiveAdmin.register Team do
 
             responses_data_all, = vars[:responses_data_all]
             _, emotion_index_chart_all = vars[:emotion_index_all]
-            celebrate_comments_count_all = vars[:celebrate_comments_count_all]
 
             attributes_table_for team do
               row :Emotion_Chart do
@@ -301,10 +299,6 @@ ActiveAdmin.register Team do
 
               row :Responses_Report do
                 raw responses_data_all
-              end
-
-              row :Celebrations_Count do
-                celebrate_comments_count_all
               end
             end
           end
