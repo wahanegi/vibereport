@@ -18,17 +18,17 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
     params.require(:time_sheet_entry).permit(:user_id, :project_id, :time_period_id, :total_hours)
   end
 
+  def validate_resource(model, id_param, error_message)
+    id_value = params.dig(:time_sheet_entry, id_param)
+    unless id_value && model.exists?(id_value)
+      render json: { error: error_message }, status: :not_found
+      return
+    end
+  end
+  
   def set_resources
-    unless User.exists?(params[:time_sheet_entry][:user_id])
-      render json: { error: 'User not found' }, status: :not_found and return
-    end
-
-    unless Project.exists?(params[:time_sheet_entry][:project_id])
-      render json: { error: 'Project not found' }, status: :not_found and return
-    end
-
-    return if TimePeriod.exists?(params[:time_sheet_entry][:time_period_id])
-
-    render json: { error: 'Time Period not found' }, status: :not_found and return
+    validate_resource(User, :user_id, 'User not found')
+    validate_resource(Project, :project_id, 'Project not found')
+    validate_resource(TimePeriod, :time_period_id, 'Time Period not found')
   end
 end
