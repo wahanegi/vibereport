@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {rangeFormat} from "../helpers/helpers";
+import {validateRow} from "../helpers/helpers";
 import Layout from "../Layout";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import {BtnAddNewRow, Calendar} from "../UI/ShareContent";
@@ -18,17 +19,6 @@ const TimesheetPage = ({
 
   const {isLoading, error} = service;
   const [rows, setRows] = useState([{id: Date.now(), company: "", project_id: "", project_name: "", time: ""}])
-
-  const validateRow = (row) => {
-    return (
-      row.company?.trim() &&
-      row.project_id?.trim() &&
-      row.project_name?.trim() &&
-      row.time &&
-      !isNaN(row.time) &&
-      Number(row.time) > 0
-    );
-  };
 
   const handlingOnClickNext = () => {
     steps.push('causes-to-celebrate');
