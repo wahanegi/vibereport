@@ -24,6 +24,7 @@ const BlockLowerBtns = ({
         <BtnPrimary
           onClick={handlingOnClickNext}
           text={isEmptyStr(stringBody) ? 'Skip to Results' : 'Submit'}
+          disabled={disabled}
         />
       )}
     </div>

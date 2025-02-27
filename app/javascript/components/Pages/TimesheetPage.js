@@ -18,12 +18,17 @@ const TimesheetPage = ({
 
   const {isLoading, error} = service;
   const [rows, setRows] = useState([{id: Date.now(), company: "", project_id: "", project_name: "", time: ""}])
-  const isNext = rows.some(({
-                              company,
-                              project_name,
-                              project_id,
-                              time
-                            }) => company && project_id && project_name && time > 0)
+
+  const validateRow = (row) => {
+    return (
+      row.company?.trim() &&
+      row.project_id?.trim() &&
+      row.project_name?.trim() &&
+      row.time &&
+      !isNaN(row.time) &&
+      Number(row.time) > 0
+    );
+  };
 
   const handlingOnClickNext = () => {
     steps.push('causes-to-celebrate');
@@ -45,13 +50,7 @@ const TimesheetPage = ({
     ))
   }
 
-  const skipHandling = () => {
-    handlingOnClickNext()
-  }
-
-  const nextHandling = () => {
-    handlingOnClickNext()
-  }
+  const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
 
   return (
     !isLoading && (
@@ -86,14 +85,18 @@ const TimesheetPage = ({
                 />
               ))}
             </div>
+            {rows.length > 0 && <p className={!isValid ? "text-danger" : "invisible"}>
+              Please fill up all fields
+            </p>}
             <BtnAddNewRow onClick={handleAddRow}/>
           </div>
 
           <div className="max-width-entry mx-auto">
             <BlockLowerBtns
-              nextHandling={nextHandling}
-              skipHandling={skipHandling}
-              isNext={isNext}
+              handlingOnClickNext={handlingOnClickNext}
+              disabled={!isValid}
+              stringBody="Submit"
+              isSubmit={true}
             />
           </div>
         </div>
