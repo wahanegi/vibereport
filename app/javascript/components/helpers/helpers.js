@@ -16,17 +16,19 @@ export const backHandling = () => {
 }
 
 export const rangeFormat = (tp) => {
-    if (isBlank(tp)) return null
+  if (isBlank(tp)) return null
 
-    const start_date = new Date(tp.start_date)
-    const end_date = new Date(tp.end_date)
-    const month_start = shortMonth(start_date)
-    const month_end = shortMonth(end_date)
-    if (month_start === month_end) {
-        return `${start_date.getDate()}-${end_date.getDate()} ${month_start}`
-    } else {
-        return `${datePrepare(start_date)} - ${datePrepare(end_date)}`
-    }
+  const start_date = new Date(tp.first_working_day)
+  const end_date = new Date(tp.last_working_day)
+
+  const month_start = shortMonth(start_date)
+  const month_end = shortMonth(end_date)
+
+  if (month_start === month_end) {
+    return `${start_date.getDate()}-${end_date.getDate()} ${month_start}`
+  } else {
+    return `${datePrepare(start_date)} - ${datePrepare(end_date)}`
+  }
 }
 
 export const datePrepare = (time) => {

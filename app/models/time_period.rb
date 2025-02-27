@@ -19,6 +19,7 @@ class TimePeriod < ApplicationRecord
   has_many :responses, dependent: :destroy
   has_many :emotions, through: :responses
   has_many :shoutouts, dependent: :destroy
+  has_many :time_sheet_entries, dependent: :destroy
 
   before_create :slugify
 
@@ -67,15 +68,33 @@ class TimePeriod < ApplicationRecord
     end
   end
 
+  def first_working_day
+    start_date.beginning_of_week
+  end
+
+  def last_working_day
+    start_date.end_of_week(:saturday)
+  end
+
   def date_range
-    "#{start_date.strftime('%Y-%m-%d')} - #{end_date.strftime('%Y-%m-%d')}"
+    work_week_range('%Y-%m-%d')
   end
 
   def date_range_str
-    "#{start_date.strftime('%b %d')} - #{end_date.strftime('%b %d')}"
+    work_week_range('%b %d')
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[time_sheet_entries]
   end
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[due_date end_date slug start_date]
+  end
+
+  private
+
+  def work_week_range(format_string)
+    "#{start_date.beginning_of_week.strftime(format_string)} - #{start_date.end_of_week.strftime(format_string)}"
   end
 end

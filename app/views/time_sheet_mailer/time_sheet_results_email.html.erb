@@ -1,0 +1,45 @@
+<table width="100%" style="background-color: #f2f2f2; font-family: 'Josefin Sans', 'Arial', 'Ubuntu', sans-serif;">
+  <tr>
+    <td style="padding: 20px; text-align: center">
+      <table width="650" style="background-color: #ffffff;">
+        <tr>
+          <td style="padding: 20px 0; text-align: center;">
+            <h2 style="margin: 0;">Timesheet Entries for <%= @time_period.date_range_str %></h2>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 20px; text-align: center;">
+            <p style="margin: 0;">
+              The master project codes are located at: 
+              <a href="<%= @doc_location %>" style="color: #0066cc; text-decoration: none;">Vibereport Timesheet Codes</a>
+            </p>
+          </td>
+        </tr>
+        <% @grouped_entries.each do |project, entries| %>
+          <tr>
+            <td style="padding: 10px 20px;">
+              <h3 style="margin: 0;">
+                <%= project.code %>: 
+                <span>Total <%= entries.sum(&:total_hours) %> hours</span>
+              </h3>
+              <table width="100%" style="margin-top: 10px; margin-left: 20px;">
+                <tr>
+                  <td>
+                    <% entries.each do |entry| %>
+                      <table width="100%">
+                        <tr>
+                          <td style="width: 30%;"><%= entry.user.first_name %> <%= entry.user.last_name %>:</td>
+                          <td style="width: 70%;"><%= entry.total_hours %> hours</td>
+                        </tr>
+                      </table>
+                    <% end %>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>
