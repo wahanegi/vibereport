@@ -24,21 +24,21 @@ const TimesheetRow = ({
                       options={optionsCompanyNames}
                       selected={row.company}
                       onChange={(value) => onChangeRowData(row.id, "company", value)}
-                      placeholder="Select..."
+                      placeholder="Enter company"
                       className="select-company"
       />
       <DropdownSelect id={"project_id"}
                       options={optionsProjectIds}
                       selected={row.project_id}
                       onChange={(value) => onChangeRowData(row.id, "project_id", value)}
-                      placeholder="Select..."
+                      placeholder="Enter project ID"
                       className="select-project-id"
       />
       <DropdownSelect id={"project_name"}
                       options={optionsProjectNames}
                       selected={row.project_name}
                       onChange={(value) => onChangeRowData(row.id, "project_name", value)}
-                      placeholder="Select..."
+                      placeholder="Enter project name"
                       className="select-project-name"
       />
       <input
@@ -46,8 +46,8 @@ const TimesheetRow = ({
         value={row.time}
         onChange={(event) => onChangeRowData(row.id, "time", event.target.value)}
         min={0}
-        placeholder=""
-        className="timesheet-row-input-time select-time shadow-none fs-5 text-gray-600 text fw-normal border-royal-blue border-4 border w-100 outline-focus-none"
+        placeholder="Enter time"
+        className="timesheet-row-input-time select-time shadow-none fs-5 text-gray-600 text fw-normal border-royal-blue border-4 border w-100 outline-focus-none text-center"
       />
     </div>
     <button className="timesheet-row-button-delete bg-white border-4 border border-royal-blue rounded-circle"

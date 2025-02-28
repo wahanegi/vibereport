@@ -67,15 +67,15 @@ const TimesheetPage = ({
             <div className="col-12 text-center mx-auto">
               <h1 className="my-1 my-md-0">Your Timesheet</h1>
             </div>
-
-            {/*Calendar*/}
-            <div className={"d-flex flex-row justify-content-center justify-content-sm-start align-items-center mb-2"}>
-              <p className={"m-0 me-1"}>Week of: </p>
-              <Calendar date={timesheet_date}/>
-            </div>
-
-            {/* Timesheet header, rows & btn-add*/}
             <div className={"timesheet-form-container row justify-content-center mx-auto"}>
+              {/*Calendar*/}
+              <div className={"d-flex flex-row justify-content-center justify-content-sm-start align-items-center mb-2"}>
+                <p className={"m-0 me-1"}>Week of: </p>
+                <Calendar date={timesheet_date}/>
+              </div>
+
+              {/* Timesheet header, rows & btn-add*/}
+              {/*<div className={"timesheet-form-container row justify-content-center mx-auto"}>*/}
               <TimesheetRowHeader/>
               <div className={"d-flex gap-1 mb-1"}>
                 {rows.map((row) => (
