@@ -1,56 +1,60 @@
 import React from "react";
-import DropdownSelect from "./DropdownSelect";
 import deleteIcon from "../../../assets/images/timesheet-row-delete.svg";
+import DropdownSelect from "./DropdownSelect";
 
-const TimesheetRow = (
-    {
-        // for company name
-        optionsCompanyNames,
-        selectedCompany,
-        onChangeCompany,
-        // for project id
-        optionsProjectIds,
-        selectedProjectId,
-        onChangeProjectId,
-        // for project name
-        optionsProjectNames,
-        selectedProjectName,
-        onChangeProjectName,
-        // for delete row and send to backend
-        onDelete
-    }
+// TODO - initOpt will be deleted after implementing data fetching from the backend.
+const initOpt = [
+  'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5',
+  'Option 6', 'Option 7', 'Option 8', 'Option 9', 'Option 10', 'Option 11'
+];
+
+const TimesheetRow = ({
+                        row,
+                        onDelete,
+                        onChangeRowData,
+                        optionsCompanyNames = initOpt,
+                        optionsProjectIds = initOpt,
+                        optionsProjectNames = initOpt
+                      }
 ) => {
-    return <div className="d-flex gap-1 flex-row flex-nowrap align-items-center">
-        <div className="timesheet-row d-flex gap-3 flex-row flex-nowrap border-royal-blue border-4 border">
-            <DropdownSelect placeholder=""
-                            options={optionsCompanyNames}
-                            onChange={onChangeCompany}
-                            selected={selectedCompany}
-                            className="timesheet-row-select-company"
-            />
-            <DropdownSelect placeholder=""
-                            options={optionsProjectIds}
-                            onChange={onChangeProjectId}
-                            selected={selectedProjectId}
-                            className="timesheet-row-select-project-id"
-            />
-            <DropdownSelect placeholder=""
-                            options={optionsProjectNames}
-                            onChange={onChangeProjectName}
-                            selected={selectedProjectName}
-                            className="timesheet-row-select-project-name"
-            />
-            <input type="number"
-                   min={0}
-                   placeholder=""
-                   className="timesheet-row-input-time shadow-none fs-5 text-gray-600 text fw-normal border-royal-blue border-4 border"
-            />
-        </div>
-        <button className="timesheet-row-button-delete bg-white border-4 border border-royal-blue rounded-circle"
-                onClick={onDelete}>
-            <img src={deleteIcon} alt="Delete icon"/>
-        </button>
+  return <div className="d-flex gap-1 flex-row flex-nowrap align-items-center">
+    <div
+      className="timesheet-row d-flex gap-1 flex-row flex-nowrap align-items-center border border-royal-blue border-4 p-1">
+      <DropdownSelect id={"company_name"}
+                      options={optionsCompanyNames}
+                      selected={row.company}
+                      onChange={(value) => onChangeRowData(row.id, "company", value)}
+                      placeholder="Enter company"
+                      className="select-company"
+      />
+      <DropdownSelect id={"project_id"}
+                      options={optionsProjectIds}
+                      selected={row.project_id}
+                      onChange={(value) => onChangeRowData(row.id, "project_id", value)}
+                      placeholder="Enter project ID"
+                      className="select-project-id"
+      />
+      <DropdownSelect id={"project_name"}
+                      options={optionsProjectNames}
+                      selected={row.project_name}
+                      onChange={(value) => onChangeRowData(row.id, "project_name", value)}
+                      placeholder="Enter project name"
+                      className="select-project-name"
+      />
+      <input
+        type="number"
+        value={row.time}
+        onChange={(event) => onChangeRowData(row.id, "time", event.target.value)}
+        min={0}
+        placeholder="Enter time"
+        className="timesheet-row-input-time select-time shadow-none fs-5 text-gray-600 text fw-normal border-royal-blue border-4 border w-100 outline-focus-none text-center"
+      />
     </div>
+    <button className="timesheet-row-button-delete bg-white border-4 border border-royal-blue rounded-circle"
+            onClick={() => onDelete(row.id)}>
+      <img src={deleteIcon} alt="Delete icon"/>
+    </button>
+  </div>
 };
 
 export default TimesheetRow;

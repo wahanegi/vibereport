@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import BackRevert from '../../../assets/images/BackToResultsButton.svg';
 import calendar from "../../../assets/images/calendar.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
@@ -14,6 +14,7 @@ import {backHandling, isPresent} from "../helpers/helpers";
 import ResultsPage from "../Pages/ResultsPage";
 import ResultsPageManager from "../Pages/ResultsPageManager";
 import {updateResponse} from "../requests/axios_requests";
+import Button from "./Button";
 import Menu from "./Menu";
 
 export const BigBtnEmotion = ({emotion, onClick, showPencil = true, addClass = '', selectedType}) => {
@@ -51,7 +52,8 @@ export const BtnOutline = ({text, addClass = '', onClick, disabled}) =>
   </button>
 
 export const BtnPrimary = ({text, addClass = '', hidden, onClick, disabled}) =>
-  <button onClick={onClick} className={`btn btn-regular fs-5 fs-md-3 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular fs-5 fs-md-3 c1 ${addClass}`} hidden={hidden}
+          disabled={disabled}>
     {text}
   </button>
 
@@ -67,11 +69,11 @@ export const Calendar = ({
       null
     }
     {positionRight && <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See next results</p>}
-    <div className="position-relative pointer w-82 mt-1" onClick={onClick}>
+    <div className="position-relative pointer w-82" onClick={onClick}>
       <img src={calendar} alt="calendar"/>
       <div className="position-absolute top-0 w-82">
         {date.includes(' - ') ?
-          <div className='mt-3 d-flex flex-column'>
+          <div className='mt-3 d-flex flex-column fs-7'>
             {date.split(' - ')[0]}
             <img src={line} alt="line"/>
             {date.split(' - ')[1]}
@@ -102,12 +104,20 @@ export const BtnBack = ({addClass = '', hidden, onClick, disabled, text = 'Back'
     {text}
   </button>
 
+export const BtnAddNewRow = ({onClick}) =>
+  <div className={"d-flex justify-content-center justify-content-sm-end mb-2 p-e-0 pe-sm-9"}>
+    <Button className={"btn-regular fs-5 fw-semibold shadow-none"} children={"+ New Entry"}
+            onClick={onClick}
+    />
+  </div>
+
+
 export const ShoutOutIcon = ({addClass = '', onClick}) =>
   <div className={'m-0 pointer'} onClick={onClick}>
     <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}}/>
   </div>
 
-export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true, }) =>
+export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true,}) =>
   <div className='d-flex justify-content-between m-3'>
     <BtnBack onClick={backHandling} addClass='m-1 align-self-center'/>
     <BtnNext onClick={nextClick} disabled={disabled} hidden={hideNext} addClass='m-1 align-self-center'/>
