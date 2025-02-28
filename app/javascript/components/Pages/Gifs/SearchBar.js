@@ -17,7 +17,7 @@ const SearchBar = ({ setTerm, term, category, word }) => {
 
   return <div className="card-header">
     <Form.Control type="text"
-                  className={`${classInput}-input`}
+                  className={`${classInput}-input fs-3 bg-light border-royal-blue`}
                   placeholder="Search GIPHY"
                   onChange={e => onInputChange(e.target.value)}
                   value={term} />

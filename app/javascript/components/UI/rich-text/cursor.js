@@ -1,5 +1,4 @@
 //For set up caret to the defiantly position
-
 import RichText from "./rich-text";
 export default class Cursor {
     static getCurrentCursorPosition(parentElement, initCoord = {x: 0, y: 0}) {
@@ -41,17 +40,18 @@ export default class Cursor {
                 }
             }
             if (selection.rangeCount) {
-                let range = selection.getRangeAt(0).cloneRange();
+                const range = selection.getRangeAt(0).cloneRange();
                 if (range.getClientRects) {
-                    range.collapse(true);
-                    let rects = range.getClientRects();
-                    if (rects.length > 0) {
-                        let rect = rects[0];
-                        coordinates.x = rect.left + window.scrollX ;
-                        coordinates.y = rect.top + window.scrollY ;
-                    }
+                  range.collapse(true);
+                  const rect = range.getBoundingClientRect();
+                  const modal = document.querySelector('.custom-modal');
+                  if (modal) {
+                    const modalRect = modal.getBoundingClientRect();
+                    coordinates.x = rect.x - modalRect.left;
+                    coordinates.y = rect.y - modalRect.top;
+                  }
                 }
-            }
+              }
             return {
                 charCount: charCount,
                 focusNode: focusNode,
@@ -64,7 +64,6 @@ export default class Cursor {
             }
         }
     }
-
     static setCurrentCursorPosition(chars, element) {
         if (chars >= 0) {
             const selection = window.getSelection();
@@ -76,7 +75,6 @@ export default class Cursor {
             }
         }
     }
-
     static _createRange(node, chars, range) {
         if (!range) {
             range = document.createRange()
@@ -104,7 +102,6 @@ export default class Cursor {
         }
         return range;
     }
-
     static _isChildOf(node, parentElement) {
         while (node !== null) {
             if (node === parentElement) {

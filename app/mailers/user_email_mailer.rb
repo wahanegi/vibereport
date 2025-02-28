@@ -40,9 +40,9 @@ class UserEmailMailer < ApplicationMailer
     mail(to: user.email, subject: "#{user.first_name}, your check-in was saved.")
   end
 
-  def send_reminder(user, message)
+  def send_reminder(user, general_link)
     @user = user
-    @message = message
+    @general_link = general_link
     mail(to: @user.email, subject: '🔔 Reminder: Share Your Vibes from Last Week')
   end
 

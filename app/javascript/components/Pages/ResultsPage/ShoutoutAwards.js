@@ -5,7 +5,7 @@ import Pluralize from "pluralize";
 import {BtnSendMoreShoutouts} from "../../UI/ShareContent";
 import isEmpty from "ramda/src/isEmpty";
 
-const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, setShowModal, currentUserShoutouts, emptyShoutouts}) => {
+const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimePeriod, setShoutOutForm, currentUserShoutouts, emptyShoutouts}) => {
   return (!isEmpty(sentShoutouts) || !isEmpty(receivedShoutouts)) && <Fragment>
     <div className={`${nextTimePeriod || isEmpty(currentUserShoutouts.sent) ? 'col-2' : ''}`}></div>
     <div className='col-8'>
@@ -46,7 +46,7 @@ const ShoutoutAwards = ({timePeriod, sentShoutouts, receivedShoutouts, nextTimeP
     <div className='col-4' hidden={nextTimePeriod || isEmpty(currentUserShoutouts.sent)}>
       <div className='d-flex justify-content-center'>
         <h6 className='mb-0 fw-semibold'>It's not too late!</h6>
-        <BtnSendMoreShoutouts onClick={() => {setShowModal(true)}} />
+        <BtnSendMoreShoutouts onClick={() => {setShoutOutForm(true)}} />
       </div>
     </div>
   </Fragment>
