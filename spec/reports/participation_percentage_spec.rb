@@ -15,8 +15,12 @@ RSpec.describe ParticipationPercentage do
       let!(:response2) { create(:response, user: user2, time_period: time_periods[1]) }
 
       it 'generates the response percentage' do
+        users_count = team.users.count
         percentage = report.generate
-        expected_percentage = (2.0 / 3 * 100).round(2)
+        actual_responses_count = Response.where(user: team.users, time_period: time_periods).count
+        total_possible_responses = users_count * time_periods.size
+        expected_percentage = ((actual_responses_count.to_f / total_possible_responses) * 100).round(2)
+
         expect(percentage).to eq(expected_percentage)
       end
     end
