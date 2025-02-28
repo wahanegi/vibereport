@@ -1,32 +1,34 @@
-.wrap-tsh-table {
-  padding-right: calc(32px + 55px);
+/* Timesheet page general styles */
+.timesheet-form-container {
+  max-width: 1600px;
   }
 
-.table-header {
-  padding: 8px 12px;
+.timesheet-header-cell {
+  padding: 8px 0;
   font-size: clamp(16px, 3vw, 32px);
-  white-space: nowrap;
   color: $gray-600;
+
+  // for hidden text on a small width
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   }
 
+.timesheet-table-container {
+  padding-right: calc(55px + 28px);
+  }
+
+// end -----------------------
 
 /* Timesheet row styles */
 .timesheet-row {
   border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  display: flex;
-  gap: 8px;
-  align-items: center;
 
   &-input-time {
-    outline: none;
     padding: 8px 12px;
     border-radius: 20px;
-
-    font-size: clamp(16px, 3vw, 32px);
-    color: $gray-600;
-    border: 4px solid $royal-blue;
-    width: 100%;
+    font-size: clamp(16px, 3vw, 32px) !important;
     }
 
   &-button-delete {
@@ -47,37 +49,37 @@
   }
 
 .select-time {
-  flex: 1 1 10%;
+  flex: 2 1 10%;
+  height: auto;
   }
-
 
 // end -----------------------
 
 /* DropdownSelect styles */
-
-/* Dropdown container */
+// Dropdown container
 .dropdown-container {
   position: relative;
   width: 100%;
   }
 
-/* Field input */
+// Field input
 .dropdown-container .rbt-input {
   padding: 8px 12px;
   border: 4px solid $royal-blue;
   border-radius: 20px;
   box-shadow: none;
   color: $gray-600;
-
-  width: 100% !important;
-  font-size: clamp(16px, 3vw, 32px);
+  font-size: clamp(16px, 3vw, 32px) !important;
+  white-space: nowrap;
+  height: min-content;
+  line-height: 1.2 !important;
 
   &:focus {
     border: 4px solid $royal-blue !important;
     }
   }
 
-/* Active dropdown input */
+// Active dropdown input
 .dropdown-container:has(.rbt-menu) .rbt-input {
   border: 4px solid $royal-blue !important;
   border-radius: 20px 20px 0 0;
@@ -91,7 +93,7 @@
   color: rgba(0, 0, 0, 0.6);
   }
 
-/* Dropdown list */
+// Dropdown list
 .rbt-menu {
   position: absolute !important;
   top: -10px !important;
@@ -113,22 +115,22 @@
   border-top-color: transparent;
   }
 
-/* List elements */
+// List elements
 .rbt-menu .dropdown-item {
   padding: 8px 12px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #fff;
+    }
   }
 
-.rbt-menu .dropdown-item:hover {
-  background-color: #fff;
-  }
-
-/* Highlighted Text */
+// Highlighted Text
 .rbt-highlight-text {
   background-color: transparent;
   }
 
-/* Clear X-button */
+// Clear X-button
 .rbt-close {
   position: absolute;
   top: 50%;
@@ -139,17 +141,17 @@
   color: $gray-400;
   transform: translateY(-50%);
   background-size: 0.75em 0.75em;
-  }
 
-.rbt-close:hover {
-  color: $gray-500;
+  &:hover {
+    color: $gray-500;
+    }
   }
 
 .rbt-close-content {
   color: transparent;
   }
 
-/* Scrollbar */
+// Scrollbar
 .rbt-menu::-webkit-scrollbar {
   width: 8px;
   }

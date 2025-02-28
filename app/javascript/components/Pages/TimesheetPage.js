@@ -75,18 +75,20 @@ const TimesheetPage = ({
             </div>
 
             {/* Timesheet header, rows & btn-add*/}
-            <TimesheetRowHeader/>
-            <div className={"d-flex gap-1 mb-1"}>
-              {rows.map((row) => (
-                <TimesheetRow
-                  key={row.id}
-                  row={row}
-                  onChangeRowData={handleChangeRowData}
-                  onDelete={handleOnDelete}
-                />
-              ))}
+            <div className={"timesheet-form-container row justify-content-center mx-auto"}>
+              <TimesheetRowHeader/>
+              <div className={"d-flex gap-1 mb-1"}>
+                {rows.map((row) => (
+                  <TimesheetRow
+                    key={row.id}
+                    row={row}
+                    onChangeRowData={handleChangeRowData}
+                    onDelete={handleOnDelete}
+                  />
+                ))}
+              </div>
+              <BtnAddNewRow onClick={handleAddRow}/>
             </div>
-            <BtnAddNewRow onClick={handleAddRow}/>
           </div>
 
           <div className="max-width-entry mx-auto">
