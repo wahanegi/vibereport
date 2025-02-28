@@ -10,6 +10,7 @@
 .costume-focus {
   &:focus-within {
     border: 6px solid $emerald !important;
+    padding: calc(1rem - 3px) !important;
   }
 }
 
