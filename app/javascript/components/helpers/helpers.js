@@ -142,3 +142,14 @@ export function getProductiveText(value) {
 
     return productivityLevels[keys.find(max => value <= max)];
 }
+
+export const validateRow = (row) => {
+    return (
+      row.company?.trim() &&
+      row.project_id?.trim() &&
+      row.project_name?.trim() &&
+      row.time &&
+      !isNaN(row.time) &&
+      Number(row.time) > 0
+    );
+  };

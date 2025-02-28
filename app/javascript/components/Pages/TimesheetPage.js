@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {rangeFormat} from "../helpers/helpers";
+import {validateRow} from "../helpers/helpers";
 import Layout from "../Layout";
 import BlockLowerBtns from "../UI/BlockLowerBtns";
 import {BtnAddNewRow, Calendar} from "../UI/ShareContent";
@@ -18,12 +19,6 @@ const TimesheetPage = ({
 
   const {isLoading, error} = service;
   const [rows, setRows] = useState([{id: Date.now(), company: "", project_id: "", project_name: "", time: ""}])
-  const isNext = rows.some(({
-                              company,
-                              project_name,
-                              project_id,
-                              time
-                            }) => company && project_id && project_name && time > 0)
 
   const handlingOnClickNext = () => {
     steps.push('causes-to-celebrate');
@@ -45,13 +40,7 @@ const TimesheetPage = ({
     ))
   }
 
-  const skipHandling = () => {
-    handlingOnClickNext()
-  }
-
-  const nextHandling = () => {
-    handlingOnClickNext()
-  }
+  const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
 
   return (
     !isLoading && (
@@ -87,15 +76,19 @@ const TimesheetPage = ({
                   />
                 ))}
               </div>
-              <BtnAddNewRow onClick={handleAddRow}/>
+              {rows.length > 0 && <p className={!isValid ? "text-primary" : "invisible"}>
+              Please fill out all fields
+            </p>}
+            <BtnAddNewRow onClick={handleAddRow}/>
             </div>
           </div>
 
           <div className="max-width-entry mx-auto">
             <BlockLowerBtns
-              nextHandling={nextHandling}
-              skipHandling={skipHandling}
-              isNext={isNext}
+              handlingOnClickNext={handlingOnClickNext}
+              disabled={!isValid}
+              stringBody="Submit"
+              isSubmit={true}
             />
           </div>
         </div>
