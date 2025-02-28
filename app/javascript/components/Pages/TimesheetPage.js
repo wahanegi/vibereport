@@ -77,7 +77,7 @@ const TimesheetPage = ({
                 ))}
               </div>
               {rows.length > 0 && <p className={!isValid ? "text-primary" : "invisible"}>
-              Please fill up all fields
+              Please fill out all fields
             </p>}
             <BtnAddNewRow onClick={handleAddRow}/>
             </div>
