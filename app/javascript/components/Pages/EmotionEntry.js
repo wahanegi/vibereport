@@ -98,12 +98,12 @@ const EmotionEntry = ({
               />
             </div>
           </div>
-          <div className="mt-4">
-            <BlockLowerBtns
+        </div>
+        <div className="w-100 mx-1 mt-xxl-4 mt-md-3 mt-2 align-self-end">
+          <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={emotion.word.length < 2}
-            />
-          </div>
+          />
         </div>
       </Layout>
     )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SweetAlert from "../../UI/SweetAlert";
 import { isBlank, isPresent, rangeFormat } from "../../helpers/helpers";
-import { BtnBack, ShoutOutIcon } from "../../UI/ShareContent";
+import { BtnBack } from "../../UI/ShareContent";
 import axios from "axios";
 import NavigationBar from "./NavigationBar";
 import EmotionSection from "./EmotionSection";
@@ -10,7 +10,6 @@ import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
 import { MIN_USERS_RESPONSES } from "../../helpers/consts";
 import Layout from '../../Layout';
-import ShoutoutModal from '../modals/ShoutoutModal';
 import WorkingModal from "../modals/WorkingModal";
 import { apiRequest, updateResponse } from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";

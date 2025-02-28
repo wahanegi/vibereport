@@ -127,7 +127,7 @@ const IcebreakerQuestion = ({
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      {!isLoading && !error && (
+      {!isLoading && !error && (<>
         <div className="w-100 mx-1">
           <div className="mb-3 d-flex flex-column">
             <div className="mb-1 fs-3">Thanks for answering!</div>
@@ -161,13 +161,15 @@ const IcebreakerQuestion = ({
               )}
             </div>
           </div>
+        </div>
+        <div className="w-100 mt-xxl-10 mt-md-6 mt-4 mx-1 align-self-end">
             <BlockLowerBtns
               isSubmit={true}
               handlingOnClickNext={handlingOnClickNext}
               stringBody={funQuestionBody}
             />
         </div>
-      )}
+      </>)}
     </Layout>
   );
 };

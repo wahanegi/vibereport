@@ -51,7 +51,7 @@ export const BtnOutline = ({text, addClass = '', onClick, disabled}) =>
   </button>
 
 export const BtnPrimary = ({text, addClass = '', hidden, onClick, disabled}) =>
-  <button onClick={onClick} className={`btn btn-regular fs-5 fs-md-3 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular fs-5 fs-md-4 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -97,7 +97,7 @@ export const BtnSkip = ({addClass = '', hidden = true, onClick, disabled}) =>
   </button>
 
 export const BtnBack = ({addClass = '', hidden, onClick, disabled, text = 'Back'}) =>
-  <button onClick={onClick} className={`btn btn-regular c1 bg-gray-200 bg-gray-hover-200 fs-5 fs-md-3 ${addClass}`}
+  <button onClick={onClick} className={`btn btn-regular c1 bg-gray-200 bg-gray-hover-200 fs-5 fs-md-4 ${addClass}`}
           hidden={hidden} disabled={disabled}>
     {text}
   </button>

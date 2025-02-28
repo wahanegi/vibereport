@@ -170,12 +170,12 @@ const EmotionIntensity = ({
           />
         </div>
       </div>
-      <div className='mt-4'>
-        <BlockLowerBtns
-          nextHandling={handlingOnClickNext}
-          disabled={isBlank(rating)}
-        />
-      </div>
+    </div>
+    <div className='w-100 mt-4 mx-1 align-self-end'>
+      <BlockLowerBtns
+        nextHandling={handlingOnClickNext}
+        disabled={isBlank(rating)}
+      />
     </div>
   </Layout>));
 };

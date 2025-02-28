@@ -103,18 +103,18 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
           <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' className = {"dropdown-img"}/>
         </Dropdown.Toggle>
         <Dropdown.Menu className={"mt-5 border border-1 border-color"}>
-          <Dropdown.Item href="#">
+          <Dropdown.ItemText>
             <Button
               className={`btn-item-menu mx-auto my-auto${draft || isLastStepDisabled ? ' disabled-btn-draft' : ''}`}
               disabled={draft || isLastStepDisabled} onClick={handleSaveDraft}>
               Save Draft
             </Button>
-          </Dropdown.Item>
-          <Dropdown.Item href="#">
+          </Dropdown.ItemText>
+          <Dropdown.ItemText>
             <Button className='btn-item-menu mx-auto my-auto' onClick={handleSignOut}>
               Log Out
             </Button>
-          </Dropdown.Item>
+          </Dropdown.ItemText>
         </Dropdown.Menu>
       </Dropdown>
       {!isStepUnsubscribe && (
