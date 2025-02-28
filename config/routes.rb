@@ -46,6 +46,8 @@ Rails.application.routes.draw do
       get '/result', to: 'results#show'
       get '/unsubscribe', to: 'users#unsubscribe'
       get '/result_manager', to: 'results#show'
+      post '/projects', to: 'projects#sync'
+      get '/projects', to: 'projects#index'
     end
   end
   get '*path', to: 'home#app', constraints: lambda { |req|
