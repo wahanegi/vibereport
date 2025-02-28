@@ -64,21 +64,23 @@ const TimesheetPage = ({
             </div>
 
             {/* Timesheet header, rows & btn-add*/}
-            <TimesheetRowHeader/>
-            <div className={"d-flex gap-1 mb-1"}>
-              {rows.map((row) => (
-                <TimesheetRow
-                  key={row.id}
-                  row={row}
-                  onChangeRowData={handleChangeRowData}
-                  onDelete={handleOnDelete}
-                />
-              ))}
-            </div>
-            {rows.length > 0 && <p className={!isValid ? "text-primary" : "invisible"}>
+            <div className={"timesheet-form-container row justify-content-center mx-auto"}>
+              <TimesheetRowHeader/>
+              <div className={"d-flex gap-1 mb-1"}>
+                {rows.map((row) => (
+                  <TimesheetRow
+                    key={row.id}
+                    row={row}
+                    onChangeRowData={handleChangeRowData}
+                    onDelete={handleOnDelete}
+                  />
+                ))}
+              </div>
+              {rows.length > 0 && <p className={!isValid ? "text-primary" : "invisible"}>
               Please fill up all fields
             </p>}
             <BtnAddNewRow onClick={handleAddRow}/>
+            </div>
           </div>
 
           <div className="max-width-entry mx-auto">
