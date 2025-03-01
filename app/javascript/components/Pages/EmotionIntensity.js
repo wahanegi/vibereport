@@ -89,13 +89,13 @@ const EmotionIntensity = ({
         <img
           src={gif_url}
           alt="Giphy image"
-          className={`small image-${category} align-top`}
+          className={`small image-${category} align-top img-fluid`}
         />
         <br/>
         <img
           src={PoweredBy}
           alt="PoweredBy"
-          className={`small-image-powered-by align-top`}
+          className="small-image-powered-by align-top"
         />
       </div>
       <div className="mb-2">
