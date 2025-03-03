@@ -27,11 +27,19 @@ class Project < ApplicationRecord
   # Override destroy
   def destroy
     if time_sheet_entries.any?
-      soft_delete!
+      soft_delete
       :soft_deleted
     else
       super
       :hard_deleted
+    end
+  end
+
+  # Override destroy!
+  def destroy!
+    transaction do
+      time_sheet_entries.destroy_all
+      super
     end
   end
 

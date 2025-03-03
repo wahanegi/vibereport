@@ -98,17 +98,17 @@ RSpec.describe Project, type: :model do
   end
 
   context 'Soft delete functionality' do
-    describe '#soft_delete!' do
+    describe '#soft_delete' do
       it 'soft deletes a project by setting deleted_at' do
-        expect { project.soft_delete! }.to change { project.reload.deleted_at }.from(nil)
+        expect { project.soft_delete }.to change { project.reload.deleted_at }.from(nil)
         expect(project.deleted_at).to be_a(Date)
       end
     end
 
-    describe '#restore!' do
+    describe '#restore' do
       it 'restores a soft-deleted project by clearing deleted_at' do
-        project.soft_delete!
-        expect { project.restore! }.to change { project.reload.deleted_at }.to(nil)
+        project.soft_delete
+        expect { project.restore }.to change { project.reload.deleted_at }.to(nil)
       end
     end
 
@@ -140,12 +140,11 @@ RSpec.describe Project, type: :model do
       end
 
       context 'with time_sheet_entries' do
-        it 'performs a soft deletion and leaves associated time_sheet_entries intact' do
-          expect { project_with_entries.destroy! }.not_to change(Project, :count)
-          expect { project_with_entries.destroy! }.not_to change(TimeSheetEntry, :count)
-
-          expect(project_with_entries.reload.deleted_at).to be_present
-          expect(TimeSheetEntry.find_by(id: time_entry.id)).to be_present
+        it 'performs a hard deletion and deletes associated time_sheet_entries' do
+          expect { project_with_entries.destroy! }.to change(Project, :count).by(-1)
+                                                                             .and change(TimeSheetEntry, :count).by(-1)
+          expect(Project.find_by(id: project_with_entries.id)).to be_nil
+          expect(TimeSheetEntry.find_by(id: time_entry.id)).to be_nil
         end
       end
     end
