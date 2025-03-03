@@ -85,7 +85,7 @@ const ProductivityCheckLow = ({
     if (productivity < 3) {
       steps.push('productivity-bad-follow-up');
     } else {
-      steps.push('causes-to-celebrate');
+      steps.push('timesheet');
     }
     saveDataToDb(steps, { productivity, draft: false });
   };
