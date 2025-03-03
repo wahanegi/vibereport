@@ -31,7 +31,7 @@ const TimesheetRow = ({
           options={optionsCompanyNames}
           selected={row.company}
           onChange={(value) => onChangeRowData(row.id, 'company', value)}
-          placeholder="Select..."
+          placeholder="Enter company"
           className="select-company"
         />
         <DropdownSelect
@@ -39,7 +39,7 @@ const TimesheetRow = ({
           options={optionsProjectIds}
           selected={row.project_id}
           onChange={(value) => onChangeRowData(row.id, 'project_id', value)}
-          placeholder="Select..."
+          placeholder="Enter project ID"
           className="select-project-id"
         />
         <DropdownSelect
@@ -47,15 +47,15 @@ const TimesheetRow = ({
           options={optionsProjectNames}
           selected={row.project_name}
           onChange={(value) => onChangeRowData(row.id, 'project_name', value)}
-          placeholder="Select..."
+          placeholder="Enter project name"
           className="select-project-name"
         />
         <input
           type="text"
           value={row.time}
           onChange={handleTimeChange}
-          placeholder=""
-          className="timesheet-row-input-time select-time shadow-none fs-5 text-gray-600 text fw-normal border-royal-blue border-4 border w-100 outline-focus-none"
+          placeholder="Enter time"
+          className="timesheet-row-input-time select-time shadow-none fs-5 text-gray-600 text fw-normal border-royal-blue border-4 border w-100 outline-focus-none text-center"
         />
       </div>
       <button

@@ -73,7 +73,7 @@ export const Calendar = ({
       <img src={calendar} alt="calendar"/>
       <div className="position-absolute top-0 w-82">
         {date.includes(' - ') ?
-          <div className='mt-3 d-flex flex-column'>
+          <div className='mt-3 d-flex flex-column fs-7'>
             {date.split(' - ')[0]}
             <img src={line} alt="line"/>
             {date.split(' - ')[1]}
@@ -106,7 +106,7 @@ export const BtnBack = ({addClass = '', hidden, onClick, disabled, text = 'Back'
 
 export const BtnAddNewRow = ({onClick}) =>
   <div className={"d-flex justify-content-center justify-content-sm-end mb-2 p-e-0 pe-sm-9"}>
-    <Button className={"btn-regular fs-5 fw-semibold border-0"} children={"+ New Entry"}
+    <Button className={"btn-regular fs-5 fw-semibold shadow-none"} children={"+ New Entry"}
             onClick={onClick}
     />
   </div>
