@@ -33,12 +33,13 @@ const TimesheetPage = ({
     setRows(rows.filter(row => row.id !== id))
   }
 
-  const handleChangeRowData = (id, field, value) => {
-    setRows(rows.map(row =>
-      row.id === id
-        ? {...row, [field]: value} : row
-    ))
-  }
+  const handleChangeRowData = (id, updates) => {
+  setRows(prevRows =>
+    prevRows.map(row =>
+      row.id === id ? { ...row, ...updates } : row
+    )
+  );
+  };
 
   const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
 

@@ -1,25 +1,53 @@
-import React from 'react';
-import deleteIcon from '../../../assets/images/timesheet-row-delete.svg';
-import DropdownSelect from './DropdownSelect';
-
+import React, { useState } from "react";
+import deleteIcon from "../../../assets/images/timesheet-row-delete.svg";
+import DropdownSelect from "./DropdownSelect";
+import { initOpt } from "../../mockProjects"
 // TODO - initOpt will be deleted after implementing data fetching from the backend.
-const initOpt = [
-  'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5',
-  'Option 6', 'Option 7', 'Option 8', 'Option 9', 'Option 10', 'Option 11'
-];
 
 const TimesheetRow = ({
   row,
   onDelete,
   onChangeRowData,
-  optionsCompanyNames = initOpt,
-  optionsProjectIds = initOpt,
-  optionsProjectNames = initOpt,
+  data = initOpt
 }) => {
+  const optionsCompanyNames = [...new Set(data.map(project => project.attributes.company))];
+
+  const projectsForSelectedCompany = row.company 
+    ? data.filter(project => project.attributes.company === row.company)
+    : data;
+    
+  const optionsProjectIds = projectsForSelectedCompany.map(project => project.attributes.code);
+  const optionsProjectNames = projectsForSelectedCompany.map(project => project.attributes.name);
+
+  const updateProjectByKey = (searchKey, value, fieldName) => {
+    const project = data.find(project => project.attributes[searchKey] === value);
+    if (project) {
+      onChangeRowData(row.id, {
+        project_id: project.attributes.code,
+        project_name: project.attributes.name
+      });
+    } else {
+      onChangeRowData(row.id, { [fieldName]: value });
+    }
+  };
+
+  const handleCompanyChange = (value) => {
+    onChangeRowData(row.id, {
+      company: value,
+      project_id: "",
+      project_name: ""
+    });
+  };
+  const handleProjectIdChange = (value) => {
+    updateProjectByKey("code", value, "project_id");
+  };
+  const handleProjectNameChange = (value) => {
+    updateProjectByKey("name", value, "project_name");
+  };
   const handleTimeChange = (event) => {
     const value = event.target.value;
     if (value === '' || (/^\d+$/.test(value) && parseInt(value, 10) > 0)) {
-      onChangeRowData(row.id, 'time', value);
+      onChangeRowData(row.id, { time: value });
     }
   };
 
@@ -30,7 +58,7 @@ const TimesheetRow = ({
           id={'company_name'}
           options={optionsCompanyNames}
           selected={row.company}
-          onChange={(value) => onChangeRowData(row.id, 'company', value)}
+          onChange={handleCompanyChange}
           placeholder="Enter company"
           className="select-company"
         />
@@ -38,7 +66,7 @@ const TimesheetRow = ({
           id={'project_id'}
           options={optionsProjectIds}
           selected={row.project_id}
-          onChange={(value) => onChangeRowData(row.id, 'project_id', value)}
+          onChange={handleProjectIdChange}
           placeholder="Enter project ID"
           className="select-project-id"
         />
@@ -46,7 +74,7 @@ const TimesheetRow = ({
           id={'project_name'}
           options={optionsProjectNames}
           selected={row.project_name}
-          onChange={(value) => onChangeRowData(row.id, 'project_name', value)}
+          onChange={handleProjectNameChange}
           placeholder="Enter project name"
           className="select-project-name"
         />
