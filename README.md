@@ -1,4 +1,4 @@
-## Welcome to the Vibe Report App
+## Welcome to the Vibe Report App 
 
 ### Badges 
 

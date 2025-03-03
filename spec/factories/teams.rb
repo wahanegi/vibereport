@@ -2,10 +2,11 @@
 #
 # Table name: teams
 #
-#  id         :bigint           not null, primary key
-#  name       :string(100)      not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :bigint           not null, primary key
+#  name              :string(100)      not null
+#  timesheet_enabled :boolean          default(FALSE), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 # Indexes
 #
@@ -14,5 +15,6 @@
 FactoryBot.define do
   factory :team do
     name { Faker::Name.unique.name }
+    timesheet_enabled { false }
   end
 end
