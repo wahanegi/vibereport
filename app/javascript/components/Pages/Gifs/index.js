@@ -69,7 +69,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
       .catch((error) => console.error('Error fetching image data:', error));
   }
 
-  const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className={`mt-1`}/>
+  const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className="mt-1"/>
 
   return  loaded && <Fragment>
     <GiphyLogo />

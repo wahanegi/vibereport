@@ -161,16 +161,12 @@ const IcebreakerAnswer = ({
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      {loaded && !isLoading && !error && (
+      {loaded && !isLoading && !error && (<>
         <div className="w-100 mx-1">
           <div className="mb-3 d-flex flex-column">
             <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
             <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>
-            <h2
-              className={`${'text-black mb-0 fs-5 fs-md-3'} ${
-                !user && 'd-none'
-              }`}
-            >
+            <h2 className={`text-black mb-0 fs-5 fs-md-3 ${!user && 'd-none'}`}>
               Brought to us by <span className="text-primary">@</span>
               {user}
             </h2>
@@ -202,13 +198,15 @@ const IcebreakerAnswer = ({
               </div>
             </div>
           </div>
+        </div>
+        <div className="w-100 mt-4 mx-1 align-self-end">
             <BlockLowerBtns
               isSubmit={true}
               handlingOnClickNext={handlingOnClickNext}
               stringBody={answerBody}
             />
         </div>
-      )}
+      </>)}
     </Layout>
   );
 };

@@ -56,8 +56,8 @@ const CausesToCelebrate = ({
                 steps={steps}
                 draft={isDraft}
                 handleSaveDraft={handleSaveDraft}>
-                <div className="w-100 mx-1">
-                    <h1 className="fs-xl-1 fs-lg-1 fs-md-1 fs-sm-2 fs-3 mt-2 mb-xxl-7 mb-xl-5 mb-md-4 mb-sm-3 mb-2">
+                <div className="w-100 mx-1 d-flex flex-column align-items-center">
+                    <h1 className="fs-xl-1 fs-sm-2 fs-3 mb-xxl-7 mb-md-5 mb-2">
                         Are there any recent <br/> causes to celebrate?
                     </h1>
                     <form className="mx-auto w-100 wrap-textarea-bad-follow">
@@ -67,15 +67,14 @@ const CausesToCelebrate = ({
                                     onChange={onCommentChange}
                                     maxLength={MAX_CHAR_LIMIT}/>
                     </form>
-                    <div className="mt-xxl-10 mt-xl-10 mt-md-6 mt-sm-3 mt-2 mx-2 max-width-bad-follow mx-md-auto">
-                        <BlockLowerBtns nextHandling={handlingOnClickNext}
-                                        skipHandling={onClickSkip}/>
-                    </div>
-
+                </div>
+                <div className="w-100 mt-xxl-10 mt-md-6 mt-4 align-self-end">
+                    <BlockLowerBtns nextHandling={handlingOnClickNext}
+                                    skipHandling={onClickSkip}/>
                 </div>
             </Layout>
         )
-     );
+    );
 };
 
 export default CausesToCelebrate;

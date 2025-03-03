@@ -11,7 +11,7 @@ const ToggleEmotionType = ({selectedType, handleEmotionType}) => {
            aria-label="Basic radio toggle button group">
         <input
           type="radio"
-          className={`btn-check toggle-negative-check negative`}
+          className="btn-check toggle-negative-check negative"
           id="negative"
           autoComplete="off"
           checked={selectedType === 'negative'}
@@ -27,7 +27,7 @@ const ToggleEmotionType = ({selectedType, handleEmotionType}) => {
 
         <input
           type="radio"
-          className={`btn-check toggle-positive-check positive`}
+          className="btn-check toggle-positive-check positive"
           id="positive"
           autoComplete="off"
           checked={selectedType === 'positive'}
