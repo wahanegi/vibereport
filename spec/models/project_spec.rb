@@ -18,7 +18,7 @@ require 'rails_helper'
 
 RSpec.describe Project, type: :model do
   let!(:project) { create :project }
-  let!(:project_with_entries) { create(:project) }
+  let!(:project_with_entries) { create :project }
   let!(:time_entry) { create(:time_sheet_entry, project: project_with_entries) }
 
   context 'factory' do
@@ -74,6 +74,10 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  context 'Associations' do
+    it { is_expected.to have_many(:time_sheet_entries).dependent(:destroy) }
+  end
+
   context 'Normalizes' do
     describe 'before save normalize code' do
       it 'converts the code to uppercase before saving' do
@@ -94,22 +98,56 @@ RSpec.describe Project, type: :model do
   end
 
   context 'Soft delete functionality' do
-    it 'soft deletes a project by setting deleted_at' do
-      expect { project.soft_delete! }.to change { project.reload.deleted_at }.from(nil)
+    describe '#soft_delete!' do
+      it 'soft deletes a project by setting deleted_at' do
+        expect { project.soft_delete! }.to change { project.reload.deleted_at }.from(nil)
+        expect(project.deleted_at).to be_a(Date)
+      end
     end
 
-    it 'permanently deletes a project with no time sheet entries' do
-      expect { project.destroy! }.to change(Project, :count).by(-1)
+    describe '#restore!' do
+      it 'restores a soft-deleted project by clearing deleted_at' do
+        project.soft_delete!
+        expect { project.restore! }.to change { project.reload.deleted_at }.to(nil)
+      end
     end
-  
-    it 'marks project as deleted instead of destroying if it has time sheet entries' do
-      expect { project_with_entries.destroy }.not_to change(Project, :count)
-      expect(project_with_entries.deleted_at).not_to be_nil
+
+    describe '#destroy' do
+      context 'with no time_sheet_entries' do
+        it 'performs a hard deletion and returns :hard_deleted' do
+          expect(project.destroy).to eq(:hard_deleted)
+          expect(Project.find_by(id: project.id)).to be_nil
+          expect(Project.count).to eq(1)
+        end
+      end
+
+      context 'with time_sheet_entries' do
+        it 'performs a soft deletion, leaves entries intact, and returns :soft_deleted' do
+          expect(project_with_entries.destroy).to eq(:soft_deleted)
+          expect(project_with_entries.reload.deleted_at).to be_present
+          expect(TimeSheetEntry.find_by(id: time_entry.id)).to be_present
+          expect(Project.count).to eq(2)
+        end
+      end
     end
-  
-    it 'restores a soft deleted project by clearing deleted_at' do
-      project.soft_delete!
-      expect { project.update!(deleted_at: nil) }.to change { project.reload.deleted_at }.to(nil)
+
+    describe '#destroy!' do
+      context 'with no time_sheet_entries' do
+        it 'performs a hard deletion without raising an error' do
+          expect { project.destroy! }.to change(Project, :count).by(-1)
+          expect(Project.find_by(id: project.id)).to be_nil
+        end
+      end
+
+      context 'with time_sheet_entries' do
+        it 'performs a soft deletion and leaves associated time_sheet_entries intact' do
+          expect { project_with_entries.destroy! }.not_to change(Project, :count)
+          expect { project_with_entries.destroy! }.not_to change(TimeSheetEntry, :count)
+
+          expect(project_with_entries.reload.deleted_at).to be_present
+          expect(TimeSheetEntry.find_by(id: time_entry.id)).to be_present
+        end
+      end
     end
   end
 end

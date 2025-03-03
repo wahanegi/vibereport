@@ -22,7 +22,7 @@ class Project < ApplicationRecord
   validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
-  has_many :time_sheet_entries
+  has_many :time_sheet_entries, dependent: :destroy
 
   # Override destroy
   def destroy
