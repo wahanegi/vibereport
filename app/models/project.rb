@@ -15,6 +15,8 @@
 #  index_projects_on_code  (code) UNIQUE
 #
 class Project < ApplicationRecord
+  include SoftDeletable
+
   normalizes :code, with: ->(code) { code.strip.upcase }
 
   validates :company, presence: true
@@ -23,18 +25,7 @@ class Project < ApplicationRecord
 
   has_many :time_sheet_entries
 
-  before_destroy :handle_soft_delete
-
-  scope :active, -> { where(deleted_at: nil) }
-  scope :deleted, -> { where.not(deleted_at: nil) }
-
-  def soft_delete!
-    update(deleted_at: Time.current)
-  end
-
-  def deleted?
-    deleted_at.present?
-  end
+  before_destroy :soft_delete_if_has_timesheets
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[id code company name deleted_at]
@@ -46,11 +37,10 @@ class Project < ApplicationRecord
 
   private
 
-  def handle_soft_delete
+  def soft_delete_if_has_timesheets
     return unless time_sheet_entries.any?
 
     soft_delete!
     throw :abort
   end
-
 end

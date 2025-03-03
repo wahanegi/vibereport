@@ -49,7 +49,7 @@ class Api::V1::ProjectsController < ApplicationController
       end
       projects_data.each do |project_data|
         project = Project.find_or_initialize_by(code: project_data['code'])
-        project.deleted_at = nil if project.deleted?
+        project.restore! if project.deleted?
         unless project.update(company: project_data['company'], name: project_data['name'])
           errors << "Please fill in all fields for project #{project_data['code']}: #{project.errors.full_messages.join(', ')}"
           raise ActiveRecord::Rollback

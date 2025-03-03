@@ -8,9 +8,9 @@ ActiveAdmin.register Project do
 
   scope :all
   scope :active, default: true
-  scope :deleted   
+  scope :deleted
 
-  index do  
+  index do
     selectable_column
     id_column
     column :company
@@ -18,7 +18,7 @@ ActiveAdmin.register Project do
     column :name
     column :deleted_at
     actions do |project|
-        link_to "Restore", restore_admin_project_path(project), method: :put, class: "member_link" if project.deleted?
+      link_to 'Restore', restore_admin_project_path(project), method: :put, class: 'member_link' if project.deleted?
     end
   end
 
@@ -31,8 +31,7 @@ ActiveAdmin.register Project do
       row :updated_at
       row :deleted_at
     end
-    div { link_to "Restore Project", restore_admin_project_path(project), method: :put, class: "button" } if project.deleted?
-
+    div { link_to 'Restore Project', restore_admin_project_path(project), method: :put, class: 'button' } if project.deleted?
   end
 
   form do |f|
@@ -50,10 +49,10 @@ ActiveAdmin.register Project do
 
       if project.time_sheet_entries.any?
         project.soft_delete!
-        redirect_to admin_projects_path, notice: "Project was soft deleted!"
+        redirect_to admin_projects_path, notice: 'Project was soft deleted!'
       else
         project.destroy!
-        redirect_to admin_projects_path, notice: "Project was permanently deleted!"
+        redirect_to admin_projects_path, notice: 'Project was permanently deleted!'
       end
     end
   end
@@ -61,12 +60,10 @@ ActiveAdmin.register Project do
   member_action :restore, method: :put do
     project = Project.find(params[:id])
     project.update!(deleted_at: nil)
-    redirect_to admin_projects_path, notice: "Project restored!"
+    redirect_to admin_projects_path, notice: 'Project restored!'
   end
 
   action_item :restore, only: :show do
-    if project.deleted?
-      link_to "Restore Project", restore_admin_project_path(project), method: :put
-    end
+    link_to 'Restore Project', restore_admin_project_path(project), method: :put if project.deleted?
   end
 end
