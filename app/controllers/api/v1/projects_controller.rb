@@ -41,11 +41,7 @@ class Api::V1::ProjectsController < ApplicationController
     errors = []
     ActiveRecord::Base.transaction do
       Project.where.not(code: incoming_codes).each do |project|
-        if project.time_sheet_entries.any?
-          project.soft_delete!
-        else
-          project.destroy!
-        end
+        project.destroy
       end
       projects_data.each do |project_data|
         project = Project.find_or_initialize_by(code: project_data['code'])

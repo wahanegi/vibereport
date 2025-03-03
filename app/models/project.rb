@@ -18,14 +18,22 @@ class Project < ApplicationRecord
   include SoftDeletable
 
   normalizes :code, with: ->(code) { code.strip.upcase }
-
   validates :company, presence: true
   validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
   has_many :time_sheet_entries
 
-  before_destroy :soft_delete_if_has_timesheets
+  # Override destroy
+  def destroy
+    if time_sheet_entries.any?
+      soft_delete!
+      :soft_deleted
+    else
+      super
+      :hard_deleted
+    end
+  end
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[id code company name deleted_at]
@@ -33,14 +41,5 @@ class Project < ApplicationRecord
 
   def self.ransackable_associations(_auth_object = nil)
     %w[time_sheet_entries]
-  end
-
-  private
-
-  def soft_delete_if_has_timesheets
-    return unless time_sheet_entries.any?
-
-    soft_delete!
-    throw :abort
   end
 end

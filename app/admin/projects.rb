@@ -46,12 +46,10 @@ ActiveAdmin.register Project do
   controller do
     def destroy
       project = Project.find(params[:id])
-
-      if project.time_sheet_entries.any?
-        project.soft_delete!
+      result = project.destroy
+      if result == :soft_deleted
         redirect_to admin_projects_path, notice: 'Project was soft deleted!'
       else
-        project.destroy!
         redirect_to admin_projects_path, notice: 'Project was permanently deleted!'
       end
     end
