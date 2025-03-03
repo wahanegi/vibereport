@@ -1,6 +1,6 @@
 <h3>Import CSV</h3>
 
-<%= form_tag import_csv_admin_teams_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag 'Import' %>
+<%= form_with url: import_csv_process_admin_teams_path do |f| %>
+  <%= f.file_field :file, accept: 'text/csv' %>
+  <%= f.submit 'Import' %>
 <% end %>
