@@ -161,7 +161,7 @@ const IcebreakerAnswer = ({
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      {loaded && !isLoading && !error && (
+      {loaded && !isLoading && !error && (<>
         <div className="container-fluid w-100 pt-1 pt-md-0">
           <div className=" d-flex flex-column mb-1">
             <h1 className="fs-md-1 text-black mb-1 my-sm-0 mb-sm-3">Kick back, relax. <br/>

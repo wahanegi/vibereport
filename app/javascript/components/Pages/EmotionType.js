@@ -101,8 +101,7 @@ const EmotionType = ({
         <div className="w-100 mt-4 mx-1 align-self-end">
             <BlockLowerBtns nextHandling={handlingOnClickNext}/>
         </div>
-      </Layout>
-    )
+      </Layout>)
   );
 };
 

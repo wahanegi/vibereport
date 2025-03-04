@@ -145,8 +145,7 @@ const ProductivityCheckLow = ({
               disabled={isBlank(productivity) || productivity === 0}
           />
         </div>
-      </Layout>
-    )
+      </Layout>)
   );
 };
 

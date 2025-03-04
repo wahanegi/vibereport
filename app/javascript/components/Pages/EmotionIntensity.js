@@ -89,13 +89,13 @@ const EmotionIntensity = ({
         <img
           src={gif_url}
           alt="Giphy image"
-          className={`small image-${category} align-top img-fluid`}
+          className={`small image-${category} align-top`}
         />
         <br/>
         <img
           src={PoweredBy}
           alt="PoweredBy"
-          className="small-image-powered-by align-top"
+          className={`small-image-powered-by align-top`}
         />
       </div>
       <div className="mb-2">
@@ -173,8 +173,8 @@ const EmotionIntensity = ({
     </div>
     <div className='w-100 mt-4 mx-1 align-self-end'>
       <BlockLowerBtns
-        nextHandling={handlingOnClickNext}
-        disabled={isBlank(rating)}
+          nextHandling={handlingOnClickNext}
+          disabled={isBlank(rating)}
       />
     </div>
   </Layout>));

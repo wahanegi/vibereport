@@ -71,8 +71,7 @@ const Gif = ({
       .catch((error) => console.error('Error fetching image data:', error));
   }
 
-  const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className="mt-1 big image-powered-by"/>
-
+  const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className={`mt-1 big image-powered-by`}/>
 
   return loaded && <Fragment>
     <GiphyLogo/>

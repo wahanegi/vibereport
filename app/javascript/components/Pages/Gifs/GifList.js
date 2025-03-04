@@ -19,7 +19,7 @@ const GifList = ({ gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifInde
     {
       isCustomGif ?
         <div className='gif'>
-          <img src={gifUrl.src} alt='Giphy image' className="big" />
+          <img src={gifUrl.src} alt='Giphy image' className={`big`} />
         </div>:
         <div className="gif-list">{gifItems}</div>
     }
