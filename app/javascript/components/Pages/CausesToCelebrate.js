@@ -1,51 +1,51 @@
 import React, {useEffect, useState} from 'react';
-import BlockLowerBtns from '../UI/BlockLowerBtns';
-import Layout from '../Layout';
 import {MAX_CHAR_LIMIT} from '../helpers/consts';
+import Layout from '../Layout';
+import BlockLowerBtns from '../UI/BlockLowerBtns';
 
 const CausesToCelebrate = ({
-                               data,
-                               setData,
-                               saveDataToDb,
-                               steps,
-                               service,
-                               draft,
+                             data,
+                             setData,
+                             saveDataToDb,
+                             steps,
+                             service,
+                             draft,
                            }) => {
-    const {response} = data;
-    const {isLoading, error} = service;
-    const {celebrate_comment} = response.attributes;
-    const [celebrateComment, setCelebrateComment] = useState(
-        celebrate_comment || ''
-    );
-    const [isDraft, setIsDraft] = useState(draft);
+  const {response} = data;
+  const {isLoading, error} = service;
+  const {celebrate_comment} = response.attributes;
+  const [celebrateComment, setCelebrateComment] = useState(
+    celebrate_comment || ''
+  );
+  const [isDraft, setIsDraft] = useState(draft);
 
-    const handleSaveDraft = () => {
-        const dataDraft = {celebrate_comment: celebrateComment, draft: true};
-        saveDataToDb(steps, dataDraft);
-        setIsDraft(true);
-    };
+  const handleSaveDraft = () => {
+    const dataDraft = {celebrate_comment: celebrateComment, draft: true};
+    saveDataToDb(steps, dataDraft);
+    setIsDraft(true);
+  };
 
-    const onClickSkip = () => {
-        steps.push('recognition');
-        saveDataToDb(steps, {celebrate_comment: null});
-    };
+  const onClickSkip = () => {
+    steps.push('recognition');
+    saveDataToDb(steps, {celebrate_comment: null});
+  };
 
-    const onCommentChange = (e) => {
-        setCelebrateComment(e.target.value);
-    };
+  const onCommentChange = (e) => {
+    setCelebrateComment(e.target.value);
+  };
 
-    useEffect(() => {
-        if (celebrate_comment !== celebrateComment && isDraft) {
-            setIsDraft(false);
-        }
-    }, [celebrateComment]);
+  useEffect(() => {
+    if (celebrate_comment !== celebrateComment && isDraft) {
+      setIsDraft(false);
+    }
+  }, [celebrateComment]);
 
-    const handlingOnClickNext = () => {
-        steps.push('recognition');
-        saveDataToDb(steps, {celebrate_comment: celebrateComment, draft: false});
-    };
+  const handlingOnClickNext = () => {
+    steps.push('recognition');
+    saveDataToDb(steps, {celebrate_comment: celebrateComment, draft: false});
+  };
 
-    if (!!error) return <p>{error.message}</p>;
+  if (!!error) return <p>{error.message}</p>;
 
     return (
         !isLoading && (

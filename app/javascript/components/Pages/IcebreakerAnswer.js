@@ -161,31 +161,34 @@ const IcebreakerAnswer = ({
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      {loaded && !isLoading && !error && (<>
-        <div className="w-100 mx-1">
-          <div className="mb-3 d-flex flex-column">
-            <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
-            <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>
-            <h2 className={`text-black mb-0 fs-5 fs-md-3 ${!user && 'd-none'}`}>
-              Brought to us by <span className="text-primary">@</span>
+      {loaded && !isLoading && !error && (
+        <div className="container-fluid w-100 pt-1 pt-md-0">
+          <div className=" d-flex flex-column mb-1">
+            <h1 className="fs-md-1 text-black mb-1 my-sm-0 mb-sm-3">Kick back, relax. <br/>
+              Time for a team question!</h1>
+            <h2
+              className={`${'text-black mb-0'} ${
+                !user && 'text-opacity-0 '
+              }`}
+            >
+              Brought to us by <span className="text-primary text-opacity-0">@</span>
               {user}
             </h2>
           </div>
           <div className="mb-5">
             <div
-              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
+              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
               {user && (
-                <p className="fs-5 text-gray-600">
-                  <span className="text-primary">@</span>
+                <p className="fs-8 fs-md-7 text-gray-600">
+                  <span className="fs-8 fs-md-7 text-primary">@</span>
                   {user} asks:
                 </p>
               )}
-              <div id="question" className='fs-5 fs-md-4 text-start mb-1'>{question_body}</div>
+              <div id="question" className='text-start fs-7 fs-md-6'>{question_body}</div>
               <div className="w-100">
-                <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
-                  <form>
+                <div className="icebreaker border border-3 rounded rounded-4 border-emerald">
                     <textarea
-                      className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none fs-5 fs-md-4"
+                      className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none"
                       name="answer_body"
                       style={{height: computedHeight - SUM_EDGE_DOWN_UP}}
                       placeholder="Tell us what you think!"
@@ -193,7 +196,6 @@ const IcebreakerAnswer = ({
                       onChange={onChangAnswer}
                       maxLength={MAX_CHAR_LIMIT}
                     />
-                  </form>
                 </div>
               </div>
             </div>

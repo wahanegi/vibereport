@@ -1,19 +1,35 @@
 @import 'colors';
 @import 'design_system_vibereport';
 
-.wrap-textarea {
-  &:focus {
-    outline: none;
-  }
-}
+.icebreaker {
+  textarea {
+    line-height: 1.5;
+    background-color: #fff;
 
-.costume-focus {
+    &::placeholder {
+      color: #0009 !important;
+      font-size: 1.5rem;
+      font-style: normal;
+      line-height: 1.5;
+      text-align: initial;
+
+      @media (max-width: 768px) {
+        font-size: 1.25rem;
+        line-height: 1.5;
+        }
+      }
+    }
+
   &:focus-within {
     border: 6px solid $emerald !important;
     padding: calc(1rem - 3px) !important;
+    }
   }
-}
 
-.max-width-icebreaker {
+.icebreaker-max-width {
   max-width: 800px;
-}
+  }
+
+.text-opacity-0 {
+  opacity: 0;
+  }

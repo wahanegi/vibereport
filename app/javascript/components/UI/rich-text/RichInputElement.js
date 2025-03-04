@@ -1,22 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Cursor from '../rich-text/cursor';
-import DropDownList from './DropDownList';
-import { userFullName } from '../../helpers/library';
-import RichText from './rich-text';
+import React, {useEffect, useRef, useState} from 'react';
+import {userFullName} from '../../helpers/library';
 import Button from '../Button';
-import RichTextArea from './RichTextArea';
+import Cursor from '../rich-text/cursor';
 import SwitcherShoutouts from '../SwitcherShoutouts';
+import DropDownList from './DropDownList';
+import RichText from './rich-text';
+import RichTextArea from './RichTextArea';
 
 const RichInputElement = ({
-  richText = '',
-  listUsers: listAllUsers,
-  setChosenUsers = () => {},
-  onSubmit,
-  classAt = 'color-primary',
-  editObj,
-}) => {
+                            richText = '',
+                            listUsers: listAllUsers,
+                            setChosenUsers = () => {
+                            },
+                            onSubmit,
+                            classAt = 'color-primary',
+                            editObj,
+                          }) => {
   const calculateInitX = (window.innerWidth - 884) / 2 + 69;
-  const initCoordinates = { x: calculateInitX, y: 373 };
+  const initCoordinates = {x: calculateInitX, y: 373};
   const [textHTML, setTextHTML] = useState(richText);
   const textAreaRef = useRef(richText);
   const [filteredUsers, setFilteredUsers] = useState(
@@ -144,7 +145,7 @@ const RichInputElement = ({
             cursorPos.focusOffset - 1 !== searchString.length ||
             RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
               .length !==
-              cursorPos.focusOffset - 1
+            cursorPos.focusOffset - 1
           )
             return 0;
           const newSearchString = (searchString + char).toLowerCase();
@@ -463,11 +464,11 @@ const RichInputElement = ({
               const userFromNode = cursorPos.isSPAN
                 ? node
                 : RichText.findUsersInText(
-                    TAG_AT,
-                    END_TAG_AT,
-                    RichText.decodeSpace(node),
-                    listAllUsers
-                  );
+                  TAG_AT,
+                  END_TAG_AT,
+                  RichText.decodeSpace(node),
+                  listAllUsers
+                );
               if (userFromNode?.length) {
                 const filtratedUsersByName = RichText.filtrationByName(
                   userFullName(userFromNode[0]),
@@ -548,7 +549,7 @@ const RichInputElement = ({
     );
     const hadSelectedUsers = [
       ...chosenUsersWithoutNemo,
-      { ...filteredUsers[i] },
+      {...filteredUsers[i]},
     ];
     setCopyChosenUsers(hadSelectedUsers);
     setChosenUsers(hadSelectedUsers);
@@ -644,7 +645,8 @@ const RichInputElement = ({
     if (inputValue) {
       navigator.clipboard
         .writeText(inputValue)
-        .then(() => {})
+        .then(() => {
+        })
         .catch((err) => {
           console.log('Something went wrong', err);
         });
@@ -697,7 +699,7 @@ const RichInputElement = ({
             handleCheckboxChange={handleCheckboxChange}
           />
           <Button
-            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-md-3 fs-4 p-0 ${
+            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${
               isDisabled ? 'disabled' : ''
             }`}
             onClick={submitHandling}
