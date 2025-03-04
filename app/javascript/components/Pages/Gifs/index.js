@@ -1,8 +1,8 @@
-import React, {useEffect, useState, Fragment} from "react"
-import SearchBar from "./SearchBar";
-import {GIPHY_URL} from "../../helpers/consts";
-import SearchResults from "./SearchResults";
+import React, {Fragment, useEffect, useState} from "react"
 import PoweredBy from '../../../../assets/images/PoweredBy.svg';
+import {GIPHY_URL} from "../../helpers/consts";
+import SearchBar from "./SearchBar";
+import SearchResults from "./SearchResults";
 
 function extractGiphyId(url) {
   // Regular expression pattern to match the ID between slashes
@@ -19,8 +19,10 @@ function extractGiphyId(url) {
   }
 }
 
-const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex,
-               isCustomGif, setIsCustomGif, uploading, uploadingError }) => {
+const Gif = ({
+               emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex,
+               isCustomGif, setIsCustomGif, uploading, uploadingError
+             }) => {
   const [term, setTerm] = useState(emotion.word)
   const {category, word} = emotion
   const [gifs, setGifs] = useState([])
@@ -37,7 +39,7 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
     }
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     const url = `${GIPHY_URL}search?q=${term?.replace(/\s/g, '+')}&api_key=${apiGiphyKey}`;
     const isGiphyLink = /https:\/\/media\.giphy\.com\/media\/\w+\/giphy\.gif/.test(String(term));
     if (isGiphyLink) {
@@ -71,13 +73,15 @@ const Gif = ({ emotion, api_giphy_key, gifUrl, setGifUrl, selectedGifIndex, setS
 
   const GiphyLogo = () => <img src={PoweredBy} alt='PoweredBy' className={`mt-1 big image-powered-by`}/>
 
-  return  loaded && <Fragment>
-    <GiphyLogo />
-    <div className='gif-card' >
-      <div className='gif-card card' onKeyDown={handleKeyDown}>
-        <SearchBar term={term} setTerm={setTerm} category={category} word={word} />
-        <SearchResults {...{gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category,
-                            isCustomGif, apiGiphyKey, uploading, uploadingError}} />
+  return loaded && <Fragment>
+    <GiphyLogo/>
+    <div className='gif-card rounded-4'>
+      <div className='gif-card card pb-1 rounded-4' onKeyDown={handleKeyDown}>
+        <SearchBar term={term} setTerm={setTerm} category={category} word={word}/>
+        <SearchResults {...{
+          gifs, gifUrl, setGifUrl, selectedGifIndex, setSelectedGifIndex, category,
+          isCustomGif, apiGiphyKey, uploading, uploadingError
+        }} />
       </div>
     </div>
   </Fragment>
