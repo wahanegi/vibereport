@@ -1,50 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import deleteIcon from "../../../assets/images/timesheet-row-delete.svg";
 import DropdownSelect from "./DropdownSelect";
-import { initOpt } from "../../mockProjects"
-// TODO - initOpt will be deleted after implementing data fetching from the backend.
 
 const TimesheetRow = ({
   row,
   onDelete,
   onChangeRowData,
-  data = initOpt
+  projects
 }) => {
-  const filteredData = (() => {
-    if (row.company && row.project_name) {
-      // Якщо обрано і компанію, і назву проекту, фільтруємо за обома
-      return data.filter(
-        project =>
-          project.attributes.company === row.company &&
-          project.attributes.name === row.project_name
-      );
-    } else if (row.company) {
-      // Якщо обрана лише компанія
-      return data.filter(
-        project => project.attributes.company === row.company
-      );
-    } else if (row.project_name) {
-      // Якщо обрана лише назва проекту
-      return data.filter(
-        project => project.attributes.name === row.project_name
-      );
-    } else {
-      // Якщо нічого не вибрано
-      return data;
-    }
-  })();
-
-  // const optionsCompanyNames = [...new Set(data.map(project => project.attributes.company))];
-  // const projectsForSelectedCompany = row.company 
-  //   ? data.filter(project => project.attributes.company === row.company)
-  //   : data;
-    
+  const filteredData = projects.filter(project =>
+    (!row.company || project.attributes.company === row.company) &&
+    (!row.project_name || project.attributes.name === row.project_name)
+  );
   const optionsCompanyNames = [...new Set(filteredData.map(project => project.attributes.company))];
-  const optionsProjectIds = [...new Set(filteredData.map(project => project.attributes.code))];
+  const optionsProjectIds = filteredData.map(project => project.attributes.code);
   const optionsProjectNames = [...new Set(filteredData.map(project => project.attributes.name))];
 
   const updateProjectByKey = (searchKey, value, fieldName) => {
-    const project = data.find(project => project.attributes[searchKey] === value);
+    const project = projects.find(project => project.attributes[searchKey] === value);
     if (project) {
       onChangeRowData(row.id, {
         company: project.attributes.company,
@@ -60,7 +33,6 @@ const TimesheetRow = ({
     onChangeRowData(row.id, {
       company: value,
       project_id: "",
-      // project_name: ""
     });
   };
   const handleProjectIdChange = (value) => {
