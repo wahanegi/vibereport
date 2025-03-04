@@ -22,29 +22,25 @@ ActiveAdmin.register Team do
     link_to 'Import CSV', import_csv_admin_teams_path
   end
 
-  collection_action :import_csv, method: %i[get post] do
-    if request.post?
-      file = params[:file].tempfile
-      options = { header_transformations: [:downcase], col_sep: ',', row_sep: :auto }
-      csv_data = SmarterCSV.process(file, options)
+  collection_action :import_csv_process, method: %i[post] do
+    file_param = params[:file]
 
-      csv_data.each do |row|
-        team = Team.find_or_create_by(name: row[:name])
+    if file_param.nil?
+      return redirect_to import_csv_admin_teams_path,
+                         alert: 'Please click "Choose File" and then select a CSV file to upload'
+    end
 
-        user_emails = row[:user_emails]&.split(',') || []
+    is_imported = Importers::TeamCsvImporter.new(file_param).call
 
-        UserTeam.where(team_id: team.id).destroy_all
-
-        user_emails.each do |email|
-          user = User.find_by(email: email.strip.downcase)
-          UserTeam.create(user_id: user.id, team_id: team.id) if user
-        end
-      end
-
+    if is_imported
       redirect_to admin_teams_path, notice: 'CSV imported successfully!'
     else
-      render 'admin/teams/import'
+      redirect_to import_csv_admin_teams_path, alert: 'Error importing CSV file'
     end
+  end
+
+  collection_action :import_csv do
+    render 'admin/teams/import'
   end
 
   action_item :export_csv, only: :index do
@@ -114,8 +110,8 @@ ActiveAdmin.register Team do
 
       if time_period
         previous_time_periods = TimePeriod.with_responses_by_team(team)
-                                          .where('end_date < ?', time_period.start_date)
-                                          .where('responses.not_working = ?', false)
+                                          .where(end_date: ...time_period.start_date)
+                                          .where(responses: { not_working: false })
                                           .order(end_date: :desc)
       end
 
@@ -209,7 +205,7 @@ ActiveAdmin.register Team do
 
                   if celebrate_verbatims.size > VISIBLE_BUBBLES
                     button 'More', class: 'margin-top-1',
-                                   onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
+                           onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div celebrate_verbatims
@@ -231,7 +227,7 @@ ActiveAdmin.register Team do
 
                   if verbatim_list.size > VISIBLE_BUBBLES
                     button 'More', class: 'margin-top-1',
-                                   onclick: "showMore(event, \"teammate-engagement-list\", #{VISIBLE_BUBBLES});"
+                           onclick: "showMore(event, \"teammate-engagement-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div verbatim_list
