@@ -59,7 +59,7 @@ export const initOpt = [
     attributes: {
       company: "Initech",
       code: "01-2024-INT",
-      name: "System Optimization - Project Delta"
+      name: "System Optimization"
     }
   },
   {
@@ -76,8 +76,26 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Initech",
-      code: "01-2024-INT",
+      code: "03-2024-INT",
       name: "Cloud Integration Service - Project Epsilon"
     }
-  }
+  },
+  {
+    id: "10",
+    type: "project",
+    attributes: {
+      company: "Initech",
+      code: "04-2024-INT",
+      name: "System Optimization"
+    }
+  },
+  {
+    id: "11",
+    type: "project",
+    attributes: {
+      company: "Acme Corp",
+      code: "04-2024-ACM",
+      name: "System Optimization"
+    }
+  },
 ];
