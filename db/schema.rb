@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_14_101305) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_14_101806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,6 +88,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101305) do
     t.string "code"
     t.string "company"
     t.datetime "created_at", null: false
+    t.date "deleted_at"
     t.string "name"
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_projects_on_code", unique: true
@@ -147,6 +148,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101305) do
   create_table "teams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", limit: 100, null: false
+    t.boolean "timesheet_enabled", default: false, null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_teams_on_name", unique: true
   end
@@ -159,6 +161,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101305) do
     t.date "start_date"
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_time_periods_on_slug", unique: true
+  end
+
+  create_table "time_sheet_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "project_id", null: false
+    t.bigint "time_period_id", null: false
+    t.integer "total_hours", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["project_id"], name: "index_time_sheet_entries_on_project_id"
+    t.index ["time_period_id"], name: "index_time_sheet_entries_on_time_period_id"
+    t.index ["user_id"], name: "index_time_sheet_entries_on_user_id"
   end
 
   create_table "user_teams", force: :cascade do |t|
@@ -204,6 +218,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_14_101305) do
   add_foreign_key "shoutout_recipients", "users"
   add_foreign_key "shoutouts", "time_periods"
   add_foreign_key "shoutouts", "users"
+  add_foreign_key "time_sheet_entries", "projects"
+  add_foreign_key "time_sheet_entries", "time_periods"
+  add_foreign_key "time_sheet_entries", "users"
   add_foreign_key "user_teams", "teams"
   add_foreign_key "user_teams", "users"
 end
