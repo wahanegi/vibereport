@@ -81,7 +81,7 @@ const EmotionEntry = ({
             </div>
             <div className="col-12 col-lg-6 col-md-8 mx-auto">
               <Form.Control 
-                className={`${emotionClasses[selectedType]} input-new-word fs-4 fs-md-3 rounded-4 mb-5 mb-md-8 fw-bold border-royal-blue`}
+                className={`${emotionClasses[selectedType]} input-new-word fs-xxl-2 fs-md-4 fs-sm-5 fs-5 rounded-4 mb-5 mb-md-8 fw-bold border-royal-blue`}
                 type="text"
                 maxLength={15}
                 autoComplete="off"

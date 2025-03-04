@@ -6,7 +6,7 @@ const ToggleEmotionType = ({selectedType, handleEmotionType}) => {
 
   return (
     <div>
-     <h2 className={"fs-md-4 text-black"}>Is this feeling positive or negative?</h2>
+     <h2 className="fs-xxl-5 fs-md-6 fs-6 mb-1">Is this feeling positive or negative?</h2>
       <div className="btn-group wrap-toggle position-relative w-100" role="group"
            aria-label="Basic radio toggle button group">
         <input
