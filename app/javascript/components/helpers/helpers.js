@@ -148,7 +148,7 @@ export function getProductiveText(value) {
 export const validateRow = (row) => {
     return (
       row.company?.trim() &&
-      row.project_id?.trim() &&
+      row.project_code?.trim() &&
       row.project_name?.trim() &&
       row.time &&
       !isNaN(row.time) &&

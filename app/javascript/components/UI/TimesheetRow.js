@@ -2,19 +2,14 @@ import React from 'react';
 import deleteIcon from '../../../assets/images/timesheet-row-delete.svg';
 import DropdownSelect from './DropdownSelect';
 
-// TODO - initOpt will be deleted after implementing data fetching from the backend.
-const initOpt = [
-  'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5',
-  'Option 6', 'Option 7', 'Option 8', 'Option 9', 'Option 10', 'Option 11'
-];
 
 const TimesheetRow = ({
   row,
   onDelete,
   onChangeRowData,
-  optionsCompanyNames = initOpt,
-  optionsProjectIds = initOpt,
-  optionsProjectNames = initOpt,
+  optionsCompanyNames,
+  optionsProjectCodes,
+  optionsProjectNames,
 }) => {
   const handleTimeChange = (event) => {
     const value = event.target.value;
@@ -35,10 +30,10 @@ const TimesheetRow = ({
           className="select-company"
         />
         <DropdownSelect
-          id={'project_id'}
-          options={optionsProjectIds}
-          selected={row.project_id}
-          onChange={(value) => onChangeRowData(row.id, 'project_id', value)}
+          id={'project_code'}
+          options={optionsProjectCodes}
+          selected={row.project_code}
+          onChange={(value) => onChangeRowData(row.id, 'project_code', value)}
           placeholder="Enter project ID"
           className="select-project-id"
         />
