@@ -30,7 +30,7 @@ ActiveAdmin.register Team do
                          alert: 'Please click "Choose File" and then select a CSV file to upload'
     end
 
-    is_imported = Importers::TeamCsvImporter.new(file_param.tempfile).call
+    is_imported = Importers::TeamCsvImporter.new(file_param).call
 
     if is_imported
       redirect_to admin_teams_path, notice: 'CSV imported successfully!'

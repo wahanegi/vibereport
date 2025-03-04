@@ -1,13 +1,15 @@
 class Importers::TeamCsvImporter
   DEFAULT_OPTIONS = { header_transformations: [:downcase], col_sep: ',', row_sep: :auto }.freeze
+  MIME_TYPE_CSV = 'text/csv'
 
-  def initialize(file, options = {})
-    @file = file
+  def initialize(file_param, options = {})
+    @mime_type = file_param&.content_type
+    @file = file_param&.tempfile
     @options = DEFAULT_OPTIONS.merge(options)
   end
 
   def call
-    return false unless @file
+    return false if missing_or_invalid_type?
 
     begin
       csv_data = SmarterCSV.process(@file, @options)
@@ -40,5 +42,9 @@ class Importers::TeamCsvImporter
 
   def generate_user_teams(team_id, user_ids)
     user_ids.map { |user_id| { team_id:, user_id: } }
+  end
+
+  def missing_or_invalid_type?
+    @file.nil? || @mime_type != MIME_TYPE_CSV
   end
 end
