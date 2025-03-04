@@ -11,7 +11,6 @@ const TimesheetRow = ({
   data = initOpt
 }) => {
   const optionsCompanyNames = [...new Set(data.map(project => project.attributes.company))];
-
   const projectsForSelectedCompany = row.company 
     ? data.filter(project => project.attributes.company === row.company)
     : data;
@@ -23,6 +22,7 @@ const TimesheetRow = ({
     const project = data.find(project => project.attributes[searchKey] === value);
     if (project) {
       onChangeRowData(row.id, {
+        company: project.attributes.company,
         project_id: project.attributes.code,
         project_name: project.attributes.name
       });

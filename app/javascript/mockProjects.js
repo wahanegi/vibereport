@@ -4,7 +4,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Acme Corp",
-      code: "2024-ACM-01",
+      code: "01-2024-ACM",
       name: "Innovative Forecasting - Project Orion"
     }
   },
@@ -13,7 +13,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Acme Corp",
-      code: "2024-ACM-02",
+      code: "02-2024-ACM",
       name: "Marketing Insight Platform - Project Nebula"
     }
   },
@@ -22,7 +22,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Acme Corp",
-      code: "2024-ACM-03",
+      code: "03-2024-ACM",
       name: "Data Analysis System - Project Aurora"
     }
   },
@@ -31,7 +31,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Globex Inc",
-      code: "2024-GLB-01",
+      code: "01-2024-GLB",
       name: "Creative Solutions Initiative - Project Titan"
     }
   },
@@ -40,7 +40,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Globex Inc",
-      code: "2024-GLB-02",
+      code: "02-2024-GLB",
       name: "Enterprise Strategy Development - Project Phoenix"
     }
   },
@@ -49,7 +49,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Globex Inc",
-      code: "2024-GLB-03",
+      code: "03-2024-GLB",
       name: "Advanced Analytics Suite - Project Vega"
     }
   },
@@ -58,7 +58,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Initech",
-      code: "2024-INT-01",
+      code: "01-2024-INT",
       name: "System Optimization - Project Delta"
     }
   },
@@ -67,7 +67,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Initech",
-      code: "2024-INT-02",
+      code: "02-2024-INT",
       name: "Workflow Automation - Project Sigma"
     }
   },
@@ -76,7 +76,7 @@ export const initOpt = [
     type: "project",
     attributes: {
       company: "Initech",
-      code: "2024-INT-03",
+      code: "01-2024-INT",
       name: "Cloud Integration Service - Project Epsilon"
     }
   }
