@@ -32,7 +32,6 @@ const TimesheetRow = ({
   const handleCompanyChange = (value) => {
     onChangeRowData(row.id, {
       company: value,
-      project_id: "",
     });
   };
   const handleProjectIdChange = (value) => {

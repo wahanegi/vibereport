@@ -638,7 +638,7 @@
 
 .btn-group.wrap-toggle {
   height: 130px;
-  width: 370px;
+  max-width: 370px;
   background-color: $color-grey;
   border-radius: 100px;
   box-shadow: 0 4px 4px 0 $gray-250;
@@ -651,6 +651,10 @@
   background-color: transparent;
   border-radius: 100px !important;
   }
+
+label.btn {
+  color: $black;
+}
 
 .btn-check.toggle-negative-check + .toggle-negative:hover {
   color: $bright-orange;

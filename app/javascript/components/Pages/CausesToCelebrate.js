@@ -68,7 +68,7 @@ const CausesToCelebrate = ({
                                     maxLength={MAX_CHAR_LIMIT}/>
                     </form>
                 </div>
-                <div className="w-100 mt-xxl-10 mt-md-6 mt-4 align-self-end">
+                <div className="w-100 mt-xxl-10 mt-md-6 mt-4 mx-1 align-self-end">
                     <BlockLowerBtns nextHandling={handlingOnClickNext}
                                     skipHandling={onClickSkip}/>
                 </div>

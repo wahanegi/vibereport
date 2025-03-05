@@ -91,11 +91,11 @@ $dark: $gray-500;
   background-color: $light-grey;
   }
 
-.bg-green-200 {
+.bg-green-200, .bg-green-200-focus:focus {
   background-color: $green-200;
   }
 
-.bg-apricot {
+.bg-apricot, .bg-apricot-focus:focus {
   background-color: $apricot;
   }
 
