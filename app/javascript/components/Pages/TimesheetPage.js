@@ -21,7 +21,7 @@ const TimesheetPage = ({
     {
       id: Date.now(),
       company: '',
-      project_code: '',
+      project_id: '',
       project_name: '',
       time: '',
     },
@@ -60,7 +60,7 @@ const TimesheetPage = ({
       {
         id: Date.now(),
         company: '',
-        project_code: '',
+        project_id: '',
         project_name: '',
         time: '',
       },
@@ -71,25 +71,16 @@ const TimesheetPage = ({
     setRows(rows.filter((row) => row.id !== id));
   };
 
-  const handleChangeRowData = (id, field, value) => {
-    setRows(
-      rows.map((row) => (row.id === id ? { ...row, [field]: value } : row))
-    );
+  const handleChangeRowData = (id, updates) => {
+  setRows(prevRows =>
+    prevRows.map(row =>
+      row.id === id ? { ...row, ...updates } : row
+    )
+  );
   };
 
   const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
-  const canSubmit = !isLoading && (fetchError || projects.length === 0 || isValid);
-
-  const optionsCompanyNames = projects?.map(
-    (project) => project.attributes.company
-  );
-  const optionsProjectCodes = projects?.map(
-    (project) => project.attributes.code
-  );
-  const optionsProjectNames = projects?.map(
-    (project) => project.attributes.name
-  );
-
+  const canSubmit = !isLoading && (fetchError || projects.length === 0 || isValid); 
   return (
     <Layout
       data={data}
@@ -125,9 +116,7 @@ const TimesheetPage = ({
                     row={row}
                     onChangeRowData={handleChangeRowData}
                     onDelete={handleOnDelete}
-                    optionsCompanyNames={optionsCompanyNames}
-                    optionsProjectCodes={optionsProjectCodes}
-                    optionsProjectNames={optionsProjectNames}
+                    projects={projects}
                   />
                 ))}
               </div>
