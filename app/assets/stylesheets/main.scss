@@ -652,6 +652,10 @@
   border-radius: 100px !important;
   }
 
+label.btn {
+  color: $black;
+}
+
 .btn-check.toggle-negative-check + .toggle-negative:hover {
   color: $bright-orange;
   background-color: transparent;
