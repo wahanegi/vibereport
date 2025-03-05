@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { rangeFormat, validateRow } from '../helpers/helpers';
+import React, {useEffect, useState} from 'react';
+import {rangeFormat, validateRow} from '../helpers/helpers';
 import Layout from '../Layout';
+import {apiRequest} from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
+import {BtnAddNewRow, Calendar} from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import TimesheetRowHeader from '../UI/TimesheetRowHeader';
-import { apiRequest } from '../requests/axios_requests';
 
 const TimesheetPage = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
+                         data,
+                         setData,
+                         saveDataToDb,
+                         steps,
+                         service,
+                         draft,
+                       }) => {
   const timesheet_date = rangeFormat(data.time_period || {});
-  const { isLoading, setIsLoading } = service;
+  const {isLoading, setIsLoading} = service;
   const [rows, setRows] = useState([
     {
       id: Date.now(),
@@ -40,7 +40,8 @@ const TimesheetPage = ({
         setIsLoading(false);
         setFetchError(null);
       },
-      () => {},
+      () => {
+      },
       projectsURL,
       (error) => {
         setFetchError(error.message);
@@ -51,7 +52,7 @@ const TimesheetPage = ({
 
   const handlingOnClickNext = () => {
     steps.push('causes-to-celebrate');
-    saveDataToDb(steps, { timesheet: null });
+    saveDataToDb(steps, {timesheet: null});
   };
 
   const handleAddRow = () => {
@@ -72,15 +73,19 @@ const TimesheetPage = ({
   };
 
   const handleChangeRowData = (id, updates) => {
-  setRows(prevRows =>
-    prevRows.map(row =>
-      row.id === id ? { ...row, ...updates } : row
-    )
-  );
+    setRows(prevRows =>
+      prevRows.map(row =>
+        row.id === id ? {...row, ...updates} : row
+      )
+    );
   };
 
   const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
-  const canSubmit = !isLoading && (fetchError || projects.length === 0 || isValid); 
+  const canSubmit = !isLoading && (fetchError || projects.length === 0 || isValid);
+  const isProjectsLoaded = !isLoading && !fetchError;
+  const isProjectsEmpty = isProjectsLoaded && projects.length === 0;
+  const isProjectsAvailable = isProjectsLoaded && projects.length > 0;
+
   return (
     <Layout
       data={data}
@@ -89,27 +94,32 @@ const TimesheetPage = ({
       steps={steps}
       draft={draft}
     >
-      <div className="container-fluid">
-        <div className="row flex-column justify-content-center">
-          <div className="col-12 text-center mx-auto">
+      <div className="container-fluid mb-1 mb-md-0">
+        <div className="row flex-column justify-content-center align-items-center">
+          <div className="col-12 text-center ">
             <h1 className="my-1 my-md-0">Your Timesheet</h1>
           </div>
-          {isLoading ? (
-            <div className="text-center my-3">Loading projects...</div>
-          ) : fetchError ? (
-            <p className="text-danger text-center my-3">
-              Error fetching projects: {fetchError}
-            </p>
-          ) : projects.length === 0 ? (
+
+          {isLoading && <div className="text-center my-3">Loading projects...</div>}
+
+          {fetchError && (
+            <p className="text-danger text-center my-3">Error fetching projects: {fetchError}</p>
+          )}
+
+          {isProjectsEmpty && (
             <p className="text-warning text-center my-3">No projects available.</p>
-          ) : (
-            <div className="timesheet-form-container row justify-content-center mx-auto">
-              <div className="d-flex flex-row justify-content-center justify-content-sm-start align-items-center mb-2">
-                <p className="m-0 me-1">Week of: </p>
-                <Calendar date={timesheet_date} />
+          )}
+
+          {isProjectsAvailable && (
+            <div className="timesheet-form-container px-4">
+              <div className={"d-flex justify-content-center justify-content-sm-start"}>
+                <div className="d-flex flex-column align-items-center mb-1">
+                  <p>Week of:</p>
+                  <Calendar date={timesheet_date}/>
+                </div>
               </div>
-              <TimesheetRowHeader />
-              <div className="d-flex gap-1 mb-1">
+              <TimesheetRowHeader/>
+              <div className="d-flex gap-3 mb-1">
                 {rows.map((row) => (
                   <TimesheetRow
                     key={row.id}
@@ -121,14 +131,15 @@ const TimesheetPage = ({
                 ))}
               </div>
               {rows.length > 0 && (
-                <p className={!isValid ? 'text-primary' : 'invisible'}>
+                <p className={`mb-1 ${!isValid ? 'text-primary' : 'invisible'}`}>
                   Please fill out all fields
                 </p>
               )}
-              <BtnAddNewRow onClick={handleAddRow} />
+              <BtnAddNewRow onClick={handleAddRow}/>
             </div>
           )}
         </div>
+
         <div className="max-width-entry mx-auto mt-3">
           <BlockLowerBtns
             handlingOnClickNext={handlingOnClickNext}

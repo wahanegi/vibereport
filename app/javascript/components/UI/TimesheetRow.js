@@ -3,11 +3,11 @@ import deleteIcon from "../../../assets/images/timesheet-row-delete.svg";
 import DropdownSelect from "./DropdownSelect";
 
 const TimesheetRow = ({
-  row,
-  onDelete,
-  onChangeRowData,
-  projects
-}) => {
+                        row,
+                        onDelete,
+                        onChangeRowData,
+                        projects
+                      }) => {
   const filteredData = projects.filter(project =>
     (!row.company || project.attributes.company === row.company) &&
     (!row.project_name || project.attributes.name === row.project_name)
@@ -25,7 +25,7 @@ const TimesheetRow = ({
         project_name: project.attributes.name
       });
     } else {
-      onChangeRowData(row.id, { [fieldName]: value });
+      onChangeRowData(row.id, {[fieldName]: value});
     }
   };
 
@@ -39,18 +39,18 @@ const TimesheetRow = ({
     updateProjectByKey("code", value, "project_id");
   };
   const handleProjectNameChange = (value) => {
-    onChangeRowData(row.id, { project_name: value });
+    onChangeRowData(row.id, {project_name: value});
   };
   const handleTimeChange = (event) => {
     const value = event.target.value;
     if (value === '' || (/^\d+$/.test(value) && parseInt(value, 10) > 0)) {
-      onChangeRowData(row.id, { time: value });
+      onChangeRowData(row.id, {time: value});
     }
   };
 
   return (
-    <div className="d-flex gap-1 flex-row flex-nowrap align-items-center">
-      <div className="timesheet-row d-flex gap-1 flex-row flex-nowrap align-items-center border border-royal-blue border-4 p-1">
+    <div className="position-relative d-flex gap-1 flex-column flex-lg-row flex-nowrap align-items-center w-100">
+      <div className="timesheet-row d-flex gap-1 flex-column flex-lg-row flex-nowrap align-items-center border border-royal-blue border-4 p-1 px-sm-5 px-md-8 px-lg-1 w-100">
         <DropdownSelect
           id={'company_name'}
           options={optionsCompanyNames}
@@ -80,14 +80,14 @@ const TimesheetRow = ({
           value={row.time}
           onChange={handleTimeChange}
           placeholder="Enter time"
-          className="timesheet-row-input-time select-time shadow-none fs-5 text-gray-600 text fw-normal border-royal-blue border-4 border w-100 outline-focus-none text-center"
+          className="timesheet-row-input-time select-time text-ellipsis w-100 border-royal-blue border-4 border outline-focus-none text-center shadow-none fw-normal text-gray-700"
         />
       </div>
       <button
-        className="timesheet-row-button-delete bg-white border-4 border border-royal-blue rounded-circle"
+        className="position-absolute timesheet-row-button-delete bg-white border-4 border border-royal-blue rounded-circle"
         onClick={() => onDelete(row.id)}
       >
-        <img src={deleteIcon} alt="Delete icon" />
+        <img src={deleteIcon} alt="Delete icon" className={"img-fluid"}/>
       </button>
     </div>
   );
