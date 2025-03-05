@@ -89,9 +89,34 @@ const TimesheetPage = ({
     ]);
   };
 
-  const handleOnDelete = (id) => {
-    setNewRows(newRows.filter((row) => row.id !== id));
-    // TODO Add logic to delete new rows from the database
+  const handleOnDelete = async (id) => {
+    const isNewRow = newRows.some((row) => row.id === id);
+
+    if (isNewRow) {
+      setNewRows(newRows.filter((row) => row.id !== id));
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await apiRequest(
+        'DELETE',
+        {},
+        () => {
+          setPrevEntries(prevEntries.filter((row) => row.id !== id));
+          setIsLoading(false);
+        },
+        () => {},
+        `${timesheetsURL}/${id}`,
+        (error) => {
+          setFetchError(`Failed to delete timesheet entry: ${error.message}`);
+          setIsLoading(false);
+        }
+      );
+    } catch (error) {
+      setFetchError('An unexpected error occurred. Please try again.');
+      setIsLoading(false);
+    }
   };
 
   const handleChangeRowData = (id, updates) => {
