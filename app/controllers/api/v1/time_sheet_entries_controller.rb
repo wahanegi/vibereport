@@ -3,8 +3,8 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
 
   def index
     time_period = TimePeriod.current
-    time_sheet_entries = time_period.time_sheet_entries.where(user_id: current_user.id)
-    render json: TimeSheetEntrySerializer.new(time_sheet_entries).serializable_hash, status: :ok
+    time_sheet_entries = time_period.time_sheet_entries.includes(:project).where(user_id: current_user.id)
+    render json: TimeSheetEntrySerializer.new(time_sheet_entries, { include: [:project] }).serializable_hash, status: :ok
   rescue StandardError => e
     Rails.logger.error "Unexpected error in TimeSheetEntriesController#index: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")

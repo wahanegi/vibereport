@@ -17,18 +17,13 @@ const TimesheetPage = ({
 }) => {
   const timesheet_date = rangeFormat(data.time_period || {});
   const { isLoading, setIsLoading } = service;
-  const [rows, setRows] = useState([
-    {
-      id: Date.now(),
-      company: '',
-      project_id: '',
-      project_name: '',
-      time: '',
-    },
-  ]);
+  const [newRows, setNewRows] = useState([]);
+  const [prevEntries, setPrevEntries] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
+
   const projectsURL = '/api/v1/projects';
+  const timesheetsURL = '/api/v1/time_sheet_entries';
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,11 +32,37 @@ const TimesheetPage = ({
       {},
       (response) => {
         setProjects(response.data);
+      },
+      () => {},
+      projectsURL,
+      (error) => {
+        setFetchError(error.message);
+        setIsLoading(false);
+      }
+    );
+
+    apiRequest(
+      'GET',
+      {},
+      (response) => {
+        const transformedEntries = response.data.map((entry) => {
+          const project = response.included.find(
+            (inc) => inc.id === entry.relationships.project.data.id
+          );
+          return {
+            id: entry.id,
+            company: project?.attributes.company || '',
+            project_id: project?.attributes.code || '',
+            project_name: project?.attributes.name || '',
+            time: entry.attributes.total_hours.toString(),
+          };
+        });
+        setPrevEntries(transformedEntries);
         setIsLoading(false);
         setFetchError(null);
       },
       () => {},
-      projectsURL,
+      timesheetsURL,
       (error) => {
         setFetchError(error.message);
         setIsLoading(false);
@@ -52,11 +73,12 @@ const TimesheetPage = ({
   const handlingOnClickNext = () => {
     steps.push('causes-to-celebrate');
     saveDataToDb(steps, { timesheet: null });
+    // TODO Add logic to save new rows to the database
   };
 
   const handleAddRow = () => {
-    setRows([
-      ...rows,
+    setNewRows([
+      ...newRows,
       {
         id: Date.now(),
         company: '',
@@ -68,19 +90,27 @@ const TimesheetPage = ({
   };
 
   const handleOnDelete = (id) => {
-    setRows(rows.filter((row) => row.id !== id));
+    setNewRows(newRows.filter((row) => row.id !== id));
+    // TODO Add logic to delete new rows from the database
   };
 
   const handleChangeRowData = (id, updates) => {
-  setRows(prevRows =>
-    prevRows.map(row =>
-      row.id === id ? { ...row, ...updates } : row
-    )
-  );
+    if (newRows.some((row) => row.id === id)) {
+      setNewRows((prevRows) =>
+        prevRows.map((row) => (row.id === id ? { ...row, ...updates } : row))
+      );
+    }
+    // TODO Add logic to update new rows in the database
   };
 
-  const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
-  const canSubmit = !isLoading && (fetchError || projects.length === 0 || isValid); 
+  const allRows = [...prevEntries, ...newRows];
+
+  const isValid =
+    allRows.length > 0 && allRows.every((row) => validateRow(row));
+  const canSubmit =
+    !isLoading && (fetchError || projects.length === 0 || isValid);
+  const canAddNewRow = allRows.every((row) => validateRow(row));
+
   return (
     <Layout
       data={data}
@@ -95,13 +125,13 @@ const TimesheetPage = ({
             <h1 className="my-1 my-md-0">Your Timesheet</h1>
           </div>
           {isLoading ? (
-            <div className="text-center my-3">Loading projects...</div>
+            <div className="text-center my-3">Loading timesheet data...</div>
           ) : fetchError ? (
-            <p className="text-danger text-center my-3">
-              Error fetching projects: {fetchError}
-            </p>
+            <p className="text-danger text-center my-3">Error: {fetchError}</p>
           ) : projects.length === 0 ? (
-            <p className="text-warning text-center my-3">No projects available.</p>
+            <p className="text-warning text-center my-3">
+              No projects available.
+            </p>
           ) : (
             <div className="timesheet-form-container row justify-content-center mx-auto">
               <div className="d-flex flex-row justify-content-center justify-content-sm-start align-items-center mb-2">
@@ -110,7 +140,7 @@ const TimesheetPage = ({
               </div>
               <TimesheetRowHeader />
               <div className="d-flex gap-1 mb-1">
-                {rows.map((row) => (
+                {allRows.map((row) => (
                   <TimesheetRow
                     key={row.id}
                     row={row}
@@ -120,12 +150,12 @@ const TimesheetPage = ({
                   />
                 ))}
               </div>
-              {rows.length > 0 && (
+              {allRows.length > 0 && (
                 <p className={!isValid ? 'text-primary' : 'invisible'}>
                   Please fill out all fields
                 </p>
               )}
-              <BtnAddNewRow onClick={handleAddRow} />
+              <BtnAddNewRow onClick={handleAddRow} disabled={!canAddNewRow} />
             </div>
           )}
         </div>
