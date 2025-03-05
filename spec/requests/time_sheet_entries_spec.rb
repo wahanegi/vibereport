@@ -157,4 +157,21 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       end
     end
   end
+
+  describe 'DELETE /api/v1/time_sheet_entries/:id' do
+    let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
+
+    context 'when the entry exists' do
+      it 'returns http status ok' do
+        delete "/api/v1/time_sheet_entries/#{entry1.id}"
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'deletes the entry' do
+        expect do
+          delete "/api/v1/time_sheet_entries/#{entry1.id}"
+        end.to change(TimeSheetEntry, :count).by(-1)
+      end
+    end
+  end
 end

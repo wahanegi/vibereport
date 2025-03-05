@@ -34,6 +34,16 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
     render json: TimeSheetEntrySerializer.new(saved_entries).serializable_hash, status: :created unless performed?
   end
 
+  def destroy
+    time_sheet_entry = TimeSheetEntry.find(params[:id])
+
+    if time_sheet_entry&.destroy
+      render json: {}, status: :ok
+    else
+      render json: { error: 'Time sheet entry not found' }, status: :not_found
+    end
+  end
+
   private
 
   def time_sheet_entries_params
