@@ -17,13 +17,25 @@ const TimesheetPage = ({
 }) => {
   const timesheet_date = rangeFormat(data.time_period || {});
   const { isLoading, setIsLoading } = service;
-  const [newRows, setNewRows] = useState([]);
-  const [prevEntries, setPrevEntries] = useState([]);
+  const [rows, setRows] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
-
+  
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
+  
+  const handleAddRow = () => {
+    setRows((prevRows) => [
+      ...prevRows,
+      {
+        id: Date.now(),
+        company: '',
+        project_id: '',
+        project_name: '',
+        time: '',
+      },
+    ]);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -57,7 +69,13 @@ const TimesheetPage = ({
             time: entry.attributes.total_hours.toString(),
           };
         });
-        setPrevEntries(transformedEntries);
+
+        if (transformedEntries.length === 0) {
+          // Якщо записів немає, додаємо один пустий рядок через handleAddRow
+          handleAddRow();
+        } else {
+        setRows(transformedEntries);
+        }
         setIsLoading(false);
         setFetchError(null);
       },
@@ -76,18 +94,6 @@ const TimesheetPage = ({
     // TODO Add logic to save new rows to the database
   };
 
-  const handleAddRow = () => {
-    setNewRows([
-      ...newRows,
-      {
-        id: Date.now(),
-        company: '',
-        project_id: '',
-        project_name: '',
-        time: '',
-      },
-    ]);
-  };
 
   const handleOnDelete = async (id) => {
     const isNewRow = newRows.some((row) => row.id === id);
@@ -120,21 +126,16 @@ const TimesheetPage = ({
   };
 
   const handleChangeRowData = (id, updates) => {
-    if (newRows.some((row) => row.id === id)) {
-      setNewRows((prevRows) =>
-        prevRows.map((row) => (row.id === id ? { ...row, ...updates } : row))
-      );
-    }
-    // TODO Add logic to update new rows in the database
+    setRows((prevRows) =>
+      prevRows.map((row) =>
+        row.id === id ? { ...row, ...updates } : row
+      )
+    );
   };
 
-  const allRows = [...prevEntries, ...newRows];
-
-  const isValid =
-    allRows.length > 0 && allRows.every((row) => validateRow(row));
-  const canSubmit =
-    !isLoading && (fetchError || projects.length === 0 || isValid);
-  const canAddNewRow = allRows.every((row) => validateRow(row));
+  const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
+  const canSubmit = !isLoading && !fetchError && projects.length > 0 && isValid;
+  const canAddNewRow = rows.every((row) => validateRow(row));
 
   return (
     <Layout
@@ -165,7 +166,7 @@ const TimesheetPage = ({
               </div>
               <TimesheetRowHeader />
               <div className="d-flex gap-1 mb-1">
-                {allRows.map((row) => (
+                {rows.map((row) => (
                   <TimesheetRow
                     key={row.id}
                     row={row}
@@ -175,7 +176,7 @@ const TimesheetPage = ({
                   />
                 ))}
               </div>
-              {allRows.length > 0 && (
+              {rows.length > 0 && (
                 <p className={!isValid ? 'text-primary' : 'invisible'}>
                   Please fill out all fields
                 </p>
