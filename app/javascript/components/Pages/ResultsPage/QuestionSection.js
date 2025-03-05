@@ -7,7 +7,7 @@ import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
   <div className='results container blur-effect'>
-    <div className='row wrap question preview'/>
+    <div className='row wrap question preview mw-100'/>
   </div>
 
 const EmptyQuestionSection = ({
@@ -61,7 +61,7 @@ const EmptyQuestionSection = ({
 const Question = ({userName, fun_question}) => {
   if (isBlank(fun_question)) return null;
 
-  return <div className='row wrap question mb-1'>
+  return <div className='row wrap question mb-1 mw-100'>
     {
       userName && <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
@@ -154,7 +154,7 @@ const AnswerItem = ({
     }
   }
 
-  return <div className='row wrap question answer mb-1'>
+  return <div className='row wrap question answer mb-1 mw-100'>
     <div className="col-xl-12">
       <div className='d-flex justify-content-end'>
         {isCurrentUser && !edit &&

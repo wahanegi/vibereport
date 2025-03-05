@@ -14,12 +14,12 @@ const ShoutoutAwards = ({
                           currentUserShoutouts,
                           emptyShoutouts
                         }) => {
-  return (!isEmpty(sentShoutouts) || !isEmpty(receivedShoutouts)) && <Fragment>
+  return (!isEmpty(sentShoutouts) || !isEmpty(receivedShoutouts)) && <div className='row mx-auto mb-2'>
     <div className={`${nextTimePeriod || isEmpty(currentUserShoutouts.sent) ? 'col-2' : ''}`}></div>
-    <div className='col-8'>
-      <div className='d-flex flex-nowrap'>
-        <img src={cup} alt="cup" style={{width: 76, height: 75}}/>
-        <div>
+    <div className='col-12 col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-sm-12'>
+      <div className='row'>
+        <div className="col-12 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-12"><img src={cup} alt="cup" style={{width: 76, height: 75}}/></div>
+        <div className="col-12 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sm-12">
           <h6 className='fs-md-7 text-center fw-semibold'>
             {
               nextTimePeriod ?
@@ -48,18 +48,18 @@ const ShoutoutAwards = ({
             </div>
           </h6>
         </div>
-        <img src={cup} alt="cup" style={{width: 76, height: 75}}/>
+      <div className="col-12 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-12"><img src={cup} alt="cup" style={{width: 76, height: 75}}/></div>
       </div>
     </div>
-    <div className='col-4' hidden={nextTimePeriod || isEmpty(currentUserShoutouts.sent)}>
-      <div className='d-flex justify-content-center'>
-        <h6 className='fs-md-7 mb-0 fw-semibold'>It's not too late!</h6>
+    <div className='col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12' hidden={nextTimePeriod || isEmpty(currentUserShoutouts.sent)}>
+      <div className='d-flex justify-content-center flex-column mt-2 mt-xxl-0 mt-xl-0 mt-lg-0 mt-md-2 mt-sm-2'>
+        <h5 className='fs-md-7 fw-semibold'>It's not too late!</h5>
         <BtnSendMoreShoutouts onClick={() => {
           setShoutOutForm(true)
         }}/>
       </div>
     </div>
-  </Fragment>
+  </div>
 }
 
 export default ShoutoutAwards

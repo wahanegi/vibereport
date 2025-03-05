@@ -180,7 +180,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   if (!loaded) return <Loader/>
 
   return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='container-fluid d-flex flex-column w-100 align-items-center pt-1 pt-md-0'>
+    <div className='container-fluid d-flex flex-column w-100 align-items-center pt-1 pt-md-0 gap-1'>
       <NoticeAlert/>
 
       <TextHeader/>

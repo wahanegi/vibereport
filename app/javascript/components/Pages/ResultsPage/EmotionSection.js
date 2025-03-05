@@ -2,13 +2,16 @@ import React from "react";
 import { EMOTION_COL_NUMBERS, MIN_USERS_RESPONSES } from "../../helpers/consts";
 import { splitArray } from "../../helpers/helpers";
 
-const AnimatedEmotion = ({ word}) => {
+const AnimatedEmotion = ({ word }) => {
   const shift = Math.round(Math.random() * 10) / 10
+  const marginTop = shift * 20
+  const fontSize = shift + 0.8
+  const duration = shift * 5
 
   const animatedStyles = {
-    marginTop: `${shift * 30}px`,
-    fontSize: `${shift + 0.8}rem`,
-    '--duration': `${shift * 5}s`
+    marginTop: `${marginTop}px`,
+    fontSize: `${fontSize}rem`,
+    '--duration': `${duration}s`
   }
 
   return (
@@ -66,7 +69,7 @@ const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses })
   return <div className='container'>
     {
       splitEmotions.map((emotions, index) =>
-        <div className="row" key={index}>
+        <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
           {
             emotions.map((emotion, index) =>
               <div className="col" key={index}>

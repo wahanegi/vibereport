@@ -59,10 +59,10 @@ const ShoutoutSection = ({
         }} />
         <div className='d-flex justify-content-start ps-2 mb-1'>
           {
-            !isEmpty(currentUserShoutouts.received) && <h4 className='fw-semibold'>
+            !isEmpty(currentUserShoutouts.received) && <h5 className='fs-md-5 fw-semibold'>
               {Pluralize('Shoutout', currentUserShoutouts.received.length)} received: {currentUserShoutouts.received.length}
               {isEmpty(currentUserShoutouts.sent) ? '' : ';'}&nbsp;&nbsp;
-            </h4>
+            </h5>
           }
           {
             !isEmpty(currentUserShoutouts.sent) &&
