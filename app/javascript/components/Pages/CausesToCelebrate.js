@@ -1,34 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import BlockLowerBtns from '../UI/BlockLowerBtns';
+import React, {useEffect, useState} from 'react';
+import {MAX_CHAR_LIMIT} from '../helpers/consts';
 import Layout from '../Layout';
-import { MAX_CHAR_LIMIT } from '../helpers/consts';
-import { Form } from 'react-bootstrap';
+import BlockLowerBtns from '../UI/BlockLowerBtns';
 
 const CausesToCelebrate = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
-  const { response } = data;
-  const { isLoading, error } = service;
-  const { celebrate_comment } = response.attributes;
+                             data,
+                             setData,
+                             saveDataToDb,
+                             steps,
+                             service,
+                             draft,
+                           }) => {
+  const {response} = data;
+  const {isLoading, error} = service;
+  const {celebrate_comment} = response.attributes;
   const [celebrateComment, setCelebrateComment] = useState(
     celebrate_comment || ''
   );
   const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
-    const dataDraft = { celebrate_comment: celebrateComment, draft: true };
+    const dataDraft = {celebrate_comment: celebrateComment, draft: true};
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
   };
 
   const onClickSkip = () => {
     steps.push('recognition');
-    saveDataToDb(steps, { celebrate_comment: null });
+    saveDataToDb(steps, {celebrate_comment: null});
   };
 
   const onCommentChange = (e) => {
@@ -43,43 +42,39 @@ const CausesToCelebrate = ({
 
   const handlingOnClickNext = () => {
     steps.push('recognition');
-    saveDataToDb(steps, { celebrate_comment: celebrateComment, draft: false });
+    saveDataToDb(steps, {celebrate_comment: celebrateComment, draft: false});
   };
 
   if (!!error) return <p>{error.message}</p>;
 
-  return (
-    !isLoading && (
-      <Layout
-        data={data}
-        setData={setData}
-        saveDataToDb={saveDataToDb}
-        steps={steps}
-        draft={isDraft}
-        handleSaveDraft={handleSaveDraft}
-      >
-        <div className="d-flex flex-column gap-5">
-          <h1>Are there any recent causes to celebrate?</h1>
-          <div className="comment-label px-1">
-            <textarea
-              className="shadow-none p-2 w-100 h-100 rounded-5"
-              placeholder="Are you grateful for anything that happened at work recently?"
-              defaultValue={celebrateComment}
-              onChange={onCommentChange}
-              maxLength={MAX_CHAR_LIMIT}
-              rows={10}
-            />
-          </div>
-          <div className='mt-4'>
-          <BlockLowerBtns
-            nextHandling={handlingOnClickNext}
-            skipHandling={onClickSkip}
-          />
-          </div>
-        </div>
-      </Layout >
-    )
-  );
+    return (
+        !isLoading && (
+            <Layout
+                data={data}
+                setData={setData}
+                saveDataToDb={saveDataToDb}
+                steps={steps}
+                draft={isDraft}
+                handleSaveDraft={handleSaveDraft}>
+                <div className="w-100 mx-1 d-flex flex-column align-items-center">
+                    <h1 className="fs-md-1 mb-5">
+                        Are there any recent <br/> causes to celebrate?
+                    </h1>
+                    <form className="wrap-textarea-bad-follow mx-auto w-100">
+                          <textarea className="w-100 p-1 h-100 fs-8 fs-md-7 border-1 shadow-none resize-none text-black fs-7 fs-md-6"
+                                    placeholder="Are you grateful for anything that happened at work recently?"
+                                    defaultValue={celebrateComment}
+                                    onChange={onCommentChange}
+                                    maxLength={MAX_CHAR_LIMIT}/>
+                    </form>
+                </div>
+                <div className="w-100 mt-xxl-10 mt-md-6 mt-4 mx-1 align-self-end">
+                    <BlockLowerBtns nextHandling={handlingOnClickNext}
+                                    skipHandling={onClickSkip}/>
+                </div>
+            </Layout>
+        )
+    );
 };
 
 export default CausesToCelebrate;

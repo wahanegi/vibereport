@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
-import {MAX_CHAR_LIMIT} from '../helpers/consts';
 import Swal from 'sweetalert2';
+import {MAX_CHAR_LIMIT} from '../helpers/consts';
 import {isBlank, isEmptyStr, isNotEmptyStr, isPresent,} from '../helpers/helpers';
 import Layout from '../Layout';
 import {apiRequest} from '../requests/axios_requests';
@@ -63,7 +63,7 @@ const IcebreakerQuestion = ({
     saveDataQuestion(goToResultPage, dataFromServer);
   };
 
-  const saveDataQuestion = (goToResultPage, dataFromServer) =>{
+  const saveDataQuestion = (goToResultPage, dataFromServer) => {
     const url = '/api/v1/fun_questions/'
     const id = prevStateQuestion?.id
 
@@ -84,18 +84,23 @@ const IcebreakerQuestion = ({
       }
     };
 
-    if(isPresent(prevQuestionBody)) {
-      if(prevQuestionBody !== funQuestionBody && isNotEmptyStr(funQuestionBody)) {
-        apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`, handleApiError).then();
-      } else if(isEmptyStr(funQuestionBody)) {
-        apiRequest("DELETE", () => {}, () => {}, () => {}, `${url}${id}`).then(goToResultPage);
+    if (isPresent(prevQuestionBody)) {
+      if (prevQuestionBody !== funQuestionBody && isNotEmptyStr(funQuestionBody)) {
+        apiRequest("PATCH", dataRequest, dataFromServer, () => {
+        }, `${url}${id}`, handleApiError).then();
+      } else if (isEmptyStr(funQuestionBody)) {
+        apiRequest("DELETE", () => {
+        }, () => {
+        }, () => {
+        }, `${url}${id}`).then(goToResultPage);
       } else {
         goToResultPage();
       }
     } else if (isEmptyStr(funQuestionBody)) {
       goToResultPage();
     } else {
-      apiRequest("POST", dataRequest, dataFromServer, ()=>{}, `${url}`, handleApiError).then();
+      apiRequest("POST", dataRequest, dataFromServer, () => {
+      }, `${url}`, handleApiError).then();
     }
   };
 
@@ -127,27 +132,26 @@ const IcebreakerQuestion = ({
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      {!isLoading && !error && (
-        <div className="w-100 mx-1">
+        {!isLoading && !error && (<>
+        <div className="w-100 mx-1 pt-1 pt-md-0">
           <div className="mb-3 d-flex flex-column">
-            <div className="mb-1 fs-3">Thanks for answering!</div>
-            <div className="lh-1 fs-3 fs-md-1 col-12 col-lg-6 mx-auto text-black">
+            <h2 className="fs-md-4 m-0 text-black mb-1">Thanks for answering!</h2>
+            <h1 className="fs-md-1 m-0 lh-1 col-12 col-lg-6 mx-auto text-black">
               Interested in submitting your own question to the team?
-            </div>
+            </h1>
           </div>
           <div className="mb-5">
             <div
-              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow max-width-icebreaker">
-              <p className="fs-5 text-gray-600">
-                <span className="text-primary">@</span>
+              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
+              <p className="fs-8 fs-md-7 text-gray-600">
+                <span className="fs-8 fs-md-7 text-primary">@</span>
                 {userName} asks:
               </p>
               {loaded && (
                 <div className="w-100">
-                  <div className="border border-3 rounded rounded-4 border-emerald p-1 costume-focus">
-                    <form>
+                  <div className="icebreaker border border-3 rounded rounded-4 border-emerald">
                       <textarea
-                        className="w-100 p-1 border-0 shadow-none wrap-textarea resize-none fs-5"
+                        className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none"
                         name="question_body"
                         placeholder="What would you ask the team? You could be selected!"
                         value={funQuestion?.question_body || ''}
@@ -155,19 +159,20 @@ const IcebreakerQuestion = ({
                         maxLength={MAX_CHAR_LIMIT}
                         style={{height: '275px'}}
                       />
-                    </form>
                   </div>
                 </div>
               )}
             </div>
           </div>
+        </div>
+        <div className="w-100 mt-xxl-10 mt-md-6 mt-4 mx-1 align-self-end">
             <BlockLowerBtns
               isSubmit={true}
               handlingOnClickNext={handlingOnClickNext}
               stringBody={funQuestionBody}
             />
         </div>
-      )}
+      </>)}
     </Layout>
   );
 };

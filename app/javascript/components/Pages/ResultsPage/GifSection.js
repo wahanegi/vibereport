@@ -32,12 +32,12 @@ const GifSection = ({gifs, nextTimePeriod, isMinUsersResponses}) => {
   });
 
   return <>
-    <div className='container'>
+    <div className='container mb-3'>
       <div className="row row-cols-lg-4 row-cols-md-2 row-cols-1">
         {gifItems}
       </div>
+      <img src={PoweredBy} alt='PoweredBy' className="big image-powered-by align-top"/>
     </div>
-    <img src={PoweredBy} alt='PoweredBy' className="big image-powered-by align-top"/>
   </>
 };
 
