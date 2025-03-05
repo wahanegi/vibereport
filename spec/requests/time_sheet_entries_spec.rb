@@ -17,6 +17,68 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
 
   before { sign_in(user) }
 
+  describe 'GET /api/v1/time_sheet_entries' do
+    let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
+    let!(:entry2) { create(:time_sheet_entry, user: user, project: project2, time_period: time_period, total_hours: 5) }
+
+    context 'with existing entries for the current user and time period' do
+      before do
+        allow(TimePeriod).to receive(:current).and_return(time_period)
+        get '/api/v1/time_sheet_entries'
+      end
+
+      it 'returns a success response' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'has correct data size' do
+        expect(json_response['data'].length).to eq(2)
+      end
+
+      it 'returns proper JSON API format' do
+        expect(json_response).to include('data')
+        expect(json_response['data'][0]).to include('type', 'id', 'attributes')
+        expect(json_response['data'][0]['type']).to eq('time_sheet_entry')
+      end
+
+      it 'returns entries for the current user and current time period' do
+        expect(json_response['data'][0]['attributes']['user_id']).to eq(user.id)
+        expect(json_response['data'][1]['attributes']['user_id']).to eq(user.id)
+
+        expect(json_response['data'][0]['attributes']['project_id']).to eq(project.id)
+        expect(json_response['data'][1]['attributes']['project_id']).to eq(project2.id)
+
+        expect(json_response['data'][0]['attributes']['total_hours']).to eq(entry1.total_hours)
+        expect(json_response['data'][1]['attributes']['total_hours']).to eq(entry2.total_hours)
+      end
+    end
+
+    context 'when no entries exist for the current user and time period' do
+      it 'returns an empty array' do
+        get '/api/v1/time_sheet_entries'
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response['data']).to be_an(Array)
+        expect(json_response['data']).to be_empty
+      end
+    end
+
+    context 'when an unexpected error occurs' do
+      before do
+        allow(TimePeriod).to receive(:current).and_raise(StandardError.new('Something went wrong'))
+        get '/api/v1/time_sheet_entries'
+      end
+
+      it 'returns a 500 internal server error' do
+        expect(response).to have_http_status(:internal_server_error)
+      end
+
+      it 'returns error message' do
+        expect(json_response['error']).to eq('An unexpected error occurred')
+      end
+    end
+  end
+
   describe 'POST /api/v1/time_sheet_entries' do
     context 'with valid parameters' do
       it 'creates records in the database and returns 201 Created' do

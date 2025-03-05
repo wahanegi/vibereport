@@ -1,6 +1,16 @@
 class Api::V1::TimeSheetEntriesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    time_period = TimePeriod.current
+    time_sheet_entries = time_period.time_sheet_entries.where(user_id: current_user.id)
+    render json: TimeSheetEntrySerializer.new(time_sheet_entries).serializable_hash, status: :ok
+  rescue StandardError => e
+    Rails.logger.error "Unexpected error in TimeSheetEntriesController#index: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    render json: { error: 'An unexpected error occurred' }, status: :internal_server_error
+  end
+
   def create
     if time_sheet_entries_params.blank?
       return render json: { error: 'No timesheet entries provided' },
@@ -21,7 +31,6 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
         saved_entries << time_sheet_entry
       end
     end
-    p saved_entries
     render json: TimeSheetEntrySerializer.new(saved_entries).serializable_hash, status: :created unless performed?
   end
 
