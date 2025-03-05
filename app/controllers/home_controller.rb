@@ -9,4 +9,10 @@ class HomeController < ApplicationController
   end
 
   def app; end
+
+  def sent
+    @email = flash[:email]
+
+    redirect_to root_path unless @email
+  end
 end

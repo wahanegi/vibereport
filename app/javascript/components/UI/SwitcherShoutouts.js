@@ -18,7 +18,7 @@ const SwitcherShoutouts = ({isChecked, handleCheckboxChange}) => {
           />
         </span>
       </label>
-      <h4 className="fs-6">{isChecked ? 'Public post' : 'Tagged only'}</h4>
+      <div className="fs-md-8">{isChecked ? 'Public post' : 'Tagged only'}</div>
     </div>
   );
 };
