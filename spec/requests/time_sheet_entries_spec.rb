@@ -8,18 +8,8 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
   let(:valid_params) do
     {
       time_sheet_entries: [
-        {
-          user_id: user.id,
-          project_id: project.id,
-          time_period_id: time_period.id,
-          total_hours: 8
-        },
-        {
-          user_id: user.id,
-          project_id: project2.id,
-          time_period_id: time_period.id,
-          total_hours: 5
-        }
+        { project_id: project.id, total_hours: 8 },
+        { project_id: project2.id, total_hours: 5 }
       ]
     }
   end
@@ -27,7 +17,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
 
   before { sign_in(user) }
 
-  describe 'POST /api/v1/time_sheet_entries tests' do
+  describe 'POST /api/v1/time_sheet_entries' do
     context 'with valid parameters' do
       it 'creates records in the database and returns 201 Created' do
         expect do
@@ -39,99 +29,69 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       end
     end
 
-    context 'if user_id is not provided' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:user_id] = nil
-
-        post '/api/v1/time_sheet_entries', params: invalid_params
+    context 'with no timesheet entries provided' do
+      it 'returns 422 Unprocessable Entity' do
+        post '/api/v1/time_sheet_entries', params: { time_sheet_entries: [] }
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include('User must exist')
+        expect(json_response['error']).to eq('No timesheet entries provided')
+        expect(TimeSheetEntry.count).to eq(0)
       end
     end
 
-    context 'if project_id is missing' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
+    context 'with missing project_id' do
+      it 'does not create records and returns 422 Unprocessable Entity' do
         invalid_params = valid_params.deep_dup
         invalid_params[:time_sheet_entries][0][:project_id] = nil
 
-        post '/api/v1/time_sheet_entries', params: invalid_params
+        expect do
+          post '/api/v1/time_sheet_entries', params: invalid_params
+        end.not_to change(TimeSheetEntry, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response['errors']).to include('Project must exist')
       end
     end
 
-    context 'if time_period_id is missing' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:time_period_id] = nil
-
-        post '/api/v1/time_sheet_entries', params: invalid_params
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include('Time period must exist')
-      end
-    end
-
-    context 'if total_hours is missing' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
+    context 'with missing total_hours' do
+      it 'does not create records and returns 422 Unprocessable Entity' do
         invalid_params = valid_params.deep_dup
         invalid_params[:time_sheet_entries][0][:total_hours] = nil
 
-        post '/api/v1/time_sheet_entries', params: invalid_params
+        expect do
+          post '/api/v1/time_sheet_entries', params: invalid_params
+        end.not_to change(TimeSheetEntry, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response['errors']).to include("Total hours can't be blank")
       end
     end
 
-    context 'if total_hours is negative' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
+    context 'with negative total_hours' do
+      it 'does not create records and returns 422 Unprocessable Entity' do
         invalid_params = valid_params.deep_dup
         invalid_params[:time_sheet_entries][0][:total_hours] = -1
 
-        post '/api/v1/time_sheet_entries', params: invalid_params
+        expect do
+          post '/api/v1/time_sheet_entries', params: invalid_params
+        end.not_to change(TimeSheetEntry, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response['errors']).to include('Total hours must be greater than or equal to 0')
       end
     end
 
-    context 'if a non-existent user_id is passed' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:user_id] = 'invalid_id'
-
-        post '/api/v1/time_sheet_entries', params: invalid_params
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include('User must exist')
-      end
-    end
-
-    context 'if a non-existent project_id is passed' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
+    context 'with non-existent project_id' do
+      it 'does not create records and returns 422 Unprocessable Entity' do
         invalid_params = valid_params.deep_dup
         invalid_params[:time_sheet_entries][0][:project_id] = 'invalid_id'
 
-        post '/api/v1/time_sheet_entries', params: invalid_params
+        expect do
+          post '/api/v1/time_sheet_entries', params: invalid_params
+        end.not_to change(TimeSheetEntry, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response['errors']).to include('Project must exist')
-      end
-    end
-
-    context 'if a non-existent time_period_id is passed' do
-      it 'does not create any records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:time_period_id] = 'invalid_id'
-
-        post '/api/v1/time_sheet_entries', params: invalid_params
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include('Time period must exist')
       end
     end
   end
