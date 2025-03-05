@@ -20,9 +20,8 @@ import Menu from "./Menu";
 export const BigBtnEmotion = ({emotion, onClick, showPencil = true, addClass = '', selectedType}) => {
   const categoryClass = selectedType || emotion.category;
   const categoryStyles = {
-    positive: 'bg-green-200 text-success',
-    neutral: 'bg-pale-cornflower text-steel-blue',
-    negative: 'bg-apricot text-cinnamon',
+    positive: 'bg-green-200 positive',
+    negative: 'bg-apricot negative',
   };
 
   const appliedStyles = categoryStyles[categoryClass] || '';

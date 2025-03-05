@@ -3,21 +3,21 @@
 		<div class="mx-1 mx-md-0">
 			<div class="mb-4 mb-md-7">
 				<h1 class="text-black mt-2 mt-md-6 mb-0 fs-2 fs-md-1">Oh, hi there!</h1>
-				<p class="gray-600 mt-2 fs-3">Welcome to</p>
+				<p class="gray-600 mt-2 fs-6 fs-md-5">Welcome to</p>
 			</div>
 			<div class="max-width-logo mx-auto">
 				<%= image_tag 'logo.png', class: 'img-fluid' %>
 			</div>
 			<div class="mt-3 mx-auto pt-3">
-				<p class="gray-600 fs-md-5 fs-6 lh-1">Enter your email address and we’ll send you a link
+				<p class="gray-600 fs-8 fs-md-7">Enter your email address and we’ll send you a link
 					<br>
 					to access your check-in and profile</p>
 			</div>
-			<div class="fs-2 mt-2 max-width-sign-in-input mx-auto">
-				<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter email here", id: "email-input", class: "mt-2 px-1 outline-focus-none fs-md-2 fs-5 w-100" %>
+			<div class="mt-2 max-width-sign-in-input mx-auto">
+				<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter email here", id: "email-input", class: "mt-2 px-1 outline-focus-none fs-4 fs-md-3 w-100" %>
 			</div>
 			<div class="mt-8">
-				<%= f.submit 'Next', class: "btn btn-regular c1 fs-3 text-white border", id: "next-button", disabled: true %>
+				<%= f.submit 'Next', class: "btn btn-regular c1 fs-5 text-white border", id: "next-button", disabled: true %>
 			</div>
 		</div>
 	</div>

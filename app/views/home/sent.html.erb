@@ -1,19 +1,21 @@
-<div class="container py-4">
-	<!-- Logo -->
-	<div class="d-flex justify-content-center pt-10">
-		<%= image_tag 'logo.png', class: 'img-fluid', height: 87 %>
-	</div>
+<div class="d-flex flex-column justify-content-center align-items-center flex-nowrap min-vh-100 p-1">
+  <!-- Logo -->
+  <div class="mb-5">
+    <%= image_tag 'logo.png', class: 'img-fluid', width: 382, height: 87 %>
+  </div>
 
-	<!-- Title -->
-	<div class="text-center mt-5 mx-auto">
-		<h2 class="text-dark mb-2">Check your inbox!</h2>
-		<p class="b3 text-dark">Look for a unique access link in your inbox at:</p>
-	</div>
+  <!-- Title -->
+  <div class="mb-5">
+    <h1 class="mb-2 text-black" style="font-size: 36px;">Check your inbox!</h1>
+    <p class="fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-5 fs-sm-6 fs-6 text-black">
+      Look for a unique access link in your inbox at:
+    </p>
+  </div>
 
-	<!-- Email -->
-	<% if params.dig("passwordless", "email").present? %>
-		<div class="b1 text-muted mt-5 text-center">
-			<%= params.dig("passwordless", "email") %>
-		</div>
-	<% end %>
+  <!-- Email -->
+  <% if @email %>
+    <div class="fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-2 fs-sm-3 fs-4 text-muted mb-7 text-break">
+      <%= @email %>
+    </div>
+  <% end %>
 </div>

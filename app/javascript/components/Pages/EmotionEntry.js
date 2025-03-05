@@ -74,14 +74,14 @@ const EmotionEntry = ({
         <div className="container-fluid">
           <div className="row flex-column justify-content-center">
             <div className="col-12 text-center mx-auto">
-              <h1 className="my-1 my-md-2">A new one! What’s up?</h1>
-              <h4 className="my-1 my-md-2 text-gray-600">
+              <h1 className="fs-md-1 mb-3">A new one! What’s up?</h1>
+              <h2 className="fs-md-4 mb-1 text-gray-600">
                 What word best describes work, recently?
-              </h4>
+              </h2>
             </div>
             <div className="col-12 col-lg-6 col-md-8 mx-auto">
               <Form.Control
-                className={`${emotionClasses[selectedType]} email_field input-new-word fs-2 rounded-4 mb-5 mb-md-8 border-royal-blue`}
+                className={`${emotionClasses[selectedType]} email_field input-new-word rounded-4 mb-5 mb-md-8 border-royal-blue fs-4 fs-md-3 fw-bold`}
                 type="text"
                 maxLength={15}
                 autoComplete="off"
@@ -98,12 +98,12 @@ const EmotionEntry = ({
               />
             </div>
           </div>
-          <div className="mt-4">
-            <BlockLowerBtns
+        </div>
+        <div className="w-100 mx-1 mt-xxl-4 mt-md-3 mt-2 align-self-end">
+          <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={emotion.word.length < 2}
-            />
-          </div>
+          />
         </div>
       </Layout>
     )
