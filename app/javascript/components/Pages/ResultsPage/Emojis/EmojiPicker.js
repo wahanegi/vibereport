@@ -82,7 +82,7 @@ const EmojiPickerComponent = React.forwardRef(({
     onChangeEmojis(emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user, setEmojiObject)
   }, [emojiObject.emoji_code])
 
-  return <div ref={ref} className='emoji-picker fs-8 position-absolute' style={pickerPosition}>
+  return <div ref={ref} className='emoji-picker position-absolute' style={pickerPosition}>
     <EmojiPicker
       onEmojiClick={onClick}
       autoFocusSearch={false}

@@ -39,8 +39,8 @@ const RichInputElement = ({
   const MARKER = '@';
   const TAG_AT = '<span class="' + classAt + '">' + MARKER;
   const END_TAG_AT = '</span>';
-  const OFFSET_X = 0;
-  const OFFSET_Y = 40;
+  const OFFSET_X = -10;
+  const OFFSET_Y = 10;
   const LIMIT_CHARS = 700;
   const highlightSmbATUnknownUser = false;
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER;
@@ -577,6 +577,7 @@ const RichInputElement = ({
   const clickHandling = (event) => {
     const element = textAreaRef.current;
     const cursor = Cursor.getCurrentCursorPosition(element);
+
     if (
       element.textContent.includes(
         `Use "@"  to include Shoutouts to members of the team!`
@@ -672,7 +673,7 @@ const RichInputElement = ({
           onKeyDown={handleKeyDown}
           onClick={clickHandling}
           cursorPos={Cursor.getCurrentCursorPosition(element)}
-          className="c3 place-size-shout-out w-100 text-start d-inline-block fs-3 lh-sm pt-2 position-relative"
+          className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
         {isDropdownList &&
@@ -698,7 +699,7 @@ const RichInputElement = ({
             handleCheckboxChange={handleCheckboxChange}
           />
           <Button
-            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-3 p-0 ${
+            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${
               isDisabled ? 'disabled' : ''
             }`}
             onClick={submitHandling}

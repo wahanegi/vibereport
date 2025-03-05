@@ -6,6 +6,8 @@ class Devise::Passwordless::SessionsController < Devise::SessionsController
     resource&.send_magic_link(remember_me: true)
 
     self.resource = resource_class.new(create_params)
+
+    flash[:email] = resource.email
     redirect_to sent_path
   end
 
