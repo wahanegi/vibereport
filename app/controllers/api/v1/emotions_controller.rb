@@ -54,7 +54,8 @@ class Api::V1::EmotionsController < ApplicationController
       check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id]),
       has_team_access: current_user.user_teams.has_team_access.any?,
       prev_results_path:,
-      time_periods: TimePeriod.ordered.map { |tp| serialize_time_period(tp) } || []
+      time_periods: TimePeriod.ordered.map { |tp| serialize_time_period(tp) } || [],
+      timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?)
     }
   end
 
