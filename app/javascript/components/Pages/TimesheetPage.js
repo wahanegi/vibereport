@@ -20,7 +20,7 @@ const TimesheetPage = ({
   const [rows, setRows] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
-  
+
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
   
@@ -94,36 +94,38 @@ const TimesheetPage = ({
     // TODO Add logic to save new rows to the database
   };
 
+  const handleOnDelete = (id) => {
+    setRows(rows.filter(row => row.id !== id))
+  }
+  // const handleOnDelete = async (id) => {
+  //   const isNewRow = newRows.some((row) => row.id === id);
 
-  const handleOnDelete = async (id) => {
-    const isNewRow = newRows.some((row) => row.id === id);
+  //   if (isNewRow) {
+  //     setNewRows(newRows.filter((row) => row.id !== id));
+  //     return;
+  //   }
 
-    if (isNewRow) {
-      setNewRows(newRows.filter((row) => row.id !== id));
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      await apiRequest(
-        'DELETE',
-        {},
-        () => {
-          setPrevEntries(prevEntries.filter((row) => row.id !== id));
-          setIsLoading(false);
-        },
-        () => {},
-        `${timesheetsURL}/${id}`,
-        (error) => {
-          setFetchError(`Failed to delete timesheet entry: ${error.message}`);
-          setIsLoading(false);
-        }
-      );
-    } catch (error) {
-      setFetchError('An unexpected error occurred. Please try again.');
-      setIsLoading(false);
-    }
-  };
+  //   try {
+  //     setIsLoading(true);
+  //     await apiRequest(
+  //       'DELETE',
+  //       {},
+  //       () => {
+  //         setPrevEntries(prevEntries.filter((row) => row.id !== id));
+  //         setIsLoading(false);
+  //       },
+  //       () => {},
+  //       `${timesheetsURL}/${id}`,
+  //       (error) => {
+  //         setFetchError(`Failed to delete timesheet entry: ${error.message}`);
+  //         setIsLoading(false);
+  //       }
+  //     );
+  //   } catch (error) {
+  //     setFetchError('An unexpected error occurred. Please try again.');
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleChangeRowData = (id, updates) => {
     setRows((prevRows) =>
