@@ -130,7 +130,7 @@ const ProductivityCheckLow = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="mx-auto w-100">
+        <div className="w-100 mx-1 d-flex flex-column align-items-center">
           <ProductivitySlider
             productivity={productivity}
             handleSliderChange={handleSliderChange}
@@ -138,15 +138,14 @@ const ProductivityCheckLow = ({
             generateStyles={generateStyles}
             imageSizes={imageSizes}
           />
-          <div className="mt-10">
-            <BlockLowerBtns
+        </div>
+        <div className="w-100 mt-xxl-10 mt-md-6 mt-3 mx-1 align-self-end">
+          <BlockLowerBtns
               nextHandling={handlingOnClickNext}
               disabled={isBlank(productivity) || productivity === 0}
-            />
-          </div>
+          />
         </div>
-      </Layout>
-    )
+      </Layout>)
   );
 };
 
