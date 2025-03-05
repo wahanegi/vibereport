@@ -97,14 +97,11 @@ const EmotionType = ({
               />
             </div>
           </div>
-
-          <div className="mt-4">
-            <BlockLowerBtns nextHandling={handlingOnClickNext}/>
-          </div>
         </div>
-
-      </Layout>
-    )
+        <div className="w-100 mt-4 mx-1 align-self-end">
+            <BlockLowerBtns nextHandling={handlingOnClickNext}/>
+        </div>
+      </Layout>)
   );
 };
 
