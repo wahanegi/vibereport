@@ -14,7 +14,14 @@ const TimesheetRow = ({
   );
   const optionsCompanyNames = [...new Set(filteredData.map(project => project.attributes.company))];
   const optionsProjectIds = filteredData.map(project => project.attributes.code);
-  const optionsProjectNames = [...new Set(filteredData.map(project => project.attributes.name))];
+  const filteredDataForProjectName = projects.filter(project =>
+    row.project_id
+      ? project.attributes.code === row.project_id
+      : row.company
+        ? project.attributes.company === row.company
+        : true
+  );
+  const optionsProjectNames = [...new Set(filteredDataForProjectName.map(project => project.attributes.name))];
 
   const updateProjectByKey = (searchKey, value, fieldName) => {
     const project = projects.find(project => project.attributes[searchKey] === value);
