@@ -6,6 +6,7 @@ import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import TimesheetRowHeader from '../UI/TimesheetRowHeader';
 import { apiRequest } from '../requests/axios_requests';
+import { error } from 'jquery';
 
 const TimesheetPage = ({
   data,
@@ -27,28 +28,11 @@ const TimesheetPage = ({
 
   useEffect(() => {
     setIsLoading(true);
-    apiRequest(
-      'GET',
-      {},
-      (response) => {
-        setProjects(response.data);
-      },
-      () => {},
-      projectsURL,
-      (error) => {
-        setFetchError(error.message);
-        setIsLoading(false);
-      }
-    );
-
-    apiRequest(
-      'GET',
-      {},
-      (response) => {
+    Promise.all([
+      apiRequest('GET', {}, (response) => {setProjects(response.data)}, () => {}, projectsURL),
+      apiRequest('GET', {}, (response) => {
         const transformedEntries = response.data.map((entry) => {
-          const project = response.included.find(
-            (inc) => inc.id === entry.relationships.project.data.id
-          );
+          const project = response.included.find((inc) => inc.id === entry.relationships.project.data.id);
           return {
             id: entry.id,
             company: project?.attributes.company || '',
@@ -58,16 +42,13 @@ const TimesheetPage = ({
           };
         });
         setPrevEntries(transformedEntries);
-        setIsLoading(false);
-        setFetchError(null);
-      },
-      () => {},
-      timesheetsURL,
-      (error) => {
-        setFetchError(error.message);
-        setIsLoading(false);
-      }
-    );
+        if (transformedEntries.length === 0) {
+          handleAddRow();
+        }
+      }, () => {}, timesheetsURL),
+    ])
+    .catch((error) => setFetchError(error.message))
+    .finally(() => setIsLoading(false));
   }, []);
 
   const handlingOnClickNext = async () => {
@@ -138,38 +119,38 @@ const TimesheetPage = ({
       return;
     }
 
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       await apiRequest(
         'DELETE',
         {},
         () => {
-          setPrevEntries(prevEntries.filter((row) => row.id !== id));
-          setIsLoading(false);
+          setPrevEntries((prevEntries) => prevEntries.filter((row) => row.id !== id));
         },
         () => {},
         `${timesheetsURL}/${id}`,
         (error) => {
           setFetchError(`Failed to delete timesheet entry: ${error.message}`);
-          setIsLoading(false);
         }
       );
     } catch (error) {
       setFetchError('An unexpected error occurred. Please try again.');
+    } finally {
       setIsLoading(false);
     }
   };
 
+  const updateRowData = (rows, setRows, id, updates) => {
+    setRows(rows.map((row) => (row.id === id ? { ...row, ...updates } : row)));
+  };
+
+
   const handleChangeRowData = (id, updates) => {
     const isNewRow = newRows.some((row) => row.id === id);
     if (isNewRow) {
-      setNewRows((prevRows) =>
-        prevRows.map((row) => (row.id === id ? { ...row, ...updates } : row))
-      );
+      updateRowData(newRows, setNewRows, id, updates);
     } else {
-      setPrevEntries((prevEntries) =>
-        prevEntries.map((row) => (row.id === id ? { ...row, ...updates } : row))
-      );
+        updateRowData(prevEntries, setPrevEntries, id, updates);
     }
   };
 
