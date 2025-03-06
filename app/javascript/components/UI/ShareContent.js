@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import BackRevert from '../../../assets/images/BackToResultsButton.svg';
 import calendar from "../../../assets/images/calendar.svg"
 import edit_pencil from "../../../assets/images/edit-pencil.svg"
@@ -19,15 +19,14 @@ import Menu from "./Menu";
 export const BigBtnEmotion = ({emotion, onClick, showPencil = true, addClass = '', selectedType}) => {
   const categoryClass = selectedType || emotion.category;
   const categoryStyles = {
-    positive: 'bg-green-200 text-success',
-    neutral: 'bg-pale-cornflower text-steel-blue',
-    negative: 'bg-apricot text-cinnamon',
+    positive: 'bg-green-200 positive',
+    negative: 'bg-apricot negative',
   };
 
   const appliedStyles = categoryStyles[categoryClass] || '';
   return (
     <button
-      className={`${addClass} container-fluid btn-custom fs-lg-2 fs-sm-3 px-auto rounded-pill emotion position-relative ${appliedStyles} emotion-button`}>
+      className={`${addClass} d-flex flex-column btn-custom px-4 rounded-pill emotion position-relative fs-2 ${appliedStyles}`}>
     <span hidden={!showPencil} onClick={onClick} className="position-absolute start-100 translate-middle">
       <img src={edit_pencil} alt="pencil"/>
     </span>
@@ -45,13 +44,13 @@ export const BtnSendMoreShoutouts = ({onClick}) =>
 
 export const BtnOutline = ({text, addClass = '', onClick, disabled}) =>
   <button onClick={onClick}
-          className={`btn btn-feature btn-lg border border-3 border-royal-blue fs-lg-4 fs-sm-6 text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`}
+          className={`btn btn-feature btn-lg border border-3 rounded-4 border-royal-blue text-gray-300 text-gray-300-hover bg-white c2 ${addClass}`}
           disabled={disabled}>
     {text}
   </button>
 
 export const BtnPrimary = ({text, addClass = '', hidden, onClick, disabled}) =>
-  <button onClick={onClick} className={`btn btn-regular fs-5 fs-md-3 c1 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 border-1 border fs-5 ${addClass}`} hidden={hidden} disabled={disabled}>
     {text}
   </button>
 
@@ -76,7 +75,7 @@ export const Calendar = ({
             <img src={line} alt="line"/>
             {date.split(' - ')[1]}
           </div> :
-          <div className='mt-5 d-flex fs-7'>{date}</div>
+          <div className='mt-5 d-flex'>{date}</div>
         }
       </div>
       {prevTimePeriod && positionLeft &&
@@ -87,17 +86,17 @@ export const Calendar = ({
   </div>
 
 export const BtnNext = ({addClass = '', hidden, onClick, disabled}) =>
-  <button onClick={onClick} className={`btn btn-regular c1 fs-4 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     Next
   </button>
 
 export const BtnSkip = ({addClass = '', hidden = true, onClick, disabled}) =>
-  <button onClick={onClick} className={`btn btn-regular c1 fs-4 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`} hidden={hidden} disabled={disabled}>
     Skip
   </button>
 
 export const BtnBack = ({addClass = '', hidden, onClick, disabled, text = 'Back'}) =>
-  <button onClick={onClick} className={`btn btn-regular c1 bg-gray-200 bg-gray-hover-200 fs-5 fs-md-3 ${addClass}`}
+  <button onClick={onClick} className={`btn btn-regular c1 bg-gray-200 bg-gray-hover-200 fs-5 ${addClass}`}
           hidden={hidden} disabled={disabled}>
     {text}
   </button>
@@ -107,7 +106,7 @@ export const ShoutOutIcon = ({addClass = '', onClick}) =>
     <img className={`${addClass}`} src={shoutout} alt="shout out" style={{width: 100, height: 100}}/>
   </div>
 
-export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true, }) =>
+export const Footer = ({nextClick, skipClick, disabled = false, hideNext = false, hideSkip = true,}) =>
   <div className='d-flex justify-content-between m-3'>
     <BtnBack onClick={backHandling} addClass='m-1 align-self-center'/>
     <BtnNext onClick={nextClick} disabled={disabled} hidden={hideNext} addClass='m-1 align-self-center'/>

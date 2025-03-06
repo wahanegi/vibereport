@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import Form from 'react-bootstrap/Form';
 
-const SearchBar = ({ setTerm, term, category, word }) => {
+const SearchBar = ({setTerm, term, category, word}) => {
   const [classInput, setClassInput] = useState(category)
   const onInputChange = (input) => {
     setTerm(input);
@@ -13,14 +13,14 @@ const SearchBar = ({ setTerm, term, category, word }) => {
     } else {
       setClassInput(category)
     }
-  },[term])
+  }, [term])
 
   return <div className="card-header">
     <Form.Control type="text"
-                  className={`${classInput}-input fs-3 bg-light border-royal-blue`}
+                  className={`${classInput}-input fs-1 fw-bold bg-light border-royal-blue`}
                   placeholder="Search GIPHY"
                   onChange={e => onInputChange(e.target.value)}
-                  value={term} />
+                  value={term}/>
   </div>
 }
 

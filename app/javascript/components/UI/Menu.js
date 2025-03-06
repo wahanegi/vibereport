@@ -100,26 +100,26 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
     <div className={`${className}`}>
       <Dropdown onClick={handleChangeImg} ref={dropdownRef}>
         <Dropdown.Toggle id='dropdown-stick' className={"rounded-circle bg-white border-0 p-0"}>
-          <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' className = {"dropdown-img"}/>
+          <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' className={"dropdown-img"}/>
         </Dropdown.Toggle>
         <Dropdown.Menu className={"mt-5 border border-1 border-color"}>
-          <Dropdown.Item href="#">
+          <Dropdown.ItemText>
             <Button
               className={`btn-item-menu mx-auto my-auto${draft || isLastStepDisabled ? ' disabled-btn-draft' : ''}`}
               disabled={draft || isLastStepDisabled} onClick={handleSaveDraft}>
               Save Draft
             </Button>
-          </Dropdown.Item>
-          <Dropdown.Item href="#">
+          </Dropdown.ItemText>
+          <Dropdown.ItemText>
             <Button className='btn-item-menu mx-auto my-auto' onClick={handleSignOut}>
               Log Out
             </Button>
-          </Dropdown.Item>
+          </Dropdown.ItemText>
         </Dropdown.Menu>
       </Dropdown>
       {!isStepUnsubscribe && (
-        <div className='fs-6 text-primary text-nowrap pt-0 pt-sm-1'>
-          <span className="fs-8 fs-sm-7 fs-md-6">
+        <div className='text-primary text-nowrap pt-0 pt-sm-1'>
+          <span>
             {getSrcMenu(lastSegment).percent}% complete
           </span>
         </div>

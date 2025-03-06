@@ -79,7 +79,7 @@ const EmotionType = ({
         <div className="container pt-10">
           <div className="row justify-content-center">
             <div className="col-auto">
-              <div className="text-center mt-1 mb-5">
+              <div className="text-center mt-1 mb-9">
                 <BigBtnEmotion
                   showPencil={false}
                   emotion={data.emotion}
@@ -96,12 +96,11 @@ const EmotionType = ({
               />
             </div>
           </div>
-            <div className="row justify-content-center mt-2 mx-auto p-0 mw-lower-buttons">
-              <BlockLowerBtns nextHandling={handlingOnClickNext}/>
-            </div>  
         </div>
-      </Layout>
-    )
+        <div className="w-100 mt-4 mx-1 align-self-end">
+            <BlockLowerBtns nextHandling={handlingOnClickNext}/>
+        </div>
+      </Layout>)
   );
 };
 

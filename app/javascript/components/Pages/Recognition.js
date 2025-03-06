@@ -70,14 +70,12 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
   const output = (shoutOuts) => {
     return (
-      <ul className='d-flex d-sm-flex flex-column gap-4 p-3 list-unstyled'>
+      <ul className='d-flex d-sm-flex flex-column gap-4 py-2 list-unstyled'>
         {shoutOuts.map(shoutOut => (
           <li
-            className='c3 bg-light fs-lg-2 fs-sm-4 position-relative align-middle border rounded-4 border-3 border-primary p-1 text-break'
+            className='bg-light position-relative align-middle border rounded-4 border-3 border-primary p-1 text-break '
             key={shoutOut.id}>
-        <span>
-          <p className='text-black align-middle text-start lh-base'>{parse(shoutOut.rich_text)}</p>
-        </span>
+            <p className='text-start fs-5 fs-md-4 fw-semibold m-0'>{parse(shoutOut.rich_text)}</p>
             <div className='position-absolute top-50 start-100 translate-middle p-2'>
               <img id={shoutOut.id} src={edit_pencil} alt="pencil" className='pencil' onClick={editHandling}/>
               <span className="expand-link"
@@ -107,32 +105,33 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      <div className='container-fluid'>
-        <h1 className='text-black'>Recognition is important!</h1>
+      <div className='container-fluid pt-1 pt-md-0'>
+        <h1 className='mb-5 fs-md-1 text-black'>Recognition is important!</h1>
 
         {!numShoutOuts &&
           <div className='mb-6'>
-            <h2 className='text-black'>
+            <h2 className='fs-md-4 text-black mb-4'>
               Consider giving members of your team a <br/>
               Shoutout to show your appreciation.
             </h2>
-            <div className='pt-2'>
+            <div className='shoutout-container position-relative'>
               <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps}
-                              draft={isDraft} handleSaveDraft={handleSaveDraft}/>
-              <div className='gray-600 fs-7 mt-1'>Click to give a Shoutout!</div>
+                              draft={isDraft} handleSaveDraft={handleSaveDraft} isMove={true}/>
             </div>
+            <p className='gray-600 mt-1 fw-bold'>Click to give a Shoutout!</p>
           </div>
         }
 
         {!!numShoutOuts &&
           <div>
-            <h2 className='text-black my-3'>
+            <h2 className='fs-md-4 text-black mb-1'>
               You've mentioned:
             </h2>
           </div>
         }
+
         {!!numShoutOuts &&
-          <div className='d-flex d-sm-flex flex-column'>
+          <div className='d-flex d-sm-flex flex-column mx-auto' style={{maxWidth: "800px"}}>
             {shoutOutForm.status &&
               <ShoutoutModal shoutOutForm={shoutOutForm}
                              setShoutOutForm={setShoutOutForm}
@@ -140,18 +139,19 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
                              setData={setData}
                              editObj={shoutOutForm.editObj}/>}
             <div
-              className='container container-sm container-md justify-content-center border border-4 rounded-4 border-primary field-shout-outs'>
+              className='container justify-content-center pe-2 border border-4 rounded-4 border-primary field-shout-outs'>
               {output(shoutOuts)}
             </div>
-            <div className='mb-6'>
-              <p className='fs-5 mt-4 lh-base'>Any more shoutouts to give?</p>
+            <p className='m-0 mt-4 fs-8 fs-md-7'>Any more shoutouts to give?</p>
+            <div className={"shoutout-container-small position-relative"}>
               <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps}
-                              draft={isDraft} handleSaveDraft={handleSaveDraft}/>
+                              draft={isDraft} handleSaveDraft={handleSaveDraft} num={numShoutOuts} isMove={true}/>
             </div>
           </div>
         }
+
         {isModal && <ShoutoutDelete onClose={onClose} data={data} setData={setData} idShoutout={idShoutout}/>}
-          <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
+        <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
       </div>
     </Layout>
   );

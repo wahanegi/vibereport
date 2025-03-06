@@ -20,7 +20,7 @@ const Layout = ({
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header data={data} steps={steps} draft={draft} handleSaveDraft={handleSaveDraft} saveDataToDb={saveDataToDb} isResult={isResult} />
-      <main className="flex-grow-1 d-flex justify-content-center align-items-start overflow-auto" role="main">
+      <main className="flex-grow-1 d-flex justify-content-center align-items-start" role="main">
         {children}
       </main>
       <Footer
