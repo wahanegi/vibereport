@@ -1,5 +1,6 @@
 class Api::V1::TimeSheetEntriesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_time_sheet_entry, only: %i[update destroy]
 
   def index
     time_period = TimePeriod.current
@@ -34,10 +35,18 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
     render json: TimeSheetEntrySerializer.new(saved_entries).serializable_hash, status: :created unless performed?
   end
 
-  def destroy
-    time_sheet_entry = TimeSheetEntry.find(params[:id])
+  def update
+    if @time_sheet_entry.update(time_sheet_entry_params)
+      render json: TimeSheetEntrySerializer.new(@time_sheet_entry, { include: [:project] }).serializable_hash,
+             status: :ok
+    else
+      render json: { errors: @time_sheet_entry.errors.full_messages },
+             status: :unprocessable_entity
+    end
+  end
 
-    if time_sheet_entry&.destroy
+  def destroy
+    if @time_sheet_entry&.destroy
       render json: {}, status: :ok
     else
       render json: { error: 'Time sheet entry not found' }, status: :not_found
@@ -48,5 +57,13 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
 
   def time_sheet_entries_params
     params.permit(time_sheet_entries: %i[project_id total_hours])[:time_sheet_entries]
+  end
+
+  def time_sheet_entry_params
+    params.require(:time_sheet_entry).permit(:project_id, :total_hours)
+  end
+
+  def set_time_sheet_entry
+    @time_sheet_entry = TimeSheetEntry.find_by(id: params[:id])
   end
 end

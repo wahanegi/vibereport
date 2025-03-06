@@ -70,10 +70,51 @@ const TimesheetPage = ({
     );
   }, []);
 
-  const handlingOnClickNext = () => {
-    steps.push('causes-to-celebrate');
-    saveDataToDb(steps, { timesheet: null });
-    // TODO Add logic to save new rows to the database
+  const handlingOnClickNext = async () => {
+    setIsLoading(true);
+    try {
+      const newEntries = newRows.map(row => {
+        const project = projects.find(p => p.attributes.code === row.project_id);
+        return { project_id: project?.id, total_hours: row.time };
+      });
+  
+      const updatedEntries = prevEntries.map(row => {
+        const project = projects.find(p => p.attributes.code === row.project_id);
+        return { id: row.id, project_id: project?.id, total_hours: row.time };
+      });
+  
+      if (newEntries.length > 0) {
+        await apiRequest(
+          'POST',
+          { time_sheet_entries: newEntries },
+          () => {},
+          () => {},
+          timesheetsURL
+        );
+      }
+  
+      if (updatedEntries.length > 0) {
+        await Promise.all(
+          updatedEntries.map(entry =>
+            apiRequest(
+              'PATCH',
+              { time_sheet_entry: { project_id: entry.project_id, total_hours: entry.total_hours } },
+              () => {},
+              () => {},
+              `${timesheetsURL}/${entry.id}`
+            )
+          )
+        );
+      }
+  
+      setNewRows([]);
+      steps.push('causes-to-celebrate');
+      saveDataToDb(steps);
+    } catch (error) {
+      setFetchError('Failed to submit timesheet entries.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleAddRow = () => {
@@ -120,12 +161,16 @@ const TimesheetPage = ({
   };
 
   const handleChangeRowData = (id, updates) => {
-    if (newRows.some((row) => row.id === id)) {
+    const isNewRow = newRows.some((row) => row.id === id);
+    if (isNewRow) {
       setNewRows((prevRows) =>
         prevRows.map((row) => (row.id === id ? { ...row, ...updates } : row))
       );
+    } else {
+      setPrevEntries((prevEntries) =>
+        prevEntries.map((row) => (row.id === id ? { ...row, ...updates } : row))
+      );
     }
-    // TODO Add logic to update new rows in the database
   };
 
   const allRows = [...prevEntries, ...newRows];
