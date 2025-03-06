@@ -1,13 +1,21 @@
-import React, {Fragment, useEffect, useState} from "react";
-import {isEmptyStr, usersEmoji} from "../../../helpers/helpers";
 import Tippy from "@tippyjs/react";
 import {Emoji, EmojiStyle} from "emoji-picker-react";
+import React, {Fragment, useEffect, useState} from "react";
 import Left from '../../../../../assets/images/chevron-left.svg'
 import Right from '../../../../../assets/images/chevron-right.svg'
-import {onChangeEmojis} from "./EmojiPicker";
 import {EMOJIS_PER_PAGE} from "../../../helpers/consts";
+import {isEmptyStr, usersEmoji} from "../../../helpers/helpers";
+import {onChangeEmojis} from "./EmojiPicker";
 
-const ShowEmojis = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user, setEmojiObject}) => {
+const ShowEmojis = ({
+                      emojiObject,
+                      setSelectedEmoji,
+                      setSelectedEmojiName,
+                      emojisArr,
+                      setEmojisArr,
+                      current_user,
+                      setEmojiObject
+                    }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(emojisArr.length / EMOJIS_PER_PAGE);
@@ -36,7 +44,7 @@ const ShowEmojis = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojis
 
   return <Fragment>
     {currentEmojis.map((item, index) => (
-      <div className='padding-x4' onClick={() => onClickEmoji(item)} key={index}>
+      <div className='margin-x4' onClick={() => onClickEmoji(item)} key={index}>
         <Tippy content={
           <div className='emoji-tooltip'>
             <Emoji
@@ -61,10 +69,10 @@ const ShowEmojis = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojis
     {emojisArr.length > EMOJIS_PER_PAGE && (
       <div>
         {currentPage > 1 && <Tippy content={<div className='emoji-tooltip'>Previous emojis</div>}>
-          <img className='padding-x2 pointer' alt='left' src={Left} onClick={handlePrevPage} />
+          <img className='padding-x2 pointer' alt='left' src={Left} onClick={handlePrevPage}/>
         </Tippy>}
         {currentPage < totalPages && <Tippy content={<div className='emoji-tooltip'>Next emojis</div>}>
-         <img className='padding-x2 pointer' alt='right' src={Right} onClick={handleNextPage}/>
+          <img className='padding-x2 pointer' alt='right' src={Right} onClick={handleNextPage}/>
         </Tippy>}
       </div>
     )}
