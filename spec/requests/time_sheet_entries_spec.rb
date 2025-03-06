@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'TimeSheetEntries API', type: :request do
   let!(:user) { create(:user) }
+  let!(:other_user) { create(:user) }
   let!(:project) { create(:project) }
   let!(:project2) { create(:project) }
   let!(:time_period) { create(:time_period) }
@@ -158,19 +159,117 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     end
   end
 
+  describe 'PATCH /api/v1/time_sheet_entries/:id' do
+    let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
+    let!(:entry2) { create(:time_sheet_entry, user: other_user, project: project2, time_period: time_period, total_hours: 5) }
+    let(:update_params) { { time_sheet_entry: { total_hours: 10 } } }
+
+    context 'when the entry exists and belongs to the current user' do
+      before { patch "/api/v1/time_sheet_entries/#{entry1.id}", params: update_params }
+
+      it 'returns http status ok' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'updates the entry' do
+        expect(entry1.reload.total_hours).to eq(10)
+      end
+
+      it 'returns the updated entry in JSON API format' do
+        expect(json_response['data']).to include('type', 'id', 'attributes')
+        expect(json_response['data']['type']).to eq('time_sheet_entry')
+        expect(json_response['data']['attributes']['total_hours']).to eq(10)
+      end
+    end
+
+    context 'when the entry does not exist' do
+      before { patch '/api/v1/time_sheet_entries/9999', params: update_params }
+
+      it 'returns http status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns an error message' do
+        expect(json_response['error']).to eq('Time sheet entry not found')
+      end
+    end
+
+    context 'when the entry belongs to another user' do
+      before { patch "/api/v1/time_sheet_entries/#{entry2.id}", params: update_params }
+
+      it 'returns http status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns an error message' do
+        expect(json_response['error']).to eq('Time sheet entry not found')
+      end
+
+      it 'does not update the entry' do
+        expect(entry2.reload.total_hours).to eq(5)
+      end
+    end
+
+    context 'when the update parameters are invalid' do
+      let(:invalid_params) { { time_sheet_entry: { total_hours: -1 } } }
+
+      before { patch "/api/v1/time_sheet_entries/#{entry1.id}", params: invalid_params }
+
+      it 'returns http status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns validation errors' do
+        expect(json_response['errors']).to include('Total hours must be greater than or equal to 0')
+      end
+
+      it 'does not update the entry' do
+        expect(entry1.reload.total_hours).to eq(8)
+      end
+    end
+  end
+
   describe 'DELETE /api/v1/time_sheet_entries/:id' do
     let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
+    let!(:entry2) { create(:time_sheet_entry, user: other_user, project: project2, time_period: time_period, total_hours: 5) }
 
-    context 'when the entry exists' do
-      it 'returns http status ok' do
-        delete "/api/v1/time_sheet_entries/#{entry1.id}"
+    context 'when the entry exists and belongs to the current user' do
+      before { delete "/api/v1/time_sheet_entries/#{entry1.id}" }
+
+      it 'returns http status no content' do
         expect(response).to have_http_status(:ok)
       end
 
       it 'deletes the entry' do
-        expect do
-          delete "/api/v1/time_sheet_entries/#{entry1.id}"
-        end.to change(TimeSheetEntry, :count).by(-1)
+        expect(TimeSheetEntry.exists?(entry1.id)).to be_falsey
+      end
+    end
+
+    context 'when the entry does not exist' do
+      before { delete '/api/v1/time_sheet_entries/9999' }
+
+      it 'returns http status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns an error message' do
+        expect(json_response['error']).to eq('Time sheet entry not found')
+      end
+    end
+
+    context 'when the entry belongs to another user' do
+      before { delete "/api/v1/time_sheet_entries/#{entry2.id}" }
+
+      it 'returns http status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns an error message' do
+        expect(json_response['error']).to eq('Time sheet entry not found')
+      end
+
+      it 'does not delete the entry' do
+        expect(TimeSheetEntry.exists?(entry2.id)).to be_truthy
       end
     end
   end

@@ -37,19 +37,17 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
 
   def update
     if @time_sheet_entry.update(time_sheet_entry_params)
-      render json: TimeSheetEntrySerializer.new(@time_sheet_entry, { include: [:project] }).serializable_hash,
-             status: :ok
+      render json: TimeSheetEntrySerializer.new(@time_sheet_entry, { include: [:project] }).serializable_hash, status: :ok
     else
-      render json: { errors: @time_sheet_entry.errors.full_messages },
-             status: :unprocessable_entity
+      render json: { errors: @time_sheet_entry.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @time_sheet_entry&.destroy
+    if @time_sheet_entry.destroy
       render json: {}, status: :ok
     else
-      render json: { error: 'Time sheet entry not found' }, status: :not_found
+      render json: { error: 'Failed to delete time sheet entry' }, status: :unprocessable_entity
     end
   end
 
@@ -64,6 +62,7 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   end
 
   def set_time_sheet_entry
-    @time_sheet_entry = TimeSheetEntry.find_by(id: params[:id])
+    @time_sheet_entry = TimeSheetEntry.find_by(id: params[:id], user_id: current_user.id)
+    render json: { error: 'Time sheet entry not found' }, status: :not_found unless @time_sheet_entry
   end
 end
