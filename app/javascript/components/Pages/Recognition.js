@@ -168,7 +168,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
                                    setData={setData}
                                    editObj={shoutOutForm.editObj}/>}
                 <div
-                    className="container justify-content-center pe-2 border border-4 rounded-4 border-primary field-shout-outs">
+                    className="container justify-content-center border border-4 rounded-4 border-primary field-shout-outs">
                   {output(shoutOuts)}
                 </div>
                 <p className="m-0 mt-4 fs-8 fs-md-7">Any more shoutouts to

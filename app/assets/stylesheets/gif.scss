@@ -1,14 +1,14 @@
 .gif-item {
   margin: 0.5%;
   position: relative;
-  }
+}
 
 .tippy {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Center the element */
-  }
+}
 
 .gif-clicked-positive {
   box-sizing: border-box;
@@ -21,8 +21,8 @@
   img {
     width: 100%;
     height: 100%;
-    }
   }
+}
 
 .gif-clicked-neutral {
   box-sizing: border-box;
@@ -36,8 +36,8 @@
   img {
     width: 100%;
     height: 100%;
-    }
   }
+}
 
 .gif-clicked-negative {
   box-sizing: border-box;
@@ -50,17 +50,17 @@
   img {
     width: 100%;
     height: 100%;
-    }
   }
+}
 
 .gif-item img {
   width: 100%;
   height: 100%;
-  }
+}
 
 .gif-wrap {
   max-width: 1104px;
-  }
+}
 
 .gif-list {
   display: grid;
@@ -70,79 +70,79 @@
   @media (max-width: 568px) {
     grid-template-columns: repeat(2, 1fr);
     height: 250px;
-    }
   }
+}
 
 .gif-card {
   background-color: $gray-500 !important;
 
   .card-header {
     height: 100px;
-    }
+  }
 
   .card-header input {
     box-shadow: none;
 
     &.positive-input {
       color: $sea-green !important;
-      }
+    }
 
     &.neutral-input {
       color: $steel-blue !important;
-      }
+    }
 
     &.negative-input {
       color: $cinnamon;
-      }
+    }
 
     &.other-input {
       color: $gray-500 !important;
-      }
     }
+  }
 
   .card-scroll::-webkit-scrollbar {
     background-color: $gray-200;
     border-radius: 8px;
-    }
+  }
 
   .card-scroll {
-    max-height: 417px;
+    max-height: 300px;
     overflow-y: auto;
-    }
+  }
 
   .card-scroll::-webkit-scrollbar-thumb {
     width: 24.08px;
     height: 63.79px;
     background: #77ccfc;
     border-radius: 8px;
-    }
   }
+}
 
 .gif img {
   &.small {
     max-width: 312px;
     max-height: 170px;
-    }
+  }
 
   &.big {
     max-width: 370px;
     max-height: 40vh;
-    }
+  }
 
   padding: 0;
   border-radius: 6px;
 
   &.image-positive {
     border: 6px solid $sea-green !important;
-    }
+  }
 
   &.image-neutral {
     border: 6px solid $steel-blue !important;
-    }
+  }
 
   &.image-negative {
     border: 6px solid $cinnamon !important;
-    }
+  }
 
   &.image-powered-by {
     top: 0;
@@ -150,8 +150,8 @@
     width: 200px;
     height: 22px;
     margin-top: 6px;
-    }
   }
+}
 
 .small-image-powered-by {
   position: initial;
@@ -160,7 +160,7 @@
   width: 90px;
   height: 10px;
   margin-top: 6px;
-  }
+}
 
 .gif-container img {
   width: 100%;
@@ -168,5 +168,5 @@
   min-height: 150px;
   max-height: 180px;
   object-fit: cover;
-  }
+}
 
