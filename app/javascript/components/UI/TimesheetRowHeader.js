@@ -2,9 +2,9 @@ import React from 'react';
 
 const TimesheetRowHeader = () => {
   return (
-    <div className={"timesheet-table-container d-flex justify-content-center mb-1"}>
+    <div className={"timesheet-table-container d-none d-lg-flex justify-content-center mb-3"}>
       <div
-        className="d-flex gap-1 flex-row flex-nowrap align-items-center w-100 border border-royal-blue border-4 rounded-4 p-1">
+        className="d-flex gap-1 flex-row flex-nowrap align-items-center w-100 fs-5 border border-royal-blue border-4 rounded-4 p-1">
         <div
           className="timesheet-header-cell select-company text-center bg-light border border-royal-blue border-4 rounded-4 fw-semibold">Company
         </div>
