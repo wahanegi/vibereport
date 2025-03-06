@@ -72,7 +72,7 @@ export const Calendar = ({
       <img src={calendar} alt="calendar"/>
       <div className="position-absolute top-0 w-82">
         {date.includes(' - ') ?
-          <div className='mt-3 d-flex flex-column fs-7'>
+          <div className='mt-3 d-flex flex-column'>
             {date.split(' - ')[0]}
             <img src={line} alt="line"/>
             {date.split(' - ')[1]}

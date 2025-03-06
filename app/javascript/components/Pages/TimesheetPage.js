@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { rangeFormat, validateRow } from '../helpers/helpers';
+import React, {useEffect, useState} from 'react';
+import {rangeFormat, validateRow} from '../helpers/helpers';
 import Layout from '../Layout';
+import {apiRequest} from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
+import {BtnAddNewRow, Calendar} from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import TimesheetRowHeader from '../UI/TimesheetRowHeader';
 import { apiRequest } from '../requests/axios_requests';
-import { error } from 'jquery';
 
 const TimesheetPage = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
+                         data,
+                         setData,
+                         saveDataToDb,
+                         steps,
+                         service,
+                         draft,
+                       }) => {
   const timesheet_date = rangeFormat(data.time_period || {});
   const { isLoading, setIsLoading } = service;
   const [newRows, setNewRows] = useState([]);
@@ -162,6 +162,9 @@ const TimesheetPage = ({
     !isLoading && (fetchError || projects.length === 0 || isValid);
   const canAddNewRow = allRows.every((row) => validateRow(row));
 
+  const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
+  const canSubmit = !isLoading && (fetchError || projects.length === 0 || isValid);
+
   return (
     <Layout
       data={data}
@@ -170,9 +173,9 @@ const TimesheetPage = ({
       steps={steps}
       draft={draft}
     >
-      <div className="container-fluid">
-        <div className="row flex-column justify-content-center">
-          <div className="col-12 text-center mx-auto">
+      <div className="container-fluid mb-1 mb-md-0">
+        <div className="row flex-column justify-content-center align-items-center">
+          <div className="col-12 text-center ">
             <h1 className="my-1 my-md-0">Your Timesheet</h1>
           </div>
           {isLoading ? (
@@ -201,6 +204,7 @@ const TimesheetPage = ({
                   />
                 ))}
               </div>
+
               {allRows.length > 0 && (
                 <p className={!isValid ? 'text-primary' : 'invisible'}>
                   Please fill out all fields
@@ -210,6 +214,7 @@ const TimesheetPage = ({
             </div>
           )}
         </div>
+
         <div className="max-width-entry mx-auto mt-3">
           <BlockLowerBtns
             handlingOnClickNext={handlingOnClickNext}
