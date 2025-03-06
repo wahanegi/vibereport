@@ -6,7 +6,6 @@ import BlockLowerBtns from '../UI/BlockLowerBtns';
 import {BtnAddNewRow, Calendar} from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import TimesheetRowHeader from '../UI/TimesheetRowHeader';
-import { apiRequest } from '../requests/axios_requests';
 
 const TimesheetPage = ({
                          data,
@@ -161,9 +160,6 @@ const TimesheetPage = ({
   const canSubmit =
     !isLoading && (fetchError || projects.length === 0 || isValid);
   const canAddNewRow = allRows.every((row) => validateRow(row));
-
-  const isValid = rows.length > 0 && rows.every((row) => validateRow(row));
-  const canSubmit = !isLoading && (fetchError || projects.length === 0 || isValid);
 
   return (
     <Layout
