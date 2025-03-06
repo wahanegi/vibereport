@@ -7,7 +7,7 @@
   &:active {
     margin: 3px 0 -3px 0;
     border-color: transparent;
-  }
+    }
 
   @include button-variant($royal-blue, $black, $white, shift-color($royal-blue, 30%), shift-color($royal-blue, 30%),
           $white, shade-color($royal-blue, 20%), shade-color($royal-blue, 20%), $black, $royal-blue,
@@ -20,18 +20,18 @@
     box-shadow: $btn-box-shadow-other !important;
     border-radius: 0.75rem;
     padding: 0 20px;
-  }
+    }
 
   &.btn-danger {
     color: $white;
     background-color: $red;
-  }
+    }
 
   // use with C2 or C3 text
   &.btn-feature {
     box-shadow: $btn-box-shadow-other;
     height: 3.75rem;
-  }
+    }
 
   // use with C1 or C2 text
   // Note: system interactions will pair with C1 text, whereas user actions will pair with C2.
@@ -43,20 +43,20 @@
 
     &.active {
       box-shadow: 4px 2px 2px $gray-100;
-    }
+      }
 
     &.back, &.delete, &.ok, &.btn-wide, &.btn-no {
       border-width: 0;
-    }
+      }
 
     &.btn-wide {
       width: 300px;
-    }
+      }
 
     &.btn-no {
       width: 196px;
+      }
     }
-  }
 
   // For the Special Components/Inputs
   &.btn-bubbles {
@@ -65,23 +65,23 @@
     &.wb1 {
       &.not-standart {
         min-width: 260px;
-      }
+        }
 
       &.not-shadow {
         box-shadow: none;
-      }
+        }
 
       padding: 0 5px;
       height: 2rem;
       border-radius: 15px;
       box-shadow: $btn-box-shadow;
-      min-width: 7.3rem;
+      min-width: 8rem;
       margin: 5px 0;
       max-width: 175px;
       overflow: hidden;
       @include emotion
+      }
     }
-  }
 
 
   // For the Special buttons
@@ -98,8 +98,8 @@
     margin: 5px !important;
     font-size: 20px !important;
 
+    }
   }
-}
 
 // The recommend using the general styles above
 // these style buttons are from CI-83
@@ -107,9 +107,11 @@
 // because they don't apply to the overall hierarchy
 
 .btn-custom {
+  height: 70px;
+
   &:disabled {
     opacity: 0.5;
-  }
+    }
 
   &.shoutout {
     position: relative;
@@ -127,10 +129,10 @@
       width: 36px;
       height: 36px;
       margin-left: 5px
+      }
     }
   }
-}
 
 .max-width-btns {
   max-width: 800px;
-}
+  }

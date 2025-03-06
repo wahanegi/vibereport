@@ -1,58 +1,37 @@
-@import 'bootstrap/scss/bootstrap';
-
-// Setting basic variables for typography
-$font-size-base: 1rem;
-$font-weight-normal: 400;
-$font-weight-bold: 700;
-
-$headings-font-family: $font-family-base;
-$headings-font-weight: 600;
-$headings-color: $black;
-
 // Adaptive fonts: Enabling RFS (Responsive Font Sizes)
 $enable-responsive-font-sizes: true;
 
 // font-grid variables
 $font-size: (
-        1: 3rem, // fs-1
-        2: 2.5rem, // fs-2
-        3: 2rem, // fs-3
-        4: 1.75rem, // fs-4
-        5: 1.5rem, // fs-5
-        6: 1.25rem, // fs-6
-        7: 1rem, // fs-7
-        8: 0.875rem, // fs-8
-        9: 0.75rem, // fs-9
-        10: 0.625rem // fs-10
+        1: 3rem, // 48px
+        2: 2.75rem, // 44px
+        3: 2.5rem, // 40px
+        4: 2.25rem, // 36px
+        5: 2rem, // 32px
+        6: 1.75rem, // 28px
+        7: 1.5rem, // 24x
+        8: 1.25rem, // 20x
 );
 
-// Overwriting default Bootstrap variables
-$font-size-xl: map-get($font-size, 1);
-$font-size-lg: map-get($font-size, 2);
-$font-size-md: map-get($font-size, 3);
-$font-size-base: map-get($font-size, 6); // 1.25rem
-$font-size-sm: map-get($font-size, 7);
-$font-size-xs: map-get($font-size, 8);
+@import 'bootstrap/scss/bootstrap';
+
+// Setting basic variables for typography
+$font-size-base: 1rem; //16px
+$font-weight-bold: 700;
+
+$headings-font-family: $font-family-base;
+$headings-font-weight: $font-weight-bold;
+$headings-color: $black;
 
 /* Custom typography styles */
-// body text-styles
-body {
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  font-weight: $font-weight-normal;
-  line-height: $line-height-base;
-  color: $headings-color;
-  background-color: $white;
-}
-
-// Heading styles
+//Heading styles
 $heading-styles: (
-        h1: (font-size: $font-size-xl, margin-bottom: 2rem),
-        h2: (font-size: $font-size-lg, margin-bottom: 1.75rem),
-        h3: (font-size: $font-size-md, margin-bottom: 1.5rem),
-        h4: (font-size: $font-size-base, margin-bottom: 1.25rem),
-        h5: (font-size: $font-size-xl, margin-bottom: 1rem),
-        h6: (font-size: $font-size-xs, margin-bottom: 0.75rem),
+        h1: (font-size: map-get($font-size, 1)), //48px
+        h2: (font-size: map-get($font-size, 4)), //36px
+        h3: (font-size: map-get($font-size, 5)), //32px
+        h4: (font-size: map-get($font-size, 6)), //28px
+        h5: (font-size: map-get($font-size, 7)), //24px
+        h6: (font-size: map-get($font-size, 8)), //20px
 );
 
 // Generating styles for headings
@@ -64,8 +43,8 @@ $heading-styles: (
     font-size: map-get($styles, font-size);
     @include rfs(map-get($styles, font-size)); // add RFS
     margin-bottom: map-get($styles, margin-bottom);
+    }
   }
-}
 
 // Adding font-grid variables to Bootstrap "font-size"-utility (fs-*)
 $utilities: map-merge(
@@ -79,3 +58,19 @@ $utilities: map-merge(
                         )
                 )
 );
+
+
+// body text-styles
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: $headings-color;
+  background-color: $white;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    }
+  }
