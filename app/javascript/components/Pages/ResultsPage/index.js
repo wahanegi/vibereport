@@ -151,11 +151,11 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   const TimePeriodNavigation = () => {
     if (nextTimePeriod && isBlank(data.prev_results_path)) {
       return (
-        <div className='mt-5'>
-          <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
-                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
-          />
-        </div>
+          <div className='mt-5'>
+            <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6 fs-sm-7'
+                     onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+            />
+          </div>
       )
     }
     return <div className='my-5'></div>
