@@ -919,7 +919,7 @@ input:checked + .slider-shoutout img {
   resize: none;
   }
 
-.max-width-emotion-intensity, .max-width-recognition, .max-width-entry, .max-width-type {
+.max-width-emotion-intensity, .max-width-recognition, .max-width-type {
   max-width: 750px;
   }
 
@@ -929,7 +929,6 @@ input:checked + .slider-shoutout img {
 
 .max-width-sign-in-input {
   max-width: 660px;
-
   &::placeholder {
     font-size: 40px;
     }
@@ -938,3 +937,4 @@ input:checked + .slider-shoutout img {
 .max-width-emotion-selection {
   max-width: 720px;
   }
+
