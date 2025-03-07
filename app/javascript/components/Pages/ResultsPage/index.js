@@ -152,7 +152,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     if (nextTimePeriod && isBlank(data.prev_results_path)) {
       return (
           <div className='mt-5'>
-            <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6 fs-sm-7'
+            <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6'
                      onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
             />
           </div>
@@ -180,7 +180,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
   if (!loaded) return <Loader/>
 
   return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='container-fluid d-flex flex-column w-100 align-items-center pt-1 pt-md-0 gap-1'>
+    <div className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
       <NoticeAlert/>
 
       <TextHeader/>

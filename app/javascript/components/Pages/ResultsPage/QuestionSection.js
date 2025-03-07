@@ -6,7 +6,7 @@ import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
-  <div className='results container blur-effect'>
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     <div className='row wrap question preview mw-100'/>
   </div>
 
@@ -47,10 +47,10 @@ const EmptyQuestionSection = ({
   }, [fun_question])
 
   return <Fragment>
-    <div className='results container'>
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
       <Question {...{userName, fun_question}} />
     </div>
-    <div className={`results container ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
+    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
       <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <h5 className='d-flex justify-content-center fw-semibold'>{text}</h5>
       </div>
@@ -65,7 +65,7 @@ const Question = ({userName, fun_question}) => {
     {
       userName && <p className='b3 muted text-start fs-7'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
-    <h6 className='fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start fw-semibold'> {fun_question.question_body}</h6>
+    <h3 className='w-auto text-start fw-semibold'> {fun_question.question_body}</h3>
   </div>
 }
 
@@ -164,7 +164,7 @@ const AnswerItem = ({
         <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
         <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
-      <div className='edit-question fs-6 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-5 fs-sm-6 w-auto text-start fw-semibold'>
+      <div className='edit-question fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-7 fs-sm-7 w-auto text-start fw-semibold'>
         <span className='color-rose'>@</span>{user.first_name} said:&nbsp;
         {
           edit ?
@@ -204,7 +204,7 @@ const QuestionSection = ({
                                                           setData={setData}
                                                           setShowWorkingModal={setShowWorkingModal}/>
 
-  return <div className='results container'>
+  return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
     <Question {...{userName, fun_question}} />
     {
       answersArray.map(data => {
