@@ -30,7 +30,7 @@ const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
 
   return <div className='row wrap shoutout answer mb-1 w-auto'>
     <div className="col-xl-12">
-      <div className='fs-6 fs-md-5 w-auto text-start truncated fw-semibold'>
+      <div className='fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start truncated fw-semibold'>
         {prefix}
         {prefix && convertUsersToString(users)}
         {!prefix && parse(shoutout.rich_text)}

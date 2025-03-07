@@ -119,18 +119,18 @@
 }
 
 .word {
-  --duration: 4s;
+  --duration: 3s;
   animation: blinkAndScale var(--duration) ease 0s infinite alternate none;
 }
 
 @keyframes blinkAndScale {
   from {
-    transform: scale(.5);
+    transform: scale(.8);
     opacity: .5;
   }
 
   to {
-    transform: scale(1.2);
+    transform: scale(1.1);
     opacity: 1;
   }
 }

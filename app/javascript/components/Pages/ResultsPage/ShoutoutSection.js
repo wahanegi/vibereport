@@ -7,7 +7,7 @@ import ShoutoutItem from "./ShoutoutItem";
 
 
 const PreviewShoutoutSection = () =>
-  <div className='results container blur-effect'>
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     <div className='row wrap shoutout preview'></div>
   </div>
 
@@ -45,7 +45,7 @@ const ShoutoutSection = ({
   }
 
   return <>
-    <div className='results container' hidden={emptyShoutouts}>
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12' hidden={emptyShoutouts}>
       <div className='row wrap shoutout mb-1'>
         <ShoutoutAwards {...{
           timePeriod,
@@ -59,10 +59,10 @@ const ShoutoutSection = ({
         }} />
         <div className='d-flex justify-content-start ps-2 mb-1'>
           {
-            !isEmpty(currentUserShoutouts.received) && <h4 className='fw-semibold'>
+            !isEmpty(currentUserShoutouts.received) && <h5 className='fs-md-5 fw-semibold'>
               {Pluralize('Shoutout', currentUserShoutouts.received.length)} received: {currentUserShoutouts.received.length}
               {isEmpty(currentUserShoutouts.sent) ? '' : ';'}&nbsp;&nbsp;
-            </h4>
+            </h5>
           }
           {
             !isEmpty(currentUserShoutouts.sent) &&
