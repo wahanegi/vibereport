@@ -6,7 +6,7 @@ import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
-  <div className='results container blur-effect'>
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     <div className='row wrap question preview mw-100'/>
   </div>
 
@@ -47,10 +47,10 @@ const EmptyQuestionSection = ({
   }, [fun_question])
 
   return <Fragment>
-    <div className='results container'>
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
       <Question {...{userName, fun_question}} />
     </div>
-    <div className={`results container ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
+    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
       <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <h5 className='d-flex justify-content-center fw-semibold'>{text}</h5>
       </div>
@@ -204,7 +204,7 @@ const QuestionSection = ({
                                                           setData={setData}
                                                           setShowWorkingModal={setShowWorkingModal}/>
 
-  return <div className='results container'>
+  return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
     <Question {...{userName, fun_question}} />
     {
       answersArray.map(data => {

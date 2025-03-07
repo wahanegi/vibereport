@@ -4,7 +4,7 @@ import React from "react"
 import PoweredBy from "../../../../assets/images/PoweredBy.svg";
 
 const PreviewGifSection = () => {
-  return (<div className='container blur-effect'>
+  return (<div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     <div className="row row-cols-lg-4 row-cols-md-2 row-cols-1">
       {Array(12).fill(0).map((_, index) => (
         <div className='col align-items-center p-1' key={index}>
@@ -32,8 +32,8 @@ const GifSection = ({gifs, nextTimePeriod, isMinUsersResponses}) => {
   });
 
   return <>
-    <div className='container mb-3'>
-      <div className="row row-cols-lg-4 row-cols-md-2 row-cols-1">
+    <div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 mb-3'>
+      <div className="row row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 row-cols-1">
         {gifItems}
       </div>
       <img src={PoweredBy} alt='PoweredBy' className="big image-powered-by align-top"/>

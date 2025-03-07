@@ -7,7 +7,7 @@ import ShoutoutItem from "./ShoutoutItem";
 
 
 const PreviewShoutoutSection = () =>
-  <div className='results container blur-effect'>
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     <div className='row wrap shoutout preview'></div>
   </div>
 
@@ -45,7 +45,7 @@ const ShoutoutSection = ({
   }
 
   return <>
-    <div className='results container' hidden={emptyShoutouts}>
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12' hidden={emptyShoutouts}>
       <div className='row wrap shoutout mb-1'>
         <ShoutoutAwards {...{
           timePeriod,

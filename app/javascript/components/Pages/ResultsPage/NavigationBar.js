@@ -42,7 +42,7 @@ const NavigationBar = ({
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
 
-    return (<div className="w-75">
+    return (<div className="col-12 col-xxl-10 col-xl-10 col-lg-10 col-md-11 col-sm-12">
         <div
             className='d-flex flex-wrap flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-column flex-sm-column align-items-center justify-content-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between w-100 gap-1'>
             <Calendar

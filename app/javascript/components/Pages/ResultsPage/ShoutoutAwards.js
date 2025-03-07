@@ -37,7 +37,7 @@ const ShoutoutAwards = ({
                 </div>
               )}
             </div>
-            <div className='col p-0 minW-280' hidden={isEmpty(sentShoutouts)}>
+            <div className='fs-md-7 col p-0 minW-280' hidden={isEmpty(sentShoutouts)}>
               {sentShoutouts.slice(0, 2).map((shoutout, i) =>
                 <div className='row d-inline-block' key={i}>
                   <p className='fw-semibold d-inline'>
