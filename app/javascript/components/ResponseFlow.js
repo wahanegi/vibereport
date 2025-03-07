@@ -3,6 +3,7 @@ import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
 import EmotionEntry from "./Pages/EmotionEntry";
 import EmotionIntensity from "./Pages/EmotionIntensity";
+import TimesheetPage from "./Pages/TimesheetPage";
 import {apiRequest} from "./requests/axios_requests";
 import {mergeData} from "./helpers/library";
 import {useNavigate} from "react-router-dom";
@@ -115,6 +116,7 @@ const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
     'meme-selection': <MemeSelection isCustomGif={isCustomGif} setIsCustomGif={setIsCustomGif} />,
     'emotion-intensity': <EmotionIntensity />,
     'productivity-check': <ProductivityCheckLow />,
+    'timesheet': <TimesheetPage />,
     'results': <Results />,
     'productivity-bad-follow-up': <ProductivityBadFollowUp />,
     'causes-to-celebrate': <CausesToCelebrate />,

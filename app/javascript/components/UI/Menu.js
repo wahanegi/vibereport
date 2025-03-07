@@ -14,6 +14,8 @@ import complete35 from '../../../assets/images/complete35.svg'
 import complete35_act from '../../../assets/images/complete35_act.svg'
 import complete45 from '../../../assets/images/complete45.svg'
 import complete45_act from '../../../assets/images/complete45_act.svg'
+import complete50 from '../../../assets/images/complete50.svg'
+import complete50_act from '../../../assets/images/complete50_act.svg'
 import complete5_10 from '../../../assets/images/complete5_10.svg'
 import complete5_10_act from '../../../assets/images/complete5_10_act.svg'
 import complete65 from '../../../assets/images/complete65.svg'
@@ -73,6 +75,7 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
     'productivity-check': {src: complete25, activeSrc: complete25_act, percent: 25},
     'productivity-bad-follow-up': {src: complete35, activeSrc: complete35_act, percent: 35},
     'causes-to-celebrate': {src: complete45, activeSrc: complete45_act, percent: 45},
+    'timesheet': { src: complete50, activeSrc: complete50_act, percent: 50 },
     'recognition': {src: complete65, activeSrc: complete65_act, percent: 65},
     'icebreaker-answer': {src: complete85, activeSrc: complete85_act, percent: 85},
     'icebreaker-question': {src: complete90, activeSrc: complete90_act, percent: 90},

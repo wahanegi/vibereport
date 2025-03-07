@@ -35,6 +35,10 @@ RSpec.describe TimePeriod, type: :model do
     it 'has many emotions trough responses' do
       expect(time_period1).to have_many(:emotions)
     end
+
+    it 'has many time_sheet_entries' do
+      expect(time_period1).to have_many(:time_sheet_entries).dependent(:destroy)
+    end
   end
 
   context 'Validations' do
@@ -80,7 +84,10 @@ RSpec.describe TimePeriod, type: :model do
 
     context '#date_range' do
       it 'returns the correct date range string' do
-        expect(time_period1.date_range).to eq("#{time_period1.start_date.strftime('%Y-%m-%d')} - #{time_period1.end_date.strftime('%Y-%m-%d')}")
+        start_date = time_period1.start_date.beginning_of_week.strftime('%Y-%m-%d')
+        end_date = time_period1.start_date.end_of_week.strftime('%Y-%m-%d')
+
+        expect(time_period1.date_range).to eq("#{start_date} - #{end_date}")
       end
     end
 

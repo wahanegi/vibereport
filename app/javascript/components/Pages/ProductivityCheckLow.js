@@ -84,6 +84,8 @@ const ProductivityCheckLow = ({
   const handlingOnClickNext = () => {
     if (productivity < 3) {
       steps.push('productivity-bad-follow-up');
+    } else if (data.timesheet_enabled) {
+      steps.push('timesheet');
     } else {
       steps.push('causes-to-celebrate');
     }

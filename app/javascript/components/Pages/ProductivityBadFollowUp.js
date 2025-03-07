@@ -29,7 +29,11 @@ const ProductivityBadFollowUp = ({
   }, [comment]);
 
   const handlingOnClickNext = () => {
-    steps.push('causes-to-celebrate');
+    if (data.timesheet_enabled) {
+      steps.push('timesheet');
+    } else {
+      steps.push('causes-to-celebrate');
+    }
     saveDataToDb(steps, {productivity_comment: comment, draft: false});
   };
 

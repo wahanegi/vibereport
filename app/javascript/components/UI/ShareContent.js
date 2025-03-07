@@ -14,6 +14,7 @@ import {backHandling, isPresent} from "../helpers/helpers";
 import ResultsPage from "../Pages/ResultsPage";
 import ResultsPageManager from "../Pages/ResultsPageManager";
 import {updateResponse} from "../requests/axios_requests";
+import Button from "./Button";
 import Menu from "./Menu";
 
 export const BigBtnEmotion = ({emotion, onClick, showPencil = true, addClass = '', selectedType}) => {
@@ -50,7 +51,8 @@ export const BtnOutline = ({text, addClass = '', onClick, disabled}) =>
   </button>
 
 export const BtnPrimary = ({text, addClass = '', hidden, onClick, disabled}) =>
-  <button onClick={onClick} className={`btn btn-regular c1 border-1 border fs-5 ${addClass}`} hidden={hidden} disabled={disabled}>
+  <button onClick={onClick} className={`btn btn-regular c1 border-1 border fs-5 ${addClass}`} hidden={hidden}
+          disabled={disabled}>
     {text}
   </button>
 
@@ -66,7 +68,7 @@ export const Calendar = ({
       null
     }
     {positionRight && <p className="position-absolute" style={{right: -48, bottom: 63, width: 180}}>See next results</p>}
-    <div className="position-relative pointer w-82 mt-1" onClick={onClick}>
+    <div className="position-relative pointer w-82" onClick={onClick}>
       <img src={calendar} alt="calendar"/>
       <div className="position-absolute top-0 w-82">
         {date.includes(' - ') ?
@@ -100,6 +102,14 @@ export const BtnBack = ({addClass = '', hidden, onClick, disabled, text = 'Back'
           hidden={hidden} disabled={disabled}>
     {text}
   </button>
+
+export const BtnAddNewRow = ({onClick, disabled}) =>
+  <div className={"d-flex justify-content-center justify-content-sm-end mb-2 p-e-0 pe-sm-9"}>
+    <Button className={"btn-regular fs-5 fw-semibold shadow-none"} children={"+ New Entry"}
+            onClick={onClick}
+            disabled={disabled}/>
+  </div>
+
 
 export const ShoutOutIcon = ({addClass = '', onClick}) =>
   <div className={'m-0 pointer'} onClick={onClick}>

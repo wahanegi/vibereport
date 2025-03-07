@@ -177,7 +177,7 @@ const MemeSelection = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="container-sm gif-wrap">
+        <div className="container-fluid gif-wrap">
           <Header/>
           <Gif
             {...{
