@@ -138,7 +138,6 @@ export const BtnAddNewRow = ({onClick}) =>
               onClick={onClick}
       />
     </div>;
-
 export const ShoutOutIcon = ({addClass = '', onClick}) =>
     <div className={'m-0 pointer'} onClick={onClick}>
       <img className={`${addClass}`} src={shoutout} alt="shout out"
