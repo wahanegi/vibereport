@@ -134,17 +134,17 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
       return (
         isMinUsersResponses ? (
           <div className='d-flex flex-column gap-1 mb-1 mb-md-0'>
-            <h1 className={"fs-md-1"}>You're one of the first to check in!</h1>
+            <h1 className="fs-md-1">You're one of the first to check in!</h1>
             <h6>Come back later to view the results</h6>
           </div>
         ) : (
-          <h1 className={"fs-md-1"}>The team is feeling...</h1>
+          <h1 className="fs-md-1">The team is feeling...</h1>
         )
       );
     }
 
     return (
-      <h1 className={"fs-md-1"}>During {rangeFormat(timePeriod)} the team was feeling...</h1>
+      <h1 className="fs-md-1">During {rangeFormat(timePeriod)}<br/> the team was feeling...</h1>
     );
   }
 

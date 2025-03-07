@@ -42,9 +42,9 @@ const NavigationBar = ({
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
 
-    return (<div className="container">
+    return (<div className="w-75">
         <div
-            className='d-flex flex-wrap justify-content-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between justify-content-md-between w-100 gap-1'>
+            className='d-flex flex-wrap flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-column flex-sm-column align-items-center justify-content-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between w-100 gap-1'>
             <Calendar
                 date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)}
                 onClick={showPrevTimePeriod}
@@ -52,7 +52,7 @@ const NavigationBar = ({
                 prevTimePeriod={prevTimePeriod}
                 emotions={emotions}
                 nextTimePeriod={nextTimePeriod}/>
-            <div className='d-flex flex-wrap align-items-center gap-1'>
+            <div className='d-flex flex-nowrap flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-column flex-sm-column align-items-center gap-1'>
                 {hasTeamAccess && <ResultsManager data={data}
                                                   setData={setData}
                                                   steps={steps}

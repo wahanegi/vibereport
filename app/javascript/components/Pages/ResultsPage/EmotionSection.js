@@ -6,7 +6,7 @@ const AnimatedEmotion = ({ word }) => {
   const shift = Math.round(Math.random() * 10) / 10
   const marginTop = shift * 20
   const fontSize = shift + 0.8
-  const duration = shift * 5
+  const duration = shift * 9
 
   const animatedStyles = {
     marginTop: `${marginTop}px`,
