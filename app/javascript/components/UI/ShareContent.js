@@ -207,13 +207,12 @@ export const Results = ({data, setData, steps, hidden = false}) => {
   };
 
   return (
-    !hidden && <div className='ms-auto me-2'>
+    !hidden && <div className='mx-auto me-md-4 mt-1'>
       <div
         className="b4 position-result pointer"
         onClick={handlingOnClickImage}
       >
         <img
-          className='ms-1'
           src={BackRevert}
           alt="Back Revert"
         />
