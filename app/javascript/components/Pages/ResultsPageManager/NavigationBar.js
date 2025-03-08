@@ -33,17 +33,19 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
 
-  return <Fragment>
-    <div className='d-flex justify-content-between position-relative' style={{marginLeft: 172, marginRight: 172, top: 40}}>
+  return <div >
+    <div className='d-flex flex-wrap justify-content-center justify-content-md-between w-100 '>
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
                 positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
+      <div className='d-flex flex-wrap align-items-center justify-content-center me-lg-4'>
       <Results data={data} setData={setData} steps={steps} />
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
                 positionRight={true} prevTimePeriod={prevTimePeriod} emotions={emotions}
                 hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))}/>
       <EditResponse onClick={handlingBack} hidden={nextTimePeriod || isPresent(prev_results_path)} />
+      </div>
     </div>
-  </Fragment>
+  </div>
 }
 
 export default NavigationBar

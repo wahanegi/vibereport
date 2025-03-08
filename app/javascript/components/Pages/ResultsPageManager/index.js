@@ -81,25 +81,11 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
   scrollTopTimePeriodCallback(nextTimePeriod)
   scrollTopModalCallback(showModal)
 
-  const Footer = () => <Fragment>
-    <ShoutOutIcon addClass={nextTimePeriod ? 'd-none' : 'hud shoutout'} onClick={() => {
-      setShowModal(true)
-    }}/>
-    {
-      nextTimePeriod && isBlank(data.prev_results_path) ?
-        <div className='mt-5'>
-          <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
-                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
-          />
-        </div> :
-        <div style={{height: 120}}></div>
-    }
-  </Fragment>
 
   if (!loaded) return <Loader/>
 
-  return loaded && <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='position-relative'>
+  return loaded && <Layout data={data} setData={setData} steps={steps} draft={draft} hideShoutout={nextTimePeriod ? true : false} isResult={true}>
+    <div className='max-width-container mx-1'>
       <>
         {
           notice && <SweetAlert {...{
@@ -114,29 +100,38 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
         {
           !nextTimePeriod ?
             isMinUsersResponses ?
-              <div className='text-header-position'>
+              <>
                 <h1 className='fs-md-1 mb-0'>You're one of the first<br/>to check in!</h1>
-                <h6 className={"fs-md-7"}>Come back later to view the results </h6><br/>
-              </div> :
-              <h1 className='fs-md-1 text-header-position mb-6'><br/>The team is feeling...</h1> :
-            <h1 className='fs-md-1 text-header-position'>During {rangeFormat(timePeriod)} <br/> the team was feeling...
+                <h6 className='fs-md-7'>Come back later to view the results </h6><br/>
+              </> :
+              <h1 className='fs-md-1'>The team is feeling...</h1> :
+            <h1 className='fs-md-1'>During {rangeFormat(timePeriod)} <br/> the team was feeling...
             </h1>
         }
         <NavigationBar {...{
           timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods, prevTimePeriod, nextTimePeriod, steps,
           emotions, data, setShowWorkingModal, setData, prev_results_path
         }} />
-        <div className="folder-shape left-cut">
+        <div className="folder-shape left-cut mt-7">
           <div className="right-cut">
             <div className='folder-line'></div>
-            <div className="fs-7 fs-md-6 position">Leader Panel
-              <img className="image-container ms-1" src={LeaderVector}/>
+            <div className="d-flex flex-column flex-md-row align-items-center fs-lg-8 fs-xl-7 position">
+              <span className='d-none d-sm-block'>Leader Panel</span>
+              <img className="leader-vector" src={LeaderVector} alt="Leader Vector" />
             </div>
           </div>
           <EmotionIndex teams={teams} nextTimePeriod={nextTimePeriod} isMinUsersResponses={isMinUsersResponses}/>
         </div>
       </>
-      <Footer/>
+      {
+        nextTimePeriod && isBlank(data.prev_results_path) ?
+          <div className='mt-5'>
+            <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-sm-5'
+                    onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+            />
+          </div> :
+          <div style={{height: 120}}></div>
+      }
     </div>
     {
       showModal && <ShoutoutModal onClose={() => {
