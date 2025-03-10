@@ -63,7 +63,7 @@ const Question = ({userName, fun_question}) => {
 
   return <div className='row wrap question mb-1 mw-100'>
     {
-      userName && <p className='b3 muted text-start fs-7'><span className='color-rose'>@</span>{userName} asks:<br/></p>
+      userName && <p className='b3 muted text-start fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
     <h3 className='w-auto text-start fw-semibold'> {fun_question.question_body}</h3>
   </div>
@@ -164,7 +164,7 @@ const AnswerItem = ({
         <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
         <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
-      <div className='edit-question fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-7 fs-sm-7 w-auto text-start fw-semibold'>
+      <div className='edit-question fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start fw-semibold'>
         <span className='color-rose'>@</span>{user.first_name} said:&nbsp;
         {
           edit ?

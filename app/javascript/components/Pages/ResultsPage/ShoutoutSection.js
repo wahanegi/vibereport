@@ -18,8 +18,8 @@ const ShoutoutSection = ({
   const [shoutOutForm, setShoutOutForm] = useState(false);
   const hasCurrentUserSentShoutouts = !isEmpty(currentUserShoutouts.sent)
   const hasCurrentUserReceivedShoutouts = !isEmpty(currentUserShoutouts.received)
-  const emptyCurrentUserShoutouts = !hasCurrentUserReceivedShoutouts && !hasCurrentUserSentShoutouts
-  const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
+  const hasEmptyCurrentUserShoutouts = !hasCurrentUserReceivedShoutouts && !hasCurrentUserSentShoutouts
+  const emptyShoutouts = hasEmptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
 
   if (!nextTimePeriod && isMinUsersResponses) return <PreviewShoutoutSection/>
 
