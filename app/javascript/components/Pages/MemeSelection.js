@@ -5,7 +5,6 @@ import Layout from '../Layout';
 import {BigBtnEmotion, BtnOutline, BtnPrimary, Header,} from '../UI/ShareContent';
 import Gif from './Gifs';
 
-
 export const getAndSetImageHeight = (file, setImageHeight, callback) => {
   const img = new Image();
   img.src = URL.createObjectURL(file);
@@ -168,35 +167,35 @@ const MemeSelection = ({
   if (!!error) return <p>{error.message}</p>;
 
   return (
-    !isLoading && (
-      <Layout
-        data={data}
-        setData={setData}
-        saveDataToDb={saveDataToDb}
-        steps={steps}
-        draft={isDraft}
-        handleSaveDraft={handleSaveDraft}
-      >
-        <div className="container-sm gif-wrap">
-          <Header/>
-          <Gif
-            {...{
-              emotion,
-              api_giphy_key,
-              gifUrl,
-              setGifUrl,
-              selectedGifIndex,
-              setSelectedGifIndex,
-              isCustomGif,
-              setIsCustomGif,
-              uploading,
-              uploadingError,
-            }}
-          />
-          <Navigation/>
-        </div>
-      </Layout>
-    )
+      !isLoading && (
+          <Layout
+              data={data}
+              setData={setData}
+              saveDataToDb={saveDataToDb}
+              steps={steps}
+              draft={isDraft}
+              handleSaveDraft={handleSaveDraft}
+          >
+            <div className="container-fluid gif-wrap">
+              <Header/>
+              <Gif
+                  {...{
+                    emotion,
+                    api_giphy_key,
+                    gifUrl,
+                    setGifUrl,
+                    selectedGifIndex,
+                    setSelectedGifIndex,
+                    isCustomGif,
+                    setIsCustomGif,
+                    uploading,
+                    uploadingError,
+                  }}
+              />
+              <Navigation/>
+            </div>
+          </Layout>
+      )
   );
 };
 

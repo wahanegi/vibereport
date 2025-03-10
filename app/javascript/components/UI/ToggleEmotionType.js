@@ -5,25 +5,27 @@ import iconPositive from "../../../assets/images/icon_positive.svg";
 const ToggleEmotionType = ({selectedType, handleEmotionType}) => {
 
   return (
-    <div>
-     <h2 className="fs-xxl-5 fs-md-6 fs-6 mb-1">Is this feeling positive or negative?</h2>
-      <div className="btn-group wrap-toggle position-relative w-100" role="group"
-           aria-label="Basic radio toggle button group">
-        <input
-          type="radio"
-          className="btn-check toggle-negative-check negative"
-          id="negative"
-          autoComplete="off"
-          checked={selectedType === 'negative'}
-          onChange={() => handleEmotionType('negative')}
-        />
-        <label className="btn toggle-category toggle-negative"
-               htmlFor="negative">
-          <div className="wrap-icon d-flex flex-column align-items-center mt-1">
-            <img className="icon-negative" src={iconNegative} alt="negative"/>
-            <span>Negative</span>
-          </div>
-        </label>
+      <div>
+        <h2 className="fs-md-4 mb-1">Is this feeling positive or negative?</h2>
+        <div className="btn-group wrap-toggle position-relative w-100"
+             role="group"
+             aria-label="Basic radio toggle button group">
+          <input
+              type="radio"
+              className="btn-check toggle-negative-check negative"
+              id="negative"
+              autoComplete="off"
+              checked={selectedType === 'negative'}
+              onChange={() => handleEmotionType('negative')}
+          />
+          <label className="btn toggle-category toggle-negative"
+                 htmlFor="negative">
+            <div
+                className="wrap-icon d-flex flex-column align-items-center mt-1">
+              <img className="icon-negative" src={iconNegative} alt="negative"/>
+              <span>Negative</span>
+            </div>
+          </label>
 
         <input
           type="radio"

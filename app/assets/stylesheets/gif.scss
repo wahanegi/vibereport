@@ -59,7 +59,7 @@
 }
 
 .gif-wrap {
-  width: 75%;
+  max-width: 1104px;
 }
 
 .gif-list {
@@ -75,6 +75,7 @@
 
 .gif-card {
   background-color: $gray-500 !important;
+  min-height: 417px;
 
   .card-header {
     height: 100px;
@@ -106,7 +107,7 @@
   }
 
   .card-scroll {
-    max-height: 417px;
+    max-height: 300px;
     overflow-y: auto;
   }
 
