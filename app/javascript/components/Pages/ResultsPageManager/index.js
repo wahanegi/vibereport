@@ -85,7 +85,7 @@ const ResultsManager = ({data, setData, steps = data.response.attributes.steps |
   if (!loaded) return <Loader/>
 
   return loaded && <Layout data={data} setData={setData} steps={steps} draft={draft} hideShoutout={nextTimePeriod ? true : false} isResult={true}>
-    <div className='max-width-container mx-1'>
+    <div className='max-width-container mx-1 w-100'>
       <>
         {
           notice && <SweetAlert {...{

@@ -170,17 +170,5 @@
 }
 
 .no-data {
-  padding: 0 200px;
-}
-
-@media (max-width: 768px) {
-  .no-data {
-    padding: 0 100px;
-  }
-}
-
-@media (max-width: 576px) {
-  .no-data {
-    padding: 0 50px;
-  }
+  padding: 0 50px;
 }
