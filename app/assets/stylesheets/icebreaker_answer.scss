@@ -21,10 +21,9 @@
     }
 
   &:focus-within {
-    border: 6px solid $emerald !important;
-    padding: calc(1rem - 3px) !important;
-    }
+    border: 4px solid $emerald !important;
   }
+}
 
 .icebreaker-max-width {
   max-width: 800px;
