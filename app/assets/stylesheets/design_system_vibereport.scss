@@ -6,53 +6,28 @@
 ////////////////////////////////////////////
 // START OF DESIGN SYSTEM VIBEREPORT AREA //
 
-//h1, h2 {
-//  font-weight: 700 !important;
-//  line-height: 100% !important;
-//  color: $gray-500;
-//}
-//
-//h1, .h1 {
-//  font-size: $h1-font-size;
-//}
-//
-//h2, .h2 {
-//  font-size: $h2-font-size;
-//}
-//
-//h1 {
-//  color: $black
-//}
-
 .b1 {
   font-size: 2.5rem !important; //40px
-  }
+}
 
 .b2 {
   font-size: 2rem !important; //32px
-  }
+}
 
 // Use for regular buttons
 .c1 {
   font: {
     family: $font-family-second !important;
     weight: $font-weight-bold !important;
-    }
   }
+}
 
 .c2 {
   font: {
     family: $font-family-base !important;
     weight: $font-weight-bold !important;
-    }
   }
-
-.c3 {
-  //font: {
-  //  family: $font-family-base !important;
-  //  weight: $font-weight-bold !important;
-  //  }
-  }
+}
 
 .form-control {
   border: 3px solid $gray-100;
@@ -60,8 +35,8 @@
   &:focus {
     border: 3px solid $input-btn-border-color !important; //3px
     box-shadow: none !important;
-    }
   }
+}
 
 input, textarea {
   height: 4.375rem; //70px
@@ -72,52 +47,52 @@ input, textarea {
 
   &:focus {
     border: 3px solid $royal-blue;
-    }
+  }
 
   &::-webkit-scrollbar {
     width: 15px;
-    }
+  }
 
   &::-webkit-scrollbar-track {
     background-color: $light-grey;
     border-radius: 10px;
-    }
+  }
 
   &::-webkit-scrollbar-thumb {
     background-color: $gray-300;
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    }
+  }
 
   &::-webkit-scrollbar-thumb:hover {
     background: shade-color($gray-300, 10%);
-    }
   }
+}
 
 textarea {
   &:focus {
     border-color: $royal-blue !important;
-    }
   }
+}
 
 // FOR DROPDOWN MENU
 .dropdown-toggle {
   height: 80px;
   width: 80px;
   padding: 0 !important;
-  }
+}
 
 .dropdown-toggle::after {
   visibility: hidden;
-  }
+}
 
 #dropdown-stick {
   &.show {
     .one-line-menu {
       border-color: $primary;
-      }
     }
   }
+}
 
 // END of DROPDOWN MENU
 
