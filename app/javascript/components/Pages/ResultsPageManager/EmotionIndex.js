@@ -100,14 +100,14 @@ const EmotionIndex = ({teams, nextTimePeriod, isMinUsersResponses}) => {
           <div key={team.id}>
             <div style={{padding: '0 50px'}}>
             <div className='w-auto text-start truncated fw-semibold calculate'>
-                <p className='grey fs-6 m-0'>The <span className="team-name">{team.name}</span> is
+                <p className='grey fs-7 fs-md-6 m-0'>The <span className="team-name">{team.name}</span> is
                   feeling <span className="team-name">{happinessChangeDescription(team.emotion_index_current_period || 0, team.previous_emotion_index || 0)}</span> than
                   last week
                   and <span className="team-name">{happinessDescription(team.emotion_index_all || 0, team.emotion_index_current_period || 0)}</span> than
                   its average.</p>
               </div>
               <div className='w-auto text-start truncated fw-semibold calculate mt-1'>
-                <p className='grey fs-6 m-0'> The <span className="team-name">{team.name}</span> is
+                <p className='grey fs-7 fs-md-6 m-0'> The <span className="team-name">{team.name}</span> is
                   feeling <span className="team-name">{productivityChangeDescription(team.productivity_average_current_period || 0, team.previous_productivity_average || 0)} </span> productive
                   than last week
                   and <span className="team-name">{productivityDescription(team.productivity_average_all || 0, team.productivity_average_current_period || 0)}</span> productive

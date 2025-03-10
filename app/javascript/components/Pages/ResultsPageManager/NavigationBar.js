@@ -37,7 +37,7 @@ const NavigationBar = ({timePeriod, showPrevTimePeriod, showNextTimePeriod, time
     <div className='d-flex flex-wrap justify-content-center justify-content-md-between w-100 '>
       <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
                 positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod} />
-      <div className='d-flex flex-wrap align-items-center justify-content-center me-lg-4'>
+      <div className='d-flex flex-wrap align-items-center justify-content-center'>
       <Results data={data} setData={setData} steps={steps} />
       <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
                 positionRight={true} prevTimePeriod={prevTimePeriod} emotions={emotions}
