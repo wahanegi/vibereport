@@ -14,8 +14,10 @@ const ShoutoutAwards = ({
                             currentUserShoutouts,
                             emptyShoutouts
                         }) => {
+    const isEmptyReceivedShoutouts = isEmpty(receivedShoutouts)
+    const isEmptySentShoutouts = isEmpty(sentShoutouts)
     const hasNextPeriodOrShoutouts = !(nextTimePeriod || isEmpty(currentUserShoutouts.sent))
-    const hasAnyShoutouts = (!isEmpty(sentShoutouts) || !isEmpty(receivedShoutouts))
+    const hasAnyShoutouts = (!isEmptySentShoutouts || !isEmptyReceivedShoutouts)
 
     const timePeriodHeader = nextTimePeriod
         ? `The Most Active Awards for ${rangeFormat(timePeriod)} go to...`
@@ -50,7 +52,7 @@ const ShoutoutAwards = ({
                 <div className="col-12 col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-sm-12">
                     <h5 className='text-center fw-semibold'>{timePeriodHeader}</h5>
                     <h5 className='text-center fw-semibold row'>
-                        <div className={'col'} hidden={isEmpty(receivedShoutouts)}>
+                        <div className='col' hidden={isEmptyReceivedShoutouts}>
                             {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
                                                       firstName={shoutout.sender.first_name}
@@ -58,7 +60,7 @@ const ShoutoutAwards = ({
                                                       gotOrSent="sent"/>
                             )}
                         </div>
-                        <div className={'col'} hidden={isEmpty(sentShoutouts)}>
+                        <div className='col' hidden={isEmptySentShoutouts}>
                             {sentShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
                                                       firstName={shoutout.recipient.first_name}
