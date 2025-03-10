@@ -65,7 +65,7 @@ const Question = ({userName, fun_question}) => {
     {
       userName && <p className='b3 muted text-start fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
-    <h3 className='w-auto text-start fw-semibold'> {fun_question.question_body}</h3>
+    <p className='fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start fw-semibold m-0'> {fun_question.question_body}</p>
   </div>
 }
 
