@@ -57,11 +57,6 @@
   top: 137px;
 }
 
-.text-header-position {
-  position: relative;
-  top: 120px;
-}
-
 .hud {
   position: fixed;
   bottom: 30px;
@@ -119,18 +114,18 @@
 }
 
 .word {
-  --duration: 4s;
+  --duration: 3s;
   animation: blinkAndScale var(--duration) ease 0s infinite alternate none;
 }
 
 @keyframes blinkAndScale {
   from {
-    transform: scale(.5);
+    transform: scale(.8);
     opacity: .5;
   }
 
   to {
-    transform: scale(1.2);
+    transform: scale(1.1);
     opacity: 1;
   }
 }
@@ -143,4 +138,37 @@
 
 .blur-effect {
   filter: blur(8px);
+}
+
+.max-width-container {
+  max-width: 1190px;
+}
+
+.chart-wrapper {
+  max-width: 400px;
+}
+
+@media (max-width: 576px) {
+  .chart-wrapper {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 432px) {
+  .chart-wrapper {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 370px) {
+  .chart-wrapper {
+    max-width: 200px;
+  }
+  .chart-title {
+    display: none;
+  }
+}
+
+.no-data {
+  padding: 0 50px;
 }

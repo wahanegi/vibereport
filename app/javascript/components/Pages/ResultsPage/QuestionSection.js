@@ -6,8 +6,8 @@ import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
-  <div className='results container blur-effect'>
-    <div className='row wrap question preview'/>
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
+    <div className='row wrap question preview mw-100'/>
   </div>
 
 const EmptyQuestionSection = ({
@@ -47,11 +47,11 @@ const EmptyQuestionSection = ({
   }, [fun_question])
 
   return <Fragment>
-    <div className='results col'>
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
       <Question {...{userName, fun_question}} />
     </div>
-    <div className={`results col ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
-      <div className={`empty-answer ${addClass} row wrap question mb-3`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
+      <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <h5 className='d-flex justify-content-center fw-semibold'>{text}</h5>
       </div>
     </div>
@@ -61,11 +61,11 @@ const EmptyQuestionSection = ({
 const Question = ({userName, fun_question}) => {
   if (isBlank(fun_question)) return null;
 
-  return <div className='row wrap question mb-1'>
+  return <div className='row wrap question mb-1 mw-100'>
     {
-      userName && <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asks:<br/></p>
+      userName && <p className='b3 muted text-start fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
-    <h5 className='fs-md-5 w-auto text-start fw-semibold'> {fun_question.question_body}</h5>
+    <p className='fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start fw-semibold m-0'> {fun_question.question_body}</p>
   </div>
 }
 
@@ -154,7 +154,7 @@ const AnswerItem = ({
     }
   }
 
-  return <div className='row wrap question answer mb-1'>
+  return <div className='row wrap question answer mb-1 mw-100'>
     <div className="col-xl-12">
       <div className='d-flex justify-content-end'>
         {isCurrentUser && !edit &&
@@ -164,7 +164,7 @@ const AnswerItem = ({
         <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
         <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
-      <div className='edit-question fs-6 fs-md-5 w-auto text-start fw-semibold'>
+      <div className='edit-question fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start fw-semibold'>
         <span className='color-rose'>@</span>{user.first_name} said:&nbsp;
         {
           edit ?
@@ -204,7 +204,7 @@ const QuestionSection = ({
                                                           setData={setData}
                                                           setShowWorkingModal={setShowWorkingModal}/>
 
-  return <div className='results container'>
+  return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
     <Question {...{userName, fun_question}} />
     {
       answersArray.map(data => {
