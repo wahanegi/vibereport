@@ -77,7 +77,7 @@ const EmotionType = ({
         handleSaveDraft={handleSaveDraft}
       >
         <div className="container pt-10">
-          <div className="row justify-content-center">
+          <div className="row justify-content-center mt-1">
             <div className="col-auto">
               <div className="text-center mt-1 mb-9">
                 <BigBtnEmotion
@@ -88,7 +88,6 @@ const EmotionType = ({
               </div>
             </div>
           </div>
-
           <div className="row justify-content-center">
             <div className="col-auto">
               <ToggleEmotionType
