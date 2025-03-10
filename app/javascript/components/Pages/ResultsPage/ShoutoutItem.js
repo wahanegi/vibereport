@@ -1,6 +1,6 @@
+import parse from "html-react-parser";
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import {convertUsersToString} from "../../helpers/helpers";
-import parse from "html-react-parser";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
@@ -15,10 +15,11 @@ const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
     if (selectedEmoji) {
       setShowEmojiPicker(false)
       setEmojiObject(Object.assign({}, emojiObject, {
-        emoji_code: selectedEmoji,
-        emoji_name: selectedEmojiName,
-        emojiable_id: shoutout.id,
-        emojiable_type: 'Shoutout'})
+          emoji_code: selectedEmoji,
+          emoji_name: selectedEmojiName,
+          emojiable_id: shoutout.id,
+          emojiable_type: 'Shoutout'
+        })
       )
     }
   }, [selectedEmoji])
@@ -29,14 +30,16 @@ const ShoutoutItem = ({shoutout, prefix, users = [], emojis, current_user}) => {
 
   return <div className='row wrap shoutout answer mb-1 w-auto'>
     <div className="col-xl-12">
-      <div className='h5 w-auto text-start truncated fw-semibold'>
+      <div className='fs-6 fs-md-5 w-auto text-start truncated fw-semibold'>
         {prefix}
         {prefix && convertUsersToString(users)}
         {!prefix && parse(shoutout.rich_text)}
         {prefix && <Fragment>"{parse(shoutout.rich_text)}"</Fragment>}
       </div>
-      <EmojiRow {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
-                     setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef}} />
+      <EmojiRow {...{
+        emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
+        setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef
+      }} />
     </div>
   </div>
 }
