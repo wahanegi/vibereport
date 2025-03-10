@@ -161,7 +161,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     return <div className='my-5'></div>
   }
 
-  const NoticeAlert = () => {
+  const SkipCheckInAlert = () => {
     const alertTitle = `<div>Just to confirm...</div></br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
     const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br></br></br>Skip this chek-in if you weren\'t working.'
     const cancelButtonText = 'Skip check-in'
@@ -181,7 +181,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
 
   return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true} hideShoutout={nextTimePeriod}>
     <div className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
-      <NoticeAlert/>
+      <SkipCheckInAlert/>
 
       <TextHeader/>
 

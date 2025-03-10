@@ -66,9 +66,9 @@ const NavigationBar = ({
                     prevTimePeriod={prevTimePeriod}
                     emotions={emotions}/>
 
-                <EditResponse onClick={handlingBack}
+               <div className="me-0 me-xxl-3 me-xl-3 me-lg-3 me-md-0 me-sm-0" hidden={nextTimePeriod}> <EditResponse onClick={handlingBack}
                               hidden={nextTimePeriod}
-                />
+                /> </div>
             </div>
         </div>
     </div>)

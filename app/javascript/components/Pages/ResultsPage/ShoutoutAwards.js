@@ -25,12 +25,12 @@ const ShoutoutAwards = ({
         <img src={cup} alt="cup"/>
     </div>
 
-    const ShoutoutCountDisplay = ({firstName, count, gotOrSent}) => <div className='row'>
-        <p className='fw-semibold m-0 p-0'>
+    const ShoutoutCountDisplay = ({firstName, count, gotOrSent}) =>
+        <p className='fw-semibold m-0 p-0 text-nowrap'>
             <span className='color-rose'>@</span><span
             className='fw-bold'>{firstName}</span> {gotOrSent} {count} {Pluralize('Shoutout', count)}&nbsp;
         </p>
-    </div>
+
 
     const SendMoreShoutouts = () => hasNextPeriodOrShoutouts &&
         <div className='col-12 col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 mb-1'>
@@ -44,13 +44,13 @@ const ShoutoutAwards = ({
 
     return hasAnyShoutouts && <div className='row justify-content-center'>
         <div
-            className={hasNextPeriodOrShoutouts ? `col-12 col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12` : 'col-8'}>
+            className={hasNextPeriodOrShoutouts ? `col-12 col-xxl-8 col-xl-8` : 'col-8'}>
             <div className='row'>
                 <CupIcon/>
                 <div className="col-12 col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-sm-12">
                     <h5 className='text-center fw-semibold'>{timePeriodHeader}</h5>
-                    <h5 className='text-center fw-semibold row row-cols-1 row-cols-xxl-2'>
-                        <div className='col p-0' hidden={isEmpty(receivedShoutouts)}>
+                    <h5 className='text-center fw-semibold row'>
+                        <div className={'col'} hidden={isEmpty(receivedShoutouts)}>
                             {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
                                                       firstName={shoutout.sender.first_name}
@@ -58,7 +58,7 @@ const ShoutoutAwards = ({
                                                       gotOrSent="sent"/>
                             )}
                         </div>
-                        <div className='col p-0' hidden={isEmpty(sentShoutouts)}>
+                        <div className={'col'} hidden={isEmpty(sentShoutouts)}>
                             {sentShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
                                                       firstName={shoutout.recipient.first_name}
@@ -71,7 +71,7 @@ const ShoutoutAwards = ({
                 <CupIcon/>
             </div>
         </div>
-        <SendMoreShoutouts />
+        <SendMoreShoutouts/>
     </div>
 }
 

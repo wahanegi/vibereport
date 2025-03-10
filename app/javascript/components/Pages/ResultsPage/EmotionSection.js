@@ -1,17 +1,16 @@
 import React from "react";
 import { EMOTION_COL_NUMBERS, MIN_USERS_RESPONSES } from "../../helpers/consts";
-import { splitArray } from "../../helpers/helpers";
+import { getRandomInteger, splitArray} from "../../helpers/helpers";
 
 const AnimatedEmotion = ({ word }) => {
-  const shift = Math.round(Math.random() * 10) / 10
-  const marginTop = shift * 20
-  const fontSize = shift + 0.8
-  const duration = shift * 7
+  const marginTop = getRandomInteger(1,15) // top margin 1-15px
+  const fontSize = getRandomInteger(13,30) // font size 13-30px
+  const duration = getRandomInteger(1500,4000) // animation duration 1500-4000ms
 
   const animatedStyles = {
     marginTop: `${marginTop}px`,
-    fontSize: `${fontSize}rem`,
-    '--duration': `${duration}s`
+    fontSize: `${fontSize}px`,
+    '--duration': `${duration}ms`
   }
 
   return (
