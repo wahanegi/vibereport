@@ -179,7 +179,7 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
 
   if (!loaded) return <Loader/>
 
-  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
+  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true} hideShoutout={nextTimePeriod}>
     <div className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
       <NoticeAlert/>
 

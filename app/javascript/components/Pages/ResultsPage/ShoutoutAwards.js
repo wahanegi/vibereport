@@ -21,20 +21,20 @@ const ShoutoutAwards = ({
         ? `The Most Active Awards for ${rangeFormat(timePeriod)} go to...`
         : 'The Most Active team members are currently...'
 
-    const CupIcon = () => <div className="col-12 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-12">
+    const CupIcon = () => <div className="col-12 col-xxl-2 col-xl-2 col-lg-2 col-md-12 col-sm-12">
         <img src={cup} alt="cup"/>
     </div>
 
-    const ShoutoutCountDisplay = ({firstName, count, gotOrSent}) => <div className='row d-inline-block'>
-        <p className='fw-semibold d-inline'>
+    const ShoutoutCountDisplay = ({firstName, count, gotOrSent}) => <div className='row'>
+        <p className='fw-semibold m-0 p-0'>
             <span className='color-rose'>@</span><span
             className='fw-bold'>{firstName}</span> {gotOrSent} {count} {Pluralize('Shoutout', count)}&nbsp;
         </p>
     </div>
 
     const SendMoreShoutouts = () => hasNextPeriodOrShoutouts &&
-        <div className='col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-1'>
-            <div className='d-flex justify-content-center flex-column mt-2 mt-xxl-0 mt-xl-0 mt-lg-0 mt-md-2 mt-sm-2'>
+        <div className='col-12 col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 mb-1'>
+            <div className='d-flex justify-content-center flex-column mt-2 mt-xxl-0 mt-xl-0 mt-lg-2 mt-md-2 mt-sm-2'>
                 <h5 className='fw-semibold'>It's not too late!</h5>
                 <BtnSendMoreShoutouts onClick={() => {
                     setShoutOutForm(true)
@@ -44,12 +44,12 @@ const ShoutoutAwards = ({
 
     return hasAnyShoutouts && <div className='row justify-content-center'>
         <div
-            className={hasNextPeriodOrShoutouts ? `col-12 col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-sm-12` : 'col-8'}>
+            className={hasNextPeriodOrShoutouts ? `col-12 col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12` : 'col-8'}>
             <div className='row'>
                 <CupIcon/>
-                <div className="col-12 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                <div className="col-12 col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-sm-12">
                     <h5 className='text-center fw-semibold'>{timePeriodHeader}</h5>
-                    <h5 className='text-center fw-semibold row row-cols-1 row-cols-xxl-2 row-cols-xl-2 row-cols-lg-2 row-cols-md-1 row-cols-sm-1'>
+                    <h5 className='text-center fw-semibold row row-cols-1 row-cols-xxl-2'>
                         <div className='col p-0' hidden={isEmpty(receivedShoutouts)}>
                             {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
