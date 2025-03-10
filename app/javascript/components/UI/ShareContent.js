@@ -70,26 +70,28 @@ export const Calendar = ({
             : <p className="m-0">See previous results</p>
         : null
 
-    return isPresent(date) && !hidden && <div className="position-relative" style={{width: 160, height: 105}}>
+    return isPresent(date) && !hidden && <div className="position-relative" style={{width: 180, height: 105}}>
         {seeResults}
         {positionRight && <p className="m-0">See next results</p>}
-        <div className="position-relative pointer" onClick={onClick}>
-            <img className="translate-middle-x position-absolute top-0" src={calendar} alt="calendar"/>
-            {date.includes(' - ')
-                ? <div className="position-absolute" style={{top: 35, left: 54}}>
-                    <div className='d-flex flex-column'>
-                        {date.split(' - ')[0]}
-                        <img src={line} alt="line"/>
-                        {date.split(' - ')[1]}
-                    </div>
-                  </div>
-                : <div className="position-absolute" style={{top: 45, left: 48}}>{date}</div>
-            }
+        <div className="position-absolute translate-middle-x start-50" style={{top: 20}}>
+            <div className="position-relative pointer" style={{height: 78, width: 83}} onClick={onClick}>
+                <img className="translate-middle-x position-absolute top-0" src={calendar} alt="calendar"/>
+                <div className="position-absolute top-0" style={{width: 83}}>
+                    {date.includes(' - ')
+                        ?
+                        <div className='d-flex flex-column mt-3'>
+                            {date.split(' - ')[0]}
+                            <img src={line} alt="line"/>
+                            {date.split(' - ')[1]}
+                        </div>
+                        : <div className="d-flex mt-5">{date}</div>
+                    }</div>
+            </div>
         </div>
         {prevTimePeriod && positionLeft &&
-            <img className="position-absolute start-0 top-50" src={polygonLeft} alt="polygon left"/>}
+            <img className="position-absolute top-50" style={{left:23}} src={polygonLeft} alt="polygon left"/>}
         {positionRight &&
-            <img className="position-absolute end-0 top-50" src={polygonRight} alt="polygon right"/>}
+            <img className="position-absolute top-50" style={{right:23}} src={polygonRight} alt="polygon right"/>}
     </div>
 }
 

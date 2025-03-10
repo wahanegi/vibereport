@@ -7,7 +7,7 @@ import ShoutoutItem from "./ShoutoutItem";
 
 
 const PreviewShoutoutSection = () =>
-  <div className='results container blur-effect'>
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect mb-2'>
     <div className='row wrap shoutout preview'></div>
   </div>
 
@@ -16,8 +16,10 @@ const ShoutoutSection = ({
                            recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user
                          }) => {
   const [shoutOutForm, setShoutOutForm] = useState(false);
-  const emptyCurrentUserShoutouts = isEmpty(currentUserShoutouts.received) && isEmpty(currentUserShoutouts.sent)
-  const emptyShoutouts = emptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
+  const hasCurrentUserSentShoutouts = !isEmpty(currentUserShoutouts.sent)
+  const hasCurrentUserReceivedShoutouts = !isEmpty(currentUserShoutouts.received)
+  const hasEmptyCurrentUserShoutouts = !hasCurrentUserReceivedShoutouts && !hasCurrentUserSentShoutouts
+  const emptyShoutouts = hasEmptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
 
   if (!nextTimePeriod && isMinUsersResponses) return <PreviewShoutoutSection/>
 
@@ -33,8 +35,8 @@ const ShoutoutSection = ({
   }
 
   const SentShoutouts = () => {
-    return !isEmpty(currentUserShoutouts.sent) && <div className='px-2'>
-      <h5 className='fs-md-5 text-start fw-semibold'>Sent:</h5>
+    return hasCurrentUserSentShoutouts && <div className='px-2'>
+      <h3 className='text-start fw-semibold'>Sent:</h3>
       {
         currentUserShoutouts.sent.map(data => {
           const {shoutout, users, emojis = []} = data
@@ -44,9 +46,18 @@ const ShoutoutSection = ({
     </div>
   }
 
+    const CurrentUserShoutoutSent = () => hasCurrentUserSentShoutouts &&
+        <h3 className='fw-semibold'> {Pluralize('Shoutout', currentUserShoutouts.sent.length)} sent: {currentUserShoutouts.sent.length}</h3>
+
+    const CurrentUserShoutoutReceived = () => hasCurrentUserReceivedShoutouts &&
+        <h3 className='fw-semibold'>
+            {Pluralize('Shoutout', currentUserShoutouts.received.length)} received: {currentUserShoutouts.received.length}
+            {!hasCurrentUserSentShoutouts ? '' : ';'}&nbsp;&nbsp;
+        </h3>
+
   return <>
-    <div className='results container' hidden={emptyShoutouts}>
-      <div className='row wrap shoutout mb-1'>
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12' hidden={emptyShoutouts}>
+      <div className='row wrap shoutout mb-1 justify-content-center'>
         <ShoutoutAwards {...{
           timePeriod,
           sentShoutouts,
@@ -58,16 +69,8 @@ const ShoutoutSection = ({
           emptyShoutouts
         }} />
         <div className='d-flex justify-content-start ps-2 mb-1'>
-          {
-            !isEmpty(currentUserShoutouts.received) && <h5 className='fs-md-5 fw-semibold'>
-              {Pluralize('Shoutout', currentUserShoutouts.received.length)} received: {currentUserShoutouts.received.length}
-              {isEmpty(currentUserShoutouts.sent) ? '' : ';'}&nbsp;&nbsp;
-            </h5>
-          }
-          {
-            !isEmpty(currentUserShoutouts.sent) &&
-            <h5 className='fs-md-5 fw-semibold'> {Pluralize('Shoutout', currentUserShoutouts.sent.length)} sent: {currentUserShoutouts.sent.length}</h5>
-          }
+            <CurrentUserShoutoutReceived />
+            <CurrentUserShoutoutSent/>
         </div>
         <ReceivedShoutouts/>
         <SentShoutouts/>
