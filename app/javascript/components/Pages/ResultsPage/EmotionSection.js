@@ -64,8 +64,8 @@ const EmotionSection = ({emotions, nextTimePeriod, data, isMinUsersResponses}) =
 
   if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data}/>
 
-  return <div className='col'>
-    <div className="row mx-auto w-75">
+  return <div className='col-8'>
+    <div className="row mx-auto w-100">
       {filteredEmotions.map((emotion, index) =>
           <div className="col" key={index}>
             <AnimatedEmotion word={emotion.word}/>
