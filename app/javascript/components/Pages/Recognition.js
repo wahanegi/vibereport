@@ -70,12 +70,12 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
   const output = (shoutOuts) => {
     return (
-        <ul className="d-flex d-sm-flex flex-column gap-2 py-2 list-unstyled">
+        <ul className="d-flex flex-column gap-2 py-2 list-unstyled">
           {shoutOuts.map(shoutOut => (
               <li
-                  className="bg-light position-relative align-middle border rounded-4 border-4 border-primary p-1 text-break pe-10"
+                  className="bg-light position-relative align-middle border rounded-4 border-4 border-primary p-1 text-break pe-10 w-100"
                   key={shoutOut.id}>
-                <p className="text-start fs-7 fs-sm-5 fs-md-4 fw-semibold m-0">{parse(
+                <p className="text-start fs-7 fs-sm-5 fs-md-4 fw-semibold m-0 text-truncate">{parse(
                     shoutOut.rich_text)}</p>
                 <div
                     className="position-absolute top-50 end-0 translate-middle-y d-flex">
@@ -155,7 +155,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
                                    setData={setData}
                                    editObj={shoutOutForm.editObj}/>}
                 <div
-                    className="container justify-content-center border border-4 rounded-4 border-primary field-shout-outs">
+                    className="container justify-content-center border border-4 rounded-4 border-primary field-shout-outs w-100">
                   {output(shoutOuts)}
                 </div>
                 <p className="m-0 mt-4 fs-8 fs-md-7">Any more shoutouts to

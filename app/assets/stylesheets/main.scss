@@ -166,6 +166,18 @@
   overflow-x: hidden;
 }
 
+@media (max-width: 575.98px) {
+  .field-shout-outs {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 420px) {
+  .field-shout-outs {
+    max-width: 290px;
+  }
+}
+
 
 //system scroll
 .field-shout-outs,
