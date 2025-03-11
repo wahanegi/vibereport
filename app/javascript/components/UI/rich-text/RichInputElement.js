@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {userFullName} from '../../helpers/library';
+import { calculateWordCount } from '../../helpers/helpers'
 import Button from '../Button';
 import Cursor from '../rich-text/cursor';
 import SwitcherShoutouts from '../SwitcherShoutouts';
 import DropDownList from './DropDownList';
-import { calculateWordCount } from '../../helpers/helpers';
 import RichText from './rich-text';
 import RichTextArea from './RichTextArea';
 
@@ -55,7 +55,11 @@ const RichInputElement = ({
     if (Cursor.getCurrentCursorPosition(element).focusOffset === 1)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates);
     setCursorPosition(Cursor.getCurrentCursorPosition(element));
+    element.innerText === undefined || element.innerText === '\x0A'
+      ? setIsDisabled(true)
+      : setIsDisabled(false);
   }, [caret, textHTML, currentSelection]);
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -677,44 +681,43 @@ const RichInputElement = ({
           className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
-        <div className="d-flex flex-column gap-3 justify-content-between flex-lg-row w-100">
-          <p
-            className="text-gray-300 mx-auto"
-            style={{ visibility: isDisabled ? 'visible' : 'hidden' }}
-          >
-            Please enter more information. The more detail the better.
+        {isDropdownList &&
+          filteredUsers.length &&
+          indexOfSelection !== undefined && (
+            <DropDownList
+              dataList={filteredUsers}
+              coordX={coordinates.x + OFFSET_X}
+              coordY={coordinates.y + OFFSET_Y}
+              onClick={clickEnterTabHandling}
+              valSel={currentSelection}
+              changeIndexSel={(val) => {
+                setIndexOfSelection(val);
+              }}
+              changeValSel={(val) => {
+                setCurrentSelection(val);
+              }}
+            />
+          )}
+        <div className='d-flex flex-column gap-3 justify-content-between flex-lg-row w-100'>
+          <p className="text-gray-300 mx-auto" style={{ visibility: isDisabled ? 'visible' : 'hidden' }} >
+              Please enter more information. The more detail the better.
           </p>
+          <div className='d-flex flex-column gap-3 justify-content-between align-content-center flex-lg-row w-100'>
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
           />
           <Button
-            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-3 p-0 ${
+            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${
               isDisabled ? 'disabled' : ''
             }`}
             onClick={submitHandling}
           >
             Send Shoutout
           </Button>
+          </div>
         </div>
       </div>
-      {isDropdownList &&
-        filteredUsers.length &&
-        indexOfSelection !== undefined && (
-          <DropDownList
-            dataList={filteredUsers}
-            coordX={coordinates.x + OFFSET_X}
-            coordY={coordinates.y + OFFSET_Y}
-            onClick={clickEnterTabHandling}
-            valSel={currentSelection}
-            changeIndexSel={(val) => {
-              setIndexOfSelection(val);
-            }}
-            changeValSel={(val) => {
-              setCurrentSelection(val);
-            }}
-          />
-        )}
     </>
   );
 };
