@@ -105,7 +105,7 @@ export const BtnBack = ({addClass = '', hidden, onClick, disabled, text = 'Back'
 
 export const BtnAddNewRow = ({onClick, disabled}) =>
   <div className={"d-flex justify-content-center justify-content-sm-end mb-2 p-e-0 pe-sm-9"}>
-    <Button className={"btn-regular fs-5 fw-semibold shadow-none"} children={"+ New Entry"}
+    <Button className='btn btn-regular c1 fs-5 shadow-none text-white border' children={"+ New Entry"}
             onClick={onClick}
             disabled={disabled}/>
   </div>

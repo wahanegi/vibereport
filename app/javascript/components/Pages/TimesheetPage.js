@@ -184,21 +184,23 @@ const TimesheetPage = ({
             </p>
           ) : (
             <div className="timesheet-form-container row justify-content-center mx-auto">
-              <div className="d-flex flex-row justify-content-center justify-content-sm-start align-items-center mb-2">
-                <p className="m-0 me-1">Week of: </p>
+              <div className="d-flex flex-column align-content-center align-content-sm-start mb-2">
+                <p className="mx-auto">Week of: </p>
                 <Calendar date={timesheet_date} />
               </div>
-              <TimesheetRowHeader />
-              <div className="d-flex gap-1 mb-1">
-                {allRows.map((row) => (
-                  <TimesheetRow
-                    key={row.id}
-                    row={row}
-                    onChangeRowData={handleChangeRowData}
-                    onDelete={handleOnDelete}
-                    projects={projects}
-                  />
-                ))}
+              <div className='pe-3'>
+                <TimesheetRowHeader />
+                <div className="d-flex gap-3 mb-1">
+                  {allRows.map((row) => (
+                    <TimesheetRow
+                      key={row.id}
+                      row={row}
+                      onChangeRowData={handleChangeRowData}
+                      onDelete={handleOnDelete}
+                      projects={projects}
+                    />
+                  ))}
+                </div>
               </div>
 
               {allRows.length > 0 && (
