@@ -1,18 +1,22 @@
 /* Timesheet page general styles */
 .timesheet-form-container {
   max-width: 1300px;
-  }
+}
+
+.timesheet-header {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
 
 .timesheet-header-cell {
   padding: 8px 0;
   color: $gray-600;
-  }
+}
 
 .text-ellipsis {
   white-space: nowrap; /* Prevents text from wrapping to a new line */
   overflow: hidden; /* Hides any content that overflows the element's width */
   text-overflow: ellipsis; /* Displays "..." when the text is cut off */
-  }
+}
 
 // end -----------------------
 
@@ -24,39 +28,43 @@
   &-input-time {
     padding: 8px;
     border-radius: 20px;
-    font-size: clamp(24px, 3vw, 30px) !important;
-    height: min-content;
+    font-size: clamp(20px, 3vw, 24px) !important;
+    min-height: 65px;
 
     &::placeholder {
-      font-size: clamp(16px, 3vw, 24px);
+      font-size: clamp(20px, 3vw, 24px);
       text-align: left;
-      }
+      color: $gray-250;
     }
+  }
 
   &-button-delete {
     padding: 6px;
     top: 0;
     right: 0;
     transform: translate(calc(27px - 2px), calc(-27px + 2px));
+
+    img {
+      filter: brightness(0) invert(0);
     }
   }
+}
 
 .select-company {
   flex: 3 1 30%;
-  }
+}
 
 .select-project-id {
   flex: 2 1 25%;
-  }
+}
 
 .select-project-name {
   flex: 3 1 30%;
-  }
+}
 
 .select-time {
   flex: 2 1 15%;
-  height: auto;
-  }
+}
 
 // end -----------------------
 
@@ -65,7 +73,7 @@
 .dropdown-container {
   position: relative;
   width: 100%;
-  }
+}
 
 // Field input
 .dropdown-container .rbt-input {
@@ -74,36 +82,37 @@
   border-radius: 20px;
   box-shadow: none;
   color: $gray-700;
-  font-size: clamp(24px, 3vw, 30px) !important;
+  font-size: clamp(20px, 3vw, 24px) !important;
   line-height: 1.2 !important;
-  height: min-content;
+  height: 65px;
   white-space: nowrap; /* Prevents text from wrapping to a new line */
   overflow: hidden; /* Hides any content that overflows the element's width */
   text-overflow: ellipsis; /* Displays "..." when the text is cut off */
 
   &::placeholder {
-    font-size: clamp(16px, 3vw, 24px);
-    }
+    font-size: clamp(20px, 3vw, 24px);
+    color: $gray-250;
+  }
 
   &:focus {
     border: 4px solid $royal-blue !important;
-    }
   }
+}
 
 // Active dropdown input
 .dropdown-container:has(.rbt-menu) .rbt-input {
   border: 4px solid $royal-blue !important;
   border-radius: 20px 20px 0 0;
   border-bottom-color: transparent !important;
-  font-size: clamp(24px, 3vw, 30px);
-  }
+  font-size: clamp(20px, 3vw, 24px);
+}
 
 .dropdown-container:has(.rbt-menu) .dropdown-item {
   padding-left: 0;
-  font-size: clamp(24px, 3vw, 30px);
+  font-size: clamp(20px, 3vw, 24px);
   line-height: 1 !important;
   color: $gray-600;
-  }
+}
 
 // Dropdown list
 .rbt-menu {
@@ -117,8 +126,8 @@
   border: 4px solid $royal-blue;
   background-color: #fff;
   box-shadow: none;
-  font-size: clamp(24px, 3vw, 30px);
-  }
+  font-size: clamp(20px, 3vw, 24px);
+}
 
 .rbt-menu.dropdown-menu.show {
   padding: 15.5px 8px !important;
@@ -127,15 +136,13 @@
   border-top-color: transparent;
 
   &::-webkit-scrollbar {
-    background-color: #fff;
-    border-bottom-right-radius: inherit; /* Inherits the border-radius from the parent to maintain rounded corners */
-    border-bottom-left-radius: inherit;
-    }
+    height: 5px;
+  }
 
   &::-webkit-scrollbar-track {
-    margin: 5px; /* Prevents the scrollbar track from overlapping the rounded corners */
-    }
+    margin: 15px; /* Prevents the scrollbar track from overlapping the rounded corners */
   }
+}
 
 // List elements
 .rbt-menu .dropdown-item {
@@ -144,15 +151,15 @@
 
   &:hover {
     background-color: #fff;
-    }
   }
+}
 
 // Highlighted Text
 .rbt-highlight-text {
   background-color: transparent;
   color: $gray-700;
   font-weight: normal;
-  }
+}
 
 // Clear X-button
 .rbt-close {
@@ -168,37 +175,37 @@
 
   &:hover {
     color: $gray-500;
-    }
+  }
 
   @include media-breakpoint-down(lg) { // lg = <992px
     width: 20px;
     height: 20px;
-    }
+  }
 
   @include media-breakpoint-down(md) { // md = <768px
     width: 14px;
     height: 14px;
-    }
   }
+}
 
 .rbt-close-content {
   color: transparent;
-  }
+}
 
 // Scrollbar
 .rbt-menu::-webkit-scrollbar {
   width: 8px;
-  }
+}
 
 .rbt-menu::-webkit-scrollbar-track {
   margin: 20px 0;
   border-radius: 10px;
   background: $gray-100;
-  }
+}
 
 .rbt-menu::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: $royal-blue;
-  }
+}
 
 // end --------------------
