@@ -14,7 +14,7 @@ const AnimatedEmotion = ({ word }) => {
   }
 
   return (
-    <div className="word fw-bold text-steel-blue" style={animatedStyles}>{word}</div>
+      <div className="word fw-bold text-steel-blue" style={animatedStyles}>{word}</div>
   );
 };
 
@@ -25,14 +25,14 @@ const PreviewEmotionSection = ({ data }) => {
   return <div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     {
       splitEmotions.map((emotions, index) =>
-        <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
-          {
-            emotions.map((emotion, index) =>
-              <div className="col" key={index}>
-                <AnimatedEmotion word={emotion.attributes.word} />
-              </div>)
-          }
-        </div>
+          <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
+            {
+              emotions.map((emotion, index) =>
+                  <div className="col" key={index}>
+                    <AnimatedEmotion word={emotion.attributes.word} />
+                  </div>)
+            }
+          </div>
       )
     }
   </div>
@@ -60,17 +60,17 @@ const filterEmotions = (emotions) => {
 };
 
 const EmotionSection = ({emotions, nextTimePeriod, data, isMinUsersResponses}) => {
-    const filteredEmotions = filterEmotions(emotions)
+  const filteredEmotions = filterEmotions(emotions)
 
-    if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data}/>
+  if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data}/>
 
-    return <div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
-        <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2">
-            {filteredEmotions.map((emotion, index) =>
-                <div className="col" key={index}>
-                    <AnimatedEmotion word={emotion.word}/>
-                </div>)}
-        </div>
+  return <div className='col'>
+    <div className="row mx-auto w-75">
+      {filteredEmotions.map((emotion, index) =>
+          <div className="col" key={index}>
+            <AnimatedEmotion word={emotion.word}/>
+          </div>)}
     </div>
+  </div>
 }
 export default EmotionSection
