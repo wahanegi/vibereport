@@ -1,18 +1,20 @@
 import React from "react";
 import { EMOTION_COL_NUMBERS, MIN_USERS_RESPONSES } from "../../helpers/consts";
-import { splitArray } from "../../helpers/helpers";
+import { getRandomInteger, splitArray} from "../../helpers/helpers";
 
-const AnimatedEmotion = ({ word}) => {
-  const shift = Math.round(Math.random() * 10) / 10
+const AnimatedEmotion = ({ word }) => {
+  const marginTop = getRandomInteger(1,15) // top margin 1-15px
+  const fontSize = getRandomInteger(13,30) // font size 13-30px
+  const duration = getRandomInteger(1500,4000) // animation duration 1500-4000ms
 
   const animatedStyles = {
-    marginTop: `${shift * 30}px`,
-    fontSize: `${shift + 0.8}rem`,
-    '--duration': `${shift * 5}s`
+    marginTop: `${marginTop}px`,
+    fontSize: `${fontSize}px`,
+    '--duration': `${duration}ms`
   }
 
   return (
-    <div className="word fw-bold text-steel-blue" style={animatedStyles}>{word}</div>
+      <div className="word fw-bold text-steel-blue" style={animatedStyles}>{word}</div>
   );
 };
 
@@ -20,17 +22,17 @@ const PreviewEmotionSection = ({ data }) => {
   const filteredData = data.data.filter(item => item.attributes.category === "positive" || item.attributes.category === "negative");
   const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS)
 
-  return <div className='container blur-effect'>
+  return <div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     {
       splitEmotions.map((emotions, index) =>
-        <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
-          {
-            emotions.map((emotion, index) =>
-              <div className="col" key={index}>
-                <AnimatedEmotion word={emotion.attributes.word} />
-              </div>)
-          }
-        </div>
+          <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
+            {
+              emotions.map((emotion, index) =>
+                  <div className="col" key={index}>
+                    <AnimatedEmotion word={emotion.attributes.word} />
+                  </div>)
+            }
+          </div>
       )
     }
   </div>
@@ -57,26 +59,18 @@ const filterEmotions = (emotions) => {
   }, []);
 };
 
-const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses }) => {
+const EmotionSection = ({emotions, nextTimePeriod, data, isMinUsersResponses}) => {
   const filteredEmotions = filterEmotions(emotions)
-  const splitEmotions = splitArray(filteredEmotions, EMOTION_COL_NUMBERS)
 
-  if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data} />
+  if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data}/>
 
-  return <div className='container'>
-    {
-      splitEmotions.map((emotions, index) =>
-        <div className="row" key={index}>
-          {
-            emotions.map((emotion, index) =>
-              <div className="col" key={index}>
-                <AnimatedEmotion word={emotion.word} />
-              </div>)
-          }
-        </div>
-      )
-    }
+  return <div className='col'>
+    <div className="row mx-auto w-75">
+      {filteredEmotions.map((emotion, index) =>
+          <div className="col" key={index}>
+            <AnimatedEmotion word={emotion.word}/>
+          </div>)}
+    </div>
   </div>
-
 }
 export default EmotionSection
