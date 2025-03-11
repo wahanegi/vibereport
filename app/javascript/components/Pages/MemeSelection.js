@@ -1,20 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Gif from './Gifs';
-import {
-  BigBtnEmotion,
-  BtnOutline,
-  BtnPrimary,
-  Header,
-} from '../UI/ShareContent';
-import {
-  backHandling,
-  gifUrlWithId,
-  isBlank,
-  isPresent,
-} from '../helpers/helpers';
+import React, {useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {backHandling, gifUrlWithId, isBlank, isPresent,} from '../helpers/helpers';
 import Layout from '../Layout';
-
+import {BigBtnEmotion, BtnOutline, BtnPrimary, Header,} from '../UI/ShareContent';
+import Gif from './Gifs';
 
 export const getAndSetImageHeight = (file, setImageHeight, callback) => {
   const img = new Image();
@@ -26,18 +15,18 @@ export const getAndSetImageHeight = (file, setImageHeight, callback) => {
 };
 
 const MemeSelection = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  isCustomGif,
-  setIsCustomGif,
-  draft,
-}) => {
-  const { emotion, api_giphy_key, response } = data;
+                         data,
+                         setData,
+                         saveDataToDb,
+                         steps,
+                         service,
+                         isCustomGif,
+                         setIsCustomGif,
+                         draft,
+                       }) => {
+  const {emotion, api_giphy_key, response} = data;
   const navigate = useNavigate();
-  const { isLoading, error } = service;
+  const {isLoading, error} = service;
   const [gifUrl, setGifUrl] = useState(response.attributes.gif || {});
   const [selectedGifIndex, setSelectedGifIndex] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -75,7 +64,7 @@ const MemeSelection = ({
   };
 
   const handleSaveDraft = () => {
-    const dataDraft = { gif: gifUrl, draft: true };
+    const dataDraft = {gif: gifUrl, draft: true};
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
   };
@@ -88,12 +77,12 @@ const MemeSelection = ({
 
   const handlingOnClickSkip = () => {
     steps.push('emotion-intensity');
-    saveDataToDb(steps, { gif: null, draft: false });
+    saveDataToDb(steps, {gif: null, draft: false});
   };
 
   const chooseGIPHYHandling = () => {
     steps.push('emotion-intensity');
-    saveDataToDb(steps, { gif: gifUrl, draft: false });
+    saveDataToDb(steps, {gif: gifUrl, draft: false});
   };
 
   const uploadGIPHYHandling = async () => {
@@ -133,19 +122,20 @@ const MemeSelection = ({
   }, [selectedFile]);
 
   const Navigation = () => (
-    <div className="d-flex justify-content-evenly gap-1">
+    <div className="d-flex gap-2 d-sm-flex justify-content-sm-evenly justify-content-lg-between justify-content-md-between">
       <div>
-        <h5 className="mt-2 mb-0 text-muted">Share it in your way!</h5>
+        <h4 className="fs-md-6 mt-2 mb-0 text-muted">Share it in your way!</h4>
         <div>
           <BtnOutline
             text="Upload your own meme!"
             onClick={handleButtonClick}
+            addClass={"fs-8 fs-sm-5"}
           />
           <input
             type="file"
             accept="image/gif, video/*" // Accepts GIF and any video format
             ref={fileInputRef}
-            style={{ display: 'none' }}
+            className="d-none"
             onChange={handleFileChange}
           />
         </div>
@@ -166,10 +156,10 @@ const MemeSelection = ({
   );
 
   const Header = () => (
-    <div className="d-flex justify-content-between mx-3 mt-3">
-      <div className="mx-auto">
-        <h5 style={{ opacity: 0.6 }}>You picked:</h5>
-        <BigBtnEmotion emotion={emotion} onClick={backHandling} />
+    <div className="d-flex mx-3 pt-1 pt-md-0">
+      <div className="d-flex flex-column">
+        <h4 className="fs-md-6 opacity-50">You picked:</h4>
+        <BigBtnEmotion emotion={emotion} onClick={backHandling}/>
       </div>
     </div>
   );
@@ -177,35 +167,35 @@ const MemeSelection = ({
   if (!!error) return <p>{error.message}</p>;
 
   return (
-    !isLoading && (
-      <Layout
-        data={data}
-        setData={setData}
-        saveDataToDb={saveDataToDb}
-        steps={steps}
-        draft={isDraft}
-        handleSaveDraft={handleSaveDraft}
-      >
-  <div className="align-self-center gif-wrap pb-10">
-        <Header />
-          <Gif
-            {...{
-              emotion,
-              api_giphy_key,
-              gifUrl,
-              setGifUrl,
-              selectedGifIndex,
-              setSelectedGifIndex,
-              isCustomGif,
-              setIsCustomGif,
-              uploading,
-              uploadingError,
-            }}
-          />
-          <Navigation />
-  </div>
-      </Layout>
-    )
+      !isLoading && (
+          <Layout
+              data={data}
+              setData={setData}
+              saveDataToDb={saveDataToDb}
+              steps={steps}
+              draft={isDraft}
+              handleSaveDraft={handleSaveDraft}
+          >
+            <div className="container-fluid gif-wrap">
+              <Header/>
+              <Gif
+                  {...{
+                    emotion,
+                    api_giphy_key,
+                    gifUrl,
+                    setGifUrl,
+                    selectedGifIndex,
+                    setSelectedGifIndex,
+                    isCustomGif,
+                    setIsCustomGif,
+                    uploading,
+                    uploadingError,
+                  }}
+              />
+              <Navigation/>
+            </div>
+          </Layout>
+      )
   );
 };
 

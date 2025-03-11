@@ -1,23 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import {userFullName} from '../../helpers/library';
+import Button from '../Button';
 import Cursor from '../rich-text/cursor';
+import SwitcherShoutouts from '../SwitcherShoutouts';
 import DropDownList from './DropDownList';
-import { userFullName } from '../../helpers/library';
 import { calculateWordCount } from '../../helpers/helpers';
 import RichText from './rich-text';
-import Button from '../Button';
 import RichTextArea from './RichTextArea';
-import SwitcherShoutouts from '../SwitcherShoutouts';
 
 const RichInputElement = ({
-  richText = '',
-  listUsers: listAllUsers,
-  setChosenUsers = () => {},
-  onSubmit,
-  classAt = 'color-primary',
-  editObj,
-}) => {
+                            richText = '',
+                            listUsers: listAllUsers,
+                            setChosenUsers = () => {
+                            },
+                            onSubmit,
+                            classAt = 'color-primary',
+                            editObj,
+                          }) => {
   const calculateInitX = (window.innerWidth - 884) / 2 + 69;
-  const initCoordinates = { x: calculateInitX, y: 373 };
+  const initCoordinates = {x: calculateInitX, y: 373};
   const [textHTML, setTextHTML] = useState(richText);
   const textAreaRef = useRef(richText);
   const [filteredUsers, setFilteredUsers] = useState(
@@ -40,7 +41,7 @@ const RichInputElement = ({
   const TAG_AT = '<span class="' + classAt + '">' + MARKER;
   const END_TAG_AT = '</span>';
   const OFFSET_X = -10;
-  const OFFSET_Y = -15;
+  const OFFSET_Y = 10;
   const LIMIT_CHARS = 700;
   const highlightSmbATUnknownUser = false;
   const node = highlightSmbATUnknownUser ? TAG_AT + END_TAG_AT : MARKER;
@@ -141,7 +142,7 @@ const RichInputElement = ({
             cursorPos.focusOffset - 1 !== searchString.length ||
             RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
               .length !==
-              cursorPos.focusOffset - 1
+            cursorPos.focusOffset - 1
           )
             return 0;
           const newSearchString = (searchString + char).toLowerCase();
@@ -460,11 +461,11 @@ const RichInputElement = ({
               const userFromNode = cursorPos.isSPAN
                 ? node
                 : RichText.findUsersInText(
-                    TAG_AT,
-                    END_TAG_AT,
-                    RichText.decodeSpace(node),
-                    listAllUsers
-                  );
+                  TAG_AT,
+                  END_TAG_AT,
+                  RichText.decodeSpace(node),
+                  listAllUsers
+                );
               if (userFromNode?.length) {
                 const filtratedUsersByName = RichText.filtrationByName(
                   userFullName(userFromNode[0]),
@@ -545,7 +546,7 @@ const RichInputElement = ({
     );
     const hadSelectedUsers = [
       ...chosenUsersWithoutNemo,
-      { ...filteredUsers[i] },
+      {...filteredUsers[i]},
     ];
     setCopyChosenUsers(hadSelectedUsers);
     setChosenUsers(hadSelectedUsers);
@@ -641,7 +642,8 @@ const RichInputElement = ({
     if (inputValue) {
       navigator.clipboard
         .writeText(inputValue)
-        .then(() => {})
+        .then(() => {
+        })
         .catch((err) => {
           console.log('Something went wrong', err);
         });

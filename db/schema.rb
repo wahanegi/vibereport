@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_17_173020) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_14_101305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,15 +82,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_17_173020) do
     t.index ["question_body"], name: "index_fun_questions_on_question_body", unique: true
     t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.text "details"
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.boolean "viewed", default: false, null: false
-    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "responses", force: :cascade do |t|
@@ -194,7 +185,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_17_173020) do
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
-  add_foreign_key "notifications", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"

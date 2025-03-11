@@ -1,19 +1,21 @@
-<div class="mx-auto placement-area">
-  <%= render 'layouts/logo', height: 87 %>
-  <div class="mt-64 size-message mx-auto">
-    <h2 class="color-black mb-28">Check your inbox!</h2>
-    <p class="b3 color-black">Look for a unique access link in your inbox at:</p>
+<div class="d-flex flex-column justify-content-center align-items-center flex-nowrap min-vh-100 p-1">
+  <!-- Logo -->
+  <div class="mb-5">
+    <%= image_tag 'logo.png', class: 'img-fluid', width: 382, height: 87 %>
   </div>
-  <% if params.dig("passwordless", "email").present? %>
-    <div class="b1 gray-600 mt-85"><%= params.dig("passwordless", "email") %></div>
+
+  <!-- Title -->
+  <div class="mb-5">
+    <h1 class="mb-2 text-black" style="font-size: 36px;">Check your inbox!</h1>
+    <p class="fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-5 fs-sm-6 fs-6 text-black">
+      Look for a unique access link in your inbox at:
+    </p>
+  </div>
+
+  <!-- Email -->
+  <% if @email %>
+    <div class="fs-xxl-2 fs-xl-2 fs-lg-2 fs-md-2 fs-sm-3 fs-4 text-muted mb-7 text-break">
+      <%= @email %>
+    </div>
   <% end %>
-  <div class="size-resolve-issue gray-600 my-6 mx-auto b3">
-    <p>If you have any issues, use the help<br>
-    button at the bottom right of this window<br>
-    to contact an administrator.</p>
-  </div>
-  <div class="hud help pointer d-flex justify-content-end h-0 pb-52 mb-3">
-    <%= link_to image_tag("help.svg"), '#', class: 'help-icon',  data: { bs_toggle: 'modal', bs_target: '#helpModal' } %>
-  </div>
-  <%= render 'layouts/help_modal' %>
 </div>

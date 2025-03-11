@@ -1,5 +1,4 @@
 //For set up caret to the defiantly position
-
 import RichText from "./rich-text";
 export default class Cursor {
     static getCurrentCursorPosition(parentElement, initCoord = {x: 0, y: 0}) {
@@ -65,7 +64,6 @@ export default class Cursor {
             }
         }
     }
-
     static setCurrentCursorPosition(chars, element) {
         if (chars >= 0) {
             const selection = window.getSelection();
@@ -77,7 +75,6 @@ export default class Cursor {
             }
         }
     }
-
     static _createRange(node, chars, range) {
         if (!range) {
             range = document.createRange()
@@ -105,7 +102,6 @@ export default class Cursor {
         }
         return range;
     }
-
     static _isChildOf(node, parentElement) {
         while (node !== null) {
             if (node === parentElement) {

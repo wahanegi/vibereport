@@ -6,41 +6,6 @@
 ////////////////////////////////////////////
 // START OF DESIGN SYSTEM VIBEREPORT AREA //
 
-a {
-  font-size: 1.438rem; //23px
-}
-
-body {
-  font: {
-    family: $font-family-base;
-    style: normal;
-  }
-  text-align: center;
-  line-height: 1.2;
-}
-
-p {
-  line-height: 100%;
-}
-
-h1, h2 {
-  font-weight: 700 !important;
-  line-height: 100% !important;
-  color: $gray-500;
-}
-
-h1, .h1 {
-  font-size: $h1-font-size;
-}
-
-h2, .h2 {
-  font-size: $h2-font-size;
-}
-
-h1 {
-  color: $black
-}
-
 .b1 {
   font-size: 2.5rem !important; //40px
 }
@@ -49,36 +14,11 @@ h1 {
   font-size: 2rem !important; //32px
 }
 
-.b3 {
-  font-size: 1.5rem !important; //24px
-}
-
-//.b4 {
-//  font-size: 1rem !important; //16px
-//}
-
-.u1 {
-  font: {
-    family: $font-family-italic, sans-serif !important;
-    weight: $font-weight-semi-bold !important;
-    size: 1rem !important; //16px
-  }
-}
-
-.wb1 {
-  font-size: 1.25rem !important; //20px
-}
-
-.wb2 {
-  font-size: 2.625rem !important; //42px
-}
-
 // Use for regular buttons
 .c1 {
   font: {
     family: $font-family-second !important;
     weight: $font-weight-bold !important;
-    size: 2rem !important; //32px
   }
 }
 
@@ -89,16 +29,6 @@ h1 {
   }
 }
 
-.c3 {
-  font: {
-    family: $font-family-base !important;
-    weight: $font-weight-bold !important;
-    size: 2.25rem !important; //36px
-  }
-}
-
-
-// use with B1, B2, or B3 text
 .form-control {
   border: 3px solid $gray-100;
 
@@ -140,46 +70,8 @@ input, textarea {
 }
 
 textarea {
-  &.b1 {
-    height: calc(2.5rem * ($line-height-base * 6 - 1));
-  }
-
-  &.b2 {
-    height: calc(2rem * ($line-height-base * 6 - 0.95));
-  }
-
-  &.b3 {
-    height: calc(1.5rem * ($line-height-base * 6 - 0.8));
-  }
-
   &:focus {
     border-color: $royal-blue !important;
-  }
-}
-
-
-// Using with the Special inputs
-// Intensity selection & follow-up field (use B3)
-
-.follow-up-field {
-  textarea {
-    margin-top: 4px;
-    width: calc($btn-width-intensity * 5 - 1rem);
-    height: 18.875rem; //302px
-    border-top-left-radius: 29px !important;
-    border-top-right-radius: 29px !important;
-  }
-}
-
-.question-field {
-  width: 46.625rem !important; //746px
-  min-height: 17.5rem; //280px
-  &.form-control {
-    border: 3px solid $emerald !important;;
-
-    &:focus {
-      border: 3px solid $sea-green !important;
-    }
   }
 }
 
@@ -190,17 +82,16 @@ textarea {
   padding: 0 !important;
 }
 
+.dropdown-toggle::after {
+  visibility: hidden;
+}
+
 #dropdown-stick {
-  // TODO: The styles for "&.show" could be moved to ".dropdown-toggle," making "#dropdown-stick" unnecessary.
   &.show {
     .one-line-menu {
       border-color: $primary;
     }
   }
-}
-
-.dropdown-toggle::after {
-  visibility: hidden;
 }
 
 // END of DROPDOWN MENU

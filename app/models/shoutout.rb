@@ -61,4 +61,3 @@ class Shoutout < ApplicationRecord
     %w[emojis recipients shoutout_recipients time_period user]
   end
 end
-

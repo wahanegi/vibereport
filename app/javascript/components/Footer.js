@@ -1,11 +1,13 @@
 import React from 'react';
+import { useLocation } from "react-router-dom";
 import ShoutoutButton from './UI/ShoutoutButton';
-import QuestionButton from './UI/QuestionButton';
 
 const Footer = ({ data, setData, hideShoutout, numShoutouts }) => {
-  return <footer className='d-flex justify-content-between p-1 w-100 align-items-center'>
-    <ShoutoutButton data={data} setData={setData} hideShoutout={hideShoutout} num={numShoutouts} />
-    <QuestionButton data={data} />
+  const location = useLocation();
+  const isRecognitionPage = location.pathname.match("recognition");
+
+  return <footer className='d-flex p-1 w-100 justify-content-end'>
+    {!isRecognitionPage && <ShoutoutButton data={data} setData={setData} hideShoutout={hideShoutout} num={numShoutouts} />}
   </footer>
 };
 

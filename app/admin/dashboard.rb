@@ -5,7 +5,7 @@ ActiveAdmin.register_page 'Dashboard' do
 
   content title: proc { I18n.t("active_admin.dashboard") } do
     columns do
-      current_period = TimePeriod.current      
+      current_period = TimePeriod.current
       vars = ActiveAdminHelpers.time_period_vars(
         current_period: current_period
       )
@@ -23,7 +23,6 @@ ActiveAdmin.register_page 'Dashboard' do
       end
 
       panel "Celebrations and Teammate Engagement for range #{current_period&.date_range}" do
-
         div do
           strong 'Celebrations Count: '
           span "#{vars[:celebrations_count_current_period]} "
@@ -31,7 +30,7 @@ ActiveAdmin.register_page 'Dashboard' do
 
         div do
           strong 'Teammate Engagement Count: '
-          span "#{vars[:teammate_engagement_count_current_period]}"
+          span (vars[:teammate_engagement_count_current_period]).to_s
         end
       end
 
@@ -61,7 +60,7 @@ ActiveAdmin.register_page 'Dashboard' do
             column "Reminder Link" do |user|
               if TimePeriod.current
                 general_link = url_for(URL.merge({ time_period_id: TimePeriod.current.id, user_id: user.id, host: 'https://cp.vibereport.app' }))
-                
+
                 div class: "custom-textarea-style" do
                   text_node general_link
                 end
@@ -87,14 +86,7 @@ ActiveAdmin.register_page 'Dashboard' do
     helper_method :alert_questions_needed?
 
     def index
-      not_viewed = Notification.not_viewed
-      if alert_questions_needed?
-        flash[:alert] = 'Alert: No unused questions left for upcoming check-in. Please add more questions.'
-      end
-      if not_viewed.present?
-        flash[:alert] = "NOTICE: #{not_viewed.count} new #{'notification'.pluralize(not_viewed.count)}" \
-                        " from #{'user'.pluralize(not_viewed.pluck(:user_id).uniq.count)}"
-      end
+      flash[:alert] = 'Alert: No unused questions left for upcoming check-in. Please add more questions.' if alert_questions_needed?
       super
     end
   end

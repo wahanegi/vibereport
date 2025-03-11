@@ -1,4 +1,5 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
+import flame10 from '../../../assets/images/flame10.svg';
 import flame2 from '../../../assets/images/flame2.svg';
 import flame3 from '../../../assets/images/flame3.svg';
 import flame4 from '../../../assets/images/flame4.svg';
@@ -7,39 +8,36 @@ import flame6 from '../../../assets/images/flame6.svg';
 import flame7 from '../../../assets/images/flame7.svg';
 import flame8 from '../../../assets/images/flame8.svg';
 import flame9 from '../../../assets/images/flame9.svg';
-import flame10 from '../../../assets/images/flame10.svg';
-import { FLAME_IMAGE_SIZES } from '../helpers/consts';
-import { isBlank } from '../helpers/helpers';
-import BlockLowerBtns from '../UI/BlockLowerBtns';
+import {FLAME_IMAGE_SIZES} from '../helpers/consts';
+import {getProductiveText, isBlank} from "../helpers/helpers";
 import Layout from '../Layout';
-
+import BlockLowerBtns from "../UI/BlockLowerBtns";
 
 const ProductivitySlider = ({
-  productivity,
-  handleSliderChange,
-  flameImages,
-  generateStyles,
-  imageSizes,
-}) => (
+                              productivity,
+                              handleSliderChange,
+                              flameImages,
+                              generateStyles,
+                              imageSizes,
+                            }) => (
   <Fragment>
-    <div className="productivity-container">
+    <div className="d-flex flex-column align-items-center pt-1 pt-md-0 mx-auto productivity-container">
       <form>
-        <h1 className="mb-2 mx-auto my-0 question">
+        <h1 className="fs-md-1 mx-auto mb-0 text-black">
           How productive have you been feeling recently?
         </h1>
-        <br />
-        <div className="productivity-card">
+        <div className="mx-1 mx-md-0">
           {productivity > 0 && (
-            <div className="image-size">
+            <div>
               <img
                 src={flameImages[productivity - 1]}
                 alt={`Productivity flame level ${productivity}`}
                 style={generateStyles(imageSizes[productivity - 1])}
-                className="image-container"
+                className="img-fluid"
               />
             </div>
           )}
-          <div className="range-size">
+          <div>
             <input
               type="range"
               min="0"
@@ -47,9 +45,9 @@ const ProductivitySlider = ({
               defaultValue={productivity}
               onChange={handleSliderChange}
               id="productivity-slider"
-              className={`form-range level-${productivity}`}
+              className={`border-0 shadow-none form-range level-${productivity}`}
             />
-            <p>Use the slider</p>
+            <p>{getProductiveText(productivity)}</p>
           </div>
         </div>
       </form>
@@ -57,21 +55,21 @@ const ProductivitySlider = ({
   </Fragment>
 );
 const ProductivityCheckLow = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
-  const { isLoading, error } = service;
+                                data,
+                                setData,
+                                saveDataToDb,
+                                steps,
+                                service,
+                                draft,
+                              }) => {
+  const {isLoading, error} = service;
   const [productivity, setProductivity] = useState(
     data.response.attributes.productivity || 0
   );
   const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
-    const dataDraft = { productivity, draft: true };
+    const dataDraft = {productivity, draft: true};
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
   };
@@ -89,7 +87,7 @@ const ProductivityCheckLow = ({
     } else {
       steps.push('causes-to-celebrate');
     }
-    saveDataToDb(steps, { productivity, draft: false });
+    saveDataToDb(steps, {productivity, draft: false});
   };
 
   const handleSliderChange = (event) => {
@@ -132,7 +130,7 @@ const ProductivityCheckLow = ({
         draft={isDraft}
         handleSaveDraft={handleSaveDraft}
       >
-        <div className="central-element">
+        <div className="w-100 mx-1 d-flex flex-column align-items-center">
           <ProductivitySlider
             productivity={productivity}
             handleSliderChange={handleSliderChange}
@@ -141,12 +139,13 @@ const ProductivityCheckLow = ({
             imageSizes={imageSizes}
           />
         </div>
-        <BlockLowerBtns
-          nextHandling={handlingOnClickNext}
-          disabled={isBlank(productivity) || productivity === 0}
-        />
-      </Layout>
-    )
+        <div className="w-100 mt-xxl-10 mt-md-6 mt-3 mx-1 align-self-end">
+          <BlockLowerBtns
+              nextHandling={handlingOnClickNext}
+              disabled={isBlank(productivity) || productivity === 0}
+          />
+        </div>
+      </Layout>)
   );
 };
 

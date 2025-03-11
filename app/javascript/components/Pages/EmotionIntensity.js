@@ -1,10 +1,10 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
+import PoweredBy from '../../../assets/images/PoweredBy.svg';
+import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
 import {capitalizeFirstLetter, isBlank} from '../helpers/helpers';
 import Layout from '../Layout';
-import ButtonEmotion from '../UI/ButtonEmotion';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
-import PoweredBy from '../../../assets/images/PoweredBy.svg';
+import ButtonEmotion from '../UI/ButtonEmotion';
 
 const IntenseLine = ({
                        rating, setRating, comment, setComment, generateStyles, category, isBlankGif,
@@ -21,7 +21,7 @@ const IntenseLine = ({
           {[1, 2, 3, 4, 5].map((value) => (
             <label
               key={value}
-              className="d-inline-block fs-2 lh-base text-center text-black mb-2 rating-label"
+              className="d-inline-block fs-1 text-center text-black rating-label mb-1"
               style={generateStyles(value, rating === value, category)}
             >
               <input
@@ -35,22 +35,20 @@ const IntenseLine = ({
               {value}
             </label>))}
         </div>
-        <div>
-          {rating && (
-            <div
-              className="border border-4 rounded-4 p-1 border-royal-blue mb-2 mx-auto w-100 wrap-textarea"
-            >
-              <label className={"w-100 h-100"}>
-                <textarea
-                  className="form-control p-2 fs-6 border border-3 rounded-4 shadow-none w-100 h-100 textarea-resize-none"
-                  placeholder={isBlankGif ? "What's going on?" : 'Help us better understand why you chose this meme and intensity level!'}
-                  defaultValue={comment}
-                  onChange={handleCommentClick}
-                  maxLength={MAX_CHAR_LIMIT}
-                />
-              </label>
-            </div>)}
-        </div>
+
+        {rating && (
+          <div className='mx-auto wrap-textarea'>
+            <label className={"comment-label w-100 h-100"}>
+              <textarea
+                className="w-100 h-100 p-2 rounded-5 shadow-none resize-none fs-8 fs-md-7"
+                placeholder={isBlankGif ? "What's going on?" : "Help us better understand why you chose this meme and intensity level!"}
+                defaultValue={comment}
+                onChange={handleCommentClick}
+                maxLength={MAX_CHAR_LIMIT}
+              />
+            </label>
+          </div>
+        )}
       </form>
     </div>);
 };
@@ -100,7 +98,7 @@ const EmotionIntensity = ({
           className={`small-image-powered-by align-top`}
         />
       </div>
-      <div className="emotion-small">
+      <div className="mb-2">
         <ButtonEmotion category={category}>{word}</ButtonEmotion>
       </div>
     </div>
@@ -111,11 +109,11 @@ const EmotionIntensity = ({
       <h1 className="mb-2">
         “{capitalizeFirstLetter(word)}” — Most excellent!
       </h1>
-      <h2 className="color-black">Select how intense the feeling is</h2>
+      <h2 className="fs-md-4 text-black mb-3">Select how intense the feeling is</h2>
       <br/>
     </Fragment>) : (<Fragment>
       <EmotionGif/>
-      <h2 className="color-black">Select how intense the feeling is</h2>
+      <h2 className="fs-md-4 text-black mb-3">Select how intense the feeling is</h2>
     </Fragment>)}
   </Fragment>);
 
@@ -153,13 +151,13 @@ const EmotionIntensity = ({
     draft={isDraft}
     handleSaveDraft={handleSaveDraft}
   >
-    <div className="container-fluid py-2">
+    <div className="container-fluid pt-1 pt-md-0">
       <div className="row">
         <div className="col-12">
           <EmotionSection/>
         </div>
       </div>
-      <div className="row">
+      <div className="row mb-5">
         <div className="col-12">
           <IntenseLine
             rating={rating}
@@ -172,9 +170,11 @@ const EmotionIntensity = ({
           />
         </div>
       </div>
+    </div>
+    <div className='w-100 mt-4 mx-1 align-self-end'>
       <BlockLowerBtns
-        nextHandling={handlingOnClickNext}
-        disabled={isBlank(rating)}
+          nextHandling={handlingOnClickNext}
+          disabled={isBlank(rating)}
       />
     </div>
   </Layout>));

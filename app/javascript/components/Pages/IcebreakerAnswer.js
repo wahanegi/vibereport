@@ -1,32 +1,32 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { isEmptyStr, isNotEmptyStr, isPresent } from '../helpers/helpers';
-import { apiRequest } from '../requests/axios_requests';
 import axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import {MAX_CHAR_LIMIT} from '../helpers/consts';
+import {isEmptyStr, isNotEmptyStr, isPresent} from '../helpers/helpers';
 import Layout from '../Layout';
+import {apiRequest} from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import { MAX_CHAR_LIMIT } from '../helpers/consts';
 
 const FULL_PRIMARY_HEIGHT = 401;
 const MARGIN_BOTTOM = 17;
 const HEIGHT_ROW_USER = 40;
-const SUM_EDGE_DOWN_UP = 26;
+const SUM_EDGE_DOWN_UP = 41;
 
 const IcebreakerAnswer = ({
-  data,
-  setData,
-  saveDataToDb,
-  steps,
-  service,
-  draft,
-}) => {
-  const { isLoading, error } = service;
+                            data,
+                            setData,
+                            saveDataToDb,
+                            steps,
+                            service,
+                            draft,
+                          }) => {
+  const {isLoading, error} = service;
   const [loaded, setLoaded] = useState(false);
   const [prevStateAnswer, setPrevStateAnswer] = useState({});
   const [answerFunQuestion, setAnswerFunQuestion] = useState({});
   const [computedHeight, setComputedHeight] = useState(260);
   const prevAnswerBody = prevStateAnswer?.answer_body;
   const answerBody = answerFunQuestion?.answer_body;
-  const { user_name, question_body } = data.fun_question;
+  const {user_name, question_body} = data.fun_question;
   const user = user_name;
   const current_user_id = data.current_user.id;
   const [isDraft, setIsDraft] = useState(draft);
@@ -51,10 +51,11 @@ const IcebreakerAnswer = ({
       });
     };
 
-    const dataDraft = { dataRequest, draft: true };
+    const dataDraft = {dataRequest, draft: true};
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
-    saveDataAnswer(dataFromServer, () => {}, true);
+    saveDataAnswer(dataFromServer, () => {
+    }, true);
   };
 
   const handlingOnClickNext = () => {
@@ -83,20 +84,24 @@ const IcebreakerAnswer = ({
           'PATCH',
           dataRequest,
           dataFromServer,
-          () => {},
+          () => {
+          },
           `${url}${id}`
         ).then();
       } else if (isEmptyStr(answerBody)) {
         apiRequest(
           'DELETE',
-          () => {},
-          () => {},
-          () => {},
+          () => {
+          },
+          () => {
+          },
+          () => {
+          },
           `${url}${id}`
         ).then(goToResultPage);
       } else {
         !isDraft && steps.push('icebreaker-question');
-        saveDataToDb(steps, { draft: false });
+        saveDataToDb(steps, {draft: false});
       }
     } else if (isEmptyStr(answerBody)) {
       if (isDraft) {
@@ -110,7 +115,8 @@ const IcebreakerAnswer = ({
         'POST',
         dataRequest,
         dataFromServer,
-        () => {},
+        () => {
+        },
         `${url}`
       ).then();
     }
@@ -118,7 +124,7 @@ const IcebreakerAnswer = ({
 
   const onChangAnswer = (e) => {
     setAnswerFunQuestion(
-      Object.assign({}, answerFunQuestion, { [e.target.name]: e.target.value })
+      Object.assign({}, answerFunQuestion, {[e.target.name]: e.target.value})
     );
   };
 
@@ -140,8 +146,8 @@ const IcebreakerAnswer = ({
       const style = el.getBoundingClientRect();
       setComputedHeight(
         FULL_PRIMARY_HEIGHT -
-          (style.height + MARGIN_BOTTOM) -
-          (user ? HEIGHT_ROW_USER : 0)
+        (style.height + MARGIN_BOTTOM) -
+        (user ? HEIGHT_ROW_USER : 0)
       );
     }, 1);
   });
@@ -155,49 +161,54 @@ const IcebreakerAnswer = ({
       draft={isDraft}
       handleSaveDraft={handleSaveDraft}
     >
-      {loaded && !isLoading && !error && (
-        <div className="w-100 m-2">
-          <div className="mb-3 d-flex flex-column">
-            <h1 className="mb-0 lh-1 fs-3 fs-md-1">Kick back, relax.</h1>
-            <h1 className="mb-3 fs-3 fs-md-1">Time for a team question!</h1>
-            <h2 className={`${'text-black mb-0 fs-5 fs-md-3'} ${!user && 'd-none'}`}>
-              Brought to us by <span className="text-primary">@</span>
+      {loaded && !isLoading && !error && (<>
+        <div className="container-fluid w-100 pt-1 pt-md-0">
+          <div className=" d-flex flex-column mb-1">
+            <h1 className="fs-md-1 text-black mb-1 my-sm-0 mb-sm-3">Kick back, relax. <br/>
+              Time for a team question!</h1>
+            <h2
+              className={`${'text-black mb-0'} ${
+                !user && 'text-opacity-0 '
+              }`}
+            >
+              Brought to us by <span className="text-primary text-opacity-0">@</span>
               {user}
             </h2>
           </div>
-          <div className="mb-2">
-            <div className="d-flex flex-column align-items-start mx-auto px-2 py-1 border border-3 rounded rounded-4 border-emerald shadow col-12 col-md-8">
+          <div className="mb-5">
+            <div
+              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
               {user && (
-                <p className="fs-5 text-gray-600">
-                  <span className="text-primary">@</span>
+                <p className="fs-8 fs-md-7 text-gray-600">
+                  <span className="fs-8 fs-md-7 text-primary">@</span>
                   {user} asks:
                 </p>
               )}
-              <h5 id="question">{question_body}</h5>
+              <div id="question" className='text-start fs-7 fs-md-6'>{question_body}</div>
               <div className="w-100">
-              <div className='border border-3 rounded rounded-4 border-emerald p-1 costume-focus'>
-                <form>
-                  <textarea
-                    className="w-100 p-1 border-0 wrap-textarea"
-                    name="answer_body"
-                    style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
-                    placeholder="Tell us what you think!"
-                    value={answerFunQuestion?.answer_body || ''}
-                    onChange={onChangAnswer}
-                    maxLength={MAX_CHAR_LIMIT}
-                  />
-                </form>
+                <div className="icebreaker border border-3 rounded rounded-4 border-emerald">
+                    <textarea
+                      className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none"
+                      name="answer_body"
+                      style={{height: computedHeight - SUM_EDGE_DOWN_UP}}
+                      placeholder="Tell us what you think!"
+                      value={answerFunQuestion?.answer_body || ''}
+                      onChange={onChangAnswer}
+                      maxLength={MAX_CHAR_LIMIT}
+                    />
                 </div>
               </div>
             </div>
           </div>
-          <BlockLowerBtns
-            isSubmit={true}
-            handlingOnClickNext={handlingOnClickNext}
-            stringBody={answerBody}
-          />
         </div>
-      )}
+        <div className="w-100 mt-4 mx-1 align-self-end">
+            <BlockLowerBtns
+              isSubmit={true}
+              handlingOnClickNext={handlingOnClickNext}
+              stringBody={answerBody}
+            />
+        </div>
+      </>)}
     </Layout>
   );
 };

@@ -1,98 +1,35 @@
 @import 'variables';
-@mixin emotion{
-  &.positive{
-    background-color: $green-200 ;
-    color:            $sea-green;
-    &:active{
-      color: shift-color($sea-green,50%);
-      background-color: shift-color($green-200,15%);
+
+@mixin emotion {
+  &.positive {
+    background-color: $green-200;
+    color: $sea-green;
+
+    &:active {
+      color: shift-color($sea-green, 50%);
+      background-color: shift-color($green-200, 15%);
     }
   }
-  &.neutral{
+  &.neutral {
     background-color: $pale-cornflower;
-    color:            $steel-blue;
-    &:active{
-      color: shift-color($steel-blue,50%);
-      background-color: shift-color($pale-cornflower,15%);
+    color: $steel-blue;
+
+    &:active {
+      color: shift-color($steel-blue, 50%);
+      background-color: shift-color($pale-cornflower, 15%);
     }
   }
-  &.negative{
+  &.negative {
     background-color: $apricot;
-    color:            $cinnamon;
-    &:active{
-      color: shift-color($cinnamon,50%);
-      background-color: shift-color($apricot,15%);
+    color: $cinnamon;
+
+    &:active {
+      color: shift-color($cinnamon, 50%);
+      background-color: shift-color($apricot, 15%);
     }
   }
   &:active {
     margin: 3px 0 -3px 0;
     border-color: transparent;
   }
-}
-
-@mixin intensive-edge{
-  position:             relative;
-  z-index:              1 !important;
-  margin:               0 -6px !important;
-  border:               6px solid $royal-blue !important;
-  height:               $btn-height-intensity + .5rem !important;
-  min-width:            $btn-width-intensity + .5rem !important;
-}
-
-@mixin element($name){
-    background-color:       #{$name} ;
-    &.active {
-      background-color:     #{$name} !important;
-      @include intensive-edge;
-    }
-  &:hover{
-    background-color: shift-color($name,3%)  !important;
-    border: 3px solid shift-color($name,20%)  !important;
-  }
-}
-
-@mixin row-quarter-circle($color1,$color2,$color3,$color4,$color5) {
-  min-width:                 $btn-width-intensity !important;
-  height:                    $btn-height-intensity !important;
-  border-radius: 0 !important;
-  border: 2px solid $black !important;
-  padding: 0;
-  margin: 4px -2px !important;
-  &.n1 {
-    border-top-left-radius:  1.8125rem !important;
-    @include element($color1);
-    &.edged{
-      border-top:            $border-element !important;
-      border-left:           $border-element !important;
-    }
-  }
-  &.n2 {
-    @include element($color2);
-    &.edged { border-top:      $border-element !important; }
-  }
-  &.n3 {
-    @include element($color3);
-    &.edged { border-top:      $border-element !important; }
-  }
-  &.n4 {
-    @include element($color4);
-    &.edged { border-top:      $border-element !important; }
-  }
-  &.n5 {
-    border-top-right-radius: 1.8125rem !important;
-    @include element($color5);
-    &.edged{
-      border-top:            $border-element !important;
-      border-right:                 $border-element !important;
-    }
-  }
-}
-@mixin row-semicircle($color1,$color2,$color3,$color4,$color5) {
-  &.n1 {
-    border-bottom-left-radius: 1.813rem !important;
-  }
-  &.n5 {
-    border-bottom-right-radius: 1.813rem !important;
-  }
-  @include row-quarter-circle($color1,$color2,$color3,$color4,$color5)
 }

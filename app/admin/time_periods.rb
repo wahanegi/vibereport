@@ -1,5 +1,5 @@
 ActiveAdmin.register TimePeriod do
-  permit_params  :start_date, :end_date, :due_date
+  permit_params :start_date, :end_date, :due_date
 
   index do
     selectable_column
@@ -68,8 +68,8 @@ ActiveAdmin.register TimePeriod do
 
       column do
         panel 'Shoutout Verbatims' do
-          shoutouts_with_message = time_period.shoutouts.select { |shoutout| shoutout.type == nil }
-          
+          shoutouts_with_message = time_period.shoutouts.select { |shoutout| shoutout.type.nil? }
+
           if shoutouts_with_message.any?
             table_for shoutouts_with_message do
               column 'Author' do |shoutout|
