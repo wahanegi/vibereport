@@ -562,10 +562,13 @@
   }
 
   li {
+    list-style: none;
+    text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     padding-inline-start: 7px;
+    color: $gray-300;
 
     &:focus, &.highlight {
       cursor: pointer;
