@@ -30,6 +30,7 @@
     border-radius: 20px;
     font-size: clamp(20px, 3vw, 24px) !important;
     min-height: 65px;
+    max-height: 65px;
 
     &::placeholder {
       font-size: clamp(20px, 3vw, 24px);
