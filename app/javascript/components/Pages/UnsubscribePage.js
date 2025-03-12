@@ -40,7 +40,7 @@ const UnsubscribePage = ({data}) => {
       </div>
       <div className="text-center mb-2">
         <Button
-          className="btn-modal c1 w-auto border-0 px-3 mb-3"
+          className="btn-modal c1 w-auto border-0 px-3 mb-3 fs-5"
           onClick={onUnsubscribe}
         >
           Unsubscribe
@@ -48,7 +48,7 @@ const UnsubscribePage = ({data}) => {
       </div>
       <div className="text-center">
         <Link to={'/'} target="_self" rel="noopener noreferrer">
-          <Button className="btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 mt-1">
+          <Button className="btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 mt-1 fs-5 border-0">
             Cancel
           </Button>
         </Link>
