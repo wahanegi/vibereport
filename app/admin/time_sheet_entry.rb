@@ -21,7 +21,9 @@ ActiveAdmin.register TimeSheetEntry do
 
   form do |f|
     f.inputs do
-      f.input :user, as: :select, collection: User.opt_in.select(:id, :first_name, :last_name).map { |user| [user.full_name, user.id] }, include_blank: false
+      f.input :user, as: :select, collection: User.opt_in.select(:id, :first_name, :last_name).map { |user|
+        [user.full_name, user.id]
+      }, include_blank: false
       f.input :project, as: :select, collection: Project.pluck(:code, :id), include_blank: false
       f.input :time_period, as: :select, collection: TimePeriod.all.select(:id, :start_date, :end_date).map { |time_period|
         [time_period.date_range_str, time_period.id]
@@ -40,7 +42,5 @@ ActiveAdmin.register TimeSheetEntry do
       row :created_at
       row :updated_at
     end
-
-    active_admin_comments
   end
 end
