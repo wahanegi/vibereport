@@ -73,13 +73,29 @@ RSpec.describe 'Admin::Teams', type: :request do
       file.write(csv_data)
       file.rewind
 
-      post import_csv_admin_teams_path, params: { file: Rack::Test::UploadedFile.new(file.path, 'text/csv') }
+      post import_csv_process_admin_teams_path, params: { file: Rack::Test::UploadedFile.new(file.path, 'text/csv') }
 
       expect(response).to redirect_to(admin_teams_path)
       follow_redirect!
 
       expect(response.body).to include('CSV imported successfully!')
       expect(response.body).to include('Team 1')
+    end
+
+    it 'renders an error message if the CSV file is not attached' do
+      post import_csv_process_admin_teams_path, params: { file: nil }
+      follow_redirect!
+      expect(response.body).to include('Please click &quot;Choose File&quot; and then select a CSV file to upload')
+    end
+
+    it 'renders an error message if the CSV file is invalid' do
+      file = Tempfile.new(['invalid_import', '.csv'])
+      file.write('')
+      file.rewind
+
+      post import_csv_process_admin_teams_path, params: { file: Rack::Test::UploadedFile.new(file.path, 'text/csv') }
+      follow_redirect!
+      expect(response.body).to include('Error importing CSV file')
     end
   end
 

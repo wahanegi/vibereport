@@ -7,7 +7,7 @@ class CelebrationVerbatims < AdminReport
   def generate
     return 'No team provided' unless @team
 
-    celebrate_comments = receive_celebrate_comments.compact.reject(&:empty?)
+    celebrate_comments = receive_celebrate_comments
 
     return 'No celebrate comments present' if celebrate_comments.empty?
 
@@ -21,5 +21,6 @@ class CelebrationVerbatims < AdminReport
             .where(user_teams: { team_id: @team.id }, responses: { time_period_id: @time_periods })
             .celebrated
             .pluck(:celebrate_comment)
+            .compact_blank
   end
 end

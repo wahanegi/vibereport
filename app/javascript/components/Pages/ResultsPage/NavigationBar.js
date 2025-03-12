@@ -42,16 +42,36 @@ const NavigationBar = ({
   }
   const isPenultimatePeriod = nextTimePeriod?.id === time_periods[0].id
 
-  return (
-    <div className='d-flex justify-content-between px-5 w-100 mb-1 mb-md-0'>
-      <Calendar date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)} onClick={showPrevTimePeriod}
-                positionLeft={true} prevTimePeriod={prevTimePeriod} emotions={emotions} nextTimePeriod={nextTimePeriod}/>
-      {hasTeamAccess && <ResultsManager data={data} setData={setData} steps={steps} nextTimePeriod={nextTimePeriod}/>}
-      <Calendar date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)} onClick={showNextTimePeriod}
-                positionRight={true} hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))} prevTimePeriod={prevTimePeriod} emotions={emotions}/>
-      <EditResponse onClick={handlingBack} hidden={nextTimePeriod}/>
-    </div>
-  )
+    return (<div className="col-12 col-xxl-10 col-xl-10 col-lg-10 col-md-11 col-sm-12">
+        <div
+            className='d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-column flex-sm-column align-items-center justify-content-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between w-100 gap-1'>
+            <Calendar
+                date={isPresent(prevTimePeriod) ? rangeFormat(prevTimePeriod) : datePrepare(timePeriod.start_date)}
+                onClick={showPrevTimePeriod}
+                positionLeft={true}
+                prevTimePeriod={prevTimePeriod}
+                emotions={emotions}
+                nextTimePeriod={nextTimePeriod}/>
+            <div className='d-flex flex-nowrap flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-column flex-sm-column align-items-center gap-1'>
+                {hasTeamAccess && <ResultsManager data={data}
+                                                  setData={setData}
+                                                  steps={steps}
+                                                  nextTimePeriod={nextTimePeriod}/>}
+
+                <Calendar
+                    date={isPenultimatePeriod ? datePrepare(nextTimePeriod?.start_date) : rangeFormat(nextTimePeriod)}
+                    onClick={showNextTimePeriod}
+                    positionRight={true}
+                    hidden={isBlank(nextTimePeriod) || (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path))}
+                    prevTimePeriod={prevTimePeriod}
+                    emotions={emotions}/>
+
+               <div className="me-0 me-xxl-3 me-xl-3 me-lg-3 me-md-0 me-sm-0" hidden={nextTimePeriod}> <EditResponse onClick={handlingBack}
+                              hidden={nextTimePeriod}
+                /> </div>
+            </div>
+        </div>
+    </div>)
 }
 
 export default NavigationBar
