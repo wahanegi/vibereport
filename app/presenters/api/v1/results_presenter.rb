@@ -41,7 +41,8 @@ class Api::V1::ResultsPresenter
   def emotion_index_all(team)
     vars = ActiveAdminHelpers.time_period_vars(
       team:,
-      time_period:
+      time_period:,
+      only: [:emotion_index_all]
     )
     vars[:emotion_index_all][0]
   end
@@ -49,7 +50,8 @@ class Api::V1::ResultsPresenter
   def productivity_average_all(team)
     vars = ActiveAdminHelpers.time_period_vars(
       team:,
-      time_period:
+      time_period:,
+      only: [:productivity_avg_all]
     )
     vars[:productivity_avg_all]
   end
@@ -59,7 +61,8 @@ class Api::V1::ResultsPresenter
 
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
-      current_period: time_period
+      current_period: time_period,
+      only: [:emotion_index_current_period]
     )
     vars[:emotion_index_current_period][0]
   end
@@ -69,7 +72,8 @@ class Api::V1::ResultsPresenter
 
     vars = ActiveAdminHelpers.time_period_vars(
       team:,
-      current_period: time_period
+      current_period: time_period,
+      only: [:productivity_average_current_period]
     )
     vars[:productivity_average_current_period]
   end
@@ -85,7 +89,8 @@ class Api::V1::ResultsPresenter
 
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
-      previous_time_period: previous_time_period
+      previous_time_period: previous_time_period,
+      only: [:previous_emotion_index]
     )
     vars[:previous_emotion_index]&.first || 0
   end
@@ -99,7 +104,8 @@ class Api::V1::ResultsPresenter
                                      .first
     vars = ActiveAdminHelpers.time_period_vars(
       team: team,
-      previous_time_period: previous_time_period
+      previous_time_period: previous_time_period,
+      only: [:previous_productivity_avg]
     )
     vars[:previous_productivity_avg]
   end
