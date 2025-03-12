@@ -67,43 +67,45 @@ export const BtnPrimary = ({text, addClass = '', hidden, onClick, disabled}) =>
     </button>;
 
 export const Calendar = ({
-  date, onClick, hidden = false, positionLeft = false,
-  positionRight = false, prevTimePeriod, emotions, nextTimePeriod,
-}) =>
-    isPresent(date) && !hidden && <div className="position-relative">
-      {prevTimePeriod && positionLeft ?
-          emotions.length < MIN_USERS_RESPONSES && !nextTimePeriod ?
-              <p className="position-absolute"
-                 style={{right: -48, bottom: 63, width: 180}}>See last week’s
-                results</p> :
-              <p className="position-absolute"
-                 style={{right: -48, bottom: 63, width: 180}}>See previous
-                results</p> :
-          null
-      }
-      {positionRight && <p className="position-absolute"
-                           style={{right: -48, bottom: 63, width: 180}}>See next
-        results</p>}
-      <div className="position-relative pointer w-82" onClick={onClick}>
-        <img src={calendar} alt="calendar"/>
-        <div className="position-absolute top-0 w-82">
-          {date.includes(' - ') ?
-              <div className="mt-3 d-flex flex-column">
-                {date.split(' - ')[0]}
-                <img src={line} alt="line"/>
-                {date.split(' - ')[1]}
-              </div> :
-              <div className="mt-5 d-flex">{date}</div>
-          }
+                             date,
+                             onClick,
+                             hidden = false,
+                             positionLeft = false,
+                             positionRight = false,
+                             prevTimePeriod,
+                             emotions,
+                             nextTimePeriod
+                         }) => {
+    const seeResults = prevTimePeriod && positionLeft
+        ? emotions.length < MIN_USERS_RESPONSES && !nextTimePeriod
+            ? <p className="m-0">See last week’s results</p>
+            : <p className="m-0">See previous results</p>
+        : null
+
+    return isPresent(date) && !hidden && <div className="position-relative" style={{width: 180, height: 105}}>
+        {seeResults}
+        {positionRight && <p className="m-0">See next results</p>}
+        <div className="position-absolute translate-middle-x start-50" style={{top: 20}}>
+            <div className="position-relative pointer" style={{height: 78, width: 83}} onClick={onClick}>
+                <img className="translate-middle-x position-absolute top-0" src={calendar} alt="calendar"/>
+                <div className="position-absolute top-0" style={{width: 83}}>
+                    {date.includes(' - ')
+                        ?
+                        <div className='d-flex flex-column mt-3'>
+                            {date.split(' - ')[0]}
+                            <img src={line} alt="line"/>
+                            {date.split(' - ')[1]}
+                        </div>
+                        : <div className="d-flex mt-5">{date}</div>
+                    }</div>
+            </div>
         </div>
         {prevTimePeriod && positionLeft &&
-            <img className="position-absolute" style={{left: -26, top: 29}}
-                 src={polygonLeft} alt="polygon left"/>}
+            <img className="position-absolute top-50" style={{left:23}} src={polygonLeft} alt="polygon left"/>}
         {positionRight &&
-            <img className="position-absolute" style={{right: -26, top: 29}}
-                 src={polygonRight} alt="polygon right"/>}
-      </div>
-    </div>;
+            <img className="position-absolute top-50" style={{right:23}} src={polygonRight} alt="polygon right"/>}
+    </div>
+}
 
 export const BtnNext = ({addClass = '', hidden, onClick, disabled}) =>
     <button onClick={onClick} className={`btn btn-regular c1 ${addClass}`}
@@ -209,28 +211,24 @@ export const ResultsManager = ({
   };
 
   return (
-      <div className={`ms-auto ${nextTimePeriod ? 'me-2' : ''}`}>
-        <div
-            className="b4 position-result pointer"
-            onClick={handlingOnClickImage}
-        >
-          <img
-              className="ms-1"
-              src={LeaderVector}
-              alt="Leader Vector"
-          />
-        </div>
-
-        {showResultsManager &&
-            <ResultsPageManager
-                data={data}
-                setData={setData}
-                steps={steps}
-                draft={draft}
-                service={service}
-            />
-        }
+    <>
+      <div className="b4 position-result pointer" onClick={handlingOnClickImage}>
+        <img
+          src={LeaderVector}
+          alt="Leader Vector"
+        />
       </div>
+
+      {showResultsManager &&
+        <ResultsPageManager
+          data={data}
+          setData={setData}
+          steps={steps}
+          draft={draft}
+          service={service}
+        />
+      }
+    </>
   );
 };
 
@@ -265,17 +263,16 @@ export const Results = ({data, setData, steps, hidden = false}) => {
   };
 
   return (
-      !hidden && <div className="ms-auto me-2">
-        <div
-            className="b4 position-result pointer"
-            onClick={handlingOnClickImage}
-        >
-          <img
-              className="ms-1"
-              src={BackRevert}
-              alt="Back Revert"
-          />
-        </div>
+    !hidden && <div className='mx-auto me-md-4 mt-1'>
+      <div
+        className="b4 position-result pointer"
+        onClick={handlingOnClickImage}
+      >
+        <img
+          src={BackRevert}
+          alt="Back Revert"
+        />
+      </div>
 
         {showResults &&
             <ResultsPage

@@ -134,34 +134,34 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
       return (
         isMinUsersResponses ? (
           <div className='d-flex flex-column gap-1 mb-1 mb-md-0'>
-            <h1 className={"fs-md-1"}>You're one of the first to check in!</h1>
+            <h1 className="fs-md-1">You're one of the first to check in!</h1>
             <h6>Come back later to view the results</h6>
           </div>
         ) : (
-          <h1 className={"fs-md-1"}>The team is feeling...</h1>
+          <h1 className="fs-md-1">The team is feeling...</h1>
         )
       );
     }
 
     return (
-      <h1 className={"fs-md-1"}>During {rangeFormat(timePeriod)} the team was feeling...</h1>
+      <h1 className="fs-md-1">During {rangeFormat(timePeriod)}<br/> the team was feeling...</h1>
     );
   }
 
   const TimePeriodNavigation = () => {
     if (nextTimePeriod && isBlank(data.prev_results_path)) {
       return (
-        <div className='mt-5'>
-          <BtnBack text='Back to most recent' addClass='mb-4 mt-5'
-                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
-          />
-        </div>
+          <div className='mt-5'>
+            <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6'
+                     onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+            />
+          </div>
       )
     }
     return <div className='my-5'></div>
   }
 
-  const NoticeAlert = () => {
+  const SkipCheckInAlert = () => {
     const alertTitle = `<div>Just to confirm...</div></br><div class='fw-bold'>${notice ? notice['alert'] : ''}</div>`
     const alertHtml = 'You previously indicated that you wern\'t working during this check-in period.</br></br></br>Skip this chek-in if you weren\'t working.'
     const cancelButtonText = 'Skip check-in'
@@ -179,9 +179,9 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
 
   if (!loaded) return <Loader/>
 
-  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}>
-    <div className='container-fluid d-flex flex-column w-100 align-items-center pt-1 pt-md-0'>
-      <NoticeAlert/>
+  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true} hideShoutout={nextTimePeriod}>
+    <div className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
+      <SkipCheckInAlert/>
 
       <TextHeader/>
 

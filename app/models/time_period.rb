@@ -27,6 +27,7 @@ class TimePeriod < ApplicationRecord
   validates :end_date, comparison: { greater_than: :start_date }
 
   scope :ordered, -> { order(start_date: :desc) }
+  scope :with_responses_by_team, ->(team) { joins(responses: { user: :user_teams }).where(user_teams: { team_id: team.id }) }
 
   def slugify
     self.slug = SecureRandom.hex(5)

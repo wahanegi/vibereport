@@ -20,6 +20,37 @@ RSpec.describe TimePeriod, type: :model do
   let!(:time_period1) { create :time_period }
   let!(:time_period2) { create :time_period }
 
+  context 'scopes' do
+    let!(:teams) { create_list(:team, 3) }
+    let!(:users) do
+      teams.map { |team| create(:user, teams: [team]) }
+    end
+    let!(:time_periods) do
+      (0...3).map do |index|
+        create(:time_period,
+               start_date: Date.current + index.weeks,
+               end_date: (Date.current + 6.days) + index.weeks,
+               due_date: (Date.current + 4.days) + index.weeks)
+      end
+    end
+    let!(:responses) do
+      time_periods.map do |time_period|
+        create(:response, time_period:, user: users.sample)
+      end
+    end
+    let(:first_team) { teams.first }
+
+    it 'sorts by start_date in descending order' do
+      expect(TimePeriod.ordered).to match_array(TimePeriod.order(start_date: :desc))
+    end
+
+    it 'joins responses where the user belongs to the team' do
+      time_periods_by_team = TimePeriod.joins(responses: { user: :user_teams }).where(user_teams: { team_id: first_team.id })
+
+      expect(TimePeriod.with_responses_by_team(first_team)).to match_array(time_periods_by_team)
+    end
+  end
+
   context 'Create multiple factories' do
     it 'multiple factories being instantiated works' do
       expect(create(:time_period)).to be_valid
