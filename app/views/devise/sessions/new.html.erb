@@ -1,35 +1,37 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="mx-auto mt-85 minW-675">
-    <div class="welcome-field mx-auto mb-115">
-      <h1 class="color-black">
-        Oh, hi there!
-      </h1>
-      <p class="b2 gray-600 mt-negative-17">Welcome to</p>
-    </div>
-    <%= render 'layouts/logo', height: 87 %>
-    <div class="input-label mt-3 mb-6 mx-auto pt-3">
-      <p class="gray-600 b3">Enter your email address and we’ll send you a link
-        <br>
-        to access your check-in and profile</p>
-    </div>
-    <div class="b1">
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter email here", id: "email-input", class:"mt-2 w-660 email-input email-input-new"%>
-    </div>
-    <div class="d-flex align-items-center mt-85 pb-52">
-      <%= f.submit 'Next', class: "btn btn-regular c1 fs-5", id: "next-button", disabled: true %>
-    </div>
-  </div>
+	<div class="container-fluid py-3">
+		<div class="mx-1 mx-md-0">
+			<div class="mb-4 mb-md-7">
+				<h1 class="text-black mt-2 mt-md-6 mb-0 fs-2 fs-md-1">Oh, hi there!</h1>
+				<p class="gray-600 mt-2 fs-6 fs-md-5">Welcome to</p>
+			</div>
+			<div class="max-width-logo mx-auto">
+				<%= image_tag 'logo.png', class: 'img-fluid' %>
+			</div>
+			<div class="mt-3 mx-auto pt-3">
+				<p class="gray-600 fs-8 fs-md-7">Enter your email address and we’ll send you a link
+					<br>
+					to access your check-in and profile</p>
+			</div>
+			<div class="mt-2 max-width-sign-in-input mx-auto">
+				<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter email here", id: "email-input", class: "mt-2 px-1 outline-focus-none fs-4 fs-md-3 w-100" %>
+			</div>
+			<div class="mt-8">
+				<%= f.submit 'Next', class: "btn btn-regular c1 fs-5 text-white border", id: "next-button", disabled: true %>
+			</div>
+		</div>
+	</div>
 <% end %>
 
 <script type="text/javascript">
-  window.onload = function() {
-    $(document).ready(function() {
+  window.onload = function () {
+    $(document).ready(function () {
       // Get the input and button elements
       const input = $("#email-input");
       const button = $('#next-button');
       input.val("")
       // Attach an event listener to the input field
-      input.on('input', function() {
+      input.on('input', function () {
         // Check if the email is valid using a regular expression
         if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.val())) {
           button.attr('disabled', false);

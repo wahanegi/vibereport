@@ -3,24 +3,25 @@
     margin: auto;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
-    width: 75vw;
     background-color: $white;
+
     &.question {
       padding: 32px 27px 18px 27px;
       border: 3px solid $emerald;
       background: $tea-green;
+
       &.preview {
         height: 500px;
-        filter: blur(8px);
       }
     }
+
     &.shoutout {
       padding: 32px 10px 18px 10px;
       background: $pink;
       border: 3px solid $red-violet;
+
       &.preview {
         height: 500px;
-        filter: blur(8px);
       }
     }
 
@@ -29,26 +30,24 @@
       min-height: auto;
       word-break: break-word;
     }
+
     &.empty-answer {
       background-color: $white;
       min-height: auto;
       color: $green-700;
+
       &.hover-event {
         background-color: $green-700;
         color: $white;
         border: 3px solid $white;
       }
     }
-    .expand-icon {
-      width: 26.6px;
-      height: 26px;
-      padding: 0
-    }
   }
+
   .edit-question {
     .form-control {
       box-shadow: none !important;
-      border:1px solid $gray-100 !important;
+      border: 1px solid $gray-100 !important;
     }
   }
 }
@@ -56,11 +55,6 @@
 .header-position {
   position: relative;
   top: 137px;
-}
-
-.text-header-position {
-  position: relative;
-  top: 120px;
 }
 
 .hud {
@@ -86,30 +80,95 @@
   max-width: 180px;
   white-space: normal;
 }
+
 .emoji-button {
   height: 22px;
   width: 22px;
   margin-left: 4px;
   background-image: url("reshot-icon-smile.svg");
+
   &:hover {
     background-image: url("reshot-icon-grinning.svg");
   }
 }
+
 .emoji-picker {
-  font-size: 14px;
-  position: absolute;
   right: 20px;
+  top: 20px;
   z-index: 100
 }
-.padding-x4 {
+
+.margin-x4 {
   margin-left: 4px;
   margin-right: 4px;
 }
+
 .padding-x2 {
   padding-left: 2px;
   padding-right: 2px;
 }
+
 .emoji-container {
   font-size: 22px !important;
   line-height: 22px !important;
+}
+
+.word {
+  --duration: 3s;
+  animation: blinkAndScale var(--duration) ease 0s infinite alternate none;
+}
+
+@keyframes blinkAndScale {
+  from {
+    transform: scale(.8);
+    opacity: .5;
+  }
+
+  to {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.square {
+  background-color: #524F50;
+  height: 125px;
+  border-radius: 6px;
+}
+
+.blur-effect {
+  filter: blur(8px);
+}
+
+.max-width-container {
+  max-width: 1190px;
+}
+
+.chart-wrapper {
+  max-width: 400px;
+}
+
+@media (max-width: 576px) {
+  .chart-wrapper {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 432px) {
+  .chart-wrapper {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 370px) {
+  .chart-wrapper {
+    max-width: 200px;
+  }
+  .chart-title {
+    display: none;
+  }
+}
+
+.no-data {
+  padding: 0 50px;
 }

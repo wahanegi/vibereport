@@ -1,17 +1,19 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
-import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../../helpers/helpers";
 import Form from "react-bootstrap/Form";
-import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import {Link} from "react-router-dom";
+import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../../helpers/helpers";
+import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
-  <div className='results col'>
-    <div className='row wrap question preview mb-3' />
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
+    <div className='row wrap question preview mw-100'/>
   </div>
 
-const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question,
-                               setShowWorkingModal, data, setData}) => {
+const EmptyQuestionSection = ({
+                                nextTimePeriod, userName, fun_question,
+                                setShowWorkingModal, data, setData
+                              }) => {
   const [text, setText] = useState('');
   const [addClass, setAddClass] = useState('')
   const handleMouseEnter = () => {
@@ -45,11 +47,11 @@ const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question,
   }, [fun_question])
 
   return <Fragment>
-    <div className='results col'>
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
       <Question {...{userName, fun_question}} />
     </div>
-    <div className={`results col ${nextTimePeriod ? '': 'pointer'}`} onClick={handlingBack}>
-      <div className={`empty-answer ${addClass} row wrap question mb-3`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
+      <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <h5 className='d-flex justify-content-center fw-semibold'>{text}</h5>
       </div>
     </div>
@@ -59,15 +61,24 @@ const EmptyQuestionSection = ({nextTimePeriod, userName, fun_question,
 const Question = ({userName, fun_question}) => {
   if (isBlank(fun_question)) return null;
 
-  return <div className='row wrap question mb-1'>
+  return <div className='row wrap question mb-1 mw-100'>
     {
-      userName && <p className='b3 muted text-start'><span className='color-rose'>@</span>{userName} asks:<br/></p>
+      userName && <p className='b3 muted text-start fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
-    <h5 className='w-auto text-start fw-semibold'> {fun_question.question_body}</h5>
+    <p className='fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start fw-semibold m-0'> {fun_question.question_body}</p>
   </div>
 }
 
-const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_question, answersArray, setAnswersArray}) => {
+const AnswerItem = ({
+                      answer,
+                      emojis,
+                      user,
+                      current_user,
+                      nextTimePeriod,
+                      fun_question,
+                      answersArray,
+                      setAnswersArray
+                    }) => {
   const isCurrentUser = !nextTimePeriod && current_user.email === user.email
   const [edit, setEdit] = useState(false)
   const [answerBody, setAnswerBody] = useState(answer.answer_body || '')
@@ -84,7 +95,7 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
 
   const dataRequest = {
     fun_question_answer: {
-      answer_body: answerBody  || '',
+      answer_body: answerBody || '',
       fun_question_id: fun_question.id
     }
   }
@@ -93,10 +104,11 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
     if (selectedEmoji) {
       setShowEmojiPicker(false)
       setEmojiObject(Object.assign({}, emojiObject, {
-        emoji_code: selectedEmoji,
-        emoji_name: selectedEmojiName,
-        emojiable_id: answer.id,
-        emojiable_type: 'FunQuestionAnswer'})
+          emoji_code: selectedEmoji,
+          emoji_name: selectedEmojiName,
+          emojiable_id: answer.id,
+          emojiable_type: 'FunQuestionAnswer'
+        })
       )
     }
   }, [selectedEmoji])
@@ -112,14 +124,14 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
         const updatedAnswer = Object.assign({}, item.answer, {
           answer_body: updatedAnswerBody,
         });
-        return { ...item, answer: updatedAnswer };
+        return {...item, answer: updatedAnswer};
       }
       return item;
     });
     setAnswersArray(updatedData)
     setEdit(false)
   }
-  const updateAnswersArray = (callback) =>{
+  const updateAnswersArray = (callback) => {
     if (callback.message === 'success') {
       const newAnswersArray = answersArray.filter(item => item.answer.id !== answer.id)
       setAnswersArray(newAnswersArray)
@@ -130,25 +142,29 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
   const updateAnswer = () => {
     const url = '/api/v1/fun_question_answers/'
     const id = answer.id
-    if(answer.answer_body !== answerBody && isNotEmptyStr(answerBody)) {
-      apiRequest("PATCH", dataRequest, dataFromServer, ()=>{}, `${url}${id}`).then();
-    } else if(isEmptyStr(answerBody)) {
-      apiRequest("DELETE", () => {}, updateAnswersArray, () => {}, `${url}${id}`).then();
+    if (answer.answer_body !== answerBody && isNotEmptyStr(answerBody)) {
+      apiRequest("PATCH", dataRequest, dataFromServer, () => {
+      }, `${url}${id}`).then();
+    } else if (isEmptyStr(answerBody)) {
+      apiRequest("DELETE", () => {
+      }, updateAnswersArray, () => {
+      }, `${url}${id}`).then();
     } else {
       setEdit(false)
     }
   }
 
-  return <div className='row wrap question answer mb-1'>
+  return <div className='row wrap question answer mb-1 mw-100'>
     <div className="col-xl-12">
       <div className='d-flex justify-content-end'>
-        {isCurrentUser && !edit && <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={()=>setEdit(true)}>Edit</Link>}
+        {isCurrentUser && !edit &&
+          <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={() => setEdit(true)}>Edit</Link>}
       </div>
       {edit && <div className='d-flex justify-content-end'>
         <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
         <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
-      <div className='edit-question h5 w-auto text-start fw-semibold'>
+      <div className='edit-question fs-7 fs-xxl-6 fs-xl-6 fs-lg-6 fs-md-6 fs-sm-7 w-auto text-start fw-semibold'>
         <span className='color-rose'>@</span>{user.first_name} said:&nbsp;
         {
           edit ?
@@ -156,19 +172,23 @@ const AnswerItem = ({answer, emojis, user, current_user, nextTimePeriod, fun_que
                           size="lg"
                           autoFocus={true}
                           onChange={e => setAnswerBody(e.target.value)}
-                          value={answerBody} />:
+                          value={answerBody}/> :
             answer.answer_body
         }
       </div>
-      <EmojiRow {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
-                     setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef}} />
+      <EmojiRow {...{
+        emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
+        setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef
+      }} />
     </div>
   </div>
 }
 
-const QuestionSection = ({fun_question, answers, nextTimePeriod, isMinUsersResponses,
-                           setShowWorkingModal, current_user, data, setData}) => {
-  if(!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
+const QuestionSection = ({
+                           fun_question, answers, nextTimePeriod, isMinUsersResponses,
+                           setShowWorkingModal, current_user, data, setData
+                         }) => {
+  if (!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection/>
 
   const userName = fun_question?.user?.first_name
   const [answersArray, setAnswersArray] = useState(answers || [])
@@ -177,20 +197,22 @@ const QuestionSection = ({fun_question, answers, nextTimePeriod, isMinUsersRespo
     setAnswersArray(answers)
   }, [answers])
 
-  if(isBlank(answersArray)) return <EmptyQuestionSection userName={userName}
-                                                    fun_question={fun_question}
-                                                    nextTimePeriod={nextTimePeriod}
-                                                    data={data}
-                                                    setData={setData}
-                                                    setShowWorkingModal={setShowWorkingModal}/>
+  if (isBlank(answersArray)) return <EmptyQuestionSection userName={userName}
+                                                          fun_question={fun_question}
+                                                          nextTimePeriod={nextTimePeriod}
+                                                          data={data}
+                                                          setData={setData}
+                                                          setShowWorkingModal={setShowWorkingModal}/>
 
-  return <div className='results col'>
+  return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
     <Question {...{userName, fun_question}} />
     {
       answersArray.map(data => {
         const {answer, user, emojis} = data
-        return <AnswerItem key={answer.id} {...{answer, emojis, fun_question, user, current_user, nextTimePeriod,
-                                                answersArray, setAnswersArray}} />
+        return <AnswerItem key={answer.id} {...{
+          answer, emojis, fun_question, user, current_user, nextTimePeriod,
+          answersArray, setAnswersArray
+        }} />
       })
     }
   </div>

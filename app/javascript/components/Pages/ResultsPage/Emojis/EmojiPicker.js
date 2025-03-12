@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import EmojiPicker, {EmojiStyle} from "emoji-picker-react";
 import axios from "axios";
+import EmojiPicker, {EmojiStyle} from "emoji-picker-react";
+import React, {useEffect} from 'react';
 import {isEmptyStr, isPresent} from "../../../helpers/helpers";
 
 const createEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, setEmojiObject) => {
@@ -63,10 +63,10 @@ export const onChangeEmojis = (emojiObject, emojisArr, setEmojisArr, setSelected
 }
 
 const EmojiPickerComponent = React.forwardRef(({
-                        emojiObject, setSelectedEmoji, current_user, pickerPosition,
-                        emojisArr, setEmojisArr, setEmojiObject, setSelectedEmojiName,
-                        setPickerPosition
-                      }, ref) => {
+                                                 emojiObject, setSelectedEmoji, current_user, pickerPosition,
+                                                 emojisArr, setEmojisArr, setEmojiObject, setSelectedEmojiName,
+                                                 setPickerPosition
+                                               }, ref) => {
   const onClick = (emojiData) => {
     const repeatEmoji = emojisArr.filter(item => item.emoji_code === emojiData.unified)
     const reactedUser = repeatEmoji.find(item => item.users.some(user => user.id === current_user.id))
@@ -82,11 +82,11 @@ const EmojiPickerComponent = React.forwardRef(({
     onChangeEmojis(emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user, setEmojiObject)
   }, [emojiObject.emoji_code])
 
-  return <div ref={ref} className='emoji-picker' style={pickerPosition}>
+  return <div ref={ref} className='emoji-picker position-absolute' style={pickerPosition}>
     <EmojiPicker
       onEmojiClick={onClick}
       autoFocusSearch={false}
-      emojiStyle={EmojiStyle.NATIVE} />
+      emojiStyle={EmojiStyle.NATIVE}/>
   </div>
 })
 

@@ -1,13 +1,8 @@
 .gif-item {
-  box-sizing: border-box;
-  display: inline-block;
   margin: 0.5%;
   position: relative;
-  width: 19%;
-  &.result-page {
-    width: 24%;
-  }
 }
+
 .tippy {
   position: absolute;
   top: 50%;
@@ -20,11 +15,12 @@
   display: inline-block;
   margin: 0.5%;
   position: relative;
-  width: 19%;
   border: 8px solid $sea-green;
   border-radius: 6px;
+
   img {
     width: 100%;
+    height: 100%;
   }
 }
 
@@ -36,8 +32,10 @@
   width: 19%;
   border: 8px solid $steel-blue;
   border-radius: 6px;
+
   img {
     width: 100%;
+    height: 100%;
   }
 }
 
@@ -46,68 +44,58 @@
   display: inline-block;
   margin: 0.5%;
   position: relative;
-  width: 19%;
   border: 8px solid $cinnamon;
   border-radius: 6px;
+
   img {
     width: 100%;
+    height: 100%;
   }
 }
 
 .gif-item img {
   width: 100%;
+  height: 100%;
 }
 
 .gif-wrap {
-  width: 75%;
-  @media (max-width: 1920px) {
-    max-width: 1169px;
-  }
-  &.result-page {
-    max-width: 100%
-  }
-  &.manager-result-page {
-    width: auto;
-  }
+  max-width: 1104px;
 }
 
 .gif-list {
-  column-gap: 0.5em;
-  font-size: .85em;
-  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5em;
+
+  @media (max-width: 568px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 250px;
+  }
 }
 
 .gif-card {
-  @media (max-width: 1920px) {
-    height: 417px !important;
-  }
-  @media (min-width: 1921px) {
-    height: 48vh !important;
-  }
   background-color: $gray-500 !important;
-  border-radius: 14.5358px !important;
-  padding: 0 0 10px 0 !important;
+  min-height: 417px;
 
   .card-header {
     height: 100px;
-    z-index: 1;
   }
 
   .card-header input {
-    font-size: $h1-font-size;
-    background-color: $light-grey !important;
-    border: 3px solid $royal-blue !important;
-    text-align: start;
     box-shadow: none;
+
     &.positive-input {
       color: $sea-green !important;
     }
+
     &.neutral-input {
       color: $steel-blue !important;
     }
+
     &.negative-input {
       color: $cinnamon;
     }
+
     &.other-input {
       color: $gray-500 !important;
     }
@@ -119,7 +107,7 @@
   }
 
   .card-scroll {
-    max-height: 417px;
+    max-height: 300px;
     overflow-y: auto;
   }
 
@@ -131,37 +119,32 @@
   }
 }
 
-.border-none {
-  border: none !important;
-}
-
 .gif img {
   &.small {
     max-width: 312px;
     max-height: 170px;
   }
+
   &.big {
-    max-width: 465px;
+    max-width: 370px;
     max-height: 40vh;
   }
 
   padding: 0;
   border-radius: 6px;
+
   &.image-positive {
     border: 6px solid $sea-green !important;
   }
+
   &.image-neutral {
     border: 6px solid $steel-blue !important;
   }
+
   &.image-negative {
     border: 6px solid $cinnamon !important;
   }
-  &.image-powered-by {
-    top: 0;
-    right: 0;
-    width: 200px;
-    height: 22px;
-  }
+
   &.image-powered-by {
     top: 0;
     right: 0;
@@ -170,6 +153,7 @@
     margin-top: 6px;
   }
 }
+
 .small-image-powered-by {
   position: initial;
   top: 0;
@@ -179,6 +163,12 @@
   margin-top: 6px;
 }
 
-.card-colors {
-  --bs-card-bg: unset !important;
-}
+//.gif-container img {
+//  width: 100%;
+//  height: 100%;
+//  min-height: 150px;
+//  max-height: 180px;
+//}
+
+
+

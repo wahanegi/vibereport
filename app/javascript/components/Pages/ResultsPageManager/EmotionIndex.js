@@ -1,22 +1,32 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, ComposedChart, Line, ReferenceLine } from 'recharts';
+import {
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts';
 
 const PreviewEmotionIndex = () =>
-  <div className='results col'>
+  <div className='no-data'>
     <div className='row calculate mb-3 no-responses'>
       <p>No responses this time...</p>
     </div>
   </div>
 
-const NoDataMessage = ({ teamName }) => (
-  <div className='results col'>
+const NoDataMessage = ({teamName}) => (
+  <div className='no-data'>
     <div className='row calculate mb-3 no-responses'>
-    <p className='grey'>No data present for <span className="team-name">{teamName}</span> during this time period.</p>
+      <p className='grey'>No data present for <span className="team-name">{teamName}</span> during this time period.</p>
     </div>
   </div>
 );
 
-const EmotionIndex = ({ teams, nextTimePeriod, isMinUsersResponses }) => {
+const EmotionIndex = ({teams, nextTimePeriod, isMinUsersResponses}) => {
 
   function getDataForTeam(team) {
     const emotionData = {
@@ -33,7 +43,7 @@ const EmotionIndex = ({ teams, nextTimePeriod, isMinUsersResponses }) => {
       Average: Math.round(((team.productivity_average_all || 0) / 9) * 100)
     };
 
-    return { emotionData, productivityData };
+    return {emotionData, productivityData};
   }
 
   function comparisonDescription(current, previous, positiveWord, negativeWord) {
@@ -75,59 +85,73 @@ const EmotionIndex = ({ teams, nextTimePeriod, isMinUsersResponses }) => {
     return comparisonDescription(currentProductivity, previousProductivity, "more", "less");
   }
 
-if(!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionIndex />
+  if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionIndex/>
 
-return (
-  <div>
-    {teams.map((team, index) => {
-      if (team.no_data_present) {
-        return <NoDataMessage key={`no-data-message-${index}`} teamName={team.name} />
-      }
+  return (
+    <div>
+      {teams.map((team, index) => {
+        if (team.no_data_present) {
+          return <NoDataMessage key={`no-data-message-${index}`} teamName={team.name}/>
+        }
 
-      const { emotionData, productivityData } = getDataForTeam(team);
+        const {emotionData, productivityData} = getDataForTeam(team);
 
-      return (
-        <div key={team.id}>
-          <>
-            <div className='h5 w-auto text-start truncated fw-semibold calculate'>
-                <p className='grey'>The <span className="team-name">{team.name}</span> is feeling <span className="team-name">{happinessChangeDescription(team.emotion_index_current_period || 0, team.previous_emotion_index || 0)}</span> than last week and <span className="team-name">{happinessDescription(team.emotion_index_all || 0, team.emotion_index_current_period || 0)}</span> than its average.</p>
+        return (
+          <div key={team.id}>
+            <div style={{padding: '0 50px'}}>
+            <div className='w-auto text-start truncated fw-semibold calculate'>
+                <p className='grey fs-7 fs-md-6 m-0'>The <span className="team-name">{team.name}</span> is
+                  feeling <span className="team-name">{happinessChangeDescription(team.emotion_index_current_period || 0, team.previous_emotion_index || 0)}</span> than
+                  last week
+                  and <span className="team-name">{happinessDescription(team.emotion_index_all || 0, team.emotion_index_current_period || 0)}</span> than
+                  its average.</p>
+              </div>
+              <div className='w-auto text-start truncated fw-semibold calculate mt-1'>
+                <p className='grey fs-7 fs-md-6 m-0'> The <span className="team-name">{team.name}</span> is
+                  feeling <span className="team-name">{productivityChangeDescription(team.productivity_average_current_period || 0, team.previous_productivity_average || 0)} </span> productive
+                  than last week
+                  and <span className="team-name">{productivityDescription(team.productivity_average_all || 0, team.productivity_average_current_period || 0)}</span> productive
+                  than its average.</p>
+              </div>
             </div>
-            <div className='h5 w-auto text-start truncated fw-semibold calculate'>
-                <p className='grey'> The <span className="team-name">{team.name}</span> is feeling <span className="team-name">{productivityChangeDescription(team.productivity_average_current_period || 0, team.previous_productivity_average || 0)} </span> productive than last week and <span className="team-name">{productivityDescription(team.productivity_average_all || 0, team.productivity_average_current_period || 0)}</span> productive than its average.</p>
+            <div className="d-flex flex-wrap justify-content-center mt-1 me-5">
+              <div className="chart-wrapper w-100 w-md-50">
+                <ResponsiveContainer width="100%" height={300}>
+                  <ComposedChart data={[emotionData]}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#6593EB" />
+                    <XAxis dataKey="name" tick={false} stroke="#6593EB" />
+                    <YAxis stroke="#6593EB" domain={[0, 8]} />
+                    <Tooltip />
+                    <Bar dataKey="Previous" fill="#82ca9d" />
+                    <Bar dataKey="Current" fill="#8884d8" />
+                    <Line type="monotone" dataKey="Average" stroke="#ffc658" dot={false} isAnimationActive={false} />
+                    <ReferenceLine y={emotionData.Average} stroke="#ffc658" ifOverflow="extendDomain" strokeWidth={5} />
+                    <text x="60%" y={25} textAnchor="middle" fill="#000" stroke="#6593EB" fontSize="16" className="chart-title">
+                      {team.name} Happiness
+                    </text>
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="chart-wrapper w-100 w-md-50">
+                <ResponsiveContainer width="100%" height={300}>
+                  <ComposedChart data={[productivityData]}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#6593EB" />
+                    <XAxis dataKey="name" tick={false} stroke="#6593EB" />
+                    <YAxis tickFormatter={(value) => `${value}%`} domain={[0, 100]} stroke="#6593EB" />
+                    <Tooltip />
+                    <Bar dataKey="Previous" fill="#9dca82" />
+                    <Bar dataKey="Current" fill="#d884cd" />
+                    <Line type="monotone" dataKey="Average" stroke="#ffc658" dot={false} isAnimationActive={false} />
+                    <ReferenceLine y={productivityData.Average} stroke="#ffc658" ifOverflow="extendDomain" strokeWidth={5} />
+                    <text x="60%" y={25} textAnchor="middle" fill="#000" stroke="#6593EB" fontSize="16" className="chart-title">{team.name} Productivity</text>
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-          </>
-          <div className="charts-wrapper">
-            <ResponsiveContainer width={400} height={300}>
-              <ComposedChart data={[emotionData]}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#6593EB" />
-                <XAxis dataKey="name" tick={false} stroke="#6593EB" />
-                <YAxis stroke="#6593EB" domain={[0, 8]}/>
-                <Tooltip />
-                <Bar dataKey="Previous" fill="#82ca9d" />
-                <Bar dataKey="Current" fill="#8884d8" />
-                <Line type="monotone" dataKey="Average" stroke="#ffc658" dot={false} isAnimationActive={false} />
-                <ReferenceLine y={emotionData.Average} stroke="#ffc658" ifOverflow="extendDomain" strokeWidth={5}/>
-                <text x={230} y={25} textAnchor="middle" fill="#000" stroke="#6593EB" fontSize="16">{team.name} Happiness</text>
-              </ComposedChart>
-            </ResponsiveContainer>
-            <ResponsiveContainer width={400} height={300}>
-              <ComposedChart width={400} height={300} data={[productivityData]}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#6593EB" />
-                <XAxis dataKey="name" tick={false} stroke="#6593EB" />
-                <YAxis tickFormatter={(value) => `${value}%`} domain={[0, 100]} stroke="#6593EB"/>
-                <Tooltip />
-                <Bar dataKey="Previous" fill="#9dca82" />
-                <Bar dataKey="Current" fill="#d884cd" />
-                <Line type="monotone" dataKey="Average" stroke="#ffc658" dot={false} isAnimationActive={false} />
-                <ReferenceLine y={productivityData.Average} stroke="#ffc658" ifOverflow="extendDomain" strokeWidth={5}/>
-                <text x={230} y={25} textAnchor="middle" fill="#000" stroke="#6593EB" fontSize="16">{team.name} Productivity</text>
-              </ComposedChart>
-            </ResponsiveContainer>
           </div>
-        </div>
-      )
-    })}
-  </div>
+        )
+      })}
+    </div>
   );
 };
 

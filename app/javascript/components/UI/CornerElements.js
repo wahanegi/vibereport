@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import ShoutoutButton from "./ShoutoutButton";
 import Menu from "./Menu";
-import Logo from "./Logo";
 
 const CornerElements = ({
                             data,
@@ -18,7 +17,6 @@ const CornerElements = ({
                             handleSaveDraft }) => {
   return (
     <Fragment>
-      <Logo />
       {
         !hideBottom ?
           <Fragment>
