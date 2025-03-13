@@ -162,3 +162,10 @@ export const validateRow = (row) => {
       Number(row.time) > 0
     );
   };
+export const calculateWordCount = (text) => {
+  return text
+    .replace(/<span[^>]*>@[^<]*<\/span>/g, '')
+    .trim()
+    .split(' ')
+    .filter((word) => word.length > 0).length;
+}

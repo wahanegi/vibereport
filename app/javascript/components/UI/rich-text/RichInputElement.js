@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {userFullName} from '../../helpers/library';
+import { calculateWordCount } from '../../helpers/helpers'
 import Button from '../Button';
 import Cursor from '../rich-text/cursor';
 import SwitcherShoutouts from '../SwitcherShoutouts';
@@ -54,9 +55,6 @@ const RichInputElement = ({
     if (Cursor.getCurrentCursorPosition(element).focusOffset === 1)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates);
     setCursorPosition(Cursor.getCurrentCursorPosition(element));
-    element.innerText === undefined || element.innerText === '\x0A'
-      ? setIsDisabled(true)
-      : setIsDisabled(false);
   }, [caret, textHTML, currentSelection]);
 
   const handleCheckboxChange = () => {
@@ -664,6 +662,10 @@ const RichInputElement = ({
       });
   };
 
+  useEffect(() => {
+    setIsDisabled(calculateWordCount(textHTML) <= 2);
+  }, [textHTML]);
+
   return (
     <>
       <div className="d-flex flex-column align-items-center">
@@ -694,6 +696,10 @@ const RichInputElement = ({
             />
           )}
         <div className='d-flex flex-column gap-3 justify-content-between flex-lg-row w-100'>
+          <p className="text-gray-300 mx-auto" style={{ visibility: isDisabled ? 'visible' : 'hidden' }} >
+              Please enter more information. The more detail the better.
+          </p>
+          <div className='d-flex flex-column gap-3 justify-content-between align-content-center flex-lg-row w-100'>
           <SwitcherShoutouts
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
@@ -706,6 +712,7 @@ const RichInputElement = ({
           >
             Send Shoutout
           </Button>
+          </div>
         </div>
       </div>
     </>
