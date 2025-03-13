@@ -53,3 +53,15 @@
 .margin-top-1 {
   margin-top: 10px;
 }
+.timesheet-wrap {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+  font-weight: bold;
+  color: #5E6469;
+}
+
+.timesheet-label {
+  width: 20%;
+}
