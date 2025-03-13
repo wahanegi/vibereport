@@ -194,7 +194,10 @@ const TimesheetPage = ({
       steps,
       saveDataToDb,
       isDraft: true,
-      onSuccess: () => setIsDraft(true),
+      onSuccess: () => {
+        setIsDraft(true);
+        document.body.click();
+      },
     });
   };
 
