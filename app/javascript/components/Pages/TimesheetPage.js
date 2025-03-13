@@ -21,7 +21,7 @@ const TimesheetPage = ({
   const [prevEntries, setPrevEntries] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
-  const [isDraft, setIsDraft] = useState(true);
+  const [isDraft, setIsDraft] = useState(draft);
 
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
@@ -142,8 +142,11 @@ const TimesheetPage = ({
       if (!isDraft) {
         setNewRows([]);
         steps.push('causes-to-celebrate');
+        saveDataToDb(steps, { draft: false});
+      } else {
+        saveDataToDb(steps, { draft: true});
       }
-      saveDataToDb(steps);
+      
       onSuccess();
     } catch (error) {
       setFetchError(
