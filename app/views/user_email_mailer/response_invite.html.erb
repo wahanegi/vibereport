@@ -161,13 +161,13 @@
     </div>
   </div>
   <div class="links-comtainer">
-    <div class="lnk-was-not" style="width: max-content">
-      <%= link_to "I was not working recently", @link_for_was_not %>
-    </div>
     <div class="lnk-unsubscribe" style="text-align: left">
       <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
                                                         action: "unsubscribe",
                                                         user_id: @user.id } %>
+    </div>
+    <div class="lnk-was-not" style="width: max-content">
+      <%= link_to "I was not working recently", @link_for_was_not %>
     </div>
   </div>
 </div>
