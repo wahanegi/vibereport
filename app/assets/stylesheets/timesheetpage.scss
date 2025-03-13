@@ -135,15 +135,24 @@
   border: 4px solid $royal-blue;
   border-radius: 0 0 20px 20px;
   border-top-color: transparent;
+  overflow: hidden;
 
   &::-webkit-scrollbar {
     height: 5px;
+    border-bottom-right-radius: inherit;
+    border-bottom-left-radius: inherit;
+    background-color: #fff;
+  }
+
+  &.horizontal-scroll-container::-webkit-scrollbar {
+    height: 12px;
   }
 
   &::-webkit-scrollbar-track {
-    margin: 15px; /* Prevents the scrollbar track from overlapping the rounded corners */
+    margin: 15px;
   }
 }
+
 
 // List elements
 .rbt-menu .dropdown-item {
