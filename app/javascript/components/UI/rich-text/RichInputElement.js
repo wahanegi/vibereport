@@ -55,9 +55,6 @@ const RichInputElement = ({
     if (Cursor.getCurrentCursorPosition(element).focusOffset === 1)
       setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates);
     setCursorPosition(Cursor.getCurrentCursorPosition(element));
-    element.innerText === undefined || element.innerText === '\x0A'
-      ? setIsDisabled(true)
-      : setIsDisabled(false);
   }, [caret, textHTML, currentSelection]);
 
   const handleCheckboxChange = () => {
