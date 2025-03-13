@@ -15,7 +15,8 @@ const initDB = {
   emotion:{id: null, word:null, category: null},
   response: { id: null, type: null, attributes:{
       steps:[ 'emotion-selection-web']}},
-  time_period: {}
+  time_period: {},
+  timesheet_enabled: false,
 }
 
 const App = () => {

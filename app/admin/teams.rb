@@ -1,11 +1,17 @@
 include ActiveAdminHelpers
 
 ActiveAdmin.register Team do
-  permit_params :name, user_ids: []
+  permit_params :name, :timesheet_enabled, user_ids: []
 
   form do |f|
     f.inputs 'Team Details' do
       f.input :name
+
+      div class: 'timesheet-wrap' do
+        label 'Timesheets Enabled', for: :team_timesheet_enabled, class: 'timesheet-label'
+        f.input :timesheet_enabled, as: :boolean, label: '', required: false
+      end
+
       f.input :users, as: :check_boxes, collection: User.order(:email).pluck(:email, :id)
     end
     f.actions
@@ -64,6 +70,9 @@ ActiveAdmin.register Team do
   show do |team|
     attributes_table do
       row :name
+      row 'Timesheets' do
+        team.timesheet_enabled ? 'Enabled' : 'Disabled'
+      end
       row 'Managers' do
         managers = team.user_teams.managers.map { |ut| ut.user.email }
         if managers.empty?
@@ -205,7 +214,7 @@ ActiveAdmin.register Team do
 
                   if celebrate_verbatims.size > VISIBLE_BUBBLES
                     button 'More', class: 'margin-top-1',
-                           onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
+                                   onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div celebrate_verbatims
@@ -227,7 +236,7 @@ ActiveAdmin.register Team do
 
                   if verbatim_list.size > VISIBLE_BUBBLES
                     button 'More', class: 'margin-top-1',
-                           onclick: "showMore(event, \"teammate-engagement-list\", #{VISIBLE_BUBBLES});"
+                                   onclick: "showMore(event, \"teammate-engagement-list\", #{VISIBLE_BUBBLES});"
                   end
                 else
                   div verbatim_list

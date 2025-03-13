@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[update]
       resources :emojis, only: %i[create destroy]
       resources :result_managers, controller: 'results', only: %i[show results_email], param: :slug
+      resources :time_sheet_entries, only: %i[index create update destroy]
       get '/response_flow_from_email', to: 'responses#response_flow_from_email'
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'
@@ -46,8 +47,18 @@ Rails.application.routes.draw do
       get '/result', to: 'results#show'
       get '/unsubscribe', to: 'users#unsubscribe'
       get '/result_manager', to: 'results#show'
+      get '/projects', to: 'projects#index'
+      # Dynamically sets the route for project codes sync based on the ENV key for security
+      auth_key = ENV.fetch('TIMESHEET_PROJECT_SYNC_AUTH_KEY', nil)
+
+      if auth_key.present?
+        post "/projects/#{auth_key}", to: 'projects#sync'
+      else
+        post '/projects', to: 'projects#sync'
+      end
     end
   end
+
   get '*path', to: 'home#app', constraints: lambda { |req|
     req.path.exclude? 'rails/active_storage'
   }
