@@ -21,6 +21,7 @@ const TimesheetPage = ({
   const [prevEntries, setPrevEntries] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
+  const [isDraft, setIsDraft] = useState(true);
 
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
@@ -52,58 +53,140 @@ const TimesheetPage = ({
         finally(() => setIsLoading(false));
   }, []);
 
-  const handlingOnClickNext = async () => {
+  const submitTimesheetEntries = async ({
+    newRows,
+    prevEntries,
+    projects,
+    timesheetsURL,
+    setIsLoading,
+    setFetchError,
+    setNewRows,
+    setPrevEntries,
+    steps,
+    saveDataToDb,
+    isDraft = false,
+    onSuccess = () => {},
+  }) => {
     setIsLoading(true);
     try {
-      const newEntries = newRows.map(row => {
+      const newEntries = newRows.map((row) => {
         const project = projects.find(
-            p => p.attributes.code === row.project_id);
-        return {project_id: project?.id, total_hours: row.time};
+          (p) => p.attributes.code === row.project_id
+        );
+        return {
+          project_id: project?.id,
+          total_hours: row.time,
+          ...(isDraft && { draft: true }),
+        };
       });
 
-      const updatedEntries = prevEntries.map(row => {
+      const updatedEntries = prevEntries.map((row) => {
         const project = projects.find(
-            p => p.attributes.code === row.project_id);
-        return {id: row.id, project_id: project?.id, total_hours: row.time};
+          (p) => p.attributes.code === row.project_id
+        );
+        return {
+          id: row.id,
+          project_id: project?.id,
+          total_hours: row.time,
+          draft: isDraft,
+        };
       });
 
       if (newEntries.length > 0) {
         await apiRequest(
-            'POST',
-            {time_sheet_entries: newEntries},
-            () => {},
-            () => {},
-            timesheetsURL,
+          'POST',
+          { time_sheet_entries: newEntries },
+          (response) => {
+            if (isDraft) {
+              const savedEntries = response.data.map((entry) => {
+                const project = projects.find(
+                  (p) => p.id === entry.relationships.project.data.id
+                );
+                return {
+                  id: entry.id,
+                  company: project?.attributes.company || '',
+                  project_id: project?.attributes.code || '',
+                  project_name: project?.attributes.name || '',
+                  time: entry.attributes.total_hours.toString(),
+                };
+              });
+              setPrevEntries((prev) => [...prev, ...savedEntries]);
+              setNewRows([]);
+            }
+          },
+          () => {},
+          timesheetsURL
         );
       }
 
       if (updatedEntries.length > 0) {
         await Promise.all(
-            updatedEntries.map(entry =>
-                apiRequest(
-                    'PATCH',
-                    {
-                      time_sheet_entry: {
-                        project_id: entry.project_id,
-                        total_hours: entry.total_hours,
-                      },
-                    },
-                    () => {},
-                    () => {},
-                    `${timesheetsURL}/${entry.id}`,
-                ),
-            ),
+          updatedEntries.map((entry) =>
+            apiRequest(
+              'PATCH',
+              {
+                time_sheet_entry: {
+                  project_id: entry.project_id,
+                  total_hours: entry.total_hours,
+                  draft: entry.draft,
+                },
+              },
+              () => {},
+              () => {},
+              `${timesheetsURL}/${entry.id}`
+            )
+          )
         );
       }
 
-      setNewRows([]);
-      steps.push('causes-to-celebrate');
+      if (!isDraft) {
+        setNewRows([]);
+        steps.push('causes-to-celebrate');
+      }
       saveDataToDb(steps);
+      onSuccess();
     } catch (error) {
-      setFetchError('Failed to submit timesheet entries.');
+      setFetchError(
+        isDraft
+          ? 'Failed to save draft.'
+          : 'Failed to submit timesheet entries.'
+      );
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handlingOnClickNext = () => {
+    submitTimesheetEntries({
+      newRows,
+      prevEntries,
+      projects,
+      timesheetsURL,
+      setIsLoading,
+      setFetchError,
+      setNewRows,
+      setPrevEntries,
+      steps,
+      saveDataToDb,
+      isDraft: false,
+    });
+  };
+
+  const handleSaveDraft = () => {
+    submitTimesheetEntries({
+      newRows,
+      prevEntries,
+      projects,
+      timesheetsURL,
+      setIsLoading,
+      setFetchError,
+      setNewRows,
+      setPrevEntries,
+      steps,
+      saveDataToDb,
+      isDraft: true,
+      onSuccess: () => setIsDraft(true),
+    });
   };
 
   const handleAddRow = () => {
@@ -117,6 +200,7 @@ const TimesheetPage = ({
         time: '',
       },
     ]);
+    setIsDraft(false);
   };
 
   const handleOnDelete = async (id) => {
@@ -155,6 +239,7 @@ const TimesheetPage = ({
 
   const handleChangeRowData = (id, updates) => {
     const isNewRow = newRows.some((row) => row.id === id);
+    if (isDraft) setIsDraft(false);
     if (isNewRow) {
       updateRowData(newRows, setNewRows, id, updates);
     } else {
@@ -163,7 +248,6 @@ const TimesheetPage = ({
   };
 
   const allRows = [...prevEntries, ...newRows];
-
   const isValid =
       allRows.length > 0 && allRows.every((row) => validateRow(row));
   const canSubmit =
@@ -176,7 +260,8 @@ const TimesheetPage = ({
           setData={setData}
           saveDataToDb={saveDataToDb}
           steps={steps}
-          draft={draft}
+          draft={isDraft}
+          handleSaveDraft={handleSaveDraft}
       >
         <div className="container-fluid mb-1 mb-md-0">
           <div

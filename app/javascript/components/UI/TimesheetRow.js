@@ -49,8 +49,8 @@ const TimesheetRow = ({
   };
   const handleTimeChange = (event) => {
     const value = event.target.value;
-    if (value === '' || (/^\d+$/.test(value) && parseInt(value, 10) > 0)) {
-      onChangeRowData(row.id, {time: value});
+    if (value === '' || (/^[1-9]\d*$/.test(value) && parseInt(value, 10) > 0)) {
+      onChangeRowData(row.id, { time: value });
     }
   };
 
