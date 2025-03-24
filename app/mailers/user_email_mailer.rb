@@ -55,10 +55,10 @@ class UserEmailMailer < ApplicationMailer
 
     if user_belongs_to_timesheet_team?
       subject = "Timesheets due Today."
-      @who_is_waiting = "You are required to fill out your timesheet for last week. Please enter it now."
+      @message_above_button = "You are required to fill out your timesheet for last week. Please enter it now."
     else
       subject = random_remind_checkin_subject(time_period)
-      @who_is_waiting = who_is_waiting(user, time_period)
+      @message_above_button = who_is_waiting(user, time_period)
     end
 
     mail(to: @user.email, subject: subject)
