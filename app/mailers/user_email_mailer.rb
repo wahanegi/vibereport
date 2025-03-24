@@ -54,7 +54,7 @@ class UserEmailMailer < ApplicationMailer
     @shout_outs = user.mentions.where(time_period_id: time_period.id)
 
     if user_belongs_to_timesheet_team?
-      subject = "Timesheets due Today."
+      subject = "Timesheets due Today"
       @message_above_button = "You are required to fill out your timesheet for last week. Please enter it now."
     else
       subject = random_remind_checkin_subject(time_period)
