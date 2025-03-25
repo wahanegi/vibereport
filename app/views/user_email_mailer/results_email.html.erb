@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Email letter</title>
-	<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<style>
+  <title>Email letter</title>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>
       * {
           margin: 0;
           padding: 0;
@@ -21,19 +21,19 @@
           margin: 0 auto;
           padding: 0 20px;
       }
-	</style>
-	<%= stylesheet_link_tag 'email_page', media: 'all' %>
+  </style>
+  <%= stylesheet_link_tag 'email_page', media: 'all' %>
 </head>
 <body>
-<div class="board mx-auto">
-	<!-- Logo -->
-	<div class="first-row text-center">
-		<%= render 'layouts/logo', height: 61 %>
-	</div>
+<div class="board">
+  <!-- Logo -->
+  <div class="first-row">
+    <%= render 'layouts/logo', height: 61 %>
+  </div>
 
-	<!-- Date -->
-	<div class="second-row">
-		<!--[if mso]>
+  <!-- Date -->
+  <div class="second-row">
+    <!--[if mso]>
     <table role="presentation" width="100%">
       <tr>
         <td style="width: 102px; height: 115px; text-align: left;">
@@ -46,41 +46,28 @@
       </tr>
     </table>
     <![endif]-->
-		<!--[if !mso]><!-->
-		<div class="calendar-days">
-			<div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
-		</div>
-		<!--<![endif]-->
-	</div>
+    <!--[if !mso]><!-->
+    <div class="calendar-days">
+      <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+    </div>
+    <!--<![endif]-->
+  </div>
 
-	<div class="container text-center">
-		<!-- Title -->
-		<div class="row">
-			<div class="col">
-				<h1 class="display-4"><%= @main_header %></h1>
-			</div>
-		</div>
-		<!-- SubTitle -->
-		<div class="row">
-			<div class="col">
-				<p class="lead"><%= @sub_header || 'See how the team has been doing:' %></p>
-			</div>
-		</div>
-	</div>
+  <div class="container text-center">
+    <!-- Title & SubTitle -->
+    <h1 class="display-4"><%= @main_header %></h1>
+    <p class="lead"><%= @sub_header || 'See how the team has been doing:' %></p>
+  </div>
 
-	<!-- BgImage -->
-	<div class="container text-center">
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-10">
-				<%= link_to image_tag("cloud_words.png", class: 'responses-words img-fluid'),
-										{ controller: "api/v1/results",
-											action: "results_email",
-											slug: @time_period.slug,
-											user_id: @user.id }
-				%>
-			</div>
-		</div>
-	</div>
+  <!-- BgImage -->
+  <div class="container">
+    <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
+                { controller: "api/v1/results",
+                  action: "results_email",
+                  slug: @time_period.slug,
+                  user_id: @user.id }
+    %>
+  </div>
 </div>
 </body>
 </html>
