@@ -11,10 +11,10 @@ class UserEmailMailer < ApplicationMailer
     @user = user
     general_link = URL.merge({ time_period_id: TimePeriod.current, user_id: user.id })
     @link_for_own_word = general_link.merge({ last_step: 'emotion-entry', not_working: false })
-    @link_for_was_not  = general_link.merge({ last_step: 'results', not_working: true })
-    @link_for_not_say  = general_link.merge({ last_step: 'rather-not-say', not_working: false, completed_at: nil })
-    @link_for_emotion  = general_link.merge({ emotion_id: nil, last_step: 'emotion-type', not_working: false })
-    @view_complete_by  = time_period.due_date.strftime('%b %d').to_s
+    @link_for_was_not = general_link.merge({ last_step: 'results', not_working: true })
+    @link_for_not_say = general_link.merge({ last_step: 'rather-not-say', not_working: false, completed_at: nil })
+    @link_for_emotion = general_link.merge({ emotion_id: nil, last_step: 'emotion-type', not_working: false })
+    @view_complete_by = time_period.due_date.strftime('%b %d').to_s
     @table = emotions_table
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
   end
@@ -51,8 +51,22 @@ class UserEmailMailer < ApplicationMailer
     @time_period = time_period
     @fun_question = time_period.fun_question
     @fun_question_responses = @fun_question.fun_question_answers.limit(3)
-    @who_is_waiting = who_is_waiting(user, time_period)
     @shout_outs = user.mentions.where(time_period_id: time_period.id)
-    mail(to: @user.email, subject: random_remind_checkin_subject(time_period))
+
+    if user_belongs_to_timesheet_team?
+      subject = "Timesheets due Today"
+      @message_above_button = "You are required to fill out your timesheet for last week. Please enter it now."
+    else
+      subject = random_remind_checkin_subject(time_period)
+      @message_above_button = who_is_waiting(user, time_period)
+    end
+
+    mail(to: @user.email, subject: subject)
+  end
+
+  private
+
+  def user_belongs_to_timesheet_team?
+    @user.teams.exists?(timesheet_enabled: true)
   end
 end
