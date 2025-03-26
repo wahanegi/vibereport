@@ -169,6 +169,6 @@ export const calculateWordCount = (text) => {
     .split(' ')
     .filter((word) => {
         const cleanedWord = word.replace(/[^\w']+/g, '');
-        return cleanedWord.length > 2;
+        return cleanedWord
       }).length;
 }
