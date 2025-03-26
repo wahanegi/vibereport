@@ -17,7 +17,7 @@
 
       .board {
           width: 100%;
-          max-width: 1080px;
+          max-width: 850px;
           margin: 0 auto;
           padding: 20px;
       }
@@ -27,8 +27,9 @@
           margin-bottom: 10px;
       }
 
-      .pr-110 {
-          padding-right: 110px;
+      .wrapper {
+          padding-right: 120px;
+          padding-left: 10px;
       }
   </style>
   <%= stylesheet_link_tag 'email_page', media: 'all' %>
@@ -45,7 +46,7 @@
           </div>
         </div>
       </td>
-      <td align="center" class="pr-110">
+      <td align="center" class="wrapper">
         <div class="logo-wrapper">
           <%= render 'layouts/logo', height: 61 %>
         </div>
