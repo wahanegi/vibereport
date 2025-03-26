@@ -19,21 +19,42 @@
           width: 100%;
           max-width: 1080px;
           margin: 0 auto;
-          padding: 0 20px;
+          padding: 20px;
       }
+
+      .header-wrapper {
+          display: grid;
+          grid-template-columns: auto 1fr;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+      }
+
+      .logo-title-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          text-align: center;
+          width: 100%;
+          gap: 10px;
+          padding-right: 120px;
+      }
+
+      .logo-wrapper {
+          height: 61px;
+      }
+
+
   </style>
   <%= stylesheet_link_tag 'email_page', media: 'all' %>
 </head>
 <body>
 <div class="board">
-  <!-- Logo -->
-  <div class="first-row">
-    <%= render 'layouts/logo', height: 61 %>
-  </div>
-
-  <!-- Date -->
-  <div class="second-row">
-    <!--[if mso]>
+  <div class="header-wrapper">
+    <!-- Date -->
+    <div class="">
+      <!--[if mso]>
     <table role="presentation" width="100%">
       <tr>
         <td style="width: 102px; height: 115px; text-align: left;">
@@ -46,17 +67,24 @@
       </tr>
     </table>
     <![endif]-->
-    <!--[if !mso]><!-->
-    <div class="calendar-days">
-      <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+      <!--[if !mso]><!-->
+      <div class="calendar-days">
+        <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+      </div>
+      <!--<![endif]-->
     </div>
-    <!--<![endif]-->
-  </div>
 
-  <div class="container text-center">
-    <!-- Title & SubTitle -->
-    <h1 class="display-4"><%= @main_header %></h1>
-    <p class="lead"><%= @sub_header || 'See how the team has been doing:' %></p>
+    <div class="logo-title-wrapper">
+      <!-- Logo -->
+      <div class="logo-wrapper">
+        <%= render 'layouts/logo', height: 61 %>
+      </div>
+      <div>
+        <!-- Title -->
+        <h1 class="display-4"><%= @main_header %></h1>
+        <p class="lead"><%= @sub_header || 'See how the team has been doing:' %></p>
+      </div>
+    </div>
   </div>
 
   <!-- BgImage -->
