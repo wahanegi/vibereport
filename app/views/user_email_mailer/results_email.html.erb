@@ -15,19 +15,19 @@
           text-align: center;
       }
 
-      .board {
+      .email-container {
           width: 100%;
           max-width: 850px;
           margin: 0 auto;
           padding: 20px;
       }
 
-      .logo-wrapper {
+      .logo {
           height: 61px;
           margin-bottom: 10px;
       }
 
-      .text-color-black {
+      .title-color {
           color: #000;
       }
 
@@ -39,7 +39,7 @@
   <%= stylesheet_link_tag 'email_page', media: 'all' %>
 </head>
 <body>
-<div class="board">
+<div class="email-container">
   <!-- Title & Date -->
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
     <tr>
@@ -51,12 +51,12 @@
         </div>
       </td>
       <td align="center" class="wrapper">
-        <div class="logo-wrapper">
+        <div class="logo">
           <%= render 'layouts/logo', height: 61 %>
         </div>
         <div>
-          <h1 class="display-4 text-color-black"><%= @main_header %></h1>
-          <p class="lead text-color-black"><%= @sub_header || 'See how the team has been doing:' %></p>
+          <h1 class="display-4 title-color"><%= @main_header %></h1>
+          <p class="lead title-color"><%= @sub_header || 'See how the team has been doing:' %></p>
         </div>
       </td>
     </tr>
