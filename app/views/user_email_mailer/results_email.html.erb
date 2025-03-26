@@ -22,70 +22,40 @@
           padding: 20px;
       }
 
-      .header-wrapper {
-          display: grid;
-          grid-template-columns: 105px 1fr;
-          align-items: center;
-          justify-content: space-between;
-          gap: 20px;
-      }
-
-      .logo-title-wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: space-between;
-          text-align: center;
-          width: 100%;
-          gap: 10px;
-          padding-right: 120px;
-      }
-
       .logo-wrapper {
           height: 61px;
+          margin-bottom: 10px;
       }
 
-
+      .pr-110 {
+          padding-right: 110px;
+      }
   </style>
   <%= stylesheet_link_tag 'email_page', media: 'all' %>
 </head>
 <body>
 <div class="board">
-  <div class="header-wrapper">
-    <!-- Date -->
-    <div class="">
-      <!--[if mso]>
-    <table role="presentation" width="100%">
-      <tr>
-        <td style="width: 102px; height: 115px; text-align: left;">
-           <div class="calendar-days" style="background-image: url('calendar_days.png'); background-repeat: no-repeat; background-size: contain;">
-            <div class="date" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-              <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
-            </div>
+  <!-- Title & Date -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="105" align="center">
+        <div class="calendar-days">
+          <div class="date">
+            <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
           </div>
-        </td>
-      </tr>
-    </table>
-    <![endif]-->
-      <!--[if !mso]><!-->
-      <div class="calendar-days">
-        <div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
-      </div>
-      <!--<![endif]-->
-    </div>
-
-    <div class="logo-title-wrapper">
-      <!-- Logo -->
-      <div class="logo-wrapper">
-        <%= render 'layouts/logo', height: 61 %>
-      </div>
-      <div>
-        <!-- Title -->
-        <h1 class="display-4"><%= @main_header %></h1>
-        <p class="lead"><%= @sub_header || 'See how the team has been doing:' %></p>
-      </div>
-    </div>
-  </div>
+        </div>
+      </td>
+      <td align="center" class="pr-110">
+        <div class="logo-wrapper">
+          <%= render 'layouts/logo', height: 61 %>
+        </div>
+        <div>
+          <h1 class="display-4"><%= @main_header %></h1>
+          <p class="lead"><%= @sub_header || 'See how the team has been doing:' %></p>
+        </div>
+      </td>
+    </tr>
+  </table>
 
   <!-- BgImage -->
   <div class="container">
