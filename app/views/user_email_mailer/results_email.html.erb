@@ -27,6 +27,10 @@
           margin-bottom: 10px;
       }
 
+      .text-color-black {
+          color: #000;
+      }
+
       .wrapper {
           padding-right: 120px;
           padding-left: 10px;
@@ -51,8 +55,8 @@
           <%= render 'layouts/logo', height: 61 %>
         </div>
         <div>
-          <h1 class="display-4 text-black"><%= @main_header %></h1>
-          <p class="lead text-black"><%= @sub_header || 'See how the team has been doing:' %></p>
+          <h1 class="display-4 text-color-black"><%= @main_header %></h1>
+          <p class="lead text-color-black"><%= @sub_header || 'See how the team has been doing:' %></p>
         </div>
       </td>
     </tr>
