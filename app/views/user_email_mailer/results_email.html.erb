@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Email letter</title>
-	<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<style>
+  <title>Email letter</title>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <style>
       * {
           margin: 0;
           padding: 0;
@@ -15,72 +15,62 @@
           text-align: center;
       }
 
-      .board {
+      .email-container {
           width: 100%;
-          max-width: 1080px;
+          max-width: 850px;
           margin: 0 auto;
-          padding: 0 20px;
+          padding: 20px;
       }
-	</style>
-	<%= stylesheet_link_tag 'email_page', media: 'all' %>
+
+      .logo {
+          height: 61px;
+          margin-bottom: 10px;
+      }
+
+      .title-color {
+          color: #000;
+      }
+
+      .wrapper {
+          padding-right: 120px;
+          padding-left: 10px;
+      }
+  </style>
+  <%= stylesheet_link_tag 'email_page', media: 'all' %>
 </head>
 <body>
-<div class="board mx-auto">
-	<!-- Logo -->
-	<div class="first-row text-center">
-		<%= render 'layouts/logo', height: 61 %>
-	</div>
-
-	<!-- Date -->
-	<div class="second-row">
-		<!--[if mso]>
-    <table role="presentation" width="100%">
-      <tr>
-        <td style="width: 102px; height: 115px; text-align: left;">
-           <div class="calendar-days" style="background-image: url('calendar_days.png'); background-repeat: no-repeat; background-size: contain;">
-            <div class="date" style="padding-top: 42px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-              <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
-            </div>
+<div class="email-container">
+  <!-- Title & Date -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="105" align="center">
+        <div class="calendar-days">
+          <div class="date">
+            <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
           </div>
-        </td>
-      </tr>
-    </table>
-    <![endif]-->
-		<!--[if !mso]><!-->
-		<div class="calendar-days">
-			<div class="date"><%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
-		</div>
-		<!--<![endif]-->
-	</div>
+        </div>
+      </td>
+      <td align="center" class="wrapper">
+        <div class="logo">
+          <%= render 'layouts/logo', height: 61 %>
+        </div>
+        <div>
+          <h1 class="display-4 title-color"><%= @main_header %></h1>
+          <p class="lead title-color"><%= @sub_header || 'See how the team has been doing:' %></p>
+        </div>
+      </td>
+    </tr>
+  </table>
 
-	<div class="container text-center">
-		<!-- Title -->
-		<div class="row">
-			<div class="col">
-				<h1 class="display-4"><%= @main_header %></h1>
-			</div>
-		</div>
-		<!-- SubTitle -->
-		<div class="row">
-			<div class="col">
-				<p class="lead"><%= @sub_header || 'See how the team has been doing:' %></p>
-			</div>
-		</div>
-	</div>
-
-	<!-- BgImage -->
-	<div class="container text-center">
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-10">
-				<%= link_to image_tag("cloud_words.png", class: 'responses-words img-fluid'),
-										{ controller: "api/v1/results",
-											action: "results_email",
-											slug: @time_period.slug,
-											user_id: @user.id }
-				%>
-			</div>
-		</div>
-	</div>
+  <!-- BgImage -->
+  <div class="container pointer">
+    <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
+                { controller: "api/v1/results",
+                  action: "results_email",
+                  slug: @time_period.slug,
+                  user_id: @user.id }
+    %>
+  </div>
 </div>
 </body>
 </html>
