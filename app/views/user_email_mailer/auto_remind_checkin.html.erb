@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <title>Email letter</title>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <%= stylesheet_link_tag 'email_page', media: 'all' %>
   <style>
       * {
@@ -74,18 +74,49 @@
               font-size: 18px !important;
           }
       }
+
+      .email-container {
+          width: 100%;
+          max-width: 850px;
+          margin: 0 auto;
+          padding: 20px;
+      }
+
+      .logo {
+          height: 61px;
+          margin-bottom: 10px;
+      }
+
+      .wrapper {
+          /*padding-right: 120px;*/
+          padding-left: 10px;
+      }
+
+      .calendar {
+          margin-bottom: 10px;
+      }
   </style>
 </head>
 <body>
-<div class="board mx-auto">
-  <div class="logo-block">
-    <div class="calendar ml-55">
-      <div class="data">TODAY</div>
-    </div>
-    <div class="mx-auto my-0">
-      <%= render 'layouts/logo', height: 61 %>
-    </div>
-  </div>
+<div class="email-container">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="105" align="center">
+        <div class="calendar">
+          <div class="data">TODAY</div>
+        </div>
+      </td>
+      <td align="center" class="wrapper">
+        <div class="logo">
+          <%= render 'layouts/logo', height: 61 %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+
+  <!-- öö-->
+
   <div class="text-block mx-auto">
     <div class="mx-auto my-0 title"><%= "Dear #{@user.first_name}," %></div>
     <div class="mx-auto my-0 text-check"><%= "#{@message_above_button}" %></div>
