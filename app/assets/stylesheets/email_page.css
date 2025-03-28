@@ -596,6 +596,8 @@ html {
     overflow: hidden;
     margin-top: 10px;
     margin-bottom: 30px;
+
+    display: block;
 }
 
 .link-text-results {
