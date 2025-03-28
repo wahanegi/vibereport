@@ -3,98 +3,127 @@
 <head>
   <title>Email letter</title>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
       * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-          font-family: 'Josefin Sans', 'Arial', 'Ubuntu',  sans-serif;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu', sans-serif;
           font-style: normal;
-          font-weight:700;
+          font-weight: 700;
           text-align: center;
           line-height: 0;
       }
-      .board{
+
+      .board {
           width: 100%;
-          max-width: 1080px; 
+          max-width: 1080px;
           margin: 0 auto;
-          padding: 0 15px; 
+          padding: 0 15px;
       }
-      .lnk-unsubscribe{
+
+      .lnk-unsubscribe {
           text-align: left;
       }
+
       .emotions-container {
           text-align: center;
       }
 
       @media only screen and (max-width: 767px) {
 
-    .first-row {
-        margin: 0 auto;
-        height: auto !important;
-    }
+          .first-row {
+              margin: 0 auto;
+              height: auto !important;
+          }
 
-    .second-row {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: auto !important;
-    }
+          .second-row {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              height: auto !important;
+          }
 
-    .calendar {
-        margin: 0 auto;
-        height: 100px;
-    }
-    .data {
-      text-align: center;
-      font-size: 1rem;
-      padding-top: 5px;
-    }
-    .ml-55 {
-      margin-left: 0 !important;
-    }
-    .emotions {
-      max-width: 500px !important;
-    }
-    .neutral-area {
-      height: auto !important;
-    }
-    .neutral-area .btn-emotion:nth-child(2) {
-      margin-top: 10px !important; 
-    }
-    .neutral-btns {
-      flex-direction: column;
-    }
-    .link-text {
-      margin-top: 20px !important;
-      font-size: 1.25rem !important;
-    }
-    .lnk-was-not a{
-      font-size: 1.25rem !important;
-      margin-top: 15px !important;
-    }
-    .links-comtainer {
-      display: flex;
-      align-items: center !important;
-      flex-direction: column !important;
-      margin-top: 40px !important;
-    }
-    .lnk-unsubscribe{
-      margin-top: 20px !important; 
-    }
-    .invitation {
-      display: block;
-      text-align: center;
-      margin-top: 15px;
-    }
-    .question {
-      font-size: 2rem;
-      line-height: 2rem;
-    }    
-  }
+          .calendar {
+              margin: 0 auto;
+              height: 100px;
+          }
+
+          .data {
+              text-align: center;
+              font-size: 1rem;
+              padding-top: 5px;
+          }
+
+          .ml-55 {
+              margin-left: 0 !important;
+          }
+
+          .emotions {
+              max-width: 500px !important;
+          }
+
+          .neutral-area {
+              height: auto !important;
+          }
+
+          .neutral-area .btn-emotion:nth-child(2) {
+              margin-top: 10px !important;
+          }
+
+          .neutral-btns {
+              flex-direction: column;
+          }
+
+          .link-text {
+              margin-top: 20px !important;
+              font-size: 1.25rem !important;
+          }
+
+          .lnk-was-not a {
+              font-size: 1.25rem !important;
+              margin-top: 15px !important;
+          }
+
+          .links-comtainer {
+              display: flex;
+              align-items: center !important;
+              flex-direction: column !important;
+              margin-top: 40px !important;
+          }
+
+          .lnk-unsubscribe {
+              margin-top: 20px !important;
+          }
+
+          .invitation {
+              display: block;
+              text-align: center;
+              margin-top: 15px;
+          }
+
+          .question {
+              font-size: 2rem;
+              line-height: 2rem;
+          }
+      }
+
+      @media only screen and (max-width: 480px) {
+          .emotions-row {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+          }
+
+          .emotions-item {
+              width: 45%;
+              margin: 5px;
+          }
+      }
+
   </style>
-  <%= stylesheet_link_tag 'email_page' , media: 'all' %>
+  <%= stylesheet_link_tag 'email_page', media: 'all' %>
 </head>
 <body>
 <div class="board mx-auto">
@@ -128,14 +157,14 @@
   <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
   <div class="mx-auto my-0 question">What word best describes how you feel about work?</div>
   <div class="emotions-container">
-    <% (0..5).each do |row|%>
-      <div class="emotions d-flex">
-        <% (0..3).each do |col|%>
-          <% cell = @table[(row*4 + col)] %>
-          <div class="<%= "btn-emotion #{cell.category}" %>"
+    <% (0..5).each do |row| %>
+      <div class="emotions d-flex emotions-row">
+        <% (0..3).each do |col| %>
+          <% cell = @table[(row * 4 + col)] %>
+          <div class="<%= "btn-emotion #{cell.category}" %> emotions-item"
                style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height:1;">
             <% @link_for_emotion[:emotion_id] = cell.id %>
-            <%= link_to cell.word, @link_for_emotion , class: "#{cell.category}-a" %>
+            <%= link_to cell.word, @link_for_emotion, class: "#{cell.category}-a" %>
           </div>
         <% end %>
       </div>
@@ -145,12 +174,12 @@
   <div class='neutral-area' style="padding: 10px 0;">
     <div class="neutral-btns" style="display: flex">
       <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin:0 auto; padding: 5px 0; line-height:1;">
-        <%= link_to "Show me different words",{ controller: 'api/v1/responses',
-                                                action: 'sign_in_from_email',
-                                                user_id: @user.id }, class: "neutral-a" %>
+        <%= link_to "Show me different words", { controller: 'api/v1/responses',
+                                                 action: 'sign_in_from_email',
+                                                 user_id: @user.id }, class: "neutral-a" %>
       </div>
       <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin:0 auto; padding: 5px 0; line-height:1;">
-        <%= link_to "I'd rather not say...", @link_for_not_say , class: "neutral-a" %>
+        <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
       </div>
     </div>
   </div>
@@ -163,8 +192,8 @@
   <div class="links-comtainer">
     <div class="lnk-unsubscribe" style="text-align: left">
       <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
-                                                        action: "unsubscribe",
-                                                        user_id: @user.id } %>
+                                                         action: "unsubscribe",
+                                                         user_id: @user.id } %>
     </div>
     <div class="lnk-was-not" style="width: max-content">
       <%= link_to "I was not working recently", @link_for_was_not %>
