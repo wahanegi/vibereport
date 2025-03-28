@@ -35,6 +35,7 @@
           padding-right: 120px;
           padding-left: 10px;
       }
+
   </style>
   <%= stylesheet_link_tag 'email_page', media: 'all' %>
 </head>
@@ -67,7 +68,7 @@
       <td align="center">
         <!-- BgImage -->
         <div class="pointer">
-          <%= link_to image_tag("cloud_words.png", class: 'responses-words', width: "850", height: "auto"),
+          <%= link_to image_tag("cloud_words.png", class: 'responses-words', style: "width: 100%; max-width: 850px; height: auto; display: block;"),
                       { controller: "api/v1/results",
                         action: "results_email",
                         slug: @time_period.slug,
