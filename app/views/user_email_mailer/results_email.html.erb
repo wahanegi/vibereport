@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <title>Email letter</title>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
       * {
           margin: 0;
@@ -62,15 +62,22 @@
     </tr>
   </table>
 
-  <!-- BgImage -->
-  <div class="container pointer">
-    <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
-                { controller: "api/v1/results",
-                  action: "results_email",
-                  slug: @time_period.slug,
-                  user_id: @user.id }
-    %>
-  </div>
+  <table>
+    <tr>
+      <td>
+        <!-- BgImage -->
+        <div class="pointer">
+          <%= link_to image_tag("cloud_words.png", class: 'responses-words', width: "850", height: "auto"),
+                      { controller: "api/v1/results",
+                        action: "results_email",
+                        slug: @time_period.slug,
+                        user_id: @user.id }
+          %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
 </div>
 </body>
 </html>
