@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {userFullName} from '../../helpers/library';
-import { calculateWordCount } from '../../helpers/helpers'
+import React, { useEffect, useRef, useState } from 'react';
+import { userFullName } from '../../helpers/library';
+import { calculateWordCount } from '../../helpers/helpers';
 import Button from '../Button';
 import Cursor from '../rich-text/cursor';
 import SwitcherShoutouts from '../SwitcherShoutouts';
@@ -9,16 +9,15 @@ import RichText from './rich-text';
 import RichTextArea from './RichTextArea';
 
 const RichInputElement = ({
-                            richText = '',
-                            listUsers: listAllUsers,
-                            setChosenUsers = () => {
-                            },
-                            onSubmit,
-                            classAt = 'color-primary',
-                            editObj,
-                          }) => {
+  richText = '',
+  listUsers: listAllUsers,
+  setChosenUsers = () => {},
+  onSubmit,
+  classAt = 'color-primary',
+  editObj,
+}) => {
   const calculateInitX = (window.innerWidth - 884) / 2 + 69;
-  const initCoordinates = {x: calculateInitX, y: 373};
+  const initCoordinates = { x: calculateInitX, y: 373 };
   const [textHTML, setTextHTML] = useState(richText);
   const textAreaRef = useRef(richText);
   const [filteredUsers, setFilteredUsers] = useState(
@@ -49,6 +48,7 @@ const RichInputElement = ({
   const [isChecked, setIsChecked] = useState(
     editObj.public === undefined ? true : editObj.public
   );
+  const isAndroid = /Android/i.test(navigator.userAgent);
 
   useEffect(() => {
     Cursor.setCurrentCursorPosition(caret, textArea);
@@ -90,6 +90,9 @@ const RichInputElement = ({
     const caretCur = cursorPos.charCount;
     const realPos = cursorPos.realPos;
     let char = event.key;
+    if (isAndroid && event.keyCode === 229) {
+      return;
+    }
     if (event.ctrlKey && event.keyCode === 67) {
       return copyToClipboard(selectedValue);
     }
@@ -143,7 +146,7 @@ const RichInputElement = ({
             cursorPos.focusOffset - 1 !== searchString.length ||
             RichText.contentBtwTags(textHTML, cursorPos, END_TAG_AT, 1)
               .length !==
-            cursorPos.focusOffset - 1
+              cursorPos.focusOffset - 1
           )
             return 0;
           const newSearchString = (searchString + char).toLowerCase();
@@ -462,11 +465,11 @@ const RichInputElement = ({
               const userFromNode = cursorPos.isSPAN
                 ? node
                 : RichText.findUsersInText(
-                  TAG_AT,
-                  END_TAG_AT,
-                  RichText.decodeSpace(node),
-                  listAllUsers
-                );
+                    TAG_AT,
+                    END_TAG_AT,
+                    RichText.decodeSpace(node),
+                    listAllUsers
+                  );
               if (userFromNode?.length) {
                 const filtratedUsersByName = RichText.filtrationByName(
                   userFullName(userFromNode[0]),
@@ -492,6 +495,65 @@ const RichInputElement = ({
         }
       }
     }
+  };
+
+  const handleInput = (event) => {
+    const element = textAreaRef.current;
+    const newText = element.innerHTML;
+    const cursorPos = Cursor.getCurrentCursorPosition(element);
+    const textContent = element.textContent;
+    const caretCur = cursorPos.charCount;
+
+    // Sync state with DOM
+    setTextHTML(newText);
+
+    // Check if '@' was just typed at the current caret position
+    if (textContent[caretCur - 1] === MARKER) {
+      const symbolCodeAt = (pos) => textContent.charCodeAt(caretCur - 1 + pos);
+      const isSpecialSmb = (pos) =>
+        isNaN(symbolCodeAt(pos)) || symbolCodeAt(pos) <= 32;
+      const isBtwSpecialSmb =
+        (!caretCur || isSpecialSmb(-1)) && isSpecialSmb(1);
+
+      if (isBtwSpecialSmb && filteredUsers.length && !isDropdownList) {
+        RichText.pasteNodeToHTMLobj(
+          MARKER,
+          textHTML,
+          cursorPos,
+          setTextHTML,
+          setCaret,
+          TAG_AT.slice(0, -1),
+          END_TAG_AT
+        );
+        setIsDropdownList(true);
+        setCoordinates(cursorPos.coordinates);
+        setSearchString('');
+        setIndexOfSelection(0);
+        setCurrentSelection(filteredUsers[0]?.id || '');
+        setFilteredUsers(RichText.sortUsersByFullName(listAllUsers)); // Reset filtered users
+      }
+    } else if (isDropdownList) {
+      const char = textContent[caretCur - 1];
+      if (char && !char.match(NON_ALLOWED_CHARS_OF_NAME) && char.length === 1) {
+        const newSearchString = (searchString + char).toLowerCase();
+        const listFoundUsers = filteredUsers.filter((user) =>
+          userFullName(user).toLowerCase().startsWith(newSearchString)
+        );
+
+        if (listFoundUsers.length === 0) {
+          transformNodeToSimple(textHTML, cursorPos, newSearchString);
+          setIsDropdownList(false);
+          setSearchString('');
+        } else {
+          setSearchString(newSearchString);
+          setFilteredUsers(listFoundUsers);
+          setIndexOfSelection(0);
+          setCurrentSelection(listFoundUsers[0]?.id || filteredUsers[0]?.id);
+        }
+      }
+    }
+
+    setCaret(caretCur);
   };
 
   const transformNodeToSimple = (textHTML, cursorPos, char) => {
@@ -547,7 +609,7 @@ const RichInputElement = ({
     );
     const hadSelectedUsers = [
       ...chosenUsersWithoutNemo,
-      {...filteredUsers[i]},
+      { ...filteredUsers[i] },
     ];
     setCopyChosenUsers(hadSelectedUsers);
     setChosenUsers(hadSelectedUsers);
@@ -572,6 +634,7 @@ const RichInputElement = ({
     }
     setCurrentSelection(listChosenUsers[0].id);
   };
+
   const clickHandling = (event) => {
     const element = textAreaRef.current;
     const cursor = Cursor.getCurrentCursorPosition(element);
@@ -643,8 +706,7 @@ const RichInputElement = ({
     if (inputValue) {
       navigator.clipboard
         .writeText(inputValue)
-        .then(() => {
-        })
+        .then(() => {})
         .catch((err) => {
           console.log('Something went wrong', err);
         });
@@ -673,6 +735,7 @@ const RichInputElement = ({
           textHTML={textHTML}
           refs={textAreaRef}
           onKeyDown={handleKeyDown}
+          onInput={handleInput}
           onClick={clickHandling}
           cursorPos={Cursor.getCurrentCursorPosition(element)}
           className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
@@ -695,23 +758,26 @@ const RichInputElement = ({
               }}
             />
           )}
-        <div className='d-flex flex-column gap-3 justify-content-between flex-lg-row w-100'>
-          <p className="text-gray-300 mx-auto" style={{ visibility: isDisabled ? 'visible' : 'hidden' }} >
-              Please enter more information. The more detail the better.
-          </p>
-          <div className='d-flex flex-column gap-3 justify-content-between align-content-center flex-lg-row w-100'>
-          <SwitcherShoutouts
-            isChecked={isChecked}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-          <Button
-            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${
-              isDisabled ? 'disabled' : ''
-            }`}
-            onClick={submitHandling}
+        <div className="d-flex flex-column gap-3 justify-content-between flex-lg-row w-100">
+          <p
+            className="text-gray-300 mx-auto"
+            style={{ visibility: isDisabled ? 'visible' : 'hidden' }}
           >
-            Send Shoutout
-          </Button>
+            Please enter more information. The more detail the better.
+          </p>
+          <div className="d-flex flex-column gap-3 justify-content-between align-content-center flex-lg-row w-100">
+            <SwitcherShoutouts
+              isChecked={isChecked}
+              handleCheckboxChange={handleCheckboxChange}
+            />
+            <Button
+              className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${
+                isDisabled ? 'disabled' : ''
+              }`}
+              onClick={submitHandling}
+            >
+              Send Shoutout
+            </Button>
           </div>
         </div>
       </div>
