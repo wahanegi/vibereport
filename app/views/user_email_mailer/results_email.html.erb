@@ -63,14 +63,14 @@
   </table>
 
   <!-- BgImage -->
-  <%= link_to controller: "api/v1/results",
-              action: "results_email",
-              slug: @time_period.slug,
-              user_id: @user.id do %>
-    <div class="container pointer">
-      <%= image_tag("logo.png", class: 'responses-words') %>
-    </div>
-  <% end %>
+  <div class="container pointer">
+    <%= link_to image_tag("logo.png", class: 'responses-words'),
+                { controller: "api/v1/results",
+                  action: "results_email",
+                  slug: @time_period.slug,
+                  user_id: @user.id }
+    %>
+  </div>
 </div>
 </body>
 </html>
