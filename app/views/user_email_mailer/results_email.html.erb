@@ -64,7 +64,7 @@
 
   <!-- BgImage -->
   <div class="container pointer">
-    <%= link_to image_tag("logo.png", class: 'responses-words'),
+    <%= link_to image_tag(attachments['cloud_words.png'].url, class: 'responses-words'),
                 { controller: "api/v1/results",
                   action: "results_email",
                   slug: @time_period.slug,
