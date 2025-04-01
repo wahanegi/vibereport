@@ -62,8 +62,8 @@
     </tr>
   </table>
 
-  <!-- BgImage -->
-  <div class="container">
+  <!-- BgImage with link -->
+  <div class="container pointer">
     <%= link_to image_tag("cloud_words.png", class: 'responses-words'),
                 { controller: "api/v1/results",
                   action: "results_email",
@@ -71,11 +71,6 @@
                   user_id: @user.id }
     %>
   </div>
-  <!--  <div class="row-over-links">-->
-  <!--    <div class="mx-auto my-0 lnk-was-not" style="width: max-content">-->
-  <!--      Test 2-->
-  <!--    </div>-->
-  <!--  </div>-->
 </div>
 </body>
 </html>
