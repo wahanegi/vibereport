@@ -341,10 +341,10 @@ Here styles for:
 
 .links-container {
     display: flex;
-    /*flex-direction: row;*/
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 42px;
 }
 
 .btn-emotion {
