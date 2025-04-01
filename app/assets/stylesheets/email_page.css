@@ -170,7 +170,7 @@ Here styles for:
     max-width: 385px;
     height: 70px;
     /*font-size: 36px;*/
-    font-size: clamp(28px, 3vw, 36px) !important;
+    font-size: clamp(32px, 2vw, 36px) !important;
     line-height: 1;
     color: rgba(0, 0, 0, 0.6);
     text-decoration-line: none;
@@ -341,10 +341,9 @@ Here styles for:
 
 .links-container {
     display: flex;
-    flex-direction: row;
+    /*flex-direction: row;*/
     justify-content: space-between;
     align-items: center;
-    gap: 5px;
     margin-top: 40px;
 }
 
