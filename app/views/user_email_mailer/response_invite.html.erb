@@ -78,7 +78,7 @@
 
           .link-text {
               margin-top: 20px !important;
-              font-size: 1.25rem !important;
+              font-size: 2rem !important;
           }
 
           .lnk-was-not a {
@@ -86,7 +86,7 @@
               margin-top: 15px !important;
           }
 
-          .links-comtainer {
+          .links-container {
               display: flex;
               align-items: center !important;
               flex-direction: column !important;
@@ -125,6 +125,11 @@
           .btn-emotion {
               width: calc(50% - 10px);
           }
+
+          .link-text {
+              margin-top: 20px !important;
+              font-size: 1.5rem !important;
+          }
       }
 
   </style>
@@ -160,7 +165,7 @@
   </div>
   <!--<![endif]-->
   <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
-  <div class="mx-auto my-0 question">What word best describes how you feel about work? IT IS A TEST EMAIL</div>
+  <div class="mx-auto my-0 question">What word best describes how you feel about work?</div>
   <div class="emotions-container">
     <% (0..5).each do |row| %>
       <div class="emotions d-flex emotions-row">
@@ -181,7 +186,7 @@
       <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin:0 auto; padding: 5px 0; line-height:1;">
         <%= link_to "Show me different words", { controller: 'api/v1/responses',
                                                  action: 'sign_in_from_email',
-                                                 user_id: @user.id }, class: "neutral-a" %>
+                                                 user_id: @user.id }, class: "neutral-a " %>
       </div>
       <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin:0 auto; padding: 5px 0; line-height:1;">
         <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
@@ -194,7 +199,7 @@
       <%= link_to "Add your own word", @link_for_own_word, class: "link-text" %>
     </div>
   </div>
-  <div class="links-comtainer">
+  <div class="links-container">
     <div class="lnk-unsubscribe" style="text-align: left">
       <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
                                                          action: "unsubscribe",
