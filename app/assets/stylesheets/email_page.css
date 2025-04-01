@@ -589,20 +589,13 @@ html {
     background-size: contain;
 }
 
-/*.responses-words {*/
-/*    width: 100%;*/
-/*    max-width: 850px;*/
-/*    height: auto;*/
-/*    overflow: hidden;*/
-/*    margin-top: 10px;*/
-/*    margin-bottom: 30px;*/
-/*}*/
-
 .responses-words {
-    position: relative;
-    width: 850px;
-    height: 325px;
+    max-width: 850px;
+    width: 100%;
+    min-height: 100px;
+    height: auto;
     overflow: inherit;
+    margin-top: 10px;
     margin-bottom: 30px;
 }
 
@@ -627,6 +620,7 @@ html {
     white-space: nowrap;
     text-transform: capitalize;
 }
+
 
 .date-completed {
     padding-top: 54px;
