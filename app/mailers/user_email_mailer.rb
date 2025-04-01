@@ -30,8 +30,6 @@ class UserEmailMailer < ApplicationMailer
     @main_header = content.main_header
     @sub_header = content.sub_header
 
-    attachments.inline['cloud_words.png'] = File.read(Rails.root.join('app/assets/images/cloud_words.png'))
-
     mail(to: @user.email, subject:)
   end
 

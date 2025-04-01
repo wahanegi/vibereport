@@ -589,12 +589,20 @@ html {
     background-size: contain;
 }
 
+/*.responses-words {*/
+/*    width: 100%;*/
+/*    max-width: 850px;*/
+/*    height: auto;*/
+/*    overflow: hidden;*/
+/*    margin-top: 10px;*/
+/*    margin-bottom: 30px;*/
+/*}*/
+
 .responses-words {
-    width: 100%;
-    max-width: 850px;
-    height: auto;
-    overflow: hidden;
-    margin-top: 10px;
+    position: relative;
+    width: 850px;
+    height: 325px;
+    overflow: inherit;
     margin-bottom: 30px;
 }
 
