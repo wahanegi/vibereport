@@ -324,7 +324,7 @@ Here styles for:
 
 .lnk-was-not a {
     /*font-size: 23px;*/
-    font-size: clamp(20px, 3vw, 24px);
+    font-size: clamp(16px, 3vw, 24px);
     white-space: nowrap;
     text-decoration-line: underline;
     line-height: normal;
@@ -344,6 +344,7 @@ Here styles for:
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 5px;
     margin-top: 40px;
 }
 
@@ -432,8 +433,7 @@ Here styles for:
 }
 
 .lnk-unsubscribe a {
-    /*font-size: 16px;*/
-    font-size: clamp(10px, 3vw, 16px);
+    font-size: clamp(12px, 3vw, 16px);
     line-height: 1;
     color: #4D4D4D;
     text-decoration: underline;
