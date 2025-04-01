@@ -170,7 +170,7 @@ Here styles for:
     max-width: 385px;
     height: 70px;
     /*font-size: 36px;*/
-    font-size: clamp(30px, 3vw, 36px);
+    font-size: clamp(28px, 3vw, 36px) !important;
     line-height: 1;
     color: rgba(0, 0, 0, 0.6);
     text-decoration-line: none;
@@ -323,7 +323,8 @@ Here styles for:
 }
 
 .lnk-was-not a {
-    font-size: 23px;
+    /*font-size: 23px;*/
+    font-size: clamp(20px, 3vw, 24px);
     white-space: nowrap;
     text-decoration-line: underline;
     line-height: normal;
@@ -379,8 +380,9 @@ Here styles for:
     width: 100%;
     max-width: 378px;
     height: 19px;
-    font-size: 24px;
-    line-height: 24px;
+    /*font-size: 24px;*/
+    font-size: clamp(16px, 3vw, 24px);
+    line-height: 1;
     color: rgba(0, 0, 0, 0.7);
     margin: 18px auto 14px auto;
 }
@@ -430,8 +432,9 @@ Here styles for:
 }
 
 .lnk-unsubscribe a {
-    font-size: 16px;
-    line-height: 19px;
+    /*font-size: 16px;*/
+    font-size: clamp(10px, 3vw, 16px);
+    line-height: 1;
     color: #4D4D4D;
     text-decoration: underline;
 }
