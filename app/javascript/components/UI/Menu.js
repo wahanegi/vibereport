@@ -1,32 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Dropdown} from "react-bootstrap";
-import complete0 from '../../../assets/images/complete0.svg'
-import complete0_act from '../../../assets/images/complete0_act.svg'
-import complete100 from '../../../assets/images/complete100.svg'
-import complete100_act from '../../../assets/images/complete100_act.svg'
-import complete15 from '../../../assets/images/complete15.svg'
-import complete15_act from '../../../assets/images/complete15_act.svg'
-import complete20 from '../../../assets/images/complete20.svg'
-import complete20_act from '../../../assets/images/complete20_act.svg'
-import complete25 from '../../../assets/images/complete25.svg'
-import complete25_act from '../../../assets/images/complete25_act.svg'
-import complete35 from '../../../assets/images/complete35.svg'
-import complete35_act from '../../../assets/images/complete35_act.svg'
-import complete45 from '../../../assets/images/complete45.svg'
-import complete45_act from '../../../assets/images/complete45_act.svg'
-import complete50 from '../../../assets/images/complete50.svg'
-import complete50_act from '../../../assets/images/complete50_act.svg'
-import complete5_10 from '../../../assets/images/complete5_10.svg'
-import complete5_10_act from '../../../assets/images/complete5_10_act.svg'
-import complete65 from '../../../assets/images/complete65.svg'
-import complete65_act from '../../../assets/images/complete65_act.svg'
-import complete85 from '../../../assets/images/complete85.svg'
-import complete85_act from '../../../assets/images/complete85_act.svg'
-import complete90 from '../../../assets/images/complete90.svg'
-import complete90_act from '../../../assets/images/complete90_act.svg'
 import {signOutUser} from "../requests/axios_requests";
 import Button from "./Button";
 import SweetAlert from "./SweetAlert";
+import {SEGMENTS_MAP} from "../helpers/consts";
 
 const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = false}) => {
   const [showModal, setShowModal] = useState(false);
@@ -67,33 +44,13 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
   const lastSegment = isResult ? 'results' : location.substring(location.lastIndexOf("/") + 1);
   const isStepUnsubscribe = location.substring(location.lastIndexOf("/") + 1) === 'unsubscribe'
 
-  const segmentsMap = {
-    'emotion-selection-web': {src: complete0, activeSrc: complete0_act, percent: 0},
-    'emotion-entry': {src: complete5_10, activeSrc: complete5_10_act, percent: 5},
-    'emotion-type': {src: complete5_10, activeSrc: complete5_10_act, percent: 5},
-    'meme-selection': {src: complete5_10, activeSrc: complete5_10_act, percent: 10},
-    'selected-giphy-follow': {src: complete15, activeSrc: complete15_act, percent: 15},
-    'emotion-intensity': {src: complete20, activeSrc: complete20_act, percent: 20},
-    'rather-not-say': {src: complete20, activeSrc: complete20_act, percent: 20},
-    'skip-ahead': {src: complete20, activeSrc: complete20_act, percent: 20},
-    'productivity-check': {src: complete25, activeSrc: complete25_act, percent: 25},
-    'productivity-bad-follow-up': {src: complete35, activeSrc: complete35_act, percent: 35},
-    'causes-to-celebrate': {src: complete45, activeSrc: complete45_act, percent: 45},
-    'timesheet': { src: complete50, activeSrc: complete50_act, percent: 50 },
-    'recognition': {src: complete65, activeSrc: complete65_act, percent: 65},
-    'icebreaker-answer': {src: complete85, activeSrc: complete85_act, percent: 85},
-    'icebreaker-question': {src: complete90, activeSrc: complete90_act, percent: 90},
-    'results': {src: complete100, activeSrc: complete100_act, percent: 100},
-    'result-managers': {src: complete100, activeSrc: complete100_act, percent: 100},
-  };
-
   const getSrcMenu = (lastSegment, activeImg) => {
     if (isStepUnsubscribe) {
       return {
-        src: activeImg ? complete0_act : complete0,
+        src: activeImg ? SEGMENTS_MAP['emotion-selection-web'].activeSrc : SEGMENTS_MAP['emotion-selection-web'].src,
       };
-    } else if (segmentsMap[lastSegment]) {
-      const {src, activeSrc, percent} = segmentsMap[lastSegment];
+    } else if (SEGMENTS_MAP[lastSegment]) {
+      const {src, activeSrc, percent} = SEGMENTS_MAP[lastSegment];
       return {
         src: activeImg ? activeSrc : src,
         percent: percent,
@@ -107,7 +64,7 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
     <div className={`${className}`}>
       <Dropdown onClick={handleChangeImg} ref={dropdownRef}>
         <Dropdown.Toggle id='dropdown-stick' className={"rounded-circle bg-white border-0 p-0"}>
-          <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' className={"dropdown-img"}/>
+          <img src={getSrcMenu(lastSegment, activeImg).src} alt='complete' className={"dropdown-img"} />
         </Dropdown.Toggle>
         <Dropdown.Menu className={"mt-5 border border-1 border-color"}>
           <Dropdown.ItemText>
