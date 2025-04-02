@@ -281,16 +281,16 @@ Here styles for:
     margin: 0 auto;
 }
 
-.data {
-    padding-top: 55px;
-    width: 102px;
-    height: 14px;
-    font-size: 16px;
-    line-height: 17px;
-    color: rgba(0, 0, 0, 0.7);
-    white-space: nowrap;
-    text-transform: capitalize;
-}
+/*.data {*/
+/*    padding-top: 55px;*/
+/*    width: 102px;*/
+/*    height: 14px;*/
+/*    font-size: 16px;*/
+/*    line-height: 17px;*/
+/*    color: rgba(0, 0, 0, 0.7);*/
+/*    white-space: nowrap;*/
+/*    text-transform: capitalize;*/
+/*}*/
 
 .question {
     width: 100%;
@@ -565,11 +565,12 @@ html {
 
 .calendar-days {
     text-align: left;
-    width: 105px;
-    height: 140px;
+    width: 100%;
+    /*height: auto;*/
     background-image: url("calendar_days.png");
     background-repeat: no-repeat;
     background-size: contain;
+    /*background-size: cover;*/
 }
 
 .responses-words {
@@ -596,13 +597,26 @@ html {
 }
 
 .date {
-    padding-top: 42px;
-    font-size: 16px;
-    line-height: 17px;
+    padding-top: 48px;
+    width: 115px;
+    height: 105px;
+    font-size: clamp(14px, 2vw, 16px);
+    line-height: 1;
     color: rgba(0, 0, 0, 0.7);
     white-space: nowrap;
     text-transform: capitalize;
 }
+
+/*.data {*/
+/*    padding-top: 55px;*/
+/*    width: 102px;*/
+/*    height: 14px;*/
+/*    font-size: 16px;*/
+/*    line-height: 17px;*/
+/*    color: rgba(0, 0, 0, 0.7);*/
+/*    white-space: nowrap;*/
+/*    text-transform: capitalize;*/
+/*}*/
 
 
 .date-completed {
