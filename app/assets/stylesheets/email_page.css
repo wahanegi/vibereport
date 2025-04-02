@@ -113,7 +113,6 @@ Here styles for:
 
 .positive, .neutral, .negative {
     height: 31px;
-    /*font-size: 19px;*/
     font-size: clamp(14px, 2vw, 19px);
     line-height: 1;
     text-align: center;
@@ -125,7 +124,6 @@ Here styles for:
     font-weight: bold;
     text-decoration: none;
     height: 31px;
-    /*font-size: 19px;*/
     font-size: clamp(18px, 2vw, 20px);
 }
 
@@ -164,22 +162,6 @@ Here styles for:
 .neutral-a {
     color: #4C77CB;
 }
-
-.link-text {
-    display: block;
-    width: 100%;
-    max-width: 385px;
-    height: 70px;
-    /*font-size: 36px;*/
-    font-size: clamp(32px, 2vw, 36px);
-    line-height: 1;
-    color: rgba(0, 0, 0, 0.6);
-    text-decoration-line: none;
-    font-weight: 700;
-    padding: 13px;
-    margin: -15px -29px;
-}
-
 
 /*       BELLOW STYLES FOR EMAIL response_invite.html.erb. PLEASE DON'T CHANGE IT!!!        */
 
@@ -280,7 +262,6 @@ Here styles for:
     width: 100%;
     max-width: 453px;
     height: 55px;
-    /*font-size: 1.5rem;*/
     font-size: clamp(20px, 2vw, 24px);
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
@@ -314,17 +295,13 @@ Here styles for:
 .question {
     width: 100%;
     max-width: 735px;
-    /*font-size: 2.5rem;*/
     font-size: clamp(32px, 2vw, 40px);
     line-height: 1;
     margin: 0 auto;
     color: #000000;
-    /* white-space: pre-line; */
-    /* min-height: 100px; */
 }
 
 .lnk-was-not a {
-    /*font-size: 23px;*/
     font-size: clamp(20px, 2vw, 23px);
     white-space: nowrap;
     text-decoration-line: underline;
@@ -352,7 +329,6 @@ Here styles for:
 .btn-emotion {
     min-width: 100px;
     height: 31px;
-    /*font-size: 1rem;*/
     font-size: clamp(14px, 2vw, 16px);
     line-height: 1.2;
     cursor: pointer;
@@ -382,7 +358,6 @@ Here styles for:
     width: 100%;
     max-width: 378px;
     height: 19px;
-    /*font-size: 24px;*/
     font-size: clamp(20px, 2vw, 24px);
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
@@ -414,8 +389,6 @@ Here styles for:
 .big-btn-text a {
     display: inline-block;
     padding: 13px 23px 13px 23px;
-    /*font-size: 2.25rem;*/
-    /*line-height: 2.25rem;*/
     font-size: clamp(30px, 2vw, 36px);
     line-height: 1;
     color: rgba(0, 0, 0, 0.6);
@@ -430,13 +403,10 @@ Here styles for:
 @media (max-width: 767.98px) {
     .big-btn-text a {
         padding: 10px 15px;
-        /*font-size: 1.25rem;*/
-        /*line-height: 1.2;*/
     }
 }
 
 .lnk-unsubscribe a {
-    /*font-size: 16px;*/
     font-size: clamp(12px, 2vw, 16px);
     line-height: 1;
     color: #4D4D4D;
