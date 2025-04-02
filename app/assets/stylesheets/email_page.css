@@ -114,17 +114,18 @@ Here styles for:
 .positive, .neutral, .negative {
     height: 31px;
     /*font-size: 19px;*/
-    /*font-size: clamp(14px, 3vw, 19px);*/
-    line-height: 19px;
+    font-size: clamp(14px, 3vw, 19px);
+    line-height: 1;
     text-align: center;
     cursor: pointer;
-    /*padding-top: 5.6px;*/
+    padding-top: 5.6px;
 }
 
 .positive-a, .neutral-a, .negative-a {
     font-weight: bold;
     text-decoration: none;
     height: 31px;
+    /*font-size: 19px;*/
     font-size: clamp(16px, 3vw, 20px);
 }
 
@@ -170,7 +171,7 @@ Here styles for:
     max-width: 385px;
     height: 70px;
     /*font-size: 36px;*/
-    font-size: clamp(32px, 2vw, 36px) !important;
+    font-size: clamp(32px, 2vw, 36px);
     line-height: 1;
     color: rgba(0, 0, 0, 0.6);
     text-decoration-line: none;
@@ -280,8 +281,8 @@ Here styles for:
     max-width: 453px;
     height: 55px;
     /*font-size: 1.5rem;*/
-    font-size: clamp(20px, 3vw, 24px);
-    line-height: 1.5rem;
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1;
     color: rgba(0, 0, 0, 0.7);
     margin: 0 auto;
     padding: 8px;
@@ -314,8 +315,8 @@ Here styles for:
     width: 100%;
     max-width: 735px;
     /*font-size: 2.5rem;*/
-    font-size: clamp(32px, 3vw, 40px);
-    line-height: 2.5rem;
+    font-size: clamp(32px, 2vw, 40px);
+    line-height: 1;
     margin: 0 auto;
     color: #000000;
     /* white-space: pre-line; */
@@ -324,7 +325,7 @@ Here styles for:
 
 .lnk-was-not a {
     /*font-size: 23px;*/
-    font-size: clamp(16px, 3vw, 24px);
+    font-size: clamp(20px, 2vw, 23px);
     white-space: nowrap;
     text-decoration-line: underline;
     line-height: normal;
@@ -343,7 +344,6 @@ Here styles for:
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     margin-top: 40px;
 }
 
@@ -351,7 +351,7 @@ Here styles for:
     min-width: 100px;
     height: 31px;
     /*font-size: 1rem;*/
-    font-size: clamp(12px, 3vw, 16px);
+    font-size: clamp(14px, 2vw, 16px);
     line-height: 1.2;
     cursor: pointer;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
@@ -381,7 +381,7 @@ Here styles for:
     max-width: 378px;
     height: 19px;
     /*font-size: 24px;*/
-    font-size: clamp(16px, 3vw, 24px);
+    font-size: clamp(20px, 2vw, 24px);
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
     margin: 18px auto 14px auto;
@@ -412,8 +412,10 @@ Here styles for:
 .big-btn-text a {
     display: inline-block;
     padding: 13px 23px 13px 23px;
-    font-size: 2.25rem;
-    line-height: 2.25rem;
+    /*font-size: 2.25rem;*/
+    /*line-height: 2.25rem;*/
+    font-size: clamp(30px, 2vw, 36px);
+    line-height: 1;
     color: rgba(0, 0, 0, 0.6);
     border: 3px solid #5689EB;
     border-radius: 1rem;
@@ -426,13 +428,14 @@ Here styles for:
 @media (max-width: 767.98px) {
     .big-btn-text a {
         padding: 10px 15px;
-        font-size: 1.25rem;
-        line-height: 1.2;
+        /*font-size: 1.25rem;*/
+        /*line-height: 1.2;*/
     }
 }
 
 .lnk-unsubscribe a {
-    font-size: clamp(12px, 3vw, 16px);
+    /*font-size: 16px;*/
+    font-size: clamp(12px, 2vw, 16px);
     line-height: 1;
     color: #4D4D4D;
     text-decoration: underline;
