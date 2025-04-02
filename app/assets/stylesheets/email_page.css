@@ -566,7 +566,7 @@ html {
 .calendar-days {
     text-align: left;
     width: 105px;
-    height: 130px;
+    height: 140px;
     background-image: url("calendar_days.png");
     background-repeat: no-repeat;
     background-size: contain;
