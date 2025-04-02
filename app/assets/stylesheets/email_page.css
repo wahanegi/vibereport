@@ -114,7 +114,7 @@ Here styles for:
 .positive, .neutral, .negative {
     height: 31px;
     /*font-size: 19px;*/
-    font-size: clamp(14px, 3vw, 19px);
+    font-size: clamp(14px, 2vw, 19px);
     line-height: 1;
     text-align: center;
     cursor: pointer;
@@ -126,7 +126,7 @@ Here styles for:
     text-decoration: none;
     height: 31px;
     /*font-size: 19px;*/
-    font-size: clamp(16px, 3vw, 20px);
+    font-size: clamp(18px, 2vw, 20px);
 }
 
 .positive-a:hover, .neutral-a:hover, .negative-a:hover {
@@ -343,8 +343,10 @@ Here styles for:
 .links-container {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     margin-top: 40px;
+    gap: 10px;
 }
 
 .btn-emotion {

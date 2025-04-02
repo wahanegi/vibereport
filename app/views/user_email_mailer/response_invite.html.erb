@@ -88,8 +88,10 @@
           .links-container {
               display: flex;
               align-items: center !important;
+              justify-content: space-between !important;
               flex-direction: column !important;
               margin-top: 40px !important;
+              gap: 10px !important;
           }
 
           .lnk-unsubscribe {
@@ -121,9 +123,9 @@
   <table role="presentation" width="100%">
     <tr>
       <td class="second-row" style="height: 50px; text-align: left;">
-        <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 102px; height: 115px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+        <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 105px; height: 120px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
           <tr>
-            <td class="data" style="padding-top: 55px; width: 102px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+            <td class="data" style="padding-top: 55px; width: 105px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
               <%= @view_complete_by %>
             </td>
           </tr>
