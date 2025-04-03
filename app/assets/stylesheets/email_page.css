@@ -281,6 +281,17 @@ Here styles for:
     margin: 0 auto;
 }
 
+.data {
+    padding-top: 55px;
+    width: 102px;
+    height: 14px;
+    font-size: 16px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+
 .question {
     width: 100%;
     max-width: 735px;
