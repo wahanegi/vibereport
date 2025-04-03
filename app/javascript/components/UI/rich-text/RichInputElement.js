@@ -507,6 +507,21 @@ const RichInputElement = ({
     // Sync state with DOM
     setTextHTML(newText);
 
+    // Check if the dropdown has just closed and cursor is inside a span
+    if (!isDropdownList && cursorPos.isSPAN) {
+      // Find the end of the current span
+      const spanEnd =
+        newText.indexOf(END_TAG_AT, cursorPos.realPos) + END_TAG_AT.length;
+      // Append a space after the span to move the cursor outside
+      const updatedText =
+        newText.slice(0, spanEnd) + ' ' + newText.slice(spanEnd);
+      setTextHTML(updatedText);
+      // Move the caret to after the space
+      const newCaretPos = caretCur + 1; // +1 for the space
+      setCaret(newCaretPos);
+      Cursor.setCurrentCursorPosition(newCaretPos, element);
+    }
+
     // Check if '@' was just typed at the current caret position
     if (textContent[caretCur - 1] === MARKER) {
       const symbolCodeAt = (pos) => textContent.charCodeAt(caretCur - 1 + pos);
