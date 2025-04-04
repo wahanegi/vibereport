@@ -136,23 +136,22 @@
   border-radius: 0 0 20px 20px;
   border-top-color: transparent;
   overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: auto;
+  max-height: 150px !important;
 
+  //scrollbar for dropdown-menu
   &::-webkit-scrollbar {
-    height: 5px;
+    width: 0;
     border-bottom-right-radius: inherit;
     border-bottom-left-radius: inherit;
     background-color: #fff;
   }
 
-  &.horizontal-scroll-container::-webkit-scrollbar {
-    height: 12px;
-  }
-
   &::-webkit-scrollbar-track {
-    margin: 15px;
+    margin: 8px;
   }
 }
-
 
 // List elements
 .rbt-menu .dropdown-item {
@@ -169,6 +168,7 @@
   background-color: transparent;
   color: $gray-700;
   font-weight: normal;
+  padding-left: 0;
 }
 
 // Clear X-button
@@ -202,7 +202,7 @@
   color: transparent;
 }
 
-// Scrollbar
+// Scrollbar for timesheets list
 .rbt-menu::-webkit-scrollbar {
   width: 8px;
 }
