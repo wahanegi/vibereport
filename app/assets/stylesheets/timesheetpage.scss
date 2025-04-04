@@ -138,6 +138,7 @@
   overflow: hidden;
   overflow-y: scroll;
   overflow-x: auto;
+  max-height: 150px;
 
   //scrollbar for dropdown-menu
   &::-webkit-scrollbar {
