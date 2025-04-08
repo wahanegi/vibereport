@@ -298,11 +298,16 @@ Here styles for:
 .question {
     width: 100%;
     max-width: 735px;
-    font-size: 32px; /* Fallback */
-    font-size: clamp(32px, 2vw, 40px);
+    font-size: 40px;
     line-height: 1;
     margin: 0 auto;
     color: #000000;
+}
+
+@media (max-width: 767.98px) {
+    .question {
+        font-size: 32px;
+    }
 }
 
 .lnk-was-not a {
