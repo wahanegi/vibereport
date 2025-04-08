@@ -73,6 +73,7 @@
 
           .neutral-btns {
               flex-direction: column;
+              gap: 10px !important;
           }
 
           .lnk-was-not a {
@@ -97,11 +98,40 @@
               display: block;
               text-align: center;
               margin-top: 15px;
+              font-size: 20px;
           }
 
           .question {
-              font-size: 2rem;
+              font-size: 32px;
               line-height: 2rem;
+          }
+
+          .lnk-unsubscribe a {
+            font-size: 12px;
+          }
+
+          .big-btn-text a {
+            font-size: 30px;
+          }
+
+          .big-btn-tooltip {
+            font-size: 20px;
+          }
+
+          .btn-emotion {
+            font-size: 12px;
+          }
+
+          .positive-a, .neutral-a, .negative-a {
+            font-size: 18px;
+          }
+
+          .positive, .neutral, .negative {
+            font-size: 14px;
+          }
+
+          .gap {
+            margin-top: 10px;
           }
       }
     </style>
@@ -136,7 +166,7 @@
     </div>
   </div>
   <!--<![endif]-->
-        <div class="mx-auto my-0 invitation" style="font-size: 24px;">Time for your latest check-in!</div>
+        <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
         <div class="mx-auto my-0 question">What word best describes how you feel about work?</div>
         <div class="emotions-container">
           <% (0..5).each do |row| %>
@@ -155,29 +185,29 @@
         <div class="underline_list"></div>
         <div class='neutral-area' style="padding: 10px 0;">
           <div class="neutral-btns" style="display: flex">
-            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1; font-size: 1.25rem">
+            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1;">
               <%= link_to "Show me different words", { controller: 'api/v1/responses',
                                                  action: 'sign_in_from_email',
                                                  user_id: @user.id }, class: "neutral-a" %>
             </div>
-            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1; font-size: 1.25rem">
+            <div class="<%= "btn-emotion neutral gap" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1;">
               <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
             </div>
           </div>
         </div>
-        <div class="big-btn-tooltip mx-auto" style="font-size: 1.5rem;">Share it in your own words!</div>
+        <div class="big-btn-tooltip mx-auto">Share it in your own words!</div>
         <div class="big-btn mx-auto">
-          <div class="big-btn-text" style="font-size: 1.875rem;">
+          <div class="big-btn-text">
             <%= link_to "Add your own word", @link_for_own_word %>
           </div>
         </div>
         <div class="links-container">
-          <div class="lnk-unsubscribe" style="text-align: left; font-size: 1rem;">
+          <div class="lnk-unsubscribe" style="text-align: left;">
             <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
                                                          action: "unsubscribe",
                                                          user_id: @user.id } %>
           </div>
-          <div class="lnk-was-not" style="width: max-content;  font-size: 1.5rem;">
+          <div class="lnk-was-not" style="width: max-content;">
             <%= link_to "I was not working recently", @link_for_was_not %>
           </div>
         </div>
