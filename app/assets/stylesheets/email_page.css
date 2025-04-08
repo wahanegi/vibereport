@@ -113,6 +113,7 @@ Here styles for:
 
 .positive, .neutral, .negative {
     height: 31px;
+    font-size: 16px; /* Fallback */
     font-size: clamp(14px, 2vw, 19px);
     line-height: 1;
     text-align: center;
@@ -124,6 +125,7 @@ Here styles for:
     font-weight: bold;
     text-decoration: none;
     height: 31px;
+    font-size: 18px; /* Fallback */
     font-size: clamp(18px, 2vw, 20px) !important;
 }
 
@@ -262,6 +264,7 @@ Here styles for:
     width: 100%;
     max-width: 453px;
     height: 55px;
+    font-size: 24px; /* Fallback */
     font-size: clamp(20px, 2vw, 24px) !important;
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
@@ -295,6 +298,7 @@ Here styles for:
 .question {
     width: 100%;
     max-width: 735px;
+    font-size: 32px; /* Fallback */
     font-size: clamp(32px, 2vw, 40px) !important;
     line-height: 1;
     margin: 0 auto;
@@ -302,6 +306,7 @@ Here styles for:
 }
 
 .lnk-was-not a {
+    font-size: 20px; /* Fallback */
     font-size: clamp(20px, 2vw, 23px) !important;
     white-space: nowrap;
     text-decoration-line: underline;
@@ -329,6 +334,7 @@ Here styles for:
 .btn-emotion {
     min-width: 100px;
     height: 31px;
+    font-size: 16px; /* Fallback */
     font-size: clamp(12px, 2vw, 16px);
     line-height: 1.2;
     cursor: pointer;
@@ -358,6 +364,7 @@ Here styles for:
     width: 100%;
     max-width: 378px;
     height: 19px;
+    font-size: 24px; /* Fallback */
     font-size: clamp(20px, 2vw, 24px) !important;
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
@@ -389,6 +396,7 @@ Here styles for:
 .big-btn-text a {
     display: inline-block;
     padding: 13px 23px 13px 23px;
+    font-size: 30px; /* Fallback */
     font-size: clamp(30px, 2vw, 36px) !important;
     line-height: 1;
     color: rgba(0, 0, 0, 0.6);
@@ -407,6 +415,7 @@ Here styles for:
 }
 
 .lnk-unsubscribe a {
+    font-size: 16px; /* Fallback */
     font-size: clamp(12px, 2vw, 16px) !important;
     line-height: 1;
     color: #4D4D4D;
@@ -597,6 +606,7 @@ html {
     padding-top: 48px;
     width: 115px;
     height: 105px;
+    font-size: 16px; /* Fallback */
     font-size: clamp(14px, 2vw, 16px);
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
