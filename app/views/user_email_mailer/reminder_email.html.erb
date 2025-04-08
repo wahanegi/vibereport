@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Email letter</title>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <style>
+  <head>
+    <title>Email letter</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <style>
       * {
           margin: 0;
           padding: 0;
@@ -33,54 +33,54 @@
           padding: 10px 10px !important;
         }
       }
-  </style>
-  <%= stylesheet_link_tag 'email_page' , media: 'all' %>
-</head>
-<body>
-<div class="board mx-auto">
-  <!--[if mso]>
-  <table role="presentation" width="100%">
-    <tr>
-      <td class="first-row-reminder" style="height: 8px; text-align: left;">
-         <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 102px; height: 115px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+    </style>
+    <%= stylesheet_link_tag 'email_page' , media: 'all' %>
+  </head>
+  <body>
+    <div class="board mx-auto">
+      <!--[if mso]>
+        <table role="presentation" width="100%">
           <tr>
-            <td class="data" style="padding-top: 55px; width: 102px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-              <%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+            <td class="first-row-reminder" style="height: 8px; text-align: left;">
+              <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 102px; height: 115px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+                <tr>
+                  <td class="data" style="padding-top: 55px; width: 102px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+                    <%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
-      </td>
-    </tr>
-  </table>
-  <![endif]-->
-  <!--[if !mso]><!-->
+      <![endif]-->
+      <!--[if !mso]><!-->
   <div class="first-row-reminder">
     <div class="calendar">
       <div class="data"><%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
     </div>
   </div>
   <!--<![endif]-->
-  <div>
-    <div class="second-row-reminder">
-      <div class="mx-auto">
-        <%= render 'layouts/logo', height: 61 %>
-      </div>
-    </div>
-    <div class="mx-auto third-row-magic mt-40">
-      <div class="mx-auto greeting">Your check-in progress is saved</div>
-    </div>
-    <div class="mx-auto fourth-row-magic">
-      <div class="submit-annotation text-reminder mx-auto">Come on back when you’re ready to complete your check-in</div>
-    </div>
-    <div class="big-btn mx-auto mt-40">
-      <div class="big-btn-text mx-auto">
-        <%= link_to "Back to check-in", { controller: 'api/v1/responses',
+        <div>
+          <div class="second-row-reminder">
+            <div class="mx-auto">
+              <%= render 'layouts/logo', height: 61 %>
+            </div>
+          </div>
+          <div class="mx-auto third-row-magic mt-40">
+            <div class="mx-auto greeting">Your check-in progress is saved</div>
+          </div>
+          <div class="mx-auto fourth-row-magic">
+            <div class="submit-annotation text-reminder mx-auto">Come on back when you’re ready to complete your check-in</div>
+          </div>
+          <div class="big-btn mx-auto mt-40">
+            <div class="big-btn-text mx-auto" style="font-size: 1.875rem;>
+              <%= link_to "Back to check-in", { controller: 'api/v1/responses',
                                           action: 'sign_in_from_email',
                                           id: @time_period.id,
                                           user_id: @user.id }%>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-</body>
-</html>
+    </body>
+  </html>

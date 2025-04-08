@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Email letter</title>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
+  <head>
+    <title>Email letter</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
       * {
           margin: 0;
           padding: 0;
@@ -104,83 +104,83 @@
               line-height: 2rem;
           }
       }
-  </style>
-  <%= stylesheet_link_tag 'email_page', media: 'all' %>
-</head>
-<body>
-<div class="board mx-auto">
-  <div class="first-row">
-    <div class="mx-auto my-0">
-      <%= render 'layouts/logo', height: 61 %>
-    </div>
-  </div>
-  <!--[if mso]>
-  <table role="presentation" width="100%">
-    <tr>
-      <td class="second-row" style="height: 50px; text-align: left;">
-        <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 105px; height: 120px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+    </style>
+    <%= stylesheet_link_tag 'email_page', media: 'all' %>
+  </head>
+  <body>
+    <div class="board mx-auto">
+      <div class="first-row">
+        <div class="mx-auto my-0">
+          <%= render 'layouts/logo', height: 61 %>
+        </div>
+      </div>
+      <!--[if mso]>
+        <table role="presentation" width="100%">
           <tr>
-            <td class="data" style="padding-top: 55px; width: 105px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-              <%= @view_complete_by %>
+            <td class="second-row" style="height: 50px; text-align: left;">
+              <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 105px; height: 120px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
+                <tr>
+                  <td class="data" style="padding-top: 55px; width: 105px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
+                    <%= @view_complete_by %>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
-      </td>
-    </tr>
-  </table>
-  <![endif]-->
-  <!--[if !mso]><!-->
+      <![endif]-->
+      <!--[if !mso]><!-->
   <div class="second-row">
     <div class="calendar ml-55">
       <div class="data"><%= @view_complete_by %></div>
     </div>
   </div>
   <!--<![endif]-->
-  <div class="mx-auto my-0 invitation">Time for your latest check-in!</div>
-  <div class="mx-auto my-0 question">What word best describes how you feel about work?</div>
-  <div class="emotions-container">
-    <% (0..5).each do |row| %>
-      <div class="emotions d-flex">
-        <% (0..3).each do |col| %>
-          <% cell = @table[(row * 4 + col)] %>
-          <div class="<%= "btn-emotion #{cell.category}" %>"
-               style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 5px 0; line-height: 1;">
-            <% @link_for_emotion[:emotion_id] = cell.id %>
-            <%= link_to cell.word, @link_for_emotion, class: "#{cell.category}-a" %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="underline_list"></div>
-  <div class='neutral-area' style="padding: 10px 0;">
-    <div class="neutral-btns" style="display: flex">
-      <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 5px 0; line-height: 1;">
-        <%= link_to "Show me different words", { controller: 'api/v1/responses',
+        <div class="mx-auto my-0 invitation" style="font-size: 1.5rem;">Time for your latest check-in!</div>
+        <div class="mx-auto my-0 question" style="font-size: 2rem;">What word best describes how you feel about work?</div>
+        <div class="emotions-container">
+          <% (0..5).each do |row| %>
+            <div class="emotions d-flex">
+              <% (0..3).each do |col| %>
+                <% cell = @table[(row * 4 + col)] %>
+                <div class="<%= "btn-emotion #{cell.category}" %>"
+               style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 6px 0 5px 0; line-height: 1;">
+                  <% @link_for_emotion[:emotion_id] = cell.id %>
+                  <%= link_to cell.word, @link_for_emotion, class: "#{cell.category}-a" %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <div class="underline_list"></div>
+        <div class='neutral-area' style="padding: 10px 0;">
+          <div class="neutral-btns" style="display: flex">
+            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1; font-size: 1.25rem">
+              <%= link_to "Show me different words", { controller: 'api/v1/responses',
                                                  action: 'sign_in_from_email',
                                                  user_id: @user.id }, class: "neutral-a" %>
-      </div>
-      <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 5px 0; line-height: 1;">
-        <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
-      </div>
-    </div>
-  </div>
-  <div class="big-btn-tooltip mx-auto">Share it in your own words!</div>
-  <div class="big-btn mx-auto">
-    <div class="big-btn-text">
-      <%= link_to "Add your own word", @link_for_own_word %>
-    </div>
-  </div>
-  <div class="links-container">
-    <div class="lnk-unsubscribe" style="text-align: left">
-      <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
+            </div>
+            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1; font-size: 1.25rem">
+              <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
+            </div>
+          </div>
+        </div>
+        <div class="big-btn-tooltip mx-auto" style="font-size: 1.5rem;">Share it in your own words!</div>
+        <div class="big-btn mx-auto">
+          <div class="big-btn-text" style="font-size: 1.875rem;">
+            <%= link_to "Add your own word", @link_for_own_word %>
+          </div>
+        </div>
+        <div class="links-container">
+          <div class="lnk-unsubscribe" style="text-align: left; font-size: 1rem;">
+            <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
                                                          action: "unsubscribe",
                                                          user_id: @user.id } %>
-    </div>
-    <div class="lnk-was-not" style="width: max-content">
-      <%= link_to "I was not working recently", @link_for_was_not %>
-    </div>
-  </div>
-</div>
-</body>
-</html>
+          </div>
+          <div class="lnk-was-not" style="width: max-content;  font-size: 1.5rem;">
+            <%= link_to "I was not working recently", @link_for_was_not %>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>
