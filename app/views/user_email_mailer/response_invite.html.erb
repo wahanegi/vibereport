@@ -102,36 +102,36 @@
           }
 
           .question {
-              font-size: 32px;
+              font-size: 32px !important;
               line-height: 2rem;
           }
 
           .lnk-unsubscribe a {
-            font-size: 12px;
+            font-size: 12px !important;
           }
 
           .big-btn-text a {
-            font-size: 30px;
+            font-size: 30px !important;
           }
 
           .big-btn-tooltip {
-            font-size: 20px;
+            font-size: 20px !important;
           }
 
           .btn-emotion {
-            font-size: 12px;
+            font-size: 12px !important;
           }
 
           .positive-a, .neutral-a, .negative-a {
-            font-size: 18px;
+            font-size: 18px !important;
           }
 
           .positive, .neutral, .negative {
-            font-size: 14px;
+            font-size: 14px !important;
           }
 
           .gap {
-            margin-top: 10px;
+            margin-top: 10px !important;
           }
       }
     </style>
@@ -174,7 +174,7 @@
               <% (0..3).each do |col| %>
                 <% cell = @table[(row * 4 + col)] %>
                 <div class="<%= "btn-emotion #{cell.category}" %>"
-               style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 6px 0 5px 0; line-height: 1;">
+               style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 8px 0; line-height: 1;">
                   <% @link_for_emotion[:emotion_id] = cell.id %>
                   <%= link_to cell.word, @link_for_emotion, class: "#{cell.category}-a" %>
                 </div>
@@ -185,12 +185,12 @@
         <div class="underline_list"></div>
         <div class='neutral-area' style="padding: 10px 0;">
           <div class="neutral-btns" style="display: flex">
-            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1;">
+            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
               <%= link_to "Show me different words", { controller: 'api/v1/responses',
                                                  action: 'sign_in_from_email',
                                                  user_id: @user.id }, class: "neutral-a" %>
             </div>
-            <div class="<%= "btn-emotion neutral gap" %>" style="width: 260px; margin: 0 auto; padding: 6px 0 5px 0; line-height: 1;">
+            <div class="<%= "btn-emotion neutral gap" %>" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
               <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
             </div>
           </div>
