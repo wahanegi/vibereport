@@ -27,6 +27,10 @@
           text-align: left;
       }
 
+      .lnk-was-not {
+          text-align: end;
+      }
+
       .emotions-container {
           text-align: center;
       }
@@ -81,14 +85,12 @@
               margin-top: 15px !important;
           }
 
-          .links-container {
-              display: flex;
-              align-items: center !important;
-              justify-content: space-between !important;
-              flex-direction: column !important;
-              margin-top: 40px !important;
-              gap: 10px !important;
-          }
+          .stack-column td {
+              display: block !important;
+              width: 100% !important;
+              text-align: center !important;
+              padding-bottom: 10px !important;
+         }
 
           .lnk-unsubscribe {
               margin-top: 20px !important;
@@ -111,7 +113,7 @@
           }
 
           .big-btn-text a {
-            font-size: 30px !important;
+            font-size: 24px !important;
           }
 
           .big-btn-tooltip {
@@ -201,16 +203,18 @@
             <%= link_to "Add your own word", @link_for_own_word %>
           </div>
         </div>
-        <div class="links-container">
-          <div class="lnk-unsubscribe" style="text-align: left;">
-            <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
-                                                         action: "unsubscribe",
-                                                         user_id: @user.id } %>
-          </div>
-          <div class="lnk-was-not" style="width: max-content;">
-            <%= link_to "I was not working recently", @link_for_was_not %>
-          </div>
-        </div>
+        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="stack-column" style="margin-top: 40px;">
+          <tr>
+            <td class="lnk-unsubscribe">
+              <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
+                                                            action: "unsubscribe",
+                                                            user_id: @user.id } %>
+            </td>
+            <td class="lnk-was-not">
+              <%= link_to "I was not working recently", @link_for_was_not %>
+            </td>
+          </tr>
+        </table>
       </div>
     </body>
   </html>
