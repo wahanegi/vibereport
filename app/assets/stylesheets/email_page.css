@@ -113,7 +113,7 @@ Here styles for:
 
 .positive, .neutral, .negative {
     height: 31px;
-    font-size: clamp(14px, 2vw, 19px);
+    font-size: 18px;
     line-height: 1;
     text-align: center;
     cursor: pointer;
@@ -124,7 +124,7 @@ Here styles for:
     font-weight: bold;
     text-decoration: none;
     height: 31px;
-    font-size: clamp(18px, 2vw, 20px);
+    font-size: 20px;
 }
 
 .positive-a:hover, .neutral-a:hover, .negative-a:hover {
@@ -219,10 +219,6 @@ Here styles for:
     text-align: left;
 }
 
-.ml-55 {
-    margin-left: 55px;
-}
-
 .mt-10 {
     margin-top: 10px;
 }
@@ -262,7 +258,7 @@ Here styles for:
     width: 100%;
     max-width: 453px;
     height: 55px;
-    font-size: clamp(20px, 2vw, 24px);
+    font-size: 24px;
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
     margin: 0 auto;
@@ -295,14 +291,14 @@ Here styles for:
 .question {
     width: 100%;
     max-width: 735px;
-    font-size: clamp(32px, 2vw, 40px);
+    font-size: 40px;
     line-height: 1;
     margin: 0 auto;
     color: #000000;
 }
 
 .lnk-was-not a {
-    font-size: clamp(20px, 2vw, 23px);
+    font-size: 23px;
     white-space: nowrap;
     text-decoration-line: underline;
     line-height: normal;
@@ -329,7 +325,7 @@ Here styles for:
 .btn-emotion {
     min-width: 100px;
     height: 31px;
-    font-size: clamp(12px, 2vw, 16px);
+    font-size: 16px;
     line-height: 1.2;
     cursor: pointer;
     box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
@@ -358,7 +354,7 @@ Here styles for:
     width: 100%;
     max-width: 378px;
     height: 19px;
-    font-size: clamp(20px, 2vw, 24px);
+    font-size: 24px;
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
     margin: 18px auto 14px auto;
@@ -389,7 +385,7 @@ Here styles for:
 .big-btn-text a {
     display: inline-block;
     padding: 13px 23px 13px 23px;
-    font-size: clamp(30px, 2vw, 36px);
+    font-size: 36px;
     line-height: 1;
     color: rgba(0, 0, 0, 0.6);
     border: 3px solid #5689EB;
@@ -407,7 +403,7 @@ Here styles for:
 }
 
 .lnk-unsubscribe a {
-    font-size: clamp(12px, 2vw, 16px);
+    font-size: 16px;
     line-height: 1;
     color: #4D4D4D;
     text-decoration: underline;
@@ -597,7 +593,7 @@ html {
     padding-top: 48px;
     width: 115px;
     height: 105px;
-    font-size: clamp(14px, 2vw, 16px);
+    font-size: 16px;
     line-height: 1;
     color: rgba(0, 0, 0, 0.7);
     white-space: nowrap;
