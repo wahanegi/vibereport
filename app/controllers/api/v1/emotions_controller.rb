@@ -1,12 +1,15 @@
 class Api::V1::EmotionsController < ApplicationController
   include UserEmailMailerHelper
   include ApplicationHelper
+
   before_action :authenticate_user!
   before_action :current_response, only: [:index]
 
   def index
     if current_user.present?
-      render json: EmotionSerializer.new(emotions_table).serializable_hash.merge(additional_params), status: :ok
+      render json: EmotionSerializer.new(emotions_table)
+                                    .serializable_hash
+                                    .merge(additional_params), status: :ok
     else
       render json: {}, status: :unauthorized
     end
@@ -38,37 +41,28 @@ class Api::V1::EmotionsController < ApplicationController
   def additional_params
     {
       current_user:,
-      time_period: serialize_time_period(time_period),
-      response: @current_response ? response_hash : { attributes: { steps: %w[emotion-selection-web].to_s } },
+      time_period: time_period.as_json(methods: %i[first_working_day last_working_day]),
+      response: if @current_response
+                  { id: @current_response.id, type: 'response', attributes: @current_response }
+                else
+                  { attributes: { steps: %w[emotion-selection-web].to_s } }
+                end,
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
-      users: User.ordered.map do |user|
-        {
-          id: user.id,
-          first_name: user.first_name,
-          last_name: user.last_name
-        }
-      end,
+      users: User.ordered.as_json(only: %i[id first_name last_name]),
       fun_question:,
       user_shoutouts: current_user.shoutouts.not_celebrate,
-      check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id]),
+      check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id])
+                                      .as_json(methods: %i[first_working_day last_working_day]),
       has_team_access: current_user.user_teams.has_team_access.any?,
       prev_results_path:,
-      time_periods: TimePeriod.ordered.map { |tp| serialize_time_period(tp) } || [],
+      time_periods: TimePeriod.ordered.as_json(methods: %i[first_working_day last_working_day]) || [],
       timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?)
     }
   end
 
   def current_response
     @current_response ||= Response.find_by(time_period_id: time_period.id, user_id: current_user.id)
-  end
-
-  def response_hash
-    {
-      id: @current_response.id,
-      type: 'response',
-      attributes: @current_response
-    }
   end
 
   def emotion_params
@@ -99,19 +93,5 @@ class Api::V1::EmotionsController < ApplicationController
 
   def time_period
     @time_period ||= TimePeriod.find_or_create_time_period
-  end
-
-  def serialize_time_period(time_period)
-    {
-      id: time_period.id,
-      start_date: time_period.start_date,
-      end_date: time_period.end_date,
-      due_date: time_period.due_date,
-      first_working_day: time_period.first_working_day,
-      last_working_day: time_period.last_working_day,
-      slug: time_period.slug,
-      created_at: time_period.created_at,
-      updated_at: time_period.updated_at
-    }
   end
 end
