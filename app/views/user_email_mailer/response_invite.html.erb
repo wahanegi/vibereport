@@ -187,12 +187,12 @@
         <div class="underline_list"></div>
         <div class='neutral-area' style="padding: 10px 0;">
           <div class="neutral-btns" style="display: flex">
-            <div class="<%= "btn-emotion neutral" %>" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
+            <div class="btn-emotion neutral" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
               <%= link_to "Show me different words", { controller: 'api/v1/responses',
                                                  action: 'sign_in_from_email',
                                                  user_id: @user.id }, class: "neutral-a" %>
             </div>
-            <div class="<%= "btn-emotion neutral gap" %>" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
+            <div class="btn-emotion neutral gap" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
               <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
             </div>
           </div>
