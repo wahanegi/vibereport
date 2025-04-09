@@ -59,10 +59,6 @@
               padding-top: 5px;
           }
 
-          .ml-55 {
-              margin-left: 0 !important;
-          }
-
           .emotions {
               max-width: 500px !important;
           }
@@ -149,7 +145,7 @@
       <!--[if mso]>
         <table role="presentation" width="100%">
           <tr>
-            <td class="second-row" style="height: 50px; text-align: left; margin-left: 25px; margin-bottom: 10px;">
+            <td class="second-row" style="height: 50px; text-align: left;">
               <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 105px; height: 120px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
                 <tr>
                   <td class="data" style="padding-top: 55px; width: 105px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
@@ -163,13 +159,13 @@
       <![endif]-->
       <!--[if !mso]><!-->
   <div class="second-row">
-    <div class="calendar" style="margin-left: 25px; margin-bottom: 10px;">
+    <div class="calendar">
       <div class="data"><%= @view_complete_by %></div>
     </div>
   </div>
   <!--<![endif]-->
         <div class="mx-auto invitation">Time for your latest check-in!</div>
-        <div class="mx-auto question">What word best describes how you feel about work?</div>
+        <div class="mx-auto question" style="margin-top: 10px;">What word best describes how you feel about work?</div>
         <div class="emotions-container">
           <% (0..5).each do |row| %>
             <div class="emotions d-flex">
