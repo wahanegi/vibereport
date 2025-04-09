@@ -244,7 +244,7 @@ Here styles for:
     text-align: left;
     width: 102px;
     height: 115px;
-    margin-top: 20px;
+    margin: 20px 0 10px 0;
     background-image: url("complete-by.png");
     background-repeat: no-repeat;
     background-size: contain;
