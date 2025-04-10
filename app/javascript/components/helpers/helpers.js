@@ -172,3 +172,9 @@ export const calculateWordCount = (text) => {
         return cleanedWord
       }).length;
 }
+
+export const reformatData = (date) => {
+    let dt = new Date(date);
+    let options = {day: '2-digit', month: 'short', year: 'numeric'};
+    return new Intl.DateTimeFormat('en-GB', options).format(dt);
+};

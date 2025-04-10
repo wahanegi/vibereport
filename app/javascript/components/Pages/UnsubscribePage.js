@@ -1,99 +1,70 @@
-import React, {Fragment, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState} from 'react';
 import {isPresent} from '../helpers/helpers';
 import Layout from '../Layout';
 import {apiRequest} from '../requests/axios_requests';
-import Button from '../UI/Button';
+import {Button} from "react-bootstrap";
 
 const UnsubscribePage = ({data}) => {
-  const {current_user, time_period} = data;
-  const [unsubscribed, setUnsubscribed] = useState(current_user.opt_out);
+    const {current_user, time_period} = data;
+    const [unsubscribed, setUnsubscribed] = useState(current_user.opt_out);
 
-  const onUnsubscribe = () => {
-    const dataSend = {opt_out: true};
-    const dataFromServer = ({current_user}) => {
-      if (isPresent(current_user)) {
-        setUnsubscribed(true);
-      }
-    };
-    const url = '/api/v1/users/';
-    const id = current_user.id;
-    apiRequest(
-      'PATCH',
-      dataSend,
-      dataFromServer,
-      () => {
-      },
-      `${url}${id}`
-    ).then();
-  };
-
-  const Unsubscribe = () => (
-    <Fragment>
-      <div className="mt-5 col-12 col-md-8 col-lg-6 mx-auto px-2">
+    const Prompt = () => <div className={'mb-3'}>
         <h1 className="fs-md-1 mb-3">
-          You will be unsubscribed from future check-in reminders.
+            {unsubscribed ?
+                'You have been unsubscribed from check-in reminders.'
+                : ' You will be unsubscribed from future check-in reminders.'}
         </h1>
-        <h3 className="fs-md-3 text-gray-600 mb-2">
-          You can always resubscribe by contacting your admin.
+        <h3 className="fs-md-3 text-gray-600">
+            {unsubscribed ?
+                'You can close this window, or continue below.'
+                : 'You can always resubscribe by contacting your admin.'}
         </h3>
-      </div>
-      <div className="text-center mb-2">
-        <Button
-          className="btn-modal c1 w-auto border-0 px-3 mb-3 fs-5"
-          onClick={onUnsubscribe}
-        >
-          Unsubscribe
-        </Button>
-      </div>
-      <div className="text-center">
-        <Link to={'/'} target="_self" rel="noopener noreferrer">
-          <Button className="btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 mt-1 fs-5 border-0">
-            Cancel
-          </Button>
-        </Link>
-      </div>
-    </Fragment>
-  );
+    </div>
 
-  const Unsubscribed = () => (
-    <Fragment>
-      <div className="col-12 col-md-8 col-lg-6 mx-auto px-2 mb-4">
-        <h1 className="mb-1 px-lg-2 fs-md-1 mt-1 mt-sm-0">
-          You have been unsubscribed from check-in reminders.
-        </h1>
-        <h3 className="text-gray-600 fs-md-3">
-          You can close this window, or continue below.
-        </h3>
-      </div>
-      <div className="text-center mb-7">
-        <Link to={'/'} target="_self" rel="noopener noreferrer">
-          <Button className="btn-modal c1 w-auto border-0 px-2">
+    const UnsubscribeOrCancel = () => {
+        const handleUnsubscribe = async () => {
+            const dataSend = {opt_out: true};
+            const dataFromServer = ({current_user}) => {
+                if (isPresent(current_user)) {
+                    setUnsubscribed(true);
+                }
+            };
+            const skipRedirect = () => {
+            }
+            const url = `/api/v1/users/${current_user.id}`;
+
+            await apiRequest('PATCH', dataSend, dataFromServer, skipRedirect, url);
+        };
+
+        return <>
+            <Button className="btn-modal c1 w-auto border-0 px-3 mb-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6 fs-sm-6"
+                    onClick={handleUnsubscribe}>
+                Unsubscribe
+            </Button>
+            <Button href={'/'} target="_self" rel="noopener noreferrer"
+                    className="btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6 fs-sm-6 border-0 d-flex align-items-center">
+                Cancel
+            </Button>
+        </>
+    }
+
+    const CheckInOrRecentResult = () => <>
+        <Button href={'/'} target="_self" rel="noopener noreferrer"
+                className="btn-modal c1 w-auto border-0 px-3 mb-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6 fs-sm-6 d-flex align-items-center">
             Start a check-in
-          </Button>
-        </Link>
-      </div>
-      <div className="text-center">
-        <Link
-          to={`/results/${time_period.slug}`}
-          target="_self"
-          rel="noopener noreferrer"
-        >
-          <Button className="btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 mt-3">
+        </Button>
+        <Button href={`/results/${time_period.slug}`} target="_self" rel="noopener noreferrer"
+                className="btn-modal c1 bg-gray-200 bg-gray-hover-200 w-auto px-3 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6 fs-sm-6 border-0 d-flex align-items-center">
             Recent results
-          </Button>
-        </Link>
-      </div>
-    </Fragment>
-  );
+        </Button>
+    </>
 
-  return (
-    <Fragment>
-      <Layout data={data} draft={true} isResult={true} hideShoutout={true}>
-        <div>{unsubscribed ? <Unsubscribed/> : <Unsubscribe/>}</div>
-      </Layout>
-    </Fragment>
-  );
+    return <Layout data={data} draft={true} isResult={true} hideShoutout={true}>
+        <div className="d-flex flex-column align-items-center mt-5 col-12 col-xxl-5 col-xl-6 col-lg-8 col-md-10 px-2">
+            <Prompt/>
+            {unsubscribed ? <CheckInOrRecentResult/> : <UnsubscribeOrCancel/>}
+        </div>
+    </Layout>
 };
 
 export default UnsubscribePage;
