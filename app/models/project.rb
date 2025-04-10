@@ -47,7 +47,7 @@ class Project < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[id code company name deleted_at]
+    %w[id code company name deleted_at usage]
   end
 
   def self.ransackable_associations(_auth_object = nil)
