@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '../../Layout';
 import {signOutUser} from '../../requests/axios_requests';
 import Button from '../../UI/Button';
-import {reformatData} from "../../helpers/helpers";
+import {reformatDate} from "../../helpers/helpers";
 
 const RatherNotSay = ({
                           data,
@@ -16,7 +16,7 @@ const RatherNotSay = ({
         <h1>We'll be here...</h1>
         <h2>
             Feel free to return to this check-in
-            <br/>before it closes on {reformatData(data.time_period.end_date)}
+            <br/>before it closes on {reformatDate(data.time_period.end_date)}
         </h2>
     </>
 
