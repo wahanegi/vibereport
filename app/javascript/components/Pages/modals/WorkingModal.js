@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import {useNavigate} from 'react-router-dom';
 import xClose from '../../../../assets/images/sys_svg/x-close.svg';
@@ -6,82 +6,69 @@ import {updateResponse} from '../../requests/axios_requests';
 import Button from '../../UI/Button';
 
 const WorkingModal = ({show, setShow, data, setData, steps}) => {
-  const navigate = useNavigate();
-  const onClickNotWorking = () => {
-    const index = steps.indexOf('emotion-selection-web');
-    const new_steps = steps.slice(0, index + 1);
+    const navigate = useNavigate();
+    const handleNotWorking = async () => {
+        const index = steps.indexOf('emotion-selection-web');
+        const newSteps = steps.slice(0, index + 1);
+        const pathToStep = `/${newSteps.at(-1)}`
+        const dataRequest = {
+            response: {
+                attributes: {
+                    not_working: false,
+                    draft: false,
+                    steps: newSteps
+                },
+            },
+        };
 
-    const dataRequest = {
-      response: {
-        attributes: {not_working: false, draft: false, steps: new_steps},
-      },
+        await updateResponse(
+            data,
+            setData,
+            dataRequest,
+            navigate(pathToStep)
+        );
     };
-    updateResponse(
-      data,
-      setData,
-      dataRequest,
-      navigate(`/${new_steps.slice(-1).toString()}`)
-    ).then();
-  };
 
-  return (
-    <Fragment>
-      <Modal
-        size="lg"
-        show={show}
-        onHide={() => {
-          setShow(false);
-        }}
-        animation={true}
-        centered
-        dialogClassName="px-1"
-      >
-        <img
-          src={xClose}
-          className="position-absolute top-0 start-100 translate-middle x-close pointer"
-          onClick={() => {
-            setShow(false);
-          }}
-        />
-        <Modal.Body>
-          <div className="fs-5 fw-bold px-3 mb-2 mt-1">Just to confirm...</div>
-          <div className="fs-4 fw-bold mb-2">
+    const handleHideModal = () =>
+        setShow(false);
+
+    const WorkCheckHeader = () => <>
+        <h2 className="px-3 mb-2 mt-1">
+            Just to confirm...
+        </h2>
+        <h2 className="fs-4 mb-3">
             Did you work during this <br/> check-in period?
-            <br/>
-          </div>
-          <div className="fs-5 fw-bold mb-2">
+        </h2>
+        <h2 className="mb-4">
             You previously indicated that you weren't
             <br/> working during this check-in period.
-            <br/>
-            <br/>
-          </div>
-          <div className="fs-5 fw-bold mb-2">
+        </h2>
+        <h2 className="mb-2">
             Skip this check-in if you weren't working.
-          </div>
-          <div className="d-flex justify-content-lg-between">
-            <div className="m-3">
-              <Button
-                className="btn-modal c1 bg-danger border-0 w-auto"
-                onClick={() => {
-                  setShow(false);
-                }}
-              >
+        </h2>
+    </>
+
+    const SkipAction = () =>
+        <div className="d-flex justify-content-lg-between">
+            <Button className="btn-modal c1 bg-danger border-0 w-auto fs-5 m-3" onClick={handleHideModal}>
                 Skip check-in
-              </Button>
-            </div>
-            <div className="m-3">
-              <Button
-                className="btn-modal c1 border-0 w-auto"
-                onClick={onClickNotWorking}
-              >
+            </Button>
+            <Button className="btn-modal c1 border-0 w-auto fs-5 m-3" onClick={handleNotWorking}>
                 Yes, I worked
-              </Button>
-            </div>
-          </div>
+            </Button>
+        </div>
+
+
+    return <Modal size="lg" show={show} onHide={handleHideModal} animation={true} centered dialogClassName="px-1">
+        <button className="position-absolute top-0 start-100 translate-middle x-close bg-transparent border-0"
+                onClick={handleHideModal}>
+            <img src={xClose} alt={'Close'}/>
+        </button>
+        <Modal.Body>
+            <WorkCheckHeader/>
+            <SkipAction/>
         </Modal.Body>
-      </Modal>
-    </Fragment>
-  );
+    </Modal>
 };
 
 export default WorkingModal;
