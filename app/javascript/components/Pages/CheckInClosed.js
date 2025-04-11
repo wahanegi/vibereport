@@ -1,24 +1,30 @@
-import React, {Fragment} from 'react';
-import {Link} from "react-router-dom";
+import React from 'react';
+import {useNavigate} from "react-router-dom";
 import {rangeFormat} from "../helpers/helpers";
 import {BtnOutline} from "../UI/ShareContent";
 
-const CheckInClosed = ({data}) => {
-  const {check_in_time_period} = data
+const CheckInClosed = ({data: {check_in_time_period}}) => {
+    const navigate = useNavigate()
+    const formatTimePeriod = rangeFormat(check_in_time_period)
 
-  return <Fragment>
-    <div className='container vh-100 d-flex flex-column align-items-center justify-content-center text-center'>
-      <div className='mt-4'>
-        <h1 className='text-muted'>The check-in for <br/>
-          {rangeFormat(check_in_time_period)}<br/>
-          has closed.
-        </h1>
-      </div>
-      <Link to={'/'} className={"mt-3"}>
-        <BtnOutline text='See the Results'/>
-      </Link>
+    const handleResult = () => {
+        if (check_in_time_period) {
+            navigate(`/results/${check_in_time_period.slug}`)
+        } else {
+            navigate(`/results`)
+        }
+    }
+
+    return <div className='container vh-100 d-flex flex-column align-items-center justify-content-center text-center'>
+        <div className='mt-4'>
+            <h1 className='text-muted'>The check-in for <br/>
+                {formatTimePeriod}<br/>
+                has closed.
+            </h1>
+        </div>
+
+        <BtnOutline text='See the Results' addClass={'mt-3'} onClick={handleResult}/>
     </div>
-  </Fragment>
 };
 
 export default CheckInClosed;

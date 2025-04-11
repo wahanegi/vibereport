@@ -162,6 +162,7 @@ export const validateRow = (row) => {
       Number(row.time) > 0
     );
   };
+
 export const calculateWordCount = (text) => {
   return text
     .replace(/<span[^>]*>@[^<]*<\/span>/g, '')
@@ -173,6 +174,12 @@ export const calculateWordCount = (text) => {
       }).length;
 }
 
+export const reformatDate = (date) => {
+    let dt = new Date(date);
+    let options = {day: '2-digit', month: 'short', year: 'numeric'};
+    return new Intl.DateTimeFormat('en-GB', options).format(dt);
+};
+  
 export const calculateBillableHours = (rows, projects) => {
   return rows.reduce((total, row) => {
     const project = projects.find((p) => p.attributes.code === row.project_id);
