@@ -7,6 +7,7 @@
 #  company    :string
 #  deleted_at :date
 #  name       :string
+#  usage      :integer          default("internal"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -71,6 +72,16 @@ RSpec.describe Project, type: :model do
     describe 'name' do
       it { is_expected.to validate_presence_of(:name) }
       it { is_expected.to allow_value('Marketing Campaign').for(:name) }
+    end
+
+    describe 'usage' do
+      it { is_expected.to validate_presence_of(:usage) }
+      it { is_expected.to allow_value('internal').for(:usage) }
+      it { is_expected.to allow_value('billable').for(:usage) }
+      it { is_expected.not_to allow_value('invalid_usage').for(:usage) }
+      it 'sets usage to internal by default for new projects' do
+        expect(project.usage).to eq('internal')
+      end
     end
   end
 

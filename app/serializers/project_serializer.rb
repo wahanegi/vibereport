@@ -7,6 +7,7 @@
 #  company    :string
 #  deleted_at :date
 #  name       :string
+#  usage      :integer          default("internal"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -17,5 +18,5 @@
 
 class ProjectSerializer
   include JSONAPI::Serializer
-  attributes :company, :code, :name
+  attributes :company, :code, :name, :usage
 end

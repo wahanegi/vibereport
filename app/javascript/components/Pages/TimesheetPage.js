@@ -22,6 +22,7 @@ const TimesheetPage = ({
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isDraft, setIsDraft] = useState(draft);
+  const [billableError, setBillableError] = useState(null);
 
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
@@ -54,6 +55,26 @@ const TimesheetPage = ({
       }, timesheetsURL),
     ]).catch((error) => setFetchError(error.message)).finally(() => setIsLoading(false));
   }, []);
+
+  const calculateBillableHours = (rows) => {
+    return rows.reduce((total, row) => {
+      const project = projects.find(
+        (p) => p.attributes.code === row.project_id
+      );
+      const hours = parseInt(row.time, 10) || 0;
+      return project?.attributes.usage === 'billable' ? total + hours : total;
+    }, 0);
+  };
+
+  useEffect(() => {
+    const allRows = [...prevEntries, ...newRows];
+    const totalBillableHours = calculateBillableHours(allRows);
+    if (totalBillableHours > 40) {
+      setBillableError('Billable projects may not exceed 40 hours in a work week.');
+    } else {
+      setBillableError(null);
+    }
+  }, [prevEntries, newRows, projects]);
 
   const submitTimesheetEntries = async ({
                                           newRows,
@@ -303,12 +324,14 @@ const TimesheetPage = ({
                 ))}
               </div>
             </div>
-
-            {allRows.length > 0 && (
-              <p className={!isValid ? 'text-primary' : 'invisible'}>
-                Please fill out all fields
-              </p>
-            )}
+            <div style={{ height: '20px' }} className='text-primary'>
+              {allRows.length > 0 && !isValid ? (
+              <p>Please fill out all fields</p>
+            ) : billableError ? (
+              <p>{billableError}</p>
+            ) : null}
+            </div>
+            
             <BtnAddNewRow onClick={handleAddRow} disabled={!canAddNewRow} />
           </div>
         </div>
@@ -316,7 +339,7 @@ const TimesheetPage = ({
         <div className="max-width-entry mx-auto mt-3">
           <BlockLowerBtns
             handlingOnClickNext={handlingOnClickNext}
-            disabled={!canSubmit}
+            disabled={!canSubmit || billableError}
             stringBody="Submit"
             isSubmit={true}
           />

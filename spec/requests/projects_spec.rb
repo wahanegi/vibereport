@@ -76,6 +76,25 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       end
     end
 
+    context 'when request contains an invalid usage value' do
+      let(:invalid_usage_data) do
+        {
+          projects: [
+            { company: 'Tech Corp', code: '2025-TEC-01', name: 'Project Alpha', usage: 'invalid_value' }
+          ]
+        }.to_json
+      end
+
+      it 'returns an error for invalid usage and rolls back' do
+        expect do
+          post '/api/v1/projects', params: invalid_usage_data, headers: headers
+        end.not_to change(Project, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to include('Usage is not included in the list')
+      end
+    end
+
     context 'when request contains an empty projects array' do
       let(:empty_projects_data) { { projects: [] }.to_json }
 
@@ -91,35 +110,37 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
 
     context 'when a project already exists in the database' do
       before do
-        create(:project, company: 'Tech Corp', code: '2025-TEC-01', name: 'Old Project Name')
+        create(:project, company: 'Tech Corp', code: '2025-TEC-01', name: 'Old Project Name', usage: 'internal')
       end
 
       let(:updated_projects_data) do
         {
           projects: [
-            { company: 'Tech Corp', code: '2025-TEC-01', name: 'Project Alpha' }
+            { company: 'Tech Corp', code: '2025-TEC-01', name: 'Project Alpha', usage: 'billable' }
           ]
         }.to_json
       end
 
-      it 'updates the existing project instead of creating a new one' do
+      it 'updates the existing project including usage instead of creating a new one' do
         expect do
           post '/api/v1/projects', params: updated_projects_data, headers: headers
         end.not_to change(Project, :count)
 
         expect(response).to have_http_status(:ok)
-        expect(Project.find_by(code: '2025-TEC-01').name).to eq('Project Alpha')
+        project = Project.find_by(code: '2025-TEC-01')
+        expect(project.name).to eq('Project Alpha')
+        expect(project.usage).to eq('billable')
       end
     end
 
     context 'when a project fails to save due to validation error during sync' do
-      let!(:existing_project) { create(:project, company: 'Existing Corp', code: 'EXIST-001', name: 'Existing Project') }
+      let!(:existing_project) { create(:project, company: 'Existing Corp', code: 'EXIST-001', name: 'Existing Project', usage: 'internal') }
 
       let(:invalid_projects_data) do
         {
           projects: [
-            { company: 'New Corp', code: 'NEW-001', name: 'New Project' },
-            { company: '', code: 'NEW-002', name: 'Invalid Project' }
+            { company: 'New Corp', code: 'NEW-001', name: 'New Project', usage: 'billable' },
+            { company: '', code: 'NEW-002', name: 'Invalid Project', usage: 'billable' }
           ]
         }.to_json
       end
@@ -145,7 +166,7 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       let(:sync_data) do
         {
           projects: [
-            { company: deleted_project.company, code: deleted_project.code, name: deleted_project.name }
+            { company: deleted_project.company, code: deleted_project.code, name: deleted_project.name, usage: 'billable' }
           ]
         }.to_json
       end
@@ -155,23 +176,23 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
           post '/api/v1/projects', params: sync_data, headers: headers
         end.to change(Project, :count).by(-1)
 
-        expect(Project.find_by(id: project_without_entries.id)).to be_nil, "Expected project_without_entries to be deleted"
-        expect(project_with_entries.reload.deleted_at).not_to be_nil, "Expected project_with_entries to be soft deleted"
-        expect(deleted_project.reload.deleted_at).to be_nil, "Expected deleted_project to be restored"
+        expect(Project.find_by(id: project_without_entries.id)).to be_nil, 'Expected project_without_entries to be deleted'
+        expect(project_with_entries.reload.deleted_at).not_to be_nil, 'Expected project_with_entries to be soft deleted'
+        expect(deleted_project.reload.deleted_at).to be_nil, 'Expected deleted_project to be restored'
       end
     end
-    
-    context 'TIMESHEET_PROJECT_SYNC_AUTH_KEY is set in ENV' do
+
+    context 'when TIMESHEET_PROJECT_SYNC_AUTH_KEY is set in ENV' do
       let(:auth_key) { 'test_sync_key' }
       let(:valid_payload) do
         {
           projects: [
-            { company: 'Company A', code: 'PRJ-001', name: 'Project Alpha' },
-            { company: 'Company B', code: 'PRJ-002', name: 'Project Beta' }
+            { company: 'Company A', code: 'PRJ-001', name: 'Project Alpha', usage: 'internal' },
+            { company: 'Company B', code: 'PRJ-002', name: 'Project Beta', usage: 'billable' }
           ]
         }.to_json
       end
-          
+
       before do
         ENV['TIMESHEET_PROJECT_SYNC_AUTH_KEY'] = auth_key
         Rails.application.reload_routes!

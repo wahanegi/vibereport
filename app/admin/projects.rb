@@ -1,9 +1,10 @@
 ActiveAdmin.register Project do
-  permit_params :company, :code, :name
+  permit_params :company, :code, :name, :usage
 
   filter :company, as: :string
   filter :code, as: :string, label: 'Project code'
   filter :name, as: :string, label: 'Project name'
+  filter :usage, as: :select, collection: Project.usages.map { |key, value| [key, value] }, label: 'Usage'
   filter :deleted_at_null, as: :boolean, label: 'Active'
 
   scope :all
@@ -16,6 +17,7 @@ ActiveAdmin.register Project do
     column :company
     column :code
     column :name
+    column :usage
     column :deleted_at
     actions do |project|
       link_to 'Restore', restore_admin_project_path(project), method: :put, class: 'member_link' if project.deleted?
@@ -27,6 +29,7 @@ ActiveAdmin.register Project do
       row :company
       row :code
       row :name
+      row :usage
       row :created_at
       row :updated_at
       row :deleted_at
@@ -39,6 +42,9 @@ ActiveAdmin.register Project do
       f.input :company
       f.input :code, label: 'Project code'
       f.input :name, label: 'Project name'
+      f.input :usage, as: :select, collection: Project.usages.keys.map { |key|
+        [key, key]
+      }, label: 'Usage', include_blank: false
     end
     f.actions
   end

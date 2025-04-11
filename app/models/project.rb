@@ -7,6 +7,7 @@
 #  company    :string
 #  deleted_at :date
 #  name       :string
+#  usage      :integer          default("internal"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -21,7 +22,9 @@ class Project < ApplicationRecord
   validates :company, presence: true
   validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
+  validates :usage, presence: true
 
+  enum :usage, { internal: 0, billable: 1 }, default: :internal, validate: true
   has_many :time_sheet_entries, dependent: :destroy
 
   # Override destroy
@@ -44,7 +47,7 @@ class Project < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[id code company name deleted_at]
+    %w[id code company name deleted_at usage]
   end
 
   def self.ransackable_associations(_auth_object = nil)
