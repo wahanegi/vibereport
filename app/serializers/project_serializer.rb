@@ -18,5 +18,5 @@
 
 class ProjectSerializer
   include JSONAPI::Serializer
-  attributes :company, :code, :name
+  attributes :company, :code, :name, :usage
 end
