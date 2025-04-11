@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { rangeFormat, validateRow } from '../helpers/helpers';
+import {
+  calculateBillableHours,
+  rangeFormat,
+  transformTimesheetEntry,
+  updateRowData,
+  validateRow,
+} from '../helpers/helpers';
 import Layout from '../Layout';
 import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
@@ -8,13 +14,13 @@ import TimesheetRow from '../UI/TimesheetRow';
 import TimesheetRowHeader from '../UI/TimesheetRowHeader';
 
 const TimesheetPage = ({
-                         data,
-                         setData,
-                         saveDataToDb,
-                         steps,
-                         service,
-                         draft,
-                       }) => {
+  data,
+  setData,
+  saveDataToDb,
+  steps,
+  service,
+  draft,
+}) => {
   const timesheet_date = rangeFormat(data.time_period || {});
   const { isLoading, setIsLoading } = service;
   const [newRows, setNewRows] = useState([]);
@@ -30,72 +36,66 @@ const TimesheetPage = ({
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
-      apiRequest('GET', {}, (response) => {
+      apiRequest(
+        'GET',
+        {},
+        (response) => {
           setProjects(response.data);
         },
-        () => {
-        }, projectsURL),
-      apiRequest('GET', {}, (response) => {
-        const transformedEntries = response.data.map((entry) => {
-          const project = response.included.find(
-            (inc) => inc.id === entry.relationships.project.data.id);
-          return {
-            id: entry.id,
-            company: project?.attributes.company || '',
-            project_id: project?.attributes.code || '',
-            project_name: project?.attributes.name || '',
-            time: entry.attributes.total_hours.toString(),
-          };
-        });
-        setPrevEntries(transformedEntries);
-        if (transformedEntries.length === 0) {
-          handleAddRow();
-        }
-      }, () => {
-      }, timesheetsURL),
-    ]).catch((error) => setFetchError(error.message)).finally(() => setIsLoading(false));
+        () => {},
+        projectsURL
+      ),
+      apiRequest(
+        'GET',
+        {},
+        (response) => {
+          const transformedEntries = response.data.map((entry) =>
+            transformTimesheetEntry(entry, response.included)
+          );
+          setPrevEntries(transformedEntries);
+          if (transformedEntries.length === 0) {
+            handleAddRow();
+          }
+        },
+        () => {},
+        timesheetsURL
+      ),
+    ])
+      .catch((error) => setFetchError(error.message))
+      .finally(() => setIsLoading(false));
   }, []);
-
-  const calculateBillableHours = (rows) => {
-    return rows.reduce((total, row) => {
-      const project = projects.find(
-        (p) => p.attributes.code === row.project_id
-      );
-      const hours = parseInt(row.time, 10) || 0;
-      return project?.attributes.usage === 'billable' ? total + hours : total;
-    }, 0);
-  };
 
   useEffect(() => {
     const allRows = [...prevEntries, ...newRows];
-    const totalBillableHours = calculateBillableHours(allRows);
+    const totalBillableHours = calculateBillableHours(allRows, projects);
     if (totalBillableHours > 40) {
-      setBillableError('Billable projects may not exceed 40 hours in a work week.');
+      setBillableError(
+        'Billable projects may not exceed 40 hours in a work week'
+      );
     } else {
       setBillableError(null);
     }
   }, [prevEntries, newRows, projects]);
 
   const submitTimesheetEntries = async ({
-                                          newRows,
-                                          prevEntries,
-                                          projects,
-                                          timesheetsURL,
-                                          setIsLoading,
-                                          setFetchError,
-                                          setNewRows,
-                                          setPrevEntries,
-                                          steps,
-                                          saveDataToDb,
-                                          isDraft = false,
-                                          onSuccess = () => {
-                                          },
-                                        }) => {
+    newRows,
+    prevEntries,
+    projects,
+    timesheetsURL,
+    setIsLoading,
+    setFetchError,
+    setNewRows,
+    setPrevEntries,
+    steps,
+    saveDataToDb,
+    isDraft = false,
+    onSuccess = () => {},
+  }) => {
     setIsLoading(true);
     try {
       const newEntries = newRows.map((row) => {
         const project = projects.find(
-          (p) => p.attributes.code === row.project_id,
+          (p) => p.attributes.code === row.project_id
         );
         return {
           project_id: project?.id,
@@ -106,7 +106,7 @@ const TimesheetPage = ({
 
       const updatedEntries = prevEntries.map((row) => {
         const project = projects.find(
-          (p) => p.attributes.code === row.project_id,
+          (p) => p.attributes.code === row.project_id
         );
         return {
           id: row.id,
@@ -122,25 +122,15 @@ const TimesheetPage = ({
           { time_sheet_entries: newEntries },
           (response) => {
             if (isDraft) {
-              const savedEntries = response.data.map((entry) => {
-                const project = projects.find(
-                  (p) => p.id === entry.relationships.project.data.id,
-                );
-                return {
-                  id: entry.id,
-                  company: project?.attributes.company || '',
-                  project_id: project?.attributes.code || '',
-                  project_name: project?.attributes.name || '',
-                  time: entry.attributes.total_hours.toString(),
-                };
-              });
+              const savedEntries = response.data.map((entry) =>
+                transformTimesheetEntry(entry, projects)
+              );
               setPrevEntries((prev) => [...prev, ...savedEntries]);
               setNewRows([]);
             }
           },
-          () => {
-          },
-          timesheetsURL,
+          () => {},
+          timesheetsURL
         );
       }
 
@@ -156,13 +146,11 @@ const TimesheetPage = ({
                   draft: entry.draft,
                 },
               },
-              () => {
-              },
-              () => {
-              },
-              `${timesheetsURL}/${entry.id}`,
-            ),
-          ),
+              () => {},
+              () => {},
+              `${timesheetsURL}/${entry.id}`
+            )
+          )
         );
       }
 
@@ -179,7 +167,7 @@ const TimesheetPage = ({
       setFetchError(
         isDraft
           ? 'Failed to save draft.'
-          : 'Failed to submit timesheet entries.',
+          : 'Failed to submit timesheet entries.'
       );
     } finally {
       setIsLoading(false);
@@ -250,15 +238,15 @@ const TimesheetPage = ({
         'DELETE',
         {},
         () => {
-          setPrevEntries(
-            (prevEntries) => prevEntries.filter((row) => row.id !== id));
+          setPrevEntries((prevEntries) =>
+            prevEntries.filter((row) => row.id !== id)
+          );
         },
-        () => {
-        },
+        () => {},
         `${timesheetsURL}/${id}`,
         (error) => {
           setFetchError(`Failed to delete timesheet entry: ${error.message}`);
-        },
+        }
       );
     } catch (error) {
       setFetchError('An unexpected error occurred. Please try again.');
@@ -267,17 +255,13 @@ const TimesheetPage = ({
     }
   };
 
-  const updateRowData = (rows, setRows, id, updates) => {
-    setRows(rows.map((row) => (row.id === id ? { ...row, ...updates } : row)));
-  };
-
   const handleChangeRowData = (id, updates) => {
     const isNewRow = newRows.some((row) => row.id === id);
     if (isDraft) setIsDraft(false);
     if (isNewRow) {
-      updateRowData(newRows, setNewRows, id, updates);
+      setNewRows(updateRowData(newRows, id, updates));
     } else {
-      updateRowData(prevEntries, setPrevEntries, id, updates);
+      setPrevEntries(updateRowData(prevEntries, id, updates));
     }
   };
 
@@ -298,15 +282,12 @@ const TimesheetPage = ({
       handleSaveDraft={handleSaveDraft}
     >
       <div className="container-fluid mb-1 mb-md-0">
-        <div
-          className="row flex-column justify-content-center align-items-center">
+        <div className="row flex-column justify-content-center align-items-center">
           <div className="col-12 text-center ">
             <h1 className="my-1 my-md-0">Your Timesheet</h1>
           </div>
-          <div
-            className="timesheet-form-container row justify-content-center mx-auto">
-            <div
-              className="d-flex flex-column align-content-center align-content-sm-start mb-2">
+          <div className="timesheet-form-container row justify-content-center mx-auto">
+            <div className="d-flex flex-column align-content-center align-content-sm-start mb-2">
               <p className="mx-auto">Week of: </p>
               <Calendar date={timesheet_date} />
             </div>
@@ -324,14 +305,14 @@ const TimesheetPage = ({
                 ))}
               </div>
             </div>
-            <div style={{ height: '20px' }} className='text-primary'>
+            <div style={{ height: '20px' }} className="text-primary">
               {allRows.length > 0 && !isValid ? (
-              <p>Please fill out all fields</p>
-            ) : billableError ? (
-              <p>{billableError}</p>
-            ) : null}
+                <p>Please fill out all fields</p>
+              ) : billableError ? (
+                <p>{billableError}</p>
+              ) : null}
             </div>
-            
+
             <BtnAddNewRow onClick={handleAddRow} disabled={!canAddNewRow} />
           </div>
         </div>
