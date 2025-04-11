@@ -28,7 +28,7 @@
                     <% entries.each do |entry| %>
                       <table width="100%">
                         <tr>
-                          <td style="width: 30%;"><%= entry.user.first_name %> <%= entry.user.last_name %>:</td>
+                          <td style="width: 30%;"><%= entry.user.full_name %>:</td>
                           <td style="width: 70%;"><%= entry.total_hours %> hours</td>
                         </tr>
                       </table>

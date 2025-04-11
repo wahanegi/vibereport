@@ -1,6 +1,9 @@
 class Importers::TeamCsvImporter
-  DEFAULT_OPTIONS = { header_transformations: [:downcase], col_sep: ',', row_sep: :auto }.freeze
-  MIME_TYPE_CSV = 'text/csv'
+  DEFAULT_OPTIONS = {
+    header_transformations: [:downcase],
+    col_sep: ',',
+    row_sep: :auto
+  }.freeze
 
   def initialize(file_param, options = {})
     @mime_type = file_param&.content_type
@@ -45,6 +48,6 @@ class Importers::TeamCsvImporter
   end
 
   def missing_or_invalid_type?
-    @file.nil? || @mime_type != MIME_TYPE_CSV
+    @file.nil? || @mime_type != Mime[:csv]
   end
 end
