@@ -140,10 +140,10 @@ const IcebreakerQuestion = ({
               Interested in submitting your own question to the team?
             </h1>
           </div>
-          <div className="mb-5">
+          <div className="mb-4">
             <div
               className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
-              <p className="fs-8 fs-md-7 text-gray-600">
+              <p className="fs-8 fs-md-7 text-gray-600 lh-lg">
                 <span className="fs-8 fs-md-7 text-primary">@</span>
                 {userName} asks:
               </p>
