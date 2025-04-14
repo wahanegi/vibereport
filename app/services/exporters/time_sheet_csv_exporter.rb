@@ -14,7 +14,7 @@ class Exporters::TimeSheetCsvExporter
 
       @time_sheets.each do |project, time_sheets|
         time_sheets.each do |time_sheet|
-          csv << [project.code, project.name, time_sheet.total_hours]
+          csv << [project.code, time_sheet.user.full_name, time_sheet.total_hours]
         end
       end
     end

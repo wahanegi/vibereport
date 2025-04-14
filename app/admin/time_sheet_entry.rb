@@ -3,7 +3,7 @@ ActiveAdmin.register TimeSheetEntry do
 
   csv do
     column('Project Code') { |time_sheet_entry| time_sheet_entry.project.code }
-    column('Name') { |time_sheet_entry| time_sheet_entry.project.name }
+    column('Name') { |time_sheet_entry| time_sheet_entry.user.full_name }
     column('Hours') { |time_sheet_entry| time_sheet_entry.total_hours }
   end
 
