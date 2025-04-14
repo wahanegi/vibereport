@@ -34,22 +34,42 @@ ActiveAdmin.register TimePeriod do
     columns do
       column do
         panel 'Participation by Team' do
-          teams = Team.includes(users: { responses: :time_period })
-          table_for teams do
-            column('Team') { |team| team.name }
-            column('Percentage') do |team|
-              total_users = team.users.count
-              if total_users.zero?
-                'N/A'
-              else
-                users_with_responses = team.users
-                                           .left_joins(:responses)
-                                           .where(responses: { time_period_id: time_period.id })
-                                           .distinct
-                                           .count
-                participation_percentage = (users_with_responses / total_users.to_f * 100).round
-                "#{participation_percentage}%"
-              end
+          teams_with_participation = Team
+                                     .includes(users: { responses: :time_period })
+                                     .map do |team|
+            total_users = team.users.count
+
+            # If there are no users in the team, we can't compute participation
+            if total_users.zero?
+              percentage = nil
+            else
+              # Count users who submitted a response for the given time_period
+              users_with_responses = team.users
+                                         .left_joins(:responses)
+                                         .where(responses: { time_period_id: time_period.id })
+                                         .distinct
+                                         .count
+
+              percentage = (users_with_responses / total_users.to_f * 100).round
+            end
+
+            # Store the team and its participation percentage in a hash
+            { team: team, percentage: percentage }
+          end
+
+          # Sort the results by participation percentage, descending
+          # Teams with `nil` percentage (e.g. no users) are placed at the bottom
+          sorted_teams = teams_with_participation.sort_by do |entry|
+            entry[:percentage] ? -entry[:percentage] : Float::INFINITY
+          end
+
+          # Render the sorted results in a table
+          table_for sorted_teams do
+            column('Team') { |entry| entry[:team].name }
+
+            column('Percentage') do |entry|
+              # Show the percentage if available, otherwise show 'N/A'
+              entry[:percentage] ? "#{entry[:percentage]}%" : 'N/A'
             end
           end
         end
