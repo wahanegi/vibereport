@@ -26,8 +26,34 @@ ActiveAdmin.register TimePeriod do
     f.actions
   end
 
-  show do
+  show title: lambda { |time_period|
+    "#{time_period.first_working_day.strftime('%b %e')}
+    - #{time_period.last_working_day.strftime('%b %e')},
+    #{time_period.last_working_day.strftime('%Y')}"
+  } do
     columns do
+      column do
+        panel 'Participation by Team' do
+          teams = Team.includes(users: { responses: :time_period })
+          table_for teams do
+            column('Team') { |team| team.name }
+            column('Percentage') do |team|
+              total_users = team.users.count
+              if total_users.zero?
+                'N/A'
+              else
+                users_with_responses = team.users
+                                           .left_joins(:responses)
+                                           .where(responses: { time_period_id: time_period.id })
+                                           .distinct
+                                           .count
+                participation_percentage = (users_with_responses / total_users.to_f * 100).round
+                "#{participation_percentage}%"
+              end
+            end
+          end
+        end
+      end
       column do
         panel 'Productivity Verbatims' do
           responses_with_comment = time_period.responses.select { |response| response.comment.present? }
