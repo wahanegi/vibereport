@@ -90,6 +90,7 @@ function ListEmotions({
     steps.push('rather-not-say');
     saveDataToDb(steps, {
       emotion_id: '',
+      gif: {},
       completed_at: null,
       time_period_id: timePeriod.id,
       user_id: data.current_user.id,
