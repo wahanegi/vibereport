@@ -12,8 +12,10 @@ class Exporters::TimeSheetCsvExporter
     CSV.generate(**@options) do |csv|
       csv << HEADERS
 
-      @time_sheets.each do |time_sheet|
-        csv << [time_sheet.project.code, time_sheet.project.name, time_sheet.total_hours]
+      @time_sheets.each do |project, time_sheets|
+        time_sheets.each do |time_sheet|
+          csv << [project.code, project.name, time_sheet.total_hours]
+        end
       end
     end
   end
