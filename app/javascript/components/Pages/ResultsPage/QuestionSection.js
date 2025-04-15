@@ -63,7 +63,7 @@ const Question = ({userName, fun_question}) => {
 
   return <div className='row wrap question mb-1 mw-100'>
     {
-      userName && <p className='b3 muted text-start fs-8 fs-md-7'><span className='color-rose'>@</span>{userName} asks:<br/></p>
+      userName && <p className='b3 muted text-start fs-7 fs-md-6'><span className='color-rose'>@</span>{userName} asks:<br/></p>
     }
     <p className='fs-7 fs-md-6 w-auto text-start fw-semibold mt-1'> {fun_question.question_body}</p>
   </div>
