@@ -54,7 +54,16 @@ ActiveAdmin.register TimeSheetEntry do
 
   controller do
     def scoped_collection
-      super.includes :time_period
+      super.includes(:time_period, :project, :user)
+    end
+
+    def csv_filename
+      return 'Timesheet Entries.csv' if @time_sheet_entries.empty?
+
+      time_periods = @time_sheet_entries.group_by(&:time_period).keys
+      formatted_time_periods = time_periods.map { |tp| "#{tp.date_range_str} #{tp.start_date.year}" }.join(', ')
+
+      "Timesheet Entries #{formatted_time_periods}.csv"
     end
   end
 end
