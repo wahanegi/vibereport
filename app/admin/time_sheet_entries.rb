@@ -1,6 +1,8 @@
 ActiveAdmin.register TimeSheetEntry do
   permit_params :user_id, :project_id, :time_period_id, :total_hours
 
+  config.sort_order = ''
+
   csv do
     column('Project Code') { |time_sheet_entry| time_sheet_entry.project.code }
     column('Name') { |time_sheet_entry| time_sheet_entry.user.full_name }
@@ -13,8 +15,8 @@ ActiveAdmin.register TimeSheetEntry do
     column('Week of', :time_period, sortable: 'time_periods.start_date') do |time_sheet_entry|
       time_sheet_entry.time_period.date_range_str
     end
-    column('Project code', :project, sortable: 'projects.code') { |time_sheet_entry| time_sheet_entry.project.code }
-    column 'Logged Hours', :total_hours, sortable: :total_hours
+    column('Project code', :project) { |time_sheet_entry| time_sheet_entry.project.code }
+    column 'Logged Hours', :total_hours
     column 'Person', :user
     actions
   end
@@ -54,16 +56,22 @@ ActiveAdmin.register TimeSheetEntry do
 
   controller do
     def scoped_collection
-      super.includes(:time_period, :project, :user)
+      super.joins(:time_period, :project, :user).order(project: { code: :desc }, total_hours: :desc)
     end
 
     def csv_filename
       return 'Timesheet Entries.csv' if @time_sheet_entries.empty?
 
-      time_periods = @time_sheet_entries.group_by(&:time_period).keys
-      formatted_time_periods = time_periods.map { |tp| "#{tp.date_range_str} #{tp.start_date.year}" }.join(', ')
+      time_periods = @time_sheet_entries.map(&:time_period).uniq
 
-      "Timesheet Entries #{formatted_time_periods}.csv"
+      formatted_period = if time_periods.size == 1
+                           period = time_periods.first
+                           "#{period.date_range_str} #{period.start_date.year}"
+                         else
+                           Time.zone.today.strftime('%d-%m-%Y')
+                         end
+
+      "Timesheet Entries #{formatted_period}.csv"
     end
   end
 end
