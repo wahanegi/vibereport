@@ -15,7 +15,7 @@ ActiveAdmin.register TimeSheetEntry do
     column('Week of', :time_period, sortable: 'time_periods.start_date') do |time_sheet_entry|
       time_sheet_entry.time_period.date_range_str
     end
-    column('Project code', :project) { |time_sheet_entry| time_sheet_entry.project.code }
+    column('Project code', :project, sortable: 'projects.code') { |time_sheet_entry| time_sheet_entry.project.code }
     column 'Logged Hours', :total_hours
     column 'Person', :user
     actions
@@ -56,7 +56,7 @@ ActiveAdmin.register TimeSheetEntry do
 
   controller do
     def scoped_collection
-      super.joins(:time_period, :project, :user).order(project: { code: :desc }, total_hours: :desc)
+      super.includes(:project, :user, :time_period).order(project: { code: :desc }, total_hours: :desc)
     end
 
     def csv_filename
