@@ -13,15 +13,15 @@ ActiveAdmin.register TimeSheetEntry do
     column('Week of', :time_period, sortable: 'time_periods.start_date') do |time_sheet_entry|
       time_sheet_entry.time_period.date_range_str
     end
-    column('Project code', :project) { |time_sheet_entry| time_sheet_entry.project.code }
-    column 'Logged Hours', :total_hours
+    column('Project code', :project, sortable: 'projects.code') { |time_sheet_entry| time_sheet_entry.project.code }
+    column 'Logged Hours', :total_hours, sortable: :total_hours
     column 'Person', :user
     actions
   end
 
-  filter :time_period, as: :select, label: 'Week of', collection: TimePeriod.select(:id, :start_date, :end_date).map { |time_period|
-    [time_period.date_range_str, time_period.id]
-  }
+  filter :time_period, as: :select, label: 'Week of', collection: TimePeriod.select(:id, :start_date, :end_date)
+                                                                            .ordered
+                                                                            .map { |tp| [tp.date_range_str, tp.id] }
   filter :project, as: :select, label: 'Project code', collection: Project.pluck(:code, :id)
   filter :user, as: :select, label: 'Person', collection: User.opt_in.select(:id, :first_name, :last_name).map { |user|
     [user.full_name, user.id]
