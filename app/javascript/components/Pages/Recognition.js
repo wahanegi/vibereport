@@ -80,7 +80,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
                 <div
                     className="position-absolute top-50 end-0 translate-middle-y d-flex">
                   <img id={shoutOut.id} src={edit_pencil} alt="pencil"
-                       className="pencil" onClick={editHandling}/>
+                       className="pointer" onClick={editHandling}/>
                   <span className="expand-link"
                         onMouseEnter={(e) =>
                             e.currentTarget.querySelector('.trash').
