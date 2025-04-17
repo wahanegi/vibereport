@@ -168,23 +168,23 @@ const IcebreakerAnswer = ({
               Time for a team question!</h1>
             <h2
               className={`${'text-black mb-0'} ${
-                !user && 'text-opacity-0 '
+                !user && 'd-none'
               }`}
             >
-              Brought to us by <span className="text-primary text-opacity-0">@</span>
+              Brought to us by <span className="text-primary">@</span>
               {user}
             </h2>
           </div>
-          <div className="mb-5">
+          <div className="mb-4">
             <div
               className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
               {user && (
-                <p className="fs-8 fs-md-7 text-gray-600">
+                <p className="fs-8 fs-md-7 text-gray-600 lh-lg">
                   <span className="fs-8 fs-md-7 text-primary">@</span>
                   {user} asks:
                 </p>
               )}
-              <div id="question" className='text-start fs-7 fs-md-6'>{question_body}</div>
+              <div id="question" className='text-start fs-7 fs-md-6 mb-1'>{question_body}</div>
               <div className="w-100">
                 <div className="icebreaker border border-3 rounded rounded-4 border-emerald">
                     <textarea
