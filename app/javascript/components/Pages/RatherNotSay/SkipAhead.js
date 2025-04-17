@@ -21,11 +21,14 @@ const RatherNotSay = ({
     </>
 
     const LogoutOrBack = () => {
-        const handleLogout = () => {
-            const id = data?.response?.id;
-            steps.push('emotion-selection-web');
-            saveDataToDb(steps, {draft: false});
-            signOutUser(id).then(() => (window.location.href = `/sign_in`));
+        const handleLogout = async () => {
+            try {
+                const id = data?.response?.id
+                await signOutUser(id);
+                window.location.href = '/users/sign_in';
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
         };
 
         const handleBack = () => {
