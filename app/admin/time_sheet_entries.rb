@@ -1,7 +1,7 @@
 ActiveAdmin.register TimeSheetEntry do
   permit_params :user_id, :project_id, :time_period_id, :total_hours
 
-  config.sort_order = ''
+  config.sort_order = '' # disable default sorting
 
   csv do
     column('Project Code') { |time_sheet_entry| time_sheet_entry.project.code }
