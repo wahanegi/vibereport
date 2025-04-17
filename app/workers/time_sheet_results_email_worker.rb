@@ -16,6 +16,9 @@ class TimeSheetResultsEmailWorker
   private
 
   def group_and_sort_entries(entries)
-    entries.group_by(&:project).sort_by { |project, _| project.code }
+    entries.group_by(&:project)
+           .sort_by { |project, _| project.code }
+           .to_h
+           .transform_values { |entries| entries.sort { |a, b| b.total_hours <=> a.total_hours } }
   end
 end

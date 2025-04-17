@@ -56,7 +56,7 @@ ActiveAdmin.register TimeSheetEntry do
 
   controller do
     def scoped_collection
-      super.includes(:project, :user, :time_period).order(project: { code: :desc }, total_hours: :desc)
+      super.includes(:project, :user, :time_period).order(project: { code: :asc }, total_hours: :desc)
     end
 
     def csv_filename
@@ -64,9 +64,8 @@ ActiveAdmin.register TimeSheetEntry do
 
       time_periods = @time_sheet_entries.map(&:time_period).uniq
 
-      formatted_period = if time_periods.size == 1
-                           period = time_periods.first
-                           "#{period.date_range_str} #{period.start_date.year}"
+      formatted_period = if time_periods.one?
+                           "#{time_periods.first.date_range_str} #{time_periods.first.start_date.year}"
                          else
                            Time.zone.today.strftime('%d-%m-%Y')
                          end
