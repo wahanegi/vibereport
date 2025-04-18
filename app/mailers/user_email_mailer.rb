@@ -3,7 +3,7 @@
 # Generate email letter CI-32
 class UserEmailMailer < ApplicationMailer
   include UserEmailMailerHelper
-  default from: "#{ENV.fetch('DEFAULT_FROM_ADDRESS')}@#{ENV.fetch('EMAIL_DOMAIN')}"
+
   NUMBER = Emotion::SHOW_NUMBER_PER_CATEGORY
   URL = { controller: 'api/v1/responses', action: 'response_flow_from_email' }.freeze
 

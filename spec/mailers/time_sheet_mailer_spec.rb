@@ -40,4 +40,13 @@ RSpec.describe TimeSheetMailer, type: :mailer do
   it 'contains the timesheet document link' do
     expect(mail.body.encoded).to include('https://docs.google.com/spreadsheets/d/example')
   end
+
+  it 'includes the CSV attachment with correct content' do
+    file = mail.attachments.first
+    expected_csv_body = Exporters::TimeSheetCsvExporter.new(grouped_entries).call
+
+    expect(file.filename).to eq("Timesheet Entries #{time_period.date_range_str} #{time_period.start_date.year}.csv")
+    expect(file.content_type).to start_with('text/csv')
+    expect(file.body.raw_source.gsub("\r\n", "\n")).to eq(expected_csv_body)
+  end
 end

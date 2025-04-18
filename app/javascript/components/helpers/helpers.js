@@ -162,6 +162,7 @@ export const validateRow = (row) => {
       Number(row.time) > 0
     );
   };
+
 export const calculateWordCount = (text) => {
   return text
     .replace(/<span[^>]*>@[^<]*<\/span>/g, '')
@@ -177,4 +178,29 @@ export const reformatDate = (date) => {
     let dt = new Date(date);
     let options = {day: '2-digit', month: 'short', year: 'numeric'};
     return new Intl.DateTimeFormat('en-GB', options).format(dt);
+};
+  
+export const calculateBillableHours = (rows, projects) => {
+  return rows.reduce((total, row) => {
+    const project = projects.find((p) => p.attributes.code === row.project_id);
+    const hours = parseInt(row.time, 10) || 0;
+    return project?.attributes.usage === 'billable' ? total + hours : total;
+  }, 0);
+};
+
+export const transformTimesheetEntry = (entry, includedProjects) => {
+  const project = includedProjects.find(
+    (inc) => inc.id === entry.relationships.project.data.id
+  );
+  return {
+    id: entry.id,
+    company: project?.attributes.company || '',
+    project_id: project?.attributes.code || '',
+    project_name: project?.attributes.name || '',
+    time: entry.attributes.total_hours.toString(),
+  };
+};
+
+export const updateRowData = (rows, id, updates) => {
+  return rows.map((row) => (row.id === id ? { ...row, ...updates } : row));
 };

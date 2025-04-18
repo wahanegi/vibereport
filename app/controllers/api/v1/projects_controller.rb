@@ -30,7 +30,7 @@ class Api::V1::ProjectsController < ApplicationController
   private
 
   def project_params
-    params.permit(projects: %i[company code name])
+    params.permit(projects: %i[company code name usage])
   end
 
   def find_duplicates_codes(incoming_codes)
@@ -46,7 +46,7 @@ class Api::V1::ProjectsController < ApplicationController
       projects_data.each do |project_data|
         project = Project.find_or_initialize_by(code: project_data['code'])
         project.restore if project.deleted?
-        unless project.update(company: project_data['company'], name: project_data['name'])
+        unless project.update(company: project_data['company'], name: project_data['name'], usage: project_data['usage'])
           errors << "Please fill in all fields for project #{project_data['code']}: #{project.errors.full_messages.join(', ')}"
           raise ActiveRecord::Rollback
         end
