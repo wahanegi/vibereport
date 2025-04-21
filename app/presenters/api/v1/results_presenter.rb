@@ -187,16 +187,16 @@ class Api::V1::ResultsPresenter
 
   def sent_shoutouts
     users = User.select(:id, :first_name, :last_name).to_a
-    mentions = Hash.new(0)
+    mentions_count = Hash.new(0)
 
     time_period.shoutouts.select(:rich_text).each do |shoutout|
       users.each do |user|
-        mentions[user] += 1 if shoutout.rich_text.include?("@#{user.full_name}")
+        mentions_count[user] += 1 if shoutout.rich_text.include?("@#{user.full_name}")
       end
     end
 
-    mentions.map { |user, count| { recipient: user, count: } }
-            .sort_by { |hash| -hash[:count] }
+    mentions_count.map { |user, count| { recipient: user, count: } }
+                  .sort_by { |hash| -hash[:count] }
   end
 
   def received_shoutouts
