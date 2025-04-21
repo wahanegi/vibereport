@@ -115,6 +115,14 @@
   color: $gray-600;
 }
 
+/* Set color to transparent to prevent duplicated text display
+* when the customer deletes characters after selecting an option
+* from the select list in the rbt-input
+* This is a known issue with the Typeahead component in version 6.4.1. */
+.rbt-input-hint {
+  color: transparent !important;
+}
+
 // Dropdown list
 .rbt-menu {
   position: absolute !important;
