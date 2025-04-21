@@ -28,7 +28,7 @@ const DropdownSelect = ({
             autoCorrect: 'off',
             spellCheck: 'false',
             inputMode: 'text',
-            name: `${id}-${Date.now()}` // unique name to avoid cache in the browser
+            name: `${id}-${Date.now()}` //unique name to avoid cache in the browser
         }}
       />
     </div>
