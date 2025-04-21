@@ -17,7 +17,7 @@ const DropdownSelect = ({
       <Typeahead
         id={id}
         options={options}
-        defaultSelected={selected ? [selected] : []}
+        selected={selected ? [selected] : []}
         onChange={(selected) => onChange(selected[0] || null)}
         placeholder={placeholder}
         disabled={disabled}
