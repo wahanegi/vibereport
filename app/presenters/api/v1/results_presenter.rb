@@ -186,15 +186,17 @@ class Api::V1::ResultsPresenter
   end
 
   def sent_shoutouts
-    sent_shoutouts = users.filter_map do |user|
-      if user.mentions.where(time_period_id: time_period.id).any?
-        {
-          recipient: user,
-          count: user.mentions.where(time_period_id: time_period.id).size
-        }
+    users = User.select(:id, :first_name, :last_name).to_a
+    mentions_count = Hash.new(0)
+
+    time_period.shoutouts.select(:rich_text).each do |shoutout|
+      users.each do |user|
+        mentions_count[user] += 1 if shoutout.rich_text.include?("@#{user.full_name}")
       end
     end
-    sent_shoutouts.sort_by { |hash| -hash[:count] }.uniq
+
+    mentions_count.map { |user, count| { recipient: user, count: } }
+                  .sort_by { |hash| -hash[:count] }
   end
 
   def received_shoutouts
