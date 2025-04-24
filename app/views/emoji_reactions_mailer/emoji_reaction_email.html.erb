@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Email letter</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @media only screen and (max-width: 600px) {
+        .stack-column {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        .center-text {
+          text-align: center !important;
+        }
+      }
+    </style>
+  </head>
+  <body style="margin: 0; padding: 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 750px; padding: 20px; margin: auto; background-color: #f2f2f2; font-family: 'Josefin Sans', 'Arial', 'Ubuntu', sans-serif;">
+      <tr>
+        <td class="stack-column" style="vertical-align: top; width: 130px; text-align: center;">
+          <div style="width: 115px; height: 105px; background-image: url('<%= image_url("calendar_days.png") %>'); background-repeat: no-repeat; background-size: contain; padding-top: 48px; text-align: center; font-size: 16px; line-height: 1.2; color: rgba(0, 0, 0, 0.7); text-transform: capitalize;">
+            <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&mdash;&mdash;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+          </div>
+        </td>
+        <td class="stack-column" style="text-align: center; vertical-align: middle;">
+          <div style="padding: 10px 0;">
+            <%= render 'layouts/logo', height: 61 %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding: 20px 0 10px 0; font-size: 18px; font-weight: bold;">
+          Hi <%= @author.full_name %>,
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding-bottom: 20px;">
+          <% @messages.each do |message| %>
+            <p style="margin: 0 0 10px 0;"><%= message %></p>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding: 20px 0; text-align: center;">
+          <a href="<%= @url %>" style="color: #5689eb; text-decoration: underline;">Click here to view on Vibereport</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
