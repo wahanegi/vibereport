@@ -3,7 +3,7 @@ class EmojiReactionsMailer < ApplicationMailer
     @time_period = time_period
     @author = author
     @messages = messages
-    @url = ENV.fetch('DOMAIN_URL', nil)
+    @url = "https://#{ENV.fetch('DOMAIN_URL')}"
 
     mail(to: @author.email, subject: random_emoji_reaction_subject)
   end

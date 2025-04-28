@@ -7,7 +7,7 @@ RSpec.describe EmojiReactionsMailer, type: :mailer do
   let(:time_period) { create :time_period }
 
   before do
-    allow(ENV).to receive(:fetch).with('DOMAIN_URL', nil).and_return(url)
+    allow(ENV).to receive(:fetch).with('DOMAIN_URL').and_return(url)
   end
 
   describe 'emoji_reaction_email' do
