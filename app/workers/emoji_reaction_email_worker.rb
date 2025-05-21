@@ -60,6 +60,7 @@ class EmojiReactionEmailWorker
 
   def extract_reactor_names(reactions)
     reactions.filter_map { |r| r.user&.full_name }
+             .uniq
              .to_sentence
   end
 end
