@@ -11,7 +11,6 @@ import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
-import TimesheetRowHeader from '../UI/TimesheetRowHeader';
 
 const TimesheetPage = ({
   data,
@@ -291,9 +290,7 @@ const TimesheetPage = ({
               <p className="mx-auto">Week of: </p>
               <Calendar date={timesheet_date} />
             </div>
-            <div className="px-7">
-              <TimesheetRowHeader />
-              <div className="d-flex gap-3 mb-1">
+              <div className="d-flex gap-1 mb-1 px-7">
                 {allRows.map((row) => (
                   <TimesheetRow
                     key={row.id}
@@ -304,7 +301,6 @@ const TimesheetPage = ({
                   />
                 ))}
               </div>
-            </div>
             <div style={{ height: '20px' }} className="text-primary">
               {allRows.length > 0 && !isValid ? (
                 <p>Please fill out all fields</p>
