@@ -23,30 +23,60 @@ const TimesheetRow = ({
   );
   const optionsProjectNames = [...new Set(filteredDataForProjectName.map(project => project.attributes.name))];
 
-  const updateProjectByKey = (searchKey, value, fieldName) => {
-    const project = projects.find(project => project.attributes[searchKey] === value);
-    if (project) {
+  const updateRowFromField = (fieldKey, value) => {
+    // If field was cleared
+    if (!value) {
+      const reset = {
+        company: { project_id: null, project_name: null },
+        project_id: { project_id: null, project_name: null },
+        project_name: { project_name: null, project_id: null },
+      };
+
+      onChangeRowData(row.id, {
+        [fieldKey]: null,
+        ...(reset[fieldKey] || {}),
+      });
+      return;
+    }
+    
+    // If field was changed
+    let matchingProjects = [];
+
+    switch (fieldKey) {
+      case 'company':
+        matchingProjects = projects.filter((p) => p.attributes.company === value);
+        break;
+      case 'project_id':
+        matchingProjects = projects.filter((p) => p.attributes.code === value);
+        break;
+      case 'project_name':
+        matchingProjects = projects.filter((p) => p.attributes.name === value && (!row.company || p.attributes.company === row.company));
+        break;
+      default:
+        return;
+    }
+
+    if (matchingProjects.length === 1) {
+      const project = matchingProjects[0];
       onChangeRowData(row.id, {
         company: project.attributes.company,
         project_id: project.attributes.code,
         project_name: project.attributes.name
       });
     } else {
-      onChangeRowData(row.id, {[fieldName]: value});
+      const fieldMapping = {
+        company: 'company',
+        project_id: 'project_id',
+        project_name: 'project_name',
+      };
+      onChangeRowData(row.id, {[fieldMapping[fieldKey]]: value, ...reset[fieldKey]});
     }
   };
 
-  const handleCompanyChange = (value) => {
-    onChangeRowData(row.id, {
-      company: value,
-    });
-  };
-  const handleProjectIdChange = (value) => {
-    updateProjectByKey("code", value, "project_id");
-  };
-  const handleProjectNameChange = (value) => {
-    onChangeRowData(row.id, {project_name: value});
-  };
+const handleCompanyChange = (value) => updateRowFromField('company', value);
+const handleProjectIdChange = (value) => updateRowFromField('project_id', value);
+const handleProjectNameChange = (value) => updateRowFromField('project_name', value);
+
   const handleTimeChange = (event) => {
     const value = event.target.value;
     if (value === '' || (/^[1-9]\d*$/.test(value) && parseInt(value, 10) > 0)) {
