@@ -78,30 +78,32 @@ const TimesheetRow = ({ row, onDelete, onChangeRowData, projects }) => {
   const optionsProjectNames = getOptionsProjectNames(row.company);
 
   return (
-    <div className="d-flex gap-1 flex-nowrap w-100 flex-column flex-md-row">
-      <DropdownSelect
-        id="company_name"
-        options={optionsCompanyNames}
-        selected={row.company}
-        onChange={handleCompanyChange}
-        placeholder="Company"
-        className="select-company"
-      />
-      <DropdownSelect
-        id="project_name"
-        options={optionsProjectNames}
-        selected={row.project_name}
-        onChange={handleProjectNameChange}
-        placeholder="Project"
-        className="select-project-name"
-      />
-      <input
-        type="text"
-        value={row.time}
-        onChange={handleTimeChange}
-        placeholder="Hours"
-        className="timesheet-row-input-time select-time text-ellipsis w-100 border-royal-blue border-4 border outline-focus-none text-center shadow-none fw-normal text-gray-700"
-      />
+    <div className="d-flex gap-1 flex-nowrap w-100 flex-row">
+      <div className="d-flex gap-1 flex-nowrap w-100 flex-column flex-md-row">
+        <DropdownSelect
+          id="company_name"
+          options={optionsCompanyNames}
+          selected={row.company}
+          onChange={handleCompanyChange}
+          placeholder="Company"
+          className="select-company"
+        />
+        <DropdownSelect
+          id="project_name"
+          options={optionsProjectNames}
+          selected={row.project_name}
+          onChange={handleProjectNameChange}
+          placeholder="Project"
+          className="select-project-name"
+        />
+        <input
+          type="text"
+          value={row.time}
+          onChange={handleTimeChange}
+          placeholder="Hours"
+          className="timesheet-row-input-time select-time text-ellipsis w-100 border-royal-blue border-4 border outline-focus-none text-center shadow-none fw-normal text-gray-700"
+        />
+      </div>
       <button className="border-0 bg-white" onClick={() => onDelete(row.id)}>
         <img src={deleteIcon} alt="Delete icon" className="img-fluid" />
       </button>

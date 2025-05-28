@@ -134,7 +134,7 @@ export const BtnBack = ({
 
 export const BtnAddNewRow = ({ onClick, disabled }) =>
   <div
-    className={'d-flex justify-content-center justify-content-sm-end mb-2 pe-sm-7'}>
+    className={'d-flex justify-content-center justify-content-sm-end mb-2 pe-sm-1'}>
     <Button className="btn btn-regular c1 fs-5 shadow-none text-white border"
             children={'+ New Entry'}
             onClick={onClick}

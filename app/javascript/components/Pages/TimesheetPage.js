@@ -165,7 +165,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
               <p className="mx-auto">Week of: </p>
               <Calendar date={timesheetDate} />
             </div>
-            <div className="d-flex gap-1 mb-1 px-7">
+            <div className="d-flex gap-7 gap-md-1 mb-1 ps-sm-7 justify-content-between">
               {rowsData.map((row) => (
                 <TimesheetRow
                   key={row.id}
