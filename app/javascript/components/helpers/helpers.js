@@ -182,22 +182,22 @@ export const reformatDate = (date) => {
   
 export const calculateBillableHours = (rows, projects) => {
   return rows.reduce((total, row) => {
-    const project = projects.find((p) => p.attributes.code === row.project_id);
+    const project = projects.find((p) => p.id === row.project_id);
     const hours = parseInt(row.time, 10) || 0;
     return project?.attributes.usage === 'billable' ? total + hours : total;
   }, 0);
 };
 
-export const transformTimesheetEntry = (entry, includedProjects) => {
-  const project = includedProjects.find(
-    (inc) => inc.id === entry.relationships.project.data.id
-  );
+export const transformTimesheetEntry = (entry, includedProjects = []) => {
+  const projectId = entry.relationships?.project?.data?.id;
+  const project = includedProjects.find((p) => p.id === projectId);
+
   return {
     id: entry.id,
     company: project?.attributes.company || '',
-    project_id: project?.attributes.code || '',
-    project_name: project?.attributes.name || '',
-    time: entry.attributes.total_hours.toString(),
+    project_id: projectId || '',
+    project_name: project?.attributes.name_with_code || '',
+    time: entry.attributes.total_hours?.toString() || '',
   };
 };
 

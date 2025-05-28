@@ -213,8 +213,8 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
   end
 
   describe 'GET /api/v1/projects' do
-    let!(:project1) { create(:project, code: '2025-XYZ-02') }
-    let!(:project2) { create(:project, code: '2020-ABC-02') }
+    let!(:project1) { create(:project, name: 'XYZ Test Project') }
+    let!(:project2) { create(:project, name: 'ABC Test Project') }
     let(:json_response) { response.parsed_body }
 
     before { get '/api/v1/projects' }
@@ -233,12 +233,12 @@ RSpec.describe Api::V1::ProjectsController, type: :request do
       expect(json_response['data'][0]['type']).to eq('project')
     end
 
-    it 'returns a list of projects sorted by code' do
-      expect(json_response['data'][0]['attributes']['code']).to eq('2020-ABC-02')
-      expect(json_response['data'][1]['attributes']['code']).to eq('2025-XYZ-02')
+    it 'returns a list of projects sorted by name' do
+      expect(json_response['data'][0]['attributes']['name']).to eq('ABC Test Project')
+      expect(json_response['data'][1]['attributes']['name']).to eq('XYZ Test Project')
 
-      expect(json_response['data'][0]['attributes']['name']).to eq(project2.name)
-      expect(json_response['data'][1]['attributes']['name']).to eq(project1.name)
+      expect(json_response['data'][0]['attributes']['code']).to eq(project2.code)
+      expect(json_response['data'][1]['attributes']['code']).to eq(project1.code)
 
       expect(json_response['data'][0]['attributes']['company']).to eq(project2.company)
       expect(json_response['data'][1]['attributes']['company']).to eq(project1.company)

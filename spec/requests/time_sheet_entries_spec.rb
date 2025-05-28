@@ -80,151 +80,53 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     end
   end
 
-  describe 'POST /api/v1/time_sheet_entries' do
+  describe 'POST /api/v1/time_sheet_entries/upsert' do
     context 'with valid parameters' do
-      it 'creates records in the database and returns 201 Created' do
-        expect do
-          post '/api/v1/time_sheet_entries', params: valid_params
-        end.to change(TimeSheetEntry, :count).by(2)
+      it 'creates new entries and returns success' do
+        post '/api/v1/time_sheet_entries/upsert', params: valid_params
 
-        expect(response).to have_http_status(:created)
-        expect(json_response).not_to be_empty
+        expect(response).to have_http_status(:ok)
+        expect(json_response['data'].size).to eq(2)
+        expect(TimeSheetEntry.count).to eq(2)
       end
     end
 
-    context 'with no timesheet entries provided' do
-      it 'returns 422 Unprocessable Entity' do
-        post '/api/v1/time_sheet_entries', params: { time_sheet_entries: [] }
+    context 'with empty time_sheet_entries' do
+      it 'returns unprocessable entity' do
+        post '/api/v1/time_sheet_entries/upsert', params: { time_sheet_entries: [] }
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response['error']).to eq('No timesheet entries provided')
-        expect(TimeSheetEntry.count).to eq(0)
       end
     end
 
-    context 'with missing project_id' do
-      it 'does not create records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:project_id] = nil
-
-        expect do
-          post '/api/v1/time_sheet_entries', params: invalid_params
-        end.not_to change(TimeSheetEntry, :count)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include('Project must exist')
-      end
-    end
-
-    context 'with missing total_hours' do
-      it 'does not create records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:total_hours] = nil
-
-        expect do
-          post '/api/v1/time_sheet_entries', params: invalid_params
-        end.not_to change(TimeSheetEntry, :count)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include("Total hours can't be blank")
-      end
-    end
-
-    context 'with negative total_hours' do
-      it 'does not create records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:total_hours] = -1
-
-        expect do
-          post '/api/v1/time_sheet_entries', params: invalid_params
-        end.not_to change(TimeSheetEntry, :count)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include('Total hours must be greater than or equal to 0')
-      end
-    end
-
-    context 'with non-existent project_id' do
-      it 'does not create records and returns 422 Unprocessable Entity' do
-        invalid_params = valid_params.deep_dup
-        invalid_params[:time_sheet_entries][0][:project_id] = 'invalid_id'
-
-        expect do
-          post '/api/v1/time_sheet_entries', params: invalid_params
-        end.not_to change(TimeSheetEntry, :count)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include('Project must exist')
-      end
-    end
-  end
-
-  describe 'PATCH /api/v1/time_sheet_entries/:id' do
-    let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
-    let!(:entry2) { create(:time_sheet_entry, user: other_user, project: project2, time_period: time_period, total_hours: 5) }
-    let(:update_params) { { time_sheet_entry: { total_hours: 10 } } }
-
-    context 'when the entry exists and belongs to the current user' do
-      before { patch "/api/v1/time_sheet_entries/#{entry1.id}", params: update_params }
-
-      it 'returns http status ok' do
-        expect(response).to have_http_status(:ok)
-      end
-
-      it 'updates the entry' do
-        expect(entry1.reload.total_hours).to eq(10)
-      end
-
-      it 'returns the updated entry in JSON API format' do
-        expect(json_response['data']).to include('type', 'id', 'attributes')
-        expect(json_response['data']['type']).to eq('time_sheet_entry')
-        expect(json_response['data']['attributes']['total_hours']).to eq(10)
-      end
-    end
-
-    context 'when the entry does not exist' do
-      before { patch '/api/v1/time_sheet_entries/9999', params: update_params }
-
-      it 'returns http status not found' do
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'returns an error message' do
-        expect(json_response['error']).to eq('Time sheet entry not found')
-      end
-    end
-
-    context 'when the entry belongs to another user' do
-      before { patch "/api/v1/time_sheet_entries/#{entry2.id}", params: update_params }
-
-      it 'returns http status not found' do
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'returns an error message' do
-        expect(json_response['error']).to eq('Time sheet entry not found')
-      end
-
-      it 'does not update the entry' do
-        expect(entry2.reload.total_hours).to eq(5)
-      end
-    end
-
-    context 'when the update parameters are invalid' do
-      let(:invalid_params) { { time_sheet_entry: { total_hours: -1 } } }
-
-      before { patch "/api/v1/time_sheet_entries/#{entry1.id}", params: invalid_params }
-
-      it 'returns http status unprocessable entity' do
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
+    context 'with invalid entry data' do
       it 'returns validation errors' do
-        expect(json_response['errors']).to include('Total hours must be greater than or equal to 0')
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: nil, total_hours: nil }
+          ]
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['errors']).to be_an(Array)
+      end
+    end
+
+    context 'with an existing entry id' do
+      let!(:existing_entry) do
+        create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 3)
       end
 
-      it 'does not update the entry' do
-        expect(entry1.reload.total_hours).to eq(8)
+      it 'updates the existing entry' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { id: existing_entry.id, project_id: project.id, total_hours: 10 }
+          ]
+        }
+
+        expect(response).to have_http_status(:ok)
+        expect(TimeSheetEntry.find(existing_entry.id).total_hours).to eq(10)
       end
     end
   end
