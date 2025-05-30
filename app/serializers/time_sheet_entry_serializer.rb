@@ -27,4 +27,8 @@ class TimeSheetEntrySerializer
 
   attributes :user_id, :project_id, :time_period_id, :total_hours
   belongs_to :project
+
+  attribute :project_name_with_code do |object|
+    "#{object.project.name} | #{object.project.code}" if object.project
+  end
 end

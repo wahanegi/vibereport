@@ -21,11 +21,7 @@
 // end -----------------------
 
 /* Timesheet row styles */
-.timesheet-row {
-  border-radius: 20px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-
-  &-input-time {
+.timesheet-row-input-time{
     padding: 8px;
     border-radius: 20px;
     font-size: clamp(20px, 3vw, 24px) !important;
@@ -39,32 +35,17 @@
     }
   }
 
-  &-button-delete {
-    padding: 6px;
-    top: 0;
-    right: 0;
-    transform: translate(calc(27px - 2px), calc(-27px + 2px));
-
-    img {
-      filter: brightness(0) invert(0);
-    }
-  }
-}
 
 .select-company {
-  flex: 3 1 30%;
-}
-
-.select-project-id {
-  flex: 2 1 25%;
+  flex: 2 1 30%;
 }
 
 .select-project-name {
-  flex: 3 1 30%;
+  flex: 3 1 55%;
 }
 
 .select-time {
-  flex: 2 1 15%;
+  flex: 1 1 15%;
 }
 
 // end -----------------------
@@ -143,17 +124,20 @@
   border: 4px solid $royal-blue;
   border-radius: 0 0 20px 20px;
   border-top-color: transparent;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: auto;
-  max-height: 150px !important;
+  max-height: 331px !important;
 
   //scrollbar for dropdown-menu
   &::-webkit-scrollbar {
-    width: 0;
+    width: 15px;
     border-bottom-right-radius: inherit;
     border-bottom-left-radius: inherit;
     background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar-track {

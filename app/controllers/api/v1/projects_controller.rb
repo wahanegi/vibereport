@@ -2,7 +2,7 @@ class Api::V1::ProjectsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    projects = Project.active.order(:code)
+    projects = Project.active.order(:name)
     render json: ProjectSerializer.new(projects).serializable_hash.to_json
   rescue StandardError => e
     Rails.logger.error "Unexpected error in ProjectsController#index: #{e.message}"

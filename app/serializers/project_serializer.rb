@@ -19,4 +19,8 @@
 class ProjectSerializer
   include JSONAPI::Serializer
   attributes :company, :code, :name, :usage
+
+  attribute :name_with_code do |object|
+    "#{object.name} | #{object.code}"
+  end
 end
