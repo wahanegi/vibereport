@@ -59,7 +59,7 @@
 
 // Field input
 .dropdown-container .rbt-input {
-  padding: 8px 30px 8px 8px;
+  padding: 8px 42px 8px 8px;
   border: 4px solid $royal-blue;
   border-radius: 20px;
   box-shadow: none;
@@ -122,12 +122,11 @@
 .rbt-menu.dropdown-menu.show {
   padding: 15.5px 8px !important;
   border: 4px solid $royal-blue;
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 20px 20px;
   border-top-color: transparent;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: auto;
-  max-height: 350px !important;
+  max-height: 331px !important;
 
   //scrollbar for dropdown-menu
   &::-webkit-scrollbar {
@@ -135,6 +134,10 @@
     border-bottom-right-radius: inherit;
     border-bottom-left-radius: inherit;
     background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar-track {
@@ -165,12 +168,12 @@
   position: absolute;
   top: 50%;
   right: 10px;
-  border: 1px solid $gray-400;
+  border: 4px solid $gray-400;
   border-radius: 50%;
   background-color: $light-grey;
   color: $gray-400;
   transform: translateY(-50%);
-  background-size: 0.6em 0.6em;
+  background-size: 0.75em 0.75em;
 
   &:hover {
     color: $gray-500;
@@ -185,12 +188,6 @@
     width: 14px;
     height: 14px;
   }
-}
-
-.btn-close {
-  width: 0.8em;
-  height: 0.8em;
-  padding: 0.2em 0.2em;
 }
 
 .rbt-close-content {
