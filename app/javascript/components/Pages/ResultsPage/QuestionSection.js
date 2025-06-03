@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../../helpers/helpers";
 import {apiRequest, updateResponse} from "../../requests/axios_requests";
 import EmojiRow from "./Emojis/EmojiRow";
+import { userFullName } from "../../helpers/library";
 
 const PreviewQuestionSection = () =>
   <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
@@ -167,7 +168,7 @@ const AnswerItem = ({
         <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
       <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
-        <span className='color-rose'>@</span>{user.first_name} said:&nbsp;
+        <span className='color-rose'>@</span>{userFullName(user)} said:&nbsp;
         {
           edit ?
             <Form.Control as="textarea" rows={4}
@@ -192,7 +193,7 @@ const QuestionSection = ({
                          }) => {
   if (!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection/>
 
-  const userName = fun_question?.user?.first_name
+  const userName = userFullName(fun_question?.user)
   const [answersArray, setAnswersArray] = useState(answers || [])
 
   useEffect(() => {

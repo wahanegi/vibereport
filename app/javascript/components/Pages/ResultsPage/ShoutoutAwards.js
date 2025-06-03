@@ -1,9 +1,10 @@
+import React from "react";
 import Pluralize from "pluralize";
 import isEmpty from "ramda/src/isEmpty";
-import React, {Fragment} from "react";
 import cup from "../../../../assets/images/cup.svg";
 import {rangeFormat} from "../../helpers/helpers";
 import {BtnSendMoreShoutouts} from "../../UI/ShareContent";
+import { userFullName } from "../../helpers/library";
 
 const ShoutoutAwards = ({
                             timePeriod,
@@ -12,7 +13,6 @@ const ShoutoutAwards = ({
                             nextTimePeriod,
                             setShoutOutForm,
                             currentUserShoutouts,
-                            emptyShoutouts
                         }) => {
     const isEmptyReceivedShoutouts = isEmpty(receivedShoutouts)
     const isEmptySentShoutouts = isEmpty(sentShoutouts)
@@ -55,7 +55,7 @@ const ShoutoutAwards = ({
                         <div className='col px-0' hidden={isEmptyReceivedShoutouts}>
                             {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
-                                                      firstName={shoutout.sender.first_name}
+                                                      firstName={userFullName(shoutout.sender)}
                                                       count={shoutout.count}
                                                       gotOrSent="sent"/>
                             )}
@@ -63,7 +63,7 @@ const ShoutoutAwards = ({
                         <div className='col px-0' hidden={isEmptySentShoutouts}>
                             {sentShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
-                                                      firstName={shoutout.recipient.first_name}
+                                                      firstName={userFullName(shoutout.recipient)}
                                                       count={shoutout.count}
                                                       gotOrSent="got"/>
                             )}
