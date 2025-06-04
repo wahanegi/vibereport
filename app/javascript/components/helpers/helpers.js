@@ -73,7 +73,7 @@ function lastEl(arr) {
 
 export function insertSpanBeforeElements(users) {
     return users.map(function (user) {
-        return "<span class='color-rose'>@</span>" + userFullName(user);
+        return userFullName(user);
     });
 }
 
