@@ -85,7 +85,7 @@ class Api::V1::EmotionsController < ApplicationController
     {
       id: fun_question.id,
       user_id: fun_question.user&.id,
-      user_name: fun_question.user&.first_name,
+      user_name: fun_question.user&.full_name,
       question_body: fun_question.question_body,
       time_period_id: fun_question.time_period_id
     }

@@ -1,9 +1,10 @@
+import React from "react";
 import Pluralize from "pluralize";
 import isEmpty from "ramda/src/isEmpty";
-import React, {Fragment} from "react";
 import cup from "../../../../assets/images/cup.svg";
 import {rangeFormat} from "../../helpers/helpers";
 import {BtnSendMoreShoutouts} from "../../UI/ShareContent";
+import { userFullName } from "../../helpers/library";
 
 const ShoutoutAwards = ({
                             timePeriod,
@@ -12,7 +13,6 @@ const ShoutoutAwards = ({
                             nextTimePeriod,
                             setShoutOutForm,
                             currentUserShoutouts,
-                            emptyShoutouts
                         }) => {
     const isEmptyReceivedShoutouts = isEmpty(receivedShoutouts)
     const isEmptySentShoutouts = isEmpty(sentShoutouts)
@@ -29,8 +29,7 @@ const ShoutoutAwards = ({
 
     const ShoutoutCountDisplay = ({firstName, count, gotOrSent}) =>
         <p className='fw-semibold m-0 p-0 text-nowrap'>
-            <span className='color-rose'>@</span><span
-            className='fw-bold'>{firstName}</span> {gotOrSent} {count} {Pluralize('Shoutout', count)}&nbsp;
+            <span className='fw-bold'>{firstName}</span> {gotOrSent} {count} {Pluralize('Shoutout', count)}&nbsp;
         </p>
 
 
@@ -52,10 +51,10 @@ const ShoutoutAwards = ({
                 <div className="col-12 col-xxl-9 col-xl-8 col-lg-8 col-md-12 col-sm-12 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-2">
                     <h5 className='text-center fw-semibold' style={{marginBottom: '.8rem'}}>{timePeriodHeader}</h5>
                     <h5 className='text-center fw-semibold row px-0'>
-                        <div className='col px-0' hidden={isEmptyReceivedShoutouts}>
+                        <div className='col px-0 mb-1' hidden={isEmptyReceivedShoutouts}>
                             {receivedShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
-                                                      firstName={shoutout.sender.first_name}
+                                                      firstName={userFullName(shoutout.sender)}
                                                       count={shoutout.count}
                                                       gotOrSent="sent"/>
                             )}
@@ -63,7 +62,7 @@ const ShoutoutAwards = ({
                         <div className='col px-0' hidden={isEmptySentShoutouts}>
                             {sentShoutouts.slice(0, 2).map((shoutout, i) =>
                                 <ShoutoutCountDisplay key={i}
-                                                      firstName={shoutout.recipient.first_name}
+                                                      firstName={userFullName(shoutout.recipient)}
                                                       count={shoutout.count}
                                                       gotOrSent="got"/>
                             )}

@@ -1,5 +1,6 @@
 import React, {Fragment} from "react";
 import parse from 'html-react-parser'
+import { userFullName } from "./library";
 
 export const isEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
 
@@ -72,7 +73,7 @@ function lastEl(arr) {
 
 export function insertSpanBeforeElements(users) {
     return users.map(function (user) {
-        return "<span class='color-rose'>@</span>" + user.first_name;
+        return userFullName(user);
     });
 }
 
