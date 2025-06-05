@@ -21,7 +21,7 @@ const IcebreakerQuestion = ({
   const [funQuestion, setFunQuestion] = useState({});
   const prevQuestionBody = prevStateQuestion?.question_body;
   const funQuestionBody = funQuestion?.question_body;
-  const userName = data.current_user.first_name;
+  const userName = `${data.current_user.first_name} ${data.current_user.last_name}`;
   const [isDraft, setIsDraft] = useState(draft);
 
   const dataRequest = {
@@ -143,10 +143,7 @@ const IcebreakerQuestion = ({
           <div className="mb-4">
             <div
               className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
-              <p className="fs-8 fs-md-7 text-gray-600 lh-lg">
-                <span className="fs-8 fs-md-7 text-primary">@</span>
-                {userName} asks:
-              </p>
+              <p className="fs-8 fs-md-7 text-gray-600 lh-lg"> {userName} asks: </p>
               {loaded && (
                 <div className="w-100">
                   <div className="icebreaker border border-3 rounded rounded-4 border-emerald">

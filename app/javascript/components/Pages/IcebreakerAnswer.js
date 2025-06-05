@@ -171,18 +171,14 @@ const IcebreakerAnswer = ({
                 !user && 'd-none'
               }`}
             >
-              Brought to us by <span className="text-primary">@</span>
-              {user}
+              Brought to us by {user}
             </h2>
           </div>
           <div className="mb-4">
             <div
               className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
               {user && (
-                <p className="fs-8 fs-md-7 text-gray-600 lh-lg">
-                  <span className="fs-8 fs-md-7 text-primary">@</span>
-                  {user} asks:
-                </p>
+                <p className="fs-8 fs-md-7 text-gray-600 lh-lg"> {user} asks: </p>
               )}
               <div id="question" className='text-start fs-7 fs-md-6 mb-1'>{question_body}</div>
               <div className="w-100">
