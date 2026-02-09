@@ -26,9 +26,11 @@ class DailyOverdueTimesheetWorker
     false
   end
 
-  def send_emails!(missing_map)
-    missing_map.each do |user, missing_periods|
-      UserEmailMailer.daily_timesheet_reminder(user, missing_periods).deliver_later
+  def send_emails!(rows)
+    rows.each do |row|
+      UserEmailMailer
+        .daily_timesheet_reminder(row[:user], row[:missing_periods])
+        .deliver_now
     end
   end
 end
