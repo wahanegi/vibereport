@@ -5,7 +5,10 @@ class DailyOverdueTimesheetWorker
   def run
     return unless force_date_reached?
 
-    missing_map = TimeSheets::MissingEntriesFinder.new.call
+    missing_map = TimeSheets::MissingEntriesFinder.new(
+      time_periods: TimePeriod.overdue
+    ).call
+
     return if missing_map.blank?
 
     send_emails!(missing_map)
