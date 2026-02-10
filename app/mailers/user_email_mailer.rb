@@ -67,6 +67,7 @@ class UserEmailMailer < ApplicationMailer
   def daily_timesheet_reminder(user, missing_periods)
     @user = user
     @missing_periods = Array(missing_periods)
+    @intro_message = 'You are required to fill out your timesheet for past periods. Please complete it as soon as possible.'
 
     # TODO: Replace with a proper deep link to the timesheet entry UI once frontend routing is finalized.
     @timesheet_base_url = app_url
