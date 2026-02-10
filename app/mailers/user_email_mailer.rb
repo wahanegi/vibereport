@@ -71,7 +71,7 @@ class UserEmailMailer < ApplicationMailer
     # TODO: Replace with a proper deep link to the timesheet entry UI once frontend routing is finalized.
     @timesheet_base_url = app_url
 
-    mail(to: @user.email, subject: 'Almost Done! Just Finish Your Timesheets')
+    mail(to: @user.email, subject: 'Reminder: Please Complete Your Overdue Timesheets')
   end
 
   private
