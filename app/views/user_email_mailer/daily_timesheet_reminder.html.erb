@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Email letter</title>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <%= stylesheet_link_tag 'email_page', media: 'all' %>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Josefin Sans', 'Arial', 'Ubuntu', sans-serif;
+          font-style: normal;
+          font-weight: 700;
+      }
+
+      .center {
+          text-align: center;
+      }
+
+      ul {
+          margin-bottom: 10px;
+          margin-top: 10px;
+          list-style-type: disc;
+          padding-left: 20px;
+          padding-right: 20px;
+          font-size: 24px;
+          line-height: 24px;
+      }
+
+      li {
+          font-size: 24px;
+          text-align: left;
+          margin-bottom: 10px;
+          margin-left: 20px;
+          color: rgba(0, 0, 0, 0.7);
+      }
+
+      .text-block {
+          max-width: 650px;
+      }
+
+      @media only screen and (max-width: 767px) {
+          ul {
+              font-size: 18px !important;
+          }
+
+          li {
+              font-size: 18px !important;
+          }
+
+          .title {
+              font-size: 32px !important;
+          }
+
+          .text-check {
+              font-size: 16px !important;
+          }
+
+          .text-shoutout {
+              font-size: 18px !important;
+          }
+      }
+
+      .email-container {
+          width: 100%;
+          max-width: 850px;
+          margin: 0 auto;
+          padding: 20px;
+      }
+
+      .logo {
+          height: 61px;
+          margin-bottom: 10px;
+      }
+
+      .wrapper {
+          padding-left: 10px;
+      }
+
+      .calendar {
+          margin-bottom: 10px;
+      }
+  </style>
+</head>
+<body>
+<div class="email-container">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="105" align="center">
+        <div class="calendar">
+          <div class="data">TODAY</div>
+        </div>
+      </td>
+      <td align="center" class="wrapper">
+        <div class="logo">
+          <%= render 'layouts/logo', height: 61 %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div class="text-block mx-auto">
+    <div class="mx-auto my-0 title"><%= "Dear #{@user.first_name}," %></div>
+    <div class="mx-auto my-0 text-check"><%= "#{@intro_message}" %></div>
+    <% if @missing_periods.any? %>
+      <ul>
+        <% @missing_periods.each do |period| %>
+          <li>
+            <strong>
+              <%= period.start_date.strftime('%b %d') %> –
+              <%= period.end_date.strftime('%b %d, %Y') %>
+            </strong>
+            —
+            <%= link_to 'Fill timesheet', '#', target: '_blank' %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+</body>
+</html>
