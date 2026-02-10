@@ -2,6 +2,12 @@ class DailyOverdueTimesheetWorker
   FORCE_DATE_ENV = 'TIMESHEET_FORCE_ENTRY_DATE'.freeze
   DATE_FORMAT    = '%m-%d-%Y'.freeze
 
+  def run_notification
+    return unless reminder_days?
+
+    run!
+  end
+
   def run
     return unless force_date_reached?
 
@@ -35,5 +41,13 @@ class DailyOverdueTimesheetWorker
         .daily_timesheet_reminder(row[:user], row[:missing_periods])
         .deliver_now
     end
+  end
+
+  def reminder_days?
+    Date.current.tuesday? ||
+      Date.current.wednesday? ||
+      Date.current.thursday? ||
+      Date.current.friday?
+    # Date.current.on_weekday? && !Date.current.monday?
   end
 end
