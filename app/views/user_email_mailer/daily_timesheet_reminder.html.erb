@@ -104,16 +104,16 @@
   <div class="text-block mx-auto">
     <div class="mx-auto my-0 title"><%= "Dear #{@user.first_name}," %></div>
     <div class="mx-auto my-0 text-check"><%= "#{@intro_message}" %></div>
-    <% if @missing_periods.any? %>
+    <% if @links.any? %>
       <ul>
-        <% @missing_periods.each do |period| %>
+        <% @links.each do |link| %>
           <li>
             <strong>
-              <%= period.start_date.strftime('%b %d') %> –
-              <%= period.end_date.strftime('%b %d, %Y') %>
+              <%= link[:period].start_date.strftime('%b %d') %> –
+              <%= link[:period].end_date.strftime('%b %d, %Y') %>
             </strong>
             —
-            <%= link_to 'Fill timesheet', '#', target: '_blank' %>
+            <%= link_to 'Fill timesheet', link[:url], target: '_blank' %>
           </li>
         <% end %>
       </ul>
