@@ -2,8 +2,16 @@
 
 module TimeSheets
   class DirectLinkBuilder
+    TOKEN_TTL = 7.days
+
     def self.call(user, time_period)
       new(user, time_period).call
+    end
+
+    def self.verify(token)
+      verifier.verify(token)
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      nil
     end
 
     def initialize(user, time_period)
@@ -12,7 +20,7 @@ module TimeSheets
     end
 
     def call
-      token = verifier.generate(payload)
+      token = verifier.generate(payload, expires_in: TOKEN_TTL)
       direct_timesheet_entry_url(token: token)
     end
 

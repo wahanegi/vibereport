@@ -5,7 +5,7 @@ class DailyOverdueTimesheetWorker
   def run_notification
     return unless reminder_days?
 
-    run!
+    run
   end
 
   def run

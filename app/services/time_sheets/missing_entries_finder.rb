@@ -5,11 +5,13 @@ module TimeSheets
     end
 
     def call
-      result = {}
+      result = []
 
       eligible_users.find_each do |user|
         missing_periods = missing_periods_for(user)
-        result[user] = missing_periods if missing_periods.any?
+        next if missing_periods.blank?
+
+        result << { user: user, missing_periods: missing_periods }
       end
 
       result
