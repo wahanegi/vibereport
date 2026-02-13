@@ -44,10 +44,6 @@ class DailyOverdueTimesheetWorker
   end
 
   def reminder_days?
-    Date.current.tuesday? ||
-      Date.current.wednesday? ||
-      Date.current.thursday? ||
-      Date.current.friday?
-    # Date.current.on_weekday? && !Date.current.monday?
+    Date.current.on_weekday?
   end
 end
