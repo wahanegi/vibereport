@@ -28,8 +28,8 @@ class TimePeriod < ApplicationRecord
 
   scope :ordered, -> { order(start_date: :desc) }
   scope :with_responses_by_team, ->(team) { joins(responses: { user: :user_teams }).where(user_teams: { team_id: team.id }) }
-  # Becomes overdue starting from the day AFTER end_date.
-  scope :overdue, -> { where(end_date: ...Date.current) }
+  # Becomes overdue starting from the day AFTER due_date.
+  scope :overdue, -> { where(due_date: ...Date.current) }
 
   def slugify
     self.slug = SecureRandom.hex(5)
