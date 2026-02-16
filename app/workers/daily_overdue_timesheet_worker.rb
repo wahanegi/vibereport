@@ -36,9 +36,9 @@ class DailyOverdueTimesheetWorker
   end
 
   def send_emails!(rows)
-    rows.each do |row|
+    rows.each do |user, missing_periods|
       UserEmailMailer
-        .daily_timesheet_reminder(row[:user], row[:missing_periods])
+        .daily_timesheet_reminder(user, missing_periods)
         .deliver_now
     end
   end
