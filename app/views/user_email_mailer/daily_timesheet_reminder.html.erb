@@ -109,10 +109,10 @@
         <% @links.each do |link| %>
           <li>
             <strong>
-              <%= link[:period].start_date.strftime('%b %d') %> –
-              <%= link[:period].end_date.strftime('%b %d, %Y') %>
+              <%= link[:period].start_date.strftime('%b %d') %> -
+              <%= link[:period].due_date.strftime('%b %d, %Y') %>
             </strong>
-            —
+            -
             <%= link_to 'Fill timesheet', link[:url], target: '_blank' %>
           </li>
         <% end %>
