@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module TimeSheets
   class DirectLinkBuilder
     TOKEN_TTL = 7.days
@@ -9,9 +7,7 @@ module TimeSheets
     end
 
     def self.verify(token)
-      verifier.verify(token)
-    rescue ActiveSupport::MessageVerifier::InvalidSignature
-      nil
+      verifier.verified(token)
     end
 
     def initialize(user, time_period)
@@ -29,17 +25,11 @@ module TimeSheets
     attr_reader :user, :time_period
 
     def payload
-      {
-        user_id: user.id,
-        time_period_id: time_period.id
-      }
+      { user_id: user.id, time_period_id: time_period.id }
     end
 
     def verifier
-      @verifier ||= ActiveSupport::MessageVerifier.new(
-        Rails.application.secret_key_base,
-        serializer: JSON
-      )
+      self.class.send(:verifier)
     end
 
     def direct_timesheet_entry_url(token:)
@@ -51,6 +41,17 @@ module TimeSheets
 
     def url_options
       ActionMailer::Base.default_url_options.presence || {}
+    end
+
+    class << self
+      private
+
+      def verifier
+        @verifier ||= ActiveSupport::MessageVerifier.new(
+          Rails.application.secret_key_base,
+          serializer: JSON
+        )
+      end
     end
   end
 end
