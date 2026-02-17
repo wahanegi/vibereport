@@ -49,8 +49,8 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
       return
     end
 
-    user_id   = payload['user_id'] || payload[:user_id]
-    period_id = payload['time_period_id'] || payload[:time_period_id]
+    user_id   = payload[:user_id]
+    period_id = payload[:time_period_id]
 
     user = User.find_by(id: user_id)
     time_period = TimePeriod.find_by(id: period_id)

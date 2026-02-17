@@ -1,13 +1,16 @@
+# frozen_string_literal: true
+
 module TimeSheets
   class DirectLinkBuilder
     TOKEN_TTL = 7.days
+    PURPOSE   = 'timesheets.direct_entry.v1'
 
     def self.call(user, time_period)
       new(user, time_period).call
     end
 
     def self.verify(token)
-      verifier.verified(token)
+      Tokens::SignedToken.decode(token, purpose: PURPOSE)
     end
 
     def initialize(user, time_period)
@@ -16,7 +19,7 @@ module TimeSheets
     end
 
     def call
-      token = verifier.generate(payload, expires_in: TOKEN_TTL)
+      token = Tokens::SignedToken.encode(payload, purpose: PURPOSE, expires_in: TOKEN_TTL)
       direct_timesheet_entry_url(token: token)
     end
 
@@ -28,10 +31,6 @@ module TimeSheets
       { user_id: user.id, time_period_id: time_period.id }
     end
 
-    def verifier
-      self.class.send(:verifier)
-    end
-
     def direct_timesheet_entry_url(token:)
       Rails.application.routes.url_helpers.api_v1_direct_timesheet_entry_url(
         token: token,
@@ -41,17 +40,6 @@ module TimeSheets
 
     def url_options
       ActionMailer::Base.default_url_options.presence || {}
-    end
-
-    class << self
-      private
-
-      def verifier
-        @verifier ||= ActiveSupport::MessageVerifier.new(
-          Rails.application.secret_key_base,
-          serializer: JSON
-        )
-      end
     end
   end
 end
