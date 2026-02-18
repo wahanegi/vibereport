@@ -18,7 +18,11 @@ RSpec.describe DailyOverdueTimesheetWorker do
 
   describe '#run_notification' do
     context 'when called on a weekday' do
-      before { allow(Date).to receive(:current).and_return(Date.new(2026, 2, 17)) }
+      before do
+        stubbed_date = Date.new(2026, 2, 17)
+        allow(Date).to receive(:current).and_return(stubbed_date)
+        stub_const('ENV', ENV.to_hash.merge('TIMESHEET_FORCE_ENTRY_DATE' => stubbed_date.strftime('%m-%d-%Y')))
+      end
 
       it 'calls run and sends emails' do
         expect { worker.run_notification }
