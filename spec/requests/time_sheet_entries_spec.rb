@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'TimeSheetEntries API', type: :request do
+  include ActiveSupport::Testing::TimeHelpers
+
   let!(:user) { create(:user) }
   let!(:other_user) { create(:user) }
   let!(:project) { create(:project) }
@@ -127,6 +129,115 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(TimeSheetEntry.find(existing_entry.id).total_hours).to eq(10)
+      end
+    end
+  end
+
+  describe 'GET /api/v1/direct_timesheet_entry' do
+    let!(:team) { create(:team, timesheet_enabled: true) }
+    let!(:user_team_record) { create(:user_team, user: user, team: team) }
+    let!(:overdue_period) { create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date) }
+
+    let(:token) do
+      url = TimeSheets::DirectLinkBuilder.call(user, overdue_period)
+      Rack::Utils.parse_query(URI.parse(url).query)['token']
+    end
+
+    before { sign_out(user) }
+
+    context 'with a valid token and overdue period' do
+      it 'signs in the user and redirects to /app' do
+        get '/api/v1/direct_timesheet_entry', params: { token: token }
+
+        expect(response).to redirect_to('/app')
+      end
+
+      it 'stores the time_period_id in the session' do
+        get '/api/v1/direct_timesheet_entry', params: { token: token }
+
+        expect(session[:direct_timesheet_time_period_id]).to eq(overdue_period.id)
+      end
+    end
+
+    context 'when token is invalid' do
+      it 'redirects to sign in with alert' do
+        get '/api/v1/direct_timesheet_entry', params: { token: 'garbage-token' }
+
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to eq('Invalid or expired link')
+      end
+    end
+
+    context 'when token is missing' do
+      it 'redirects to sign in with alert' do
+        get '/api/v1/direct_timesheet_entry'
+
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to eq('Invalid or expired link')
+      end
+    end
+
+    context 'when token has expired' do
+      it 'redirects to sign in with alert' do
+        expired_token = token
+
+        travel(TimeSheets::DirectLinkBuilder::TOKEN_TTL + 1.day) do
+          get '/api/v1/direct_timesheet_entry', params: { token: expired_token }
+
+          expect(response).to redirect_to(new_user_session_path)
+          expect(flash[:alert]).to eq('Invalid or expired link')
+        end
+      end
+    end
+
+    context 'when user does not exist' do
+      it 'redirects to sign in with alert' do
+        valid_token = token
+        user.destroy!
+
+        get '/api/v1/direct_timesheet_entry', params: { token: valid_token }
+
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to eq('Invalid link')
+      end
+    end
+
+    context 'when time period does not exist' do
+      it 'redirects to sign in with alert' do
+        valid_token = token
+        overdue_period.destroy!
+
+        get '/api/v1/direct_timesheet_entry', params: { token: valid_token }
+
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to eq('Invalid link')
+      end
+    end
+
+    context 'when user has no team with timesheet enabled' do
+      before { team.update!(timesheet_enabled: false) }
+
+      it 'redirects to sign in with access denied alert' do
+        get '/api/v1/direct_timesheet_entry', params: { token: token }
+
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to eq('Access denied')
+      end
+    end
+
+    context 'when time period is not overdue' do
+      let!(:future_period) { create(:time_period, start_date: 1.week.from_now.to_date, end_date: 2.weeks.from_now.to_date, due_date: 10.days.from_now.to_date) }
+
+      let(:non_overdue_token) do
+        url = TimeSheets::DirectLinkBuilder.call(user, future_period)
+        Rack::Utils.parse_query(URI.parse(url).query)['token']
+      end
+
+      it 'redirects to /app without storing session' do
+        get '/api/v1/direct_timesheet_entry', params: { token: non_overdue_token }
+
+        expect(response).to redirect_to('/app')
+        expect(session[:direct_timesheet_time_period_id]).to be_nil
       end
     end
   end

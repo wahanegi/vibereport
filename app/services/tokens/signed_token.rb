@@ -32,7 +32,6 @@ module Tokens
 
         payload.with_indifferent_access
       rescue ActiveSupport::MessageVerifier::InvalidSignature,
-             ActiveSupport::MessageVerifier::InvalidMessage,
              JSON::ParserError
         nil
       end
