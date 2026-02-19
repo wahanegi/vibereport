@@ -1,14 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe DailyOverdueTimesheetWorker do
+  include ActiveSupport::Testing::TimeHelpers
+
+  REFERENCE_DATE = Date.new(2026, 2, 17)
+
   let(:worker) { described_class.new }
 
   let!(:team) { create(:team, timesheet_enabled: true) }
   let!(:user) { create(:user, opt_out: false) }
   let!(:user_team) { create(:user_team, user: user, team: team) }
-  let!(:overdue_period) { create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date) }
+  let!(:overdue_period) do
+    create(:time_period,
+           start_date: REFERENCE_DATE - 3.weeks,
+           end_date: REFERENCE_DATE - 2.weeks,
+           due_date: REFERENCE_DATE - 10.days)
+  end
 
-  let(:force_date) { Date.current.strftime('%m-%d-%Y') }
+  let(:force_date) { REFERENCE_DATE.strftime('%m-%d-%Y') }
 
   before do
     stub_const('ENV', ENV.to_hash.merge(
@@ -18,11 +27,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
 
   describe '#run_notification' do
     context 'when called on a weekday' do
-      before do
-        stubbed_date = Date.new(2026, 2, 17)
-        allow(Date).to receive(:current).and_return(stubbed_date)
-        stub_const('ENV', ENV.to_hash.merge('TIMESHEET_START_FORCED_ENTRY_DATE' => stubbed_date.strftime('%m-%d-%Y')))
-      end
+      around { |example| travel_to(REFERENCE_DATE) { example.run } }
 
       it 'calls run and sends emails' do
         expect { worker.run_notification }
@@ -31,7 +36,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
     end
 
     context 'when called on a weekend' do
-      before { allow(Date).to receive(:current).and_return(Date.new(2026, 2, 15)) }
+      around { |example| travel_to(Date.new(2026, 2, 15)) { example.run } }
 
       it 'does not send any emails' do
         expect { worker.run_notification }
@@ -41,6 +46,8 @@ RSpec.describe DailyOverdueTimesheetWorker do
   end
 
   describe '#run' do
+    around { |example| travel_to(REFERENCE_DATE) { example.run } }
+
     context 'when force date has been reached and there are missing entries' do
       it 'sends reminder emails to users with missing timesheets' do
         expect { worker.run }
@@ -54,7 +61,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
     end
 
     context 'when force date has not been reached yet' do
-      let(:force_date) { (Date.current + 5.days).strftime('%m-%d-%Y') }
+      let(:force_date) { (REFERENCE_DATE + 5.days).strftime('%m-%d-%Y') }
 
       it 'does not send any emails' do
         expect { worker.run }
