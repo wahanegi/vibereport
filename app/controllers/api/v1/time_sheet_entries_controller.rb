@@ -89,7 +89,12 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
         merged_params = entry_params.merge(user_id: current_user.id, time_period_id: time_period.id)
         time_sheet_entry =
           if entry_params[:id].present?
-            TimeSheetEntry.find_by(id: entry_params[:id], user_id: current_user.id) || TimeSheetEntry.new
+            found = TimeSheetEntry.find_by(id: entry_params[:id], user_id: current_user.id)
+            unless found
+              render json: { error: 'Time sheet entry not found' }, status: :not_found
+              raise ActiveRecord::Rollback
+            end
+            found
           else
             TimeSheetEntry.find_or_initialize_by(
               user_id: current_user.id,
