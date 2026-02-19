@@ -106,7 +106,7 @@ RSpec.describe Tokens::SignedToken do
       it 'raises an error' do
         token = described_class.encode(payload, purpose: purpose)
 
-        expect { described_class.decode(token, purpose: nil) }.to raise_error(StandardError)
+        expect { described_class.decode(token, purpose: nil) }.to raise_error(ArgumentError)
       end
     end
 
