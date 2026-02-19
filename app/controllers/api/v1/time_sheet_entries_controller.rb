@@ -23,8 +23,9 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
     saved_entries = process_time_sheet_entries(time_period)
     return if performed?
 
+    final_submit = ActiveModel::Type::Boolean.new.cast(params[:final_submit])
     direct_id = session[:direct_timesheet_time_period_id]
-    session.delete(:direct_timesheet_time_period_id) if direct_id.present?
+    session.delete(:direct_timesheet_time_period_id) if direct_id.present? && final_submit
 
     render json: TimeSheetEntrySerializer.new(saved_entries, { include: [:project] }).serializable_hash
                                          .merge(meta: { time_period_id: time_period.id,
