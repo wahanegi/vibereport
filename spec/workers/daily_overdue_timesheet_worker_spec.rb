@@ -12,7 +12,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
 
   before do
     stub_const('ENV', ENV.to_hash.merge(
-                        'TIMESHEET_FORCE_ENTRY_DATE' => force_date
+                        'TIMESHEET_START_FORCED_ENTRY_DATE' => force_date
                       ))
   end
 
@@ -21,7 +21,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
       before do
         stubbed_date = Date.new(2026, 2, 17)
         allow(Date).to receive(:current).and_return(stubbed_date)
-        stub_const('ENV', ENV.to_hash.merge('TIMESHEET_FORCE_ENTRY_DATE' => stubbed_date.strftime('%m-%d-%Y')))
+        stub_const('ENV', ENV.to_hash.merge('TIMESHEET_START_FORCED_ENTRY_DATE' => stubbed_date.strftime('%m-%d-%Y')))
       end
 
       it 'calls run and sends emails' do
@@ -62,9 +62,9 @@ RSpec.describe DailyOverdueTimesheetWorker do
       end
     end
 
-    context 'when TIMESHEET_FORCE_ENTRY_DATE env is not set' do
+    context 'when TIMESHEET_START_FORCED_ENTRY_DATE env is not set' do
       before do
-        stub_const('ENV', ENV.to_hash.except('TIMESHEET_FORCE_ENTRY_DATE'))
+        stub_const('ENV', ENV.to_hash.except('TIMESHEET_START_FORCED_ENTRY_DATE'))
       end
 
       it 'does not send any emails' do
@@ -73,7 +73,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
       end
     end
 
-    context 'when TIMESHEET_FORCE_ENTRY_DATE has invalid format' do
+    context 'when TIMESHEET_START_FORCED_ENTRY_DATE has invalid format' do
       let(:force_date) { 'not-a-date' }
 
       it 'does not send any emails' do
@@ -82,7 +82,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
       end
 
       it 'logs an error' do
-        expect(Rails.logger).to receive(:error).with(/Invalid TIMESHEET_FORCE_ENTRY_DATE/)
+        expect(Rails.logger).to receive(:error).with(/Invalid TIMESHEET_START_FORCED_ENTRY_DATE/)
 
         worker.run
       end
