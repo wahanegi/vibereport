@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_10_084412) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_19_150528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,28 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_10_084412) do
     t.index ["question_body"], name: "index_fun_questions_on_question_body", unique: true
     t.index ["time_period_id"], name: "index_fun_questions_on_time_period_id"
     t.index ["user_id"], name: "index_fun_questions_on_user_id"
+  end
+
+  create_table "innovation_brainstormings", force: :cascade do |t|
+    t.text "brainstorming_body", null: false
+    t.datetime "created_at", null: false
+    t.bigint "innovation_topic_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["innovation_topic_id"], name: "index_innovation_brainstormings_on_innovation_topic_id"
+    t.index ["user_id", "innovation_topic_id"], name: "index_unique_brainstorm_on_user_and_topic", unique: true
+    t.index ["user_id"], name: "index_innovation_brainstormings_on_user_id"
+  end
+
+  create_table "innovation_topics", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "innovation_body", null: false
+    t.boolean "posted", default: false
+    t.bigint "time_period_id"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["time_period_id"], name: "index_innovation_topics_on_time_period_id"
+    t.index ["user_id"], name: "index_innovation_topics_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -195,6 +217,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_10_084412) do
   add_foreign_key "fun_question_answers", "users"
   add_foreign_key "fun_questions", "time_periods"
   add_foreign_key "fun_questions", "users"
+  add_foreign_key "innovation_brainstormings", "innovation_topics"
+  add_foreign_key "innovation_brainstormings", "users"
+  add_foreign_key "innovation_topics", "time_periods"
+  add_foreign_key "innovation_topics", "users"
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"
