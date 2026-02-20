@@ -20,20 +20,11 @@
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class InnovationTopic < ApplicationRecord
-  belongs_to :user
-  belongs_to :time_period, optional: true
-
-  has_one :response, dependent: :nullify
-  has_many :innovation_brainstormings, dependent: :destroy
-
-  validates :innovation_body, presence: true
-
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[id innovation_body posted time_period_id created_at updated_at user_id]
-  end
-
-  def self.ransackable_associations(_auth_object = nil)
-    %w[innovation_brainstormings response time_period user]
+FactoryBot.define do
+  factory :innovation_topic do
+    innovation_body { Faker::Lorem.sentence }
+    posted { false }
+    association :time_period
+    association :user
   end
 end
