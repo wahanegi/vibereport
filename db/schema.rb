@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_20_134232) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_20_140658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -113,6 +113,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_20_134232) do
     t.bigint "fun_question_answer_id"
     t.bigint "fun_question_id"
     t.jsonb "gif"
+    t.bigint "innovation_brainstorming_id"
     t.bigint "innovation_topic_id"
     t.boolean "not_working", default: false
     t.jsonb "notices"
@@ -127,6 +128,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_20_134232) do
     t.index ["emotion_id"], name: "index_responses_on_emotion_id"
     t.index ["fun_question_answer_id"], name: "index_responses_on_fun_question_answer_id"
     t.index ["fun_question_id"], name: "index_responses_on_fun_question_id"
+    t.index ["innovation_brainstorming_id"], name: "index_responses_on_innovation_brainstorming_id"
     t.index ["innovation_topic_id"], name: "index_responses_on_innovation_topic_id"
     t.index ["shoutout_id"], name: "index_responses_on_shoutout_id"
     t.index ["time_period_id"], name: "index_responses_on_time_period_id"
@@ -226,6 +228,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_20_134232) do
   add_foreign_key "responses", "emotions"
   add_foreign_key "responses", "fun_question_answers"
   add_foreign_key "responses", "fun_questions"
+  add_foreign_key "responses", "innovation_brainstormings"
   add_foreign_key "responses", "innovation_topics"
   add_foreign_key "responses", "shoutouts"
   add_foreign_key "responses", "time_periods"
