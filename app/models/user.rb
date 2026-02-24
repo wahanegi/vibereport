@@ -37,6 +37,8 @@ class User < ApplicationRecord
   has_many :teams, through: :user_teams
   has_many :emojis, dependent: :destroy
   has_many :time_sheet_entries, dependent: :destroy
+  has_many :innovation_topics, dependent: :destroy
+  has_many :innovation_brainstormings, dependent: :destroy
   before_validation :strip_first_name_last_name
 
   MAX_NAME_LENGTH = 15

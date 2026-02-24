@@ -20,22 +20,8 @@
 #  fk_rails_...  (time_period_id => time_periods.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class InnovationTopic < ApplicationRecord
-  belongs_to :user
-  belongs_to :time_period, optional: true
+class InnovationTopicSerializer
+  include JSONAPI::Serializer
 
-  has_one :response, dependent: :nullify
-  has_many :innovation_brainstormings, dependent: :destroy
-
-  validates :innovation_body, presence: true
-
-  scope :unposted, -> { where(posted: false) }
-
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[id innovation_body posted time_period_id created_at updated_at user_id]
-  end
-
-  def self.ransackable_associations(_auth_object = nil)
-    %w[innovation_brainstormings response time_period user]
-  end
+  attributes :id, :innovation_body, :posted, :time_period_id, :user_id
 end

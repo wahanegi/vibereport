@@ -73,19 +73,19 @@ RSpec.describe Emotion, type: :model do
 
   describe '#create' do
     it 'creates a new Emotion' do
-      expect { Emotion.create(word: 'well', category: "positive", public: false) }.to change(Emotion, :count).by(1)
+      expect { Emotion.create(word: 'well', category: 'positive', public: false) }.to change(Emotion, :count).by(1)
     end
 
     context 'with existing emotion word' do
-      let!(:existing_emotion) { create(:emotion, word: 'happy', category: 'positive', public: false) }
-      let(:emotion_params) { { emotion: { word: 'happy', category: 'positive', public: false } } }
+      # Используем уникальное слово, чтобы не пересекаться с let! на уровне describe (Faker может создать 'happy' + positive)
+      let!(:existing_emotion) { create(:emotion, word: 'existingword', category: 'positive', public: false) }
 
       it 'creates with existing emotion word and new category' do
-        expect { Emotion.create(word: 'happy', category: 'negative', public: false) }.to change(Emotion, :count)
+        expect { Emotion.create(word: 'existingword', category: 'negative', public: false) }.to change(Emotion, :count)
       end
 
       it 'does not create with existing emotion word and category' do
-        expect { Emotion.create(word: 'happy', category: 'positive', public: false) }.not_to change(Emotion, :count)
+        expect { Emotion.create(word: 'existingword', category: 'positive', public: false) }.not_to change(Emotion, :count)
       end
     end
 
