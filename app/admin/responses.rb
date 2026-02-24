@@ -1,6 +1,6 @@
 ActiveAdmin.register Response do
   permit_params %i[time_period_id emotion_id user_id not_working steps rating productivity productivity_comment
-                   celebrate_comment comment completed_at gif]
+                   celebrate_comment comment completed_at gif innovation_topic_id innovation_brainstorming_id]
 
   index do
     selectable_column
