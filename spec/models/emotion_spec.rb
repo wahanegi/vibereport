@@ -77,7 +77,6 @@ RSpec.describe Emotion, type: :model do
     end
 
     context 'with existing emotion word' do
-      # Используем уникальное слово, чтобы не пересекаться с let! на уровне describe (Faker может создать 'happy' + positive)
       let!(:existing_emotion) { create(:emotion, word: 'existingword', category: 'positive', public: false) }
 
       it 'creates with existing emotion word and new category' do

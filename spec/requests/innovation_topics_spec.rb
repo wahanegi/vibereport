@@ -34,7 +34,7 @@ RSpec.describe Api::V1::InnovationTopicsController do
     it 'returns the innovation topic as JSON' do
       get "/api/v1/innovation_topics/#{innovation_topic.id}"
       body = response.parsed_body
-      expect(body.dig('data', 'attributes', 'id')).to eq(innovation_topic.id)
+      expect(body.dig('data', 'id').to_s).to eq(innovation_topic.id.to_s)
       expect(body.dig('data', 'attributes', 'innovation_body')).to eq(innovation_topic.innovation_body)
     end
 

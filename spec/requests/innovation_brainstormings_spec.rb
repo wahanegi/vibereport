@@ -35,8 +35,18 @@ RSpec.describe Api::V1::InnovationBrainstormingsController do
     it 'returns the innovation brainstorming as JSON' do
       get "/api/v1/innovation_brainstormings/#{innovation_brainstorming.id}"
       body = response.parsed_body
-      expect(body.dig('data', 'attributes', 'id')).to eq(innovation_brainstorming.id)
+      expect(body.dig('data', 'id').to_s).to eq(innovation_brainstorming.id.to_s)
       expect(body.dig('data', 'attributes', 'brainstorming_body')).to eq(innovation_brainstorming.brainstorming_body)
+    end
+
+    context 'when requesting another user\'s brainstorming' do
+      let(:other_user) { create(:user) }
+      let!(:other_brainstorming) { create(:innovation_brainstorming, user: other_user, innovation_topic: innovation_topic) }
+
+      it 'returns not_found' do
+        get "/api/v1/innovation_brainstormings/#{other_brainstorming.id}"
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
     context 'when the innovation brainstorming does not exist' do
@@ -88,7 +98,7 @@ RSpec.describe Api::V1::InnovationBrainstormingsController do
       it 'does not create a duplicate and returns errors' do
         post '/api/v1/innovation_brainstormings', params: valid_attributes
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body['error']).to be_present
+        expect(response.parsed_body['error']).to eq('user_id' => ['can submit only one brainstorming per topic'])
         expect(InnovationBrainstorming.count).to eq(1)
       end
     end
@@ -113,6 +123,15 @@ RSpec.describe Api::V1::InnovationBrainstormingsController do
         expect(response).to have_http_status(:success)
         expect(response.parsed_body.dig('data', 'attributes', 'brainstorming_body')).to eq('Updated brainstorming body')
       end
+
+      it 'does not change innovation_topic_id when sent in params' do
+        other_topic = create(:innovation_topic, user: user)
+        original_topic_id = innovation_brainstorming.innovation_topic_id
+        patch "/api/v1/innovation_brainstormings/#{innovation_brainstorming.id}",
+              params: { innovation_brainstorming: { brainstorming_body: 'Updated', innovation_topic_id: other_topic.id } }
+        expect(response).to have_http_status(:success)
+        expect(innovation_brainstorming.reload.innovation_topic_id).to eq(original_topic_id)
+      end
     end
 
     context 'with invalid parameters' do
@@ -125,6 +144,17 @@ RSpec.describe Api::V1::InnovationBrainstormingsController do
         subject
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body['error']['brainstorming_body']).to be_present
+      end
+    end
+
+    context 'when updating another user\'s brainstorming' do
+      let(:other_user) { create(:user) }
+      let!(:other_brainstorming) { create(:innovation_brainstorming, user: other_user, innovation_topic: innovation_topic) }
+
+      it 'returns not_found' do
+        patch "/api/v1/innovation_brainstormings/#{other_brainstorming.id}",
+              params: { innovation_brainstorming: { brainstorming_body: 'Hacked' } }
+        expect(response).to have_http_status(:not_found)
       end
     end
 
