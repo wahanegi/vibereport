@@ -28,13 +28,13 @@ RSpec.describe InnovationTopic, type: :model do
   let(:topic) { build(:innovation_topic, user: user, time_period: time_period) }
 
   describe 'associations' do
-    it { should belong_to(:user) }
     it { should belong_to(:time_period).optional }
     it { should have_one(:response).dependent(:nullify) }
     it { should have_many(:innovation_brainstormings).dependent(:destroy) }
   end
 
   describe 'validations' do
+    it { should validate_presence_of(:user) }
     it { should validate_presence_of(:innovation_body) }
   end
 
