@@ -90,6 +90,6 @@ class Response < ApplicationRecord
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    %w[emotion fun_question fun_question_answer time_period user]
+    %w[emotion fun_question fun_question_answer time_period user innovation_topic innovation_brainstorming]
   end
 end
