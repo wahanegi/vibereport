@@ -21,15 +21,25 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class InnovationTopic < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :time_period, optional: true
 
   has_one :response, dependent: :nullify
   has_many :innovation_brainstormings, dependent: :destroy
 
+  validates :user, presence: true
   validates :innovation_body, presence: true
 
   scope :unposted, -> { where(posted: false) }
+  scope :ordered, -> { order(created_at: :desc) }
+
+  def display_name
+    "Innovation topic: #{innovation_body.truncate(45)}"
+  end
+
+  def short_name(length: 50)
+    innovation_body.truncate(length)
+  end
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[id innovation_body posted time_period_id created_at updated_at user_id]
