@@ -63,6 +63,10 @@ class User < ApplicationRecord
     last_name&.strip!
   end
 
+  def self.admin_select_options
+    order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
     %w[email first_name id last_name not_ask_visibility opt_out time_period_index updated_at]
   end
