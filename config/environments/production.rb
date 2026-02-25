@@ -95,13 +95,13 @@ Rails.application.configure do
   config.action_mailer.asset_host = "https://#{ENV.fetch('DOMAIN_URL')}"
   config.action_mailer.default_url_options = { host: ENV.fetch('DOMAIN_URL'), protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = if ENV['SENDGRID_API_KEY'].present?
+  config.action_mailer.smtp_settings = if ENV['SENDGRID_API_TOKEN'].present?
                                          {
                                            address: 'smtp.sendgrid.net',
                                            port: 587,
                                            domain: ENV.fetch('DOMAIN_URL'),
                                            user_name: 'apikey',
-                                           password: ENV['SENDGRID_API_KEY'],
+                                           password: ENV.fetch('SENDGRID_API_TOKEN'),
                                            authentication: :plain,
                                            enable_starttls_auto: true
                                          }
