@@ -93,13 +93,13 @@ Rails.application.configure do
 
   # Settings for external email services such as SendGrid
   config.action_mailer.asset_host = "https://#{ENV.fetch('DOMAIN_URL')}"
-  config.action_mailer.default_url_options = { host: ENV.fetch('DOMAIN_URL', nil), protocol: 'https' }
+  config.action_mailer.default_url_options = { host: ENV.fetch('DOMAIN_URL'), protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
   if ENV['SENDGRID_API_KEY'].present?
     config.action_mailer.smtp_settings = {
       address: 'smtp.sendgrid.net',
       port: 587,
-      domain: ENV.fetch('DOMAIN_URL', nil),
+      domain: ENV.fetch('DOMAIN_URL'),
       user_name: 'apikey',
       password: ENV['SENDGRID_API_KEY'],
       authentication: :plain,
@@ -107,19 +107,19 @@ Rails.application.configure do
     }
   else
     config.action_mailer.smtp_settings = {
-      address: ENV.fetch('SMTP_ADDRESS', nil),
-      port: ENV.fetch('SMTP_PORT', nil),
-      domain: ENV.fetch('SMTP_DOMAIN', nil),
-      user_name: ENV.fetch('SMTP_USERNAME', nil),
-      password: ENV.fetch('SMTP_PASSWORD', nil),
+      address: ENV.fetch('SMTP_ADDRESS'),
+      port: ENV.fetch('SMTP_PORT'),
+      domain: ENV.fetch('SMTP_DOMAIN'),
+      user_name: ENV.fetch('SMTP_USERNAME'),
+      password: ENV.fetch('SMTP_PASSWORD'),
       authentication: (ENV['SMTP_AUTHENTICATION'].present? ? ENV['SMTP_AUTHENTICATION'].to_sym : 'plain')
     }
   end
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.asset_host = "https://#{ENV.fetch('DOMAIN_URL', nil)}"
+  config.asset_host = "https://#{ENV.fetch('DOMAIN_URL')}"
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins "https://#{ENV.fetch('DOMAIN_URL', nil)}"
+      origins "https://#{ENV.fetch('DOMAIN_URL')}"
       resource '/fonts/*', headers: :any, methods: %i[get options head]
       resource '/assets/*', headers: :any, methods: %i[get options head]
     end
