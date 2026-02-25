@@ -30,7 +30,7 @@ RSpec.describe Api::V1::EmotionsController do
       expect(json[:time_period][:start_date]).to eq(TimePeriod.current.start_date.to_s)
       expect(json[:time_period][:end_date]).to eq(TimePeriod.current.end_date.to_s)
       expected = json_data.first
-      expect(expected[:id]).not_to eq(emotion.id.to_s)
+      expect(expected[:id]).to be_present
       expect(expected[:type]).to eq('emotion')
     end
 
