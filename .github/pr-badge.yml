@@ -1,5 +1,5 @@
 - label: "JIRA"
   message: "$issuePrefix"
   color: "#009900"
-  url: "https://cloverpop-internship-2025.atlassian.net/browse/$issuePrefix"
+  url: "https://clearboxdecisions.atlassian.net/browse/$issuePrefix"
   when: "$issuePrefix"
