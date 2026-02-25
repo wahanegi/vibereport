@@ -29,7 +29,7 @@ class InnovationBrainstorming < ApplicationRecord
   validates :user, presence: true
   validates :innovation_topic, presence: true
   validates :brainstorming_body, presence: true
-  validates :user_id, uniqueness: { scope: :innovation_topic_id }
+  validates :user_id, uniqueness: { scope: :innovation_topic_id, message: 'can submit only one brainstorming per topic' }
 
   def display_name
     "Innovation brainstorming: #{brainstorming_body.truncate(45)}"

@@ -42,7 +42,7 @@ RSpec.describe Emotion, type: :model do
     it { is_expected.to validate_length_of(:word).is_at_least(2).is_at_most(15) }
 
     context 'uniqueness of word within category' do
-      let!(:existing_emotion) { create(:emotion, word: 'pressured', category: :positive) }
+      let!(:existing_emotion) { create(:emotion, word: 'pressured_spec', category: :positive) }
 
       it 'does not allow the same emotion word with the same category' do
         new_emotion = FactoryBot.build(:emotion, word: existing_emotion.word, category: existing_emotion.category)
