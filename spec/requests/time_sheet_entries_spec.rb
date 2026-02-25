@@ -131,6 +131,76 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         expect(TimeSheetEntry.find(existing_entry.id).total_hours).to eq(10)
       end
     end
+
+    context 'when id is provided but entry not found for current user' do
+      let!(:entry_of_other_user) do
+        create(:time_sheet_entry, user: other_user, project: project, time_period: time_period, total_hours: 5)
+      end
+
+      it 'returns not found and does not create a new record' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { id: entry_of_other_user.id, project_id: project.id, total_hours: 10 }
+          ]
+        }
+
+        expect(response).to have_http_status(:not_found)
+        expect(json_response['error']).to eq('Time sheet entry not found')
+        expect(TimeSheetEntry.find(entry_of_other_user.id).total_hours).to eq(5)
+      end
+    end
+
+    context 'when id is provided but entry does not exist' do
+      it 'returns not found and does not create a record with supplied id' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { id: 999_999, project_id: project.id, total_hours: 10 }
+          ]
+        }
+
+        expect(response).to have_http_status(:not_found)
+        expect(json_response['error']).to eq('Time sheet entry not found')
+        expect(TimeSheetEntry.exists?(999_999)).to be_falsey
+      end
+    end
+
+    context 'with direct timesheet session (Save Draft flow)' do
+      let!(:team) { create(:team, timesheet_enabled: true) }
+      let!(:user_team_record) { create(:user_team, user: user, team: team) }
+      let!(:overdue_period) do
+        create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date)
+      end
+      let(:token) do
+        url = TimeSheets::DirectLinkBuilder.call(user, overdue_period)
+        Rack::Utils.parse_query(URI.parse(url).query)['token']
+      end
+
+      before { sign_out(user) }
+
+      it 'does not clear session when final_submit is false (draft)' do
+        get '/api/v1/direct_timesheet_entry', params: { token: token }
+        post '/api/v1/time_sheet_entries/upsert', params: valid_params.merge(final_submit: false)
+
+        expect(response).to have_http_status(:ok)
+        expect(session[:direct_timesheet_time_period_id]).to eq(overdue_period.id)
+      end
+
+      it 'clears session when final_submit is true' do
+        get '/api/v1/direct_timesheet_entry', params: { token: token }
+        post '/api/v1/time_sheet_entries/upsert', params: valid_params.merge(final_submit: true)
+
+        expect(response).to have_http_status(:ok)
+        expect(session[:direct_timesheet_time_period_id]).to be_nil
+      end
+
+      it 'does not clear session when final_submit is omitted (backward compatibility)' do
+        get '/api/v1/direct_timesheet_entry', params: { token: token }
+        post '/api/v1/time_sheet_entries/upsert', params: valid_params
+
+        expect(response).to have_http_status(:ok)
+        expect(session[:direct_timesheet_time_period_id]).to eq(overdue_period.id)
+      end
+    end
   end
 
   describe 'GET /api/v1/direct_timesheet_entry' do
