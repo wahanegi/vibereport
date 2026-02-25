@@ -95,26 +95,26 @@ Rails.application.configure do
   config.action_mailer.asset_host = "https://#{ENV.fetch('DOMAIN_URL')}"
   config.action_mailer.default_url_options = { host: ENV.fetch('DOMAIN_URL'), protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
-  if ENV['SENDGRID_API_KEY'].present?
-    config.action_mailer.smtp_settings = {
-      address: 'smtp.sendgrid.net',
-      port: 587,
-      domain: ENV.fetch('DOMAIN_URL'),
-      user_name: 'apikey',
-      password: ENV['SENDGRID_API_KEY'],
-      authentication: :plain,
-      enable_starttls_auto: true
-    }
-  else
-    config.action_mailer.smtp_settings = {
-      address: ENV.fetch('SMTP_ADDRESS'),
-      port: ENV.fetch('SMTP_PORT'),
-      domain: ENV.fetch('SMTP_DOMAIN'),
-      user_name: ENV.fetch('SMTP_USERNAME'),
-      password: ENV.fetch('SMTP_PASSWORD'),
-      authentication: (ENV['SMTP_AUTHENTICATION'].present? ? ENV['SMTP_AUTHENTICATION'].to_sym : 'plain')
-    }
-  end
+  config.action_mailer.smtp_settings = if ENV['SENDGRID_API_KEY'].present?
+                                         {
+                                           address: 'smtp.sendgrid.net',
+                                           port: 587,
+                                           domain: ENV.fetch('DOMAIN_URL'),
+                                           user_name: 'apikey',
+                                           password: ENV['SENDGRID_API_KEY'],
+                                           authentication: :plain,
+                                           enable_starttls_auto: true
+                                         }
+                                       else
+                                         {
+                                           address: ENV.fetch('SMTP_ADDRESS'),
+                                           port: ENV.fetch('SMTP_PORT'),
+                                           domain: ENV.fetch('SMTP_DOMAIN'),
+                                           user_name: ENV.fetch('SMTP_USERNAME'),
+                                           password: ENV.fetch('SMTP_PASSWORD'),
+                                           authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym
+                                         }
+                                       end
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   config.asset_host = "https://#{ENV.fetch('DOMAIN_URL')}"
   config.middleware.insert_before 0, Rack::Cors do
