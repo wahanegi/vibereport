@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -22,7 +22,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -82,7 +82,7 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
@@ -91,30 +91,35 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Settings for external email services such as Mailtrap or Postmark
-  config.action_mailer.asset_host = "https://#{ENV['DOMAIN_URL']}"
-  config.action_mailer.default_url_options = { host: ENV['DOMAIN_URL'], protocol: 'https' }
-  if ENV['POSTMARK_API_TOKEN'].present?
-    config.action_mailer.delivery_method = :postmark
-    config.action_mailer.postmark_settings = {
-      api_token: ENV['POSTMARK_API_TOKEN']
-    }
-  else
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: ENV['SMTP_ADDRESS'],
-      port: ENV['SMTP_PORT'],
-      domain: ENV['SMTP_DOMAIN'],
-      user_name: ENV['SMTP_USERNAME'],
-      password: ENV['SMTP_PASSWORD'],
-      authentication: (ENV['SMTP_AUTHENTICATION'].present? ? ENV['SMTP_AUTHENTICATION'].to_sym : 'plain')
-    }
-  end
+  # Settings for external email services such as SendGrid
+  config.action_mailer.asset_host = "https://#{ENV.fetch('DOMAIN_URL')}"
+  config.action_mailer.default_url_options = { host: ENV.fetch('DOMAIN_URL'), protocol: 'https' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = if ENV['SENDGRID_API_TOKEN'].present?
+                                         {
+                                           address: 'smtp.sendgrid.net',
+                                           port: 587,
+                                           domain: ENV.fetch('DOMAIN_URL'),
+                                           user_name: 'apikey',
+                                           password: ENV.fetch('SENDGRID_API_TOKEN'),
+                                           authentication: :plain,
+                                           enable_starttls_auto: true
+                                         }
+                                       else
+                                         {
+                                           address: ENV.fetch('SMTP_ADDRESS'),
+                                           port: ENV.fetch('SMTP_PORT'),
+                                           domain: ENV.fetch('SMTP_DOMAIN'),
+                                           user_name: ENV.fetch('SMTP_USERNAME'),
+                                           password: ENV.fetch('SMTP_PASSWORD'),
+                                           authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym
+                                         }
+                                       end
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.asset_host = "https://#{ENV['DOMAIN_URL']}"
+  config.asset_host = "https://#{ENV.fetch('DOMAIN_URL')}"
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins "https://#{ENV['DOMAIN_URL']}"
+      origins "https://#{ENV.fetch('DOMAIN_URL')}"
       resource '/fonts/*', headers: :any, methods: %i[get options head]
       resource '/assets/*', headers: :any, methods: %i[get options head]
     end
