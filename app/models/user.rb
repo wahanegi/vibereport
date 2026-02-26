@@ -37,6 +37,8 @@ class User < ApplicationRecord
   has_many :teams, through: :user_teams
   has_many :emojis, dependent: :destroy
   has_many :time_sheet_entries, dependent: :destroy
+  has_many :innovation_topics, dependent: :destroy
+  has_many :innovation_brainstormings, dependent: :destroy
   before_validation :strip_first_name_last_name
 
   MAX_NAME_LENGTH = 15
@@ -59,6 +61,10 @@ class User < ApplicationRecord
   def strip_first_name_last_name
     first_name&.strip!
     last_name&.strip!
+  end
+
+  def self.admin_select_options
+    order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
   end
 
   def self.ransackable_attributes(_auth_object = nil)

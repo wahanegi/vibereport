@@ -42,7 +42,7 @@ RSpec.describe Emotion, type: :model do
     it { is_expected.to validate_length_of(:word).is_at_least(2).is_at_most(15) }
 
     context 'uniqueness of word within category' do
-      let!(:existing_emotion) { create(:emotion, word: 'pressured', category: :positive) }
+      let!(:existing_emotion) { create(:emotion, word: 'pressured_spec', category: :positive) }
 
       it 'does not allow the same emotion word with the same category' do
         new_emotion = FactoryBot.build(:emotion, word: existing_emotion.word, category: existing_emotion.category)
@@ -73,19 +73,18 @@ RSpec.describe Emotion, type: :model do
 
   describe '#create' do
     it 'creates a new Emotion' do
-      expect { Emotion.create(word: 'well', category: "positive", public: false) }.to change(Emotion, :count).by(1)
+      expect { Emotion.create(word: 'well', category: 'positive', public: false) }.to change(Emotion, :count).by(1)
     end
 
     context 'with existing emotion word' do
-      let!(:existing_emotion) { create(:emotion, word: 'happy', category: 'positive', public: false) }
-      let(:emotion_params) { { emotion: { word: 'happy', category: 'positive', public: false } } }
+      let!(:existing_emotion) { create(:emotion, word: 'existingword', category: 'positive', public: false) }
 
       it 'creates with existing emotion word and new category' do
-        expect { Emotion.create(word: 'happy', category: 'negative', public: false) }.to change(Emotion, :count)
+        expect { Emotion.create(word: 'existingword', category: 'negative', public: false) }.to change(Emotion, :count)
       end
 
       it 'does not create with existing emotion word and category' do
-        expect { Emotion.create(word: 'happy', category: 'positive', public: false) }.not_to change(Emotion, :count)
+        expect { Emotion.create(word: 'existingword', category: 'positive', public: false) }.not_to change(Emotion, :count)
       end
     end
 

@@ -51,6 +51,7 @@ class Api::V1::EmotionsController < ApplicationController
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
       users: User.ordered.as_json(only: %i[id first_name last_name]),
       fun_question:,
+      innovation_topic:,
       user_shoutouts: current_user.shoutouts.not_celebrate,
       check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id])
                                       .as_json(methods: %i[first_working_day last_working_day]),
@@ -88,6 +89,42 @@ class Api::V1::EmotionsController < ApplicationController
       user_name: fun_question.user&.full_name,
       question_body: fun_question.question_body,
       time_period_id: fun_question.time_period_id
+    }
+  end
+
+  def innovation_topic
+    period = time_period
+
+    existing = InnovationTopic.find_by(time_period_id: period.id)
+    return prepared_innovation_topic(existing) if existing.present?
+
+    topic = nil
+    InnovationTopic.transaction do
+      period.lock!
+
+      existing = InnovationTopic.find_by(time_period_id: period.id)
+      if existing.present?
+        topic = existing
+        break
+      end
+
+      topic = InnovationTopic.unposted
+                             .where(time_period_id: nil)
+                             .order(Arel.sql('RANDOM()'))
+                             .first
+
+      break if topic.blank?
+
+      topic.update!(posted: true, time_period_id: period.id)
+    end
+    topic.present? ? prepared_innovation_topic(topic) : nil
+  end
+
+  def prepared_innovation_topic(topic)
+    {
+      id: topic.id,
+      innovation_body: topic.innovation_body,
+      time_period_id: topic.time_period_id
     }
   end
 
