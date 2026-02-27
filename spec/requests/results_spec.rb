@@ -30,6 +30,8 @@ RSpec.describe Api::V1::ResultsController do
     end
 
     context 'with valid token' do
+      before { create(:response, user: user, time_period: time_period) }
+
       it 'signs in the user and redirects to results' do
         get '/api/v1/results_email', params: { token: valid_token }
 

@@ -29,15 +29,31 @@ module Api
       end
 
       def response_flow_from_email
-        sign_in user
+        payload = SignedLinks::ResponseFlowBuilder.verify(params[:token])
+        return redirect_to_invalid_link if payload.blank?
+
+        @user = User.find_by(id: payload[:user_id].to_i)
+        return redirect_to_invalid_link if @user.blank?
+
+        time_period = TimePeriod.find_by(id: payload[:time_period_id].to_i)
+        return redirect_to_invalid_link if time_period.blank?
+
+        sign_in @user
         reset_time_period_index
-        result = ResponseFlowFromEmail.new(params, @user).call
-        if params[:time_period_id] == TimePeriod.current.id.to_s
+        result = ResponseFlowFromEmail.new(
+          @user,
+          time_period_id: payload[:time_period_id].to_i,
+          last_step: payload[:last_step],
+          not_working: payload[:not_working],
+          emotion_id: payload[:emotion_id]&.to_i,
+          completed_at: payload[:completed_at]
+        ).call
+        if payload[:time_period_id].to_i == TimePeriod.current.id
           return redirect_to root_path if result[:success]
 
           render json: { error: result[:error] }, status: :unprocessable_entity
         else
-          session[:check_in_time_period_id] = params[:time_period_id]
+          session[:check_in_time_period_id] = payload[:time_period_id].to_i
           redirect_to '/check-in-closed'
         end
       end
@@ -50,8 +66,13 @@ module Api
       end
 
       def sign_in_from_email
-        user
-        sign_in user
+        payload = SignedLinks::SignInFromEmailBuilder.verify(params[:token])
+        return redirect_to_invalid_link if payload.blank?
+
+        @user = User.find_by(id: payload[:user_id].to_i)
+        return redirect_to_invalid_link if @user.blank?
+
+        sign_in @user
         redirect_to root_path
       end
 
@@ -75,6 +96,10 @@ module Api
 
       def user
         @user ||= User.find_by(id: params[:user_id])
+      end
+
+      def redirect_to_invalid_link
+        redirect_to new_user_session_path, alert: 'Invalid or expired link'
       end
 
       def complete_response
