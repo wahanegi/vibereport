@@ -63,6 +63,7 @@ RSpec.describe UserEmailMailer, type: :mailer do
   end
 
   describe '#auto_remind_checkin' do
+    let!(:fun_question) { create(:fun_question, time_period: time_period) }
     let(:mail) { described_class.auto_remind_checkin(user, time_period) }
 
     it 'includes sign_in link with token in body' do
