@@ -171,10 +171,10 @@
             <div class="emotions d-flex">
               <% (0..3).each do |col| %>
                 <% cell = @table[(row * 4 + col)] %>
+                <% next if cell.nil? %>
                 <div class="<%= "btn-emotion #{cell.category}" %>"
                style="min-width: <%= btn_special(cell.word, :width)%>px; margin: 5px <%= btn_special(cell.word, :margin)%>px; padding: 8px 0; line-height: 1;">
-                  <% @link_for_emotion[:emotion_id] = cell.id %>
-                  <%= link_to cell.word, @link_for_emotion, class: "#{cell.category}-a" %>
+                  <%= link_to cell.word, @emotion_links[cell.id], class: "#{cell.category}-a" %>
                 </div>
               <% end %>
             </div>
@@ -184,9 +184,7 @@
         <div class='neutral-area' style="padding: 10px 0;">
           <div class="neutral-btns" style="display: flex">
             <div class="btn-emotion neutral" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
-              <%= link_to "Show me different words", { controller: 'api/v1/responses',
-                                                 action: 'sign_in_from_email',
-                                                 user_id: @user.id }, class: "neutral-a" %>
+              <%= link_to "Show me different words", @url_sign_in_from_email, class: "neutral-a" %>
             </div>
             <div class="btn-emotion neutral gap" style="width: 260px; margin: 0 auto; padding: 8px 0; line-height: 1;">
               <%= link_to "I'd rather not say...", @link_for_not_say, class: "neutral-a" %>
@@ -202,9 +200,7 @@
         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="stack-column" style="margin-top: 40px;">
           <tr>
             <td class="lnk-unsubscribe">
-              <%= link_to "Unsubscribe from future check-ins", { controller: "api/v1/users",
-                                                            action: "unsubscribe",
-                                                            user_id: @user.id } %>
+              <%= link_to "Unsubscribe from future check-ins", @url_unsubscribe %>
             </td>
             <td class="lnk-was-not" style="text-align: end;">
               <%= link_to "I was not working recently", @link_for_was_not %>

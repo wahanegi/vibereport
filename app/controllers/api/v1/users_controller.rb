@@ -12,18 +12,14 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def unsubscribe
-    return redirect_to '/unsubscribe' if sign_in(user)
+    payload = SignedLinks::UnsubscribeBuilder.verify(params[:token])
+    return redirect_to(new_user_session_path, alert: 'Invalid or expired link') if payload.blank?
 
-    render json: { error: 'Not sign in user' }, status: :unprocessable_entity
-  end
+    @user = User.find_by(id: payload[:user_id].to_i)
+    return redirect_to(new_user_session_path, alert: 'Invalid or expired link') if @user.blank?
 
-  def send_reminder
-    @user = User.find(params[:id])
-    general_link = api_v1_response_flow_from_email_url(time_period_id: TimePeriod.current.id, user_id: @user.id)
-
-    UserEmailMailer.send_reminder(@user, general_link).deliver_now
-
-    redirect_to admin_dashboard_path, notice: "Reminder sent to #{@user.full_name}"
+    sign_in @user
+    redirect_to '/unsubscribe'
   end
 
   private
