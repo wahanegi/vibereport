@@ -78,6 +78,12 @@ ActiveAdmin.register User do
     end
   end
 
+  member_action :send_reminder, method: :post do
+    general_link = SignedLinks::ResponseFlowBuilder.url(resource, TimePeriod.current)
+    UserEmailMailer.send_reminder(resource, general_link).deliver_now
+    redirect_to admin_dashboard_path, notice: "Reminder sent to #{resource.full_name}"
+  end
+
   form do |f|
     f.inputs do
       f.input :first_name

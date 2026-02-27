@@ -22,15 +22,6 @@ class Api::V1::UsersController < ApplicationController
     redirect_to '/unsubscribe'
   end
 
-  def send_reminder
-    @user = User.find(params[:id])
-    general_link = SignedLinks::ResponseFlowBuilder.url(@user, TimePeriod.current)
-
-    UserEmailMailer.send_reminder(@user, general_link).deliver_now
-
-    redirect_to admin_dashboard_path, notice: "Reminder sent to #{@user.full_name}"
-  end
-
   private
 
   def user_params

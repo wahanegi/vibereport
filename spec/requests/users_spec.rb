@@ -54,30 +54,9 @@ RSpec.describe Api::V1::UsersController do
     end
   end
 
-  describe 'POST #send_reminder' do
-    context 'when sending reminder to user' do
-      let(:mailer) { double('UserEmailMailer', deliver_now: true) }
-
-      before do
-        allow(UserEmailMailer).to receive(:send_reminder).and_return(mailer)
-        post send_reminder_api_v1_user_path(user.id)
-      end
-
-      it 'sends the reminder email' do
-        expect(UserEmailMailer).to have_received(:send_reminder)
-      end
-
-      it 'passes user and a signed URL (with token) to the mailer' do
-        expect(UserEmailMailer).to have_received(:send_reminder).with(user, a_string_matching(/token=/))
-      end
-
-      it 'redirects to the admin dashboard path' do
-        expect(response).to redirect_to(admin_dashboard_path)
-      end
-
-      it 'displays the success notice' do
-        expect(flash[:notice]).to eq("Reminder sent to #{user.full_name}")
-      end
+  describe 'POST send_reminder (security: must not be exposed on public API)' do
+    it 'has no route so reminder cannot be triggered via API' do
+      expect { post "/api/v1/users/#{user.id}/send_reminder" }.to raise_error(ActionController::RoutingError)
     end
   end
 end
