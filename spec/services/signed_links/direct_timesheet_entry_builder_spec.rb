@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe TimeSheets::DirectLinkBuilder do
+RSpec.describe SignedLinks::DirectTimesheetEntryBuilder do
   include ActiveSupport::Testing::TimeHelpers
 
   let(:user) { create(:user) }
