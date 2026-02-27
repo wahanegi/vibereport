@@ -251,7 +251,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       it 'redirects to sign in with alert' do
         expired_token = token
 
-        travel(8.days) do
+        travel(SignedLinks::DirectTimesheetEntryBuilder::TOKEN_TTL + 1.day) do
           get '/api/v1/direct_timesheet_entry', params: { token: expired_token }
 
           expect(response).to redirect_to(new_user_session_path)
