@@ -1,5 +1,4 @@
 module ActiveAdminHelpers
-  URL = { controller: 'api/v1/responses', action: 'response_flow_from_email' }.freeze
   VISIBLE_BUBBLES = 3
 
   def self.time_period_vars(
@@ -15,26 +14,63 @@ module ActiveAdminHelpers
 
     vars[:emotion_index] = EmotionIndex.new(team, time_period).generate if only.include?(:emotion_index)
     vars[:emotion_index_all] = EmotionIndex.new(team, all_time_periods).generate if only.include?(:emotion_index_all)
-    vars[:emotion_index_current_period] = EmotionIndex.new(team, current_period).generate if only.include?(:emotion_index_current_period)
+    if only.include?(:emotion_index_current_period)
+      vars[:emotion_index_current_period] =
+        EmotionIndex.new(team, current_period).generate
+    end
 
     vars[:productivity_avg] = ProductivityAverage.new(team, time_period).generate if only.include?(:productivity_avg)
-    vars[:productivity_avg_all] = ProductivityAverage.new(team, all_time_periods).generate if only.include?(:productivity_avg_all)
-    vars[:productivity_average_current_period] = ProductivityAverage.new(team, current_period).generate if only.include?(:productivity_average_current_period)
+    if only.include?(:productivity_avg_all)
+      vars[:productivity_avg_all] =
+        ProductivityAverage.new(team, all_time_periods).generate
+    end
+    if only.include?(:productivity_average_current_period)
+      vars[:productivity_average_current_period] =
+        ProductivityAverage.new(team, current_period).generate
+    end
 
-    vars[:participation_percentage] = ParticipationPercentage.new(team, time_period).generate if only.include?(:participation_percentage)
-    vars[:participation_percentage_all] = ParticipationPercentage.new(team, all_time_periods).generate if only.include?(:participation_percentage_all)
+    if only.include?(:participation_percentage)
+      vars[:participation_percentage] =
+        ParticipationPercentage.new(team, time_period).generate
+    end
+    if only.include?(:participation_percentage_all)
+      vars[:participation_percentage_all] =
+        ParticipationPercentage.new(team, all_time_periods).generate
+    end
 
-    vars[:productivity_verbatims] = ProductivityVerbatims.new(team, team.nil? ? current_period : time_period).generate if only.include?(:productivity_verbatims)
+    if only.include?(:productivity_verbatims)
+      vars[:productivity_verbatims] =
+        ProductivityVerbatims.new(team,
+                                  team.nil? ? current_period : time_period).generate
+    end
 
-    vars[:celebrate_comments_count] = CelebrationsCount.new(team, time_period).generate if only.include?(:celebrate_comments_count)
-    vars[:celebrate_comments_count_all] = CelebrationsCount.new(team, all_time_periods).generate if only.include?(:celebrate_comments_count_all)
-    vars[:celebrations_count_current_period] = CelebrationsCount.new(team, current_period).generate if only.include?(:celebrations_count_current_period)
+    if only.include?(:celebrate_comments_count)
+      vars[:celebrate_comments_count] =
+        CelebrationsCount.new(team, time_period).generate
+    end
+    if only.include?(:celebrate_comments_count_all)
+      vars[:celebrate_comments_count_all] =
+        CelebrationsCount.new(team, all_time_periods).generate
+    end
+    if only.include?(:celebrations_count_current_period)
+      vars[:celebrations_count_current_period] =
+        CelebrationsCount.new(team, current_period).generate
+    end
 
     vars[:celebrate_verbatims] = CelebrationVerbatims.new(team, time_period).generate if only.include?(:celebrate_verbatims)
 
-    vars[:teammate_engagement_count] = TeammateEngagementCount.new(team, time_period).generate if only.include?(:teammate_engagement_count)
-    vars[:teammate_engagement_count_all] = TeammateEngagementCount.new(team, all_time_periods).generate if only.include?(:teammate_engagement_count_all)
-    vars[:teammate_engagement_count_current_period] = TeammateEngagementCount.new(team, current_period).generate if only.include?(:teammate_engagement_count_current_period)
+    if only.include?(:teammate_engagement_count)
+      vars[:teammate_engagement_count] =
+        TeammateEngagementCount.new(team, time_period).generate
+    end
+    if only.include?(:teammate_engagement_count_all)
+      vars[:teammate_engagement_count_all] =
+        TeammateEngagementCount.new(team, all_time_periods).generate
+    end
+    if only.include?(:teammate_engagement_count_current_period)
+      vars[:teammate_engagement_count_current_period] =
+        TeammateEngagementCount.new(team, current_period).generate
+    end
 
     vars[:verbatim_list] = TeammateEngagementVerbatims.new(team, time_period).generate if only.include?(:verbatim_list)
 
@@ -43,12 +79,31 @@ module ActiveAdminHelpers
     vars[:shoutout_user_names] = ShoutoutAuthorReport.new(team, time_period).generate if only.include?(:shoutout_user_names)
 
     if previous_time_period
-      vars[:previous_shoutouts_count] = ShoutoutsCountReport.new(team, previous_time_period).generate if only.include?(:previous_shoutouts_count)
-      vars[:previous_emotion_index] = EmotionIndex.new(team, previous_time_period).generate if only.include?(:previous_emotion_index)
-      vars[:previous_productivity_avg] = ProductivityAverage.new(team, previous_time_period).generate if only.include?(:previous_productivity_avg)
-      vars[:previous_participation_percentage] = ParticipationPercentage.new(team, previous_time_period).generate if only.include?(:previous_participation_percentage)
-      vars[:previous_celebrate_comments_count] = CelebrationsCount.new(team, previous_time_period).generate if only.include?(:previous_celebrate_comments_count)
-      vars[:previous_teammate_engagement_count] = TeammateEngagementCount.new(team, previous_time_period).generate if only.include?(:previous_teammate_engagement_count)
+      if only.include?(:previous_shoutouts_count)
+        vars[:previous_shoutouts_count] =
+          ShoutoutsCountReport.new(team, previous_time_period).generate
+      end
+      if only.include?(:previous_emotion_index)
+        vars[:previous_emotion_index] =
+          EmotionIndex.new(team, previous_time_period).generate
+      end
+      if only.include?(:previous_productivity_avg)
+        vars[:previous_productivity_avg] =
+          ProductivityAverage.new(team, previous_time_period).generate
+      end
+      if only.include?(:previous_participation_percentage)
+        vars[:previous_participation_percentage] =
+          ParticipationPercentage.new(team, previous_time_period).generate
+      end
+      if only.include?(:previous_celebrate_comments_count)
+        vars[:previous_celebrate_comments_count] =
+          CelebrationsCount.new(team, previous_time_period).generate
+      end
+      if only.include?(:previous_teammate_engagement_count)
+        vars[:previous_teammate_engagement_count] =
+          TeammateEngagementCount.new(team,
+                                      previous_time_period).generate
+      end
     end
 
     vars

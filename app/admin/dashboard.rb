@@ -37,7 +37,7 @@ ActiveAdmin.register_page 'Dashboard' do
             column 'Reminder Link' do |user|
               if current_time_period
                 div class: 'custom-textarea-style' do
-                  text_node api_v1_response_flow_from_email_url(time_period_id: current_time_period.id, user_id: user.id)
+                  text_node SignedLinks::ResponseFlowBuilder.url(user, current_time_period)
                 end
               else
                 text_node 'No current TimePeriod available.'
