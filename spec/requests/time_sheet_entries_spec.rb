@@ -171,7 +171,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date)
       end
       let(:token) do
-        url = SignedLinks::DirectTimesheetEntryBuilder.call(user, overdue_period)
+        url = TimeSheets::DirectLinkBuilder.call(user, overdue_period)
         Rack::Utils.parse_query(URI.parse(url).query)['token']
       end
 
@@ -209,7 +209,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     let!(:overdue_period) { create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date) }
 
     let(:token) do
-      url = SignedLinks::DirectTimesheetEntryBuilder.call(user, overdue_period)
+      url = TimeSheets::DirectLinkBuilder.call(user, overdue_period)
       Rack::Utils.parse_query(URI.parse(url).query)['token']
     end
 
@@ -251,7 +251,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       it 'redirects to sign in with alert' do
         expired_token = token
 
-        travel(SignedLinks::DirectTimesheetEntryBuilder::TOKEN_TTL + 1.day) do
+        travel(TimeSheets::DirectLinkBuilder::TOKEN_TTL + 1.day) do
           get '/api/v1/direct_timesheet_entry', params: { token: expired_token }
 
           expect(response).to redirect_to(new_user_session_path)
@@ -299,7 +299,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       let!(:future_period) { create(:time_period, start_date: 1.week.from_now.to_date, end_date: 2.weeks.from_now.to_date, due_date: 10.days.from_now.to_date) }
 
       let(:non_overdue_token) do
-        url = SignedLinks::DirectTimesheetEntryBuilder.call(user, future_period)
+        url = TimeSheets::DirectLinkBuilder.call(user, future_period)
         Rack::Utils.parse_query(URI.parse(url).query)['token']
       end
 

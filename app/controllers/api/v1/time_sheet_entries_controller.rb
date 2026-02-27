@@ -42,7 +42,7 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   end
 
   def direct_entry
-    payload = SignedLinks::DirectTimesheetEntryBuilder.verify(params[:token])
+    payload = TimeSheets::DirectLinkBuilder.verify(params[:token])
 
     if payload.blank?
       session.delete(:direct_timesheet_time_period_id)

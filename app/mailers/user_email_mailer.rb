@@ -68,7 +68,7 @@ class UserEmailMailer < ApplicationMailer
     @user = user
     @missing_periods = Array(missing_periods).sort_by(&:due_date)
     @links = @missing_periods.map do |period|
-      { period: period, url: SignedLinks::DirectTimesheetEntryBuilder.call(user, period) }
+      { period: period, url: TimeSheets::DirectLinkBuilder.call(user, period) }
     end
     @intro_message = 'You are required to fill out your timesheet for past periods. Please complete it as soon as possible.'
 
