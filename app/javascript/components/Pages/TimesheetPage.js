@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   calculateBillableHours,
   rangeFormat,
@@ -11,16 +12,21 @@ import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
+import SweetAlert from "../UI/SweetAlert";
 
 const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
-  
-  const timesheetDate = rangeFormat(data.time_period || {});
-  const { isLoading, setIsLoading } = service;
+  const navigate = useNavigate();
+
   const [rowsData, setRowsData] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isDraft, setIsDraft] = useState(true);
   const [billableError, setBillableError] = useState(null);
+
+  const { isLoading, setIsLoading } = service;
+
+  const timesheetDate = rangeFormat(data.time_period || {});
+  const isDirectTimesheetMode = Boolean(data?.direct_timesheet)
 
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
@@ -30,7 +36,10 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
-      apiRequest('GET', {}, (response) => { setProjects(response.data);}, () => {}, projectsURL),
+      apiRequest('GET', {}, (response) => {
+        setProjects(response.data);
+      }, () => {
+      }, projectsURL),
       apiRequest('GET', {}, (response) => {
         const transformedEntries = response.data.map((entry) =>
           transformTimesheetEntry(entry, response.included)
@@ -39,7 +48,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
         if (transformedEntries.length === 0) {
           handleAddRow();
         }
-      }, () => {}, timesheetsURL),
+      }, () => { }, timesheetsURL),
     ]).catch((error) => setFetchError(error.message))
       .finally(() => setIsLoading(false));
   }, []);
@@ -57,7 +66,8 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
   }, [rowsData, projects]);
 
   // Function to submit the timesheet
-  const submitTimesheet = (isDraft = false, onSuccess = () => {}) => {
+  const submitTimesheet = (isDraft = false, onSuccess = () => {
+  }) => {
     const formattedEntries = rowsData.map((row) => ({
       id: String(row.id).startsWith('new_') ? undefined : row.id,
       project_id: row.project_id,
@@ -66,24 +76,64 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
 
     const payload = {
       time_sheet_entries: formattedEntries,
+      final_submit: isDirectTimesheetMode && !isDraft,
     };
-    
-    apiRequest('POST', payload, (responseData) => {
+
+    setIsLoading(true);
+
+    apiRequest(
+      'POST',
+      payload,
+      (responseData) => {
         setRowsData(responseData.data.map((entry) =>
-            transformTimesheetEntry(entry, responseData.included)
+          transformTimesheetEntry(entry, responseData.included)
         ));
-      }, () => {}, upsertURL,
-      (error) => {console.error('Upsert failed:', error);}
+
+        // Logic for direct timesheet flow
+        if (isDirectTimesheetMode) {
+          if (!isDraft) {
+            const slug = responseData?.meta?.time_period_slug
+
+            if (!slug) {
+              setFetchError('Something went wrong. Please try again.');
+              setIsLoading(false);
+              return;
+            }
+
+            onSuccess();
+            setIsLoading(false);
+
+            SweetAlert({
+              alertTitle: 'Success!',
+              alertHtml: 'Your timesheet has been successfully saved. You may now close this page.',
+              confirmButtonText: 'OK',
+              showCancelButton: false,
+              onConfirmAction: () => navigate(`/results/${slug}`),
+              onDeclineAction: () => navigate(`/results/${slug}`)
+            });
+
+            return;
+          }
+        }
+
+        // Logic for normal flow
+        if (!isDraft) {
+          steps.push('causes-to-celebrate');
+          saveDataToDb(steps, { draft: false });
+        } else {
+          saveDataToDb(steps, { draft: true });
+        }
+        onSuccess();
+        setIsLoading(false);
+      },
+      () => { },
+      upsertURL,
+      (error) => {
+        setFetchError('Failed to save timesheet. Please try again.');
+        setIsLoading(false);
+        console.error('Upsert failed:', error);
+      }
     );
-
-    if (!isDraft) {
-      steps.push('causes-to-celebrate');
-      saveDataToDb(steps, { draft: false });
-    } else {
-
-      saveDataToDb(steps, { draft: true });
-    }
-    onSuccess();
   };
 
   const saveDraft = () => {
@@ -123,7 +173,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
         () => {
           setRowsData((prevRows) => prevRows.filter((row) => row.id !== id));
         },
-        () => {},
+        () => { },
         `${timesheetsURL}/${id}`,
         (error) => {
           setFetchError(`Failed to delete timesheet entry: ${error.message}`);
@@ -197,6 +247,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
             disabled={!canSubmit || billableError}
             stringBody="Submit"
             isSubmit={true}
+            isDirectTimesheetMode={isDirectTimesheetMode}
           />
         </div>
       </div>

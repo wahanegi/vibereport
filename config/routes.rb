@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       get '/all_emotions', to: 'emotions#all_emotions'
       get '/sign_out_user', to: 'responses#sign_out_user'
       get '/sign_in_from_email', to: 'responses#sign_in_from_email'
+      get '/direct_timesheet_entry', to: 'time_sheet_entries#direct_entry', as: :direct_timesheet_entry
       get '/results_email', to: 'results#results_email'
       get '/result', to: 'results#show'
       get '/unsubscribe', to: 'users#unsubscribe'
