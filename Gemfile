@@ -17,7 +17,7 @@ gem 'jsonapi-serializer', '~> 2.2'                            # Fast, simple and
 gem 'nokogiri'                                                # premailer-rails requires either nokogiri or hpricot.
 gem 'pg', '~> 1.1'                                            # Postgres gem
 gem 'premailer-rails'                                         # gem is a drop in solution for styling HTML emails with CSS without having to do the hard work yourself.
-gem 'puma', '~> 6.4', '>= 6.4.2'                                          # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
+gem 'puma', '~> 6.4', '>= 6.4.2'                              # Webserver recommended by heroku: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 gem 'rack-cors', '~> 2.0', '>= 2.0.2'                         # Middleware that will make Rack-based apps CORS compatible. Fork the project here: https://github.com/cyu/rack-cors
 gem 'rails', '~> 7.2.2.1'                                     # Ruby on Rails is a full-stack web framework.
 gem 'redis', '~> 4.0'                                         # A Ruby client that tries to match Redis' API one-to-one
@@ -35,8 +35,8 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]                 # Debugging functionality for Ruby.
   gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'                        # Allows override of local ENV variables in an .env file (see https://github.com/bkeepers/dotenv#usage)
   gem 'factory_bot_rails'                                         # Test data generator -- see spec/support/factory_helper.rb
-  gem 'faker', git: 'https://github.com/faker-ruby/faker.git' # Easy way to add fake data: names, email addresses, etc.
-  gem 'rspec-rails', '>= 6.0.3' # rspec-rails is a testing framework for Rails 5+.
+  gem 'faker', git: 'https://github.com/faker-ruby/faker.git'     # Easy way to add fake data: names, email addresses, etc.
+  gem 'rspec-rails', '>= 6.0.3'                                   # rspec-rails is a testing framework for Rails 5+.
 end
 
 group :development do
@@ -58,8 +58,4 @@ group :test do
   gem 'shoulda-matchers'              # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'simplecov', require: false     # Code coverage for Ruby. See https://github.com/simplecov-ruby/simplecov for setting options
   gem 'webdrivers'                    # Run Selenium tests more easily with install and updates for all supported webdrivers.
-end
-
-group :production do
-  gem 'postmark-rails', '~> 0.22.1'   # Mail service for our production server: https://www.postmarkapp.com
 end
