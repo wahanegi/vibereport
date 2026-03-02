@@ -39,7 +39,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
       steps.push('causes-to-celebrate')
       saveDataToDb(steps, {draft: false})
     } else
-      steps.push('icebreaker-answer')
+      steps.push('innovation-brainstorming')
     saveDataToDb(steps, {draft: false})
   }
   const skipHandling = () => {
@@ -70,38 +70,30 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
   const output = (shoutOuts) => {
     return (
-        <ul className="d-flex flex-column gap-2 py-2 list-unstyled">
-          {shoutOuts.map(shoutOut => (
-              <li
-                  className="bg-light position-relative align-middle border rounded-4 border-4 border-primary p-1 text-break pe-10 w-100"
-                  key={shoutOut.id}>
-                <p className="text-start fs-7 fs-sm-5 fs-md-4 fw-semibold m-0 text-truncate">{parse(
-                    shoutOut.rich_text)}</p>
-                <div
-                    className="position-absolute top-50 end-0 translate-middle-y d-flex">
-                  <img id={shoutOut.id} src={edit_pencil} alt="pencil"
-                       className="pointer" onClick={editHandling}/>
-                  <span className="expand-link"
-                        onMouseEnter={(e) =>
-                            e.currentTarget.querySelector('.trash').
-                                classList.
-                                add('d-none') ||
-                            e.currentTarget.querySelector('.trashRed').
-                                classList.
-                                remove('d-none')}
-                        onMouseLeave={(e) =>
-                            e.currentTarget.querySelector('.trash').
-                                classList.
-                                remove('d-none') ||
-                            e.currentTarget.querySelector('.trashRed').
-                                classList.
-                                add('d-none')}
-                  >
+      <ul className="d-flex flex-column gap-2 py-2 list-unstyled">
+        {shoutOuts.map(shoutOut => (
+          <li
+            className="bg-light position-relative align-middle border rounded-4 border-4 border-primary p-1 text-break pe-10 w-100"
+            key={shoutOut.id}>
+            <p className="text-start fs-7 fs-sm-5 fs-md-4 fw-semibold m-0 text-truncate">{parse(
+              shoutOut.rich_text)}</p>
+            <div
+              className="position-absolute top-50 end-0 translate-middle-y d-flex">
+              <img id={shoutOut.id} src={edit_pencil} alt="pencil"
+                   className="pointer" onClick={editHandling} />
+              <span className="expand-link"
+                    onMouseEnter={(e) =>
+                      e.currentTarget.querySelector('.trash').classList.add('d-none') ||
+                      e.currentTarget.querySelector('.trashRed').classList.remove('d-none')}
+                    onMouseLeave={(e) =>
+                      e.currentTarget.querySelector('.trash').classList.remove('d-none') ||
+                      e.currentTarget.querySelector('.trashRed').classList.add('d-none')}
+              >
             <img src={trash} alt="trash" className="trash"
-                 onClick={trashHandling}/>
+                 onClick={trashHandling} />
             <img id={'trashRed' + shoutOut.id} src={trashRed} alt="trash"
                  className="trashRed d-none"
-                 onClick={trashHandling}/>
+                 onClick={trashHandling} />
           </span>
             </div>
           </li>
@@ -126,12 +118,12 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
         {!numShoutOuts &&
           <div className='mb-6'>
             <h2 className='fs-md-4 text-black mb-4'>
-              Consider giving members of your team a <br/>
+              Consider giving members of your team a <br />
               Shoutout to show your appreciation.
             </h2>
             <div className='shoutout-container position-relative'>
               <ShoutoutButton data={data} setData={setData} isDraft={isDraft} saveDataToDb={saveDataToDb} steps={steps}
-                              draft={isDraft} handleSaveDraft={handleSaveDraft} isMove={true}/>
+                              draft={isDraft} handleSaveDraft={handleSaveDraft} isMove={true} />
             </div>
             <p className='gray-600 mt-1 fw-bold'>Click to give a Shoutout!</p>
           </div>
@@ -145,34 +137,34 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
           </div>
         }
 
-          {!!numShoutOuts &&
-              <div className="d-flex d-sm-flex flex-column mx-auto"
-                   style={{maxWidth: '884px'}}>
-                {shoutOutForm.status &&
-                    <ShoutoutModal shoutOutForm={shoutOutForm}
-                                   setShoutOutForm={setShoutOutForm}
-                                   data={data}
-                                   setData={setData}
-                                   editObj={shoutOutForm.editObj}/>}
-                <div
-                    className="container justify-content-center border border-4 rounded-4 border-primary field-shout-outs w-100">
-                  {output(shoutOuts)}
-                </div>
-                <p className="m-0 mt-4 fs-8 fs-md-7">Any more shoutouts to
-                  give?</p>
-                <div className={'shoutout-container-small position-relative'}>
-                  <ShoutoutButton data={data} setData={setData}
-                                  isDraft={isDraft} saveDataToDb={saveDataToDb}
-                                  steps={steps}
-                                  draft={isDraft}
-                                  handleSaveDraft={handleSaveDraft}
-                                  num={numShoutOuts} isMove={true}/>
-                </div>
-              </div>
-          }
+        {!!numShoutOuts &&
+          <div className="d-flex d-sm-flex flex-column mx-auto"
+               style={{maxWidth: '884px'}}>
+            {shoutOutForm.status &&
+              <ShoutoutModal shoutOutForm={shoutOutForm}
+                             setShoutOutForm={setShoutOutForm}
+                             data={data}
+                             setData={setData}
+                             editObj={shoutOutForm.editObj} />}
+            <div
+              className="container justify-content-center border border-4 rounded-4 border-primary field-shout-outs w-100">
+              {output(shoutOuts)}
+            </div>
+            <p className="m-0 mt-4 fs-8 fs-md-7">Any more shoutouts to
+              give?</p>
+            <div className={'shoutout-container-small position-relative'}>
+              <ShoutoutButton data={data} setData={setData}
+                              isDraft={isDraft} saveDataToDb={saveDataToDb}
+                              steps={steps}
+                              draft={isDraft}
+                              handleSaveDraft={handleSaveDraft}
+                              num={numShoutOuts} isMove={true} />
+            </div>
+          </div>
+        }
 
-        {isModal && <ShoutoutDelete onClose={onClose} data={data} setData={setData} idShoutout={idShoutout}/>}
-        <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts}/>
+        {isModal && <ShoutoutDelete onClose={onClose} data={data} setData={setData} idShoutout={idShoutout} />}
+        <BlockLowerBtns skipHandling={skipHandling} nextHandling={nextHandling} isNext={!!numShoutOuts} />
       </div>
     </Layout>
   );
