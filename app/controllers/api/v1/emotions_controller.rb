@@ -98,26 +98,26 @@ class Api::V1::EmotionsController < ApplicationController
     existing = InnovationTopic.find_by(time_period_id: period.id)
     return prepared_innovation_topic(existing) if existing.present?
 
-    # topic = nil
-    # InnovationTopic.transaction do
-    #   period.lock!
-    #
-    #   existing = InnovationTopic.find_by(time_period_id: period.id)
-    #   if existing.present?
-    #     topic = existing
-    #     break
-    #   end
-    #
-    #   topic = InnovationTopic.unposted
-    #                          .where(time_period_id: nil)
-    #                          .order(Arel.sql('RANDOM()'))
-    #                          .first
-    #
-    #   break if topic.blank?
-    #
-    #   topic.update!(posted: true, time_period_id: period.id)
-    # end
-    # topic.present? ? prepared_innovation_topic(topic) : nil
+    topic = nil
+    InnovationTopic.transaction do
+      period.lock!
+
+      existing = InnovationTopic.find_by(time_period_id: period.id)
+      if existing.present?
+        topic = existing
+        break
+      end
+
+      topic = InnovationTopic.unposted
+                             .where(time_period_id: nil)
+                             .order(Arel.sql('RANDOM()'))
+                             .first
+
+      break if topic.blank?
+
+      topic.update!(posted: true, time_period_id: period.id)
+    end
+    topic.present? ? prepared_innovation_topic(topic) : nil
   end
 
   def prepared_innovation_topic(topic)
