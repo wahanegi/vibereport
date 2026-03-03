@@ -42,34 +42,59 @@ RSpec.describe Api::V1::EmotionsController do
     end
 
     context 'innovation_topic' do
-      it 'includes innovation_topic when an unposted topic exists and marks it as posted' do
-        topic = create(:innovation_topic, posted: false, time_period_id: nil, user: user)
+      it 'returns topic pre-assigned to current period and sets posted on first request' do
+        current_period = TimePeriod.find_or_create_time_period
+        topic = create(:innovation_topic, posted: false, time_period: current_period, user: user)
         get '/api/v1/emotions'
         expect(response).to have_http_status(:success)
         expect(json[:innovation_topic]).to be_present
         expect(json[:innovation_topic][:id]).to eq(topic.id)
         expect(json[:innovation_topic][:innovation_body]).to eq(topic.innovation_body)
-        expect(json[:innovation_topic][:time_period_id]).to eq(TimePeriod.find_or_create_time_period.id)
+        expect(json[:innovation_topic][:time_period_id]).to eq(current_period.id)
         expect(topic.reload.posted).to eq(true)
-        expect(topic.reload.time_period_id).to eq(TimePeriod.find_or_create_time_period.id)
       end
 
-      it 'returns nil when no topic for current period and no unposted topics exist' do
+      it 'returns same topic on second request without updating posted again' do
+        current_period = TimePeriod.find_or_create_time_period
+        topic = create(:innovation_topic, posted: true, time_period: current_period, user: user)
+        get '/api/v1/emotions'
+        expect(response).to have_http_status(:success)
+        expect(json[:innovation_topic][:id]).to eq(topic.id)
+        get '/api/v1/emotions'
+        expect(response).to have_http_status(:success)
+        expect(json[:innovation_topic][:id]).to eq(topic.id)
+        expect(topic.reload.posted).to eq(true)
+      end
+
+      it 'returns nil when no topic assigned to current period' do
         create(:innovation_topic, posted: true, time_period_id: nil, user: user)
         get '/api/v1/emotions'
         expect(response).to have_http_status(:success)
         expect(json[:innovation_topic]).to be_nil
       end
 
-      it 'returns the same innovation_topic on subsequent requests when already assigned to period' do
-        topic = create(:innovation_topic, posted: false, time_period_id: nil, user: user)
-        get '/api/v1/emotions'
-        first_id = json[:innovation_topic][:id]
-        get '/api/v1/emotions'
-        expect(response).to have_http_status(:success)
-        expect(json[:innovation_topic][:id]).to eq(first_id)
-        expect(json[:innovation_topic][:id]).to eq(topic.id)
-      end
+      # Automatic topic selection when there is no admin-assigned topic (may be useful in the future)
+      # it 'includes innovation_topic when an unposed topic exists and marks it as posted' do
+      #   topic = create(:innovation_topic, posted: false, time_period_id: nil, user: user)
+      #   get '/api/v1/emotions'
+      #   expect(response).to have_http_status(:success)
+      #   expect(json[:innovation_topic]).to be_present
+      #   expect(json[:innovation_topic][:id]).to eq(topic.id)
+      #   expect(json[:innovation_topic][:innovation_body]).to eq(topic.innovation_body)
+      #   expect(json[:innovation_topic][:time_period_id]).to eq(TimePeriod.find_or_create_time_period.id)
+      #   expect(topic.reload.posted).to eq(true)
+      #   expect(topic.reload.time_period_id).to eq(TimePeriod.find_or_create_time_period.id)
+      # end
+
+      # it 'returns the same innovation_topic on subsequent requests when already assigned to period' do
+      #   topic = create(:innovation_topic, posted: false, time_period_id: nil, user: user)
+      #   get '/api/v1/emotions'
+      #   first_id = json[:innovation_topic][:id]
+      #   get '/api/v1/emotions'
+      #   expect(response).to have_http_status(:success)
+      #   expect(json[:innovation_topic][:id]).to eq(first_id)
+      #   expect(json[:innovation_topic][:id]).to eq(topic.id)
+      # end
     end
   end
 end
