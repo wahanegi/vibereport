@@ -1,3 +1,4 @@
+<%= content_tag(:div, flash[:alert], class: 'alert alert-danger') if flash[:alert].present? %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 	<div class="container-fluid py-3">
 		<div class="mx-1 mx-md-0">
