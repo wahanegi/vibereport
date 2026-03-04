@@ -268,7 +268,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         get '/api/v1/direct_timesheet_entry', params: { token: valid_token }
 
         expect(response).to redirect_to(new_user_session_path)
-        expect(flash[:alert]).to eq('Invalid link')
+        expect(flash[:alert]).to eq('Invalid or expired link')
       end
     end
 
@@ -280,7 +280,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         get '/api/v1/direct_timesheet_entry', params: { token: valid_token }
 
         expect(response).to redirect_to(new_user_session_path)
-        expect(flash[:alert]).to eq('Invalid link')
+        expect(flash[:alert]).to eq('Invalid or expired link')
       end
     end
 

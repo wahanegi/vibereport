@@ -176,7 +176,7 @@ RSpec.describe Api::V1::ResponsesController do
 
   describe 'GET #sign_in_from_email', :logged_out do
     let(:valid_token) do
-      url = SignedLinks::SignInFromEmailBuilder.url(user, time_period: TimePeriod.current)
+      url = SignedLinks::SignInFromEmailBuilder.url(user)
       Rack::Utils.parse_query(URI.parse(url).query)['token']
     end
 

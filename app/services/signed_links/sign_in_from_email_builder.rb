@@ -7,9 +7,8 @@ module SignedLinks
     ROUTE_NAME = :api_v1_sign_in_from_email_url
 
     class << self
-      def url(user, time_period: nil)
+      def url(user)
         payload = { user_id: user.id }
-        payload[:time_period_id] = time_period.id if time_period.present?
 
         Builder.build_url(
           purpose: PURPOSE,

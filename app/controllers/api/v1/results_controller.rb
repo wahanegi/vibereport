@@ -28,8 +28,8 @@ class Api::V1::ResultsController < ApplicationController
   private
 
   def results_email_error_message
-    return 'Time period not found' if time_period.blank?
-    return 'No responses found' if time_period.responses.blank?
+    return 'Time period not found' if @time_period.blank?
+    return 'No responses found' if @time_period.responses.blank?
 
     ''
   end

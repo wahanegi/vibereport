@@ -17,7 +17,7 @@ class UserEmailMailer < ApplicationMailer
     @emotion_links = @table.to_h do |cell|
       [cell.id, SignedLinks::ResponseFlowBuilder.url_for_emotion(user, time_period, cell.id)]
     end
-    @url_sign_in_from_email = SignedLinks::SignInFromEmailBuilder.url(user, time_period: time_period)
+    @url_sign_in_from_email = SignedLinks::SignInFromEmailBuilder.url(user)
     @url_unsubscribe = SignedLinks::UnsubscribeBuilder.url(user)
     @view_complete_by = time_period.due_date.strftime('%b %d').to_s
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
@@ -42,7 +42,7 @@ class UserEmailMailer < ApplicationMailer
     @response = response
     @user = user
     @time_period = time_period
-    @url_sign_in_from_email = SignedLinks::SignInFromEmailBuilder.url(user, time_period: time_period)
+    @url_sign_in_from_email = SignedLinks::SignInFromEmailBuilder.url(user)
     mail(to: user.email, subject: "#{user.first_name}, your check-in was saved.")
   end
 
@@ -55,7 +55,7 @@ class UserEmailMailer < ApplicationMailer
   def auto_remind_checkin(user, time_period)
     @user = user
     @time_period = time_period
-    @url_sign_in_from_email = SignedLinks::SignInFromEmailBuilder.url(user, time_period: time_period)
+    @url_sign_in_from_email = SignedLinks::SignInFromEmailBuilder.url(user)
     @fun_question = time_period.fun_question
     @fun_question_responses = @fun_question&.fun_question_answers&.limit(3) || []
     @shout_outs = user.mentions.where(time_period_id: time_period.id)
