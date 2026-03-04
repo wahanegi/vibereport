@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
 import {
   calculateBillableHours,
   rangeFormat,
@@ -8,22 +7,20 @@ import {
   validateRow,
 } from '../helpers/helpers';
 import Layout from '../Layout';
-import { apiRequest } from '../requests/axios_requests';
+import {apiRequest} from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
+import {BtnAddNewRow, Calendar} from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import SweetAlert from "../UI/SweetAlert";
 
-const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
-  const navigate = useNavigate();
-
+const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
   const [rowsData, setRowsData] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isDraft, setIsDraft] = useState(true);
   const [billableError, setBillableError] = useState(null);
 
-  const { isLoading, setIsLoading } = service;
+  const {isLoading, setIsLoading} = service;
 
   const timesheetDate = rangeFormat(data.time_period || {});
   const isDirectTimesheetMode = Boolean(data?.direct_timesheet)
@@ -108,8 +105,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
               alertHtml: 'Your timesheet has been successfully saved. You may now close this page.',
               confirmButtonText: 'OK',
               showCancelButton: false,
-              onConfirmAction: () => navigate(`/results/${slug}`),
-              onDeclineAction: () => navigate(`/results/${slug}`)
+              showCloseButton: false
             });
 
             return;
@@ -119,9 +115,9 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
         // Logic for normal flow
         if (!isDraft) {
           steps.push('causes-to-celebrate');
-          saveDataToDb(steps, { draft: false });
+          saveDataToDb(steps, {draft: false});
         } else {
-          saveDataToDb(steps, { draft: true });
+          saveDataToDb(steps, {draft: true});
         }
         onSuccess();
         setIsLoading(false);
@@ -226,7 +222,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
                 />
               ))}
             </div>
-            <div style={{ height: '20px' }} className="text-primary">
+            <div style={{height: '20px'}} className="text-primary">
               {rowsData.length > 0 && !isValid ? (
                 <p>Please fill out all fields</p>
               ) : billableError ? (
