@@ -25,6 +25,7 @@ class InnovationBrainstorming < ApplicationRecord
   belongs_to :innovation_topic, optional: true
 
   has_one :response, dependent: :nullify
+  has_many :emojis, as: :emojiable, dependent: :destroy
 
   validates :user, presence: true
   validates :innovation_topic, presence: true
@@ -40,10 +41,10 @@ class InnovationBrainstorming < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[id brainstorming_body innovation_topic_id user_id created_at updated_at deleted_at]
+    %w[id brainstorming_body innovation_topic_id user_id created_at updated_at]
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    %w[innovation_topic user response]
+    %w[innovation_topic user response emojis]
   end
 end

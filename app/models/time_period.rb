@@ -16,6 +16,7 @@
 #
 class TimePeriod < ApplicationRecord
   has_one :fun_question, dependent: :destroy
+  has_one :innovation_topic, dependent: :nullify
   has_many :responses, dependent: :destroy
   has_many :emotions, through: :responses
   has_many :shoutouts, dependent: :destroy
