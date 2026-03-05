@@ -129,7 +129,8 @@ class Api::V1::EmotionsController < ApplicationController
     {
       id: topic.id,
       innovation_body: topic.innovation_body,
-      time_period_id: topic.time_period_id
+      time_period_id: topic.time_period_id,
+      user_name: topic.user&.full_name
     }
   end
 
