@@ -9,7 +9,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
 
   let!(:team) { create(:team, timesheet_enabled: true) }
   let!(:user) { create(:user, opt_out: false) }
-  let!(:user_team) { create(:user_team, user: user, team: team) }
+  let!(:user_team) { create(:user_team, user: user, team: team, created_at: REFERENCE_DATE - 2.months) }
   let!(:overdue_period) do
     create(:time_period,
            start_date: REFERENCE_DATE - 3.weeks,
@@ -117,7 +117,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
 
     context 'with multiple users having missing entries' do
       let!(:user2) { create(:user, opt_out: false) }
-      let!(:user_team2) { create(:user_team, user: user2, team: team) }
+      let!(:user_team2) { create(:user_team, user: user2, team: team, created_at: REFERENCE_DATE - 2.months) }
 
       it 'sends an email to each user with missing timesheets' do
         expect { worker.run }
