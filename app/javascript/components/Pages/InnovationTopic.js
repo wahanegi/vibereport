@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {MAX_CHAR_LIMIT} from '../helpers/consts';
-import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from '../helpers/helpers';
+import React, { useEffect, useState } from 'react';
+import { MAX_CHAR_LIMIT } from '../helpers/consts';
+import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from '../helpers/helpers';
 import Layout from '../Layout';
-import {apiRequest} from '../requests/axios_requests';
+import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 import Swal from "sweetalert2";
 
@@ -20,10 +20,11 @@ const InnovationTopic = ({
   const [isDraft, setIsDraft] = useState(draft);
   const [loaded, setLoaded] = useState(false);
 
-  const {isLoading, error} = service;
+  const { isLoading, error } = service;
 
   const prevTopicBody = prevStateTopic?.innovation_body;
   const topicBody = topic?.innovation_body;
+  const isTopicBody = Boolean(topicBody)
   const current_user_id = data.current_user.id;
 
   const dataRequest = {
@@ -42,14 +43,12 @@ const InnovationTopic = ({
   const handleSaveDraft = () => {
     const dataFromServer = (innovation_topic) => {
       const id = innovation_topic.data?.id;
-      console.log("innovation_topic id: ", id);
-
       saveDataToDb(steps, {
         innovation_topic_id: id,
       });
     };
 
-    const dataDraft = {dataRequest, draft: true};
+    const dataDraft = { dataRequest, draft: true };
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
     saveDataTopic(
@@ -117,7 +116,7 @@ const InnovationTopic = ({
           `${url}${id}`).then(goToResultPage);
       } else {
         !isDraft && steps.push('icebreaker-answer');
-        saveDataToDb(steps, {draft: false});
+        saveDataToDb(steps, { draft: false });
       }
     } else if (isEmptyStr(topicBody)) {
       if (isDraft) {
@@ -138,7 +137,7 @@ const InnovationTopic = ({
 
   const onChangTopic = (e) => {
     setTopic(
-      Object.assign({}, topic, {[e.target.name]: e.target.value})
+      Object.assign({}, topic, { [e.target.name]: e.target.value })
     );
   };
 
@@ -171,13 +170,13 @@ const InnovationTopic = ({
           </div>
           <div className="mb-4">
             <div
-              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-emerald shadow icebreaker-max-width">
+              className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-royal-blue shadow innovation-max-width">
               <div className="w-100">
-                <div className="icebreaker border border-3 rounded rounded-4 border-emerald">
+                <div className="innovation border border-3 rounded rounded-4 border-royal-blue">
                     <textarea
                       className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none"
                       name="innovation_body"
-                      style={{height: 260}}
+                      style={{ height: 260 }}
                       placeholder="Tell us what you think!"
                       value={topic?.innovation_body || ''}
                       onChange={onChangTopic}
@@ -190,7 +189,7 @@ const InnovationTopic = ({
         </div>
         <div className="w-100 mt-4 mx-1 align-self-end">
           <BlockLowerBtns
-            isNext={!!topicBody}
+            isNext={isTopicBody}
             skipHandling={skipHandling}
             nextHandling={handlingOnClickNext}
             stringBody={topicBody}
