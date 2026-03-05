@@ -47,11 +47,11 @@ RSpec.describe InnovationBrainstorming, type: :model do
 
   describe 'Ransack support' do
     it 'returns the expected attributes' do
-      expect(described_class.ransackable_attributes).to match_array(%w[id brainstorming_body innovation_topic_id user_id created_at updated_at deleted_at])
+      expect(described_class.ransackable_attributes).to match_array(%w[id brainstorming_body innovation_topic_id user_id created_at updated_at])
     end
 
     it 'returns the expected associations' do
-      expect(described_class.ransackable_associations).to match_array(%w[innovation_topic user response])
+      expect(described_class.ransackable_associations).to match_array(%w[innovation_topic user response emojis])
     end
   end
 
