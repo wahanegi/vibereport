@@ -15,7 +15,7 @@ class Api::V1::InnovationBrainstormingsController < ApplicationController
       render json: { error: innovation_brainstorming.errors }, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
-    render json: { error: { innovation_topic_id: ['can submit only one brainstorming per topic'] } },
+    render json: { error: { user_id: ['can submit only one brainstorming per topic'] } },
            status: :unprocessable_entity
   end
 
