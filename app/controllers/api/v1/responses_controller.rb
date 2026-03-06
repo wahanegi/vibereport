@@ -40,14 +40,14 @@ module Api
 
         sign_in @user
         reset_time_period_index
-        result = ResponseFlowFromEmail.new(
-          @user,
+        response_flow_options = {
           time_period_id: payload[:time_period_id].to_i,
-          last_step: payload[:last_step],
-          not_working: payload[:not_working],
+          not_working: payload.key?(:not_working) ? payload[:not_working] : false,
           emotion_id: payload[:emotion_id]&.to_i,
           completed_at: payload[:completed_at]
-        ).call
+        }
+        response_flow_options[:last_step] = payload[:last_step] if payload.key?(:last_step)
+        result = ResponseFlowFromEmail.new(@user, **response_flow_options).call
         if payload[:time_period_id].to_i == TimePeriod.current.id
           return redirect_to root_path if result[:success]
 

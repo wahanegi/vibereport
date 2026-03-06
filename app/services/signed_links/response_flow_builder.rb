@@ -17,7 +17,13 @@ module SignedLinks
       end
 
       def url_for_emotion(user, time_period, emotion_id)
-        url(user, time_period, emotion_id: emotion_id)
+        url(
+          user,
+          time_period,
+          emotion_id: emotion_id,
+          last_step: 'emotion-type',
+          not_working: false
+        )
       end
 
       def verify(token)
