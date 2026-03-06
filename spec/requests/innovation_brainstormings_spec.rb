@@ -177,9 +177,10 @@ RSpec.describe Api::V1::InnovationBrainstormingsController do
         expect { subject }.to change(InnovationBrainstorming, :count).by(-1)
       end
 
-      it 'returns no_content' do
+      it 'returns ok with success message' do
         subject
-        expect(response).to have_http_status(:no_content)
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq('message' => 'success')
       end
     end
 

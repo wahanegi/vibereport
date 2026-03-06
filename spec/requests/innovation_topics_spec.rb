@@ -127,11 +127,11 @@ RSpec.describe Api::V1::InnovationTopicsController do
 
       before { sign_in(user) }
 
-      it 'allows update and returns success' do
+      it 'denies update and returns not_found' do
         patch "/api/v1/innovation_topics/#{other_topic.id}",
               params: { innovation_topic: { innovation_body: 'Updated by another user' } }
-        expect(response).to have_http_status(:ok)
-        expect(other_topic.reload.innovation_body).to eq('Updated by another user')
+        expect(response).to have_http_status(:not_found)
+        expect(other_topic.reload.innovation_body).not_to eq('Updated by another user')
       end
     end
   end
@@ -163,9 +163,9 @@ RSpec.describe Api::V1::InnovationTopicsController do
 
       before { sign_in(user) }
 
-      it 'allows destroy and returns no_content' do
-        expect { delete "/api/v1/innovation_topics/#{other_topic.id}" }.to change(InnovationTopic, :count).by(-1)
-        expect(response).to have_http_status(:no_content)
+      it 'denies destroy and returns not_found' do
+        expect { delete "/api/v1/innovation_topics/#{other_topic.id}" }.not_to change(InnovationTopic, :count)
+        expect(response).to have_http_status(:not_found)
       end
     end
   end

@@ -34,8 +34,11 @@ class Api::V1::InnovationTopicsController < ApplicationController
   private
 
   def set_innovation_topic
-    @innovation_topic = InnovationTopic.find_by(id: params[:id])
-    head :not_found if @innovation_topic.blank?
+    @innovation_topic = current_user.innovation_topics.find_by(id: params[:id])
+    return if @innovation_topic.present?
+
+    head :not_found
+    nil
   end
 
   def innovation_topic_params
