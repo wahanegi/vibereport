@@ -4,8 +4,6 @@
 class UserEmailMailer < ApplicationMailer
   include UserEmailMailerHelper
 
-  NUMBER = Emotion::SHOW_NUMBER_PER_CATEGORY
-
   def response_invite(user, time_period)
     @user = user
     @link_for_own_word = SignedLinks::ResponseFlowBuilder.url(user, time_period, last_step: 'emotion-entry',

@@ -106,7 +106,7 @@ RSpec.describe SignedLinks::ResponseFlowBuilder do
         url = described_class.url(user, time_period)
         token = Rack::Utils.parse_query(URI.parse(url).query)['token']
 
-        travel(8.days) do
+        travel(described_class::TOKEN_TTL + 1.day) do
           expect(described_class.verify(token)).to be_nil
         end
       end

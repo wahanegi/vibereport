@@ -94,10 +94,6 @@ module Api
         }
       end
 
-      def user
-        @user ||= User.find_by(id: params[:user_id])
-      end
-
       def redirect_to_invalid_link
         redirect_to new_user_session_path, alert: 'Invalid or expired link'
       end
