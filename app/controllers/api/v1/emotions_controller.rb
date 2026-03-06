@@ -102,25 +102,25 @@ class Api::V1::EmotionsController < ApplicationController
     end
 
     topic = nil
-    # Automatic topic selection when there is no admin-assigned topic (may be useful in the future)
-    # InnovationTopic.transaction do
-    #   period.lock!
 
-    #   existing = InnovationTopic.find_by(time_period_id: period.id)
-    #   if existing.present?
-    #     topic = existing
-    #     break
-    #   end
+    InnovationTopic.transaction do
+      period.lock!
 
-    #   topic = InnovationTopic.unposted
-    #                          .where(time_period_id: nil)
-    #                          .order(Arel.sql('RANDOM()'))
-    #                          .first
+      existing = InnovationTopic.find_by(time_period_id: period.id)
+      if existing.present?
+        topic = existing
+        break
+      end
 
-    #   break if topic.blank?
+      topic = InnovationTopic.unposted
+                             .where(time_period_id: nil)
+                             .order(Arel.sql('RANDOM()'))
+                             .first
 
-    #   topic.update!(posted: true, time_period_id: period.id)
-    # end
+      break if topic.blank?
+
+      topic.update!(posted: true, time_period_id: period.id)
+    end
 
     topic.present? ? prepared_innovation_topic(topic) : nil
   end
