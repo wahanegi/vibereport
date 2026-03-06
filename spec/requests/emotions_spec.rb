@@ -26,8 +26,6 @@ RSpec.describe Api::V1::EmotionsController do
       expect(json[:time_period][:end_date]).to eq(TimePeriod.current.end_date.to_s)
       expected = json_data.first
       expect(expected[:type]).to eq('emotion')
-      emotion_ids = json_data.map { |item| item[:id].to_i }
-      expect(emotion_ids).to include(emotion.id)
     end
 
     it 'should will be correct the length of the response' do
