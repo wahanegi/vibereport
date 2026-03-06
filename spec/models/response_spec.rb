@@ -55,7 +55,6 @@ RSpec.describe Response, type: :model do
   let!(:time_period) { create :time_period }
   let!(:emotion) { create :emotion }
   let!(:emotion2) { create :emotion }
-  let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }
   let!(:fun_question) { create :fun_question }
   let!(:fun_question_answer) { create :fun_question_answer }
   let(:response) { FactoryBot.create(:response, user:, time_period:, emotion:, steps: %w[emotion-selection-web]) }

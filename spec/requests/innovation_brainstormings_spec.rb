@@ -98,7 +98,7 @@ RSpec.describe Api::V1::InnovationBrainstormingsController do
       it 'does not create a duplicate and returns errors' do
         post '/api/v1/innovation_brainstormings', params: valid_attributes
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body['error']).to eq('user_id' => ['can submit only one brainstorming per topic'])
+        expect(response.parsed_body['error']).to eq('user_id' => ['User can submit only one brainstorming per topic'])
         expect(InnovationBrainstorming.count).to eq(1)
       end
     end

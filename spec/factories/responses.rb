@@ -55,11 +55,22 @@ FactoryBot.define do
     association :emotion, factory: :emotion
     steps { 'Some steps' }
     association :fun_question, factory: :fun_question
-    association :innovation_topic
-    association :innovation_brainstorming
   end
 
   trait :not_working_response do
     not_working { true }
+  end
+
+  trait :with_innovation_topic do
+    association :innovation_topic
+  end
+
+  trait :with_brainstorming do
+    association :innovation_brainstorming
+  end
+
+  trait :with_innovation do
+    association :innovation_topic
+    association :innovation_brainstorming
   end
 end
