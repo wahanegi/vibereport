@@ -15,7 +15,14 @@ class Api::V1::ResultsPresenter
     @teams = current_user.user_teams.has_team_access.map(&:team)
     @original_url = original_url
     @innovation_topic = time_period.innovation_topic
-    @innovation_brainstormings = innovation_topic ? responses.includes(innovation_brainstorming: :user).filter_map(&:innovation_brainstorming).compact : []
+    @innovation_brainstormings =
+      if innovation_topic
+        responses
+          .includes(innovation_brainstorming: [:user, { emojis: :user }])
+          .filter_map(&:innovation_brainstorming)
+      else
+        []
+      end
   end
 
   def json_hash
