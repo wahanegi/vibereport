@@ -29,7 +29,7 @@ class Api::V1::InnovationBrainstormingsController < ApplicationController
 
   def destroy
     @innovation_brainstorming.destroy!
-    head :no_content
+    render json: { message: 'success' }, status: :ok
   rescue ActiveRecord::RecordNotDestroyed
     render json: { error: @innovation_brainstorming.errors }, status: :unprocessable_entity
   end
