@@ -30,7 +30,6 @@ const InnovationTopic = ({
   const dataRequest = {
     innovation_topic: {
       innovation_body: topicBody || '',
-      user_id: current_user_id,
     },
   };
 
@@ -48,8 +47,7 @@ const InnovationTopic = ({
       });
     };
 
-    const dataDraft = { dataRequest, draft: true };
-    saveDataToDb(steps, dataDraft);
+    saveDataToDb(steps, { draft: true });
     setIsDraft(true);
     saveDataTopic(
       dataFromServer,

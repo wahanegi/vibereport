@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ListEmotions from "./Pages/ListEmotions";
 import MemeSelection from "./Pages/MemeSelection";
 import EmotionEntry from "./Pages/EmotionEntry";
 import EmotionIntensity from "./Pages/EmotionIntensity";
 import TimesheetPage from "./Pages/TimesheetPage";
-import {apiRequest} from "./requests/axios_requests";
-import {mergeData} from "./helpers/library";
-import {useNavigate} from "react-router-dom";
+import { apiRequest } from "./requests/axios_requests";
+import { mergeData } from "./helpers/library";
+import { useNavigate } from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
 import CausesToCelebrate from "./Pages/CausesToCelebrate";
@@ -21,13 +21,13 @@ import ResultsManager from "./Pages/ResultsPageManager";
 import InnovationBrainstorming from "./Pages/InnovationBrainstorming";
 import InnovationTopic from "./Pages/InnovationTopic";
 
-const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
+const ResponseFlow = ({ step, data, setData, setIsShuffleEmotions }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const stepsArr = data.response.attributes.steps
   const prev_results_path = data.prev_results_path
   const navigate = useNavigate()
-  const service = {isLoading, error, setIsLoading}
+  const service = { isLoading, error, setIsLoading }
   const draft = data.response.attributes.draft
   const mainPage = 'emotion-selection-web'
   const [go, setGo] = useState(null)
@@ -89,7 +89,7 @@ const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
   //*** **addedData** - necessary data (and future data) for update or save in DB by using Response controller
   //*** Format addedData = **{key: value, ...., key(n): value(n)}**
   const saveDataToDb = (stepsArr, addedData = {}) => {
-    const dataRequest = {response: {attributes: {steps: stepsArr, ...addedData}}}
+    const dataRequest = { response: { attributes: { steps: stepsArr, ...addedData } } }
     setIsLoading(true)
     createOrUpdate(data, dataRequest, saveDataToAttributes)
   }
@@ -143,20 +143,7 @@ const ResponseFlow = ({step, data, setData, setIsShuffleEmotions}) => {
     draft,
   };
 
-// fallback
-  let resolvedStep = go;
-  if (go === 'innovation-brainstorming' && !data.innovation_topic) {
-    resolvedStep = 'innovation-topic';
-  }
-
-// synchronize URL
-  useEffect(() => {
-    if (resolvedStep && resolvedStep !== go) {
-      navigate(`/${resolvedStep}`, {replace: true});
-    }
-  }, [resolvedStep, go, navigate]);
-
-  const component = componentMap[resolvedStep] || null;
+  const component = componentMap[go] || null;
 
   return component ? React.cloneElement(component, componentProps) : null;
 }

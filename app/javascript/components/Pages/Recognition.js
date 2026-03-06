@@ -1,5 +1,5 @@
 import parse from 'html-react-parser'
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import edit_pencil from "../../../assets/images/edit-pencil-shadow.svg";
 import trash from "../../../assets/images/sys_svg/frame-439.png"
 import trashRed from "../../../assets/images/sys_svg/frame-440.png"
@@ -9,8 +9,8 @@ import ShoutoutButton from "../UI/ShoutoutButton";
 import ShoutoutDelete from "../UI/ShoutoutDelete";
 import ShoutoutModal from './modals/ShoutoutModal';
 
-const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
-  const [shoutOutForm, setShoutOutForm] = useState({status: false, editObj: {}})
+const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => {
+  const [shoutOutForm, setShoutOutForm] = useState({ status: false, editObj: {} })
   const [isModal, setIsModal] = useState(false)
   const [idShoutout, setIdShoutout] = useState()
   const [isDraft, setIsDraft] = useState(draft)
@@ -23,24 +23,27 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
   const numShoutOuts = shoutOuts.length
 
   const handleSaveDraft = () => {
-    saveDataToDb(steps, {draft: true});
+    saveDataToDb(steps, { draft: true });
     setIsDraft(true);
   }
 
   useEffect(() => {
     if (previousNumShoutOuts.length !== numShoutOuts) {
-      saveDataToDb(steps, {draft: false});
+      saveDataToDb(steps, { draft: false });
       setIsDraft(false);
     }
   }, [numShoutOuts]);
 
   const handlingOnClickNext = () => {
     if (!data.fun_question) {
-      steps.push('causes-to-celebrate')
-      saveDataToDb(steps, {draft: false})
-    } else
-      steps.push('innovation-brainstorming')
-    saveDataToDb(steps, {draft: false})
+      steps.push('causes-to-celebrate');
+    } else if (data.innovation_topic) {
+      steps.push('innovation-brainstorming');
+    } else {
+      steps.push('innovation-topic');
+    }
+
+    saveDataToDb(steps, { draft: false });
   }
   const skipHandling = () => {
     handlingOnClickNext()
@@ -54,11 +57,11 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
     setIsDraft(false)
     const editObj = data.user_shoutouts.find(item => item.id === Number(e.target.attributes.id.value))
 
-    setShoutOutForm({status: true, editObj: editObj})
+    setShoutOutForm({ status: true, editObj: editObj })
   }
 
   const closeHandling = (draft) => {
-    setShoutOutForm({status: false, editObj: {}})
+    setShoutOutForm({ status: false, editObj: {} })
     setIsDraft(draft)
   }
   const trashHandling = (e) => {
@@ -139,7 +142,7 @@ const Recognition = ({data, setData, saveDataToDb, steps, service, draft}) => {
 
         {!!numShoutOuts &&
           <div className="d-flex d-sm-flex flex-column mx-auto"
-               style={{maxWidth: '884px'}}>
+               style={{ maxWidth: '884px' }}>
             {shoutOutForm.status &&
               <ShoutoutModal shoutOutForm={shoutOutForm}
                              setShoutOutForm={setShoutOutForm}

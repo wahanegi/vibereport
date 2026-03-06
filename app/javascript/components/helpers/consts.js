@@ -20,15 +20,15 @@ export const EMOTION_COLORS = {
 };
 
 export const FLAME_IMAGE_SIZES = [
-  {width: '55px', height: '70px', marginTop: '241px'},
-  {width: '84px', height: '98px', marginTop: '213px'},
-  {width: '145px', height: '133.5px', marginTop: '177.5px'},
-  {width: '169px', height: '159px', marginTop: '152px'},
-  {width: '185px', height: '196px', marginTop: '115px'},
-  {width: '208px', height: '253px', marginTop: '58px'},
-  {width: '211px', height: '239px', marginTop: '72px'},
-  {width: '221px', height: '271px', marginTop: '40px'},
-  {width: '382px', height: '311px', marginTop: '0'},
+  { width: '55px', height: '70px', marginTop: '241px' },
+  { width: '84px', height: '98px', marginTop: '213px' },
+  { width: '145px', height: '133.5px', marginTop: '177.5px' },
+  { width: '169px', height: '159px', marginTop: '152px' },
+  { width: '185px', height: '196px', marginTop: '115px' },
+  { width: '208px', height: '253px', marginTop: '58px' },
+  { width: '211px', height: '239px', marginTop: '72px' },
+  { width: '221px', height: '271px', marginTop: '40px' },
+  { width: '382px', height: '311px', marginTop: '0' },
 ];
 
 export const EMOTION_COL_NUMBERS = 6
@@ -66,23 +66,23 @@ import complete100_act from '../../../assets/images/progress_menu/complete100_ac
 
 // Grouping all images for progress menu
 export const SEGMENTS_MAP = {
-  'emotion-selection-web': {src: complete0, activeSrc: complete0_act, percent: 0},
-  'emotion-entry': {src: complete5_10, activeSrc: complete5_10_act, percent: 5},
-  'emotion-type': {src: complete5_10, activeSrc: complete5_10_act, percent: 5},
-  'meme-selection': {src: complete5_10, activeSrc: complete5_10_act, percent: 10},
-  'selected-giphy-follow': {src: complete15, activeSrc: complete15_act, percent: 15},
-  'emotion-intensity': {src: complete20, activeSrc: complete20_act, percent: 20},
-  'rather-not-say': {src: complete20, activeSrc: complete20_act, percent: 20},
-  'skip-ahead': {src: complete20, activeSrc: complete20_act, percent: 20},
-  'productivity-check': {src: complete25, activeSrc: complete25_act, percent: 25},
-  'productivity-bad-follow-up': {src: complete35, activeSrc: complete35_act, percent: 35},
-  'timesheet': {src: complete45, activeSrc: complete45_act, percent: 45},
-  'causes-to-celebrate': {src: complete50, activeSrc: complete50_act, percent: 50},
-  'recognition': {src: complete65, activeSrc: complete65_act, percent: 65},
-  'innovation-brainstorming': {src: complete65, activeSrc: complete65_act, percent: 70}, //TODO complete70
-  'innovation-topic': {src: complete65, activeSrc: complete65_act, percent: 75}, //TODO complete75
-  'icebreaker-answer': {src: complete85, activeSrc: complete85_act, percent: 85},
-  'icebreaker-question': {src: complete90, activeSrc: complete90_act, percent: 90},
-  'results': {src: complete100, activeSrc: complete100_act, percent: 100},
-  'result-managers': {src: complete100, activeSrc: complete100_act, percent: 100},
+  'emotion-selection-web': { src: complete0, activeSrc: complete0_act, percent: 0 },
+  'emotion-entry': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
+  'emotion-type': { src: complete5_10, activeSrc: complete5_10_act, percent: 5 },
+  'meme-selection': { src: complete5_10, activeSrc: complete5_10_act, percent: 10 },
+  'selected-giphy-follow': { src: complete15, activeSrc: complete15_act, percent: 15 },
+  'emotion-intensity': { src: complete20, activeSrc: complete20_act, percent: 20 },
+  'rather-not-say': { src: complete20, activeSrc: complete20_act, percent: 20 },
+  'skip-ahead': { src: complete20, activeSrc: complete20_act, percent: 20 },
+  'productivity-check': { src: complete25, activeSrc: complete25_act, percent: 25 },
+  'productivity-bad-follow-up': { src: complete35, activeSrc: complete35_act, percent: 35 },
+  'timesheet': { src: complete45, activeSrc: complete45_act, percent: 45 },
+  'causes-to-celebrate': { src: complete50, activeSrc: complete50_act, percent: 50 },
+  'recognition': { src: complete65, activeSrc: complete65_act, percent: 65 },
+  'innovation-brainstorming': { src: complete65, activeSrc: complete65_act, percent: 70 },
+  'innovation-topic': { src: complete65, activeSrc: complete65_act, percent: 75 },
+  'icebreaker-answer': { src: complete85, activeSrc: complete85_act, percent: 85 },
+  'icebreaker-question': { src: complete90, activeSrc: complete90_act, percent: 90 },
+  'results': { src: complete100, activeSrc: complete100_act, percent: 100 },
+  'result-managers': { src: complete100, activeSrc: complete100_act, percent: 100 },
 };

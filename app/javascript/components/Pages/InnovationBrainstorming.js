@@ -20,8 +20,6 @@ const InnovationBrainstorming = ({
   service,
   draft,
 }) => {
-  if (!data.innovation_topic) return null;
-
   const [prevStateBrainstorming, setPrevStateBrainstorming] = useState({});
   const [brainstorming, setBrainstorming] = useState({});
   const [computedHeight, setComputedHeight] = useState(260);
@@ -49,8 +47,7 @@ const InnovationBrainstorming = ({
       });
     };
 
-    const dataDraft = { dataRequest, draft: true };
-    saveDataToDb(steps, dataDraft);
+    saveDataToDb(steps, { draft: true });
     setIsDraft(true);
     saveDataBrainstorming(dataFromServer, () => {
     }, true);
@@ -178,6 +175,8 @@ const InnovationBrainstorming = ({
       );
     }, 1);
   }, [isUserName]);
+
+  if (!data.innovation_topic) return null;
 
   return (
     <Layout

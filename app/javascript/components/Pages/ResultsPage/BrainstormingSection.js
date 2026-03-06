@@ -127,7 +127,7 @@ const BrainstormingItem = ({
 
   const updateBrainstormingsArray = (callback) => {
     if (callback.message === 'success') {
-      const newBrainstormingsArray = brainstormingsArray.filter(item => item.innovation_brainstorming.id !== brainstorming.id)
+      const newBrainstormingsArray = brainstormingsArray.filter(item => item.brainstorming.id !== brainstorming.id)
       setBrainstormingsArray(newBrainstormingsArray)
     }
     setEdit(false)
@@ -210,22 +210,22 @@ const BrainstormingsSection = ({
   innovation_topic, innovation_brainstormings, nextTimePeriod, isMinUsersResponses,
   setShowWorkingModal, current_user, data, setData
 }) => {
-  if (!nextTimePeriod && isMinUsersResponses) return <PreviewTopicSection />
 
   const [brainstormingsArray, setBrainstormingsArray] = useState(innovation_brainstormings || [])
   const userName = userFullName(innovation_topic?.user)
 
 
+  useEffect(() => {
+    setBrainstormingsArray(innovation_brainstormings)
+  }, [innovation_brainstormings])
+
+  if (!nextTimePeriod && isMinUsersResponses) return <PreviewTopicSection />
   if (isBlank(brainstormingsArray)) return <EmptyTopicSection userName={userName}
                                                               innovation_topic={innovation_topic}
                                                               nextTimePeriod={nextTimePeriod}
                                                               data={data}
                                                               setData={setData}
                                                               setShowWorkingModal={setShowWorkingModal} />
-
-  useEffect(() => {
-    setBrainstormingsArray(innovation_brainstormings)
-  }, [innovation_brainstormings])
 
   return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
     <Brainstorming {...{ userName, innovation_topic }} />
