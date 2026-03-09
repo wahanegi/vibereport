@@ -219,7 +219,6 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                        currentUserShoutouts={current_user_shoutouts}
                        recivedPublicShoutouts={received_and_public_shoutouts} />
 
-
       <BrainstormingSection innovation_topic={innovation_topic}
                             current_user={current_user}
                             innovation_brainstormings={innovation_brainstormings}

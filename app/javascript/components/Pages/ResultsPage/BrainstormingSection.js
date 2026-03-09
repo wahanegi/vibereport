@@ -1,86 +1,22 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import { apiRequest, updateResponse } from "../../requests/axios_requests";
-import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from "../../helpers/helpers";
+import { apiRequest } from "../../requests/axios_requests";
+import { isEmptyStr, isNotEmptyStr } from "../../helpers/helpers";
 import { userFullName } from "../../helpers/library";
 import EmojiRow from "./Emojis/EmojiRow";
+import ResponseSection from "./Shared/ResponseSection";
+import ResponseHeader from "./Shared/ResponseHeader";
 
-const PreviewTopicSection = () =>
-  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
-    <div className='row wrap brainstorming preview mw-100' />
-  </div>
-
-const EmptyTopicSection = ({
-  nextTimePeriod, userName, innovation_topic,
-  setShowWorkingModal, data, setData
-}) => {
-  const [text, setText] = useState('');
-  const [addClass, setAddClass] = useState('')
-
-  const handleMouseEnter = () => {
-    if (!Boolean(innovation_topic)) return null
-
-    !nextTimePeriod && setText('Suggest this Innovation Topic!');
-    !nextTimePeriod && setAddClass('hover-event')
-  };
-
-  const handleMouseLeave = () => {
-    setText(nextTimePeriod || !Boolean(innovation_topic) ? 'No Innovation topic for brainstorming this time...' : 'No brainstormings yet...!');
-    setAddClass('');
-  };
-
-  const handlingBack = () => {
-    if (isPresent(data.prev_results_path) || !Boolean(innovation_topic)) return;
-
-    const steps = data.response.attributes.steps
-    const index = steps.indexOf('innovation-brainstorming');
-
-    if (index === -1) {
-      !nextTimePeriod && setShowWorkingModal(true)
-    } else {
-      const new_steps = steps.slice(0, index + 1);
-      const dataRequest = {
-        response: { attributes: { steps: new_steps } }
-      }
-      !nextTimePeriod && updateResponse(data, setData, dataRequest)
-    }
-  }
-
-  useEffect(() => {
-    setText(nextTimePeriod || !Boolean(innovation_topic) ? 'No Innovation topic for brainstorming this time...' : 'No brainstormings yet...!');
-  }, [nextTimePeriod, innovation_topic])
-
-  return <Fragment>
-    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
-      <Brainstorming {...{ userName, innovation_topic }} />
-    </div>
-    <div onClick={handlingBack}
-         className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod || !Boolean(innovation_topic) ? '' : 'pointer'}`}>
-      <div onMouseEnter={handleMouseEnter}
-           onMouseLeave={handleMouseLeave}
-           className={`empty-brainstorming ${addClass} row wrap topic mb-3 mw-100`}>
-        <h5 className='d-flex justify-content-center fw-semibold'>{text}</h5>
-      </div>
-    </div>
-  </Fragment>
-}
-
-const Brainstorming = ({ userName, innovation_topic }) => {
-  if (isBlank(innovation_topic)) return null;
-
-  return <div className='row wrap topic mb-1 mw-100'>
-    {userName &&
-      <p className='b3 muted text-start fs-7 fs-md-6 mb-1'>
-        {userName} asks about this innovation topic:
-        <br />
-      </p>
-    }
-    <p className='fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
-      {innovation_topic.innovation_body}
-    </p>
-  </div>
-}
+const BrainstormingHeader = ({ userName, innovation_topic }) => (
+  <ResponseHeader
+    userName={userName}
+    label='asks about this innovation topic:'
+    text={innovation_topic?.innovation_body}
+    body={innovation_topic}
+    wrapperClass='topic'
+  />
+);
 
 const BrainstormingItem = ({
   brainstorming,
@@ -89,10 +25,10 @@ const BrainstormingItem = ({
   current_user,
   nextTimePeriod,
   innovation_topic,
-  brainstormingsArray,
-  setBrainstormingsArray
+  itemsArray: brainstormingsArray,
+  setItemsArray: setBrainstormingsArray
 }) => {
-  const [brainstormingBody, setBrainstormingBody] = useState(brainstorming.brainstorming_body || '')
+  const [brainstormingBody, setBrainstormingBody] = useState(brainstorming?.brainstorming_body || '')
   const [edit, setEdit] = useState(false)
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const [selectedEmojiName, setSelectedEmojiName] = useState("");
@@ -108,7 +44,6 @@ const BrainstormingItem = ({
       innovation_topic_id: innovation_topic?.id,
     },
   }
-
 
   const dataFromServer = (response) => {
     const updatedBrainstormingBody = response.data.attributes.brainstorming_body
@@ -174,16 +109,14 @@ const BrainstormingItem = ({
     <div className="col-xl-12">
       <div className='d-flex justify-content-end'>
         {isCurrentUser && !edit &&
-          <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={() => setEdit(true)}>Edit</Link>
-        }
+          <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={() => setEdit(true)}>Edit</Link>}
       </div>
 
       {edit &&
         <div className='d-flex justify-content-end'>
           <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
-          <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateBrainstorming}>Save</Link>
-        </div>
-      }
+          <Link to={''} className='h6 fw-semibold text-success' disabled onClick={updateBrainstorming}>Save</Link>
+        </div>}
 
       <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
         {userFullName(user)} suggested:&nbsp;
@@ -194,8 +127,7 @@ const BrainstormingItem = ({
                         autoFocus={true}
                         onChange={e => setBrainstormingBody(e.target.value)}
                         value={brainstormingBody} />
-          : brainstorming.brainstorming_body
-        }
+          : brainstorming.brainstorming_body}
       </div>
 
       <EmojiRow {...{
@@ -210,35 +142,35 @@ const BrainstormingsSection = ({
   innovation_topic, innovation_brainstormings, nextTimePeriod, isMinUsersResponses,
   setShowWorkingModal, current_user, data, setData
 }) => {
-
   const [brainstormingsArray, setBrainstormingsArray] = useState(innovation_brainstormings || [])
   const userName = userFullName(innovation_topic?.user)
 
-
-  useEffect(() => {
-    setBrainstormingsArray(innovation_brainstormings)
-  }, [innovation_brainstormings])
-
-  if (!nextTimePeriod && isMinUsersResponses) return <PreviewTopicSection />
-  if (isBlank(brainstormingsArray)) return <EmptyTopicSection userName={userName}
-                                                              innovation_topic={innovation_topic}
-                                                              nextTimePeriod={nextTimePeriod}
-                                                              data={data}
-                                                              setData={setData}
-                                                              setShowWorkingModal={setShowWorkingModal} />
-
-  return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
-    <Brainstorming {...{ userName, innovation_topic }} />
-    {
-      brainstormingsArray.map(data => {
-        const { brainstorming, user, emojis } = data
-        return <BrainstormingItem key={`innovation_brainstorming-${brainstorming.id}`} {...{
-          brainstorming, emojis, innovation_topic, user, current_user, nextTimePeriod,
-          brainstormingsArray, setBrainstormingsArray
-        }} />
-      })
-    }
-  </div>
-}
+  return (
+    <ResponseSection
+      nextTimePeriod={nextTimePeriod}
+      isMinUsersResponses={isMinUsersResponses}
+      items={brainstormingsArray}
+      setItems={setBrainstormingsArray}
+      current_user={current_user}
+      headerComponent={BrainstormingHeader}
+      itemComponent={BrainstormingItem}
+      headerProps={{ userName, innovation_topic }}
+      itemDataKey="brainstorming"
+      emptyConfig={{
+        stepName: 'innovation-brainstorming',
+        defaultTextCurrent: 'No brainstormings yet...!',
+        defaultTextNext: 'No Innovation topic for brainstorming this time...!',
+        hoverText: 'Suggest this Innovation Topic!',
+        nextTimePeriod,
+        setShowWorkingModal,
+        data,
+        setData,
+        topicExists: Boolean(innovation_topic),
+        emptyClass: 'empty-brainstorming topic',
+        previewClass: 'topic'
+      }}
+    />
+  );
+};
 
 export default BrainstormingsSection
