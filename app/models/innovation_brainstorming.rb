@@ -21,6 +21,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class InnovationBrainstorming < ApplicationRecord
+  MAX_DISPLAY_LENGTH = 45
+
   belongs_to :user, optional: true
   belongs_to :innovation_topic, optional: true
 
@@ -33,10 +35,10 @@ class InnovationBrainstorming < ApplicationRecord
   validates :user_id, uniqueness: { scope: :innovation_topic_id, message: 'User can submit only one brainstorming per topic' }
 
   def display_name
-    "Innovation brainstorming: #{brainstorming_body.truncate(45)}"
+    "Innovation brainstorming: #{brainstorming_body.truncate(MAX_DISPLAY_LENGTH)}"
   end
 
-  def short_name(length: 50)
+  def short_name(length: MAX_DISPLAY_LENGTH)
     brainstorming_body.truncate(length)
   end
 

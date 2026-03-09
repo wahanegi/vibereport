@@ -21,6 +21,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class InnovationTopic < ApplicationRecord
+  MAX_DISPLAY_LENGTH = 45
+
   belongs_to :user, optional: true
   belongs_to :time_period, optional: true
 
@@ -34,10 +36,10 @@ class InnovationTopic < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }
 
   def display_name
-    "Innovation topic: #{innovation_body.truncate(45)}"
+    "Innovation topic: #{innovation_body.truncate(MAX_DISPLAY_LENGTH)}"
   end
 
-  def short_name(length: 50)
+  def short_name(length: MAX_DISPLAY_LENGTH)
     innovation_body.truncate(length)
   end
 
