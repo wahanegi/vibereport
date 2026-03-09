@@ -138,7 +138,7 @@ const BrainstormingItem = ({
   </div>
 }
 
-const BrainstormingsSection = ({
+const TopicSection = ({
   innovation_topic, innovation_brainstormings, nextTimePeriod, isMinUsersResponses,
   setShowWorkingModal, current_user, data, setData
 }) => {
@@ -173,4 +173,4 @@ const BrainstormingsSection = ({
   );
 };
 
-export default BrainstormingsSection
+export default TopicSection
