@@ -38,7 +38,6 @@ class Api::V1::InnovationTopicsController < ApplicationController
     return if @innovation_topic.present?
 
     head :not_found
-    nil
   end
 
   def innovation_topic_params

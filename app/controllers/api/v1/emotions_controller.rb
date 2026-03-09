@@ -93,20 +93,19 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def innovation_topic
-    period = time_period
-    existing = InnovationTopic.find_by(time_period_id: period.id)
+    existing = InnovationTopic.find_by(time_period_id: time_period.id)
 
     if existing.present?
-      existing.update!(posted: true) if existing.posted == false
+      existing.update!(posted: true) unless existing.posted?
       return prepared_innovation_topic(existing)
     end
 
     topic = nil
 
     InnovationTopic.transaction do
-      period.lock!
+      time_period.lock!
 
-      existing = InnovationTopic.find_by(time_period_id: period.id)
+      existing = InnovationTopic.find_by(time_period_id: time_period.id)
       if existing.present?
         topic = existing
         break
@@ -119,7 +118,7 @@ class Api::V1::EmotionsController < ApplicationController
 
       break if topic.blank?
 
-      topic.update!(posted: true, time_period_id: period.id)
+      topic.update!(posted: true, time_period_id: time_period.id)
     end
 
     topic.present? ? prepared_innovation_topic(topic) : nil
