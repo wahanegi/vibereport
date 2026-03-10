@@ -173,7 +173,7 @@ RSpec.describe TimeSheets::MissingEntriesFinder do
       ).call
     end
 
-    it 'uses earliest join date across all timesheet teams' do
+    it 'includes period when user joined any timesheet team before period ended' do
       expect(subject[user]).to contain_exactly(between_period)
     end
   end
@@ -194,7 +194,7 @@ RSpec.describe TimeSheets::MissingEntriesFinder do
     end
   end
 
-  context 'when earliest_join_dates_for returns empty hash' do
+  context 'when timesheet_memberships_for returns empty hash' do
     let!(:applicable_period) { create(:time_period, start_date: Date.new(2024, 2, 1), end_date: Date.new(2024, 2, 7), due_date: Date.new(2024, 2, 5)) }
     let!(:user_team) { create(:user_team, user: user, team: team, created_at: 2.months.ago) }
 
@@ -202,7 +202,7 @@ RSpec.describe TimeSheets::MissingEntriesFinder do
       finder = described_class.new(
         time_periods: TimePeriod.where(id: [applicable_period.id])
       )
-      allow(finder).to receive(:earliest_join_dates_for).and_return({})
+      allow(finder).to receive(:timesheet_memberships_for).and_return({})
 
       result = finder.call
 

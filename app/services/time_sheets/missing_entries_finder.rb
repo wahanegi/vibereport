@@ -22,13 +22,16 @@ module TimeSheets
       periods_by_id = periods.index_by(&:id)
 
       entries_by_user_id = fetch_entries_by_user(user_ids, period_ids)
-      earliest_join_dates = earliest_join_dates_for(user_ids)
+      memberships_by_user_id = timesheet_memberships_for(user_ids)
 
       users.each do |user|
-        cutoff_date = earliest_join_dates[user.id]
-        next if cutoff_date.nil?
+        memberships = memberships_by_user_id[user.id]
+        next if memberships.blank?
 
-        applicable_period_ids = period_ids.select { |id| periods_by_id[id].start_date >= cutoff_date }
+        applicable_period_ids = period_ids.select do |id|
+          period = periods_by_id[id]
+          memberships.any? { |m| m.created_at.to_date <= period.end_date }
+        end
         missing_ids = missing_period_ids_for_user(user, applicable_period_ids, entries_by_user_id)
         next if missing_ids.empty?
 
@@ -55,13 +58,12 @@ module TimeSheets
       entries.group_by(&:user_id)
     end
 
-    def earliest_join_dates_for(user_ids)
+    def timesheet_memberships_for(user_ids)
       UserTeam
         .joins(:team)
         .where(teams: { timesheet_enabled: true }, user_id: user_ids)
-        .group(:user_id)
-        .minimum(:created_at)
-        .transform_values(&:to_date)
+        .select(:user_id, :created_at)
+        .group_by(&:user_id)
     end
 
     def missing_period_ids_for_user(user, period_ids, entries_by_user_id)
