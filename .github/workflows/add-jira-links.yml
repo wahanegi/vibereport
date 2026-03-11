@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Extract Jira Issue Keys
+      - name: Extract Jira Issue Keys.
         id: extract_keys
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
