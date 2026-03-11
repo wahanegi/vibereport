@@ -19,6 +19,11 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
   let(:json_response) { response.parsed_body }
 
   before { sign_in(user) }
+  before do
+    stub_const('ENV', ENV.to_hash.merge(
+      'TIMESHEET_START_FORCED_ENTRY_DATE' => 20.days.ago.strftime(DATE_FORMAT)
+    ))
+  end
 
   describe 'GET /api/v1/time_sheet_entries' do
     let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
