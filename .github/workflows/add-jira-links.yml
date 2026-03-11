@@ -1,0 +1,224 @@
+name: Add Jira Links to PR
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  add-jira-links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract Jira Issue Keys
+        id: extract_keys
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          
+          # Extract all Jira keys matching patterns: CP-XXXX, VB-XXXX, AM-XXXX, CC-XXXX, etc.
+          # Using a broader pattern to catch all project prefixes
+          ALL_KEYS=$(echo "$PR_TITLE $BRANCH_NAME" | grep -oE '[A-Z]+-[0-9]+' | sort -u)
+          
+          if [ -z "$ALL_KEYS" ]; then
+            echo "No Jira issue keys found in PR title or branch name"
+            echo "KEYS_FOUND=false" >> $GITHUB_ENV
+            exit 0
+          fi
+          
+          echo "Found Jira issue keys: $ALL_KEYS"
+          
+          # Convert to comma-separated list
+          KEYS_CSV=$(echo "$ALL_KEYS" | tr '\n' ',' | sed 's/,$//')
+          echo "ISSUE_KEYS=$KEYS_CSV" >> $GITHUB_ENV
+          echo "KEYS_FOUND=true" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Update PR Description.
+        if: env.KEYS_FOUND == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          CURRENT_BODY: ${{ github.event.pull_request.body }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_INSTANCE: ${{ secrets.JIRA_INSTANCE }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          # Split keys back into array
+          IFS=',' read -ra KEYS <<< "$ISSUE_KEYS"
+          
+          # Build Jira links section with badges
+          JIRA_SECTION=""
+          for KEY in "${KEYS[@]}"; do
+            JIRA_URL="https://${JIRA_INSTANCE}/browse/$KEY"
+            
+            ISSUE_TYPE=""
+            ISSUE_SUMMARY=""
+            AI_DESCRIPTION=""
+            if [ -n "$JIRA_API_TOKEN" ] && [ -n "$JIRA_EMAIL" ] && [ -n "$JIRA_INSTANCE" ]; then
+              JIRA_RESPONSE=$(curl -s \
+                --user "${JIRA_EMAIL}:${JIRA_API_TOKEN}" \
+                -H "Accept: application/json" \
+                "https://${JIRA_INSTANCE}/rest/api/3/issue/${KEY}?fields=issuetype,summary,description" 2>/dev/null || echo "")
+              
+              if [ -n "$JIRA_RESPONSE" ]; then
+                ISSUE_TYPE=$(echo "$JIRA_RESPONSE" | jq -r '.fields.issuetype.name // ""' 2>/dev/null || echo "")
+                ISSUE_SUMMARY=$(echo "$JIRA_RESPONSE" | jq -r '.fields.summary // ""' 2>/dev/null || echo "")
+                
+                # Get description for AI processing
+                RAW_DESCRIPTION=$(echo "$JIRA_RESPONSE" | jq -r '
+                  if .fields.description then
+                    if .fields.description.content then
+                      [.fields.description.content[] | 
+                       if .content then 
+                         [.content[] | 
+                          if .text then .text else empty end
+                         ] | join(" ")
+                       else empty end
+                      ] | join(" ")
+                    else
+                      .fields.description
+                    end
+                  else
+                    ""
+                  end
+                ' 2>/dev/null || echo "")
+                
+                if [ -n "$OPENAI_API_KEY" ] && [ -n "$ISSUE_SUMMARY" ] && [ "${{ vars.ENABLE_AI_SUMMARIES }}" = "true" ]; then
+                  TRIMMED_DESC=$(echo "$RAW_DESCRIPTION" | head -c 2000)
+                  
+                  JSON_PAYLOAD=$(jq -n \
+                    --arg summary "$ISSUE_SUMMARY" \
+                    --arg desc "$TRIMMED_DESC" \
+                    '{
+                      "model": "gpt-4o-mini",
+                      "messages": [
+                        {
+                          "role": "system",
+                          "content": "You are a technical assistant helping developers. Create a brief 2-3 sentence summary of what needs to be done in this PR based on the Jira ticket. Focus on the technical implementation, ignore links, Figma references, and requirements documents. Write in present tense. If description is empty, expand on the summary."
+                        },
+                        {
+                          "role": "user",
+                          "content": ("Jira Summary: " + $summary + "\n\nJira Description: " + $desc)
+                        }
+                      ],
+                      "max_tokens": 150,
+                      "temperature": 0.3
+                    }')
+                  
+                  ai_response=$(curl -s -w "%{http_code}" --max-time 10 \
+                    -H "Authorization: Bearer $OPENAI_API_KEY" \
+                    -H "Content-Type: application/json" \
+                    -d "$JSON_PAYLOAD" \
+                    "https://api.openai.com/v1/chat/completions" 2>/dev/null || echo "000")
+                  
+                  if [ -n "$ai_response" ] && [ "${#ai_response}" -ge 3 ]; then
+                    ai_http_code=${ai_response: -3}
+                    ai_body=${ai_response:0:${#ai_response}-3}
+                  else
+                    ai_http_code="000"
+                    ai_body=""
+                  fi
+                  
+                  if [ "$ai_http_code" -ge 200 ] && [ "$ai_http_code" -lt 300 ]; then
+                    AI_DESCRIPTION=$(echo "$ai_body" | jq -r '.choices[0].message.content // ""' 2>/dev/null || echo "")
+                  else
+                    echo "Warning: OpenAI API returned status $ai_http_code for $KEY"
+                  fi
+                fi
+              fi
+            fi
+            
+            # Determine badge color based on issue type
+            BADGE_COLOR="0052CC"
+            case "$ISSUE_TYPE" in
+              "Bug")
+                BADGE_COLOR="FF5630"
+                ;;
+              "Story")
+                BADGE_COLOR="36B37E"
+                ;;
+              "Task")
+                BADGE_COLOR="0052CC"
+                ;;
+              "Epic")
+                BADGE_COLOR="6554C0"
+                ;;
+            esac
+            
+            # Build badge and link
+            if [ -n "$ISSUE_TYPE" ]; then
+              ESCAPED_KEY=$(echo "$KEY" | sed 's/-/--/g')
+              BADGE_URL="https://img.shields.io/badge/${ESCAPED_KEY}-${ISSUE_TYPE}-${BADGE_COLOR}?style=flat-square&logo=jira"
+              JIRA_SECTION+="[![${KEY}](${BADGE_URL})](${JIRA_URL})"
+              # Add AI-generated description if available
+              if [ -n "$AI_DESCRIPTION" ]; then
+                JIRA_SECTION+=$'\n'"${AI_DESCRIPTION}"
+              fi
+            else
+              # Fallback if Jira API is not available
+              JIRA_SECTION+="- [$KEY]($JIRA_URL)"
+            fi
+            JIRA_SECTION+=$'\n'
+          done
+          
+          # Only update if we have new links to add
+          if [ -n "$JIRA_SECTION" ] && [ "$JIRA_SECTION" != $'\n' ]; then
+            # Add section header
+            JIRA_SECTION="## Jira"$'\n'"$JIRA_SECTION"
+            
+            # Check if Jira section already exists
+            if echo "$CURRENT_BODY" | grep -q "## Jira"; then
+              # Replace existing section
+              NEW_BODY=$(echo "$CURRENT_BODY" | awk -v section="$JIRA_SECTION" '
+                /## Jira/ {
+                  print section
+                  skip=1
+                  next
+                }
+                /^## / && skip {
+                  skip=0
+                }
+                !skip {
+                  print
+                }
+              ')
+            else
+              # Prepend new section to the body
+              NEW_BODY="$JIRA_SECTION"$'\n'"$CURRENT_BODY"
+            fi
+            
+            # Escape the body for JSON
+            ESCAPED_BODY=$(echo "$NEW_BODY" | jq -Rs .)
+            
+            # Update PR description using GitHub API
+            gh_response=$(curl -s -w "%{http_code}" -X PATCH \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER" \
+              -d "{\"body\": $ESCAPED_BODY}" 2>/dev/null || echo "000")
+            
+            if [ -n "$gh_response" ] && [ "${#gh_response}" -ge 3 ]; then
+              gh_http_code=${gh_response: -3}
+              gh_body=${gh_response:0:${#gh_response}-3}
+            else
+              gh_http_code="000"
+              gh_body=""
+            fi
+            
+            if [ "$gh_http_code" -ge 200 ] && [ "$gh_http_code" -lt 300 ]; then
+              echo "Successfully updated PR description with Jira links"
+            else
+              echo "Error: GitHub API returned status $gh_http_code"
+              echo "Response: $gh_body"
+              exit 1
+            fi
+          else
+            echo "All Jira links already present in PR description"
+          fi
+        shell: bash

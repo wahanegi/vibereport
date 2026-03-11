@@ -1,5 +1,0 @@
-- label: "JIRA"
-  message: "$issuePrefix"
-  color: "#009900"
-  url: "https://clearboxdecisions.atlassian.net/browse/$issuePrefix"
-  when: "$issuePrefix"
