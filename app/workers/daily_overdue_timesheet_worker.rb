@@ -1,6 +1,6 @@
 class DailyOverdueTimesheetWorker
   FORCE_DATE_ENV = 'TIMESHEET_START_FORCED_ENTRY_DATE'.freeze
-  DATE_FORMAT    = '%m-%d-%Y'.freeze
+  DATE_FORMAT    = '%Y-%m-%d'.freeze
 
   def run_notification
     return unless reminder_days?

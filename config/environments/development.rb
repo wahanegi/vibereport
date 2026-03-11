@@ -101,11 +101,11 @@ ENV['GIPHY_API_KEY'] = 'v6xr0UlohPqB69kIH5HlnmIIGxc34EaS'
 
 # Do NOT hard-code TIMESHEET_START_FORCED_ENTRY_DATE here.
 # For local testing, set ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] in your shell.
-# Expected format: MM-DD-YYYY (e.g., 01-31-2026).
+# Expected format: YYYY-MM-DD (e.g., 2026-01-31).
 #
 # Example (in your terminal):
-#   export TIMESHEET_START_FORCED_ENTRY_DATE=01-31-2026
+#   export TIMESHEET_START_FORCED_ENTRY_DATE=2026-01-31
 #   bin/rails c
-#   ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] # => "01-31-2026"
+#   ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] # => "2026-01-31"
 #
 # When not set, reminders will not be force-enabled in development.
