@@ -68,7 +68,7 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
       return
     end
 
-    unless TimePeriod.overdue.exists?(id: time_period.id)
+    unless TimePeriod.overdue_after_forced_date.exists?(id: time_period.id)
       session.delete(:direct_timesheet_time_period_id)
       redirect_to app_path
       return

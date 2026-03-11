@@ -1,6 +1,5 @@
 class DailyOverdueTimesheetWorker
   FORCE_DATE_ENV = 'TIMESHEET_START_FORCED_ENTRY_DATE'.freeze
-  DATE_FORMAT    = '%Y-%m-%d'.freeze
 
   def run_notification
     return unless reminder_days?
@@ -12,7 +11,7 @@ class DailyOverdueTimesheetWorker
     return unless force_date_reached?
 
     missing_map = TimeSheets::MissingEntriesFinder.call(
-      time_periods: TimePeriod.overdue
+      time_periods: TimePeriod.overdue_after_forced_date
     )
 
     return if missing_map.blank?

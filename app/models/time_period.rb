@@ -28,8 +28,6 @@ class TimePeriod < ApplicationRecord
 
   scope :ordered, -> { order(start_date: :desc) }
   scope :with_responses_by_team, ->(team) { joins(responses: { user: :user_teams }).where(user_teams: { team_id: team.id }) }
-  # Becomes overdue starting from the day AFTER due_date.
-  scope :overdue, -> { where(due_date: ...Date.current) }
 
   def slugify
     self.slug = SecureRandom.hex(5)
@@ -85,6 +83,14 @@ class TimePeriod < ApplicationRecord
 
   def date_range_str
     work_week_range('%b %d')
+  end
+
+  def self.overdue_after_forced_date
+    forced_entry_date = ENV.fetch('TIMESHEET_START_FORCED_ENTRY_DATE', nil)
+    return none if forced_entry_date.blank?
+
+    start_date = Date.strptime(forced_entry_date, DATE_FORMAT)
+    where(due_date: start_date...Date.current)
   end
 
   def self.ransackable_associations(_auth_object = nil)
