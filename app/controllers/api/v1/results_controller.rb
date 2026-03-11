@@ -1,4 +1,5 @@
 class Api::V1::ResultsController < ApplicationController
+  include LegacyEmailLinkSupport
   before_action :authenticate_user!, :time_period, only: %i[show]
 
   def show
@@ -11,6 +12,8 @@ class Api::V1::ResultsController < ApplicationController
 
   def results_email
     payload = SignedLinks::ResultsEmailBuilder.verify(params[:token])
+    # TODO: Remove next line after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+    payload ||= legacy_results_email_payload if legacy_links_allowed?
     return redirect_to_invalid_link if payload.blank?
 
     @user = User.find_by(id: payload[:user_id].to_i)
@@ -58,5 +61,13 @@ class Api::V1::ResultsController < ApplicationController
 
   def redirect_to_invalid_link
     redirect_to new_user_session_path, alert: 'Invalid or expired link'
+  end
+
+  # TODO: Remove after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+  def legacy_results_email_payload
+    return if params[:user_id].blank? || params[:slug].blank?
+
+    { user_id: params[:user_id].to_i,
+      time_period_slug: params[:slug] }.with_indifferent_access
   end
 end

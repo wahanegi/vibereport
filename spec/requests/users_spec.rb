@@ -52,6 +52,39 @@ RSpec.describe Api::V1::UsersController do
         expect(controller.current_user).not_to eq(user_b)
       end
     end
+
+    # TODO: Remove this context after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+    context 'with legacy params (no token)', :legacy_link_support do
+      before do
+        stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.from_now.to_date.to_s))
+      end
+
+      it 'signs in user and redirects to unsubscribe when user_id present' do
+        get '/api/v1/unsubscribe', params: { user_id: user.id }
+
+        expect(controller.current_user).to eq(user)
+        expect(response).to redirect_to('/unsubscribe')
+      end
+
+      it 'redirects to login when user_id is missing' do
+        get '/api/v1/unsubscribe'
+
+        expect(controller.current_user).to be_nil
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      context 'when legacy period has passed' do
+        before do
+          stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.ago.to_date.to_s))
+        end
+
+        it 'does not sign in even with valid legacy params' do
+          get '/api/v1/unsubscribe', params: { user_id: user.id }
+
+          expect(controller.current_user).to be_nil
+        end
+      end
+    end
   end
 
   describe 'POST send_reminder (security: must not be exposed on public API)' do
