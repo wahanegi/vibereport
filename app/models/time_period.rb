@@ -90,7 +90,7 @@ class TimePeriod < ApplicationRecord
     return none if forced_entry_date.blank?
 
     start_date = Date.strptime(forced_entry_date, DATE_FORMAT)
-    where(due_date: start_date...Date.current)
+    where(end_date: start_date...Date.current)
   end
 
   def self.ransackable_associations(_auth_object = nil)
