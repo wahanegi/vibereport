@@ -135,6 +135,8 @@ class Api::V1::EmotionsController < ApplicationController
       time_period_id: topic.time_period_id,
       user_name: topic.user&.full_name
     }
+  end
+
   def direct_timesheet_period
     return @direct_timesheet_period if defined?(@direct_timesheet_period)
 
