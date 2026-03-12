@@ -12,12 +12,12 @@ RSpec.describe DailyOverdueTimesheetWorker do
   let!(:user_team) { create(:user_team, user: user, team: team, created_at: REFERENCE_DATE - 2.months) }
   let!(:overdue_period) do
     create(:time_period,
-           start_date: REFERENCE_DATE - 3.weeks,
-           end_date: REFERENCE_DATE - 2.weeks,
-           due_date: REFERENCE_DATE - 10.days)
+           start_date: REFERENCE_DATE - 21.days,
+           end_date: REFERENCE_DATE - 15.days,
+           due_date: REFERENCE_DATE - 14.days)
   end
 
-  let(:force_date) { (REFERENCE_DATE - 20.days).strftime(DATE_FORMAT) }
+  let(:force_date) { (REFERENCE_DATE - 30.days).strftime(DATE_FORMAT) }
 
   before do
     stub_const('ENV', ENV.to_hash.merge(
@@ -107,7 +107,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
     end
 
     context 'when there are no overdue time periods' do
-      before { overdue_period.update!(due_date: Date.current + 5.days) }
+      before { overdue_period.update!(end_date: Date.current + 5.days) }
 
       it 'does not send any emails' do
         expect { worker.run }
