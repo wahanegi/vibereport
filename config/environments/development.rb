@@ -98,3 +98,14 @@ ENV['DAY_TO_SEND_FINAL_REMINDER'] = 'monday'
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
 ENV['DEFAULT_FROM_ADDRESS'] = 'hello'
 ENV['GIPHY_API_KEY'] = 'v6xr0UlohPqB69kIH5HlnmIIGxc34EaS'
+
+# Do NOT hard-code TIMESHEET_START_FORCED_ENTRY_DATE here.
+# For local testing, set ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] in your shell.
+# Expected format: YYYY-MM-DD (e.g., 2026-01-31).
+#
+# Example (in your terminal):
+#   export TIMESHEET_START_FORCED_ENTRY_DATE=2026-01-31
+#   bin/rails c
+#   ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] # => "2026-01-31"
+#
+# When not set, reminders will not be force-enabled in development.

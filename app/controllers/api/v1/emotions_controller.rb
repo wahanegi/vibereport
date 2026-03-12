@@ -42,10 +42,14 @@ class Api::V1::EmotionsController < ApplicationController
     {
       current_user:,
       time_period: time_period.as_json(methods: %i[first_working_day last_working_day]),
+      direct_timesheet: direct_timesheet?,
       response: if @current_response
-                  { id: @current_response.id, type: 'response', attributes: @current_response }
+                  attrs = @current_response.as_json
+                  attrs['steps'] = %w[emotion-selection-web timesheet] if direct_timesheet?
+                  { id: @current_response.id, type: 'response', attributes: attrs }
                 else
-                  { attributes: { steps: %w[emotion-selection-web].to_s } }
+                  steps = direct_timesheet? ? %w[emotion-selection-web timesheet] : ['emotion-selection-web']
+                  { attributes: { steps: steps } }
                 end,
       emotion: @current_response ? @current_response.emotion : {},
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
@@ -55,7 +59,7 @@ class Api::V1::EmotionsController < ApplicationController
       check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id])
                                       .as_json(methods: %i[first_working_day last_working_day]),
       has_team_access: current_user.user_teams.has_team_access.any?,
-      prev_results_path:,
+      prev_results_path: (direct_timesheet? ? nil : prev_results_path),
       time_periods: TimePeriod.ordered.as_json(methods: %i[first_working_day last_working_day]) || [],
       timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?)
     }
@@ -91,7 +95,18 @@ class Api::V1::EmotionsController < ApplicationController
     }
   end
 
+  def direct_timesheet_period
+    return @direct_timesheet_period if defined?(@direct_timesheet_period)
+
+    id = session[:direct_timesheet_time_period_id]
+    @direct_timesheet_period = id.present? ? TimePeriod.find_by(id: id) : nil
+  end
+
+  def direct_timesheet?
+    direct_timesheet_period.present?
+  end
+
   def time_period
-    @time_period ||= TimePeriod.find_or_create_time_period
+    @time_period ||= direct_timesheet_period || TimePeriod.find_or_create_time_period
   end
 end

@@ -54,14 +54,25 @@ class UserEmailMailer < ApplicationMailer
     @shout_outs = user.mentions.where(time_period_id: time_period.id)
 
     if user_belongs_to_timesheet_team?
-      subject = "Timesheets due Today"
-      @message_above_button = "You are required to fill out your timesheet for last week. Please enter it now."
+      subject = 'Timesheets due Today'
+      @message_above_button = 'You are required to fill out your timesheet for last week. Please enter it now.'
     else
       subject = random_remind_checkin_subject(time_period)
       @message_above_button = who_is_waiting(user, time_period)
     end
 
     mail(to: @user.email, subject: subject)
+  end
+
+  def daily_timesheet_reminder(user, missing_periods)
+    @user = user
+    @missing_periods = Array(missing_periods).sort_by(&:due_date)
+    @links = @missing_periods.map do |period|
+      { period: period, url: TimeSheets::DirectLinkBuilder.call(user, period) }
+    end
+    @intro_message = 'You are required to fill out your timesheet for past periods. Please complete it as soon as possible.'
+
+    mail(to: @user.email, subject: 'Action Required: Overdue Timesheet(s)')
   end
 
   private
