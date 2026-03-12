@@ -34,6 +34,9 @@ class TimeSheetEntry < ApplicationRecord
   scope :billable, lambda {
     joins(:project).where(projects: { usage: 'billable' })
   }
+  scope :for_users_and_periods, lambda { |user_ids, period_ids|
+    where(user_id: user_ids, time_period_id: period_ids)
+  }
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[id total_hours project_id time_period_id user_id]

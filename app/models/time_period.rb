@@ -86,6 +86,14 @@ class TimePeriod < ApplicationRecord
     work_week_range('%b %d')
   end
 
+  def self.overdue_after_forced_date
+    forced_entry_date = ENV.fetch('TIMESHEET_START_FORCED_ENTRY_DATE', nil)
+    return none if forced_entry_date.blank?
+
+    start_date = Date.strptime(forced_entry_date, DATE_FORMAT)
+    where(end_date: start_date...Date.current)
+  end
+
   def self.ransackable_associations(_auth_object = nil)
     %w[time_sheet_entries]
   end

@@ -134,4 +134,77 @@ RSpec.describe TimePeriod, type: :model do
       end
     end
   end
+
+  describe '.overdue_after_forced_date' do
+    include ActiveSupport::Testing::TimeHelpers
+
+    REFERENCE_DATE = Date.new(2026, 2, 17)
+
+    around { |example| travel_to(REFERENCE_DATE) { example.run } }
+
+    let!(:period1) do
+      create(:time_period,
+             start_date: REFERENCE_DATE - 30.days,
+             end_date: REFERENCE_DATE - 25.days)
+    end
+
+    let!(:period2) do
+      create(:time_period,
+             start_date: REFERENCE_DATE - 20.days,
+             end_date: REFERENCE_DATE - 15.days)
+    end
+
+    let!(:period3) do
+      create(:time_period,
+             start_date: REFERENCE_DATE - 5.days,
+             end_date: REFERENCE_DATE - 1.day)
+    end
+
+    context 'when TIMESHEET_START_FORCED_ENTRY_DATE is in the past' do
+      before do
+        stub_const('ENV', ENV.to_hash.merge(
+                            'TIMESHEET_START_FORCED_ENTRY_DATE' => (REFERENCE_DATE - 21.days).strftime('%Y-%m-%d')
+        ))
+      end
+
+      it 'returns periods after forced date' do
+        result = TimePeriod.overdue_after_forced_date
+        expect(result).to contain_exactly(period2, period3)
+      end
+    end
+
+    context 'when TIMESHEET_START_FORCED_ENTRY_DATE is today' do
+      before do
+        stub_const('ENV', ENV.to_hash.merge(
+                            'TIMESHEET_START_FORCED_ENTRY_DATE' => REFERENCE_DATE.strftime('%Y-%m-%d')
+        ))
+      end
+
+      it 'returns periods with end_date today or later (empty if none)' do
+        expect(TimePeriod.overdue_after_forced_date).to be_empty
+      end
+    end
+
+    context 'when TIMESHEET_START_FORCED_ENTRY_DATE is in the future' do
+      before do
+        stub_const('ENV', ENV.to_hash.merge(
+                            'TIMESHEET_START_FORCED_ENTRY_DATE' => (REFERENCE_DATE + 5.days).strftime('%Y-%m-%d')
+        ))
+      end
+
+      it 'returns empty set' do
+        expect(TimePeriod.overdue_after_forced_date).to be_empty
+      end
+    end
+
+    context 'when TIMESHEET_START_FORCED_ENTRY_DATE is not set' do
+      before do
+        stub_const('ENV', ENV.to_hash.except('TIMESHEET_START_FORCED_ENTRY_DATE'))
+      end
+
+      it 'returns empty set' do
+        expect(TimePeriod.overdue_after_forced_date).to be_empty
+      end
+    end
+  end
 end
