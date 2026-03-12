@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Api::V1::UsersController do
   let!(:user) { create :user }
 
-  before(:each) do |test|
-    sign_in(user) unless test.metadata[:logged_out]
+  before(:each) do |example|
+    sign_in(user) unless example.metadata[:logged_out]
   end
 
   describe 'PUT #update' do
@@ -19,26 +19,77 @@ RSpec.describe Api::V1::UsersController do
     end
   end
 
-  describe 'POST #send_reminder' do
-    context 'when sending reminder to user' do
-      let(:mailer) { double("UserEmailMailer", deliver_now: true) }
+  describe 'GET #unsubscribe', :logged_out do
+    let(:valid_token) do
+      url = SignedLinks::UnsubscribeBuilder.url(user)
+      Rack::Utils.parse_query(URI.parse(url).query)['token']
+    end
 
+    context 'with valid token' do
+      it 'signs in the user and redirects' do
+        get '/api/v1/unsubscribe', params: { token: valid_token }
+
+        expect(controller.current_user).to eq(user)
+        expect(response).to have_http_status(:redirect)
+      end
+    end
+
+    context 'with invalid token' do
+      it 'does not sign in' do
+        get '/api/v1/unsubscribe', params: { token: 'invalid' }
+
+        expect(controller.current_user).to be_nil
+      end
+    end
+
+    context 'security: valid token for user A and user_id=B in query' do
+      let(:user_b) { create(:user) }
+
+      it 'signs in user A (from token), ignores params[:user_id]' do
+        get '/api/v1/unsubscribe', params: { token: valid_token, user_id: user_b.id }
+
+        expect(controller.current_user).to eq(user)
+        expect(controller.current_user).not_to eq(user_b)
+      end
+    end
+
+    # TODO: Remove this context after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+    context 'with legacy params (no token)', :legacy_link_support do
       before do
-        allow(UserEmailMailer).to receive(:send_reminder).and_return(mailer)
-        post send_reminder_api_v1_user_path(user.id)
+        stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.from_now.to_date.to_s))
       end
 
-      it 'sends the reminder email' do
-        expect(UserEmailMailer).to have_received(:send_reminder)
+      it 'signs in user and redirects to unsubscribe when user_id present' do
+        get '/api/v1/unsubscribe', params: { user_id: user.id }
+
+        expect(controller.current_user).to eq(user)
+        expect(response).to redirect_to('/unsubscribe')
       end
 
-      it 'redirects to the admin dashboard path' do
-        expect(response).to redirect_to(admin_dashboard_path)
+      it 'redirects to login when user_id is missing' do
+        get '/api/v1/unsubscribe'
+
+        expect(controller.current_user).to be_nil
+        expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'displays the success notice' do
-        expect(flash[:notice]).to eq("Reminder sent to #{user.full_name}")
+      context 'when legacy period has passed' do
+        before do
+          stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.ago.to_date.to_s))
+        end
+
+        it 'does not sign in even with valid legacy params' do
+          get '/api/v1/unsubscribe', params: { user_id: user.id }
+
+          expect(controller.current_user).to be_nil
+        end
       end
+    end
+  end
+
+  describe 'POST send_reminder (security: must not be exposed on public API)' do
+    it 'has no route so reminder cannot be triggered via API' do
+      expect { post "/api/v1/users/#{user.id}/send_reminder" }.to raise_error(ActionController::RoutingError)
     end
   end
 end
