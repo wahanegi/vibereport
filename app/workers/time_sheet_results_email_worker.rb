@@ -34,6 +34,7 @@ class TimeSheetResultsEmailWorker
     TimeSheetEntry
       .includes(:project, :user, :time_period) # avoids N+1 queries
       .joins(:time_period)
+      .merge(TimePeriod.finished)
       .where(time_periods: { start_date: TIMESHEET_LAST_MONTHS_PERIOD.months.ago.beginning_of_week..Date.current })
   end
 end
