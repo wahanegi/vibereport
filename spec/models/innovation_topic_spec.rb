@@ -36,6 +36,12 @@ RSpec.describe InnovationTopic, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:innovation_body) }
+
+    describe 'uniqueness of innovation_body' do
+      subject { create(:innovation_topic) }
+
+      it { is_expected.to validate_uniqueness_of(:innovation_body).case_insensitive }
+    end
   end
 
   describe 'Ransack support' do
