@@ -68,7 +68,7 @@ RSpec.describe Exporters::TimeSheetExcelExporter do
 
       workbook_double = double('workbook')
       allow(Axlsx::Package).to receive(:new)
-                                 .and_return(double(workbook: workbook_double, to_stream: double(read: 'binary_data')))
+        .and_return(double(workbook: workbook_double, to_stream: double(read: 'binary_data')))
 
       sheet_double = double('sheet')
       styles_double = double('styles', add_style: 1)
@@ -76,11 +76,14 @@ RSpec.describe Exporters::TimeSheetExcelExporter do
       allow(sheet_double).to receive(:styles).and_return(styles_double)
       allow(sheet_double).to receive(:add_row)
 
-      allow(workbook_double).to receive(:add_worksheet).and_yield(sheet_double)
+      expect(workbook_double)
+        .to receive(:add_worksheet)
+        .at_least(:once) do |args|
 
-      expect(workbook_double).to receive(:add_worksheet) do |args|
-        expect(args[:name].length).to be <= described_class::MAX_SHEET_NAME_LENGTH
+        expect(args[:name].length)
+          .to be <= described_class::MAX_SHEET_NAME_LENGTH
       end
+        .and_yield(sheet_double)
 
       described_class.new(entries + [entry_with_long_period]).call
     end
