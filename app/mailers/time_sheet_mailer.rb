@@ -3,7 +3,7 @@ class TimeSheetMailer < ApplicationMailer
     @grouped_entries = grouped_entries
     @time_period = time_period
     @doc_location = ENV.fetch('TIMESHEETS_DOC_LOCATION', nil)
-    @has_entries_last_year = attach_excel
+    @has_entries_in_report_range = attach_excel
 
     recipients = ENV.fetch('TIMESHEETS_RESULTS_EMAILS', '').split(',')
 

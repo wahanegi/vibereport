@@ -6,9 +6,11 @@
           <tr>
             <td style="padding: 20px 0; text-align: center;">
               <%= content_tag(:h2,
-                              @has_entries_last_year ?
+                              @has_entries_in_report_range ?
                                 "Timesheet Entries for #{@time_period.date_range_str}" :
-                                "No timesheet entries were found for the past #{TIMESHEET_LAST_MONTHS_PERIOD} months.") %>
+                                "No timesheet entries were found for the past #{TIMESHEET_LAST_MONTHS_PERIOD} months.",
+                              style: "margin: 0;")
+              %>
             </td>
           </tr>
         <!-- 2. Link to master project codes -->
@@ -41,7 +43,7 @@
             </tr>
           <% end %>
         <% else %>
-          <% if @has_entries_last_year %>
+          <% if @has_entries_in_report_range %>
             <tr>
               <td style="padding: 20px; text-align: center;">
                 There are no timesheet entries for this period.

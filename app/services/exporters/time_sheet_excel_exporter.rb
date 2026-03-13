@@ -3,7 +3,7 @@ class Exporters::TimeSheetExcelExporter
   require 'caxlsx'
 
   HEADERS = ['Project Code', 'Name', 'Hours'].freeze
-  MAX_SHEET_NAME_LENGTH = 31 # Excel has 31 symbols of limit
+  MAX_SHEET_NAME_LENGTH = 31 # Excel limits sheet names to 31 characters
 
   def initialize(entries)
     @entries = entries
