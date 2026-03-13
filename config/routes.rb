@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       resources :responses, only: %i[create update], param: :id
       resources :fun_question_answers, only: %i[show create update destroy]
       resources :fun_questions, only: %i[show create update destroy]
+      resources :innovation_topics, only: %i[show create update destroy]
+      resources :innovation_brainstormings, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug
       resources :shoutouts, only: %i[show create update destroy]
       resources :users, only: %i[update]

@@ -13,6 +13,10 @@ describe EmotionSelectionNotificationWorker do
     12.times { create(:emotion, category: 'negative', public: true) }
   end
 
+  before do
+    Faker::UniqueGenerator.clear
+  end
+
   describe '.initialize' do
     it 'fetches all users' do
       expect(worker.users).to match_array([user1, user2])

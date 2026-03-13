@@ -1,0 +1,54 @@
+# == Schema Information
+#
+# Table name: innovation_topics
+#
+#  id              :bigint           not null, primary key
+#  innovation_body :text             not null
+#  posted          :boolean          default(FALSE), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  time_period_id  :bigint
+#  user_id         :bigint           not null
+#
+# Indexes
+#
+#  index_innovation_topics_on_time_period_id  (time_period_id)
+#  index_innovation_topics_on_user_id         (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (time_period_id => time_periods.id)
+#  fk_rails_...  (user_id => users.id)
+#
+class InnovationTopic < ApplicationRecord
+  MAX_DISPLAY_LENGTH = 45
+
+  belongs_to :user, optional: true
+  belongs_to :time_period, optional: true
+
+  has_one :response, dependent: :nullify
+  has_many :innovation_brainstormings, dependent: :destroy
+
+  validates :user, presence: true
+  validates :innovation_body, presence: true
+  validates :innovation_body, uniqueness: { case_sensitive: false }
+
+  scope :unposted, -> { where(posted: false) }
+  scope :ordered, -> { order(created_at: :desc) }
+
+  def display_name
+    "Innovation topic: #{innovation_body.truncate(MAX_DISPLAY_LENGTH)}"
+  end
+
+  def short_name(length: MAX_DISPLAY_LENGTH)
+    innovation_body.truncate(length)
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id innovation_body posted time_period_id created_at updated_at user_id]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[innovation_brainstormings response time_period user]
+  end
+end
