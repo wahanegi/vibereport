@@ -31,6 +31,7 @@ class InnovationTopic < ApplicationRecord
 
   validates :user, presence: true
   validates :innovation_body, presence: true
+  validates :innovation_body, uniqueness: { case_sensitive: false }
 
   scope :unposted, -> { where(posted: false) }
   scope :ordered, -> { order(created_at: :desc) }

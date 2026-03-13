@@ -80,6 +80,34 @@ RSpec.describe Api::V1::InnovationTopicsController do
         expect(response.parsed_body['error']['innovation_body']).to be_present
       end
     end
+
+    context 'when innovation_body already exists' do
+      let!(:existing_topic) { create(:innovation_topic, innovation_body: 'Existing Topic') }
+
+      it 'does not create a duplicate topic' do
+        expect do
+          post '/api/v1/innovation_topics', params: {
+            innovation_topic: { innovation_body: 'Existing Topic', time_period_id: time_period.id }
+          }
+        end.not_to change(InnovationTopic, :count)
+      end
+
+      it 'returns 422 with error message' do
+        post '/api/v1/innovation_topics', params: {
+          innovation_topic: { innovation_body: 'Existing Topic', time_period_id: time_period.id }
+        }
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body['error']['innovation_body']).to include('This topic already exists')
+      end
+
+      it 'treats different cases as duplicates' do
+        expect do
+          post '/api/v1/innovation_topics', params: {
+            innovation_topic: { innovation_body: 'existing topic', time_period_id: time_period.id }
+          }
+        end.not_to change(InnovationTopic, :count)
+      end
+    end
   end
 
   describe 'PATCH #update' do
@@ -132,6 +160,22 @@ RSpec.describe Api::V1::InnovationTopicsController do
               params: { innovation_topic: { innovation_body: 'Updated by another user' } }
         expect(response).to have_http_status(:not_found)
         expect(other_topic.reload.innovation_body).not_to eq('Updated by another user')
+      end
+    end
+
+    context 'when updating to an existing innovation_body' do
+      let!(:another_topic) { create(:innovation_topic, innovation_body: 'Taken Name', user: user) }
+
+      it 'returns 422' do
+        patch "/api/v1/innovation_topics/#{innovation_topic.id}",
+              params: { innovation_topic: { innovation_body: 'Taken Name' } }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns error message' do
+        patch "/api/v1/innovation_topics/#{innovation_topic.id}",
+              params: { innovation_topic: { innovation_body: 'Taken Name' } }
+        expect(response.parsed_body['error']['innovation_body']).to include('This topic already exists')
       end
     end
   end
