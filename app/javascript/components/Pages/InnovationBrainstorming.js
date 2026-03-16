@@ -201,7 +201,7 @@ const InnovationBrainstorming = ({
             <div
               className="d-flex flex-column align-items-start mx-auto px-2 py-2 border border-3 rounded rounded-4 border-royal-blue shadow innovation-max-width">
               {isUserName && (
-                <p className="fs-8 fs-md-7 text-gray-600 lh-lg"> {userName} asks what do you think about: </p>
+                <p className="fs-8 fs-md-7 text-gray-600 lh-lg"> {userName} suggests: </p>
               )}
               <div id="topic" className='text-start fs-7 fs-md-6 mb-1'>{topicBody}</div>
               <div className="w-100">
