@@ -8,7 +8,7 @@
               <%= content_tag(:h2,
                               @has_entries_in_report_range ?
                                 "Timesheet Entries for #{@time_period.date_range_str}" :
-                                "No timesheet entries were found for the past #{TIMESHEET_LAST_MONTHS_PERIOD} months.",
+                                "No timesheet entries were found for the past #{@time_sheet_last_months_period} months.",
                               style: "margin: 0;")
               %>
             </td>

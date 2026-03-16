@@ -1,4 +1,6 @@
 class TimeSheetResultsEmailWorker
+  TIMESHEET_LAST_MONTHS_PERIOD = ENV.fetch('TIMESHEET_LAST_MONTHS_PERIOD', 12).to_i
+
   def initialize
     @time_period = TimePeriod.previous_time_period
     @time_sheet_entries = @time_period&.time_sheet_entries
@@ -18,6 +20,7 @@ class TimeSheetResultsEmailWorker
       grouped_entries_for_html,
       @time_period,
       attach_excel: attach_excel,
+      last_months_period: TIMESHEET_LAST_MONTHS_PERIOD
     ).deliver_now
   end
 
