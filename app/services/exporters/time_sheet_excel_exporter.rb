@@ -1,7 +1,5 @@
 # Generates an Excel file with multiple sheets (one per week)
 class Exporters::TimeSheetExcelExporter
-  require 'caxlsx'
-
   HEADERS = ['Project Code', 'Name', 'Hours'].freeze
   MAX_SHEET_NAME_LENGTH = 31 # Excel limits sheet names to 31 characters
 

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'caxlsx'
 
 RSpec.describe Exporters::TimeSheetExcelExporter do
   let(:user1) { create(:user, first_name: 'Alice', last_name: 'Smith') }
