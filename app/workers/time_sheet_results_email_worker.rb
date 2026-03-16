@@ -1,9 +1,8 @@
 class TimeSheetResultsEmailWorker
-  TIMESHEET_LAST_MONTHS_PERIOD = ENV.fetch('TIMESHEET_LAST_MONTHS_PERIOD', 12).to_i
-
   def initialize
     @time_period = TimePeriod.previous_time_period
     @time_sheet_entries = @time_period&.time_sheet_entries
+    @time_sheet_last_months_period = ENV.fetch('TIMESHEET_LAST_MONTHS_PERIOD', 12).to_i
   end
 
   def run_notification
@@ -20,7 +19,7 @@ class TimeSheetResultsEmailWorker
       grouped_entries_for_html,
       @time_period,
       attach_excel: attach_excel,
-      last_months_period: TIMESHEET_LAST_MONTHS_PERIOD
+      last_months_period: @time_sheet_last_months_period
     ).deliver_now
   end
 
@@ -38,6 +37,6 @@ class TimeSheetResultsEmailWorker
       .includes(:project, :user, :time_period) # avoids N+1 queries
       .joins(:time_period)
       .merge(TimePeriod.finished)
-      .where(time_periods: { start_date: TIMESHEET_LAST_MONTHS_PERIOD.months.ago.beginning_of_week..Date.current })
+      .where(time_periods: { start_date: @time_sheet_last_months_period.months.ago.beginning_of_week..Date.current })
   end
 end
