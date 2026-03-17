@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   calculateBillableHours,
   rangeFormat,
@@ -7,23 +7,24 @@ import {
   validateRow,
 } from '../helpers/helpers';
 import Layout from '../Layout';
-import {apiRequest} from '../requests/axios_requests';
+import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import {BtnAddNewRow, Calendar} from '../UI/ShareContent';
+import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import SweetAlert from "../UI/SweetAlert";
 
-const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
+const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
   const [rowsData, setRowsData] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isDraft, setIsDraft] = useState(true);
   const [billableError, setBillableError] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const {isLoading, setIsLoading} = service;
+  const { isLoading, setIsLoading } = service;
 
   const timesheetDate = rangeFormat(data.time_period || {});
-  const isDirectTimesheetMode = Boolean(data?.direct_timesheet)
+  const isDirectTimesheetMode = Boolean(data?.direct_timesheet);
 
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
@@ -97,12 +98,20 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
               return;
             }
 
+            setIsSubmitted(true);
             onSuccess();
             setIsLoading(false);
 
+            const baseHtml = 'Your timesheet has been successfully saved. You may now close this page.';
+            const shouldShowDirectCheckInCta = Boolean(data?.can_complete_check_in);
+
+            const alertHtml = shouldShowDirectCheckInCta
+              ? `${baseHtml}<br/><br/><a href="/app">Click here to complete your check in for last week</a>`
+              : baseHtml;
+
             SweetAlert({
               alertTitle: 'Success!',
-              alertHtml: 'Your timesheet has been successfully saved. You may now close this page.',
+              alertHtml,
               confirmButtonText: 'OK',
               showCancelButton: false,
               showCloseButton: false
@@ -115,9 +124,9 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
         // Logic for normal flow
         if (!isDraft) {
           steps.push('causes-to-celebrate');
-          saveDataToDb(steps, {draft: false});
+          saveDataToDb(steps, { draft: false });
         } else {
-          saveDataToDb(steps, {draft: true});
+          saveDataToDb(steps, { draft: true });
         }
         onSuccess();
         setIsLoading(false);
@@ -222,7 +231,7 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
                 />
               ))}
             </div>
-            <div style={{height: '20px'}} className="text-primary">
+            <div style={{ height: '20px' }} className="text-primary">
               {rowsData.length > 0 && !isValid ? (
                 <p>Please fill out all fields</p>
               ) : billableError ? (

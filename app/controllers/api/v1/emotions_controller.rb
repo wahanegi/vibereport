@@ -60,9 +60,53 @@ class Api::V1::EmotionsController < ApplicationController
                                       .as_json(methods: %i[first_working_day last_working_day]),
       has_team_access: current_user.user_teams.has_team_access.any?,
       prev_results_path: (direct_timesheet? ? nil : prev_results_path),
+      has_remaining_direct_timesheets: direct_timesheet? && has_remaining_direct_timesheets?,
+      can_complete_check_in: direct_timesheet? && check_in_period? && !check_in_completed?,
+      direct_results_path: if direct_timesheet? && !has_remaining_direct_timesheets?
+                             previous_time_period_for_check_in&.slug&.then do |slug|
+                               "/results/#{slug}"
+                             end
+                           else
+                             nil
+                           end,
       time_periods: TimePeriod.ordered.as_json(methods: %i[first_working_day last_working_day]) || [],
       timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?)
     }
+  end
+
+  def previous_time_period_for_check_in
+    @previous_time_period_for_check_in ||= TimePeriod.previous_time_period
+  end
+
+  def check_in_completed?
+    prev_period = previous_time_period_for_check_in
+    return false if prev_period.nil?
+
+    Response.exists?(time_period_id: prev_period.id, user_id: current_user.id, draft: false)
+  end
+
+  def has_remaining_direct_timesheets?
+    return false unless direct_timesheet?
+
+    overdue_periods = TimePeriod.overdue_after_forced_date.ordered.to_a
+    return false if overdue_periods.empty?
+
+    enabled_memberships = current_user.user_teams.joins(:team).where(teams: { timesheet_enabled: true })
+    return false if enabled_memberships.empty?
+
+    applicable_periods = overdue_periods.select do |period|
+      enabled_memberships.any? { |membership| membership.created_at.to_date <= period.end_date }
+    end
+
+    current_direct_period_id = direct_timesheet_period&.id
+    remaining_period_ids = applicable_periods.map(&:id) - [current_direct_period_id].compact
+    return false if remaining_period_ids.empty?
+
+    completed_period_ids = TimeSheetEntry.where(user_id: current_user.id, time_period_id: remaining_period_ids)
+                                         .distinct
+                                         .pluck(:time_period_id)
+
+    (remaining_period_ids - completed_period_ids).any?
   end
 
   def current_response
