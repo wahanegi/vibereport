@@ -11,6 +11,7 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
   const dropdownRef = useRef(null);
   const alertTitleLogout = "<div class='text-black'>Are you sure you <br/>  want to log out?</div>"
   const id = data?.response?.id
+  const isDirectTimesheetMode = Boolean(data?.direct_timesheet);
   const lastStep = isResult
       ? 'results'
       : Array.isArray(steps) && steps.length > 0
@@ -45,6 +46,10 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
   const isStepUnsubscribe = location.substring(location.lastIndexOf("/") + 1) === 'unsubscribe'
 
   const getSrcMenu = (lastSegment, activeImg) => {
+    if (isDirectTimesheetMode) {
+      const { src, activeSrc } = SEGMENTS_MAP['emotion-selection-web'];
+      return { src: activeImg ? activeSrc : src, percent: null };
+    }
     if (isStepUnsubscribe) {
       return {
         src: activeImg ? SEGMENTS_MAP['emotion-selection-web'].activeSrc : SEGMENTS_MAP['emotion-selection-web'].src,
@@ -81,10 +86,10 @@ const Menu = ({className = '', data, steps, draft, handleSaveDraft, isResult = f
           </Dropdown.ItemText>
         </Dropdown.Menu>
       </Dropdown>
-      {!isStepUnsubscribe && (
+      {!isStepUnsubscribe && !isDirectTimesheetMode && (
         <div className='text-primary text-nowrap pt-0 pt-sm-1'>
           <span>
-            {getSrcMenu(lastSegment).percent}% complete
+            {getSrcMenu(lastSegment, activeImg).percent}% complete
           </span>
         </div>
       )}
