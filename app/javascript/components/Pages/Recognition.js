@@ -17,34 +17,31 @@ const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => 
   const sumShoutOuts = data.user_shoutouts.filter(item => item.time_period_id === data.time_period.id)
   const [previousNumShoutOuts, setPreviousNumShoutOuts] = useState(sumShoutOuts)
 
-  const shoutOuts = sumShoutOuts
-    .sort((a, b) => a.updated_at < b.updated_at ? 1 : -1)
-
+  const shoutOuts = sumShoutOuts.sort((a, b) => a.updated_at < b.updated_at ? 1 : -1)
   const numShoutOuts = shoutOuts.length
+  const isInnovationQuestionSubmissionEnabled = data?.innovation_question_submission_enabled;
 
   const handleSaveDraft = () => {
     saveDataToDb(steps, { draft: true });
     setIsDraft(true);
   }
 
-  useEffect(() => {
-    if (previousNumShoutOuts.length !== numShoutOuts) {
-      saveDataToDb(steps, { draft: false });
-      setIsDraft(false);
-    }
-  }, [numShoutOuts]);
-
   const handlingOnClickNext = () => {
+    let nextStep;
+
     if (!data.fun_question) {
-      steps.push('causes-to-celebrate');
+      nextStep = 'causes-to-celebrate';
     } else if (data.innovation_topic) {
-      steps.push('innovation-brainstorming');
+      nextStep = 'innovation-brainstorming';
+    } else if (isInnovationQuestionSubmissionEnabled) {
+      nextStep = 'icebreaker-answer';
     } else {
-      steps.push('innovation-topic');
+      nextStep = 'innovation-topic';
     }
 
-    saveDataToDb(steps, { draft: false });
+    saveDataToDb([...steps, nextStep], { draft: false });
   }
+
   const skipHandling = () => {
     handlingOnClickNext()
   }
@@ -52,6 +49,7 @@ const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => 
   const nextHandling = () => {
     handlingOnClickNext()
   }
+
   const editHandling = (e) => {
     e.preventDefault()
     setIsDraft(false)
@@ -60,10 +58,6 @@ const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => 
     setShoutOutForm({ status: true, editObj: editObj })
   }
 
-  const closeHandling = (draft) => {
-    setShoutOutForm({ status: false, editObj: {} })
-    setIsDraft(draft)
-  }
   const trashHandling = (e) => {
     setIsModal(true)
     setIdShoutout(e.target.attributes.id.value.slice("trashRed".length))
@@ -104,6 +98,13 @@ const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => 
       </ul>
     )
   }
+
+  useEffect(() => {
+    if (previousNumShoutOuts.length !== numShoutOuts) {
+      saveDataToDb(steps, { draft: false });
+      setIsDraft(false);
+    }
+  }, [numShoutOuts]);
 
   return (
     <Layout

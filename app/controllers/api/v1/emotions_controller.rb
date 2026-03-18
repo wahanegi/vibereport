@@ -62,7 +62,8 @@ class Api::V1::EmotionsController < ApplicationController
       has_team_access: current_user.user_teams.has_team_access.any?,
       prev_results_path: (direct_timesheet? ? nil : prev_results_path),
       time_periods: TimePeriod.ordered.as_json(methods: %i[first_working_day last_working_day]) || [],
-      timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?)
+      timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?),
+      innovation_question_submission_enabled: innovation_question_submission_enabled?
     }
   end
 
@@ -150,5 +151,11 @@ class Api::V1::EmotionsController < ApplicationController
 
   def time_period
     @time_period ||= direct_timesheet_period || TimePeriod.find_or_create_time_period
+  end
+
+  def innovation_question_submission_enabled?
+    @innovation_question_submission_enabled = ActiveRecord::Type::Boolean.new.cast(
+      ENV.fetch('INNOVATION_QUESTION_SUBMISSION', 'false') == 'true'
+    )
   end
 end

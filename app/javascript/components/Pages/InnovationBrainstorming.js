@@ -30,6 +30,9 @@ const InnovationBrainstorming = ({
   const prevBrainstormingBody = prevStateBrainstorming?.brainstorming_body;
   const brainstormingBody = brainstorming?.brainstorming_body;
   const { user_name: userName, innovation_body: topicBody } = data.innovation_topic;
+  const isInnovationQuestionSubmissionEnabled = data?.innovation_question_submission_enabled;
+  const nextStep = isInnovationQuestionSubmissionEnabled ? 'icebreaker-answer' : 'innovation-topic';
+
   const isUserName = Boolean(userName)
 
   const dataRequest = {
@@ -53,20 +56,36 @@ const InnovationBrainstorming = ({
     }, true);
   };
 
+  // const handlingOnClickNext = () => {
+  //   const dataFromServer = (innovation_brainstorming) => {
+  //     const id = innovation_brainstorming.data?.id;
+  //     steps.push('innovation-topic');
+  //     saveDataToDb(steps, {
+  //       innovation_brainstorming_id: id,
+  //       draft: false,
+  //     });
+  //   };
+  //
+  //   const goToResultPage = () => {
+  //     steps.push('innovation-topic');
+  //     saveDataToDb(steps);
+  //   };
+  //   saveDataBrainstorming(dataFromServer, goToResultPage);
+  // };
+
   const handlingOnClickNext = () => {
     const dataFromServer = (innovation_brainstorming) => {
       const id = innovation_brainstorming.data?.id;
-      steps.push('innovation-topic');
-      saveDataToDb(steps, {
+      saveDataToDb([...steps, nextStep], {
         innovation_brainstorming_id: id,
         draft: false,
       });
     };
 
     const goToResultPage = () => {
-      steps.push('innovation-topic');
-      saveDataToDb(steps);
+      saveDataToDb([...steps, nextStep]);
     };
+
     saveDataBrainstorming(dataFromServer, goToResultPage);
   };
 
@@ -81,9 +100,12 @@ const InnovationBrainstorming = ({
       confirmButtonText: 'OK',
       showCancelButton: false,
       showCloseButton: false,
+      // onConfirmAction: () => {
+      //   steps.push('innovation-topic');
+      //   saveDataToDb(steps);
+      // }
       onConfirmAction: () => {
-        steps.push('innovation-topic');
-        saveDataToDb(steps);
+        saveDataToDb([...steps, nextStep]);
       }
     });
   };
@@ -114,16 +136,25 @@ const InnovationBrainstorming = ({
           `${url}${id}`
         ).then(goToResultPage);
       } else {
-        !isDraft && steps.push('innovation-topic');
-        saveDataToDb(steps, { draft: false });
+        // !isDraft && steps.push('innovation-topic');
+        // saveDataToDb(steps, { draft: false });
+        saveDataToDb(isDraft ? steps : [...steps, nextStep], { draft: false });
       }
     } else if (isEmptyStr(brainstormingBody)) {
+      // if (isDraft) {
+      //   steps.push('innovation-brainstorming');
+      // } else {
+      //   steps.push('innovation-topic');
+      // }
+      // saveDataToDb(steps);
+
+      // const targetStep = isDraft ? 'innovation-brainstorming' : nextStep;
+      // saveDataToDb([...steps, targetStep]);
       if (isDraft) {
-        steps.push('innovation-brainstorming');
+        saveDataToDb(steps);
       } else {
-        steps.push('innovation-topic');
+        saveDataToDb([...steps, nextStep]);
       }
-      saveDataToDb(steps);
     } else {
       apiRequest(
         'POST',
@@ -175,7 +206,7 @@ const InnovationBrainstorming = ({
       );
     }, 1);
   }, [isUserName]);
-
+  console.log("data: ", data)
   if (!data.innovation_topic) return null;
 
   return (
