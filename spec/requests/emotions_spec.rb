@@ -20,7 +20,7 @@ RSpec.describe Api::V1::EmotionsController do
 
     it 'should returns a proper format of the JSON response' do
       get '/api/v1/emotions'
-      expect(json.length).to eq(18)
+      expect(json.length).to eq(20)
       expect(json[:time_period][:id]).to eq(TimePeriod.current.id)
       expect(json[:time_period][:start_date]).to eq(TimePeriod.current.start_date.to_s)
       expect(json[:time_period][:end_date]).to eq(TimePeriod.current.end_date.to_s)
@@ -51,15 +51,46 @@ RSpec.describe Api::V1::EmotionsController do
       let!(:user_team) { create(:user_team, user: user, team: team, created_at: REFERENCE_DATE - 2.months) }
       let!(:project) { create(:project) }
 
-      before do
-        stub_const('ENV', ENV.to_hash.merge(
-                            'TIMESHEET_START_FORCED_ENTRY_DATE' => (REFERENCE_DATE - 30.days).strftime('%Y-%m-%d'),
-                            'DAY_TO_SEND_INVITES' => 'friday',
-                            'DAY_TO_SEND_FINAL_REMINDER' => 'monday',
-                            'START_WEEK_DAY' => 'monday'
-                          ))
+      around do |example|
+        original_values = {
+          'TIMESHEET_START_FORCED_ENTRY_DATE' => ENV.fetch('TIMESHEET_START_FORCED_ENTRY_DATE', nil),
+          'DAY_TO_SEND_INVITES' => ENV.fetch('DAY_TO_SEND_INVITES', nil),
+          'DAY_TO_SEND_FINAL_REMINDER' => ENV.fetch('DAY_TO_SEND_FINAL_REMINDER', nil),
+          'START_WEEK_DAY' => ENV.fetch('START_WEEK_DAY', nil)
+        }
+        ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] = (REFERENCE_DATE - 30.days).strftime('%Y-%m-%d')
+        ENV['DAY_TO_SEND_INVITES'] = 'friday'
+        ENV['DAY_TO_SEND_FINAL_REMINDER'] = 'monday'
+        ENV['START_WEEK_DAY'] = 'monday'
+        example.run
+      ensure
+        original_values.each { |k, v| v.nil? ? ENV.delete(k) : ENV[k] = v }
       end
 
+      before do
+        # Remove all time_periods except the ones we create explicitly in this context.
+        # This prevents conflicts with periods created by factory defaults or other tests.
+        TimePeriod.where.not(id: [current_period.id, previous_period.id, overdue_period1.id, overdue_period2.id]).destroy_all
+      end
+
+      # Current period for REFERENCE_DATE (2026-03-20 Fri)
+      # Week: Mon 2026-03-16 to Sun 2026-03-22
+      let!(:current_period) do
+        create(:time_period,
+               start_date: Date.new(2026, 3, 16),
+               end_date: Date.new(2026, 3, 22),
+               due_date: Date.new(2026, 3, 20))
+      end
+
+      # Previous period: ends 1 week before current (for TimePeriod.previous_time_period)
+      let!(:previous_period) do
+        create(:time_period,
+               start_date: Date.new(2026, 3, 9),
+               end_date: Date.new(2026, 3, 15),
+               due_date: Date.new(2026, 3, 13))
+      end
+
+      # Overdue periods for direct timesheet testing
       let!(:overdue_period1) do
         create(:time_period,
                start_date: REFERENCE_DATE - 30.days,
@@ -74,15 +105,6 @@ RSpec.describe Api::V1::EmotionsController do
                due_date: REFERENCE_DATE - 12.days)
       end
 
-      # Period whose end_date is 1 week before current week (so previous_time_period finds it)
-      # For REFERENCE_DATE 2026-03-20 (Fri), current week ends 2026-03-22, previous ends 2026-03-15
-      let!(:previous_period) do
-        create(:time_period,
-               start_date: Date.new(2026, 3, 9),
-               end_date: Date.new(2026, 3, 15),
-               due_date: Date.new(2026, 3, 13))
-      end
-
       let(:direct_token) do
         url = TimeSheets::DirectLinkBuilder.call(user, overdue_period2)
         Rack::Utils.parse_query(URI.parse(url).query)['token']
@@ -93,98 +115,139 @@ RSpec.describe Api::V1::EmotionsController do
         follow_redirect!
       end
 
-      context 'has_remaining_direct_timesheets' do
-        it 'is true when another overdue period has no timesheet' do
-          setup_direct_session
-          travel_to(REFERENCE_DATE) do
-            get '/api/v1/emotions'
-            expect(json[:has_remaining_direct_timesheets]).to be true
-          end
-        end
-
-        it 'is false when all other overdue periods have timesheet entries' do
-          create(:time_sheet_entry, user: user, project: project, time_period: overdue_period1, total_hours: 8)
-          create(:time_sheet_entry, user: user, project: project, time_period: previous_period, total_hours: 8)
-          setup_direct_session
-          travel_to(REFERENCE_DATE) do
-            get '/api/v1/emotions'
-          end
-          expect(json[:has_remaining_direct_timesheets]).to be false
-        end
-
-        it 'is false when direct mode is off' do
-          travel_to(REFERENCE_DATE) do
-            get '/api/v1/emotions'
-            expect(json[:has_remaining_direct_timesheets]).to be false
-          end
-        end
-      end
-
       context 'can_complete_check_in' do
-        it 'is true when in check-in window and no completed response for previous period (even with remaining timesheets)' do
-          setup_direct_session
+        it 'is true when in check-in window and no completed response for current period' do
           travel_to(REFERENCE_DATE) do
+            setup_direct_session
             get '/api/v1/emotions'
-            expect(json[:has_remaining_direct_timesheets]).to be true
+
             expect(json[:can_complete_check_in]).to be true
           end
         end
 
-        it 'is true when no remaining timesheets, in check-in window, no completed response' do
-          create(:time_sheet_entry, user: user, project: project, time_period: overdue_period1, total_hours: 8)
-          create(:time_sheet_entry, user: user, project: project, time_period: previous_period, total_hours: 8)
-          setup_direct_session
+        it 'is false when user has completed response for current period' do
           travel_to(REFERENCE_DATE) do
-            get '/api/v1/emotions'
-            expect(json[:can_complete_check_in]).to be true
-          end
-        end
+            # Create response for the actual current period that API will find
+            actual_current = TimePeriod.current || TimePeriod.find_or_create_time_period
+            create(:response, user: user, time_period: actual_current, draft: false)
 
-        it 'is false when user has completed response for previous period' do
-          create(:time_sheet_entry, user: user, project: project, time_period: overdue_period1, total_hours: 8)
-          create(:time_sheet_entry, user: user, project: project, time_period: previous_period, total_hours: 8)
-          create(:response, user: user, time_period: previous_period, draft: false)
-          setup_direct_session
-          travel_to(REFERENCE_DATE) do
+            setup_direct_session
             get '/api/v1/emotions'
+
             expect(json[:can_complete_check_in]).to be false
           end
         end
 
         it 'is false when outside check-in window (Tuesday)' do
-          create(:time_sheet_entry, user: user, project: project, time_period: overdue_period1, total_hours: 8)
-          create(:time_sheet_entry, user: user, project: project, time_period: previous_period, total_hours: 8)
-          setup_direct_session
           travel_to(Date.new(2026, 3, 24)) do # Tuesday
+            setup_direct_session
             get '/api/v1/emotions'
+
+            expect(json[:can_complete_check_in]).to be false
+          end
+        end
+
+        it 'is false when direct mode is off' do
+          travel_to(REFERENCE_DATE) do
+            get '/api/v1/emotions'
+
             expect(json[:can_complete_check_in]).to be false
           end
         end
       end
 
-      context 'direct_results_path' do
-        it 'returns /results/:slug when all timesheets done and previous period exists' do
-          create(:time_sheet_entry, user: user, project: project, time_period: overdue_period1, total_hours: 8)
-          create(:time_sheet_entry, user: user, project: project, time_period: previous_period, total_hours: 8)
-          setup_direct_session
+      context 'in_check_in_window' do
+        it 'is true when in direct mode and inside check-in window (Friday)' do
           travel_to(REFERENCE_DATE) do
+            setup_direct_session
             get '/api/v1/emotions'
-            expect(json[:direct_results_path]).to eq("/results/#{previous_period.slug}")
+
+            expect(json[:in_check_in_window]).to be true
           end
         end
 
-        it 'is nil when remaining direct timesheets exist' do
-          setup_direct_session
+        it 'is false when in direct mode but outside check-in window (Tuesday)' do
+          travel_to(Date.new(2026, 3, 24)) do # Tuesday
+            setup_direct_session
+            get '/api/v1/emotions'
+
+            expect(json[:in_check_in_window]).to be false
+          end
+        end
+
+        it 'is false when direct mode is off' do
           travel_to(REFERENCE_DATE) do
             get '/api/v1/emotions'
-            expect(json[:direct_results_path]).to be_nil
+
+            expect(json[:in_check_in_window]).to be false
+          end
+        end
+      end
+
+      context 'direct_results_path' do
+        it 'returns /results/:slug of previous period when in direct mode' do
+          travel_to(REFERENCE_DATE) do
+            setup_direct_session
+            get '/api/v1/emotions'
+
+            expect(json[:direct_results_path]).to eq("/results/#{previous_period.slug}")
           end
         end
 
         it 'is nil when direct mode is off' do
           travel_to(REFERENCE_DATE) do
             get '/api/v1/emotions'
+
             expect(json[:direct_results_path]).to be_nil
+          end
+        end
+      end
+
+      context 'current_period_results_path' do
+        it 'returns /results/:slug of current period when in direct mode' do
+          travel_to(REFERENCE_DATE) do
+            setup_direct_session
+            get '/api/v1/emotions'
+
+            # Check format: should be /results/:slug
+            expect(json[:current_period_results_path]).to match(%r{^/results/[a-f0-9]+$})
+          end
+        end
+
+        it 'is nil when direct mode is off' do
+          travel_to(REFERENCE_DATE) do
+            get '/api/v1/emotions'
+
+            expect(json[:current_period_results_path]).to be_nil
+          end
+        end
+      end
+
+      context 'direct_timesheet_already_filled' do
+        it 'is false when no timesheet entry exists for direct period' do
+          travel_to(REFERENCE_DATE) do
+            setup_direct_session
+            get '/api/v1/emotions'
+
+            expect(json[:direct_timesheet_already_filled]).to be false
+          end
+        end
+
+        it 'is true when timesheet entry exists for direct period' do
+          create(:time_sheet_entry, user: user, project: project, time_period: overdue_period2, total_hours: 8)
+          travel_to(REFERENCE_DATE) do
+            setup_direct_session
+            get '/api/v1/emotions'
+
+            expect(json[:direct_timesheet_already_filled]).to be true
+          end
+        end
+
+        it 'is false when direct mode is off' do
+          travel_to(REFERENCE_DATE) do
+            get '/api/v1/emotions'
+
+            expect(json[:direct_timesheet_already_filled]).to be false
           end
         end
       end
