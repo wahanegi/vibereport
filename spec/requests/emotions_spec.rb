@@ -45,10 +45,13 @@ RSpec.describe Api::V1::EmotionsController do
       include ActiveSupport::Testing::TimeHelpers
 
       # Friday – inside default check-in window (Fri–Mon)
-      REFERENCE_DATE = Date.new(2026, 3, 20)
+      # Using a method instead of constant to avoid conflicts with other spec files
+      def reference_date
+        Date.new(2026, 3, 20)
+      end
 
       let!(:team) { create(:team, timesheet_enabled: true) }
-      let!(:user_team) { create(:user_team, user: user, team: team, created_at: REFERENCE_DATE - 2.months) }
+      let!(:user_team) { create(:user_team, user: user, team: team, created_at: reference_date - 2.months) }
       let!(:project) { create(:project) }
 
       around do |example|
@@ -58,7 +61,7 @@ RSpec.describe Api::V1::EmotionsController do
           'DAY_TO_SEND_FINAL_REMINDER' => ENV.fetch('DAY_TO_SEND_FINAL_REMINDER', nil),
           'START_WEEK_DAY' => ENV.fetch('START_WEEK_DAY', nil)
         }
-        ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] = (REFERENCE_DATE - 30.days).strftime('%Y-%m-%d')
+        ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] = (reference_date - 30.days).strftime('%Y-%m-%d')
         ENV['DAY_TO_SEND_INVITES'] = 'friday'
         ENV['DAY_TO_SEND_FINAL_REMINDER'] = 'monday'
         ENV['START_WEEK_DAY'] = 'monday'
@@ -73,7 +76,7 @@ RSpec.describe Api::V1::EmotionsController do
         TimePeriod.where.not(id: [current_period.id, previous_period.id, overdue_period1.id, overdue_period2.id]).destroy_all
       end
 
-      # Current period for REFERENCE_DATE (2026-03-20 Fri)
+      # Current period for reference_date (2026-03-20 Fri)
       # Week: Mon 2026-03-16 to Sun 2026-03-22
       let!(:current_period) do
         create(:time_period,
@@ -93,16 +96,16 @@ RSpec.describe Api::V1::EmotionsController do
       # Overdue periods for direct timesheet testing
       let!(:overdue_period1) do
         create(:time_period,
-               start_date: REFERENCE_DATE - 30.days,
-               end_date: REFERENCE_DATE - 25.days,
-               due_date: REFERENCE_DATE - 22.days)
+               start_date: reference_date - 30.days,
+               end_date: reference_date - 25.days,
+               due_date: reference_date - 22.days)
       end
 
       let!(:overdue_period2) do
         create(:time_period,
-               start_date: REFERENCE_DATE - 20.days,
-               end_date: REFERENCE_DATE - 15.days,
-               due_date: REFERENCE_DATE - 12.days)
+               start_date: reference_date - 20.days,
+               end_date: reference_date - 15.days,
+               due_date: reference_date - 12.days)
       end
 
       let(:direct_token) do
@@ -117,7 +120,7 @@ RSpec.describe Api::V1::EmotionsController do
 
       context 'can_complete_check_in' do
         it 'is true when in check-in window and no completed response for current period' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             setup_direct_session
             get '/api/v1/emotions'
 
@@ -126,7 +129,7 @@ RSpec.describe Api::V1::EmotionsController do
         end
 
         it 'is false when user has completed response for current period' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             # Create response for the actual current period that API will find
             actual_current = TimePeriod.current || TimePeriod.find_or_create_time_period
             create(:response, user: user, time_period: actual_current, draft: false)
@@ -148,7 +151,7 @@ RSpec.describe Api::V1::EmotionsController do
         end
 
         it 'is false when direct mode is off' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             get '/api/v1/emotions'
 
             expect(json[:can_complete_check_in]).to be false
@@ -158,7 +161,7 @@ RSpec.describe Api::V1::EmotionsController do
 
       context 'in_check_in_window' do
         it 'is true when in direct mode and inside check-in window (Friday)' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             setup_direct_session
             get '/api/v1/emotions'
 
@@ -176,7 +179,7 @@ RSpec.describe Api::V1::EmotionsController do
         end
 
         it 'is false when direct mode is off' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             get '/api/v1/emotions'
 
             expect(json[:in_check_in_window]).to be false
@@ -186,7 +189,7 @@ RSpec.describe Api::V1::EmotionsController do
 
       context 'direct_results_path' do
         it 'returns /results/:slug of previous period when in direct mode' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             setup_direct_session
             get '/api/v1/emotions'
 
@@ -195,7 +198,7 @@ RSpec.describe Api::V1::EmotionsController do
         end
 
         it 'is nil when direct mode is off' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             get '/api/v1/emotions'
 
             expect(json[:direct_results_path]).to be_nil
@@ -205,7 +208,7 @@ RSpec.describe Api::V1::EmotionsController do
 
       context 'current_period_results_path' do
         it 'returns /results/:slug of current period when in direct mode' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             setup_direct_session
             get '/api/v1/emotions'
 
@@ -215,7 +218,7 @@ RSpec.describe Api::V1::EmotionsController do
         end
 
         it 'is nil when direct mode is off' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             get '/api/v1/emotions'
 
             expect(json[:current_period_results_path]).to be_nil
@@ -225,7 +228,7 @@ RSpec.describe Api::V1::EmotionsController do
 
       context 'direct_timesheet_already_filled' do
         it 'is false when no timesheet entry exists for direct period' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             setup_direct_session
             get '/api/v1/emotions'
 
@@ -235,7 +238,7 @@ RSpec.describe Api::V1::EmotionsController do
 
         it 'is true when timesheet entry exists for direct period' do
           create(:time_sheet_entry, user: user, project: project, time_period: overdue_period2, total_hours: 8)
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             setup_direct_session
             get '/api/v1/emotions'
 
@@ -244,7 +247,7 @@ RSpec.describe Api::V1::EmotionsController do
         end
 
         it 'is false when direct mode is off' do
-          travel_to(REFERENCE_DATE) do
+          travel_to(reference_date) do
             get '/api/v1/emotions'
 
             expect(json[:direct_timesheet_already_filled]).to be false
@@ -258,7 +261,7 @@ RSpec.describe Api::V1::EmotionsController do
 
         allow(TimePeriod).to receive(:previous_time_period).and_call_original
 
-        travel_to(REFERENCE_DATE) do
+        travel_to(reference_date) do
           get '/api/v1/emotions'
         end
 
