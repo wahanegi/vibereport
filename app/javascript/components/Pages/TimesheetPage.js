@@ -201,6 +201,17 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
   const canSubmit = !isLoading && isValid && !fetchError && projects.length > 0;
   const canAddNewRow = rowsData.every((row) => validateRow(row));
 
+  const canNavigate = isSubmitted || Boolean(data?.direct_timesheet_already_filled);
+
+  let logoHref = null;
+  if (canNavigate && isDirectTimesheetMode) {
+    if (data?.in_check_in_window) {
+      logoHref = data.can_complete_check_in ? '/app' : data.current_period_results_path;
+    } else {
+      logoHref = data.direct_results_path;
+    }
+  }
+
   return (
     <Layout
       data={data}
@@ -209,6 +220,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
       steps={steps}
       draft={isDraft}
       handleSaveDraft={saveDraft}
+      logoHref={logoHref}
     >
       <div className="container-fluid mb-1 mb-md-0">
         <div className="row flex-column justify-content-center align-items-center">

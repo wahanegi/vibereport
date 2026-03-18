@@ -15,9 +15,6 @@ module ApplicationHelper
   end
 
   def check_in_period?
-    # TODO: remove - temporarily include all weekdays in development for testing CTA
-    return true if Rails.env.development?
-
     invite_day_name = (ENV['DAY_TO_SEND_INVITES'] || 'friday').strip.capitalize
     final_day_name = (ENV['DAY_TO_SEND_FINAL_REMINDER'] || 'monday').strip.capitalize
     invite_wday = Date::DAYNAMES.index(invite_day_name)
