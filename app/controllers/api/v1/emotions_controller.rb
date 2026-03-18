@@ -55,13 +55,15 @@ class Api::V1::EmotionsController < ApplicationController
       api_giphy_key: ENV['GIPHY_API_KEY'].presence,
       users: User.ordered.as_json(only: %i[id first_name last_name]),
       fun_question:,
+      innovation_topic:,
       user_shoutouts: current_user.shoutouts.not_celebrate,
       check_in_time_period: TimePeriod.find_by(id: session[:check_in_time_period_id])
                                       .as_json(methods: %i[first_working_day last_working_day]),
       has_team_access: current_user.user_teams.has_team_access.any?,
       prev_results_path: (direct_timesheet? ? nil : prev_results_path),
       time_periods: TimePeriod.ordered.as_json(methods: %i[first_working_day last_working_day]) || [],
-      timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?)
+      timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?),
+      innovation_question_submission_enabled: innovation_question_submission_enabled?
     }
   end
 
@@ -95,6 +97,47 @@ class Api::V1::EmotionsController < ApplicationController
     }
   end
 
+  def innovation_topic
+    existing = InnovationTopic.find_by(time_period_id: time_period.id)
+
+    if existing.present?
+      existing.update!(posted: true) unless existing.posted?
+      return prepared_innovation_topic(existing)
+    end
+
+    topic = nil
+
+    InnovationTopic.transaction do
+      time_period.lock!
+
+      existing = InnovationTopic.find_by(time_period_id: time_period.id)
+      if existing.present?
+        topic = existing
+        break
+      end
+
+      topic = InnovationTopic.unposted
+                             .where(time_period_id: nil)
+                             .order(Arel.sql('RANDOM()'))
+                             .first
+
+      break if topic.blank?
+
+      topic.update!(posted: true, time_period_id: time_period.id)
+    end
+
+    topic.present? ? prepared_innovation_topic(topic) : nil
+  end
+
+  def prepared_innovation_topic(topic)
+    {
+      id: topic.id,
+      innovation_body: topic.innovation_body,
+      time_period_id: topic.time_period_id,
+      user_name: topic.user&.full_name
+    }
+  end
+
   def direct_timesheet_period
     return @direct_timesheet_period if defined?(@direct_timesheet_period)
 
@@ -108,5 +151,11 @@ class Api::V1::EmotionsController < ApplicationController
 
   def time_period
     @time_period ||= direct_timesheet_period || TimePeriod.find_or_create_time_period
+  end
+
+  def innovation_question_submission_enabled?
+    @innovation_question_submission_enabled = ActiveRecord::Type::Boolean.new.cast(
+      ENV.fetch('INNOVATION_QUESTION_SUBMISSION', 'false') == 'true'
+    )
   end
 end

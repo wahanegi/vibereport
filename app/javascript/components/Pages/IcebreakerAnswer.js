@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {MAX_CHAR_LIMIT} from '../helpers/consts';
-import {isEmptyStr, isNotEmptyStr, isPresent} from '../helpers/helpers';
+import React, { useEffect, useState } from 'react';
+import { MAX_CHAR_LIMIT } from '../helpers/consts';
+import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from '../helpers/helpers';
 import Layout from '../Layout';
-import {apiRequest} from '../requests/axios_requests';
+import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 
 const FULL_PRIMARY_HEIGHT = 401;
@@ -12,24 +12,25 @@ const HEIGHT_ROW_USER = 40;
 const SUM_EDGE_DOWN_UP = 41;
 
 const IcebreakerAnswer = ({
-                            data,
-                            setData,
-                            saveDataToDb,
-                            steps,
-                            service,
-                            draft,
-                          }) => {
-  const {isLoading, error} = service;
+  data,
+  setData,
+  saveDataToDb,
+  steps,
+  service,
+  draft,
+}) => {
   const [loaded, setLoaded] = useState(false);
   const [prevStateAnswer, setPrevStateAnswer] = useState({});
   const [answerFunQuestion, setAnswerFunQuestion] = useState({});
   const [computedHeight, setComputedHeight] = useState(260);
+  const [isDraft, setIsDraft] = useState(draft);
+  const { isLoading, error } = service;
+
   const prevAnswerBody = prevStateAnswer?.answer_body;
   const answerBody = answerFunQuestion?.answer_body;
-  const {user_name, question_body} = data.fun_question;
+  const { user_name, question_body } = data.fun_question;
   const user = user_name;
   const current_user_id = data.current_user.id;
-  const [isDraft, setIsDraft] = useState(draft);
   const dataRequest = {
     fun_question_answer: {
       answer_body: answerBody || '',
@@ -38,11 +39,6 @@ const IcebreakerAnswer = ({
     },
   };
 
-  useEffect(() => {
-    if (answerBody !== prevAnswerBody && isDraft) {
-      setIsDraft(false);
-    }
-  }, [answerBody]);
 
   const handleSaveDraft = () => {
     const dataFromServer = (fun_question_answer) => {
@@ -51,7 +47,7 @@ const IcebreakerAnswer = ({
       });
     };
 
-    const dataDraft = {dataRequest, draft: true};
+    const dataDraft = { dataRequest, draft: true };
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
     saveDataAnswer(dataFromServer, () => {
@@ -62,17 +58,21 @@ const IcebreakerAnswer = ({
     const dataFromServer = (fun_question_answer) => {
       steps.push('icebreaker-question');
       saveDataToDb(steps, {
-        fun_question_answer_id: fun_question_answer.data.id,
+        fun_question_answer_id: fun_question_answer?.data.id,
         draft: false,
       });
     };
 
     const goToResultPage = () => {
-      steps.push('results');
+      steps.push('icebreaker-question');
       saveDataToDb(steps);
     };
     saveDataAnswer(dataFromServer, goToResultPage);
   };
+
+  const skipHandling = () => {
+    handlingOnClickNext()
+  }
 
   const saveDataAnswer = (dataFromServer, goToResultPage, isDraft = false) => {
     const url = '/api/v1/fun_question_answers/';
@@ -101,13 +101,13 @@ const IcebreakerAnswer = ({
         ).then(goToResultPage);
       } else {
         !isDraft && steps.push('icebreaker-question');
-        saveDataToDb(steps, {draft: false});
+        saveDataToDb(steps, { draft: false });
       }
     } else if (isEmptyStr(answerBody)) {
       if (isDraft) {
         steps.push('icebreaker-answer');
       } else {
-        steps.push('results');
+        steps.push('icebreaker-question');
       }
       saveDataToDb(steps);
     } else {
@@ -123,21 +123,26 @@ const IcebreakerAnswer = ({
   };
 
   const onChangAnswer = (e) => {
-    setAnswerFunQuestion(
-      Object.assign({}, answerFunQuestion, {[e.target.name]: e.target.value})
-    );
+    setAnswerFunQuestion(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   useEffect(() => {
-    const id = data.response.attributes.fun_question_answer_id;
-    axios.get(`/api/v1/fun_question_answers/${id}`).then((res) => {
+    if (answerBody !== prevAnswerBody && isDraft) {
+      setIsDraft(false);
+    }
+  }, [answerBody, isDraft, prevAnswerBody]);
+
+  useEffect(() => {
+    const fun_question_answer_id = data.response.attributes.fun_question_answer_id;
+    isBlank(fun_question_answer_id) && setLoaded(true);
+
+    fun_question_answer_id && axios.get(`/api/v1/fun_question_answers/${fun_question_answer_id}`).then((res) => {
       setPrevStateAnswer(res.data.data?.attributes);
       setAnswerFunQuestion(res.data.data?.attributes);
       setLoaded(true);
     });
   }, []);
 
-  if (!!error) return <p>{error.message}</p>;
 
   useEffect(() => {
     setTimeout(function () {
@@ -150,7 +155,10 @@ const IcebreakerAnswer = ({
         (user ? HEIGHT_ROW_USER : 0)
       );
     }, 1);
-  });
+  }, [question_body, user]);
+
+
+  if (!!error) return <p>{error.message}</p>;
 
   return (
     <Layout
@@ -164,7 +172,7 @@ const IcebreakerAnswer = ({
       {loaded && !isLoading && !error && (<>
         <div className="container-fluid w-100 pt-1 pt-md-0">
           <div className=" d-flex flex-column mb-1">
-            <h1 className="fs-md-1 text-black mb-1 my-sm-0 mb-sm-3">Kick back, relax. <br/>
+            <h1 className="fs-md-1 text-black mb-1 my-sm-0 mb-sm-3">Kick back, relax. <br />
               Time for a team question!</h1>
             <h2
               className={`${'text-black mb-0'} ${
@@ -186,7 +194,7 @@ const IcebreakerAnswer = ({
                     <textarea
                       className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none"
                       name="answer_body"
-                      style={{height: computedHeight - SUM_EDGE_DOWN_UP}}
+                      style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
                       placeholder="Tell us what you think!"
                       value={answerFunQuestion?.answer_body || ''}
                       onChange={onChangAnswer}
@@ -198,11 +206,12 @@ const IcebreakerAnswer = ({
           </div>
         </div>
         <div className="w-100 mt-4 mx-1 align-self-end">
-            <BlockLowerBtns
-              isSubmit={true}
-              handlingOnClickNext={handlingOnClickNext}
-              stringBody={answerBody}
-            />
+          <BlockLowerBtns
+            isNext={!!answerBody}
+            skipHandling={skipHandling}
+            nextHandling={handlingOnClickNext}
+            stringBody={answerBody}
+          />
         </div>
       </>)}
     </Layout>
