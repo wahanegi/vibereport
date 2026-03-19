@@ -6,6 +6,7 @@ ruby '3.2.6'
 gem 'activeadmin', '~> 3.2', '>= 3.2.2'                       # The administration framework for Ruby on Rails
 gem 'awesome_print', '~> 1.9', '>= 1.9.2'                     # Nicely formatted data structures in console.
 gem 'bootsnap', require: false                                # Reduces boot times through caching; required in config/boot.rb
+gem 'caxlsx', '~> 4.4.1'                                      # This gem for generating Excel files
 gem 'chartkick', '~> 5.0', '>= 5.0.2'                         # Create beautiful Javascript charts with one line of Ruby
 gem 'cssbundling-rails', '~> 1.2', '>= 1.2.0'                 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem 'devise', '~> 4.9', '>= 4.9.4'                            # Flexible authentication solution for Rails with Warden
