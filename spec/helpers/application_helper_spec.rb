@@ -6,7 +6,6 @@ RSpec.describe ApplicationHelper, type: :helper do
   describe '#check_in_period?' do
     include ActiveSupport::Testing::TimeHelpers
 
-    # Reference week: 2026-03-20 (Fri) .. 2026-03-26 (Thu)
     FRI = Date.new(2026, 3, 20)
     SAT = Date.new(2026, 3, 21)
     SUN = Date.new(2026, 3, 22)

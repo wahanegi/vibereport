@@ -76,7 +76,6 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
 
     sign_in(user)
     session[:direct_timesheet_time_period_id] = time_period.id
-    flash[:from_direct_entry] = true
     redirect_to app_path
   end
 

@@ -44,8 +44,6 @@ RSpec.describe Api::V1::EmotionsController do
     context 'direct timesheet mode' do
       include ActiveSupport::Testing::TimeHelpers
 
-      # Friday – inside default check-in window (Fri–Mon)
-      # Using a method instead of constant to avoid conflicts with other spec files
       def reference_date
         Date.new(2026, 3, 20)
       end
@@ -71,34 +69,14 @@ RSpec.describe Api::V1::EmotionsController do
       end
 
       before do
-        # Remove all time_periods except the ones we create explicitly in this context.
-        # This prevents conflicts with periods created by factory defaults or other tests.
-        TimePeriod.where.not(id: [current_period.id, previous_period.id, overdue_period1.id, overdue_period2.id]).destroy_all
+        TimePeriod.where.not(id: [current_period.id, overdue_period2.id]).destroy_all
       end
 
-      # Current period for reference_date (2026-03-20 Fri)
-      # Week: Mon 2026-03-16 to Sun 2026-03-22
       let!(:current_period) do
         create(:time_period,
                start_date: Date.new(2026, 3, 16),
                end_date: Date.new(2026, 3, 22),
                due_date: Date.new(2026, 3, 20))
-      end
-
-      # Previous period: ends 1 week before current (for TimePeriod.previous_time_period)
-      let!(:previous_period) do
-        create(:time_period,
-               start_date: Date.new(2026, 3, 9),
-               end_date: Date.new(2026, 3, 15),
-               due_date: Date.new(2026, 3, 13))
-      end
-
-      # Overdue periods for direct timesheet testing
-      let!(:overdue_period1) do
-        create(:time_period,
-               start_date: reference_date - 30.days,
-               end_date: reference_date - 25.days,
-               due_date: reference_date - 22.days)
       end
 
       let!(:overdue_period2) do
@@ -130,7 +108,6 @@ RSpec.describe Api::V1::EmotionsController do
 
         it 'is false when user has completed response for current period' do
           travel_to(reference_date) do
-            # Create response for the actual current period that API will find
             actual_current = TimePeriod.current || TimePeriod.find_or_create_time_period
             create(:response, user: user, time_period: actual_current, draft: false)
 
