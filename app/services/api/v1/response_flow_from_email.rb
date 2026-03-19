@@ -1,13 +1,15 @@
-class Api::V1::ResponseFlowFromEmail
-  attr_reader :params, :user, :time_period_id, :emotion_id, :last_step, :not_working
+# frozen_string_literal: true
 
-  def initialize(params, user)
-    @params = params
+class Api::V1::ResponseFlowFromEmail
+  attr_reader :user, :time_period_id, :emotion_id, :last_step, :not_working, :completed_at
+
+  def initialize(user, time_period_id:, last_step: nil, not_working: false, emotion_id: nil, completed_at: nil)
     @user = user
-    @time_period_id = params[:time_period_id]
-    @emotion_id = params[:emotion_id]
-    @not_working = params[:not_working]
-    @last_step = params[:last_step]
+    @time_period_id = time_period_id
+    @emotion_id = emotion_id
+    @not_working = not_working
+    @last_step = last_step
+    @completed_at = completed_at
   end
 
   def call

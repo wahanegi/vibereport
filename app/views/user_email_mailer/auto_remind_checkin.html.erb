@@ -107,10 +107,7 @@
     <div class="fourth-row-magic">
       <div class="mt-37 btn-remind center">
         <div class="btn-text-remind">
-          <%= link_to "Check in now", { controller: 'api/v1/responses',
-                                        action: 'sign_in_from_email',
-                                        id: @time_period.id,
-                                        user_id: @user.id } %>
+          <%= link_to "Check in now", @url_sign_in_from_email %>
         </div>
       </div>
     </div>

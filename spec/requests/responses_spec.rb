@@ -128,4 +128,150 @@ RSpec.describe Api::V1::ResponsesController do
       }]
     end
   end
+
+  describe 'GET #response_flow_from_email', :logged_out do
+    let(:current_time_period) { TimePeriod.current }
+    let(:valid_token) do
+      url = SignedLinks::ResponseFlowBuilder.url(user, current_time_period, last_step: 'emotion-entry', not_working: false)
+      Rack::Utils.parse_query(URI.parse(url).query)['token']
+    end
+
+    context 'with valid token' do
+      it 'signs in the user and redirects or returns success' do
+        get '/api/v1/response_flow_from_email', params: { token: valid_token }
+
+        expect(response).to have_http_status(:redirect).or have_http_status(:ok)
+        expect(controller.current_user).to eq(user)
+      end
+    end
+
+    context 'with invalid token' do
+      it 'does not sign in and returns error or redirect to login' do
+        get '/api/v1/response_flow_from_email', params: { token: 'invalid-token' }
+
+        expect(controller.current_user).to be_nil
+        expect(response).to have_http_status(:redirect).or have_http_status(:unauthorized)
+      end
+    end
+
+    context 'with missing token' do
+      it 'does not sign in' do
+        get '/api/v1/response_flow_from_email'
+
+        expect(controller.current_user).to be_nil
+      end
+    end
+
+    context 'security: valid token for user A and user_id=B in query' do
+      let(:user_b) { create(:user) }
+
+      it 'signs in user A (from token), ignores params[:user_id]' do
+        get '/api/v1/response_flow_from_email', params: { token: valid_token, user_id: user_b.id }
+
+        expect(controller.current_user).to eq(user)
+        expect(controller.current_user).not_to eq(user_b)
+      end
+    end
+
+    # TODO: Remove this context after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+    context 'with legacy params (no token)', :legacy_link_support do
+      before do
+        stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.from_now.to_date.to_s))
+      end
+
+      it 'signs in user and redirects when user_id and time_period_id present' do
+        get '/api/v1/response_flow_from_email', params: { user_id: user.id, time_period_id: current_time_period.id }
+
+        expect(controller.current_user).to eq(user)
+        expect(response).to have_http_status(:redirect)
+      end
+
+      it 'redirects to invalid link when user_id is missing' do
+        get '/api/v1/response_flow_from_email', params: { time_period_id: current_time_period.id }
+
+        expect(controller.current_user).to be_nil
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      context 'when legacy period has passed' do
+        before do
+          stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.ago.to_date.to_s))
+        end
+
+        it 'does not sign in even with valid legacy params' do
+          get '/api/v1/response_flow_from_email', params: { user_id: user.id, time_period_id: current_time_period.id }
+
+          expect(controller.current_user).to be_nil
+        end
+      end
+    end
+  end
+
+  describe 'GET #sign_in_from_email', :logged_out do
+    let(:valid_token) do
+      url = SignedLinks::SignInFromEmailBuilder.url(user)
+      Rack::Utils.parse_query(URI.parse(url).query)['token']
+    end
+
+    context 'with valid token' do
+      it 'signs in the user and redirects to root' do
+        get '/api/v1/sign_in_from_email', params: { token: valid_token }
+
+        expect(response).to redirect_to(root_path)
+        expect(controller.current_user).to eq(user)
+      end
+    end
+
+    context 'with invalid token' do
+      it 'does not sign in' do
+        get '/api/v1/sign_in_from_email', params: { token: 'invalid' }
+
+        expect(controller.current_user).to be_nil
+      end
+    end
+
+    context 'security: valid token for user A and user_id=B in query' do
+      let(:user_b) { create(:user) }
+
+      it 'signs in user A (from token), ignores params[:user_id]' do
+        get '/api/v1/sign_in_from_email', params: { token: valid_token, user_id: user_b.id }
+
+        expect(controller.current_user).to eq(user)
+        expect(controller.current_user).not_to eq(user_b)
+      end
+    end
+
+    # TODO: Remove this context after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+    context 'with legacy params (no token)', :legacy_link_support do
+      before do
+        stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.from_now.to_date.to_s))
+      end
+
+      it 'signs in user and redirects to root when user_id present' do
+        get '/api/v1/sign_in_from_email', params: { user_id: user.id }
+
+        expect(controller.current_user).to eq(user)
+        expect(response).to redirect_to(root_path)
+      end
+
+      it 'redirects to invalid link when user_id is missing' do
+        get '/api/v1/sign_in_from_email'
+
+        expect(controller.current_user).to be_nil
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      context 'when legacy period has passed' do
+        before do
+          stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.ago.to_date.to_s))
+        end
+
+        it 'does not sign in even with valid legacy params' do
+          get '/api/v1/sign_in_from_email', params: { user_id: user.id }
+
+          expect(controller.current_user).to be_nil
+        end
+      end
+    end
+  end
 end

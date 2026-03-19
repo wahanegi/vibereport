@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe TimeSheets::DirectLinkBuilder do
+RSpec.describe SignedLinks::DirectTimesheetEntryBuilder do
   include ActiveSupport::Testing::TimeHelpers
 
   let(:user) { create(:user) }
@@ -25,10 +27,16 @@ RSpec.describe TimeSheets::DirectLinkBuilder do
       expect(params['token']).not_to be_blank
     end
 
-    it 'generates a token that can be verified back to original data' do
+    it 'does not include user_id or time_period_id in URL' do
       uri = URI.parse(url)
       params = Rack::Utils.parse_query(uri.query)
-      payload = described_class.verify(params['token'])
+
+      expect(params).not_to have_key('user_id')
+      expect(params).not_to have_key('time_period_id')
+    end
+
+    it 'generates a token that can be verified back to original data' do
+      payload = described_class.verify(Rack::Utils.parse_query(URI.parse(url).query)['token'])
 
       expect(payload[:user_id]).to eq(user.id)
       expect(payload[:time_period_id]).to eq(time_period.id)
@@ -37,19 +45,13 @@ RSpec.describe TimeSheets::DirectLinkBuilder do
     it 'generates unique URLs for different users' do
       other_user = create(:user)
 
-      url_a = described_class.call(user, time_period)
-      url_b = described_class.call(other_user, time_period)
-
-      expect(url_a).not_to eq(url_b)
+      expect(described_class.call(user, time_period)).not_to eq(described_class.call(other_user, time_period))
     end
 
     it 'generates unique URLs for different time periods' do
       other_period = create(:time_period)
 
-      url_a = described_class.call(user, time_period)
-      url_b = described_class.call(user, other_period)
-
-      expect(url_a).not_to eq(url_b)
+      expect(described_class.call(user, time_period)).not_to eq(described_class.call(user, other_period))
     end
   end
 
@@ -86,11 +88,11 @@ RSpec.describe TimeSheets::DirectLinkBuilder do
     end
 
     context 'with an expired token' do
-      it 'returns nil after TOKEN_TTL' do
+      it 'returns nil after TTL' do
         url = described_class.call(user, time_period)
         token = Rack::Utils.parse_query(URI.parse(url).query)['token']
 
-        travel(described_class::TOKEN_TTL + 1.day) do
+        travel(8.days) do
           expect(described_class.verify(token)).to be_nil
         end
       end
