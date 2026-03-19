@@ -14,7 +14,6 @@ const Layout = ({
   isResult = false,
   hideShoutout = false,
   handleSaveDraft,
-  logoHref = null,
 }) => {
   const location = useLocation();
   const isRecognitionPage = location.pathname.match('recognition');
@@ -23,7 +22,7 @@ const Layout = ({
   return (
     <>
       <Header data={data} steps={steps} draft={draft} handleSaveDraft={handleSaveDraft} saveDataToDb={saveDataToDb}
-        isResult={isResult} logoHref={logoHref} />
+        isResult={isResult} />
 
       <div className={'position-relative'}>
         <main

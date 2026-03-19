@@ -20,7 +20,7 @@ RSpec.describe Api::V1::EmotionsController do
 
     it 'should returns a proper format of the JSON response' do
       get '/api/v1/emotions'
-      expect(json.length).to eq(20)
+      expect(json.length).to eq(16)
       expect(json[:time_period][:id]).to eq(TimePeriod.current.id)
       expect(json[:time_period][:start_date]).to eq(TimePeriod.current.start_date.to_s)
       expect(json[:time_period][:end_date]).to eq(TimePeriod.current.end_date.to_s)
@@ -157,115 +157,6 @@ RSpec.describe Api::V1::EmotionsController do
             expect(json[:can_complete_check_in]).to be false
           end
         end
-      end
-
-      context 'in_check_in_window' do
-        it 'is true when in direct mode and inside check-in window (Friday)' do
-          travel_to(reference_date) do
-            setup_direct_session
-            get '/api/v1/emotions'
-
-            expect(json[:in_check_in_window]).to be true
-          end
-        end
-
-        it 'is false when in direct mode but outside check-in window (Tuesday)' do
-          travel_to(Date.new(2026, 3, 24)) do # Tuesday
-            setup_direct_session
-            get '/api/v1/emotions'
-
-            expect(json[:in_check_in_window]).to be false
-          end
-        end
-
-        it 'is false when direct mode is off' do
-          travel_to(reference_date) do
-            get '/api/v1/emotions'
-
-            expect(json[:in_check_in_window]).to be false
-          end
-        end
-      end
-
-      context 'direct_results_path' do
-        it 'returns /results/:slug of previous period when in direct mode' do
-          travel_to(reference_date) do
-            setup_direct_session
-            get '/api/v1/emotions'
-
-            expect(json[:direct_results_path]).to eq("/results/#{previous_period.slug}")
-          end
-        end
-
-        it 'is nil when direct mode is off' do
-          travel_to(reference_date) do
-            get '/api/v1/emotions'
-
-            expect(json[:direct_results_path]).to be_nil
-          end
-        end
-      end
-
-      context 'current_period_results_path' do
-        it 'returns /results/:slug of current period when in direct mode' do
-          travel_to(reference_date) do
-            setup_direct_session
-            get '/api/v1/emotions'
-
-            # Check format: should be /results/:slug
-            expect(json[:current_period_results_path]).to match(%r{^/results/[a-f0-9]+$})
-          end
-        end
-
-        it 'is nil when direct mode is off' do
-          travel_to(reference_date) do
-            get '/api/v1/emotions'
-
-            expect(json[:current_period_results_path]).to be_nil
-          end
-        end
-      end
-
-      context 'direct_timesheet_already_filled' do
-        it 'is false when no timesheet entry exists for direct period' do
-          travel_to(reference_date) do
-            setup_direct_session
-            get '/api/v1/emotions'
-
-            expect(json[:direct_timesheet_already_filled]).to be false
-          end
-        end
-
-        it 'is true when timesheet entry exists for direct period' do
-          create(:time_sheet_entry, user: user, project: project, time_period: overdue_period2, total_hours: 8)
-          travel_to(reference_date) do
-            setup_direct_session
-            get '/api/v1/emotions'
-
-            expect(json[:direct_timesheet_already_filled]).to be true
-          end
-        end
-
-        it 'is false when direct mode is off' do
-          travel_to(reference_date) do
-            get '/api/v1/emotions'
-
-            expect(json[:direct_timesheet_already_filled]).to be false
-          end
-        end
-      end
-
-      it 'memoizes previous_time_period_for_check_in' do
-        create(:time_sheet_entry, user: user, project: project, time_period: overdue_period1, total_hours: 8)
-        setup_direct_session
-
-        allow(TimePeriod).to receive(:previous_time_period).and_call_original
-
-        travel_to(reference_date) do
-          get '/api/v1/emotions'
-        end
-
-        expect(TimePeriod).to have_received(:previous_time_period).at_most(:once)
       end
     end
   end
