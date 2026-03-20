@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { apiRequest } from "../../requests/axios_requests";
-import { isEmptyStr, isNotEmptyStr } from "../../helpers/helpers";
+import { isEmptyStr, isNotEmptyStr, sortBrainstormingEmojis } from "../../helpers/helpers";
 import { userFullName } from "../../helpers/library";
 import EmojiRow from "./Emojis/EmojiRow";
 import ResponseSection from "./Shared/ResponseSection";
@@ -37,6 +37,7 @@ const BrainstormingItem = ({
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const modalRef = useRef(null);
 
+  const sortedEmojisArr = sortBrainstormingEmojis(emojisArr)
   const isCurrentUser = !nextTimePeriod && current_user.email === user.email
   const dataRequest = {
     innovation_brainstorming: {
@@ -130,9 +131,12 @@ const BrainstormingItem = ({
           : brainstorming.brainstorming_body}
       </div>
 
+      <p className={'text-orange-700 text-end'}>Please vote using emoticons</p>
+
       <EmojiRow {...{
-        emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
-        setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef
+        emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr: sortedEmojisArr, setEmojisArr, current_user,
+        setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef,
+        isTopicSection: true
       }} />
     </div>
   </div>
