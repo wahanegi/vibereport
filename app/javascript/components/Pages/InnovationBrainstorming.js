@@ -160,7 +160,7 @@ const InnovationBrainstorming = ({
         'POST',
         dataRequest,
         dataFromServer,
-        () => {},
+        () => { },
         `${url}`,
         (err) => {
           if (err?.response?.data?.error?.user_id) showAlertForSuggestedTopic()
@@ -237,16 +237,36 @@ const InnovationBrainstorming = ({
               <div id="topic" className='text-start fs-7 fs-md-6 mb-1'>{topicBody}</div>
               <div className="w-100">
                 <div className="innovation border border-3 rounded rounded-4 border-royal-blue">
-                    <textarea
-                      className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none"
-                      name="brainstorming_body"
-                      style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
-                      placeholder="Tell us what you think!"
-                      value={brainstorming?.brainstorming_body || ''}
-                      onChange={onChangBrainstorming}
-                      maxLength={MAX_CHAR_LIMIT}
-                    />
+                  <textarea
+                    className="w-100 fs-8 fs-md-7 px-2 py-1 border-0 shadow-none outline-focus-none resize-none"
+                    name="brainstorming_body"
+                    style={{ height: computedHeight - SUM_EDGE_DOWN_UP }}
+                    placeholder="Tell us what you think!"
+                    value={brainstorming?.brainstorming_body || ''}
+                    onChange={onChangBrainstorming}
+                    maxLength={MAX_CHAR_LIMIT}
+                  />
                 </div>
+                <div className="innovation-hint bg-light text-start px-3 py-1 mt-1 rounded rounded-4">
+                  <p className="innovation-hint__title  text-gray-700 fs-9 fs-md-8  fw-bold mb-1">
+                    Please format your response using the following structure:
+                  </p>
+                  <ul className="innovation-hint__list mb-1 text-start fs-9 fs-md-8 text-gray-600">
+                    <li className="text-start">
+                      <span className="fw-bold">Idea:</span> A brief description of the idea.
+                    </li>
+                    <li className="text-start">
+                      <span className="fw-bold">Example:</span> A specific example of how it might work in the product.
+                    </li>
+                    <li className="text-start">
+                      <span className="fw-bold">Benefit:</span> How this change would improve the experience.
+                    </li>
+                  </ul>
+                  <p className="text-gray-600 fs-9 fs-md-8">
+                    Ideas can range from small improvements to larger concepts. Both are valuable!
+                  </p>
+                </div>
+
               </div>
             </div>
           </div>
