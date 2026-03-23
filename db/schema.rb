@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_10_084412) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_23_110933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -159,6 +159,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_10_084412) do
     t.bigint "user_id", null: false
     t.index ["project_id"], name: "index_time_sheet_entries_on_project_id"
     t.index ["time_period_id"], name: "index_time_sheet_entries_on_time_period_id"
+    t.index ["user_id", "time_period_id", "project_id"], name: "index_unique_timesheet_entries", unique: true
     t.index ["user_id"], name: "index_time_sheet_entries_on_user_id"
   end
 
