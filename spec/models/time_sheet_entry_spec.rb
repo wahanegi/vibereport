@@ -15,6 +15,7 @@
 #  index_time_sheet_entries_on_project_id      (project_id)
 #  index_time_sheet_entries_on_time_period_id  (time_period_id)
 #  index_time_sheet_entries_on_user_id         (user_id)
+#  index_unique_timesheet_entries              (user_id,time_period_id,project_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -48,7 +49,8 @@ RSpec.describe TimeSheetEntry, type: :model do
 
       it 'allows additional billable hours if existing hours are below 40' do
         create(:time_sheet_entry, user: user, time_period: time_period, project: billable_project, total_hours: 30)
-        time_sheet_entry = build(:time_sheet_entry, user: user, time_period: time_period, project: billable_project, total_hours: 10)
+        another_project = create(:project, usage: 'billable')
+        time_sheet_entry = build(:time_sheet_entry, user: user, time_period: time_period, project: another_project, total_hours: 10)
         expect(time_sheet_entry).to be_valid
       end
 
@@ -75,6 +77,12 @@ RSpec.describe TimeSheetEntry, type: :model do
         billable_project = create(:project, usage: 'billable')
         time_sheet_entry = build(:time_sheet_entry, user: user, time_period: time_period, project: billable_project, total_hours: 40)
         expect(time_sheet_entry).to be_valid
+      end
+
+      it 'does not allow duplicate entries at DB level' do
+        create(:time_sheet_entry, user: user, time_period: time_period, project: internal_project, total_hours: 20)
+        duplicate = build(:time_sheet_entry, user: user, time_period: time_period, project: internal_project, total_hours: 20)
+        expect(duplicate).not_to be_valid
       end
     end
   end

@@ -135,6 +135,20 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         expect(response).to have_http_status(:ok)
         expect(TimeSheetEntry.find(existing_entry.id).total_hours).to eq(10)
       end
+
+      context 'when duplicate project_id are provided' do
+        it 'returns validation errors' do
+          post '/api/v1/time_sheet_entries/upsert', params: {
+            time_sheet_entries: [
+              { project_id: project.id, total_hours: 10 },
+              { project_id: project.id, total_hours: 20 }
+            ]
+          }
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json_response['error']).to eq('Each project can be selected only once')
+        end
+      end
     end
 
     context 'when id is provided but entry not found for current user' do
