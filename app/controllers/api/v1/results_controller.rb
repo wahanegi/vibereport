@@ -1,4 +1,5 @@
 class Api::V1::ResultsController < ApplicationController
+  include LegacyEmailLinkSupport
   before_action :authenticate_user!, :time_period, only: %i[show]
 
   def show
@@ -10,10 +11,19 @@ class Api::V1::ResultsController < ApplicationController
   end
 
   def results_email
-    sign_in user
+    payload = SignedLinks::ResultsEmailBuilder.verify(params[:token])
+    # TODO: Remove next line after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+    payload ||= legacy_results_email_payload if legacy_links_allowed?
+    return redirect_to_invalid_link if payload.blank?
+
+    @user = User.find_by(id: payload[:user_id].to_i)
+    @time_period = TimePeriod.find_by(slug: payload[:time_period_slug])
+    return redirect_to_invalid_link if @user.blank? || @time_period.blank?
+
+    sign_in @user
     msg = results_email_error_message
     update_user_time_index
-    return redirect_to "/results/#{params[:slug]}" if msg.blank?
+    return redirect_to "/results/#{@time_period.slug}" if msg.blank?
 
     render json: { error: msg }, status: :unprocessable_entity
   end
@@ -21,8 +31,8 @@ class Api::V1::ResultsController < ApplicationController
   private
 
   def results_email_error_message
-    return 'Time period not found' if time_period.blank?
-    return 'No responses found' if time_period.responses.blank?
+    return 'Time period not found' if @time_period.blank?
+    return 'No responses found' if @time_period.responses.blank?
 
     ''
   end
@@ -44,8 +54,20 @@ class Api::V1::ResultsController < ApplicationController
   end
 
   def update_user_time_index
-    requested_time_period = time_periods.find_by(slug: params[:slug])
+    requested_time_period = time_periods.find_by(slug: @time_period.slug)
     index = time_periods.index(requested_time_period)
-    user.update!(time_period_index: index)
+    @user.update!(time_period_index: index)
+  end
+
+  def redirect_to_invalid_link
+    redirect_to new_user_session_path, alert: 'Invalid or expired link'
+  end
+
+  # TODO: Remove after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+  def legacy_results_email_payload
+    return if params[:user_id].blank? || params[:slug].blank?
+
+    { user_id: params[:user_id].to_i,
+      time_period_slug: params[:slug] }.with_indifferent_access
   end
 end

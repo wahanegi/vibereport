@@ -1,6 +1,7 @@
 module Api
   module V1
     class ResponsesController < ApplicationController
+      include LegacyEmailLinkSupport
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices, :rating,
                       :comment, :productivity, :productivity_comment, :fun_question_id, :shoutout_id,
                       :fun_question_answer_id, :completed_at, :draft, :celebrate_comment, { gif: %i[src height] },
@@ -30,15 +31,33 @@ module Api
       end
 
       def response_flow_from_email
-        sign_in user
+        payload = SignedLinks::ResponseFlowBuilder.verify(params[:token])
+        # TODO: Remove next line after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+        payload ||= legacy_response_flow_payload if legacy_links_allowed?
+        return redirect_to_invalid_link if payload.blank?
+
+        @user = User.find_by(id: payload[:user_id].to_i)
+        return redirect_to_invalid_link if @user.blank?
+
+        time_period = TimePeriod.find_by(id: payload[:time_period_id].to_i)
+        return redirect_to_invalid_link if time_period.blank?
+
+        sign_in @user
         reset_time_period_index
-        result = ResponseFlowFromEmail.new(params, @user).call
-        if params[:time_period_id] == TimePeriod.current.id.to_s
+        response_flow_options = {
+          time_period_id: payload[:time_period_id].to_i,
+          not_working: payload.key?(:not_working) ? payload[:not_working] : false,
+          emotion_id: payload[:emotion_id]&.to_i,
+          completed_at: payload[:completed_at]
+        }
+        response_flow_options[:last_step] = payload[:last_step] if payload.key?(:last_step)
+        result = ResponseFlowFromEmail.new(@user, **response_flow_options).call
+        if payload[:time_period_id].to_i == TimePeriod.current.id
           return redirect_to root_path if result[:success]
 
           render json: { error: result[:error] }, status: :unprocessable_entity
         else
-          session[:check_in_time_period_id] = params[:time_period_id]
+          session[:check_in_time_period_id] = payload[:time_period_id].to_i
           redirect_to '/check-in-closed'
         end
       end
@@ -51,8 +70,15 @@ module Api
       end
 
       def sign_in_from_email
-        user
-        sign_in user
+        payload = SignedLinks::SignInFromEmailBuilder.verify(params[:token])
+        # TODO: Remove next line after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+        payload ||= legacy_sign_in_payload if legacy_links_allowed?
+        return redirect_to_invalid_link if payload.blank?
+
+        @user = User.find_by(id: payload[:user_id].to_i)
+        return redirect_to_invalid_link if @user.blank?
+
+        sign_in @user
         redirect_to root_path
       end
 
@@ -74,8 +100,8 @@ module Api
         }
       end
 
-      def user
-        @user ||= User.find_by(id: params[:user_id])
+      def redirect_to_invalid_link
+        redirect_to new_user_session_path, alert: 'Invalid or expired link'
       end
 
       def complete_response
@@ -93,6 +119,28 @@ module Api
 
       def reset_time_period_index
         current_user.update!(time_period_index: 0)
+      end
+
+      # TODO: Remove after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+      def legacy_response_flow_payload
+        return if params[:user_id].blank? || params[:time_period_id].blank?
+
+        payload = {
+          user_id: params[:user_id].to_i,
+          time_period_id: params[:time_period_id].to_i
+        }
+        payload[:last_step] = params[:last_step] if params[:last_step].present?
+        payload[:emotion_id] = params[:emotion_id].to_i if params[:emotion_id].present?
+        payload[:not_working] = ActiveModel::Type::Boolean.new.cast(params[:not_working]) if params.key?(:not_working)
+        payload[:completed_at] = params[:completed_at] if params.key?(:completed_at)
+        payload.with_indifferent_access
+      end
+
+      # TODO: Remove after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
+      def legacy_sign_in_payload
+        return if params[:user_id].blank?
+
+        { user_id: params[:user_id].to_i }.with_indifferent_access
       end
     end
   end

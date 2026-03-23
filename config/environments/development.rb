@@ -109,3 +109,12 @@ ENV['GIPHY_API_KEY'] = 'v6xr0UlohPqB69kIH5HlnmIIGxc34EaS'
 #   ENV['TIMESHEET_START_FORCED_ENTRY_DATE'] # => "2026-01-31"
 #
 # When not set, reminders will not be force-enabled in development.
+
+# Do NOT hard-code TIMESHEET_LAST_MONTHS_PERIOD here.
+# For local testing, set ENV['TIMESHEET_LAST_MONTHS_PERIOD'] in your shell.
+# Example (in your terminal):
+#   export TIMESHEET_LAST_MONTHS_PERIOD='3'
+#   bin/rails c
+#   ENV['TIMESHEET_LAST_MONTHS_PERIOD'] # => "3"
+#
+# If the variable is not set, the default value of 12 will be used.

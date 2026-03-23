@@ -42,7 +42,7 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   end
 
   def direct_entry
-    payload = TimeSheets::DirectLinkBuilder.verify(params[:token])
+    payload = SignedLinks::DirectTimesheetEntryBuilder.verify(params[:token])
 
     if payload.blank?
       session.delete(:direct_timesheet_time_period_id)
@@ -50,15 +50,15 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
       return
     end
 
-    user_id   = payload[:user_id]
-    period_id = payload[:time_period_id]
+    user_id   = payload[:user_id].to_i
+    period_id = payload[:time_period_id].to_i
 
     user = User.find_by(id: user_id)
     time_period = TimePeriod.find_by(id: period_id)
 
     if user.blank? || time_period.blank?
       session.delete(:direct_timesheet_time_period_id)
-      redirect_to new_user_session_path, alert: 'Invalid link'
+      redirect_to new_user_session_path, alert: 'Invalid or expired link'
       return
     end
 
