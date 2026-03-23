@@ -1,26 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   calculateBillableHours,
+  checkCompanyProjectsSelection,
   rangeFormat,
   transformTimesheetEntry,
   updateRowData,
   validateRow,
 } from '../helpers/helpers';
 import Layout from '../Layout';
-import {apiRequest} from '../requests/axios_requests';
+import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import {BtnAddNewRow, Calendar} from '../UI/ShareContent';
+import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import SweetAlert from "../UI/SweetAlert";
 
-const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
+const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
   const [rowsData, setRowsData] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isDraft, setIsDraft] = useState(true);
   const [billableError, setBillableError] = useState(null);
 
-  const {isLoading, setIsLoading} = service;
+  const { isLoading, setIsLoading } = service;
 
   const timesheetDate = rangeFormat(data.time_period || {});
   const isDirectTimesheetMode = Boolean(data?.direct_timesheet)
@@ -115,9 +116,9 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
         // Logic for normal flow
         if (!isDraft) {
           steps.push('causes-to-celebrate');
-          saveDataToDb(steps, {draft: false});
+          saveDataToDb(steps, { draft: false });
         } else {
-          saveDataToDb(steps, {draft: true});
+          saveDataToDb(steps, { draft: true });
         }
         onSuccess();
         setIsLoading(false);
@@ -191,6 +192,7 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
   const isValid = rowsData.length > 0 && rowsData.every((row) => validateRow(row));
   const canSubmit = !isLoading && isValid && !fetchError && projects.length > 0;
   const canAddNewRow = rowsData.every((row) => validateRow(row));
+  const companyProjectsError = checkCompanyProjectsSelection(rowsData, projects);
 
   return (
     <Layout
@@ -219,11 +221,14 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
                   onChangeRowData={handleChangeRowData}
                   onDelete={handleOnDelete}
                   projects={projects}
+                  rowsData={rowsData}
                 />
               ))}
             </div>
-            <div style={{height: '20px'}} className="text-primary">
-              {rowsData.length > 0 && !isValid ? (
+            <div style={{ height: '20px' }} className="text-primary">
+              {companyProjectsError ? (
+                <p>{companyProjectsError}</p>
+              ) : rowsData.length > 0 && !isValid ? (
                 <p>Please fill out all fields</p>
               ) : billableError ? (
                 <p>{billableError}</p>
