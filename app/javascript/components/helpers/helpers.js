@@ -190,6 +190,10 @@ export const calculateBillableHours = (rows, projects) => {
   }, 0);
 };
 
+export const calculateTotalHours = (rows) => {
+  return rows.reduce((total, row) => total + (parseInt(row.time, 10) || 0), 0);
+};
+
 export const transformTimesheetEntry = (entry, includedProjects = []) => {
   const projectId = entry.relationships?.project?.data?.id;
   const project = includedProjects.find((p) => p.id === projectId);
