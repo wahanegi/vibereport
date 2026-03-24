@@ -53,7 +53,7 @@ const InnovationBrainstorming = ({
   const brainstormingBody = brainstorming?.brainstorming_body;
   const { user_name: userName, innovation_body: topicBody } = data.innovation_topic;
   const isInnovationQuestionSubmissionEnabled = data?.innovation_question_submission_enabled;
-  const nextStep = isInnovationQuestionSubmissionEnabled ? 'icebreaker-answer' : 'innovation-topic';
+  const nextStep = isInnovationQuestionSubmissionEnabled ? 'innovation-topic' : 'icebreaker-answer';
 
   const isUserName = Boolean(userName)
 
@@ -376,7 +376,7 @@ const InnovationBrainstorming = ({
                   <div
                     ref={hintRef}
                     className={`innovation-hint bg-light text-start px-2 py-1 mt-1 rounded rounded-4 ${isExpanded ? 'innovation-hint--hidden' : ''
-                      }`}
+                    }`}
                     style={{
                       top: hintTopCollapsedPx ?? 0,
                     }}
@@ -389,7 +389,8 @@ const InnovationBrainstorming = ({
                         <span className="fw-bold">Idea:</span> A brief description of the idea.
                       </li>
                       <li className="text-start">
-                        <span className="fw-bold">Example:</span> A specific example of how it might work in the product.
+                        <span className="fw-bold">Example:</span> A specific example of how it might work in the
+                        product.
                       </li>
                       <li className="text-start">
                         <span className="fw-bold">Benefit:</span> How this change would improve the experience.

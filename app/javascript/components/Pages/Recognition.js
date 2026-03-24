@@ -34,9 +34,9 @@ const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => 
     } else if (data.innovation_topic) {
       nextStep = 'innovation-brainstorming';
     } else if (isInnovationQuestionSubmissionEnabled) {
-      nextStep = 'icebreaker-answer';
-    } else {
       nextStep = 'innovation-topic';
+    } else {
+      nextStep = 'icebreaker-answer';
     }
 
     saveDataToDb([...steps, nextStep], { draft: false });
