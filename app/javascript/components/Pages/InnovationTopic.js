@@ -172,7 +172,7 @@ const InnovationTopic = ({
               <div className="w-100">
                 <div className="innovation border border-3 rounded rounded-4 border-royal-blue">
                     <textarea
-                      className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none"
+                      className="w-100 fs-8 fs-md-7 p-2 border-0 shadow-none outline-focus-none resize-none overflow-auto"
                       name="innovation_body"
                       style={{ height: 260 }}
                       placeholder="Tell us what you think!"
