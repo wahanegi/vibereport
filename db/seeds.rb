@@ -30,13 +30,22 @@ if FunQuestion.count.zero?
   end
 end
 
-if InnovationTopic.count.zero?
-  user_id = ENV['SEED_INNOVATION_TOPIC_USER_ID'].to_i
-  raise 'Please set SEED_INNOVATION_TOPIC_USER_ID' if user_id.zero?
+# ===========================
+# Seed: Default Innovation Topics
+# Creates initial + newly added topics from default_topics.yml
+# Requires SEED_INNOVATION_TOPIC_USER_ID env variable
+# ===========================
+user_id = ENV['SEED_INNOVATION_TOPIC_USER_ID'].to_i
+raise 'Please set SEED_INNOVATION_TOPIC_USER_ID' if user_id.zero?
 
-  topics = YAML.load_file(Rails.root.join('db/seeds/default_topics.yml'))
+topics = YAML.load_file(Rails.root.join('db/seeds/default_topics.yml'))
 
-  topics['topics'].each do |topic|
-    InnovationTopic.create!(innovation_body: topic['innovation_body'], user_id:)
-  end
+topics['topics'].each do |topic|
+  next if InnovationTopic.exists?(['LOWER(innovation_body) = ?', topic['innovation_body'].downcase])
+
+  InnovationTopic.create!(
+    innovation_body: topic['innovation_body'],
+    user_id:,
+    posted: true
+  )
 end
