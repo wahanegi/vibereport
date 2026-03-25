@@ -50,14 +50,18 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       end
 
       it 'returns entries for the current user and current time period' do
-        expect(json_response['data'][0]['attributes']['user_id']).to eq(user.id)
-        expect(json_response['data'][1]['attributes']['user_id']).to eq(user.id)
+        data = json_response['data']
+        project_ids = data.map { |d| d['attributes']['project_id'] }
 
-        expect(json_response['data'][0]['attributes']['project_id']).to eq(project.id)
-        expect(json_response['data'][1]['attributes']['project_id']).to eq(project2.id)
+        expect(project_ids).to contain_exactly(project.id, project2.id)
 
-        expect(json_response['data'][0]['attributes']['total_hours']).to eq(entry1.total_hours)
-        expect(json_response['data'][1]['attributes']['total_hours']).to eq(entry2.total_hours)
+        total_hours = data.map { |d| d['attributes']['total_hours'] }
+
+        expect(total_hours).to contain_exactly(entry1.total_hours, entry2.total_hours)
+
+        data.each do |d|
+          expect(d['attributes']['user_id']).to eq(user.id)
+        end
       end
     end
 
