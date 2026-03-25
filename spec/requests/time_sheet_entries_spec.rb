@@ -136,7 +136,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         expect(TimeSheetEntry.find(existing_entry.id).total_hours).to eq(10)
       end
 
-      context 'when duplicate project_id are provided' do
+      context 'when duplicate project_ids are provided' do
         it 'returns validation errors' do
           post '/api/v1/time_sheet_entries/upsert', params: {
             time_sheet_entries: [

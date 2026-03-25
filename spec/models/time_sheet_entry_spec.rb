@@ -79,10 +79,26 @@ RSpec.describe TimeSheetEntry, type: :model do
         expect(time_sheet_entry).to be_valid
       end
 
-      it 'does not allow duplicate entries at DB level' do
+      it 'does not allow duplicate entries at the model validation level' do
         create(:time_sheet_entry, user: user, time_period: time_period, project: internal_project, total_hours: 20)
         duplicate = build(:time_sheet_entry, user: user, time_period: time_period, project: internal_project, total_hours: 20)
         expect(duplicate).not_to be_valid
+      end
+
+      it 'enforces the DB unique index' do
+        create(:time_sheet_entry, user: user, time_period: time_period, project: internal_project)
+
+        expect {
+          # bypass Rails validations, hit DB constraint directly
+          TimeSheetEntry.insert!({
+                                   user_id: user.id,
+                                   time_period_id: time_period.id,
+                                   project_id: internal_project.id,
+                                   total_hours: 20,
+                                   created_at: Time.current,
+                                   updated_at: Time.current
+                                 })
+        }.to raise_error(ActiveRecord::RecordNotUnique)
       end
     end
   end
