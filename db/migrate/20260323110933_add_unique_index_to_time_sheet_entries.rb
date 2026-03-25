@@ -16,7 +16,7 @@ class AddUniqueIndexToTimeSheetEntries < ActiveRecord::Migration[7.2]
 
     if duplicate_count.positive?
       puts "\n#{'!' * 100}"
-      puts "!   MIGRATION STOPPED: Found #{duplicate_count} duplicate time_sheet_entries!"
+      puts "!   MIGRATION STOPPED: Found #{duplicate_count} projects with duplicate time_sheet_entries for the same user in the same period!"
       puts '!   You must clean duplicates before applying the unique index.'
       puts '!   Instructions:'
       puts '!     1. Open Rails console on production'
