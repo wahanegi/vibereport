@@ -60,7 +60,7 @@ export function splitArray(arr, n) {
   const len = arr.length;
   const result = [];
 
-  for (i = 0; i < len; i += n) {
+  for (let i = 0; i < len; i += n) {
     result.push(arr.slice(i, i + n));
   }
 
