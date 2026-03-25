@@ -67,10 +67,9 @@ class Api::V1::EmotionsController < ApplicationController
   end
 
   def check_in_completed?
-    current_period = current_time_period
-    return false if current_period.nil?
+    return false if current_time_period.nil?
 
-    Response.exists?(time_period_id: current_period.id, user_id: current_user.id, draft: false)
+    Response.exists?(time_period_id: current_time_period.id, user_id: current_user.id, draft: false)
   end
 
   def current_time_period
