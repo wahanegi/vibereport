@@ -194,6 +194,7 @@ const InnovationBrainstorming = ({
 
       isExpandedRef.current = nextExpanded;
       setIsExpanded(nextExpanded);
+      setIsScrollEnabled(nextExpanded);
       setTextareaContentHeight(nextExpanded ? expandedContentHeight : oneLineContentHeight);
     });
   };
@@ -205,7 +206,7 @@ const InnovationBrainstorming = ({
   }, [brainstormingBody]);
 
   useEffect(() => {
-    setIsScrollEnabled(false);
+    if (!isExpanded) setIsScrollEnabled(false);
   }, [isExpanded]);
 
   useEffect(() => {
@@ -274,6 +275,7 @@ const InnovationBrainstorming = ({
       setTextareaContentHeight(
         shouldExpand ? expandedTextareaContentHeight : oneLineContentHeight
       );
+      setIsScrollEnabled(shouldExpand);
 
       didInitialSyncRef.current = true;
       setLayoutReady(true);
