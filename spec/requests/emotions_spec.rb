@@ -42,11 +42,7 @@ RSpec.describe Api::V1::EmotionsController do
     end
 
     context 'direct timesheet mode' do
-      include ActiveSupport::Testing::TimeHelpers
-
-      def reference_date
-        Date.new(2026, 3, 20)
-      end
+      let(:reference_date) { Date.new(2026, 3, 20) }
 
       let!(:team) { create(:team, timesheet_enabled: true) }
       let!(:user_team) { create(:user_team, user: user, team: team, created_at: reference_date - 2.months) }

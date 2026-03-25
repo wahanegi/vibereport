@@ -4,15 +4,13 @@ require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
   describe '#check_in_period?' do
-    include ActiveSupport::Testing::TimeHelpers
-
-    FRI = Date.new(2026, 3, 20)
-    SAT = Date.new(2026, 3, 21)
-    SUN = Date.new(2026, 3, 22)
-    MON = Date.new(2026, 3, 23)
-    TUE = Date.new(2026, 3, 24)
-    WED = Date.new(2026, 3, 25)
-    THU = Date.new(2026, 3, 26)
+    let(:fri) { Date.new(2026, 3, 20) }
+    let(:sat) { Date.new(2026, 3, 21) }
+    let(:sun) { Date.new(2026, 3, 22) }
+    let(:mon) { Date.new(2026, 3, 23) }
+    let(:tue) { Date.new(2026, 3, 24) }
+    let(:wed) { Date.new(2026, 3, 25) }
+    let(:thu) { Date.new(2026, 3, 26) }
 
     context 'with default window Fri -> Mon' do
       before do
@@ -20,31 +18,31 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'returns true on Friday' do
-        travel_to(FRI) { expect(helper.send(:check_in_period?)).to be true }
+        travel_to(fri) { expect(helper.send(:check_in_period?)).to be true }
       end
 
       it 'returns true on Saturday' do
-        travel_to(SAT) { expect(helper.send(:check_in_period?)).to be true }
+        travel_to(sat) { expect(helper.send(:check_in_period?)).to be true }
       end
 
       it 'returns true on Sunday' do
-        travel_to(SUN) { expect(helper.send(:check_in_period?)).to be true }
+        travel_to(sun) { expect(helper.send(:check_in_period?)).to be true }
       end
 
       it 'returns true on Monday' do
-        travel_to(MON) { expect(helper.send(:check_in_period?)).to be true }
+        travel_to(mon) { expect(helper.send(:check_in_period?)).to be true }
       end
 
       it 'returns false on Tuesday' do
-        travel_to(TUE) { expect(helper.send(:check_in_period?)).to be false }
+        travel_to(tue) { expect(helper.send(:check_in_period?)).to be false }
       end
 
       it 'returns false on Wednesday' do
-        travel_to(WED) { expect(helper.send(:check_in_period?)).to be false }
+        travel_to(wed) { expect(helper.send(:check_in_period?)).to be false }
       end
 
       it 'returns false on Thursday' do
-        travel_to(THU) { expect(helper.send(:check_in_period?)).to be false }
+        travel_to(thu) { expect(helper.send(:check_in_period?)).to be false }
       end
     end
 
@@ -57,27 +55,27 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'returns true on Wednesday' do
-        travel_to(WED) { expect(helper.send(:check_in_period?)).to be true }
+        travel_to(wed) { expect(helper.send(:check_in_period?)).to be true }
       end
 
       it 'returns true on Thursday' do
-        travel_to(THU) { expect(helper.send(:check_in_period?)).to be true }
+        travel_to(thu) { expect(helper.send(:check_in_period?)).to be true }
       end
 
       it 'returns true on Friday' do
-        travel_to(FRI) { expect(helper.send(:check_in_period?)).to be true }
+        travel_to(fri) { expect(helper.send(:check_in_period?)).to be true }
       end
 
       it 'returns false on Tuesday' do
-        travel_to(TUE) { expect(helper.send(:check_in_period?)).to be false }
+        travel_to(tue) { expect(helper.send(:check_in_period?)).to be false }
       end
 
       it 'returns false on Saturday' do
-        travel_to(SAT) { expect(helper.send(:check_in_period?)).to be false }
+        travel_to(sat) { expect(helper.send(:check_in_period?)).to be false }
       end
 
       it 'returns false on Monday' do
-        travel_to(MON) { expect(helper.send(:check_in_period?)).to be false }
+        travel_to(mon) { expect(helper.send(:check_in_period?)).to be false }
       end
     end
 
