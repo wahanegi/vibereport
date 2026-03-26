@@ -88,8 +88,8 @@ export const SEGMENTS_MAP = {
 };
 
 export const BRAINSTORMING_ALLOWED_EMOJIS = [
-  { unified: "1f44d", name: "interesting", level: 4 },
-  { unified: "1f525", name: "high impact", level: 3 },
-  { unified: "1f9e0", name: "clever idea", level: 2 },
-  { unified: "1f680", name: "worth exploring", level: 1 }
+  { unified: "1f44d", name: "interesting", level: 1 },
+  { unified: "1f525", name: "high impact", level: 2 },
+  { unified: "1f9e0", name: "clever idea", level: 3 },
+  { unified: "1f680", name: "worth exploring", level: 4 }
 ];

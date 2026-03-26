@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { apiRequest } from "../../requests/axios_requests";
-import { isEmptyStr, isNotEmptyStr, sortBrainstormingEmojis } from "../../helpers/helpers";
+import { isEmptyStr, isNotEmptyStr, sortBrainstormingEmojis, sortBrainstormingsArray } from "../../helpers/helpers";
 import { userFullName } from "../../helpers/library";
 import EmojiRow from "./Emojis/EmojiRow";
 import ResponseSection from "./Shared/ResponseSection";
@@ -100,11 +100,18 @@ const BrainstormingItem = ({
         })
       )
     }
-  }, [selectedEmoji])
 
-  useEffect(() => {
-    setEmojisArr(emojis)
-  }, [emojis])
+    // Global update brainstormings and sorted them after choice an emoji
+    setBrainstormingsArray(prev => {
+      const updated = prev.map(item => {
+        if (item.brainstorming.id === brainstorming.id) {
+          return { ...item, emojis: [...emojisArr] };
+        }
+        return item;
+      });
+      return sortBrainstormingsArray(updated);
+    });
+  }, [selectedEmoji])
 
   return <div className='row wrap topic brainstorming  mb-1 mw-100'>
     <div className="col-xl-12">

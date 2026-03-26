@@ -220,6 +220,22 @@ export const sortBrainstormingEmojis = (emojis) => {
   return [...emojis].sort((a, b) => {
     const levelA = emojiLevels[a.emoji_code] || 0;
     const levelB = emojiLevels[b.emoji_code] || 0;
-    return levelB - levelA; // low level first
+    return levelA - levelB; // low level first
+  });
+};
+
+export const sortBrainstormingsArray = (arr) => {
+  return [...arr].sort((a, b) => {
+    const aScore = a.emojis.reduce((sum, e) => {
+      const emojiInfo = BRAINSTORMING_ALLOWED_EMOJIS.find(x => x.unified === e.emoji_code);
+      return sum + (emojiInfo ? e.count : 0);
+    }, 0);
+
+    const bScore = b.emojis.reduce((sum, e) => {
+      const emojiInfo = BRAINSTORMING_ALLOWED_EMOJIS.find(x => x.unified === e.emoji_code);
+      return sum + (emojiInfo ? e.count : 0);
+    }, 0);
+
+    return bScore - aScore;
   });
 };
