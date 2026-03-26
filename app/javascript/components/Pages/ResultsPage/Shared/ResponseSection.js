@@ -2,6 +2,7 @@ import React from "react";
 import { isBlank } from "../../../helpers/helpers";
 import PreviewSection from "./PreviewSection";
 import EmptySection from "./EmptySection";
+import AnimatedList from "./AnimatedList";
 
 const ResponseSection = ({
   nextTimePeriod,
@@ -33,23 +34,13 @@ const ResponseSection = ({
     <section className="results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12">
       <HeaderComponent {...headerProps} />
 
-      <ul className="list-unstyled p-0 m-0">
-        {items.map((data) => {
-          const item = data[itemDataKey];
-          if (!item) return null;
-
-          return (
-            <li key={`${itemDataKey}-${item.id}`}>
-              <ItemComponent
-                {...data}
-                current_user={current_user}
-                itemsArray={items}
-                setItemsArray={setItems}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      <AnimatedList
+        items={items}
+        itemDataKey={itemDataKey}
+        ItemComponent={ItemComponent}
+        current_user={current_user}
+        setItems={setItems}
+      />
     </section>
   );
 };
