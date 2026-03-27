@@ -1,19 +1,19 @@
-import axios from "axios";
-import React, { useEffect, useState } from 'react';
-import { MIN_USERS_RESPONSES } from "../../helpers/consts";
-import { isBlank, isPresent, rangeFormat } from "../../helpers/helpers";
-import Layout from '../../Layout';
-import { apiRequest, updateResponse } from "../../requests/axios_requests";
-import Loader from "../../UI/Loader";
-import { BtnBack } from "../../UI/ShareContent";
-import SweetAlert from "../../UI/SweetAlert";
-import WorkingModal from "../modals/WorkingModal";
-import EmotionSection from "./EmotionSection";
-import GifSection from "./GifSection";
-import NavigationBar from "./NavigationBar";
-import QuestionSection from "./QuestionSection";
-import ShoutoutSection from "./ShoutoutSection";
-import TopicSection from "./TopicSection";
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { MIN_USERS_RESPONSES } from '../../helpers/consts'
+import { isBlank, isPresent, rangeFormat } from '../../helpers/helpers'
+import Layout from '../../Layout'
+import { apiRequest, updateResponse } from '../../requests/axios_requests'
+import Loader from '../../UI/Loader'
+import { BtnBack } from '../../UI/ShareContent'
+import SweetAlert from '../../UI/SweetAlert'
+import WorkingModal from '../modals/WorkingModal'
+import EmotionSection from './EmotionSection'
+import GifSection from './GifSection'
+import NavigationBar from './NavigationBar'
+import QuestionSection from './QuestionSection'
+import ShoutoutSection from './ShoutoutSection'
+import TopicSection from './TopicSection'
 
 export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/') => {
   useEffect(() => {
@@ -31,7 +31,7 @@ export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
     if (!nextTimePeriod) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-  }, [nextTimePeriod]);
+  }, [nextTimePeriod])
 }
 
 export const scrollTopModalCallback = (showModal) => {
@@ -40,7 +40,7 @@ export const scrollTopModalCallback = (showModal) => {
       window.scrollTo({ top: 200, behavior: 'smooth' })
     }
   }, [showModal])
-};
+}
 
 export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex) => {
   useEffect(() => {
@@ -50,7 +50,7 @@ export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTim
       setNextTimePeriod(time_periods[timePeriodIndex - 1])
     }
   }, [timePeriodIndex, time_periods?.length])
-};
+}
 
 export const onRemoveAlert = (updateResponse, data, setData) => {
   const dataRequest = {
@@ -69,8 +69,8 @@ export const onChangeTimePeriodIndex = (current_user, index, setTimePeriodIndex,
   }
   const url = '/api/v1/users/'
   const id = current_user.id
-  apiRequest("PATCH", dataSend, dataFromServer, () => {
-  }, `${url}${id}`).then();
+  apiRequest('PATCH', dataSend, dataFromServer, () => {
+  }, `${url}${id}`).then()
 }
 
 const Results = ({ data, setData, steps = data.response.attributes.steps || [], draft = true }) => {
@@ -85,7 +85,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
-  const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index);
+  const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index)
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
   const initialIndex = 0
@@ -112,7 +112,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   }
 
   const showNextTimePeriod = () => {
-    if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return;
+    if (timePeriod.id === time_periods[1].id && isPresent(data.prev_results_path)) return
 
     if (timePeriodIndex > 0) {
       const index = timePeriodIndex - 1
@@ -135,32 +135,32 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
     if (!nextTimePeriod) {
       return (
         isMinUsersResponses ? (
-          <div className='d-flex flex-column gap-1 mb-1 mb-md-0'>
+          <div className="d-flex flex-column gap-1 mb-1 mb-md-0">
             <h1 className="fs-md-1">You're one of the first to check in!</h1>
             <h6>Come back later to view the results</h6>
           </div>
         ) : (
           <h1 className="fs-md-1">The team is feeling...</h1>
         )
-      );
+      )
     }
 
     return (
       <h1 className="fs-md-1">During {rangeFormat(timePeriod)}<br /> the team was feeling...</h1>
-    );
+    )
   }
 
   const TimePeriodNavigation = () => {
     if (nextTimePeriod && isBlank(data.prev_results_path)) {
       return (
-        <div className='mt-5'>
-          <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6'
+        <div className="mt-5">
+          <BtnBack text="Back to most recent" addClass="mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6"
                    onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
           />
         </div>
       )
     }
-    return <div className='my-5'></div>
+    return <div className="my-5"></div>
   }
 
   const SkipCheckInAlert = () => {
@@ -189,7 +189,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                  isResult={true}
                  hideShoutout={nextTimePeriod}>
     <div
-      className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
+      className="w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0">
       <SkipCheckInAlert />
 
       <TextHeader />
@@ -203,11 +203,13 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
       <EmotionSection emotions={emotions}
                       nextTimePeriod={nextTimePeriod}
                       data={data}
-                      isMinUsersResponses={isMinUsersResponses} />
+                      isMinUsersResponses={isMinUsersResponses}
+                      loaded={loaded} />
 
       <GifSection gifs={gifs}
                   nextTimePeriod={nextTimePeriod}
-                  isMinUsersResponses={isMinUsersResponses} />
+                  isMinUsersResponses={isMinUsersResponses}
+                  loaded={loaded} />
 
       <ShoutoutSection nextTimePeriod={nextTimePeriod}
                        current_user={current_user}
@@ -217,7 +219,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                        data={data} setData={setData}
                        isMinUsersResponses={isMinUsersResponses}
                        currentUserShoutouts={current_user_shoutouts}
-                       recivedPublicShoutouts={received_and_public_shoutouts} />
+                       recivedPublicShoutouts={received_and_public_shoutouts}
+                       loaded={loaded} />
 
       <TopicSection innovation_topic={innovation_topic}
                     current_user={current_user}
@@ -235,7 +238,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                        nextTimePeriod={nextTimePeriod}
                        data={data}
                        setData={setData}
-                       setShowWorkingModal={setShowWorkingModal} />
+                       setShowWorkingModal={setShowWorkingModal}
+                       loaded={loaded} />
 
       <TimePeriodNavigation />
     </div>
@@ -247,4 +251,4 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
       steps={steps} />
   </Layout>
 }
-export default Results;
+export default Results
