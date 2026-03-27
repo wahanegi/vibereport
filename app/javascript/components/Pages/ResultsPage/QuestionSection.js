@@ -76,15 +76,15 @@ const Question = ({ userName, fun_question }) => {
 }
 
 const AnswerItem = ({
-                      answer,
-                      emojis,
-                      user,
-                      current_user,
-                      nextTimePeriod,
-                      fun_question,
-                      answersArray,
-                      setAnswersArray
-                    }) => {
+  answer,
+  emojis,
+  user,
+  current_user,
+  nextTimePeriod,
+  fun_question,
+  answersArray,
+  setAnswersArray
+}) => {
   const isCurrentUser = !nextTimePeriod && current_user.email === user.email
   const [edit, setEdit] = useState(false)
   const [answerBody, setAnswerBody] = useState(answer.answer_body || '')
