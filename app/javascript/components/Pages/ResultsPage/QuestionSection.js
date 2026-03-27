@@ -168,7 +168,7 @@ const AnswerItem = ({
       </div>
       {edit && <div className="d-flex justify-content-end">
         <Link to={''} className="text-danger h6 fw-semibold me-2" onClick={onCancel}>Cancel</Link>
-        <Link to={''} className="color-green h6 fw-semibold" disabled onClick={updateAnswer}>Save</Link>
+        <Link to={''} className="text-success h6 fw-semibold" disabled onClick={updateAnswer}>Save</Link>
       </div>}
       <div className="edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base">
         {userFullName(user)} said:&nbsp;
@@ -230,7 +230,7 @@ const QuestionSection = ({
   }
 
   return <div className="results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12">
-    <Question userName={...{ userName, fun_question }} />
+    <Question {...{ userName, fun_question }} />
     {
       answersArray.map(({ answer, user, emojis }) => (
         <AnswerItem key={answer.id} {...{

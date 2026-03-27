@@ -13,6 +13,7 @@ import GifSection from './GifSection'
 import NavigationBar from './NavigationBar'
 import QuestionSection from './QuestionSection'
 import ShoutoutSection from './ShoutoutSection'
+import TopicSection from './TopicSection'
 
 export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/') => {
   useEffect(() => {
@@ -77,7 +78,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   const [results, setResults] = useState({})
   const {
     answers, emotions, fun_question, gifs, sent_shoutouts, received_shoutouts,
-    current_user_shoutouts, responses_count, received_and_public_shoutouts, prev_results_path
+    current_user_shoutouts, responses_count, received_and_public_shoutouts, prev_results_path,
+    innovation_topic, innovation_brainstormings
   } = results
   const { time_periods, current_user } = data
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
@@ -179,7 +181,12 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
 
   if (!loaded) return <Loader />
 
-  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true}
+  return <Layout data={data}
+                 setData={setData}
+                 steps={steps}
+                 draft={draft}
+                 hideBottom={true}
+                 isResult={true}
                  hideShoutout={nextTimePeriod}>
     <div
       className="w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0">
@@ -214,6 +221,15 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                        currentUserShoutouts={current_user_shoutouts}
                        recivedPublicShoutouts={received_and_public_shoutouts}
                        loaded={loaded} />
+
+      <TopicSection innovation_topic={innovation_topic}
+                    current_user={current_user}
+                    innovation_brainstormings={innovation_brainstormings}
+                    isMinUsersResponses={isMinUsersResponses}
+                    nextTimePeriod={nextTimePeriod}
+                    data={data}
+                    setData={setData}
+                    setShowWorkingModal={setShowWorkingModal} />
 
       <QuestionSection fun_question={fun_question}
                        current_user={current_user}

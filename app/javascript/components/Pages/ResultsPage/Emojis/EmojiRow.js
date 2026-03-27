@@ -1,11 +1,11 @@
-import ShowEmojis from "./ShowEmojis";
-import isEmpty from "ramda/src/isEmpty";
+import React, { useEffect, useRef, useState } from "react";
 import Tippy from "@tippyjs/react";
-import {isPresent} from "../../../helpers/helpers";
+import { isPresent } from "../../../helpers/helpers";
+import isEmpty from "ramda/src/isEmpty";
+import ShowEmojis from "./ShowEmojis";
 import EmojiPickerComponent from "./EmojiPicker";
-import React, {useEffect, useRef, useState} from "react";
 
- const calculatePickerPosition = (inputRef, showEmojiPicker, setPickerPosition) => {
+const calculatePickerPosition = (inputRef, showEmojiPicker, setPickerPosition) => {
   useEffect(() => {
     if (inputRef.current && showEmojiPicker) {
       const inputRect = inputRef.current.getBoundingClientRect();
@@ -34,6 +34,7 @@ const closePickerCallback = (modalRef, showEmojiPicker, setShowEmojiPicker, setP
         setPickerPosition({})
       }
     }
+
     if (showEmojiPicker) {
       document.addEventListener('mousedown', handleClickOutside);
     }
@@ -43,9 +44,10 @@ const closePickerCallback = (modalRef, showEmojiPicker, setShowEmojiPicker, setP
   }, [showEmojiPicker]);
 };
 
-const EmojiRow = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
-                   setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef}) => {
-
+const EmojiRow = ({
+  emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user,
+  setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef, isTopicSection
+}) => {
   const inputRef = useRef(null);
   const [pickerPosition, setPickerPosition] = useState({});
 
@@ -53,10 +55,19 @@ const EmojiRow = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisAr
   calculatePickerPosition(inputRef, showEmojiPicker, setPickerPosition)
 
   return <div className="emoji-container d-flex justify-content-end position-relative">
-    <ShowEmojis {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr, setEmojisArr, current_user, setEmojiObject}} />
-    <div ref={inputRef} className='pointer d-flex align-items-center' onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ fontSize: 20 }}>
+    <ShowEmojis {...{
+      emojiObject,
+      setSelectedEmoji,
+      setSelectedEmojiName,
+      emojisArr,
+      setEmojisArr,
+      current_user,
+      setEmojiObject
+    }} />
+    <div ref={inputRef} className='pointer d-flex align-items-center'
+         onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ fontSize: 20 }}>
       {!isEmpty(emojisArr) && <span>|</span>}
-      <Tippy content={<div className='emoji-tooltip'>Add reaction...</div>} >
+      <Tippy content={<div className='emoji-tooltip'>Add reaction...</div>}>
         <div className='emoji-button' />
       </Tippy>
     </div>
@@ -64,8 +75,11 @@ const EmojiRow = ({emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisAr
       showEmojiPicker && isPresent(pickerPosition) &&
       <EmojiPickerComponent
         ref={modalRef}
-        {...{emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr,
-          setEmojisArr, setEmojiObject, current_user, pickerPosition, setPickerPosition}} />
+        {...{
+          emojiObject, setSelectedEmoji, setSelectedEmojiName, emojisArr,
+          setEmojisArr, setEmojiObject, current_user, pickerPosition, setPickerPosition,
+          isTopicSection
+        }} />
     }
   </div>
 }
