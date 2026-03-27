@@ -1,20 +1,20 @@
-import React, {Fragment, useEffect, useRef, useState} from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
-import {Link} from "react-router-dom";
-import {isBlank, isEmptyStr, isNotEmptyStr, isPresent} from "../../helpers/helpers";
-import {apiRequest, updateResponse} from "../../requests/axios_requests";
+import { Link } from "react-router-dom";
+import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from "../../helpers/helpers";
+import { apiRequest, updateResponse } from "../../requests/axios_requests";
 import EmojiRow from "./Emojis/EmojiRow";
 import { userFullName } from "../../helpers/library";
 
 const PreviewQuestionSection = () =>
   <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
-    <div className='row wrap question preview mw-100'/>
+    <div className='row wrap question preview mw-100' />
   </div>
 
 const EmptyQuestionSection = ({
-                                nextTimePeriod, userName, fun_question,
-                                setShowWorkingModal, data, setData
-                              }) => {
+  nextTimePeriod, userName, fun_question,
+  setShowWorkingModal, data, setData
+}) => {
   const [text, setText] = useState('');
   const [addClass, setAddClass] = useState('')
   const handleMouseEnter = () => {
@@ -37,7 +37,7 @@ const EmptyQuestionSection = ({
     } else {
       const new_steps = steps.slice(0, index + 1);
       const dataRequest = {
-        response: {attributes: {steps: new_steps}}
+        response: { attributes: { steps: new_steps } }
       }
       !nextTimePeriod && updateResponse(data, setData, dataRequest)
     }
@@ -49,40 +49,42 @@ const EmptyQuestionSection = ({
 
   return <Fragment>
     <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
-      <Question {...{userName, fun_question}} />
+      <Question {...{ userName, fun_question }} />
     </div>
-    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`} onClick={handlingBack}>
-      <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`}
+         onClick={handlingBack}>
+      <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter}
+           onMouseLeave={handleMouseLeave}>
         <h5 className='d-flex justify-content-center fw-semibold'>{text}</h5>
       </div>
     </div>
   </Fragment>
 }
 
-const Question = ({userName, fun_question}) => {
-    if (isBlank(fun_question)) return null;
+const Question = ({ userName, fun_question }) => {
+  if (isBlank(fun_question)) return null;
 
-    return <div className='row wrap question mb-1 mw-100'>
-      {
-        userName && <p className='b3 muted text-start fs-7 fs-md-6 mb-1'>
-          {userName} asks:
-          <br />
-        </p>
-      }
-      <p className='fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'> {fun_question.question_body}</p>
-    </div>
+  return <div className='row wrap question mb-1 mw-100'>
+    {
+      userName && <p className='b3 muted text-start fs-7 fs-md-6 mb-1'>
+        {userName} asks:
+        <br />
+      </p>
+    }
+    <p className='fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'> {fun_question.question_body}</p>
+  </div>
 }
 
 const AnswerItem = ({
-                      answer,
-                      emojis,
-                      user,
-                      current_user,
-                      nextTimePeriod,
-                      fun_question,
-                      answersArray,
-                      setAnswersArray
-                    }) => {
+  answer,
+  emojis,
+  user,
+  current_user,
+  nextTimePeriod,
+  fun_question,
+  answersArray,
+  setAnswersArray
+}) => {
   const isCurrentUser = !nextTimePeriod && current_user.email === user.email
   const [edit, setEdit] = useState(false)
   const [answerBody, setAnswerBody] = useState(answer.answer_body || '')
@@ -128,7 +130,7 @@ const AnswerItem = ({
         const updatedAnswer = Object.assign({}, item.answer, {
           answer_body: updatedAnswerBody,
         });
-        return {...item, answer: updatedAnswer};
+        return { ...item, answer: updatedAnswer };
       }
       return item;
     });
@@ -166,7 +168,7 @@ const AnswerItem = ({
       </div>
       {edit && <div className='d-flex justify-content-end'>
         <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
-        <Link to={''} className='color-green h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
+        <Link to={''} className='text-success h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
       <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
         {userFullName(user)} said:&nbsp;
@@ -176,7 +178,7 @@ const AnswerItem = ({
                           size="lg"
                           autoFocus={true}
                           onChange={e => setAnswerBody(e.target.value)}
-                          value={answerBody}/> :
+                          value={answerBody} /> :
             answer.answer_body
         }
       </div>
@@ -189,10 +191,10 @@ const AnswerItem = ({
 }
 
 const QuestionSection = ({
-                           fun_question, answers, nextTimePeriod, isMinUsersResponses,
-                           setShowWorkingModal, current_user, data, setData
-                         }) => {
-  if (!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection/>
+  fun_question, answers, nextTimePeriod, isMinUsersResponses,
+  setShowWorkingModal, current_user, data, setData
+}) => {
+  if (!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
 
   const userName = userFullName(fun_question?.user)
   const [answersArray, setAnswersArray] = useState(answers || [])
@@ -206,13 +208,13 @@ const QuestionSection = ({
                                                           nextTimePeriod={nextTimePeriod}
                                                           data={data}
                                                           setData={setData}
-                                                          setShowWorkingModal={setShowWorkingModal}/>
+                                                          setShowWorkingModal={setShowWorkingModal} />
 
   return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
-    <Question {...{userName, fun_question}} />
+    <Question {...{ userName, fun_question }} />
     {
       answersArray.map(data => {
-        const {answer, user, emojis} = data
+        const { answer, user, emojis } = data
         return <AnswerItem key={answer.id} {...{
           answer, emojis, fun_question, user, current_user, nextTimePeriod,
           answersArray, setAnswersArray

@@ -2,7 +2,8 @@ class Api::V1::ResultsPresenter
   include ApplicationHelper
   include ActiveAdminHelpers
 
-  attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users, :teams, :original_url
+  attr_reader :fun_question, :time_period, :current_user, :responses, :fun_question_answers, :users, :teams, :original_url,
+              :innovation_topic, :innovation_brainstormings
 
   def initialize(time_period_slug, current_user, original_url)
     @time_period = TimePeriod.find_by(slug: time_period_slug)
@@ -13,6 +14,15 @@ class Api::V1::ResultsPresenter
     @current_user = current_user
     @teams = current_user.user_teams.has_team_access.map(&:team)
     @original_url = original_url
+    @innovation_topic = time_period.innovation_topic
+    @innovation_brainstormings =
+      if innovation_topic
+        responses
+          .includes(innovation_brainstorming: [:user, { emojis: :user }])
+          .filter_map(&:innovation_brainstorming)
+      else
+        []
+      end
   end
 
   def json_hash
@@ -29,7 +39,9 @@ class Api::V1::ResultsPresenter
       current_user:,
       received_and_public_shoutouts:,
       prev_results_path:,
-      teams: original_url.include?('result_managers') ? teams_with_emotion_index : []
+      teams: original_url.include?('result_managers') ? teams_with_emotion_index : [],
+      innovation_topic: topic,
+      innovation_brainstormings: brainstormings
     }
   end
 
@@ -138,6 +150,36 @@ class Api::V1::ResultsPresenter
     {
       image: response.gif,
       emotion: response.emotion
+    }
+  end
+
+  def topic
+    return nil if innovation_topic.blank?
+
+    {
+      id: innovation_topic.id,
+      innovation_body: innovation_topic.innovation_body,
+      user: innovation_topic.user
+    }
+  end
+
+  def brainstormings
+    return nil if innovation_brainstormings.blank?
+
+    sort_brainstormings_with_current_user_first(innovation_brainstormings, current_user).map { |brainstorming| brainstorming_block(brainstorming) }
+  end
+
+  def sort_brainstormings_with_current_user_first(brainstormings, current_user)
+    current_user_brainstorming, other_brainstormings = brainstormings.partition { |brainstorming| brainstorming.user == current_user }
+    sorted_other_brainstormings = other_brainstormings.sort_by(&:created_at)
+    [current_user_brainstorming, sorted_other_brainstormings].flatten.compact
+  end
+
+  def brainstorming_block(brainstorming)
+    {
+      brainstorming:,
+      user: brainstorming.user,
+      emojis: emojis_data(brainstorming.emojis)
     }
   end
 

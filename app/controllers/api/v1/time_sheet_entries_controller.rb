@@ -1,4 +1,8 @@
 class Api::V1::TimeSheetEntriesController < ApplicationController
+  MAX_PERIOD_HOURS = 168
+  PERIOD_HOURS_LIMIT_EXCEEDED_CODE = 'period_hours_limit_exceeded'.freeze
+  PERIOD_HOURS_LIMIT_EXCEEDED_MESSAGE = 'Total hours per period must not exceed 168'.freeze
+
   before_action :authenticate_user!, except: [:direct_entry]
 
   before_action :set_time_sheet_entry, only: %i[destroy]
@@ -20,6 +24,8 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
     return render_error('Each project can be selected only once') if duplicate_project_ids?(time_sheet_entries_params)
 
     time_period = effective_time_period
+    return if validate_period_hours_limit_exceeded(time_period)
+
     saved_entries = process_time_sheet_entries(time_period)
     return if performed?
 
@@ -147,5 +153,56 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
                                          .merge(meta: { time_period_id: time_period.id,
                                                         time_period_slug: time_period.slug }),
            status: :ok
+  def validate_period_hours_limit_exceeded(time_period)
+    total_hours = period_total_hours_after_upsert(time_period)
+    return false unless total_hours > MAX_PERIOD_HOURS
+
+    render json: {
+      errors: [
+        {
+          code: PERIOD_HOURS_LIMIT_EXCEEDED_CODE,
+          message: PERIOD_HOURS_LIMIT_EXCEEDED_MESSAGE
+        }
+      ]
+    }, status: :unprocessable_entity
+    true
+  end
+
+  def period_total_hours_after_upsert(time_period)
+    current_entries = TimeSheetEntry.where(user_id: current_user.id, time_period_id: time_period.id)
+                                    .index_by(&:id)
+
+    submitted_totals_by_entry_id = {}
+
+    time_sheet_entries_params.each do |entry_params|
+      entry_id = entry_params[:id].presence&.to_i
+      normalized_hours = normalize_total_hours(entry_params[:total_hours])
+      next if normalized_hours.nil?
+
+      if entry_id.present?
+        submitted_totals_by_entry_id[entry_id] = normalized_hours
+        next
+      end
+
+      matched_entry = current_entries.values.find { |entry| entry.project_id == entry_params[:project_id].to_i }
+      if matched_entry.present?
+        submitted_totals_by_entry_id[matched_entry.id] = normalized_hours
+      else
+        submitted_totals_by_entry_id["new_#{entry_params[:project_id]}"] = normalized_hours
+      end
+    end
+
+    unchanged_total = current_entries.sum do |id, entry|
+      submitted_totals_by_entry_id.key?(id) ? 0 : entry.total_hours
+    end
+
+    submitted_total = submitted_totals_by_entry_id.values.sum
+    unchanged_total + submitted_total
+  end
+
+  def normalize_total_hours(value)
+    Integer(value, 10)
+  rescue ArgumentError, TypeError
+    nil
   end
 end

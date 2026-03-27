@@ -11,7 +11,7 @@ if AdminUser.count.zero? && ENV['ADMIN_USER'] && ENV['ADMIN_PASSWORD']
 end
 
 if Emotion.count.zero?
-  seed_file = Rails.root.join("db/seeds/starting_emotions.yml")
+  seed_file = Rails.root.join('db/seeds/starting_emotions.yml')
   contents = YAML.load_file(seed_file)
 
   contents.each do |category_and_words|
@@ -23,9 +23,29 @@ if Emotion.count.zero?
 end
 
 if FunQuestion.count.zero?
-  questions = YAML.load_file(Rails.root.join("db/seeds/default_questions.yml"))
+  questions = YAML.load_file(Rails.root.join('db/seeds/default_questions.yml'))
 
   questions['questions'].each do |question|
     FunQuestion.create(question_body: question['question_body'], public: true)
   end
+end
+
+# ===========================
+# Seed: Default Innovation Topics
+# Creates initial + newly added topics from default_topics.yml
+# Requires SEED_INNOVATION_TOPIC_USER_ID env variable
+# ===========================
+user_id = ENV['SEED_INNOVATION_TOPIC_USER_ID'].to_i
+raise 'Please set SEED_INNOVATION_TOPIC_USER_ID' if user_id.zero?
+
+topics = YAML.load_file(Rails.root.join('db/seeds/default_topics.yml'))
+
+topics['topics'].each do |topic|
+  next if InnovationTopic.exists?(['LOWER(innovation_body) = ?', topic['innovation_body'].downcase])
+
+  InnovationTopic.create!(
+    innovation_body: topic['innovation_body'],
+    user_id:,
+    posted: true
+  )
 end

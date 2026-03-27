@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import parse from 'html-react-parser'
 import { userFullName } from "./library";
+import { BRAINSTORMING_ALLOWED_EMOJIS } from "./consts";
 
 export const isEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
 
@@ -189,6 +190,10 @@ export const calculateBillableHours = (rows, projects) => {
   }, 0);
 };
 
+export const calculateTotalHours = (rows) => {
+  return rows.reduce((total, row) => total + (parseInt(row.time, 10) || 0), 0);
+};
+
 export const transformTimesheetEntry = (entry, includedProjects = []) => {
   const projectId = entry.relationships?.project?.data?.id;
   const project = includedProjects.find((p) => p.id === projectId);
@@ -224,4 +229,31 @@ export const checkCompanyProjectsSelection = (rowsData, projects) => {
     }
   }
   return null;
+export const sortBrainstormingEmojis = (emojis) => {
+  const emojiLevels = BRAINSTORMING_ALLOWED_EMOJIS.reduce((acc, emoji) => {
+    acc[emoji.unified] = emoji.level;
+    return acc;
+  }, {});
+
+  return [...emojis].sort((a, b) => {
+    const levelA = emojiLevels[a.emoji_code] || 0;
+    const levelB = emojiLevels[b.emoji_code] || 0;
+    return levelA - levelB; // low level first
+  });
+};
+
+export const sortBrainstormingsArray = (arr) => {
+  return [...arr].sort((a, b) => {
+    const aScore = a.emojis.reduce((sum, e) => {
+      const emojiInfo = BRAINSTORMING_ALLOWED_EMOJIS.find(x => x.unified === e.emoji_code);
+      return sum + (emojiInfo ? e.count : 0);
+    }, 0);
+
+    const bScore = b.emojis.reduce((sum, e) => {
+      const emojiInfo = BRAINSTORMING_ALLOWED_EMOJIS.find(x => x.unified === e.emoji_code);
+      return sum + (emojiInfo ? e.count : 0);
+    }, 0);
+
+    return bScore - aScore;
+  });
 };

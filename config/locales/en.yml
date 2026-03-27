@@ -45,3 +45,25 @@ en:
           attributes:
             project_id:
               taken: "can be selected only once per timesheet"
+        innovation_brainstorming:
+          attributes:
+            user:
+              blank: "Please select a user"
+              taken: "User can submit only one brainstorming per topic"
+            innovation_topic:
+              blank: "Please select a topic"
+            brainstorming_body:
+              blank: "Please enter a brainstorming"
+        innovation_topic:
+          attributes:
+            user:
+              blank: "Please select a user"
+            innovation_body:
+              blank: "Please enter a topic"
+              taken: "This topic already exists"
+    attributes:
+      innovation_topic:
+        innovation_body: "Topic"
+      innovation_brainstorming:
+        brainstorming_body: "Brainstorming"
+        innovation_topic: "Topic"

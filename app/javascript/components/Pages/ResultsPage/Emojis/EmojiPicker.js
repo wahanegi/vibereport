@@ -1,10 +1,11 @@
 import axios from "axios";
-import EmojiPicker, {EmojiStyle} from "emoji-picker-react";
-import React, {useEffect} from 'react';
-import {isEmptyStr, isPresent} from "../../../helpers/helpers";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+import React from 'react';
+import { isPresent } from "../../../helpers/helpers";
+import BrainstormingEmojiPicker from "./BrainstormingEmojiPicker";
 
 const createEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, setEmojiObject) => {
-  axios.post(`/api/v1/emojis`, {emoji_object: emojiObject})
+  axios.post(`/api/v1/emojis`, { emoji_object: emojiObject })
     .then(res => {
       const emoji_code = res.data.data.emoji_data.emoji_code
       const updatedData = emojisArr.map(item => {
@@ -54,6 +55,7 @@ const removeEmoji = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, cur
       setEmojiObject({})
     })
 }
+
 export const onChangeEmojis = (emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user = {}, setEmojiObject) => {
   const repeatEmoji = emojisArr.filter(item => item.emoji_code === emojiObject.emoji_code)
   const reactedUser = repeatEmoji.find(item => item.users.some(user => user.id === current_user.id))
@@ -63,30 +65,40 @@ export const onChangeEmojis = (emojiObject, emojisArr, setEmojisArr, setSelected
 }
 
 const EmojiPickerComponent = React.forwardRef(({
-                                                 emojiObject, setSelectedEmoji, current_user, pickerPosition,
-                                                 emojisArr, setEmojisArr, setEmojiObject, setSelectedEmojiName,
-                                                 setPickerPosition
-                                               }, ref) => {
+  emojiObject, setSelectedEmoji, current_user, pickerPosition,
+  emojisArr, setEmojisArr, setEmojiObject, setSelectedEmojiName,
+  setPickerPosition, isTopicSection
+}, ref) => {
   const onClick = (emojiData) => {
     const repeatEmoji = emojisArr.filter(item => item.emoji_code === emojiData.unified)
     const reactedUser = repeatEmoji.find(item => item.users.some(user => user.id === current_user.id))
-    setEmojiObject(Object.assign({}, emojiObject, {id: reactedUser?.current_user_emoji?.id}))
+    setEmojiObject(Object.assign({}, emojiObject, { id: reactedUser?.current_user_emoji?.id }))
     setSelectedEmoji(emojiData.unified);
     setSelectedEmojiName(emojiData.names[0])
     setPickerPosition({})
   }
 
-  useEffect(() => {
-    if (isEmptyStr(emojiObject.emoji_code)) return;
-
-    onChangeEmojis(emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user, setEmojiObject)
-  }, [emojiObject.emoji_code])
+  if (isTopicSection) {
+    return (
+      <BrainstormingEmojiPicker
+        ref={ref}
+        pickerPosition={pickerPosition}
+        emojisArr={emojisArr}
+        current_user={current_user}
+        emojiObject={emojiObject}
+        setEmojiObject={setEmojiObject}
+        setSelectedEmoji={setSelectedEmoji}
+        setSelectedEmojiName={setSelectedEmojiName}
+        setPickerPosition={setPickerPosition}
+      />
+    );
+  }
 
   return <div ref={ref} className='emoji-picker position-absolute' style={pickerPosition}>
     <EmojiPicker
       onEmojiClick={onClick}
       autoFocusSearch={false}
-      emojiStyle={EmojiStyle.NATIVE}/>
+      emojiStyle={EmojiStyle.NATIVE} />
   </div>
 })
 
