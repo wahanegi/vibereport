@@ -229,6 +229,8 @@ export const checkCompanyProjectsSelection = (rowsData, projects) => {
     }
   }
   return null;
+}
+
 export const sortBrainstormingEmojis = (emojis) => {
   const emojiLevels = BRAINSTORMING_ALLOWED_EMOJIS.reduce((acc, emoji) => {
     acc[emoji.unified] = emoji.level;
