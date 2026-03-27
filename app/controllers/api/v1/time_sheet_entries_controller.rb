@@ -153,6 +153,8 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
                                          .merge(meta: { time_period_id: time_period.id,
                                                         time_period_slug: time_period.slug }),
            status: :ok
+  end
+
   def validate_period_hours_limit_exceeded(time_period)
     total_hours = period_total_hours_after_upsert(time_period)
     return false unless total_hours > MAX_PERIOD_HOURS
