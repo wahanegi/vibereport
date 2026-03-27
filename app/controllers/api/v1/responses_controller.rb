@@ -4,7 +4,8 @@ module Api
       include LegacyEmailLinkSupport
       PARAMS_ATTRS = [:user_id, :emotion_id, :time_period_id, [steps: []], :not_working, :notices, :rating,
                       :comment, :productivity, :productivity_comment, :fun_question_id, :shoutout_id,
-                      :fun_question_answer_id, :completed_at, :draft, :celebrate_comment, { gif: %i[src height] }].freeze
+                      :fun_question_answer_id, :completed_at, :draft, :celebrate_comment, { gif: %i[src height] },
+                      :innovation_brainstorming_id, :innovation_topic_id].freeze
 
       before_action :retrieve_response, only: %i[update]
       before_action :authenticate_user!, only: %i[create update]

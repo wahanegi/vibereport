@@ -7,14 +7,18 @@ RSpec.describe Api::V1::ResultsPresenter do
   let!(:emotion) { create :emotion }
   let!(:fun_question) { create :fun_question, time_period: }
   let!(:fun_question_answer) { create :fun_question_answer, fun_question:, user: }
-  let!(:user_response) { create :response, emotion:, time_period:, user:, fun_question_answer:, steps: %w[emotion-selection-web meme-selection results], gif: { src: 'https://giphy.com/gifs/mls-chicharito-chicha-savor-it-IXKJ943d0GOIV6UMFj', height: 100 }, completed_at: Date.current }
-  let!(:user_response2) { create :response, emotion:, time_period:, user: user2, steps: %w[emotion-selection-web meme-selection results], completed_at: Date.current }
+  let!(:innovation_topic) { create :innovation_topic, time_period:, user: }
+  let!(:innovation_brainstorming) { create :innovation_brainstorming, innovation_topic:, user: }
+  let!(:innovation_brainstorming2) { create :innovation_brainstorming, innovation_topic:, user: user2 }
+  let!(:user_response) { create :response, emotion:, time_period:, user:, fun_question_answer:, innovation_brainstorming:, steps: %w[emotion-selection-web meme-selection results], gif: { src: 'https://giphy.com/gifs/mls-chicharito-chicha-savor-it-IXKJ943d0GOIV6UMFj', height: 100 }, completed_at: Date.current }
+  let!(:user_response2) { create :response, emotion:, time_period:, user: user2, innovation_brainstorming: innovation_brainstorming2, steps: %w[emotion-selection-web meme-selection results], completed_at: Date.current }
   let!(:shoutout) { create :shoutout, time_period:, user: user2, rich_text: "@#{user.full_name} thanks" }
   let!(:shoutout2) { create :shoutout, time_period:, user:, rich_text: "@#{user2.full_name} thanks" }
   let!(:shoutout3) { create :shoutout, time_period:, user: user2, public: true }
   let!(:shoutout_recipient) { create :shoutout_recipient, shoutout:, user: }
   let!(:shoutout_recipient2) { create :shoutout_recipient, shoutout: shoutout2, user: user2 }
   let!(:emoji) { create(:emoji, emoji_code: ':open_mouth:', user_id: user.id, emojiable: fun_question_answer) }
+  let!(:brainstorming_emoji) { create(:emoji, emoji_code: ':fire:', emoji_name: 'fire', user: user2, emojiable: innovation_brainstorming) }
   let(:presenter) { Api::V1::ResultsPresenter.new(time_period.slug, user, 'api/v1/result_managers') }
   let!(:team1) { create :team }
   let!(:team2) { create :team }
@@ -54,6 +58,31 @@ RSpec.describe Api::V1::ResultsPresenter do
               current_user_emoji: emoji
             ]
           }],
+          innovation_topic: {
+            id: innovation_topic.id,
+            innovation_body: innovation_topic.innovation_body,
+            user: innovation_topic.user
+          },
+          innovation_brainstormings: [
+            {
+              brainstorming: innovation_brainstorming,
+              user: user,
+              emojis: [
+                {
+                  emoji_code: brainstorming_emoji.emoji_code,
+                  emoji_name: brainstorming_emoji.emoji_name,
+                  users: [user2],
+                  count: 1,
+                  current_user_emoji: nil
+                }
+              ]
+            },
+            {
+              brainstorming: innovation_brainstorming2,
+              user: user2,
+              emojis: []
+            }
+          ],
           sent_shoutouts: [
             {
               recipient: user,
@@ -129,6 +158,49 @@ RSpec.describe Api::V1::ResultsPresenter do
           ]
         }
       )
+    end
+  end
+
+  describe 'innovation topic and brainstormings' do
+    subject(:result) { presenter.json_hash }
+
+    describe 'innovation topic' do
+      it 'returns innovation topic data' do
+        expect(result[:innovation_topic]).to include(
+          id: innovation_topic.id,
+          innovation_body: innovation_topic.innovation_body,
+          user: innovation_topic.user
+        )
+      end
+    end
+
+    describe 'innovation brainstormings' do
+      it 'returns correct brainstormings with users and emojis including current_user_emoji' do
+        current_user_emoji = create(:emoji, emoji_code: ':sparkles:', emoji_name: 'sparkles', user: user, emojiable: innovation_brainstorming)
+
+        brainstormings = presenter.json_hash[:innovation_brainstormings]
+        expect(brainstormings.size).to eq(2)
+
+        first_brainstorming = brainstormings.find { |b| b[:brainstorming] == innovation_brainstorming }
+        expect(first_brainstorming[:user]).to eq(user)
+        expect(first_brainstorming[:emojis].size).to eq(2)
+
+        emoji_user2 = first_brainstorming[:emojis].find { |e| e[:emoji_code] == brainstorming_emoji.emoji_code }
+        expect(emoji_user2[:users]).to contain_exactly(user2)
+        expect(emoji_user2[:count]).to eq(1)
+        expect(emoji_user2[:current_user_emoji]).to be_nil
+
+        emoji_current_user = first_brainstorming[:emojis].find { |e| e[:emoji_code] == current_user_emoji.emoji_code }
+        expect(emoji_current_user[:users]).to contain_exactly(user)
+        expect(emoji_current_user[:count]).to eq(1)
+        expect(emoji_current_user[:current_user_emoji]).to eq(current_user_emoji)
+
+        second_brainstorming = brainstormings.find { |b| b[:brainstorming] == innovation_brainstorming2 }
+        expect(second_brainstorming[:user]).to eq(user2)
+        expect(second_brainstorming[:emojis]).to eq([])
+
+        expect(brainstormings.map { |b| b[:user] }).to contain_exactly(user, user2)
+      end
     end
   end
 end

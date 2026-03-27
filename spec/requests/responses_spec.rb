@@ -53,6 +53,8 @@ RSpec.describe Api::V1::ResponsesController do
               'fun_question_id' => nil,
               'fun_question_answer_id' => nil,
               'shoutout_id' => nil,
+              'innovation_topic_id' => response_saved.innovation_topic_id,
+              'innovation_brainstorming_id' => response_saved.innovation_brainstorming_id,
               'draft' => user_response.draft,
               'completed_at' => nil,
               'not_working' => false
@@ -109,6 +111,8 @@ RSpec.describe Api::V1::ResponsesController do
                 'shoutout_id' => nil,
                 'fun_question_id' => user_response.fun_question.id,
                 'fun_question_answer_id' => nil,
+                'innovation_topic_id' => user_response.innovation_topic_id,
+                'innovation_brainstorming_id' => user_response.innovation_brainstorming_id,
                 'draft' => user_response.draft,
                 'completed_at' => nil,
                 'not_working' => false

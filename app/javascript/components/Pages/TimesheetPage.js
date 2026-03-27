@@ -1,26 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   calculateBillableHours,
+  calculateTotalHours,
   rangeFormat,
   transformTimesheetEntry,
   updateRowData,
   validateRow,
 } from '../helpers/helpers';
 import Layout from '../Layout';
-import {apiRequest} from '../requests/axios_requests';
+import { apiRequest } from '../requests/axios_requests';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
-import {BtnAddNewRow, Calendar} from '../UI/ShareContent';
+import { BtnAddNewRow, Calendar } from '../UI/ShareContent';
 import TimesheetRow from '../UI/TimesheetRow';
 import SweetAlert from "../UI/SweetAlert";
 
-const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
+const MAX_PERIOD_HOURS = 168;
+const PERIOD_HOURS_LIMIT_EXCEEDED_CODE = 'period_hours_limit_exceeded';
+const PERIOD_HOURS_LIMIT_EXCEEDED_MESSAGE = 'Total hours per period must not exceed 168';
+
+const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
   const [rowsData, setRowsData] = useState([]);
   const [projects, setProjects] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isDraft, setIsDraft] = useState(true);
   const [billableError, setBillableError] = useState(null);
+  const [periodHoursError, setPeriodHoursError] = useState(null);
 
-  const {isLoading, setIsLoading} = service;
+  const { isLoading, setIsLoading } = service;
 
   const timesheetDate = rangeFormat(data.time_period || {});
   const isDirectTimesheetMode = Boolean(data?.direct_timesheet)
@@ -62,9 +68,20 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
     }
   }, [rowsData, projects]);
 
+  useEffect(() => {
+    const totalPeriodHours = calculateTotalHours(rowsData);
+    if (totalPeriodHours > MAX_PERIOD_HOURS) {
+      setPeriodHoursError(PERIOD_HOURS_LIMIT_EXCEEDED_MESSAGE);
+    } else {
+      setPeriodHoursError(null);
+    }
+  }, [rowsData]);
+
   // Function to submit the timesheet
   const submitTimesheet = (isDraft = false, onSuccess = () => {
   }) => {
+    if (periodHoursError) return;
+
     const formattedEntries = rowsData.map((row) => ({
       id: String(row.id).startsWith('new_') ? undefined : row.id,
       project_id: row.project_id,
@@ -115,9 +132,9 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
         // Logic for normal flow
         if (!isDraft) {
           steps.push('causes-to-celebrate');
-          saveDataToDb(steps, {draft: false});
+          saveDataToDb(steps, { draft: false });
         } else {
-          saveDataToDb(steps, {draft: true});
+          saveDataToDb(steps, { draft: true });
         }
         onSuccess();
         setIsLoading(false);
@@ -125,6 +142,17 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
       () => { },
       upsertURL,
       (error) => {
+        const periodLimitError = error?.response?.data?.errors?.find(
+          (entryError) => entryError.code === PERIOD_HOURS_LIMIT_EXCEEDED_CODE
+        );
+
+        if (periodLimitError) {
+          setPeriodHoursError(periodLimitError.message || PERIOD_HOURS_LIMIT_EXCEEDED_MESSAGE);
+          setFetchError(null);
+          setIsLoading(false);
+          return;
+        }
+
         setFetchError('Failed to save timesheet. Please try again.');
         setIsLoading(false);
         console.error('Upsert failed:', error);
@@ -185,11 +213,12 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
 
   const handleChangeRowData = (id, updates) => {
     if (isDraft) setIsDraft(false);
+    setFetchError(null);
     setRowsData(updateRowData(rowsData, id, updates));
   };
 
   const isValid = rowsData.length > 0 && rowsData.every((row) => validateRow(row));
-  const canSubmit = !isLoading && isValid && !fetchError && projects.length > 0;
+  const canSubmit = !isLoading && isValid && !fetchError && projects.length > 0 && !periodHoursError && !billableError;
   const canAddNewRow = rowsData.every((row) => validateRow(row));
 
   return (
@@ -222,9 +251,11 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
                 />
               ))}
             </div>
-            <div style={{height: '20px'}} className="text-primary">
+            <div style={{ height: '20px' }} className="text-primary">
               {rowsData.length > 0 && !isValid ? (
                 <p>Please fill out all fields</p>
+              ) : periodHoursError ? (
+                <p>{periodHoursError}</p>
               ) : billableError ? (
                 <p>{billableError}</p>
               ) : null}
@@ -240,7 +271,7 @@ const TimesheetPage = ({data, setData, saveDataToDb, steps, service}) => {
         <div className="max-width-entry mx-auto mt-3">
           <BlockLowerBtns
             handlingOnClickNext={() => submitTimesheet()}
-            disabled={!canSubmit || billableError}
+            disabled={!canSubmit}
             stringBody="Submit"
             isSubmit={true}
             isDirectTimesheetMode={isDirectTimesheetMode}

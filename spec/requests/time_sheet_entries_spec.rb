@@ -21,8 +21,8 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
   before { sign_in(user) }
   before do
     stub_const('ENV', ENV.to_hash.merge(
-      'TIMESHEET_START_FORCED_ENTRY_DATE' => 20.days.ago.strftime(DATE_FORMAT)
-    ))
+                        'TIMESHEET_START_FORCED_ENTRY_DATE' => 20.days.ago.strftime(DATE_FORMAT)
+                      ))
   end
 
   describe 'GET /api/v1/time_sheet_entries' do
@@ -95,6 +95,77 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         expect(response).to have_http_status(:ok)
         expect(json_response['data'].size).to eq(2)
         expect(TimeSheetEntry.count).to eq(2)
+      end
+    end
+
+    context 'when total period hours validation is applied' do
+      before do
+        allow(TimePeriod).to receive(:find_or_create_time_period).and_return(time_period)
+      end
+
+      it 'allows save when aggregate total is equal to 168' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: project.id, total_hours: 100 },
+            { project_id: project2.id, total_hours: 68 }
+          ]
+        }
+
+        expect(response).to have_http_status(:ok)
+        expect(TimeSheetEntry.where(user_id: user.id, time_period_id: time_period.id).sum(:total_hours)).to eq(168)
+      end
+
+      it 'returns validation error when aggregate total exceeds 168' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: project.id, total_hours: 100 },
+            { project_id: project2.id, total_hours: 69 }
+          ]
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['errors']).to include(
+          {
+            'code' => 'period_hours_limit_exceeded',
+            'message' => 'Total hours per period must not exceed 168'
+          }
+        )
+      end
+
+      it 'returns validation error for very large values' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: project.id, total_hours: 10_000_000_000_000 }
+          ]
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['errors']).to include(
+          {
+            'code' => 'period_hours_limit_exceeded',
+            'message' => 'Total hours per period must not exceed 168'
+          }
+        )
+      end
+
+      it 'returns validation error when unchanged existing entries make total exceed 168' do
+        create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 100)
+        create(:time_sheet_entry, user: user, project: project2, time_period: time_period, total_hours: 60)
+        new_project = create(:project)
+
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: new_project.id, total_hours: 9 }
+          ]
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['errors']).to include(
+          {
+            'code' => 'period_hours_limit_exceeded',
+            'message' => 'Total hours per period must not exceed 168'
+          }
+        )
       end
     end
 

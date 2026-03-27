@@ -1,0 +1,53 @@
+topics:
+  - innovation_body: What idea could help new users turn an initial decision topic into a well-structured decision tree more quickly?
+  - innovation_body: What idea could make the product easier for new users to learn?
+  - innovation_body: What idea could make an existing useful but hard-to-discover feature easier to find or understand?
+  - innovation_body: What small improvement could noticeably speed up the process of building or editing a decision tree?
+  - innovation_body: What idea could reduce the number of steps required to complete a common task in the product?
+  - innovation_body: What idea could eliminate or simplify a repetitive workflow in the product?
+  - innovation_body: What automation idea could significantly reduce repetitive work when building decision trees or forecasts?
+  - innovation_body: What bold or unconventional idea could significantly change how people interact with this product?
+  - innovation_body: What task currently takes minutes but could potentially be completed in seconds with the right idea?
+  - innovation_body: What task in the product could be replaced entirely with a smarter default, suggestion, or automation?
+  - innovation_body: What workflow related to decisions or forecasting could become dramatically faster, and what idea would enable that?
+  - innovation_body: What feature idea could make navigating large decision trees, flows, or scenarios easier?
+  - innovation_body: What idea could help users organize, structure, or view their decisions, flows, or forecasts more effectively?
+  - innovation_body: What feature could make decision or scenario collaboration easier across teams and stakeholders?
+  - innovation_body: What integration idea could make the product more useful within everyday workflows?
+  - innovation_body: What ideas could help users reuse parts of previous decisions, scenarios, or flows when working on new ones?
+  - innovation_body: What templates or AI-generated starting points could help users create a new decision or scenario faster?
+  - innovation_body: What idea could allow the product to automatically generate helpful insights or suggestions while users build decisions or forecasts?
+  - innovation_body: What intelligent suggestions could the product provide to help users build stronger decisions or scenarios?
+  - innovation_body: What proactive suggestions could the product provide to guide users while building a decision tree or running a scenario?
+  - innovation_body: What idea could make the product more predictive by anticipating what users want to do next?
+  - innovation_body: What ideas could help users identify gaps, risks, or weaknesses in a decision or scenario?
+  - innovation_body: What idea could help users avoid common mistakes while building decisions or forecasts?
+  - innovation_body: Where could the product automatically detect and fix common mistakes or inefficiencies in scenarios or decisions?
+  - innovation_body: What intelligent feedback could the product provide to help users improve the quality of their decisions?
+  - innovation_body: What automated insights could help users identify risks, sensitivities, or tradeoffs in a completed decision or flow?
+  - innovation_body: What insights could the product highlight automatically to show which assumptions or variables have the greatest impact on a decision outcome?
+  - innovation_body: What idea could allow the product to automatically surface helpful insights for managers based on a completed decision, scenario, or flow?
+  - innovation_body: What insights could the product generate to help teams learn from how previous decisions performed over time?
+  - innovation_body: What ways could the product apply insights from past decisions to help users make better decisions in the future?
+  - innovation_body: What features could better help users track how a decision outcome or result evolves over time?
+  - innovation_body: What idea could help users quickly understand the key drivers behind a decision outcome?
+  - innovation_body: What idea could help users quickly understand how confident they should be in a forecast or decision result?
+  - innovation_body: What idea could make it easier for users to test “what if” changes to forecasts?
+  - innovation_body: What features could help users identify which decisions or scenarios deserve the most attention or review?
+  - innovation_body: What part of the experience could be redesigned to be more visual, interactive, or exploratory?
+  - innovation_body: What idea could redesign part of the interface to make it clearer or easier to understand?
+  - innovation_body: What part of the product feels outdated, and what idea could reinvent it using modern capabilities?
+  - innovation_body: If we redesigned one part of the product from scratch today, what idea would you propose for how it should work differently?
+  - innovation_body: What feature idea could make the product feel dramatically more powerful or “magical” to use?
+  - innovation_body: What features could evolve from tools into assistants that proactively guide users through decisions or flows?
+  - innovation_body: If AI acted as a partner while someone was building a decision or forecast, what idea would you propose for how it should help?
+  - innovation_body: What would an AI-first version of this product look like, and what idea would define that experience?
+  - innovation_body: What complex decision workflow could potentially be completed with a single prompt or command?
+  - innovation_body: What idea could simplify a feature that currently feels overly complex without reducing its capability?
+  - innovation_body: What new feature or capability could unlock entirely new use cases for the product?
+  - innovation_body: What feature or capability could make the product useful in more types of decisions or industries?
+  - innovation_body: What unconventional or experimental idea could meaningfully improve the future of the product?
+  - innovation_body: What ideas from other products, tools, or experiences could inspire improvements for Cloverpop?
+  - innovation_body: What idea could significantly improve a part of the product that currently feels slow?
+  - innovation_body: What idea could improve inline help so users can get answers without leaving the product?
+  - innovation_body: What idea could help users quickly summarize a decision, flow, or scenario for stakeholders?
