@@ -6,7 +6,7 @@ const Loader = () => {
     <div className="loader-overlay">
       <ColorRing />
     </div>
-  );
-};
+  )
+}
 
-export default Loader;
+export default Loader
