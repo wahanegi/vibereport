@@ -1,8 +1,8 @@
-import React from 'react'
-import { isBlank } from '../../../helpers/helpers'
-import PreviewSection from './PreviewSection'
-import EmptySection from './EmptySection'
-import AnimatedList from './AnimatedList'
+import React from "react";
+import { isBlank } from "../../../helpers/helpers";
+import PreviewSection from "./PreviewSection";
+import EmptySection from "./EmptySection";
+import AnimatedList from "./AnimatedList";
 
 const ResponseSection = ({
   nextTimePeriod,
@@ -18,11 +18,11 @@ const ResponseSection = ({
   loaded
 }) => {
   if (!loaded) {
-    return <PreviewSection previewClass={emptyConfig.previewClass} />
+    return <PreviewSection previewClass={emptyConfig.previewClass} />;
   }
 
   if (!nextTimePeriod && isMinUsersResponses) {
-    return <PreviewSection previewClass={emptyConfig.previewClass} />
+    return <PreviewSection previewClass={emptyConfig.previewClass} />;
   }
 
   if (isBlank(items)) {
@@ -32,7 +32,7 @@ const ResponseSection = ({
           <HeaderComponent {...headerProps} />
         </div>
       </EmptySection>
-    )
+    );
   }
 
   return (
@@ -47,7 +47,7 @@ const ResponseSection = ({
         setItems={setItems}
       />
     </section>
-  )
-}
+  );
+};
 
-export default ResponseSection
+export default ResponseSection;

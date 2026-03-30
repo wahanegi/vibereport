@@ -1,41 +1,41 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
-import Form from 'react-bootstrap/Form'
-import { Link } from 'react-router-dom'
-import { apiRequest, updateResponse } from '../../requests/axios_requests'
-import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from '../../helpers/helpers'
-import { userFullName } from '../../helpers/library'
-import EmojiRow from './Emojis/EmojiRow'
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
+import { apiRequest, updateResponse } from "../../requests/axios_requests";
+import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from "../../helpers/helpers";
+import { userFullName } from "../../helpers/library";
+import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
-  <div className="results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect">
-    <div className="row wrap question preview mw-100" />
-  </div>
+  <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
+    <div className='row wrap question preview mw-100' />
+  </div>;
 
 const EmptyQuestionSection = ({
-                                nextTimePeriod, userName, fun_question,
-                                setShowWorkingModal, data, setData
-                              }) => {
-  const [text, setText] = useState('')
-  const [addClass, setAddClass] = useState('')
+  nextTimePeriod, userName, fun_question,
+  setShowWorkingModal, data, setData
+}) => {
+  const [text, setText] = useState('');
+  const [addClass, setAddClass] = useState('');
   const handleMouseEnter = () => {
-    !nextTimePeriod && setText('Answer this Icebreaker!')
-    !nextTimePeriod && setAddClass('hover-event')
-  }
+    !nextTimePeriod && setText('Answer this Icebreaker!');
+    !nextTimePeriod && setAddClass('hover-event');
+  };
 
   const handleMouseLeave = () => {
-    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...')
-    setAddClass('')
-  }
+    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...');
+    setAddClass('');
+  };
 
   const handlingBack = () => {
-    if (isPresent(data.prev_results_path)) return
+    if (isPresent(data.prev_results_path)) return;
 
-    const steps = data.response.attributes.steps
-    const index = steps.indexOf('icebreaker-answer')
+    const steps = data.response.attributes.steps;
+    const index = steps.indexOf('icebreaker-answer');
     if (index === -1) {
-      !nextTimePeriod && setShowWorkingModal(true)
+      !nextTimePeriod && setShowWorkingModal(true);
     } else {
-      const new_steps = steps.slice(0, index + 1)
+      const new_steps = steps.slice(0, index + 1);
       const dataRequest = {
         response: { attributes: { steps: new_steps } }
       }
@@ -44,29 +44,29 @@ const EmptyQuestionSection = ({
   }
 
   useEffect(() => {
-    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...')
-  }, [fun_question])
+    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...');
+  }, [fun_question]);
 
   return <Fragment>
-    <div className="results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12">
+    <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
       <Question {...{ userName, fun_question }} />
     </div>
     <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`}
          onClick={handlingBack}>
       <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter}
            onMouseLeave={handleMouseLeave}>
-        <h5 className="d-flex justify-content-center fw-semibold">{text}</h5>
+        <h5 className='d-flex justify-content-center fw-semibold'>{text}</h5>
       </div>
     </div>
   </Fragment>
 }
 
 const Question = ({ userName, fun_question }) => {
-  if (isBlank(fun_question)) return null
+  if (isBlank(fun_question)) return null;
 
-  return <div className="row wrap question mb-1 mw-100">
+  return <div className='row wrap question mb-1 mw-100'>
     {
-      userName && <p className="b3 muted text-start fs-7 fs-md-6 mb-1">
+      userName && <p className='b3 muted text-start fs-7 fs-md-6 mb-1'>
         {userName} asks:
         <br />
       </p>
@@ -88,12 +88,12 @@ const AnswerItem = ({
   const isCurrentUser = !nextTimePeriod && current_user.email === user.email
   const [edit, setEdit] = useState(false)
   const [answerBody, setAnswerBody] = useState(answer.answer_body || '')
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-  const [selectedEmoji, setSelectedEmoji] = useState('')
-  const [selectedEmojiName, setSelectedEmojiName] = useState('')
-  const [emojisArr, setEmojisArr] = useState(emojis || [])
-  const modalRef = useRef(null)
-  const [emojiObject, setEmojiObject] = useState({})
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
+  const [selectedEmojiName, setSelectedEmojiName] = useState("");
+  const [emojisArr, setEmojisArr] = useState(emojis || []);
+  const modalRef = useRef(null);
+  const [emojiObject, setEmojiObject] = useState({});
   const onCancel = () => {
     setEdit(false)
     setAnswerBody(answer.answer_body)
@@ -128,12 +128,12 @@ const AnswerItem = ({
     const updatedData = answersArray.map(item => {
       if (item.answer.id === answer.id) {
         const updatedAnswer = Object.assign({}, item.answer, {
-          answer_body: updatedAnswerBody
-        })
-        return { ...item, answer: updatedAnswer }
+          answer_body: updatedAnswerBody,
+        });
+        return { ...item, answer: updatedAnswer };
       }
-      return item
-    })
+      return item;
+    });
     setAnswersArray(updatedData)
     setEdit(false)
   }
@@ -154,23 +154,23 @@ const AnswerItem = ({
     } else if (isEmptyStr(answerBody)) {
       apiRequest('DELETE', () => {
       }, updateAnswersArray, () => {
-      }, `${url}${id}`).then()
+      }, `${url}${id}`).then();
     } else {
       setEdit(false)
     }
   }
 
-  return <div className="row wrap question answer mb-1 mw-100">
-    <div className="col-xl-12">
-      <div className="d-flex justify-content-end">
+  return <div className='row wrap question answer mb-1 mw-100'>
+    <div className='col-xl-12'>
+      <div className='d-flex justify-content-end'>
         {isCurrentUser && !edit &&
-          <Link to={''} className="text-muted h6 fw-semibold mb-0" onClick={() => setEdit(true)}>Edit</Link>}
+          <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={() => setEdit(true)}>Edit</Link>}
       </div>
-      {edit && <div className="d-flex justify-content-end">
-        <Link to={''} className="text-danger h6 fw-semibold me-2" onClick={onCancel}>Cancel</Link>
-        <Link to={''} className="text-success h6 fw-semibold" disabled onClick={updateAnswer}>Save</Link>
+      {edit && <div className='d-flex justify-content-end'>
+        <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
+        <Link to={''} className='text-success h6 fw-semibold' disabled onClick={updateAnswer}>Save</Link>
       </div>}
-      <div className="edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base">
+      <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
         {userFullName(user)} said:&nbsp;
         {
           edit ?
@@ -187,36 +187,35 @@ const AnswerItem = ({
         setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef
       }} />
     </div>
-  </div>
-}
+  </div>;
+};
 
 const QuestionSection = ({
-                           fun_question,
-                           answers,
-                           nextTimePeriod,
-                           isMinUsersResponses,
-                           setShowWorkingModal,
-                           current_user,
-                           data,
-                           setData,
-                           loaded
-                         }) => {
+  fun_question,
+  answers,
+  nextTimePeriod,
+  isMinUsersResponses,
+  setShowWorkingModal,
+  current_user,
+  data,
+  setData,
+  loaded
+}) => {
   const userName = userFullName(fun_question?.user)
   const [answersArray, setAnswersArray] = useState(answers || [])
 
   useEffect(() => {
     if (loaded) {
-      setAnswersArray(answers || [])
+      setAnswersArray(answers || []);
     }
-  }, [answers, loaded])
+  }, [answers, loaded]);
 
-  // EARLY RETURNS
   if (!loaded) {
-    return <PreviewQuestionSection /> // 1. Loading
+    return <PreviewQuestionSection />;
   }
 
   if (!nextTimePeriod && isMinUsersResponses) {
-    return <PreviewQuestionSection /> // 2. Preview
+    return <PreviewQuestionSection />;
   }
 
   if (isBlank(answersArray)) {
@@ -226,10 +225,10 @@ const QuestionSection = ({
       nextTimePeriod={nextTimePeriod}
       data={data}
       setData={setData}
-      setShowWorkingModal={setShowWorkingModal} /> // 3. Empty state
+      setShowWorkingModal={setShowWorkingModal} />
   }
 
-  return <div className="results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12">
+  return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
     <Question {...{ userName, fun_question }} />
     {
       answersArray.map(({ answer, user, emojis }) => (
