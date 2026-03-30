@@ -939,3 +939,15 @@ input:checked + .slider-shoutout img {
 .fixed-button-offset {
   padding-bottom: 140px;
 }
+
+// Loading
+.loader-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 20;
+}

@@ -45,11 +45,11 @@ export const scrollTopModalCallback = (showModal) => {
 export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTimePeriod, setNextTimePeriod, timePeriodIndex) => {
   useEffect(() => {
     if (time_periods) {
-      setTimePeriod(time_periods[timePeriodIndex]);
-      setPrevTimePeriod(time_periods[timePeriodIndex + 1]);
-      setNextTimePeriod(time_periods[timePeriodIndex - 1]);
+      setTimePeriod(time_periods[timePeriodIndex])
+      setPrevTimePeriod(time_periods[timePeriodIndex + 1])
+      setNextTimePeriod(time_periods[timePeriodIndex - 1])
     }
-  }, [timePeriodIndex, time_periods?.length]);
+  }, [timePeriodIndex, time_periods?.length])
 };
 
 export const onRemoveAlert = (updateResponse, data, setData) => {
@@ -69,7 +69,7 @@ export const onChangeTimePeriodIndex = (current_user, index, setTimePeriodIndex,
   }
   const url = '/api/v1/users/'
   const id = current_user.id
-  apiRequest('PATCH', dataSend, dataFromServer, () => {
+  apiRequest("PATCH", dataSend, dataFromServer, () => {
   }, `${url}${id}`).then()
 }
 
@@ -85,7 +85,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
-  const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index)
+  const [timePeriodIndex, setTimePeriodIndex] = useState(current_user.time_period_index);
   const [notice, setNotice] = useState(data.response.attributes?.notices || null)
   const [showWorkingModal, setShowWorkingModal] = useState(false)
   const initialIndex = 0
@@ -135,7 +135,7 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
     if (!nextTimePeriod) {
       return (
         isMinUsersResponses ? (
-          <div className="d-flex flex-column gap-1 mb-1 mb-md-0">
+          <div className='d-flex flex-column gap-1 mb-1 mb-md-0'>
             <h1 className="fs-md-1">You're one of the first to check in!</h1>
             <h6>Come back later to view the results</h6>
           </div>
@@ -179,8 +179,6 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
     }} />)
   }
 
-  if (!loaded) return <Loader />
-
   return <Layout data={data}
                  setData={setData}
                  steps={steps}
@@ -190,6 +188,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                  hideShoutout={nextTimePeriod}>
     <div
       className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
+      {!loaded && <Loader />}
+
       <SkipCheckInAlert />
 
       <TextHeader />
