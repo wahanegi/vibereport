@@ -9,17 +9,17 @@ import EmojiRow from "./Emojis/EmojiRow";
 const PreviewQuestionSection = () =>
   <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     <div className='row wrap question preview mw-100' />
-  </div>;
+  </div>
 
 const EmptyQuestionSection = ({
   nextTimePeriod, userName, fun_question,
   setShowWorkingModal, data, setData
 }) => {
   const [text, setText] = useState('');
-  const [addClass, setAddClass] = useState('');
+  const [addClass, setAddClass] = useState('')
   const handleMouseEnter = () => {
     !nextTimePeriod && setText('Answer this Icebreaker!');
-    !nextTimePeriod && setAddClass('hover-event');
+    !nextTimePeriod && setAddClass('hover-event')
   };
 
   const handleMouseLeave = () => {
@@ -30,10 +30,10 @@ const EmptyQuestionSection = ({
   const handlingBack = () => {
     if (isPresent(data.prev_results_path)) return;
 
-    const steps = data.response.attributes.steps;
+    const steps = data.response.attributes.steps
     const index = steps.indexOf('icebreaker-answer');
     if (index === -1) {
-      !nextTimePeriod && setShowWorkingModal(true);
+      !nextTimePeriod && setShowWorkingModal(true)
     } else {
       const new_steps = steps.slice(0, index + 1);
       const dataRequest = {
@@ -45,7 +45,7 @@ const EmptyQuestionSection = ({
 
   useEffect(() => {
     setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...');
-  }, [fun_question]);
+  }, [fun_question])
 
   return <Fragment>
     <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
@@ -71,7 +71,7 @@ const Question = ({ userName, fun_question }) => {
         <br />
       </p>
     }
-    <p className="fs-7 fs-md-6 w-auto text-start fw-semibold lh-base"> {fun_question.question_body}</p>
+    <p className='fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'> {fun_question.question_body}</p>
   </div>
 }
 
@@ -149,10 +149,10 @@ const AnswerItem = ({
     const url = '/api/v1/fun_question_answers/'
     const id = answer.id
     if (answer.answer_body !== answerBody && isNotEmptyStr(answerBody)) {
-      apiRequest('PATCH', dataRequest, dataFromServer, () => {
-      }, `${url}${id}`).then()
+      apiRequest("PATCH", dataRequest, dataFromServer, () => {
+      }, `${url}${id}`).then();
     } else if (isEmptyStr(answerBody)) {
-      apiRequest('DELETE', () => {
+      apiRequest("DELETE", () => {
       }, updateAnswersArray, () => {
       }, `${url}${id}`).then();
     } else {
@@ -161,7 +161,7 @@ const AnswerItem = ({
   }
 
   return <div className='row wrap question answer mb-1 mw-100'>
-    <div className='col-xl-12'>
+    <div className="col-xl-12">
       <div className='d-flex justify-content-end'>
         {isCurrentUser && !edit &&
           <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={() => setEdit(true)}>Edit</Link>}
@@ -187,8 +187,8 @@ const AnswerItem = ({
         setEmojiObject, showEmojiPicker, setShowEmojiPicker, modalRef
       }} />
     </div>
-  </div>;
-};
+  </div>
+}
 
 const QuestionSection = ({
   fun_question,

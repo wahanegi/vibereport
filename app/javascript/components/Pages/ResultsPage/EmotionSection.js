@@ -10,7 +10,7 @@ const AnimatedEmotion = ({ word }) => {
   const animatedStyles = {
     marginTop: `${marginTop}px`,
     fontSize: `${fontSize}px`,
-    "--duration": `${duration}ms`
+    '--duration': `${duration}ms`
   };
 
   return (
@@ -20,9 +20,9 @@ const AnimatedEmotion = ({ word }) => {
 
 const PreviewEmotionSection = ({ data }) => {
   const filteredData = data.data.filter(item => item.attributes.category === "positive" || item.attributes.category === "negative");
-  const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS);
+  const splitEmotions = splitArray(filteredData, EMOTION_COL_NUMBERS)
 
-  return <div className="col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect">
+  return <div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     {
       splitEmotions.map((emotions, index) =>
         <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
@@ -34,8 +34,8 @@ const PreviewEmotionSection = ({ data }) => {
           }
         </div>)
     }
-  </div>;
-};
+  </div>
+}
 
 const isValidEmotion = (emotion) => emotion.category === "positive" || emotion.category === "negative";
 
@@ -59,17 +59,17 @@ const filterEmotions = (emotions) => {
 };
 
 const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses, loaded }) => {
-  const filteredEmotions = filterEmotions(emotions);
-
   if (!loaded) {
     return <PreviewEmotionSection data={data} />
   }
+
+  const filteredEmotions = filterEmotions(emotions)
 
   if (!nextTimePeriod && isMinUsersResponses) {
     return <PreviewEmotionSection data={data} />
   }
 
-  return <div className="col-8 mt-2">
+  return <div className='col-8 mt-2'>
     <div className="row mx-auto w-100 gap-2">
       {filteredEmotions.map((emotion, index) =>
         <div className="col" key={index}>

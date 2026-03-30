@@ -15,6 +15,11 @@ const ShoutoutSection = ({
   recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user, loaded
 }) => {
   const [shoutOutForm, setShoutOutForm] = useState(false);
+
+  if (!loaded) {
+    return <PreviewShoutoutSection />
+  }
+
   const hasCurrentUserSentShoutouts = !isEmpty(currentUserShoutouts.sent)
   const hasCurrentUserReceivedShoutouts = !isEmpty(currentUserShoutouts.received)
 
@@ -57,9 +62,7 @@ const ShoutoutSection = ({
       {!hasCurrentUserSentShoutouts ? '' : ';'}&nbsp;&nbsp;
     </h3>
 
-  if (!loaded) {
-    return <PreviewShoutoutSection />
-  }
+
 
   if (!nextTimePeriod && isMinUsersResponses) {
     return <PreviewShoutoutSection />
