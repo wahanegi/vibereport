@@ -239,3 +239,5 @@ export const sortBrainstormingsArray = (arr) => {
     return bScore - aScore;
   });
 };
+
+export const getSortedGifs = (gifs) => [...gifs].sort((a, b) => a.image.height - b.image.height);

@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import isEmpty from "ramda/src/isEmpty";
 import React from "react";
 import PoweredBy from "../../../../assets/images/PoweredBy.svg";
+import { getSortedGifs } from "../../helpers/helpers";
 
 const PreviewGifSection = () => {
   return (<div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
@@ -25,9 +26,9 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses, loaded }) => {
     return <PreviewGifSection />;
   }
 
-  if (isEmpty(gifs)) return null;
+  if (isEmpty(gifs)) return null
 
-  const gifItems = gifs.sort((a, b) => a.image.height - b.image.height).map((gif, index) => {
+  const gifItems = getSortedGifs(gifs).map((gif, index) => {
     return <div className='col align-items-center gif-container p-1' key={index}>
         <Tippy content={
           <div className={`btn btn-bubbles wb1 not-shadow tippy fs-8 fw-bold ${gif.emotion.category}`}>
@@ -45,7 +46,7 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses, loaded }) => {
       {gifItems}
     </div>
     <img src={PoweredBy} alt='PoweredBy' className="big image-powered-by align-top" />
-  </div>;
+  </div>
 };
 
 export default GifSection
