@@ -1,22 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import { apiRequest } from "../../requests/axios_requests";
-import { isEmptyStr, isNotEmptyStr, sortBrainstormingEmojis, sortBrainstormingsArray } from "../../helpers/helpers";
-import { userFullName } from "../../helpers/library";
-import EmojiRow from "./Emojis/EmojiRow";
-import ResponseSection from "./Shared/ResponseSection";
-import ResponseHeader from "./Shared/ResponseHeader";
+import React, { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import Form from 'react-bootstrap/Form'
+import { apiRequest } from '../../requests/axios_requests'
+import { isEmptyStr, isNotEmptyStr, sortBrainstormingEmojis, sortBrainstormingsArray } from '../../helpers/helpers'
+import { userFullName } from '../../helpers/library'
+import EmojiRow from './Emojis/EmojiRow'
+import ResponseSection from './Shared/ResponseSection'
+import ResponseHeader from './Shared/ResponseHeader'
 
 const BrainstormingHeader = ({ userName, innovation_topic }) => (
   <ResponseHeader
     userName={userName}
-    label='asks about this innovation topic:'
+    label="asks about this innovation topic:"
     text={innovation_topic?.innovation_body}
     body={innovation_topic}
-    wrapperClass='topic'
+    wrapperClass="topic"
   />
-);
+)
 
 const BrainstormingItem = ({
   brainstorming,
@@ -30,20 +30,20 @@ const BrainstormingItem = ({
 }) => {
   const [brainstormingBody, setBrainstormingBody] = useState(brainstorming?.brainstorming_body || '')
   const [edit, setEdit] = useState(false)
-  const [selectedEmoji, setSelectedEmoji] = useState("");
-  const [selectedEmojiName, setSelectedEmojiName] = useState("");
-  const [emojisArr, setEmojisArr] = useState(emojis || []);
-  const [emojiObject, setEmojiObject] = useState({});
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const modalRef = useRef(null);
+  const [selectedEmoji, setSelectedEmoji] = useState('')
+  const [selectedEmojiName, setSelectedEmojiName] = useState('')
+  const [emojisArr, setEmojisArr] = useState(emojis || [])
+  const [emojiObject, setEmojiObject] = useState({})
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const modalRef = useRef(null)
 
   const sortedEmojisArr = sortBrainstormingEmojis(emojisArr)
   const isCurrentUser = !nextTimePeriod && current_user.email === user.email
   const dataRequest = {
     innovation_brainstorming: {
       brainstorming_body: brainstormingBody || '',
-      innovation_topic_id: innovation_topic?.id,
-    },
+      innovation_topic_id: innovation_topic?.id
+    }
   }
 
   const dataFromServer = (response) => {
@@ -51,12 +51,12 @@ const BrainstormingItem = ({
     const updatedData = brainstormingsArray.map(item => {
       if (item.brainstorming.id === brainstorming.id) {
         const updatedBrainstorming = Object.assign({}, item.brainstorming, {
-          brainstorming_body: updatedBrainstormingBody,
-        });
-        return { ...item, brainstorming: updatedBrainstorming };
+          brainstorming_body: updatedBrainstormingBody
+        })
+        return { ...item, brainstorming: updatedBrainstorming }
       }
-      return item;
-    });
+      return item
+    })
     setBrainstormingsArray(updatedData)
     setEdit(false)
   }
@@ -73,12 +73,12 @@ const BrainstormingItem = ({
     const url = '/api/v1/innovation_brainstormings/'
     const id = brainstorming.id
     if (brainstorming.brainstorming_body !== brainstormingBody && isNotEmptyStr(brainstormingBody)) {
-      apiRequest("PATCH", dataRequest, dataFromServer, () => {
-      }, `${url}${id}`).then();
+      apiRequest('PATCH', dataRequest, dataFromServer, () => {
+      }, `${url}${id}`).then()
     } else if (isEmptyStr(brainstormingBody)) {
-      apiRequest("DELETE", () => {
+      apiRequest('DELETE', () => {
       }, updateBrainstormingsArray, () => {
-      }, `${url}${id}`).then();
+      }, `${url}${id}`).then()
     } else {
       setEdit(false)
     }
@@ -105,28 +105,28 @@ const BrainstormingItem = ({
     setBrainstormingsArray(prev => {
       const updated = prev.map(item => {
         if (item.brainstorming.id === brainstorming.id) {
-          return { ...item, emojis: [...emojisArr] };
+          return { ...item, emojis: [...emojisArr] }
         }
-        return item;
-      });
-      return sortBrainstormingsArray(updated);
-    });
+        return item
+      })
+      return sortBrainstormingsArray(updated)
+    })
   }, [selectedEmoji])
 
-  return <div className='row wrap topic brainstorming  mb-1 mw-100'>
+  return <div className="row wrap topic brainstorming  mb-1 mw-100">
     <div className="col-xl-12">
-      <div className='d-flex justify-content-end'>
+      <div className="d-flex justify-content-end">
         {isCurrentUser && !edit &&
-          <Link to={''} className='text-muted h6 fw-semibold mb-0' onClick={() => setEdit(true)}>Edit</Link>}
+          <Link to={''} className="text-muted h6 fw-semibold mb-0" onClick={() => setEdit(true)}>Edit</Link>}
       </div>
 
       {edit &&
-        <div className='d-flex justify-content-end'>
-          <Link to={''} className='text-danger h6 fw-semibold me-2' onClick={onCancel}>Cancel</Link>
-          <Link to={''} className='h6 fw-semibold text-success' disabled onClick={updateBrainstorming}>Save</Link>
+        <div className="d-flex justify-content-end">
+          <Link to={''} className="text-danger h6 fw-semibold me-2" onClick={onCancel}>Cancel</Link>
+          <Link to={''} className="h6 fw-semibold text-success" disabled onClick={updateBrainstorming}>Save</Link>
         </div>}
 
-      <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
+      <div className="edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base">
         {userFullName(user)} suggested:&nbsp;
         <br />
         {edit ?
@@ -151,7 +151,7 @@ const BrainstormingItem = ({
 
 const TopicSection = ({
   innovation_topic, innovation_brainstormings, nextTimePeriod, isMinUsersResponses,
-  setShowWorkingModal, current_user, data, setData
+  setShowWorkingModal, current_user, data, setData, loaded
 }) => {
   const [brainstormingsArray, setBrainstormingsArray] = useState(innovation_brainstormings || [])
   const userName = userFullName(innovation_topic?.user)
@@ -180,8 +180,9 @@ const TopicSection = ({
         emptyClass: 'empty-brainstorming topic',
         previewClass: 'topic'
       }}
+      loaded
     />
-  );
-};
+  )
+}
 
 export default TopicSection

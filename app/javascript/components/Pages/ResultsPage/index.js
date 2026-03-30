@@ -229,7 +229,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                     nextTimePeriod={nextTimePeriod}
                     data={data}
                     setData={setData}
-                    setShowWorkingModal={setShowWorkingModal} />
+                    setShowWorkingModal={setShowWorkingModal}
+                    loaded={loaded} />
 
       <QuestionSection fun_question={fun_question}
                        current_user={current_user}
