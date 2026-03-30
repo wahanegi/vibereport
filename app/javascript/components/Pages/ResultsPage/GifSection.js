@@ -17,16 +17,15 @@ const PreviewGifSection = () => (
 
 const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses, loaded }) => {
 
-  // EARLY RETURNS
   if (!loaded) {
-    return <PreviewGifSection /> // 1. Loading
+    return <PreviewGifSection />
   }
 
   if (!nextTimePeriod && isMinUsersResponses) {
-    return <PreviewGifSection /> // 2. Preview
+    return <PreviewGifSection />
   }
 
-  if (isEmpty(gifs)) return null // 3. Empty
+  if (isEmpty(gifs)) return null
 
   const gifItems = gifs.sort((a, b) => a.image.height - b.image.height).map((gif, index) => (
     <div className="col align-items-center gif-container p-1" key={index}>

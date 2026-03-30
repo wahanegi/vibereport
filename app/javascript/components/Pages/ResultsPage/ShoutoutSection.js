@@ -11,9 +11,9 @@ const PreviewShoutoutSection = () =>
   </div>
 
 const ShoutoutSection = ({
-                           nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts,
-                           recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user, loaded
-                         }) => {
+  nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts,
+  recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user, loaded
+}) => {
   const [shoutOutForm, setShoutOutForm] = useState(false)
   const hasCurrentUserSentShoutouts = !isEmpty(currentUserShoutouts.sent)
   const hasCurrentUserReceivedShoutouts = !isEmpty(currentUserShoutouts.received)
@@ -57,13 +57,12 @@ const ShoutoutSection = ({
       {!hasCurrentUserSentShoutouts ? '' : ';'}&nbsp;&nbsp;
     </h3>
 
-  // EARLY RETURNS
   if (!loaded) {
-    return <PreviewShoutoutSection /> // 1. Loading
+    return <PreviewShoutoutSection />
   }
 
   if (!nextTimePeriod && isMinUsersResponses) {
-    return <PreviewShoutoutSection /> // 2. Preview
+    return <PreviewShoutoutSection />
   }
 
   return <>

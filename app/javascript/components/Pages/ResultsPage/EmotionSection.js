@@ -60,13 +60,12 @@ const filterEmotions = (emotions) => {
 const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses, loaded }) => {
   const filteredEmotions = filterEmotions(emotions)
 
-  // EARLY RETURNS
   if (!loaded) {
-    return <PreviewEmotionSection data={data} /> // 1. Loading
+    return <PreviewEmotionSection data={data} />
   }
 
   if (!nextTimePeriod && isMinUsersResponses) {
-    return <PreviewEmotionSection data={data} /> // 2. Preview
+    return <PreviewEmotionSection data={data} />
   }
 
   return <div className="col-8 mt-2">
