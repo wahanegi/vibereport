@@ -56,16 +56,18 @@ const ShoutoutModal = ({
         dataFromServer,
         () => {
         },
-        '/api/v1/shoutouts'
-      ).catch(handlingErrors)
+        '/api/v1/shoutouts',
+        handlingErrors
+      )
       : apiRequest(
         'PATCH',
         dataSend,
         dataFromServer,
         () => {
         },
-        '/api/v1/shoutouts/' + idEditText
-      ).catch(handlingErrors);
+        '/api/v1/shoutouts/' + idEditText,
+        handlingErrors
+      );
   };
 
   const handlingErrors = (errors) => {
@@ -84,6 +86,8 @@ const ShoutoutModal = ({
       <Modal
         size="lg"
         show={shoutOutForm}
+        backdrop="static"
+        keyboard={true}
         onHide={() => {
           setShoutOutForm(false);
         }}

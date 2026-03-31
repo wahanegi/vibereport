@@ -493,6 +493,17 @@
 }
 
 //ShoutoutModal
+#alert {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+#alert > * {
+  pointer-events: auto;
+}
+
 #overlays {
   position: absolute;
   z-index: 20;
@@ -591,6 +602,7 @@
 
 .placement-modal-message {
   z-index: 22;
+  z-index: 2001;
   max-width: 595px;
   min-height: 282px;
 
