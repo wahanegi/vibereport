@@ -126,7 +126,7 @@ const BrainstormingItem = ({
           <Link to={''} className='h6 fw-semibold text-success' disabled onClick={updateBrainstorming}>Save</Link>
         </div>}
 
-      <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base text-pre-wrap'>
+      <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
         {userFullName(user)} suggested:&nbsp;
         <br />
         {edit ?
@@ -137,7 +137,8 @@ const BrainstormingItem = ({
                         onChange={e => setBrainstormingBody(e.target.value)}
                         value={brainstormingBody}
                         className='h-auto' />
-          : brainstorming.brainstorming_body}
+          : <p className="text-pre-wrap text-start">{brainstorming.brainstorming_body}</p>
+        }
       </div>
 
       <p className={'text-orange-700 text-end'}>Please vote using emoticons</p>
