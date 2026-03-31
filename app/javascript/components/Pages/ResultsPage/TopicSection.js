@@ -126,15 +126,17 @@ const BrainstormingItem = ({
           <Link to={''} className='h6 fw-semibold text-success' disabled onClick={updateBrainstorming}>Save</Link>
         </div>}
 
-      <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base'>
+      <div className='edit-question fs-7 fs-md-6 w-auto text-start fw-semibold lh-base text-pre-wrap'>
         {userFullName(user)} suggested:&nbsp;
         <br />
         {edit ?
           <Form.Control as="textarea" rows={4}
+                        name={"brainstorming-textarea"}
                         size="lg"
                         autoFocus={true}
                         onChange={e => setBrainstormingBody(e.target.value)}
-                        value={brainstormingBody} />
+                        value={brainstormingBody}
+                        className='h-auto' />
           : brainstorming.brainstorming_body}
       </div>
 
