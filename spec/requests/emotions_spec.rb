@@ -135,7 +135,7 @@ RSpec.describe Api::V1::EmotionsController do
       end
 
       let(:direct_token) do
-        url = TimeSheets::DirectLinkBuilder.call(user, overdue_period2)
+        url = SignedLinks::DirectTimesheetEntryBuilder.call(user, overdue_period2)
         Rack::Utils.parse_query(URI.parse(url).query)['token']
       end
 
