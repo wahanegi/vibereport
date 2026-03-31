@@ -15,16 +15,6 @@ Rails.application.routes.draw do
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
-  namespace :api do
-    namespace :v1 do
-      resources :users do
-        member do
-          post :send_reminder
-        end
-      end
-    end
-  end
-
   get '/app', to: 'home#app'
   get '/sent', to: 'home#sent'
   namespace :api do
@@ -33,6 +23,8 @@ Rails.application.routes.draw do
       resources :responses, only: %i[create update], param: :id
       resources :fun_question_answers, only: %i[show create update destroy]
       resources :fun_questions, only: %i[show create update destroy]
+      resources :innovation_topics, only: %i[show create update destroy]
+      resources :innovation_brainstormings, only: %i[show create update destroy]
       resources :results, only: %i[show results_email], param: :slug
       resources :shoutouts, only: %i[show create update destroy]
       resources :users, only: %i[update]

@@ -12,6 +12,7 @@ RSpec.describe RemindCheckInEmailWorker do
   let(:run_worker) { worker.run_notification }
 
   before(:each) do
+    Faker::UniqueGenerator.clear
     stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_FINAL_REMINDER' => Date.current.strftime('%A')))
   end
 

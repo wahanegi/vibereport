@@ -21,8 +21,8 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
   before { sign_in(user) }
   before do
     stub_const('ENV', ENV.to_hash.merge(
-      'TIMESHEET_START_FORCED_ENTRY_DATE' => 20.days.ago.strftime(DATE_FORMAT)
-    ))
+                        'TIMESHEET_START_FORCED_ENTRY_DATE' => 20.days.ago.strftime(DATE_FORMAT)
+                      ))
   end
 
   describe 'GET /api/v1/time_sheet_entries' do
@@ -95,6 +95,77 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         expect(response).to have_http_status(:ok)
         expect(json_response['data'].size).to eq(2)
         expect(TimeSheetEntry.count).to eq(2)
+      end
+    end
+
+    context 'when total period hours validation is applied' do
+      before do
+        allow(TimePeriod).to receive(:find_or_create_time_period).and_return(time_period)
+      end
+
+      it 'allows save when aggregate total is equal to 168' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: project.id, total_hours: 100 },
+            { project_id: project2.id, total_hours: 68 }
+          ]
+        }
+
+        expect(response).to have_http_status(:ok)
+        expect(TimeSheetEntry.where(user_id: user.id, time_period_id: time_period.id).sum(:total_hours)).to eq(168)
+      end
+
+      it 'returns validation error when aggregate total exceeds 168' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: project.id, total_hours: 100 },
+            { project_id: project2.id, total_hours: 69 }
+          ]
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['errors']).to include(
+          {
+            'code' => 'period_hours_limit_exceeded',
+            'message' => 'Total hours per period must not exceed 168'
+          }
+        )
+      end
+
+      it 'returns validation error for very large values' do
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: project.id, total_hours: 10_000_000_000_000 }
+          ]
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['errors']).to include(
+          {
+            'code' => 'period_hours_limit_exceeded',
+            'message' => 'Total hours per period must not exceed 168'
+          }
+        )
+      end
+
+      it 'returns validation error when unchanged existing entries make total exceed 168' do
+        create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 100)
+        create(:time_sheet_entry, user: user, project: project2, time_period: time_period, total_hours: 60)
+        new_project = create(:project)
+
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [
+            { project_id: new_project.id, total_hours: 9 }
+          ]
+        }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['errors']).to include(
+          {
+            'code' => 'period_hours_limit_exceeded',
+            'message' => 'Total hours per period must not exceed 168'
+          }
+        )
       end
     end
 
@@ -176,7 +247,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date)
       end
       let(:token) do
-        url = TimeSheets::DirectLinkBuilder.call(user, overdue_period)
+        url = SignedLinks::DirectTimesheetEntryBuilder.call(user, overdue_period)
         Rack::Utils.parse_query(URI.parse(url).query)['token']
       end
 
@@ -214,7 +285,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     let!(:overdue_period) { create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date) }
 
     let(:token) do
-      url = TimeSheets::DirectLinkBuilder.call(user, overdue_period)
+      url = SignedLinks::DirectTimesheetEntryBuilder.call(user, overdue_period)
       Rack::Utils.parse_query(URI.parse(url).query)['token']
     end
 
@@ -256,7 +327,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       it 'redirects to sign in with alert' do
         expired_token = token
 
-        travel(TimeSheets::DirectLinkBuilder::TOKEN_TTL + 1.day) do
+        travel(SignedLinks::DirectTimesheetEntryBuilder::TOKEN_TTL + 1.day) do
           get '/api/v1/direct_timesheet_entry', params: { token: expired_token }
 
           expect(response).to redirect_to(new_user_session_path)
@@ -273,7 +344,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         get '/api/v1/direct_timesheet_entry', params: { token: valid_token }
 
         expect(response).to redirect_to(new_user_session_path)
-        expect(flash[:alert]).to eq('Invalid link')
+        expect(flash[:alert]).to eq('Invalid or expired link')
       end
     end
 
@@ -285,7 +356,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         get '/api/v1/direct_timesheet_entry', params: { token: valid_token }
 
         expect(response).to redirect_to(new_user_session_path)
-        expect(flash[:alert]).to eq('Invalid link')
+        expect(flash[:alert]).to eq('Invalid or expired link')
       end
     end
 
@@ -304,7 +375,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       let!(:future_period) { create(:time_period, start_date: 1.week.from_now.to_date, end_date: 2.weeks.from_now.to_date, due_date: 10.days.from_now.to_date) }
 
       let(:non_overdue_token) do
-        url = TimeSheets::DirectLinkBuilder.call(user, future_period)
+        url = SignedLinks::DirectTimesheetEntryBuilder.call(user, future_period)
         Rack::Utils.parse_query(URI.parse(url).query)['token']
       end
 

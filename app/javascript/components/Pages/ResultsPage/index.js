@@ -1,11 +1,11 @@
 import axios from "axios";
-import React, {useEffect, useState} from 'react';
-import {MIN_USERS_RESPONSES} from "../../helpers/consts";
-import {isBlank, isPresent, rangeFormat} from "../../helpers/helpers";
+import React, { useEffect, useState } from 'react';
+import { MIN_USERS_RESPONSES } from "../../helpers/consts";
+import { isBlank, isPresent, rangeFormat } from "../../helpers/helpers";
 import Layout from '../../Layout';
-import {apiRequest, updateResponse} from "../../requests/axios_requests";
+import { apiRequest, updateResponse } from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
-import {BtnBack} from "../../UI/ShareContent";
+import { BtnBack } from "../../UI/ShareContent";
 import SweetAlert from "../../UI/SweetAlert";
 import WorkingModal from "../modals/WorkingModal";
 import EmotionSection from "./EmotionSection";
@@ -13,6 +13,7 @@ import GifSection from "./GifSection";
 import NavigationBar from "./NavigationBar";
 import QuestionSection from "./QuestionSection";
 import ShoutoutSection from "./ShoutoutSection";
+import TopicSection from "./TopicSection";
 
 export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url = '/api/v1/results/') => {
   useEffect(() => {
@@ -28,7 +29,7 @@ export const loadResultsCallback = (timePeriod, setLoaded, setResults, data, url
 export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
   useEffect(() => {
     if (!nextTimePeriod) {
-      window.scrollTo({top: 0, behavior: 'smooth'})
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [nextTimePeriod]);
 }
@@ -36,7 +37,7 @@ export const scrollTopTimePeriodCallback = (nextTimePeriod) => {
 export const scrollTopModalCallback = (showModal) => {
   useEffect(() => {
     if (showModal) {
-      window.scrollTo({top: 200, behavior: 'smooth'})
+      window.scrollTo({ top: 200, behavior: 'smooth' })
     }
   }, [showModal])
 };
@@ -53,17 +54,17 @@ export const changeTimePeriodCallback = (time_periods, setTimePeriod, setPrevTim
 
 export const onRemoveAlert = (updateResponse, data, setData) => {
   const dataRequest = {
-    response: {attributes: {notices: null}}
+    response: { attributes: { notices: null } }
   }
   updateResponse(data, setData, dataRequest).then()
 }
 
 export const onChangeTimePeriodIndex = (current_user, index, setTimePeriodIndex, data, setData) => {
-  const dataSend = {time_period_index: index}
-  const dataFromServer = ({current_user}) => {
+  const dataSend = { time_period_index: index }
+  const dataFromServer = ({ current_user }) => {
     if (isPresent(current_user)) {
       setTimePeriodIndex(current_user.time_period_index)
-      setData(Object.assign({}, data, {current_user}))
+      setData(Object.assign({}, data, { current_user }))
     }
   }
   const url = '/api/v1/users/'
@@ -72,14 +73,15 @@ export const onChangeTimePeriodIndex = (current_user, index, setTimePeriodIndex,
   }, `${url}${id}`).then();
 }
 
-const Results = ({data, setData, steps = data.response.attributes.steps || [], draft = true}) => {
+const Results = ({ data, setData, steps = data.response.attributes.steps || [], draft = true }) => {
   const [loaded, setLoaded] = useState(false)
   const [results, setResults] = useState({})
   const {
     answers, emotions, fun_question, gifs, sent_shoutouts, received_shoutouts,
-    current_user_shoutouts, responses_count, received_and_public_shoutouts, prev_results_path
+    current_user_shoutouts, responses_count, received_and_public_shoutouts, prev_results_path,
+    innovation_topic, innovation_brainstormings
   } = results
-  const {time_periods, current_user} = data
+  const { time_periods, current_user } = data
   const [timePeriod, setTimePeriod] = useState(data.time_period || {})
   const [prevTimePeriod, setPrevTimePeriod] = useState(null)
   const [nextTimePeriod, setNextTimePeriod] = useState(null)
@@ -144,18 +146,18 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     }
 
     return (
-      <h1 className="fs-md-1">During {rangeFormat(timePeriod)}<br/> the team was feeling...</h1>
+      <h1 className="fs-md-1">During {rangeFormat(timePeriod)}<br /> the team was feeling...</h1>
     );
   }
 
   const TimePeriodNavigation = () => {
     if (nextTimePeriod && isBlank(data.prev_results_path)) {
       return (
-          <div className='mt-5'>
-            <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6'
-                     onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
-            />
-          </div>
+        <div className='mt-5'>
+          <BtnBack text='Back to most recent' addClass='mb-4 mt-5 fs-7 fs-xxl-5 fs-xl-5 fs-lg-5 fs-md-6'
+                   onClick={() => onChangeTimePeriodIndex(current_user, initialIndex, setTimePeriodIndex, data, setData)}
+          />
+        </div>
       )
     }
     return <div className='my-5'></div>
@@ -177,13 +179,20 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
     }} />)
   }
 
-  if (!loaded) return <Loader/>
+  if (!loaded) return <Loader />
 
-  return <Layout data={data} setData={setData} steps={steps} draft={draft} hideBottom={true} isResult={true} hideShoutout={nextTimePeriod}>
-    <div className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
-      <SkipCheckInAlert/>
+  return <Layout data={data}
+                 setData={setData}
+                 steps={steps}
+                 draft={draft}
+                 hideBottom={true}
+                 isResult={true}
+                 hideShoutout={nextTimePeriod}>
+    <div
+      className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
+      <SkipCheckInAlert />
 
-      <TextHeader/>
+      <TextHeader />
 
       <NavigationBar {...{
         timePeriod, showPrevTimePeriod, showNextTimePeriod, time_periods,
@@ -194,11 +203,11 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
       <EmotionSection emotions={emotions}
                       nextTimePeriod={nextTimePeriod}
                       data={data}
-                      isMinUsersResponses={isMinUsersResponses}/>
+                      isMinUsersResponses={isMinUsersResponses} />
 
       <GifSection gifs={gifs}
                   nextTimePeriod={nextTimePeriod}
-                  isMinUsersResponses={isMinUsersResponses}/>
+                  isMinUsersResponses={isMinUsersResponses} />
 
       <ShoutoutSection nextTimePeriod={nextTimePeriod}
                        current_user={current_user}
@@ -208,7 +217,16 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
                        data={data} setData={setData}
                        isMinUsersResponses={isMinUsersResponses}
                        currentUserShoutouts={current_user_shoutouts}
-                       recivedPublicShoutouts={received_and_public_shoutouts}/>
+                       recivedPublicShoutouts={received_and_public_shoutouts} />
+
+      <TopicSection innovation_topic={innovation_topic}
+                    current_user={current_user}
+                    innovation_brainstormings={innovation_brainstormings}
+                    isMinUsersResponses={isMinUsersResponses}
+                    nextTimePeriod={nextTimePeriod}
+                    data={data}
+                    setData={setData}
+                    setShowWorkingModal={setShowWorkingModal} />
 
       <QuestionSection fun_question={fun_question}
                        current_user={current_user}
@@ -217,16 +235,16 @@ const Results = ({data, setData, steps = data.response.attributes.steps || [], d
                        nextTimePeriod={nextTimePeriod}
                        data={data}
                        setData={setData}
-                       setShowWorkingModal={setShowWorkingModal}/>
+                       setShowWorkingModal={setShowWorkingModal} />
 
-      <TimePeriodNavigation/>
+      <TimePeriodNavigation />
     </div>
     <WorkingModal
       show={showWorkingModal}
       setShow={setShowWorkingModal}
       data={data}
       setData={setData}
-      steps={steps}/>
+      steps={steps} />
   </Layout>
 }
 export default Results;

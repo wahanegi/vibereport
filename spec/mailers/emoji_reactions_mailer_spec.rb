@@ -28,7 +28,7 @@ RSpec.describe EmojiReactionsMailer, type: :mailer do
     end
 
     it 'assigns the author to the template' do
-      expect(mail.body.encoded).to match("#{author.first_name} #{author.last_name}")
+      expect(mail.body.encoded).to match(/#{author.first_name}\s+#{author.last_name}/)
     end
 
     it 'assigns the messages to the template' do

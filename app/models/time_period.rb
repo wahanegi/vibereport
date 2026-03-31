@@ -16,6 +16,7 @@
 #
 class TimePeriod < ApplicationRecord
   has_one :fun_question, dependent: :destroy
+  has_one :innovation_topic, dependent: :nullify
   has_many :responses, dependent: :destroy
   has_many :emotions, through: :responses
   has_many :shoutouts, dependent: :destroy
@@ -28,6 +29,7 @@ class TimePeriod < ApplicationRecord
 
   scope :ordered, -> { order(start_date: :desc) }
   scope :with_responses_by_team, ->(team) { joins(responses: { user: :user_teams }).where(user_teams: { team_id: team.id }) }
+  scope :finished, -> { where(end_date: ..Date.yesterday) }
 
   def slugify
     self.slug = SecureRandom.hex(5)

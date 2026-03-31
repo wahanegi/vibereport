@@ -15,6 +15,7 @@
     "chartkick": "^5.0.1",
     "emoji-picker-react": "^4.4.10",
     "esbuild": "^0.17.7",
+    "framer-motion": "^12.38.0",
     "html-react-parser": "^3.0.15",
     "jquery": "^3.6.3",
     "pluralize": "^8.0.0",

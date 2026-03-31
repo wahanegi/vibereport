@@ -4,6 +4,7 @@
 
 //color-variables
 $gray-100: #d2d2d2; // For Muted text and input placeholders depending on context
+$gray-150: #e7e7e7; // For custom emoji-picker border
 $gray-200: #9e9e9e; // For Muted text and input placeholders depending on context
 $gray-250: rgba(0, 0, 0, 0.25); //for shadow
 $gray-300: #666; // For Muted text and input placeholders depending on context
@@ -12,7 +13,7 @@ $gray-500: #454547; // For Text and headers
 $gray-600: rgba(0, 0, 0, 0.6);
 $gray-700: rgba(0, 0, 0, 0.7);
 $gray-tea-green: #ccedd5;
-
+$blue-50: #f1f8ff;
 $apricot: #fcddce; // For negative background color
 $cinnamon: #d1794e; // For negative color
 $emerald: #7fcd95; // For positive accents
@@ -114,6 +115,14 @@ $dark: $gray-500;
 .border-light-gray {
   border-color: $light-grey !important;
   }
+
+.border-gray-150 {
+  border-color: $gray-150 !important;
+}
+
+.bg-hover-blue-50:hover {
+  background-color: $blue-50;
+}
 
 .hover\:bg-primary-hover:hover {
   background-color: shift-color($primary, 30%) !important;
