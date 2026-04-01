@@ -178,8 +178,9 @@ const AnswerItem = ({
                           size="lg"
                           autoFocus={true}
                           onChange={e => setAnswerBody(e.target.value)}
-                          value={answerBody} /> :
-            answer.answer_body
+                          value={answerBody}
+                          className='h-auto' />
+            : <p className="text-pre-wrap text-start">{answer.answer_body}</p>
         }
       </div>
       <EmojiRow {...{
