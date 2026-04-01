@@ -87,7 +87,7 @@ const ShoutoutModal = ({
         size="lg"
         show={shoutOutForm}
         backdrop="static"
-        keyboard={true}
+        keyboard={isNotAlert}
         onHide={() => {
           setShoutOutForm(false);
         }}
