@@ -38,7 +38,8 @@
   }
 }
 
-input, textarea {
+input,
+textarea {
   height: 4.375rem; //70px
   text-align: left;
   border: 3px solid $royal-blue;
@@ -87,6 +88,14 @@ textarea {
 }
 
 #dropdown-stick {
+
+  &:focus,
+  &:focus-visible,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+
   &.show {
     .one-line-menu {
       border-color: $primary;
