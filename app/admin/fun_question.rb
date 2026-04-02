@@ -12,6 +12,21 @@ ActiveAdmin.register FunQuestion do
     actions
   end
 
+  show do
+    attributes_table do
+      row :question_body
+      row :user.name
+      row :time_period do |t|
+        link_to t.time_period.date_range,
+                admin_time_period_path(t.time_period) if t.time_period.present?
+      end
+      row :used
+      row :public
+      row :created_at
+      row :updated_at
+    end
+  end
+
   filter :user, as: :select, collection: User.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] }
   filter :time_period, as: :select, collection: TimePeriod.order(start_date: :desc).map { |t| [t.date_range, t.id] }
   filter :public, as: :boolean

@@ -22,6 +22,50 @@ ActiveAdmin.register Response do
     actions
   end
 
+  show do
+    attributes_table do
+      row :time_period do |t|
+        link_to t.time_period.date_range,
+                admin_time_period_path(t.time_period) if t.time_period.present?
+      end
+      row :word do |response|
+        response.emotion&.word.presence
+      end
+      row :category do |response|
+        response.emotion&.category.presence
+      end
+      row :user
+      row :not_working
+      row :steps
+      row :rating
+      row :comment
+      row :notices
+      row :productivity
+      row :productivity_comment
+      row :fun_question do |response|
+        if response.fun_question.present?
+          link_to response.fun_question.question_body,
+                  admin_fun_question_path(response.fun_question)
+        end
+      end
+      row :fun_question_answer do |response|
+        if response.fun_question_answer.present?
+          link_to response.fun_question_answer.answer_body,
+                  admin_fun_question_answer_path(response.fun_question_answer)
+        end
+      end
+      row :gif
+      row :draft
+      row :shoutout
+      row :completed_at
+      row :celebrate_comment
+      row :innovation_topic
+      row :innovation_brainstorming
+      row :created_at
+      row :updated_at
+    end
+  end
+
   filter :user, as: :select, collection: proc { User.joins(:responses).distinct.order(:email).map { |u| ["#{u.email} (#{u.first_name} #{u.last_name})", u.id] } }
   filter :time_period, as: :select, collection: TimePeriod.order(start_date: :desc).map { |t| [t.date_range, t.id] }
   filter :emotion, as: :select, collection: proc { Emotion.pluck(:word, :id) }, label: 'Word'
