@@ -54,7 +54,7 @@ describe UserEmailMailerHelper, type: :helper do
       team = user_team.team
       user_team2.team
       result = who_is_waiting(user, time_period)
-      expect(result).to eq("The #{team.name} team is waiting for you to check-in for #{time_period.date_range_str}")
+      expect(result).to eq("The #{team.name} team is waiting for you to check-in for #{time_period.date_range}")
     end
 
     it 'returns nil when the user is not a manager' do
