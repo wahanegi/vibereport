@@ -65,9 +65,9 @@ ActiveAdmin.register TimeSheetEntry do
       time_periods = @time_sheet_entries.map(&:time_period).uniq
 
       formatted_period = if time_periods.one?
-                           "#{time_periods.first.date_range} #{time_periods.first.start_date.year}"
+                           time_periods.first.date_range_for_csv.to_s
                          else
-                           Time.zone.today.strftime('%d-%m-%Y')
+                           Time.zone.today.strftime(DateFormats::STANDARD_DATE)
                          end
 
       "Timesheet Entries #{formatted_period}.csv"

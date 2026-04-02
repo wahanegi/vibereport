@@ -83,6 +83,10 @@ class TimePeriod < ApplicationRecord
     work_week_range
   end
 
+  def date_range_for_csv
+    "#{first_working_day.strftime(DateFormats::MONTH_DAY)} - #{last_working_day.strftime(DateFormats::MONTH_DAY_YEAR)}"
+  end
+
   def self.overdue_after_forced_date
     forced_entry_date = ENV.fetch('TIMESHEET_START_FORCED_ENTRY_DATE', nil)
     return none if forced_entry_date.blank?
