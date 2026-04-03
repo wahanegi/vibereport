@@ -46,6 +46,6 @@ topics['topics'].each do |topic|
   InnovationTopic.create!(
     innovation_body: topic['innovation_body'],
     user_id:,
-    posted: true
+    posted: false
   )
 end
