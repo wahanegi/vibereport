@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import PoweredBy from '../../../assets/images/PoweredBy.svg';
-import {EMOTION_COLORS, MAX_CHAR_LIMIT} from '../helpers/consts';
+import { EMOTION_COLORS, MAX_CHAR_LIMIT, REGEX } from '../helpers/consts'
 import {capitalizeFirstLetter, isBlank} from '../helpers/helpers';
 import Layout from '../Layout';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
@@ -64,6 +64,9 @@ const EmotionIntensity = ({
   const isBlankGif = isBlank(gif_url);
   const [isDraft, setIsDraft] = useState(draft);
 
+  const gif = data.response.attributes.gif;
+  const isVideo = REGEX.videoExtension.test(gif?.src || '');
+
   const handleSaveDraft = () => {
     const dataDraft = {rating, comment, draft: true};
     saveDataToDb(steps, dataDraft);
@@ -86,11 +89,18 @@ const EmotionIntensity = ({
   const EmotionGif = () => (
     <div className="d-flex flex-column align-items-center">
       <div className="gif d-inline-block text-end">
+        {
+          isVideo ? (
+            <video autoPlay loop muted playsInline
+                   src={gif_url}
+                   className={`small image-${category} align-top`} />
+          ) : (
         <img
           src={gif_url}
           alt="Giphy image"
           className={`small image-${category} align-top`}
         />
+          )}
         <br/>
         <img
           src={PoweredBy}

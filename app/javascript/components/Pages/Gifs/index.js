@@ -51,7 +51,7 @@ const Gif = ({
         .then((data) => {
           const gifs = data.data?.map(gif => ({
             src: gif.images.original.url,
-            src_preview: gif.images.preview_gif.url,
+            src_preview: gif.images.fixed_height.mp4,
             height: parseInt(gif.images.fixed_width.height),
           }));
           setGifs(gifs)
