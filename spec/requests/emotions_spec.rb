@@ -91,30 +91,30 @@ RSpec.describe Api::V1::EmotionsController do
         expect(json[:innovation_topic][:id]).to eq(topic.id)
       end
 
-      it 'assigns the eligible innovation topic with the lowest id when several exist' do
+      it 'assigns the eligible innovation topic with the lowest sort_order when several exist' do
         first_topic = create(
           :innovation_topic,
           posted: false,
           time_period_id: nil,
           user: user,
-          innovation_body: 'FIFO deterministic topic alpha'
+          innovation_body: 'FIFO deterministic topic alpha',
+          sort_order: 10
         )
         second_topic = create(
           :innovation_topic,
           posted: false,
           time_period_id: nil,
           user: user,
-          innovation_body: 'FIFO deterministic topic beta'
+          innovation_body: 'FIFO deterministic topic beta',
+          sort_order: 20
         )
-        expected_id = [first_topic.id, second_topic.id].min
 
         get '/api/v1/emotions'
 
         expect(response).to have_http_status(:success)
-        expect(json[:innovation_topic][:id]).to eq(expected_id)
-        expect(InnovationTopic.find(expected_id).time_period_id).to eq(TimePeriod.find_or_create_time_period.id)
-        other_id = [first_topic.id, second_topic.id].max
-        expect(InnovationTopic.find(other_id).time_period_id).to be_nil
+        expect(json[:innovation_topic][:id]).to eq(first_topic.id)
+        expect(InnovationTopic.find(first_topic.id).time_period_id).to eq(TimePeriod.find_or_create_time_period.id)
+        expect(InnovationTopic.find(second_topic.id).time_period_id).to be_nil
       end
     end
   end

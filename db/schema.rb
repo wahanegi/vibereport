@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_20_140658) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_06_104951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_20_140658) do
     t.datetime "created_at", null: false
     t.text "innovation_body", null: false
     t.boolean "posted", default: false, null: false
+    t.integer "sort_order", null: false
     t.bigint "time_period_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

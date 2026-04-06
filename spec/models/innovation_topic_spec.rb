@@ -5,6 +5,7 @@
 #  id              :bigint           not null, primary key
 #  innovation_body :text             not null
 #  posted          :boolean          default(FALSE), not null
+#  sort_order      :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  time_period_id  :bigint
@@ -46,7 +47,7 @@ RSpec.describe InnovationTopic, type: :model do
 
   describe 'Ransack support' do
     it 'returns the expected attributes' do
-      expect(described_class.ransackable_attributes).to match_array(%w[id innovation_body posted time_period_id created_at updated_at user_id])
+      expect(described_class.ransackable_attributes).to match_array(%w[id innovation_body posted sort_order time_period_id created_at updated_at user_id])
     end
 
     it 'returns the expected associations' do

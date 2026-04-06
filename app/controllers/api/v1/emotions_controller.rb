@@ -118,7 +118,7 @@ class Api::V1::EmotionsController < ApplicationController
 
       topic = InnovationTopic.unposted
                              .where(time_period_id: nil)
-                             .order(:id)
+                             .order(sort_order: :asc, id: :asc)
                              .first
 
       break if topic.blank?
