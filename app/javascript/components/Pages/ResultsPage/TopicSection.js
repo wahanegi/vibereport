@@ -136,7 +136,7 @@ const BrainstormingItem = ({
                         autoFocus={true}
                         onChange={e => setBrainstormingBody(e.target.value)}
                         value={brainstormingBody}
-                        className='h-auto' />
+                        className='textarea-auto-resize' />
           : <p className="text-pre-wrap text-start">{brainstorming.brainstorming_body}</p>
         }
       </div>

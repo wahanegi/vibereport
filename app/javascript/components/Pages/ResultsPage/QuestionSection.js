@@ -179,7 +179,7 @@ const AnswerItem = ({
                           autoFocus={true}
                           onChange={e => setAnswerBody(e.target.value)}
                           value={answerBody}
-                          className='h-auto' />
+                          className='textarea-auto-resize' />
             : <p className="text-pre-wrap text-start">{answer.answer_body}</p>
         }
       </div>
