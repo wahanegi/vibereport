@@ -1,0 +1,47 @@
+name: Require One AI Label
+
+permissions:
+  pull-requests: read
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+      - unlabeled
+      - ready_for_review
+      - edited
+
+jobs:
+  require-ai-label:
+    name: Require one ai label
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate PR labels
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const labels = context.payload.pull_request.labels.map(l => l.name);
+            const aiLabels = labels.filter(name => name.startsWith("ai:"));
+
+            core.info(`All labels: ${labels.join(", ") || "(none)"}`);
+            core.info(`Matching ai: labels: ${aiLabels.join(", ") || "(none)"}`);
+
+            if (aiLabels.length === 1) {
+              core.notice(`Exactly one ai: label is present: ${aiLabels[0]}`);
+              return;
+            }
+
+            if (aiLabels.length === 0) {
+              core.setFailed(
+                "This pull request must have exactly one label starting with 'ai:'. Please add before merging."
+              );
+              return;
+            }
+
+            core.setFailed(
+              `This pull request has ${aiLabels.length} labels starting with 'ai:': ${aiLabels.join(", ")}. Please keep exactly one.`
+            );
