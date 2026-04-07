@@ -1,8 +1,9 @@
 import React, {Fragment} from "react"
+import { REGEX } from '../../helpers/consts'
 
 const GifItem = ({ gif, index, selectedGifIndex, setSelectedGifIndex, setGifUrl, category }) => {
   const gif_url = gif.src_preview || gif.src
-  const isVideo = Boolean(gif.src_preview);
+  const isVideo = REGEX.videoExtension.test(gif_url || '');
 
   const onGifSelect = () => {
     setGifUrl({ src: gif_url, height: gif.height });
@@ -15,7 +16,8 @@ const GifItem = ({ gif, index, selectedGifIndex, setSelectedGifIndex, setGifUrl,
         isVideo ? (
         <video autoPlay loop muted playsInline
                src={gif_url}
-               onClick={onGifSelect} />
+               onClick={onGifSelect}
+               aria-label={`gif ${category}`} />
       ) : (
       <img src={gif_url} onClick={onGifSelect} alt={`gif ${category}`} />
       )}

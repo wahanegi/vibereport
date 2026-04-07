@@ -93,7 +93,8 @@ const EmotionIntensity = ({
           isVideo ? (
             <video autoPlay loop muted playsInline
                    src={gif_url}
-                   className={`small image-${category} align-top`} />
+                   className={`small image-${category} align-top`}
+                   aria-label={`gif ${category}`} />
           ) : (
         <img
           src={gif_url}

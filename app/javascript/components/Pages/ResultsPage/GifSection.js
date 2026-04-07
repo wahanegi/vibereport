@@ -32,9 +32,10 @@ const GifSection = ({gifs, nextTimePeriod, isMinUsersResponses}) => {
         {
           isVideo ? (
             <video autoPlay loop muted playsInline
-                   src={gif.image.src} />
+                   src={gif.image.src}
+                   aria-label={gif.emotion.word} />
           ) : (
-            <img src={gif.image.src} alt={`gif ${index}`}/>
+            <img src={gif.image.src} alt={`gif ${gif.emotion.word}`}/>
           )}
       </Tippy>
     </div>
