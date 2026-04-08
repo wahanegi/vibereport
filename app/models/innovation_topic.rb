@@ -37,6 +37,8 @@ class InnovationTopic < ApplicationRecord
   validates :innovation_body, uniqueness: { case_sensitive: false }
   validates :sort_order, presence: true, uniqueness: true,
                          numericality: { only_integer: true, greater_than: 0 }
+  validates :time_period, uniqueness: { allow_blank: true,
+                                        message: 'already has an innovation topic assigned' }
 
   scope :unposted, -> { where(posted: false) }
   scope :ordered, -> { order(created_at: :desc) }

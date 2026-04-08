@@ -50,6 +50,31 @@ RSpec.describe InnovationTopic, type: :model do
 
       it { is_expected.to validate_uniqueness_of(:sort_order) }
     end
+
+    describe 'uniqueness of time_period' do
+      it 'does not allow two topics assigned to the same time period' do
+        create(:innovation_topic, time_period: time_period, user: user)
+        duplicate = build(:innovation_topic, time_period: time_period, user: user)
+
+        expect(duplicate).not_to be_valid
+        expect(duplicate.errors[:time_period]).to include('already has an innovation topic assigned')
+      end
+
+      it 'allows multiple topics with no time period assigned' do
+        create(:innovation_topic, time_period: nil, user: user)
+        second = build(:innovation_topic, time_period: nil, user: user)
+
+        expect(second).to be_valid
+      end
+
+      it 'allows different time periods to each have a topic' do
+        other_time_period = create(:time_period)
+        create(:innovation_topic, time_period: time_period, user: user)
+        topic_for_other_period = build(:innovation_topic, time_period: other_time_period, user: user)
+
+        expect(topic_for_other_period).to be_valid
+      end
+    end
   end
 
   describe 'sort order assignment' do
