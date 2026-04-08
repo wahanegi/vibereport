@@ -90,9 +90,7 @@ export const Calendar = ({
         className={`position-relative ${onClick ? 'pointer' : ''}`}
         style={{ height: 78, width: 83 }}
         onClick={onClick}
-        role={onClick ? 'button' : undefined}
-        tabIndex={onClick ? 0 : undefined}
-        onKeyDown={onClick ? (e) => { if(e.key === 'Enter' || e.key === ' ') onClick(); } : undefined}>
+        role={onClick ? 'button' : undefined} >
         <img className="translate-middle-x position-absolute top-0" src={calendar} alt="calendar" />
         <div className="position-absolute top-0" style={{ width: 83 }}>
           {date.includes(' - ')
