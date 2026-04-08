@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   calculateBillableHours,
+  checkCompanyProjectsSelection,
   calculateTotalHours,
   rangeFormat,
   transformTimesheetEntry,
@@ -220,6 +221,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
   const isValid = rowsData.length > 0 && rowsData.every((row) => validateRow(row));
   const canSubmit = !isLoading && isValid && !fetchError && projects.length > 0 && !periodHoursError && !billableError;
   const canAddNewRow = rowsData.every((row) => validateRow(row));
+  const companyProjectsError = checkCompanyProjectsSelection(rowsData, projects);
 
   return (
     <Layout
@@ -248,11 +250,14 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
                   onChangeRowData={handleChangeRowData}
                   onDelete={handleOnDelete}
                   projects={projects}
+                  rowsData={rowsData}
                 />
               ))}
             </div>
             <div style={{ height: '20px' }} className="text-primary">
-              {rowsData.length > 0 && !isValid ? (
+              {companyProjectsError ? (
+                <p>{companyProjectsError}</p>
+              ) : rowsData.length > 0 && !isValid ? (
                 <p>Please fill out all fields</p>
               ) : periodHoursError ? (
                 <p>{periodHoursError}</p>
