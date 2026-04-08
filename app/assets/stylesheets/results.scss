@@ -204,3 +204,9 @@
 .no-data {
   padding: 0 50px;
 }
+
+.textarea-auto-resize {
+  min-height: 4rem;
+  resize: vertical;
+  height: auto;
+}
