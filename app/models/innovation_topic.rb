@@ -35,7 +35,8 @@ class InnovationTopic < ApplicationRecord
   validates :user, presence: true
   validates :innovation_body, presence: true
   validates :innovation_body, uniqueness: { case_sensitive: false }
-  validates :sort_order, presence: true
+  validates :sort_order, presence: true, uniqueness: true,
+                         numericality: { only_integer: true, greater_than: 0 }
 
   scope :unposted, -> { where(posted: false) }
   scope :ordered, -> { order(created_at: :desc) }
@@ -59,6 +60,8 @@ class InnovationTopic < ApplicationRecord
   private
 
   def assign_sort_order
-    self.sort_order ||= (InnovationTopic.maximum(:sort_order).to_i + 10)
+    return if sort_order.present?
+
+    self.sort_order = InnovationTopic.maximum(:sort_order).to_i + 10
   end
 end

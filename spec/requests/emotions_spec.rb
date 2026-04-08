@@ -116,6 +116,7 @@ RSpec.describe Api::V1::EmotionsController do
         expect(InnovationTopic.find(first_topic.id).time_period_id).to eq(TimePeriod.find_or_create_time_period.id)
         expect(InnovationTopic.find(second_topic.id).time_period_id).to be_nil
       end
+
     end
   end
 end

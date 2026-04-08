@@ -51,12 +51,19 @@ ActiveAdmin.register InnovationTopic do
 
   form do |f|
     f.inputs do
+      if f.object.new_record? && f.object.sort_order == 0
+        f.object.sort_order = nil
+      end
+
       f.input :innovation_body
       f.input :user, collection: User.admin_select_options
       f.input :time_period,
               collection: TimePeriod.ordered.map { |t| [t.date_range, t.id] },
               include_blank: true
-      f.input :sort_order
+      f.input :sort_order,
+              required: false,
+              input_html: { required: false },
+              label: 'Sort order'
       f.input :posted
     end
     f.actions

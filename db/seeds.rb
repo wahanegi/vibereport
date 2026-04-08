@@ -50,3 +50,10 @@ topics['topics'].each_with_index do |topic, index|
     sort_order: (index + 1) * 10
   )
 end
+
+# ===========================
+# Seed: Innovation Topics data normalization
+# Manual rollout step for production:
+# unassigned topics should not be posted
+# ===========================
+InnovationTopic.where(posted: true, time_period_id: nil).update_all(posted: false)

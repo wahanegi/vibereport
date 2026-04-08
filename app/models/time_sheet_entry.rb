@@ -15,6 +15,7 @@
 #  index_time_sheet_entries_on_project_id      (project_id)
 #  index_time_sheet_entries_on_time_period_id  (time_period_id)
 #  index_time_sheet_entries_on_user_id         (user_id)
+#  index_unique_timesheet_entries              (user_id,time_period_id,project_id) UNIQUE
 #
 # Foreign Keys
 #
