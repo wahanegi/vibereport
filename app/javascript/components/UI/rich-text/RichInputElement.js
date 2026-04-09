@@ -84,13 +84,15 @@ const RichInputElement = ({
 
   const handleKeyDown = (event) => {
     const mod = event.ctrlKey || event.metaKey;
-    if (mod && (event.keyCode === 67 || event.key === 'c')) {
+    if (mod && event.code === 'KeyC') {
       event.preventDefault();
       copyToClipboard(window.getSelection().toString());
       return;
     }
-    if (mod && (event.keyCode === 86 || event.key === 'v')) {
-      event.preventDefault();
+    if (mod && event.code === 'KeyV') {
+      return;
+    }
+    if (mod) {
       return;
     }
     event.preventDefault();
@@ -689,18 +691,17 @@ const RichInputElement = ({
               Please enter more information. The more detail the better.
           </p>
           <div className='d-flex flex-column gap-3 justify-content-between align-content-center flex-lg-row w-100'>
-          <SwitcherShoutouts
-            isChecked={isChecked}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-          <Button
-            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${
-              isDisabled ? 'disabled' : ''
-            }`}
-            onClick={submitHandling}
-          >
-            Send Shoutout
-          </Button>
+            <SwitcherShoutouts
+              isChecked={isChecked}
+              handleCheckboxChange={handleCheckboxChange}
+            />
+            <Button
+              className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${isDisabled ? 'disabled' : ''
+                }`}
+              onClick={submitHandling}
+            >
+              Send Shoutout
+            </Button>
           </div>
         </div>
       </div>
