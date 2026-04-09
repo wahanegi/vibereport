@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {userFullName} from '../../helpers/library';
 import { calculateWordCount } from '../../helpers/helpers'
 import Button from '../Button';
@@ -7,6 +7,37 @@ import SwitcherShoutouts from '../SwitcherShoutouts';
 import DropDownList from './DropDownList';
 import RichText from './rich-text';
 import RichTextArea from './RichTextArea';
+
+function scrollEditableCaretIntoView(containerEl, retryDepth = 0) {
+  if (process.env.NODE_ENV === 'test' || !containerEl || !containerEl.isConnected || !window.getSelection) return;
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
+  const range = selection.getRangeAt(0);
+  let caretRect = range.getBoundingClientRect();
+  if (caretRect.width === 0 && caretRect.height === 0) {
+    const rects = range.getClientRects();
+    if (!rects.length) {
+      if (retryDepth < 2) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            scrollEditableCaretIntoView(containerEl, retryDepth + 1);
+          });
+        });
+      } else {
+        const lineHeight = parseFloat(getComputedStyle(containerEl).lineHeight) || 24;
+        containerEl.scrollBy({ top: lineHeight });
+      }
+      return;
+    }
+    caretRect = rects[0];
+  }
+  const containerRect = containerEl.getBoundingClientRect();
+  if (caretRect.bottom > containerRect.bottom) {
+    containerEl.scrollBy({ top: caretRect.bottom - containerRect.bottom });
+  } else if (caretRect.top < containerRect.top) {
+    containerEl.scrollBy({ top: caretRect.top - containerRect.top });
+  }
+}
 
 const RichInputElement = ({
                             richText = '',
@@ -50,11 +81,15 @@ const RichInputElement = ({
     editObj.public === undefined ? true : editObj.public
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const textArea = textAreaRef.current;
+    if (!textArea) return;
     Cursor.setCurrentCursorPosition(caret, textArea);
-    if (Cursor.getCurrentCursorPosition(element).focusOffset === 1)
-      setCoordinates(Cursor.getCurrentCursorPosition(element).coordinates);
-    setCursorPosition(Cursor.getCurrentCursorPosition(element));
+    const cursorPos = Cursor.getCurrentCursorPosition(textArea);
+    if (cursorPos.focusOffset === 1)
+      setCoordinates(cursorPos.coordinates);
+    setCursorPosition(cursorPos);
+    scrollEditableCaretIntoView(textArea);
   }, [caret, textHTML, currentSelection]);
 
   const handleCheckboxChange = () => {
@@ -674,7 +709,6 @@ const RichInputElement = ({
           refs={textAreaRef}
           onKeyDown={handleKeyDown}
           onClick={clickHandling}
-          cursorPos={Cursor.getCurrentCursorPosition(element)}
           className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
         />
