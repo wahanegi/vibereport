@@ -172,8 +172,8 @@ const TopicSection = ({
       itemDataKey="brainstorming"
       emptyConfig={{
         stepName: 'innovation-brainstorming',
-        defaultTextCurrent: 'No brainstormings yet...!',
-        defaultTextNext: 'No Innovation topic for brainstorming this time...!',
+        defaultTextCurrent: 'No brainstormings yet...',
+        defaultTextNext: 'No Innovation topic for brainstorming this time...',
         hoverText: 'Suggest this Innovation Topic!',
         nextTimePeriod,
         setShowWorkingModal,

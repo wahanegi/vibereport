@@ -17,18 +17,21 @@ const EmptyQuestionSection = ({
 }) => {
   const [text, setText] = useState('');
   const [addClass, setAddClass] = useState('')
+
+  const isFunQuestion = Boolean(fun_question)
+
   const handleMouseEnter = () => {
-    !nextTimePeriod && setText('Answer this Icebreaker!');
-    !nextTimePeriod && setAddClass('hover-event')
+    !nextTimePeriod && isFunQuestion && setText('Answer this Icebreaker!');
+    (!nextTimePeriod && isFunQuestion) && setAddClass('hover-event')
   };
 
   const handleMouseLeave = () => {
-    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...');
+    setText(nextTimePeriod || !isFunQuestion ? 'No fun question this time...' : 'No responses yet...');
     setAddClass('');
   };
 
   const handlingBack = () => {
-    if (isPresent(data.prev_results_path)) return;
+    if (isPresent(data.prev_results_path || !isFunQuestion)) return;
 
     const steps = data.response.attributes.steps
     const index = steps.indexOf('icebreaker-answer');
@@ -44,14 +47,14 @@ const EmptyQuestionSection = ({
   }
 
   useEffect(() => {
-    setText(nextTimePeriod ? 'No responses this time...' : 'No responses yet...');
+    setText(nextTimePeriod || !isFunQuestion ? 'No fun question this time...' : 'No responses yet...');
   }, [fun_question])
 
   return <Fragment>
     <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
       <Question {...{ userName, fun_question }} />
     </div>
-    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod ? '' : 'pointer'}`}
+    <div className={`results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 ${nextTimePeriod || !isFunQuestion ? '' : 'pointer'}`}
          onClick={handlingBack}>
       <div className={`empty-answer ${addClass} row wrap question mb-3 mw-100`} onMouseEnter={handleMouseEnter}
            onMouseLeave={handleMouseLeave}>
@@ -102,7 +105,7 @@ const AnswerItem = ({
   const dataRequest = {
     fun_question_answer: {
       answer_body: answerBody || '',
-      fun_question_id: fun_question.id
+      fun_question_id: fun_question?.id
     }
   }
 
