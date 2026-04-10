@@ -30,6 +30,7 @@ class TimeSheetEntry < ApplicationRecord
   belongs_to :time_period
 
   validates :total_hours, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :project_id, uniqueness: { scope: %i[user_id time_period_id] }
   validate :billable_hours_limit, if: -> { project&.billable? }
 
   scope :billable, lambda {
