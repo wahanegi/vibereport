@@ -31,7 +31,7 @@ const EmptyQuestionSection = ({
   };
 
   const handlingBack = () => {
-    if (isPresent(data.prev_results_path || !isFunQuestion)) return;
+    if (isPresent(data.prev_results_path) || !isFunQuestion) return;
 
     const steps = data.response.attributes.steps
     const index = steps.indexOf('icebreaker-answer');
@@ -48,7 +48,7 @@ const EmptyQuestionSection = ({
 
   useEffect(() => {
     setText(nextTimePeriod || !isFunQuestion ? 'No fun question this time...' : 'No responses yet...');
-  }, [fun_question])
+  }, [fun_question, nextTimePeriod])
 
   return <Fragment>
     <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
