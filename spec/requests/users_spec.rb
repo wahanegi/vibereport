@@ -53,36 +53,21 @@ RSpec.describe Api::V1::UsersController do
       end
     end
 
-    # TODO: Remove this context after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
-    context 'with legacy params (no token)', :legacy_link_support do
-      before do
-        stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.from_now.to_date.to_s))
-      end
-
-      it 'signs in user and redirects to unsubscribe when user_id present' do
+    context 'without token: legacy query params do not authenticate' do
+      it 'does not sign in when only user_id is present' do
         get '/api/v1/unsubscribe', params: { user_id: user.id }
-
-        expect(controller.current_user).to eq(user)
-        expect(response).to redirect_to('/unsubscribe')
-      end
-
-      it 'redirects to login when user_id is missing' do
-        get '/api/v1/unsubscribe'
 
         expect(controller.current_user).to be_nil
         expect(response).to redirect_to(new_user_session_path)
       end
+    end
 
-      context 'when legacy period has passed' do
-        before do
-          stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.ago.to_date.to_s))
-        end
+    context 'with missing token' do
+      it 'does not sign in' do
+        get '/api/v1/unsubscribe'
 
-        it 'does not sign in even with valid legacy params' do
-          get '/api/v1/unsubscribe', params: { user_id: user.id }
-
-          expect(controller.current_user).to be_nil
-        end
+        expect(controller.current_user).to be_nil
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
