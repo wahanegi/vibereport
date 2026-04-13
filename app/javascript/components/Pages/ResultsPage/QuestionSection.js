@@ -21,8 +21,10 @@ const EmptyQuestionSection = ({
   const isFunQuestion = Boolean(fun_question)
 
   const handleMouseEnter = () => {
-    !nextTimePeriod && isFunQuestion && setText('Answer this Icebreaker!');
-    (!nextTimePeriod && isFunQuestion) && setAddClass('hover-event')
+    if (!nextTimePeriod && isFunQuestion) {
+      setText('Answer this Icebreaker!');
+      setAddClass('hover-event');
+    }
   };
 
   const handleMouseLeave = () => {
