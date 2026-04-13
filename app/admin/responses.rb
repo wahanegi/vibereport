@@ -28,11 +28,8 @@ ActiveAdmin.register Response do
         link_to t.time_period.date_range,
                 admin_time_period_path(t.time_period) if t.time_period.present?
       end
-      row :word do |response|
-        response.emotion&.word.presence
-      end
-      row :category do |response|
-        response.emotion&.category.presence
+      row :emotion do |response|
+        link_to response.emotion.word, admin_emotion_path(response.emotion) if response.emotion.present?
       end
       row :user
       row :not_working

@@ -7,7 +7,7 @@ ActiveAdmin.register FunQuestion do
     column :question_body
     column :used
     column :public
-    column :user.name
+    column :user
     column :created_at
     actions
   end
@@ -15,7 +15,9 @@ ActiveAdmin.register FunQuestion do
   show do
     attributes_table do
       row :question_body
-      row :user.name
+      row :user do |record|
+        link_to record.user.full_name, admin_user_path(record.user)
+      end
       row :time_period do |t|
         link_to t.time_period.date_range,
                 admin_time_period_path(t.time_period) if t.time_period.present?

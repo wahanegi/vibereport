@@ -79,8 +79,9 @@ class TimePeriod < ApplicationRecord
     start_date.end_of_week(:saturday)
   end
 
-  def date_range
-    work_week_range
+  def date_range(start_format = DateFormats::MONTH_DAY,
+                 end_format = DateFormats::MONTH_DAY_YEAR_COMMA)
+    "#{first_working_day.strftime(start_format)} - #{last_working_day.strftime(end_format)}"
   end
 
   def date_range_for_csv
@@ -101,12 +102,5 @@ class TimePeriod < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[due_date end_date slug start_date]
-  end
-
-  private
-
-  def work_week_range(start_format = DateFormats::MONTH_DAY,
-                      end_format = DateFormats::MONTH_DAY_YEAR_COMMA)
-    "#{first_working_day.strftime(start_format)} - #{last_working_day.strftime(end_format)}"
   end
 end
