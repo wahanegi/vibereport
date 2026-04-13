@@ -131,11 +131,14 @@ const BrainstormingItem = ({
         <br />
         {edit ?
           <Form.Control as="textarea" rows={4}
+                        name={"brainstorming-textarea"}
                         size="lg"
                         autoFocus={true}
                         onChange={e => setBrainstormingBody(e.target.value)}
-                        value={brainstormingBody} />
-          : brainstorming.brainstorming_body}
+                        value={brainstormingBody}
+                        className='textarea-auto-resize' />
+          : <p className="text-pre-wrap text-start">{brainstorming.brainstorming_body}</p>
+        }
       </div>
 
       <p className={'text-orange-700 text-end'}>Please vote using emoticons</p>
