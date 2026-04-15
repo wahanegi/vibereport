@@ -83,19 +83,24 @@ const RichInputElement = ({
   }, []);
 
   const handleKeyDown = (event) => {
+    const mod = event.ctrlKey || event.metaKey;
+    if (mod && event.code === 'KeyC') {
+      event.preventDefault();
+      copyToClipboard(window.getSelection().toString());
+      return;
+    }
+    if (mod && event.code === 'KeyV') {
+      return;
+    }
+    if (mod) {
+      return;
+    }
     event.preventDefault();
-    const selectedValue = window.getSelection().toString();
     const text = element.textContent;
     const cursorPos = Cursor.getCurrentCursorPosition(element, initCoordinates);
     const caretCur = cursorPos.charCount;
     const realPos = cursorPos.realPos;
     let char = event.key;
-    if (event.ctrlKey && event.keyCode === 67) {
-      return copyToClipboard(selectedValue);
-    }
-    if (event.ctrlKey && event.keyCode === 86) {
-      return paste();
-    }
     switch (char.toLowerCase()) {
       case 'enter':
         if (!isDropdownList) char = '\x0A';
@@ -613,15 +618,11 @@ const RichInputElement = ({
     });
   };
 
-  useEffect(() => {
-    window.addEventListener('paste', function (e) {
-      e.preventDefault();
-      paste();
-    });
-    window.addEventListener('cut', function (e) {
-      e.preventDefault();
-    });
-  }, [textHTML]);
+  const handlePaste = (event) => {
+    event.preventDefault();
+    const pastedText = event.clipboardData?.getData('text/plain') ?? '';
+    pasteFromClipboard(pastedText);
+  };
 
   const pasteFromClipboard = (text) => {
     const cursorPos = Cursor.getCurrentCursorPosition(element);
@@ -651,17 +652,6 @@ const RichInputElement = ({
     }
   };
 
-  const paste = () => {
-    navigator.clipboard
-      .readText()
-      .then((text) => {
-        pasteFromClipboard(text);
-      })
-      .catch((err) => {
-        console.log('Something went wrong', err);
-      });
-  };
-
   useEffect(() => {
     setIsDisabled(calculateWordCount(textHTML) <= 2);
   }, [textHTML]);
@@ -674,6 +664,7 @@ const RichInputElement = ({
           refs={textAreaRef}
           onKeyDown={handleKeyDown}
           onClick={clickHandling}
+          onPaste={handlePaste}
           cursorPos={Cursor.getCurrentCursorPosition(element)}
           className="c3 place-size-shout-out w-100 border-none text-start d-inline-block lh-sm pt-2"
           placeholder={`\x0DUse "${TAG_AT}${END_TAG_AT}"  to include Shoutouts to members of the team!\x0A`}
@@ -700,18 +691,17 @@ const RichInputElement = ({
               Please enter more information. The more detail the better.
           </p>
           <div className='d-flex flex-column gap-3 justify-content-between align-content-center flex-lg-row w-100'>
-          <SwitcherShoutouts
-            isChecked={isChecked}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-          <Button
-            className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${
-              isDisabled ? 'disabled' : ''
-            }`}
-            onClick={submitHandling}
-          >
-            Send Shoutout
-          </Button>
+            <SwitcherShoutouts
+              isChecked={isChecked}
+              handleCheckboxChange={handleCheckboxChange}
+            />
+            <Button
+              className={`btn-modal bg-primary hover:bg-primary-hover c2 fs-6 fs-md-5 p-0 ${isDisabled ? 'disabled' : ''
+                }`}
+              onClick={submitHandling}
+            >
+              Send Shoutout
+            </Button>
           </div>
         </div>
       </div>
