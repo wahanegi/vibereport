@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 const RichTextArea = ({
   textHTML,
@@ -7,19 +7,10 @@ const RichTextArea = ({
   onKeyDown,
   onClick,
   className,
-  cursorPos,
   placeholder,
   children,
 }) => {
   const [isNotActive, setIsNotActive] = useState(true);
-  useEffect(() => {
-    const rect = refs.current.getBoundingClientRect();
-    const isCaretWithinBounds = rect.top < cursorPos.coordinates.y &&
-        rect.bottom > cursorPos.coordinates.y;
-    if (process.env.NODE_ENV !== 'test' && !isCaretWithinBounds) {
-      refs.current.scrollBy({top: cursorPos.coordinates.y - rect.y});
-    }
-  }, [cursorPos]);
 
   const handleOnKeyUp = (e) => {
     !textHTML.length ? setIsNotActive(true) : setIsNotActive(false);
