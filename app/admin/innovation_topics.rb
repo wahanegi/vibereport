@@ -1,5 +1,6 @@
 ActiveAdmin.register InnovationTopic do
   permit_params :innovation_body, :posted, :sort_order, :user_id, :time_period_id
+  config.sort_order = 'sort_order_desc'
 
   filter :innovation_body
   filter :user, as: :select, collection: User.admin_select_options
