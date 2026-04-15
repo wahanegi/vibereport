@@ -33,6 +33,12 @@ const InnovationTopic = ({
     },
   };
 
+  const getNextStep = ({ isDraftFlow = false } = {}) => {
+    if (isDraftFlow) return 'innovation-topic';
+    if (data?.fun_question) return 'icebreaker-answer';
+    return 'icebreaker-question';
+  };
+
   useEffect(() => {
     if (topicBody !== prevTopicBody && isDraft) {
       setIsDraft(false);
@@ -57,17 +63,17 @@ const InnovationTopic = ({
 
   const handlingOnClickNext = () => {
     const dataFromServer = (innovation_topic) => {
-      steps.push('icebreaker-answer');
-      saveDataToDb(steps, {
-        innovation_topic_id: innovation_topic.data.id,
-        user_id: current_user_id,
-        draft: false,
-      });
+      saveDataToDb(
+        [...steps, getNextStep()],
+        {
+          innovation_topic_id: innovation_topic.data.id,
+          user_id: current_user_id,
+          draft: false,
+        });
     };
 
     const goToResultPage = () => {
-      steps.push('icebreaker-answer');
-      saveDataToDb(steps);
+      saveDataToDb([...steps, getNextStep()]);
     };
     saveDataTopic(dataFromServer, goToResultPage);
   };
@@ -113,16 +119,10 @@ const InnovationTopic = ({
           () => { },
           `${url}${id}`).then(goToResultPage);
       } else {
-        !isDraft && steps.push('icebreaker-answer');
-        saveDataToDb(steps, { draft: false });
+        !isDraft && saveDataToDb([...steps, getNextStep()], { draft: false });
       }
     } else if (isEmptyStr(topicBody)) {
-      if (isDraft) {
-        steps.push('innovation-topic');
-      } else {
-        steps.push('icebreaker-answer');
-      }
-      saveDataToDb(steps);
+      saveDataToDb([...steps, getNextStep({ isDraftFlow: isDraft })]);
     } else {
       apiRequest(
         'POST',
