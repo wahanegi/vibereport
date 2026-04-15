@@ -3,7 +3,8 @@ import Swal from "sweetalert2";
 
 const SweetAlert = ({onConfirmAction = () => {}, onDeclineAction = () => {}, alertTitle, alertHtml, cancelButtonText, confirmButtonText,
                       cancelButtonClass, confirmButtonClass, denyButtonText, showCloseButton = true,
-                      showDenyButton = false, showCancelButton = true, showConfirmButton = true}) => {
+                      showDenyButton = false, showCancelButton = true, showConfirmButton = true,
+                      allowOutsideClick = false, allowEscapeKey = true}) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: `btn fs-5 ${confirmButtonClass || 'btn-primary'}`,
@@ -17,6 +18,10 @@ const SweetAlert = ({onConfirmAction = () => {}, onDeclineAction = () => {}, ale
   swalWithBootstrapButtons.fire({
     title: alertTitle,
     html: alertHtml,
+    allowOutsideClick: allowOutsideClick,
+    allowEscapeKey: allowEscapeKey,
+    keydownListenerCapture: true,
+    stopKeydownPropagation: false,
     showCancelButton: showCancelButton,
     showCloseButton: showCloseButton,
     showDenyButton: showDenyButton,
