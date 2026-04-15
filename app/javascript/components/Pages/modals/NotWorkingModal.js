@@ -16,6 +16,8 @@ const NotWorkingModal = ({ data, makeNotWorking, show, setShow }) => {
       <Modal
         size="lg"
         show={show}
+        backdrop="static"
+        keyboard={true}
         onHide={() => {
           setShow(false);
         }}

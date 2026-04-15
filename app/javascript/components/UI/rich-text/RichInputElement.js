@@ -83,6 +83,9 @@ const RichInputElement = ({
   }, []);
 
   const handleKeyDown = (event) => {
+    if (event.key === 'Escape' && !isDropdownList) {
+      return;
+    }
     event.preventDefault();
     const selectedValue = window.getSelection().toString();
     const text = element.textContent;
