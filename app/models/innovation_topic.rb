@@ -5,6 +5,7 @@
 #  id              :bigint           not null, primary key
 #  innovation_body :text             not null
 #  posted          :boolean          default(FALSE), not null
+#  sort_order      :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  time_period_id  :bigint
@@ -29,9 +30,15 @@ class InnovationTopic < ApplicationRecord
   has_one :response, dependent: :nullify
   has_many :innovation_brainstormings, dependent: :destroy
 
+  before_validation :assign_sort_order, on: :create
+
   validates :user, presence: true
   validates :innovation_body, presence: true
   validates :innovation_body, uniqueness: { case_sensitive: false }
+  validates :sort_order, presence: true, uniqueness: true,
+                         numericality: { only_integer: true, greater_than: 0 }
+  validates :time_period, uniqueness: { allow_blank: true,
+                                        message: 'already has an innovation topic assigned' }
 
   scope :unposted, -> { where(posted: false) }
   scope :ordered, -> { order(created_at: :desc) }
@@ -45,10 +52,18 @@ class InnovationTopic < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[id innovation_body posted time_period_id created_at updated_at user_id]
+    %w[id innovation_body posted sort_order time_period_id created_at updated_at user_id]
   end
 
   def self.ransackable_associations(_auth_object = nil)
     %w[innovation_brainstormings response time_period user]
+  end
+
+  private
+
+  def assign_sort_order
+    return if sort_order.present?
+
+    self.sort_order = InnovationTopic.maximum(:sort_order).to_i + 10
   end
 end
