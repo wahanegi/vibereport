@@ -34,6 +34,7 @@ ActiveAdmin.register InnovationTopic do
       end
       row :posted
       row :created_at
+      row :updated_at
     end
 
     panel 'Brainstormings' do
