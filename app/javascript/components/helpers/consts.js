@@ -93,3 +93,7 @@ export const BRAINSTORMING_ALLOWED_EMOJIS = [
   { unified: "1f9e0", name: "clever idea", level: 3 },
   { unified: "1f680", name: "worth exploring", level: 4 }
 ];
+
+export const REGEX = {
+  videoExtension: /\.(mp4|webm)$/i
+}

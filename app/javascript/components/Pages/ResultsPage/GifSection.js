@@ -1,6 +1,7 @@
-import Tippy from "@tippyjs/react";
+import React from "react"
+import Tippy from '@tippyjs/react';
 import isEmpty from "ramda/src/isEmpty";
-import React from "react";
+import { REGEX } from '../../helpers/consts'
 import PoweredBy from "../../../../assets/images/PoweredBy.svg";
 import { getSortedGifs } from "../../helpers/helpers";
 
@@ -28,16 +29,22 @@ const GifSection = ({ gifs, nextTimePeriod, isMinUsersResponses, loaded }) => {
 
   if (isEmpty(gifs)) return null
 
-  const gifItems = getSortedGifs(gifs).map((gif, index) => {
+  const gifItems = gifs.sort((a, b) => a.image.height - b.image.height).map((gif, index) => {
+    const isVideo = REGEX.videoExtension.test(gif?.image?.src || '');
+
     return <div className='col align-items-center gif-container p-1' key={index}>
-        <Tippy content={
-          <div className={`btn btn-bubbles wb1 not-shadow tippy fs-8 fw-bold ${gif.emotion.category}`}>
-            {gif.emotion.word}
-          </div>
-        }>
-          <img src={gif.image.src} className="w-100 h-100" alt={`gif ${index}`} />
-        </Tippy>
-      </div>
+      <Tippy content={
+        <div className={`btn btn-bubbles wb1 not-shadow tippy fs-8 fw-bold ${gif.emotion.category}`}>{gif.emotion.word}</div>}>
+        {
+          isVideo ? (
+            <video autoPlay loop muted playsInline
+                   src={gif.image.src}
+                   aria-label={gif.emotion.word} />
+          ) : (
+            <img src={gif.image.src} alt={`gif ${gif.emotion.word}`}/>
+          )}
+      </Tippy>
+    </div>
   });
 
   return <div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 mb-3'>
