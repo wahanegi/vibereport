@@ -7,7 +7,7 @@ class RemindCheckInEmailWorker
   end
 
   def run_notification
-    return unless Date.current.strftime('%A').casecmp?(ENV['DAY_TO_SEND_FINAL_REMINDER'] || '')
+    return unless Date.current.strftime(DateFormats::DAY_NAME_FULL).casecmp?(ENV['DAY_TO_SEND_FINAL_REMINDER'] || '')
 
     send_reminder_emails!
   end

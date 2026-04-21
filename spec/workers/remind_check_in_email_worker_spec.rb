@@ -13,7 +13,7 @@ RSpec.describe RemindCheckInEmailWorker do
 
   before(:each) do
     Faker::UniqueGenerator.clear
-    stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_FINAL_REMINDER' => Date.current.strftime('%A')))
+    stub_const('ENV', ENV.to_hash.merge('DAY_TO_SEND_FINAL_REMINDER' => Date.current.strftime(DateFormats::DAY_NAME_FULL)))
   end
 
   describe '.initialize' do

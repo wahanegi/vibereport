@@ -6,7 +6,7 @@ class TimeSheetResultsEmailWorker
   end
 
   def run_notification
-    return unless Date.current.strftime('%A')
+    return unless Date.current.strftime(DateFormats::DAY_NAME_FULL)
                       .casecmp?(ENV.fetch('DAY_TO_SEND_RESULTS_EMAIL', nil))
 
     excel_entries = fetch_entries

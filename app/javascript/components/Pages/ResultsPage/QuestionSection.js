@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
-import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from "../../helpers/helpers";
 import { apiRequest, updateResponse } from "../../requests/axios_requests";
-import EmojiRow from "./Emojis/EmojiRow";
+import { isBlank, isEmptyStr, isNotEmptyStr, isPresent } from "../../helpers/helpers";
 import { userFullName } from "../../helpers/library";
+import EmojiRow from "./Emojis/EmojiRow";
 
 const PreviewQuestionSection = () =>
   <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
@@ -192,35 +192,52 @@ const AnswerItem = ({
 }
 
 const QuestionSection = ({
-  fun_question, answers, nextTimePeriod, isMinUsersResponses,
-  setShowWorkingModal, current_user, data, setData
+  fun_question,
+  answers,
+  nextTimePeriod,
+  isMinUsersResponses,
+  setShowWorkingModal,
+  current_user,
+  data,
+  setData,
+  loaded
 }) => {
-  if (!nextTimePeriod && isMinUsersResponses) return <PreviewQuestionSection />
-
   const userName = userFullName(fun_question?.user)
   const [answersArray, setAnswersArray] = useState(answers || [])
 
   useEffect(() => {
-    setAnswersArray(answers)
-  }, [answers])
+    if (loaded) {
+      setAnswersArray(answers || []);
+    }
+  }, [answers, loaded]);
 
-  if (isBlank(answersArray)) return <EmptyQuestionSection userName={userName}
-                                                          fun_question={fun_question}
-                                                          nextTimePeriod={nextTimePeriod}
-                                                          data={data}
-                                                          setData={setData}
-                                                          setShowWorkingModal={setShowWorkingModal} />
+  if (!loaded) {
+    return <PreviewQuestionSection />;
+  }
+
+  if (!nextTimePeriod && isMinUsersResponses) {
+    return <PreviewQuestionSection />;
+  }
+
+  if (isBlank(answersArray)) {
+    return <EmptyQuestionSection
+      userName={userName}
+      fun_question={fun_question}
+      nextTimePeriod={nextTimePeriod}
+      data={data}
+      setData={setData}
+      setShowWorkingModal={setShowWorkingModal} />
+  }
 
   return <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12'>
     <Question {...{ userName, fun_question }} />
     {
-      answersArray.map(data => {
-        const { answer, user, emojis } = data
-        return <AnswerItem key={answer.id} {...{
+      answersArray.map(({ answer, user, emojis }) => (
+        <AnswerItem key={answer.id} {...{
           answer, emojis, fun_question, user, current_user, nextTimePeriod,
           answersArray, setAnswersArray
         }} />
-      })
+      ))
     }
   </div>
 }
