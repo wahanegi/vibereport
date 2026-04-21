@@ -18,11 +18,11 @@
   border: 8px solid $sea-green;
   border-radius: 6px;
 
-  img {
+  img, video {
     width: 100%;
     height: 100%;
     }
-  }
+ }
 
 .gif-clicked-neutral {
   box-sizing: border-box;
@@ -33,7 +33,7 @@
   border: 8px solid $steel-blue;
   border-radius: 6px;
 
-  img {
+  img, video {
     width: 100%;
     height: 100%;
     }
@@ -47,16 +47,18 @@
   border: 8px solid $cinnamon;
   border-radius: 6px;
 
-  img {
+  img, video {
     width: 100%;
     height: 100%;
     }
   }
 
-.gif-item img {
-  width: 100%;
-  height: 100%;
+.gif-item {
+  img, video {
+    width: 100%;
+    height: 100%;
   }
+}
 
 .gif-wrap {
   max-width: 1104px;
@@ -71,7 +73,13 @@
     grid-template-columns: repeat(2, 1fr);
     height: 250px;
     }
+
+  video {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
   }
+}
 
 .gif-card {
   background-color: $gray-500 !important;
@@ -119,7 +127,8 @@
     }
   }
 
-.gif img {
+.gif {
+  img, video {
   &.small {
     max-width: 312px;
     max-height: 170px;
@@ -153,6 +162,7 @@
     margin-top: 6px;
     }
   }
+}
 
 .small-image-powered-by {
   position: initial;
@@ -171,3 +181,8 @@
   object-fit: cover;
   }
 
+.gif-container video {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
