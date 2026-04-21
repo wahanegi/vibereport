@@ -17,7 +17,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
            due_date: REFERENCE_DATE - 14.days)
   end
 
-  let(:force_date) { (REFERENCE_DATE - 30.days).strftime(DATE_FORMAT) }
+  let(:force_date) { (REFERENCE_DATE - 30.days).strftime(DateFormats::STANDARD_DATE) }
 
   before do
     stub_const('ENV', ENV.to_hash.merge(
@@ -61,7 +61,7 @@ RSpec.describe DailyOverdueTimesheetWorker do
     end
 
     context 'when force date has not been reached yet' do
-      let(:force_date) { (REFERENCE_DATE + 5.days).strftime(DATE_FORMAT) }
+      let(:force_date) { (REFERENCE_DATE + 5.days).strftime(DateFormats::STANDARD_DATE) }
 
       it 'does not send any emails' do
         expect { worker.run }

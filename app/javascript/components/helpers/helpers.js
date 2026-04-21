@@ -61,7 +61,7 @@ export function splitArray(arr, n) {
   const len = arr.length;
   const result = [];
 
-  for (i = 0; i < len; i += n) {
+  for (let i = 0; i < len; i += n) {
     result.push(arr.slice(i, i + n));
   }
 
@@ -211,6 +211,26 @@ export const updateRowData = (rows, id, updates) => {
   return rows.map((row) => (row.id === id ? { ...row, ...updates } : row));
 };
 
+export const checkCompanyProjectsSelection = (rowsData, projects) => {
+  for (let row of rowsData) {
+    if (!row.company) continue;
+
+    const selectedIds = rowsData
+      .filter((r) => r.id !== row.id)
+      .map((r) => r.project_id)
+      .filter(Boolean);
+
+    const companyProjects = projects.filter(
+      (p) => p.attributes.company === row.company
+    );
+
+    if (companyProjects.length > 0 && companyProjects.every(p => selectedIds.includes(p.id))) {
+      return 'All projects for this company are already selected';
+    }
+  }
+  return null;
+}
+
 export const sortBrainstormingEmojis = (emojis) => {
   const emojiLevels = BRAINSTORMING_ALLOWED_EMOJIS.reduce((acc, emoji) => {
     acc[emoji.unified] = emoji.level;
@@ -239,3 +259,5 @@ export const sortBrainstormingsArray = (arr) => {
     return bScore - aScore;
   });
 };
+
+export const getSortedGifs = (gifs) => [...gifs].sort((a, b) => a.image.height - b.image.height);

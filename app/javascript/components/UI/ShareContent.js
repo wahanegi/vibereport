@@ -73,7 +73,7 @@ export const Calendar = ({
                            positionLeft = false,
                            positionRight = false,
                            prevTimePeriod,
-                           emotions,
+                           emotions=[],
                            nextTimePeriod,
                          }) => {
   const seeResults = prevTimePeriod && positionLeft

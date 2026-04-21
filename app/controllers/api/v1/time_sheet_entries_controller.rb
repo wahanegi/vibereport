@@ -19,9 +19,9 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   end
 
   def upsert
-    if time_sheet_entries_params.blank?
-      return render json: { error: 'No timesheet entries provided' }, status: :unprocessable_entity
-    end
+    return render_error('No timesheet entries provided') if time_sheet_entries_params.blank?
+
+    return render_error('Each project can be selected only once') if duplicate_project_ids?(time_sheet_entries_params)
 
     time_period = effective_time_period
     return if validate_period_hours_limit_exceeded(time_period)
@@ -29,14 +29,10 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
     saved_entries = process_time_sheet_entries(time_period)
     return if performed?
 
-    final_submit = ActiveModel::Type::Boolean.new.cast(params[:final_submit])
-    direct_id = session[:direct_timesheet_time_period_id]
-    session.delete(:direct_timesheet_time_period_id) if direct_id.present? && final_submit
+    render_success(saved_entries, time_period)
 
-    render json: TimeSheetEntrySerializer.new(saved_entries, { include: [:project] }).serializable_hash
-                                         .merge(meta: { time_period_id: time_period.id,
-                                                        time_period_slug: time_period.slug }),
-           status: :ok
+  rescue ActiveRecord::RecordNotUnique
+    render_error('Each project can be selected only once')
   end
 
   def destroy
@@ -137,6 +133,26 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   def set_time_sheet_entry
     @time_sheet_entry = TimeSheetEntry.find_by(id: params[:id], user_id: current_user.id)
     render json: { error: 'Time sheet entry not found' }, status: :not_found unless @time_sheet_entry
+  end
+
+  def duplicate_project_ids?(entries)
+    ids = entries.filter_map { |entry| entry[:project_id] }
+    ids.uniq.length != ids.length
+  end
+
+  def render_error(message)
+    render json: { error: message }, status: :unprocessable_entity
+  end
+
+  def render_success(saved_entries, time_period)
+    final_submit = ActiveModel::Type::Boolean.new.cast(params[:final_submit])
+    direct_id = session[:direct_timesheet_time_period_id]
+    session.delete(:direct_timesheet_time_period_id) if direct_id.present? && final_submit
+
+    render json: TimeSheetEntrySerializer.new(saved_entries, { include: [:project] }).serializable_hash
+                                         .merge(meta: { time_period_id: time_period.id,
+                                                        time_period_slug: time_period.slug }),
+           status: :ok
   end
 
   def validate_period_hours_limit_exceeded(time_period)

@@ -41,6 +41,10 @@ en:
           attributes:
             rich_text:
               taken: "A content shoutout already exists!"
+        time_sheet_entry:
+          attributes:
+            project_id:
+              taken: "can be selected only once per timesheet"
         innovation_brainstorming:
           attributes:
             user:
@@ -63,3 +67,5 @@ en:
       innovation_brainstorming:
         brainstorming_body: "Brainstorming"
         innovation_topic: "Topic"
+      fun_question:
+        question_body: "Question"

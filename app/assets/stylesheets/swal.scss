@@ -6,6 +6,10 @@ body.swal2-shown > [aria-hidden="true"] {
   filter: blur(50px);
 }
 
+.swal2-container {
+  z-index: 4000 !important;
+}
+
 .swal2-close-button {
   position: absolute;
   top: -13px;

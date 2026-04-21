@@ -4,14 +4,6 @@ RSpec.describe Api::V1::InnovationTopicsController do
   let!(:user) { create :user }
   let!(:time_period) { create :time_period }
   let!(:innovation_topic) { create(:innovation_topic, user: user, time_period: time_period) }
-  let(:valid_attributes) do
-    {
-      innovation_topic: {
-        innovation_body: Faker::Lorem.sentence,
-        time_period_id: time_period.id
-      }
-    }
-  end
   let(:invalid_attributes) do
     {
       innovation_topic: {
@@ -48,6 +40,16 @@ RSpec.describe Api::V1::InnovationTopicsController do
 
   describe 'POST #create' do
     context 'with valid parameters' do
+      let(:free_time_period) { create(:time_period) }
+      let(:valid_attributes) do
+        {
+          innovation_topic: {
+            innovation_body: Faker::Lorem.sentence,
+            time_period_id: free_time_period.id
+          }
+        }
+      end
+
       subject { post '/api/v1/innovation_topics', params: valid_attributes }
 
       it 'creates a new innovation topic' do
@@ -83,18 +85,19 @@ RSpec.describe Api::V1::InnovationTopicsController do
 
     context 'when innovation_body already exists' do
       let!(:existing_topic) { create(:innovation_topic, innovation_body: 'Existing Topic') }
+      let(:unused_time_period) { create(:time_period) }
 
       it 'does not create a duplicate topic' do
         expect do
           post '/api/v1/innovation_topics', params: {
-            innovation_topic: { innovation_body: 'Existing Topic', time_period_id: time_period.id }
+            innovation_topic: { innovation_body: 'Existing Topic', time_period_id: unused_time_period.id }
           }
         end.not_to change(InnovationTopic, :count)
       end
 
       it 'returns 422 with error message' do
         post '/api/v1/innovation_topics', params: {
-          innovation_topic: { innovation_body: 'Existing Topic', time_period_id: time_period.id }
+          innovation_topic: { innovation_body: 'Existing Topic', time_period_id: unused_time_period.id }
         }
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body['error']['innovation_body']).to include('This topic already exists')
@@ -103,7 +106,7 @@ RSpec.describe Api::V1::InnovationTopicsController do
       it 'treats different cases as duplicates' do
         expect do
           post '/api/v1/innovation_topics', params: {
-            innovation_topic: { innovation_body: 'existing topic', time_period_id: time_period.id }
+            innovation_topic: { innovation_body: 'existing topic', time_period_id: unused_time_period.id }
           }
         end.not_to change(InnovationTopic, :count)
       end
@@ -151,7 +154,8 @@ RSpec.describe Api::V1::InnovationTopicsController do
 
     context 'when updating another user\'s topic' do
       let(:other_user) { create(:user) }
-      let!(:other_topic) { create(:innovation_topic, user: other_user, time_period: time_period) }
+      let(:other_time_period) { create(:time_period) }
+      let!(:other_topic) { create(:innovation_topic, user: other_user, time_period: other_time_period) }
 
       before { sign_in(user) }
 
@@ -203,7 +207,8 @@ RSpec.describe Api::V1::InnovationTopicsController do
 
     context 'when destroying another user\'s topic' do
       let(:other_user) { create(:user) }
-      let!(:other_topic) { create(:innovation_topic, user: other_user, time_period: time_period) }
+      let(:other_time_period) { create(:time_period) }
+      let!(:other_topic) { create(:innovation_topic, user: other_user, time_period: other_time_period) }
 
       before { sign_in(user) }
 

@@ -25,11 +25,11 @@ RSpec.describe TimeSheetMailer, type: :mailer do
   end
 
   it 'has the correct subject' do
-    expect(mail.subject).to eq("Timesheet Entries #{Time.zone.today.strftime(TimeSheetMailer::TIMESHEET_DISPLAY_DATE_FORMAT)}")
+    expect(mail.subject).to eq("Timesheet Entries #{Time.zone.today.strftime(DateFormats::DAY_MONTH_YEAR)}")
   end
 
   it 'contains the correct date range' do
-    expect(mail.body.encoded).to include(time_period.date_range_str)
+    expect(mail.body.encoded).to include(time_period.date_range)
   end
 
   it 'contains the correct project code and total hours' do
@@ -46,7 +46,7 @@ RSpec.describe TimeSheetMailer, type: :mailer do
   it 'attaches an Excel file' do
     expect(mail.attachments.count).to eq(1)
     file = mail.attachments.first
-    expect(file.filename).to eq("Timesheet Entries #{Time.zone.today.strftime(TimeSheetMailer::TIMESHEET_DISPLAY_DATE_FORMAT)}.xlsx")
+    expect(file.filename).to eq("Timesheet Entries #{Time.zone.today.strftime(DateFormats::DAY_MONTH_YEAR)}.xlsx")
     expect(file.content_type).to eq(TimeSheetMailer::EXCEL_MIME_TYPE)
   end
 end

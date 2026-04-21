@@ -31,6 +31,7 @@ class ResponsesReport < AdminReport
   def response_data(response_counts)
     time_periods = TimePeriod.select(:id, :start_date, :end_date)
                              .where(id: response_counts.keys)
+                             .order(:start_date)
 
     response_counts.map do |time_period_id, count|
       time_period = time_periods.find { |tp| tp.id == time_period_id }
@@ -42,6 +43,7 @@ class ResponsesReport < AdminReport
   def create_chart(data, chart_id)
     area_chart data,
                xtitle: 'Period', ytitle: 'Count', id: chart_id,
-               library: { colors: ['green'], title: { fontName: 'Arial', fontSize: 18 } }
+               library: { colors: ['green'], title: { fontName: 'Arial', fontSize: 18 } },
+               discrete: true # make X-axis categorical instead of date-based
   end
 end

@@ -14,8 +14,13 @@ const ResponseSection = ({
   itemComponent: ItemComponent,
   headerProps,
   itemDataKey,
-  emptyConfig
+  emptyConfig,
+  loaded
 }) => {
+  if (!loaded) {
+    return <PreviewSection previewClass={emptyConfig.previewClass} />;
+  }
+
   if (!nextTimePeriod && isMinUsersResponses) {
     return <PreviewSection previewClass={emptyConfig.previewClass} />;
   }
