@@ -82,7 +82,7 @@ const RichInputElement = ({
     }
   }, []);
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event) => {  
     const mod = event.ctrlKey || event.metaKey;
     if (mod && event.code === 'KeyC') {
       event.preventDefault();

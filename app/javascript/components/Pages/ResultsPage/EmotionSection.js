@@ -1,6 +1,6 @@
 import React from "react";
-import { EMOTION_COL_NUMBERS, MIN_USERS_RESPONSES } from "../../helpers/consts";
-import { getRandomInteger, splitArray} from "../../helpers/helpers";
+import { EMOTION_COL_NUMBERS } from "../../helpers/consts";
+import { getRandomInteger, splitArray } from "../../helpers/helpers";
 
 const AnimatedEmotion = ({ word }) => {
   const marginTop = getRandomInteger(1,15) // top margin 1-15px
@@ -11,10 +11,10 @@ const AnimatedEmotion = ({ word }) => {
     marginTop: `${marginTop}px`,
     fontSize: `${fontSize}px`,
     '--duration': `${duration}ms`
-  }
+  };
 
   return (
-      <div className="word fw-bold text-steel-blue" style={animatedStyles}>{word}</div>
+    <div className="word fw-bold text-steel-blue" style={animatedStyles}>{word}</div>
   );
 };
 
@@ -25,15 +25,14 @@ const PreviewEmotionSection = ({ data }) => {
   return <div className='col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
     {
       splitEmotions.map((emotions, index) =>
-          <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
-            {
-              emotions.map((emotion, index) =>
-                  <div className="col" key={index}>
-                    <AnimatedEmotion word={emotion.attributes.word} />
-                  </div>)
-            }
-          </div>
-      )
+        <div className="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2" key={index}>
+          {
+            emotions.map((emotion, index) =>
+              <div className="col" key={index}>
+                <AnimatedEmotion word={emotion.attributes.word} />
+              </div>)
+          }
+        </div>)
     }
   </div>
 }
@@ -59,17 +58,23 @@ const filterEmotions = (emotions) => {
   }, []);
 };
 
-const EmotionSection = ({emotions, nextTimePeriod, data, isMinUsersResponses}) => {
+const EmotionSection = ({ emotions, nextTimePeriod, data, isMinUsersResponses, loaded }) => {
+  if (!loaded) {
+    return <PreviewEmotionSection data={data} />
+  }
+
   const filteredEmotions = filterEmotions(emotions)
 
-  if (!nextTimePeriod && isMinUsersResponses) return <PreviewEmotionSection data={data}/>
+  if (!nextTimePeriod && isMinUsersResponses) {
+    return <PreviewEmotionSection data={data} />
+  }
 
   return <div className='col-8 mt-2'>
     <div className="row mx-auto w-100 gap-2">
       {filteredEmotions.map((emotion, index) =>
-          <div className="col" key={index}>
-            <AnimatedEmotion word={emotion.word}/>
-          </div>)}
+        <div className="col" key={index}>
+          <AnimatedEmotion word={emotion.word} />
+        </div>)}
     </div>
   </div>
 }
