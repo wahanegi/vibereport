@@ -86,7 +86,11 @@ export const Calendar = ({
     {seeResults}
     {positionRight && <p className="m-0">See next results</p>}
     <div className="position-absolute translate-middle-x start-50" style={{ top: 20 }}>
-      <div className="position-relative pointer" style={{ height: 78, width: 83 }} onClick={onClick}>
+      <div
+        className={`position-relative ${onClick ? 'pointer' : ''}`}
+        style={{ height: 78, width: 83 }}
+        onClick={onClick}
+        role={onClick ? 'button' : undefined} >
         <img className="translate-middle-x position-absolute top-0" src={calendar} alt="calendar" />
         <div className="position-absolute top-0" style={{ width: 83 }}>
           {date.includes(' - ')
