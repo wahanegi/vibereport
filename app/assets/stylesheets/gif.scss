@@ -179,7 +179,7 @@
 }
 
 .gif-container img {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .gif-list img,
@@ -194,5 +194,5 @@
 }
 
 .gif-list img {
-  object-fit: cover;
+  object-fit: contain;
 }
