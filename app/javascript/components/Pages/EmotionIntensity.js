@@ -53,6 +53,59 @@ const IntenseLine = ({
     </div>);
 };
 
+const EmotionGif = ({ isVideo, gifUrl, category, word }) => (
+  <div className="d-flex flex-column align-items-center">
+    <div className="gif d-inline-block text-end">
+      {
+        isVideo ? (
+          <video autoPlay loop muted playsInline
+                 src={gifUrl}
+                 className={`small image-${category} align-top`}
+                 aria-label={`gif ${category}`} />
+        ) : (
+          <img
+            src={gifUrl}
+            alt="Giphy image"
+            className={`small image-${category} align-top`}
+          />
+        )}
+      <br />
+      <img
+        src={PoweredBy}
+        alt="PoweredBy"
+        className={`small-image-powered-by align-top`}
+      />
+    </div>
+    <div className="mb-2">
+      <ButtonEmotion category={category}>{word}</ButtonEmotion>
+    </div>
+  </div>
+)
+
+const EmotionSection = ({ gifUrl, word, category, isVideo }) => (
+  <Fragment>
+    {isBlank(gifUrl) ? (
+      <Fragment>
+        <h1 className="mb-2">
+          “{capitalizeFirstLetter(word)}” — Most excellent!
+        </h1>
+        <h2 className="fs-md-4 text-black mb-3">Select how intense the feeling is</h2>
+        <br />
+      </Fragment>
+    ) : (
+      <Fragment>
+        <EmotionGif
+          isVideo={isVideo}
+          gifUrl={gifUrl}
+          category={category}
+          word={word}/>
+        <h2 className="fs-md-4 text-black mb-3">Select how intense the feeling is</h2>
+      </Fragment>
+    )}
+  </Fragment>
+)
+
+
 const EmotionIntensity = ({
                             data, setData, saveDataToDb, steps, service, draft,
                           }) => {
@@ -85,48 +138,6 @@ const EmotionIntensity = ({
     steps.push('productivity-check');
     saveDataToDb(steps, {rating, comment, draft: false});
   };
-
-  const EmotionGif = () => (
-    <div className="d-flex flex-column align-items-center">
-      <div className="gif d-inline-block text-end">
-        {
-          isVideo ? (
-            <video autoPlay loop muted playsInline
-                   src={gif_url}
-                   className={`small image-${category} align-top`}
-                   aria-label={`gif ${category}`} />
-          ) : (
-        <img
-          src={gif_url}
-          alt="Giphy image"
-          className={`small image-${category} align-top`}
-        />
-          )}
-        <br/>
-        <img
-          src={PoweredBy}
-          alt="PoweredBy"
-          className={`small-image-powered-by align-top`}
-        />
-      </div>
-      <div className="mb-2">
-        <ButtonEmotion category={category}>{word}</ButtonEmotion>
-      </div>
-    </div>
-  );
-
-  const EmotionSection = () => (<Fragment>
-    {isBlank(gif_url) ? (<Fragment>
-      <h1 className="mb-2">
-        “{capitalizeFirstLetter(word)}” — Most excellent!
-      </h1>
-      <h2 className="fs-md-4 text-black mb-3">Select how intense the feeling is</h2>
-      <br/>
-    </Fragment>) : (<Fragment>
-      <EmotionGif/>
-      <h2 className="fs-md-4 text-black mb-3">Select how intense the feeling is</h2>
-    </Fragment>)}
-  </Fragment>);
 
   const generateStyles = (value, selected, category) => {
     let backgroundColor, borderColor;
@@ -165,7 +176,12 @@ const EmotionIntensity = ({
     <div className="container-fluid pt-1 pt-md-0">
       <div className="row">
         <div className="col-12">
-          <EmotionSection/>
+          <EmotionSection
+            gifUrl={gif_url}
+            word={word}
+            category={category}
+            isVideo={isVideo}
+          />
         </div>
       </div>
       <div className="row mb-5">
