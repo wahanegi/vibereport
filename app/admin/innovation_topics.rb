@@ -1,5 +1,6 @@
 ActiveAdmin.register InnovationTopic do
-  permit_params :innovation_body, :posted, :user_id, :time_period_id
+  permit_params :innovation_body, :posted, :sort_order, :user_id, :time_period_id
+  config.sort_order = 'sort_order_desc'
 
   filter :innovation_body
   filter :user, as: :select, collection: User.admin_select_options
@@ -17,6 +18,7 @@ ActiveAdmin.register InnovationTopic do
       link_to t.time_period.date_range,
               admin_time_period_path(t.time_period) if t.time_period.present?
     end
+    column :sort_order
     column :posted
     column :created_at
     actions
@@ -32,6 +34,7 @@ ActiveAdmin.register InnovationTopic do
       end
       row :posted
       row :created_at
+      row :updated_at
     end
 
     panel 'Brainstormings' do
@@ -50,11 +53,19 @@ ActiveAdmin.register InnovationTopic do
 
   form do |f|
     f.inputs do
+      if f.object.new_record? && f.object.sort_order == 0
+        f.object.sort_order = nil
+      end
+
       f.input :innovation_body
       f.input :user, collection: User.admin_select_options
       f.input :time_period,
               collection: TimePeriod.ordered.map { |t| [t.date_range, t.id] },
               include_blank: true
+      f.input :sort_order,
+              required: false,
+              input_html: { required: false },
+              label: 'Sort order'
       f.input :posted
     end
     f.actions

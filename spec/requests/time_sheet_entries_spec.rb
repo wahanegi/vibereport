@@ -21,7 +21,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
   before { sign_in(user) }
   before do
     stub_const('ENV', ENV.to_hash.merge(
-                        'TIMESHEET_START_FORCED_ENTRY_DATE' => 20.days.ago.strftime(DATE_FORMAT)
+                        'TIMESHEET_START_FORCED_ENTRY_DATE' => 20.days.ago.strftime(DateFormats::STANDARD_DATE)
                       ))
   end
 

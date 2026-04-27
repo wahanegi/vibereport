@@ -4,10 +4,11 @@ ActiveAdmin.register TimePeriod do
   index do
     selectable_column
     id_column
+    column('Week of', sortable: :start_date) { |time_period| time_period.date_range }
     column :start_date
     column :end_date
-    column :created_at
     column :due_date
+    column :created_at
     column :slug
     actions
   end
@@ -26,11 +27,7 @@ ActiveAdmin.register TimePeriod do
     f.actions
   end
 
-  show title: lambda { |time_period|
-    "#{time_period.first_working_day.strftime('%b %e')}
-    - #{time_period.last_working_day.strftime('%b %e')},
-    #{time_period.last_working_day.strftime('%Y')}"
-  } do
+  show title: :date_range do
     columns do
       column do
         panel 'Participation by Team' do

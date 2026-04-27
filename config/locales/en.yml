@@ -67,3 +67,5 @@ en:
       innovation_brainstorming:
         brainstorming_body: "Brainstorming"
         innovation_topic: "Topic"
+      fun_question:
+        question_body: "Question"

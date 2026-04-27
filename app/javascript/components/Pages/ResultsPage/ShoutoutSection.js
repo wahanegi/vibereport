@@ -1,10 +1,9 @@
-import Pluralize from 'pluralize';
+import Pluralize from "pluralize";
 import isEmpty from "ramda/src/isEmpty";
 import React, { useState } from "react";
 import ShoutoutModal from "../modals/ShoutoutModal";
 import ShoutoutAwards from "./ShoutoutAwards";
 import ShoutoutItem from "./ShoutoutItem";
-
 
 const PreviewShoutoutSection = () =>
   <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12 blur-effect'>
@@ -13,15 +12,22 @@ const PreviewShoutoutSection = () =>
 
 const ShoutoutSection = ({
   nextTimePeriod, timePeriod, sentShoutouts, receivedShoutouts, currentUserShoutouts,
-  recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user
+  recivedPublicShoutouts, data, setData, isMinUsersResponses, current_user, loaded
 }) => {
   const [shoutOutForm, setShoutOutForm] = useState(false);
+
+  if (!loaded) {
+    return <PreviewShoutoutSection />
+  }
+
   const hasCurrentUserSentShoutouts = !isEmpty(currentUserShoutouts.sent)
   const hasCurrentUserReceivedShoutouts = !isEmpty(currentUserShoutouts.received)
-  const hasEmptyCurrentUserShoutouts = !hasCurrentUserReceivedShoutouts && !hasCurrentUserSentShoutouts
-  const emptyShoutouts = hasEmptyCurrentUserShoutouts && isEmpty(sentShoutouts) && isEmpty(receivedShoutouts)
 
-  if (!nextTimePeriod && isMinUsersResponses) return <PreviewShoutoutSection />
+  const emptyShoutouts =
+    !hasCurrentUserReceivedShoutouts &&
+    !hasCurrentUserSentShoutouts &&
+    isEmpty(sentShoutouts) &&
+    isEmpty(receivedShoutouts)
 
   const ReceivedShoutouts = () => {
     return !isEmpty(recivedPublicShoutouts) && <div className='px-2'>
@@ -35,8 +41,8 @@ const ShoutoutSection = ({
   }
 
   const SentShoutouts = () => {
-    return hasCurrentUserSentShoutouts && <div className='px-2'>
-      <h3 className='text-start fw-semibold'>Sent:</h3>
+    return hasCurrentUserSentShoutouts && <div className="px-2">
+      <h3 className="text-start fw-semibold">Sent:</h3>
       {
         currentUserShoutouts.sent.map(data => {
           const { shoutout, users, emojis = [] } = data
@@ -55,6 +61,12 @@ const ShoutoutSection = ({
       {Pluralize('Shoutout', currentUserShoutouts.received.length)} received: {currentUserShoutouts.received.length}
       {!hasCurrentUserSentShoutouts ? '' : ';'}&nbsp;&nbsp;
     </h3>
+
+
+
+  if (!nextTimePeriod && isMinUsersResponses) {
+    return <PreviewShoutoutSection />
+  }
 
   return <>
     <div className='results col-12 col-xxl-9 col-xl-9 col-lg-9 col-md-10 col-sm-12' hidden={emptyShoutouts}>

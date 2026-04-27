@@ -45,7 +45,7 @@
               <table class="calendar" role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 102px; height: 115px; background-image: url('complete-by.png'); background-repeat: no-repeat; background-size: contain;">
                 <tr>
                   <td class="data" style="padding-top: 55px; width: 102px; height: 14px; font-size: 16px; line-height: 17px; color: rgba(0, 0, 0, 0.7); white-space: nowrap; text-transform: capitalize;">
-                    <%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+                    <%= @view_calendar_days = "#{@time_period.end_date.strftime(DateFormats::MONTH_DAY)}".html_safe %>
                   </td>
                 </tr>
               </table>
@@ -56,7 +56,7 @@
       <!--[if !mso]><!-->
   <div class="first-row-reminder">
     <div class="calendar">
-      <div class="data"><%= @view_calendar_days = "#{@time_period.end_date.strftime('%d %b')}".html_safe %></div>
+      <div class="data"><%= @view_calendar_days = "#{@time_period.end_date.strftime(DateFormats::MONTH_DAY)}".html_safe %></div>
     </div>
   </div>
   <!--<![endif]-->
