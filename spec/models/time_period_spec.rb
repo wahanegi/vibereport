@@ -115,8 +115,8 @@ RSpec.describe TimePeriod, type: :model do
 
     context '#date_range' do
       it 'returns the correct date range string' do
-        start_date = time_period1.start_date.beginning_of_week.strftime('%Y-%m-%d')
-        end_date = time_period1.start_date.end_of_week.strftime('%Y-%m-%d')
+        start_date = time_period1.first_working_day.strftime(DateFormats::MONTH_DAY)
+        end_date = time_period1.last_working_day.strftime(DateFormats::MONTH_DAY_YEAR_COMMA)
 
         expect(time_period1.date_range).to eq("#{start_date} - #{end_date}")
       end
@@ -163,7 +163,7 @@ RSpec.describe TimePeriod, type: :model do
     context 'when TIMESHEET_START_FORCED_ENTRY_DATE is in the past' do
       before do
         stub_const('ENV', ENV.to_hash.merge(
-                            'TIMESHEET_START_FORCED_ENTRY_DATE' => (REFERENCE_DATE - 21.days).strftime('%Y-%m-%d')
+                            'TIMESHEET_START_FORCED_ENTRY_DATE' => (REFERENCE_DATE - 21.days).strftime(DateFormats::STANDARD_DATE)
         ))
       end
 
@@ -176,7 +176,7 @@ RSpec.describe TimePeriod, type: :model do
     context 'when TIMESHEET_START_FORCED_ENTRY_DATE is today' do
       before do
         stub_const('ENV', ENV.to_hash.merge(
-                            'TIMESHEET_START_FORCED_ENTRY_DATE' => REFERENCE_DATE.strftime('%Y-%m-%d')
+                            'TIMESHEET_START_FORCED_ENTRY_DATE' => REFERENCE_DATE.strftime(DateFormats::STANDARD_DATE)
         ))
       end
 
@@ -188,7 +188,7 @@ RSpec.describe TimePeriod, type: :model do
     context 'when TIMESHEET_START_FORCED_ENTRY_DATE is in the future' do
       before do
         stub_const('ENV', ENV.to_hash.merge(
-                            'TIMESHEET_START_FORCED_ENTRY_DATE' => (REFERENCE_DATE + 5.days).strftime('%Y-%m-%d')
+                            'TIMESHEET_START_FORCED_ENTRY_DATE' => (REFERENCE_DATE + 5.days).strftime(DateFormats::STANDARD_DATE)
         ))
       end
 

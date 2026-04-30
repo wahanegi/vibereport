@@ -5,6 +5,7 @@
 #  id              :bigint           not null, primary key
 #  innovation_body :text             not null
 #  posted          :boolean          default(FALSE), not null
+#  sort_order      :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  time_period_id  :bigint
@@ -36,17 +37,73 @@ RSpec.describe InnovationTopic, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:innovation_body) }
+    it { should validate_numericality_of(:sort_order).is_greater_than(0).only_integer }
 
     describe 'uniqueness of innovation_body' do
       subject { create(:innovation_topic) }
 
       it { is_expected.to validate_uniqueness_of(:innovation_body).case_insensitive }
     end
+
+    describe 'uniqueness of sort_order' do
+      subject { create(:innovation_topic) }
+
+      it { is_expected.to validate_uniqueness_of(:sort_order) }
+    end
+
+    describe 'uniqueness of time_period' do
+      it 'does not allow two topics assigned to the same time period' do
+        create(:innovation_topic, time_period: time_period, user: user)
+        duplicate = build(:innovation_topic, time_period: time_period, user: user)
+
+        expect(duplicate).not_to be_valid
+        expect(duplicate.errors[:time_period]).to include('already has an innovation topic assigned')
+      end
+
+      it 'allows multiple topics with no time period assigned' do
+        create(:innovation_topic, time_period: nil, user: user)
+        second = build(:innovation_topic, time_period: nil, user: user)
+
+        expect(second).to be_valid
+      end
+
+      it 'allows different time periods to each have a topic' do
+        other_time_period = create(:time_period)
+        create(:innovation_topic, time_period: time_period, user: user)
+        topic_for_other_period = build(:innovation_topic, time_period: other_time_period, user: user)
+
+        expect(topic_for_other_period).to be_valid
+      end
+    end
+  end
+
+  describe 'sort order assignment' do
+    let!(:last_topic) { create(:innovation_topic, sort_order: 520) }
+
+    it 'assigns next sort_order when value is not provided' do
+      new_topic = create(:innovation_topic, sort_order: nil)
+
+      expect(new_topic.sort_order).to eq(last_topic.sort_order + 10)
+    end
+
+    it 'does not allow zero sort_order' do
+      topic_with_zero_sort_order = build(:innovation_topic, sort_order: 0)
+
+      expect(topic_with_zero_sort_order).not_to be_valid
+      expect(topic_with_zero_sort_order.errors[:sort_order]).to include('must be greater than 0')
+    end
+
+    it 'does not allow nil sort_order on update' do
+      existing_topic = create(:innovation_topic, sort_order: 530)
+
+      expect(existing_topic.update(sort_order: nil)).to eq(false)
+      expect(existing_topic.errors[:sort_order]).to include("can't be blank")
+    end
   end
 
   describe 'Ransack support' do
     it 'returns the expected attributes' do
-      expect(described_class.ransackable_attributes).to match_array(%w[id innovation_body posted time_period_id created_at updated_at user_id])
+      expect(described_class.ransackable_attributes).to match_array(%w[id innovation_body posted sort_order time_period_id created_at updated_at user_id])
     end
 
     it 'returns the expected associations' do

@@ -17,7 +17,7 @@ class UserEmailMailer < ApplicationMailer
     end
     @url_sign_in_from_email = SignedLinks::SignInFromEmailBuilder.url(user)
     @url_unsubscribe = SignedLinks::UnsubscribeBuilder.url(user)
-    @view_complete_by = time_period.due_date.strftime('%b %d').to_s
+    @view_complete_by = time_period.due_date.strftime(DateFormats::MONTH_DAY).to_s
     mail(to: user.email, subject: "Hey #{user.first_name}, how has work been?")
   end
 

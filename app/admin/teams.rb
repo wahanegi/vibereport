@@ -98,7 +98,7 @@ ActiveAdmin.register Team do
           time_periods = TimePeriod.with_responses_by_team(team)
                                    .select("DISTINCT DATE_TRUNC('month', start_date) as month_start")
                                    .order(month_start: :desc)
-                                   .map { |tp| [tp.month_start.strftime('%Y-%m'), tp.month_start.strftime('%Y-%m-%d')] }
+                                   .map { |tp| [tp.month_start.strftime(DateFormats::MONTH_YEAR_FULL), tp.month_start.strftime(DateFormats::STANDARD_DATE)] }
           select_tag :time_period,
                      options_for_select(time_periods, params[:time_period]),
                      include_blank: 'Select Month',
@@ -141,7 +141,7 @@ ActiveAdmin.register Team do
       )
 
       if time_periods.present?
-        panel "Month: <span style='color: #007BFF; font-weight: bold;'>#{selected_month.strftime('%B %Y')}</span>".html_safe do
+        panel "Month: <span style='color: #007BFF; font-weight: bold;'>#{selected_month.strftime(DateFormats::MONTH_YEAR_FULL)}</span>".html_safe do
           responses_count = Response.joins(user: :teams)
                                     .where(teams: { id: team.id }, time_period: time_periods, not_working: false)
                                     .count
@@ -284,7 +284,7 @@ ActiveAdmin.register Team do
       if earliest_start_date.nil? || latest_end_date.nil?
         panel "All Time: <span style='color: #007bff; font-weight: bold;'>No data present for this period</span>".html_safe
       else
-        panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime('%B %Y')}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime('%B %Y')}</span>".html_safe do
+        panel "All Time: <span style='color: #007bff; font-weight: bold;'>#{earliest_start_date.strftime(DateFormats::MONTH_YEAR_FULL)}</span> - <span style='color: #007bff; font-weight: bold;'>#{latest_end_date.strftime(DateFormats::MONTH_YEAR_FULL)}</span>".html_safe do
           responses_count = Response.joins(user: :teams)
                                     .where(user: { teams: team })
                                     .working

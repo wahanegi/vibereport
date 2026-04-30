@@ -11,10 +11,6 @@
           width: 100% !important;
           max-width: 100% !important;
         }
-
-        .center-text {
-          text-align: center !important;
-        }
       }
     </style>
   </head>
@@ -23,7 +19,7 @@
       <tr>
         <td class="stack-column" style="vertical-align: top; width: 130px; text-align: center; background: url('<%= image_url("calendar_days.png") %>') no-repeat center top; background-size: contain; height: 105px;">
           <div style="padding-top: 48px; padding-bottom: 4px; font-size: 16px; line-height: 1.2; color: rgba(0, 0, 0, 0.7); text-transform: capitalize; font-weight: bold;">
-            <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&mdash;&mdash;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+            <%= @view_calendar_days = "#{@time_period.start_date.strftime(DateFormats::MONTH_DAY)}<br>&mdash;&mdash;<br>#{@time_period.end_date.strftime(DateFormats::MONTH_DAY)}".html_safe %>
           </div>
         </td>
         <td class="stack-column" style="text-align: left; vertical-align: middle;">

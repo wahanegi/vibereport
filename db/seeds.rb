@@ -40,12 +40,20 @@ raise 'Please set SEED_INNOVATION_TOPIC_USER_ID' if user_id.zero?
 
 topics = YAML.load_file(Rails.root.join('db/seeds/default_topics.yml'))
 
-topics['topics'].each do |topic|
+topics['topics'].each_with_index do |topic, index|
   next if InnovationTopic.exists?(['LOWER(innovation_body) = ?', topic['innovation_body'].downcase])
 
   InnovationTopic.create!(
     innovation_body: topic['innovation_body'],
     user_id:,
-    posted: true
+    posted: false,
+    sort_order: (index + 1) * 10
   )
 end
+
+# ===========================
+# Seed: Innovation Topics data normalization
+# Manual rollout step for production:
+# unassigned topics should not be posted
+# ===========================
+InnovationTopic.where(posted: true, time_period_id: nil).update_all(posted: false)

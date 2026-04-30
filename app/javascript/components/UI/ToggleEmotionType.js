@@ -1,6 +1,6 @@
 import React from "react";
-import iconNegative from "../../../assets/images/icon_negative.svg";
-import iconPositive from "../../../assets/images/icon_positive.svg";
+import iconNegative from "../../../assets/images/icon_negative.png";
+import iconPositive from "../../../assets/images/icon_positive.png";
 
 const ToggleEmotionType = ({selectedType, handleEmotionType}) => {
 

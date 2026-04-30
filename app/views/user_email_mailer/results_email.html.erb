@@ -46,7 +46,7 @@
           <td width="105" height="140" align="center">
             <div class="calendar-days">
               <div class="date">
-                <%= @view_calendar_days = "#{@time_period.start_date.strftime('%d %b')}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime('%d %b')}".html_safe %>
+                <%= @view_calendar_days = "#{@time_period.start_date.strftime(DateFormats::MONTH_DAY)}<br>&nbsp;&mdash;&mdash;&nbsp;<br>#{@time_period.end_date.strftime(DateFormats::MONTH_DAY)}".html_safe %>
               </div>
             </div>
           </td>

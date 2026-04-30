@@ -58,7 +58,7 @@ class TimePeriod < ApplicationRecord
 
       start_date = Date.current.beginning_of_week(day_that_week_starts)
       end_date = start_date + 6.days
-      due_date = (start_date..end_date).find { |date| date.strftime('%A').downcase.to_sym == day_to_send_invites }
+      due_date = (start_date..end_date).find { |date| date.strftime(DateFormats::DAY_NAME_FULL).downcase.to_sym == day_to_send_invites }
       TimePeriod.create!(start_date:, end_date:, due_date:)
     end
 
@@ -79,19 +79,20 @@ class TimePeriod < ApplicationRecord
     start_date.end_of_week(:saturday)
   end
 
-  def date_range
-    work_week_range('%Y-%m-%d')
+  def date_range(start_format = DateFormats::MONTH_DAY,
+                 end_format = DateFormats::MONTH_DAY_YEAR_COMMA)
+    "#{first_working_day.strftime(start_format)} - #{last_working_day.strftime(end_format)}"
   end
 
-  def date_range_str
-    work_week_range('%b %d')
+  def date_range_for_csv
+    "#{first_working_day.strftime(DateFormats::MONTH_DAY)} - #{last_working_day.strftime(DateFormats::MONTH_DAY_YEAR)}"
   end
 
   def self.overdue_after_forced_date
     forced_entry_date = ENV.fetch('TIMESHEET_START_FORCED_ENTRY_DATE', nil)
     return none if forced_entry_date.blank?
 
-    start_date = Date.strptime(forced_entry_date, DATE_FORMAT)
+    start_date = Date.strptime(forced_entry_date, DateFormats::STANDARD_DATE)
     where(end_date: start_date...Date.current)
   end
 
@@ -101,11 +102,5 @@ class TimePeriod < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[due_date end_date slug start_date]
-  end
-
-  private
-
-  def work_week_range(format_string)
-    "#{start_date.beginning_of_week.strftime(format_string)} - #{start_date.end_of_week.strftime(format_string)}"
   end
 end

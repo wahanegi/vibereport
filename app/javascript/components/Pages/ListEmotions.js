@@ -81,7 +81,7 @@ function ListEmotions({
   const rangeFormat = (tp) => {
     const dueDate = new Date(tp.due_date);
     const month = dueDate
-      .toLocaleString('default', {month: 'long'})
+      .toLocaleString('en-US', {month: 'long'})
       .slice(0, 3);
     return month + ' ' + `${dueDate.getDate()}`.padStart(2, '0');
   };

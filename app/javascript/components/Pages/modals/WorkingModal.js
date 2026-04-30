@@ -59,7 +59,7 @@ const WorkingModal = ({show, setShow, data, setData, steps}) => {
         </div>
 
 
-    return <Modal size="lg" show={show} onHide={handleHideModal} animation={true} centered dialogClassName="px-1">
+    return <Modal size="lg" show={show} backdrop="static" keyboard={true} onHide={handleHideModal} animation={true} centered dialogClassName="px-1">
         <button className="position-absolute top-0 start-100 translate-middle x-close bg-transparent border-0"
                 onClick={handleHideModal}>
             <img src={xClose} alt={'Close'}/>

@@ -43,7 +43,7 @@ const BrainstormingItem = ({
     innovation_brainstorming: {
       brainstorming_body: brainstormingBody || '',
       innovation_topic_id: innovation_topic?.id,
-    },
+    }
   }
 
   const dataFromServer = (response) => {
@@ -154,10 +154,14 @@ const BrainstormingItem = ({
 
 const TopicSection = ({
   innovation_topic, innovation_brainstormings, nextTimePeriod, isMinUsersResponses,
-  setShowWorkingModal, current_user, data, setData
+  setShowWorkingModal, current_user, data, setData, loaded
 }) => {
   const [brainstormingsArray, setBrainstormingsArray] = useState(innovation_brainstormings || [])
   const userName = userFullName(innovation_topic?.user)
+
+  useEffect(() => {
+    setBrainstormingsArray(innovation_brainstormings || [])
+  }, [innovation_brainstormings])
 
   return (
     <ResponseSection
@@ -183,8 +187,9 @@ const TopicSection = ({
         emptyClass: 'empty-brainstorming topic',
         previewClass: 'topic'
       }}
+      loaded={loaded}
     />
-  );
-};
+  )
+}
 
 export default TopicSection
