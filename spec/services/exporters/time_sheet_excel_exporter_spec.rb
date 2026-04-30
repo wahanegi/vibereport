@@ -28,8 +28,8 @@ RSpec.describe Exporters::TimeSheetExcelExporter do
     it 'creates sheets only for past periods with correct names' do
       workbook_double = instance_double(Axlsx::Workbook)
       allow(Axlsx::Package).to receive(:new).and_return(double(workbook: workbook_double, to_stream: double(read: 'binary_data')))
-      expect(workbook_double).to receive(:add_worksheet).with(hash_including(name: past_period.date_range_str.first(31)))
-      expect(workbook_double).not_to receive(:add_worksheet).with(hash_including(name: future_period.date_range_str.first(31)))
+      expect(workbook_double).to receive(:add_worksheet).with(hash_including(name: past_period.date_range.first(31)))
+      expect(workbook_double).not_to receive(:add_worksheet).with(hash_including(name: future_period.date_range.first(31)))
 
       exporter.call
     end
@@ -55,7 +55,7 @@ RSpec.describe Exporters::TimeSheetExcelExporter do
 
     it 'limits sheet name to MAX_SHEET_NAME_LENGTH characters' do
       long_period = create(:time_period, start_date: 2.weeks.ago, end_date: 1.week.ago)
-      allow(long_period).to receive(:date_range_str).and_return('X' * 50)
+      allow(long_period).to receive(:date_range).and_return('X' * 50)
 
       entry_with_long_period = create(
         :time_sheet_entry,

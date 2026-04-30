@@ -33,6 +33,10 @@
       text-align: left;
       color: $gray-250;
     }
+
+    &:disabled {
+      background-color: $gray-100 !important;
+    }
   }
 
 
@@ -55,6 +59,10 @@
 .dropdown-container {
   position: relative;
   width: 100%;
+
+  .form-control:disabled{
+    background-color: $gray-100 !important;
+  }
 }
 
 // Field input

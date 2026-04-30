@@ -17,7 +17,7 @@ class Exporters::TimeSheetExcelExporter
       .sort_by { |tp, _| tp.start_date }
       .reverse_each do |time_period, entries|
 
-      sheet_name = time_period.date_range_str.first(MAX_SHEET_NAME_LENGTH)
+      sheet_name = time_period.date_range.first(MAX_SHEET_NAME_LENGTH)
 
       workbook.add_worksheet(name: sheet_name) do |sheet|
         # header row

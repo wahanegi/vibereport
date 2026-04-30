@@ -1,5 +1,5 @@
 import React from 'react';
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import ShoutoutButton from './UI/ShoutoutButton';
 
@@ -22,7 +22,7 @@ const Layout = ({
   return (
     <>
       <Header data={data} steps={steps} draft={draft} handleSaveDraft={handleSaveDraft} saveDataToDb={saveDataToDb}
-              isResult={isResult} />
+        isResult={isResult} />
 
       <div className={'position-relative'}>
         <main
@@ -31,7 +31,7 @@ const Layout = ({
           {children}
         </main>
 
-        <div className={'position-fixed bottom-0 end-0 pb-1 pe-1'} style={{zIndex: 10}}>
+        <div className={'position-fixed bottom-0 end-0 pb-1 pe-1'} style={{ zIndex: 10 }}>
           {!isRecognitionPage && !isDirectTimesheetMode &&
             <ShoutoutButton data={data} setData={setData} hideShoutout={hideShoutout} num={numShoutouts} />}
         </div>

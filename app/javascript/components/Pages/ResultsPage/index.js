@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { MIN_USERS_RESPONSES } from "../../helpers/consts";
 import { isBlank, isPresent, rangeFormat } from "../../helpers/helpers";
-import Layout from '../../Layout';
+import Layout from "../../Layout";
 import { apiRequest, updateResponse } from "../../requests/axios_requests";
 import Loader from "../../UI/Loader";
 import { BtnBack } from "../../UI/ShareContent";
@@ -70,7 +70,7 @@ export const onChangeTimePeriodIndex = (current_user, index, setTimePeriodIndex,
   const url = '/api/v1/users/'
   const id = current_user.id
   apiRequest("PATCH", dataSend, dataFromServer, () => {
-  }, `${url}${id}`).then();
+  }, `${url}${id}`).then()
 }
 
 const Results = ({ data, setData, steps = data.response.attributes.steps || [], draft = true }) => {
@@ -179,8 +179,6 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
     }} />)
   }
 
-  if (!loaded) return <Loader />
-
   return <Layout data={data}
                  setData={setData}
                  steps={steps}
@@ -190,6 +188,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                  hideShoutout={nextTimePeriod}>
     <div
       className='w-100 d-flex flex-column align-items-center gap-1 px-1 px-xxl-0 px-xl-0 px-lg-0 px-md-1 px-sm-1 pt-1 pt-md-0'>
+      {!loaded && <Loader />}
+
       <SkipCheckInAlert />
 
       <TextHeader />
@@ -203,11 +203,13 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
       <EmotionSection emotions={emotions}
                       nextTimePeriod={nextTimePeriod}
                       data={data}
-                      isMinUsersResponses={isMinUsersResponses} />
+                      isMinUsersResponses={isMinUsersResponses}
+                      loaded={loaded} />
 
       <GifSection gifs={gifs}
                   nextTimePeriod={nextTimePeriod}
-                  isMinUsersResponses={isMinUsersResponses} />
+                  isMinUsersResponses={isMinUsersResponses}
+                  loaded={loaded} />
 
       <ShoutoutSection nextTimePeriod={nextTimePeriod}
                        current_user={current_user}
@@ -217,7 +219,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                        data={data} setData={setData}
                        isMinUsersResponses={isMinUsersResponses}
                        currentUserShoutouts={current_user_shoutouts}
-                       recivedPublicShoutouts={received_and_public_shoutouts} />
+                       recivedPublicShoutouts={received_and_public_shoutouts}
+                       loaded={loaded} />
 
       <TopicSection innovation_topic={innovation_topic}
                     current_user={current_user}
@@ -226,7 +229,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                     nextTimePeriod={nextTimePeriod}
                     data={data}
                     setData={setData}
-                    setShowWorkingModal={setShowWorkingModal} />
+                    setShowWorkingModal={setShowWorkingModal}
+                    loaded={loaded} />
 
       <QuestionSection fun_question={fun_question}
                        current_user={current_user}
@@ -235,7 +239,8 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
                        nextTimePeriod={nextTimePeriod}
                        data={data}
                        setData={setData}
-                       setShowWorkingModal={setShowWorkingModal} />
+                       setShowWorkingModal={setShowWorkingModal}
+                       loaded={loaded} />
 
       <TimePeriodNavigation />
     </div>
@@ -247,4 +252,4 @@ const Results = ({ data, setData, steps = data.response.attributes.steps || [], 
       steps={steps} />
   </Layout>
 }
-export default Results;
+export default Results

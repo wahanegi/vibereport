@@ -37,6 +37,11 @@ const ShowEmojis = ({
   };
 
   useEffect(() => {
+    const nextTotalPages = Math.max(1, Math.ceil(emojisArr.length / EMOJIS_PER_PAGE));
+    setCurrentPage((prevPage) => Math.min(prevPage, nextTotalPages));
+  }, [emojisArr.length]);
+
+  useEffect(() => {
     if (isEmptyStr(emojiObject.emoji_code)) return;
 
     onChangeEmojis(emojiObject, emojisArr, setEmojisArr, setSelectedEmoji, current_user, setEmojiObject)

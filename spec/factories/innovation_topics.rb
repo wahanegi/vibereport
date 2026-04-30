@@ -5,6 +5,7 @@
 #  id              :bigint           not null, primary key
 #  innovation_body :text             not null
 #  posted          :boolean          default(FALSE), not null
+#  sort_order      :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  time_period_id  :bigint
@@ -21,9 +22,12 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
+  sequence(:innovation_topic_sort_order) { |n| n * 10 }
+
   factory :innovation_topic do
     innovation_body { Faker::Lorem.sentence }
     posted { false }
+    sort_order { generate(:innovation_topic_sort_order) }
     association :time_period
     association :user
   end

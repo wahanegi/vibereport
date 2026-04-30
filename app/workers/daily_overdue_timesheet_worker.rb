@@ -25,11 +25,11 @@ class DailyOverdueTimesheetWorker
     raw = ENV.fetch(FORCE_DATE_ENV, nil)
     return false if raw.blank?
 
-    force_date = Date.strptime(raw, DATE_FORMAT)
+    force_date = Date.strptime(raw, DateFormats::STANDARD_DATE)
     Date.current >= force_date
   rescue ArgumentError
     Rails.logger.error(
-      "[DailyOverdueTimesheetWorker] Invalid #{FORCE_DATE_ENV}=#{raw.inspect}. Expected format #{DATE_FORMAT}."
+      "[DailyOverdueTimesheetWorker] Invalid #{FORCE_DATE_ENV}=#{raw.inspect}. Expected format #{DateFormats::STANDARD_DATE}."
     )
     false
   end

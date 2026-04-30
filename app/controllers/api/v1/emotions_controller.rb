@@ -61,10 +61,21 @@ class Api::V1::EmotionsController < ApplicationController
                                       .as_json(methods: %i[first_working_day last_working_day]),
       has_team_access: current_user.user_teams.has_team_access.any?,
       prev_results_path: (direct_timesheet? ? nil : prev_results_path),
+      can_complete_check_in: direct_timesheet? && check_in_period? && !check_in_completed?,
       time_periods: TimePeriod.ordered.as_json(methods: %i[first_working_day last_working_day]) || [],
       timesheet_enabled: current_user.teams.any?(&:timesheet_enabled?),
       innovation_question_submission_enabled: innovation_question_submission_enabled?
     }
+  end
+
+  def check_in_completed?
+    return false if current_time_period.nil?
+
+    Response.exists?(time_period_id: current_time_period.id, user_id: current_user.id, draft: false)
+  end
+
+  def current_time_period
+    @current_time_period ||= TimePeriod.current
   end
 
   def current_response
@@ -118,7 +129,7 @@ class Api::V1::EmotionsController < ApplicationController
 
       topic = InnovationTopic.unposted
                              .where(time_period_id: nil)
-                             .order(Arel.sql('RANDOM()'))
+                             .order(sort_order: :asc, id: :asc)
                              .first
 
       break if topic.blank?

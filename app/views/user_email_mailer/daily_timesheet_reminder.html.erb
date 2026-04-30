@@ -105,8 +105,8 @@
         <% @links.each do |link| %>
           <li>
             <strong>
-              <%= link[:period].first_working_day.strftime('%b %d') %> -
-              <%= link[:period].last_working_day.strftime('%b %d, %Y') %>
+              <%= link[:period].first_working_day.strftime(DateFormats::MONTH_DAY) %> -
+              <%= link[:period].last_working_day.strftime(DateFormats::MONTH_DAY_YEAR_COMMA) %>
             </strong>
             -
             <%= link_to 'Fill timesheet', link[:url], target: '_blank' %>

@@ -15,6 +15,7 @@
 #  index_time_sheet_entries_on_project_id      (project_id)
 #  index_time_sheet_entries_on_time_period_id  (time_period_id)
 #  index_time_sheet_entries_on_user_id         (user_id)
+#  index_unique_timesheet_entries              (user_id,time_period_id,project_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -29,6 +30,7 @@ class TimeSheetEntry < ApplicationRecord
   belongs_to :time_period
 
   validates :total_hours, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :project_id, uniqueness: { scope: %i[user_id time_period_id] }
   validate :billable_hours_limit, if: -> { project&.billable? }
 
   scope :billable, lambda {

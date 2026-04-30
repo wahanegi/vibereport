@@ -5,6 +5,7 @@
 #  id              :bigint           not null, primary key
 #  innovation_body :text             not null
 #  posted          :boolean          default(FALSE), not null
+#  sort_order      :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  time_period_id  :bigint

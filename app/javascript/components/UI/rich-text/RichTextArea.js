@@ -6,6 +6,7 @@ const RichTextArea = ({
   refs,
   onKeyDown,
   onClick,
+  onPaste,
   className,
   placeholder,
   children,
@@ -31,6 +32,7 @@ const RichTextArea = ({
         <div contentEditable={true}
              suppressContentEditableWarning={true}
              onKeyDown={onKeyDown}
+             onPaste={onPaste}
              onKeyUp={handleOnKeyUp}
              onClick={handleOnClick}
              onContextMenu={onContextMenuHandling}
