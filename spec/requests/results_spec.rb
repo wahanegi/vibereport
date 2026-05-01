@@ -60,37 +60,14 @@ RSpec.describe Api::V1::ResultsController do
       end
     end
 
-    # TODO: Remove this context after LEGACY_EMAIL_LINKS_CUTOFF_DATE passes.
-    context 'with legacy params (no token)', :legacy_link_support do
-      before do
-        stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.from_now.to_date.to_s))
-        create(:response, user: user, time_period: time_period)
-      end
+    context 'without token: legacy query params do not authenticate' do
+      before { create(:response, user: user, time_period: time_period) }
 
-      it 'signs in user and redirects to results when user_id and slug present' do
+      it 'does not sign in when only user_id and slug are present' do
         get '/api/v1/results_email', params: { user_id: user.id, slug: time_period.slug }
-
-        expect(controller.current_user).to eq(user)
-        expect(response).to have_http_status(:redirect)
-      end
-
-      it 'redirects to invalid link when user_id is missing' do
-        get '/api/v1/results_email', params: { slug: time_period.slug }
 
         expect(controller.current_user).to be_nil
         expect(response).to redirect_to(new_user_session_path)
-      end
-
-      context 'when legacy period has passed' do
-        before do
-          stub_const('ENV', ENV.to_h.merge('LEGACY_EMAIL_LINKS_CUTOFF_DATE' => 1.day.ago.to_date.to_s))
-        end
-
-        it 'does not sign in even with valid legacy params' do
-          get '/api/v1/results_email', params: { user_id: user.id, slug: time_period.slug }
-
-          expect(controller.current_user).to be_nil
-        end
       end
     end
   end
