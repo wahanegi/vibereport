@@ -19,7 +19,13 @@ const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => 
 
   const shoutOuts = sumShoutOuts.sort((a, b) => a.updated_at < b.updated_at ? 1 : -1)
   const numShoutOuts = shoutOuts.length
-  const isInnovationQuestionSubmissionEnabled = data?.innovation_question_submission_enabled;
+
+  const getNextStep = () => {
+    if (data?.innovation_topic) return 'innovation-brainstorming';
+    if (data?.innovation_question_submission_enabled) return 'innovation-topic';
+    if (data?.fun_question) return 'icebreaker-answer';
+    return 'icebreaker-question';
+  };
 
   const handleSaveDraft = () => {
     saveDataToDb(steps, { draft: true });
@@ -27,19 +33,7 @@ const Recognition = ({ data, setData, saveDataToDb, steps, service, draft }) => 
   }
 
   const handlingOnClickNext = () => {
-    let nextStep;
-
-    if (!data.fun_question) {
-      nextStep = 'causes-to-celebrate';
-    } else if (data.innovation_topic) {
-      nextStep = 'innovation-brainstorming';
-    } else if (isInnovationQuestionSubmissionEnabled) {
-      nextStep = 'innovation-topic';
-    } else {
-      nextStep = 'icebreaker-answer';
-    }
-
-    saveDataToDb([...steps, nextStep], { draft: false });
+    saveDataToDb([...steps, getNextStep()], { draft: false });
   }
 
   const skipHandling = () => {

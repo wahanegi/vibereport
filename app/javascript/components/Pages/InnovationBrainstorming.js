@@ -52,9 +52,6 @@ const InnovationBrainstorming = ({
   const prevBrainstormingBody = prevStateBrainstorming?.brainstorming_body;
   const brainstormingBody = brainstorming?.brainstorming_body;
   const { user_name: userName, innovation_body: topicBody } = data.innovation_topic;
-  const isInnovationQuestionSubmissionEnabled = data?.innovation_question_submission_enabled;
-  const nextStep = isInnovationQuestionSubmissionEnabled ? 'innovation-topic' : 'icebreaker-answer';
-
   const isUserName = Boolean(userName)
 
   const dataRequest = {
@@ -62,6 +59,12 @@ const InnovationBrainstorming = ({
       brainstorming_body: brainstormingBody || '',
       innovation_topic_id: data.innovation_topic.id,
     },
+  };
+
+  const getNextStep = () => {
+    if (data?.innovation_question_submission_enabled) return 'innovation-topic'
+    if (data?.fun_question) return 'icebreaker-answer';
+    return 'icebreaker-question';
   };
 
   const handleSaveDraft = () => {
@@ -81,14 +84,14 @@ const InnovationBrainstorming = ({
   const handlingOnClickNext = () => {
     const dataFromServer = (innovation_brainstorming) => {
       const id = innovation_brainstorming.data?.id;
-      saveDataToDb([...steps, nextStep], {
+      saveDataToDb([...steps, getNextStep()], {
         innovation_brainstorming_id: id,
         draft: false,
       });
     };
 
     const goToResultPage = () => {
-      saveDataToDb([...steps, nextStep]);
+      saveDataToDb([...steps, getNextStep()]);
     };
 
     saveDataBrainstorming(dataFromServer, goToResultPage);
@@ -106,7 +109,7 @@ const InnovationBrainstorming = ({
       showCancelButton: false,
       showCloseButton: false,
       onConfirmAction: () => {
-        saveDataToDb([...steps, nextStep]);
+        saveDataToDb([...steps, getNextStep()]);
       }
     });
   };
@@ -137,14 +140,10 @@ const InnovationBrainstorming = ({
           `${url}${id}`
         ).then(goToResultPage);
       } else {
-        saveDataToDb(isDraft ? steps : [...steps, nextStep], { draft: false });
+        saveDataToDb(isDraft ? steps : [...steps, getNextStep()], { draft: false });
       }
     } else if (isEmptyStr(brainstormingBody)) {
-      if (isDraft) {
-        saveDataToDb(steps);
-      } else {
-        saveDataToDb([...steps, nextStep]);
-      }
+      saveDataToDb(isDraft ? steps : [...steps, getNextStep()]);
     } else {
       apiRequest(
         'POST',

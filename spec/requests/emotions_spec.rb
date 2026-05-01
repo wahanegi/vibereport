@@ -211,5 +211,26 @@ RSpec.describe Api::V1::EmotionsController do
         end
       end
     end
+
+
+    context 'when there are no eligible fun questions' do
+      before do
+        # No custom question for the current period
+        FunQuestion.where(time_period_id: TimePeriod.find_or_create_time_period.id).delete_all
+
+        # No fallback custom question (not_used + user_id present)
+        FunQuestion.delete_all
+        create(:fun_question, public: false, used: false) # not eligible (not public)
+        create(:fun_question, public: true, used: true)   # not eligible (already used)
+      end
+
+      it 'returns 200 and fun_question as nil without errors' do
+        expect { get '/api/v1/emotions' }.not_to raise_error
+
+        expect(response).to have_http_status(:ok)
+        expect(json).to have_key(:fun_question)
+        expect(json[:fun_question]).to be_nil
+      end
+    end
   end
 end

@@ -88,6 +88,7 @@ class Api::V1::EmotionsController < ApplicationController
 
   def fun_question
     fun_question = custom_question.presence || FunQuestion.question_public.not_used.sample
+    return nil if fun_question.blank?
     return prepared_question(fun_question) if fun_question.time_period_id.present?
 
     fun_question.update(time_period_id: time_period.id, used: true) if fun_question.time_period_id.blank?
