@@ -130,12 +130,24 @@ const RichInputElement = ({
     if (mod) {
       return;
     }
-    event.preventDefault();
     const text = element.textContent;
     const cursorPos = Cursor.getCurrentCursorPosition(element, initCoordinates);
     const caretCur = cursorPos.charCount;
     const realPos = cursorPos.realPos;
     let char = event.key;
+    const inMentionSpan = cursorPos.isSPAN && textHTML[cursorPos.realPos] !== '<';
+    if (
+      (char === 'ArrowUp' || char === 'ArrowDown') &&
+      !isDropdownList &&
+      !inMentionSpan
+    ) {
+      requestAnimationFrame(() => {
+        const pos = Cursor.getCurrentCursorPosition(element);
+        setCaret(pos.charCount);
+      });
+      return;
+    }
+    event.preventDefault();
     switch (char.toLowerCase()) {
       case 'enter':
         if (!isDropdownList) char = '\x0A';

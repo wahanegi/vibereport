@@ -1,13 +1,6 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 
 const ListItem = ( props ) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    if (props.focus) {
-      ref.current?.focus();
-    }
-  }, [props.focus]);
-
   const handleKeyDown = event => {
     let i = props.index
     event.preventDefault()
@@ -37,7 +30,7 @@ const ListItem = ( props ) => {
   }
 
   return (
-    <li ref={ref} className={props.className} tabIndex={props.focus ? 0 : -1}
+    <li className={props.className} tabIndex={-1}
         index = { props.index }
         onClick={ onClickHandling }
         onKeyDown = { handleKeyDown }
