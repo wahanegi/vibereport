@@ -39,6 +39,51 @@ function scrollEditableCaretIntoView(containerEl, retryDepth = 0) {
   }
 }
 
+function getIncompletePlainMention(plainText, cursorChar, chosenUsers) {
+  if (cursorChar <= 0 || !plainText) return null;
+  const end = cursorChar;
+  let start = cursorChar - 1;
+  while (start >= 0 && !/[\s\n]/.test(plainText[start])) {
+    if (plainText[start] === '@') {
+      const namePart = plainText.slice(start + 1, end);
+      const isCompleteMention = chosenUsers.some(
+        (user) => userFullName(user) === namePart
+      );
+      if (isCompleteMention) return null;
+      return { start, end };
+    }
+    start--;
+  }
+  return null;
+}
+
+function htmlCharRangeToIndices(html, charStart, charEnd) {
+  let charIdx = 0;
+  let htmlStart = -1;
+  let htmlEnd = -1;
+  let i = 0;
+  while (i < html.length && charIdx < charEnd) {
+    if (html.startsWith('&nbsp;', i)) {
+      if (charIdx === charStart) htmlStart = i;
+      charIdx += 1;
+      i += 6;
+      if (charIdx === charEnd) htmlEnd = i;
+      continue;
+    }
+    if (html[i] === '<') {
+      const gt = html.indexOf('>', i);
+      if (gt === -1) break;
+      i = gt + 1;
+      continue;
+    }
+    if (charIdx === charStart) htmlStart = i;
+    charIdx += 1;
+    i += 1;
+    if (charIdx === charEnd) htmlEnd = i;
+  }
+  return htmlStart >= 0 && htmlEnd >= 0 ? { htmlStart, htmlEnd } : null;
+}
+
 const RichInputElement = ({
                             richText = '',
                             listUsers: listAllUsers,
@@ -537,10 +582,61 @@ const RichInputElement = ({
               RichText.deleteNextChar(textHTML, realPos, setTextHTML);
             }
             break;
-          case 'Backspace':
+          case 'Backspace': {
+            const plainMention = cursorPos.isDIV
+              ? getIncompletePlainMention(text, caretCur, copyChosenUsers)
+              : null;
+            if (plainMention) {
+              const newToken = text.slice(plainMention.start, caretCur - 1);
+              const searchPart =
+                newToken.length > 1 ? newToken.slice(1).toLowerCase() : '';
+              const availableUsers = RichText.filtrationById(
+                copyChosenUsers,
+                listAllUsers
+              );
+              const matches =
+                searchPart === ''
+                  ? availableUsers
+                  : RichText.searchUsersByFirstLetters(
+                      searchPart,
+                      availableUsers
+                    );
+              if (
+                newToken.startsWith('@') &&
+                (searchPart === '' || matches.length > 0)
+              ) {
+                const range = htmlCharRangeToIndices(
+                  textHTML,
+                  plainMention.start,
+                  caretCur
+                );
+                if (range) {
+                  const wrapped =
+                    TAG_AT.slice(0, -1) +
+                    RichText.encodeSpace(newToken) +
+                    END_TAG_AT;
+                  setTextHTML(
+                    textHTML.slice(0, range.htmlStart) +
+                      wrapped +
+                      textHTML.slice(range.htmlEnd)
+                  );
+                  setCaret(caretCur - 1);
+                  setSearchString(searchPart);
+                  setFilteredUsers(matches);
+                  setIndexOfSelection(0);
+                  if (matches.length) {
+                    setCurrentSelection(matches[0].id);
+                  }
+                  setIsDropdownList(true);
+                  setCoordinates(cursorPos.coordinates);
+                  break;
+                }
+              }
+            }
             RichText.deletePreviousChar(textHTML, realPos, setTextHTML);
             RichText.decrementPositionCursor(1, cursorPos, setCaret);
             break;
+          }
         }
       }
     }
