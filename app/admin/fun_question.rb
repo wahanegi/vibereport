@@ -16,7 +16,7 @@ ActiveAdmin.register FunQuestion do
     attributes_table do
       row :question_body
       row :user do |record|
-        link_to record.user.full_name, admin_user_path(record.user)
+        link_to record.user.full_name, admin_user_path(record.user) if record.user.present?
       end
       row :time_period do |t|
         link_to t.time_period.date_range,
