@@ -25,12 +25,6 @@ module ActiveAdminHelpers
 
     vars[:productivity_verbatims] = ProductivityVerbatims.new(team, team.nil? ? current_period : time_period).generate if only.include?(:productivity_verbatims)
 
-    vars[:celebrate_comments_count] = CelebrationsCount.new(team, time_period).generate if only.include?(:celebrate_comments_count)
-    vars[:celebrate_comments_count_all] = CelebrationsCount.new(team, all_time_periods).generate if only.include?(:celebrate_comments_count_all)
-    vars[:celebrations_count_current_period] = CelebrationsCount.new(team, current_period).generate if only.include?(:celebrations_count_current_period)
-
-    vars[:celebrate_verbatims] = CelebrationVerbatims.new(team, time_period).generate if only.include?(:celebrate_verbatims)
-
     vars[:teammate_engagement_count] = TeammateEngagementCount.new(team, time_period).generate if only.include?(:teammate_engagement_count)
     vars[:teammate_engagement_count_all] = TeammateEngagementCount.new(team, all_time_periods).generate if only.include?(:teammate_engagement_count_all)
     vars[:teammate_engagement_count_current_period] = TeammateEngagementCount.new(team, current_period).generate if only.include?(:teammate_engagement_count_current_period)
@@ -46,7 +40,6 @@ module ActiveAdminHelpers
       vars[:previous_emotion_index] = EmotionIndex.new(team, previous_time_period).generate if only.include?(:previous_emotion_index)
       vars[:previous_productivity_avg] = ProductivityAverage.new(team, previous_time_period).generate if only.include?(:previous_productivity_avg)
       vars[:previous_participation_percentage] = ParticipationPercentage.new(team, previous_time_period).generate if only.include?(:previous_participation_percentage)
-      vars[:previous_celebrate_comments_count] = CelebrationsCount.new(team, previous_time_period).generate if only.include?(:previous_celebrate_comments_count)
       vars[:previous_teammate_engagement_count] = TeammateEngagementCount.new(team, previous_time_period).generate if only.include?(:previous_teammate_engagement_count)
     end
 

@@ -5,7 +5,6 @@
 #  id                          :bigint           not null, primary key
 #  ai_answer                   :text
 #  ai_question                 :string
-#  celebrate_comment           :string
 #  comment                     :text
 #  completed_at                :date
 #  draft                       :boolean          default(FALSE), not null

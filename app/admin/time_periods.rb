@@ -91,25 +91,6 @@ ActiveAdmin.register TimePeriod do
       end
 
       column do
-        panel 'Celebration Verbatims' do
-          responses_with_message = time_period.responses.select { |response| response.celebrate_comment.present? }
-
-          if responses_with_message.any?
-            table_for responses_with_message do
-              column 'Author' do |response|
-                response.user.full_name
-              end
-              column 'Message' do |response|
-                response.celebrate_comment
-              end
-            end
-          else
-            'No celebration comments present.'
-          end
-        end
-      end
-
-      column do
         panel 'Shoutout Verbatims' do
           shoutouts_with_message = time_period.shoutouts.select { |shoutout| shoutout.type.nil? }
 
