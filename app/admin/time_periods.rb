@@ -91,6 +91,33 @@ ActiveAdmin.register TimePeriod do
       end
 
       column do
+        panel 'AI Question' do
+          responses_with_answer = time_period.responses.select { |response| response.ai_answer.present? }
+
+          if responses_with_answer.any?
+            question = responses_with_answer.map(&:ai_question).compact_blank.first
+
+            if question.present?
+              para do
+                strong question
+              end
+            end
+
+            table_for responses_with_answer do
+              column 'Author' do |response|
+                response.user.full_name
+              end
+              column 'Message' do |response|
+                response.ai_answer
+              end
+            end
+          else
+            'No AI responses present.'
+          end
+        end
+      end
+
+      column do
         panel 'Shoutout Verbatims' do
           shoutouts_with_message = time_period.shoutouts.select { |shoutout| shoutout.type.nil? }
 
