@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_07_120000) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_21_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,11 +85,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_07_120000) do
     t.datetime "created_at", null: false
     t.text "innovation_body", null: false
     t.boolean "posted", default: false, null: false
-    t.integer "sort_order", null: false
+    t.integer "sort_order", default: 0, null: false
     t.bigint "time_period_id"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["sort_order"], name: "index_innovation_topics_on_sort_order", unique: true
     t.index ["time_period_id"], name: "index_innovation_topics_on_time_period_id"
     t.index ["user_id"], name: "index_innovation_topics_on_user_id"
   end
@@ -106,6 +105,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_07_120000) do
   end
 
   create_table "responses", force: :cascade do |t|
+    t.text "ai_answer"
+    t.string "ai_question"
     t.string "celebrate_comment"
     t.text "comment"
     t.date "completed_at"

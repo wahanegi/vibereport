@@ -3,6 +3,8 @@
 # Table name: responses
 #
 #  id                          :bigint           not null, primary key
+#  ai_answer                   :text
+#  ai_question                 :string
 #  celebrate_comment           :string
 #  comment                     :text
 #  completed_at                :date
@@ -83,7 +85,7 @@ class Response < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[celebrate_comment comment completed_at created_at draft
+    %w[celebrate_comment ai_question ai_answer comment completed_at created_at draft
        emotion_id fun_question_answer_id fun_question_id gif id id_value
        not_working notices productivity productivity_comment rating
        shoutout_id steps time_period_id updated_at user_id]

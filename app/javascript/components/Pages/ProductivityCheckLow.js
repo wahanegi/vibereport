@@ -87,7 +87,7 @@ const ProductivityCheckLow = ({
     } else if (data.timesheet_enabled) {
       steps.push('timesheet');
     } else {
-      steps.push('causes-to-celebrate');
+      steps.push('this-week-in-ai');
     }
     saveDataToDb(steps, {productivity, draft: false});
   };
