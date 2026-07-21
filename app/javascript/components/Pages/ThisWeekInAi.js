@@ -58,7 +58,7 @@ const ThisWeekInAi = ({
                 handleSaveDraft={handleSaveDraft}>
                 <div className="w-100 mx-1 d-flex flex-column align-items-center">
                     <h1 className="fs-md-1 mb-5">
-                        What was your most memorable <br/> interaction with AI this week?
+                        {AI_QUESTION}
                     </h1>
                     <form className="wrap-textarea-bad-follow mx-auto w-100">
                           <textarea className="w-100 p-1 h-100 fs-8 fs-md-7 border-1 shadow-none resize-none text-black fs-7 fs-md-6"
