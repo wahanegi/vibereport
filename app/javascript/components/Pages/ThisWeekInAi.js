@@ -57,7 +57,7 @@ const ThisWeekInAi = ({
                 draft={isDraft}
                 handleSaveDraft={handleSaveDraft}>
                 <div className="w-100 mx-1 d-flex flex-column align-items-center">
-                    <h1 className="fs-md-1 mb-5">
+                    <h1 className="fs-md-1 mb-5 col-12 col-lg-6 mx-auto text-center">
                         {AI_QUESTION}
                     </h1>
                     <form className="wrap-textarea-bad-follow mx-auto w-100">
