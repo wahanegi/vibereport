@@ -108,7 +108,7 @@ ActiveAdmin.register TimePeriod do
                 response.user.full_name
               end
               column 'Message' do |response|
-                response.ai_answer
+                simple_format(response.ai_answer)
               end
             end
           else
