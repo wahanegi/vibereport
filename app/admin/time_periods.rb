@@ -92,7 +92,7 @@ ActiveAdmin.register TimePeriod do
 
       column do
         panel 'AI Question' do
-          responses_with_answer = time_period.responses.select { |response| response.ai_answer.present? }
+          responses_with_answer = time_period.responses.where.not(ai_answer: [nil, '']).includes(:user)
 
           if responses_with_answer.any?
             question = responses_with_answer.map(&:ai_question).compact_blank.first
