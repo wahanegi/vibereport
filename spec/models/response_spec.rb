@@ -3,7 +3,8 @@
 # Table name: responses
 #
 #  id                          :bigint           not null, primary key
-#  celebrate_comment           :string
+#  ai_answer                   :text
+#  ai_question                 :string
 #  comment                     :text
 #  completed_at                :date
 #  draft                       :boolean          default(FALSE), not null

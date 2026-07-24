@@ -17,6 +17,18 @@ RSpec.describe 'Admin::TimePeriod', type: :request do
       get "/admin/time_periods/#{time_period.id}"
       expect(response).to have_http_status(200)
     end
+
+    it 'shows the AI question and answers on the show page' do
+      create :response, time_period:,
+                        ai_question: 'What was your most memorable interaction with AI this week?',
+                        ai_answer: 'I debugged a tricky issue by feeding console errors to the AI.'
+
+      get "/admin/time_periods/#{time_period.id}"
+
+      expect(response.body).to include('AI Question')
+      expect(response.body).to include('What was your most memorable interaction with AI this week?')
+      expect(response.body).to include('I debugged a tricky issue by feeding console errors to the AI.')
+    end
   end
 
   describe 'GET - Edit' do

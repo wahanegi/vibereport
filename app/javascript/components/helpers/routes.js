@@ -10,7 +10,7 @@ export const ALL_STEPS = [
   {id: "4.1", step: "productivity-check"},
   {id: "4.25", step: "productivity-bad-follow-up"},
   {id: "5", step: "timesheet"},
-  {id: "6", step: "causes-to-celebrate"},
+  {id: "6", step: "this-week-in-ai"},
   {id: "7", step: "recognition"},
   {id: "7.5", step: "innovation-brainstorming"},
   {id: "7.6", step: "innovation-topic"},

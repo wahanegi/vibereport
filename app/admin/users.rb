@@ -54,27 +54,6 @@ ActiveAdmin.register User do
           end
         end
       end
-
-      column do
-        panel 'Sent Celebration Verbatims' do
-          responses_with_celebrate = user.responses.select { |response| response.celebrate_comment.present? }
-
-          if responses_with_celebrate.present?
-            table_for responses_with_celebrate do
-              column 'Message' do |response|
-                response.celebrate_comment
-              end
-              column 'Time Period' do |response|
-                start_date = response.time_period.start_date.to_s
-                end_date = response.time_period.end_date.to_s
-                content_tag :span, "#{start_date} - #{end_date}", class: 'highlight-date'
-              end
-            end
-          else
-            'No celebration verbatims present.'
-          end
-        end
-      end
     end
   end
 

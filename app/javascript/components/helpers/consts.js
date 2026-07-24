@@ -77,7 +77,7 @@ export const SEGMENTS_MAP = {
   'productivity-check': { src: complete25, activeSrc: complete25_act, percent: 25 },
   'productivity-bad-follow-up': { src: complete35, activeSrc: complete35_act, percent: 35 },
   'timesheet': { src: complete45, activeSrc: complete45_act, percent: 45 },
-  'causes-to-celebrate': { src: complete50, activeSrc: complete50_act, percent: 50 },
+  'this-week-in-ai': { src: complete50, activeSrc: complete50_act, percent: 50 },
   'recognition': { src: complete65, activeSrc: complete65_act, percent: 65 },
   'innovation-brainstorming': { src: complete65, activeSrc: complete65_act, percent: 70 },
   'innovation-topic': { src: complete65, activeSrc: complete65_act, percent: 75 },

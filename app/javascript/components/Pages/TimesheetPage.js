@@ -139,7 +139,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
 
         // Logic for normal flow
         if (!isDraft) {
-          steps.push('causes-to-celebrate');
+          steps.push('this-week-in-ai');
           saveDataToDb(steps, { draft: false });
         } else {
           saveDataToDb(steps, { draft: true });

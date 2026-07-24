@@ -8,7 +8,8 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/app/javascript/$1',
     "^ramda$": "ramda/src/index.js",
-    "^ramda/es/(.*)$": "ramda/src/$1"
+    "^ramda/es/(.*)$": "ramda/src/$1",
+    "\\.(png|jpe?g|gif|ttf|woff2?)$": "<rootDir>/fileMock.js"
   },
   testEnvironment: 'jsdom',
 };

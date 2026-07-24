@@ -1,14 +1,14 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {MemoryRouter} from 'react-router-dom';
-import CausesToCelebrate from "../Pages/CausesToCelebrate";
+import ThisWeekInAi from "../Pages/ThisWeekInAi";
 
 const mockService = {
     isLoading: false,
     error: null,
   };
-  
+
   const data = {
     response: {
       attributes: {},
@@ -26,7 +26,7 @@ const mockService = {
   };
   const setData = jest.fn();
 
-const сausesToCelebrateProps = {
+const thisWeekInAiProps = {
   data,
   setData,
   saveDataToDb: () => {},
@@ -35,21 +35,21 @@ const сausesToCelebrateProps = {
   draft: false,
 };
 
-  describe('CausesToCelebrate', () => {
+  describe('ThisWeekInAi', () => {
     test('checking components for crashing', () => {
       render(
         <MemoryRouter>
-          <CausesToCelebrate {...сausesToCelebrateProps} />
+          <ThisWeekInAi {...thisWeekInAiProps} />
         </MemoryRouter>
         );
     });
-  
-    it('reproduces page celebrate', () => {
+
+    it('reproduces the AI question page', () => {
       render(
         <MemoryRouter>
-          <CausesToCelebrate {...сausesToCelebrateProps} />
+          <ThisWeekInAi {...thisWeekInAiProps} />
         </MemoryRouter>
         );
-      expect(screen.getByText('Are there any recent causes to celebrate?')).toBeInTheDocument();
+      expect(screen.getByText('What was your most memorable interaction with AI this week?')).toBeInTheDocument();
     });
   });

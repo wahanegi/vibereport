@@ -9,7 +9,7 @@ import { mergeData } from "./helpers/library";
 import { useNavigate } from "react-router-dom";
 import ProductivityCheckLow from "./Pages/ProductivityCheckLow";
 import ProductivityBadFollowUp from "./Pages/ProductivityBadFollowUp";
-import CausesToCelebrate from "./Pages/CausesToCelebrate";
+import ThisWeekInAi from "./Pages/ThisWeekInAi";
 import Recognition from "./Pages/Recognition";
 import IcebreakerAnswer from "./Pages/IcebreakerAnswer";
 import IcebreakerQuestion from "./Pages/IcebreakerQuestion";
@@ -125,7 +125,7 @@ const ResponseFlow = ({ step, data, setData, setIsShuffleEmotions }) => {
     'timesheet': <TimesheetPage />,
     'results': <Results />,
     'productivity-bad-follow-up': <ProductivityBadFollowUp />,
-    'causes-to-celebrate': <CausesToCelebrate />,
+    'this-week-in-ai': <ThisWeekInAi />,
     'recognition': <Recognition />,
     'innovation-brainstorming': <InnovationBrainstorming />,
     'innovation-topic': <InnovationTopic />,

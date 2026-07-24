@@ -91,20 +91,28 @@ ActiveAdmin.register TimePeriod do
       end
 
       column do
-        panel 'Celebration Verbatims' do
-          responses_with_message = time_period.responses.select { |response| response.celebrate_comment.present? }
+        panel 'AI Question' do
+          responses_with_answer = time_period.responses.where.not(ai_answer: [nil, '']).includes(:user)
 
-          if responses_with_message.any?
-            table_for responses_with_message do
+          if responses_with_answer.any?
+            question = responses_with_answer.map(&:ai_question).compact_blank.first
+
+            if question.present?
+              para do
+                strong question
+              end
+            end
+
+            table_for responses_with_answer do
               column 'Author' do |response|
                 response.user.full_name
               end
               column 'Message' do |response|
-                response.celebrate_comment
+                simple_format(response.ai_answer)
               end
             end
           else
-            'No celebration comments present.'
+            'No AI responses present.'
           end
         end
       end
