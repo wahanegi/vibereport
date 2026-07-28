@@ -62,3 +62,6 @@ end
 
 ENV['EMAIL_DOMAIN'] = 'vibereport.app'
 ENV['DEFAULT_FROM_ADDRESS'] = 'do_not_reply'
+ENV['DAY_TO_SEND_IDEAS_TO_SLACK'] = 'tuesday'
+ENV['SLACK_BOT_TOKEN'] = 'xoxb-test-token'
+ENV['SLACK_IDEAS_CHANNEL'] = 'C_TEST_CHANNEL'

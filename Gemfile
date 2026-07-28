@@ -26,6 +26,7 @@ gem 'rubocop', '~> 1.58', '>= 1.58.0', require: false         # A Ruby static co
 gem 'rubocop-performance', '~> 1.16', require: false          # A rubocop Performance extension
 gem 'rubocop-rails', '~> 2.20', '>= 2.20.0', require: false   # Automatic Rails code style checking tool. A RuboCop extension focused on enforcing Rails best practices and coding conventions.
 gem 'sassc-rails', '~> 2.1', '>= 2.1.2'                       # This gem integrates the C implementation of Sass, LibSass, into the asset pipeline.
+gem 'slack-ruby-client', '~> 3.2'                            # Slack Web API client
 gem 'smarter_csv', '1.9.0'                                    # This gem for smarter importing of CSV Files as Array(s) of Hashes, with optional features for processing large files in parallel.
 gem 'sprockets-rails', '~> 3.5', '>= 3.5.0'                   # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'stimulus-rails', '~> 1.3', '>= 1.3.0'                    # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
