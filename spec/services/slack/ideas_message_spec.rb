@@ -71,4 +71,46 @@ RSpec.describe Slack::IdeasMessage do
       expect(described_class.reactions_for(brainstorming)).to eq([])
     end
   end
+
+  describe '.vote_summary' do
+    let(:brainstorming) { create(:innovation_brainstorming) }
+
+    def vote(code)
+      create(:emoji, emoji_code: code, emoji_name: 'x', user: create(:user), emojiable: brainstorming)
+    end
+
+    it 'summarises counts per vote type in canonical order, with a label' do
+      2.times { vote('1f44d') }
+      vote('1f525')
+
+      expect(described_class.vote_summary(brainstorming)).to eq('Voted in Vibe.Report: 👍 2 · 🔥 1')
+    end
+
+    it 'skips vote types with no votes' do
+      vote('1f9e0')
+
+      expect(described_class.vote_summary(brainstorming)).to eq('Voted in Vibe.Report: 🧠 1')
+    end
+
+    it 'returns nil when there are no votes' do
+      expect(described_class.vote_summary(brainstorming)).to be_nil
+    end
+  end
+
+  describe '.idea vote-count block' do
+    let(:brainstorming) { create(:innovation_brainstorming) }
+
+    it 'appends a context block with the vote summary when votes exist' do
+      create(:emoji, emoji_code: '1f44d', emoji_name: 'x', user: create(:user), emojiable: brainstorming)
+
+      blocks = described_class.idea(brainstorming)[:blocks]
+
+      expect(blocks.size).to eq(3)
+      expect(blocks.last[:elements].first[:text]).to eq('Voted in Vibe.Report: 👍 1')
+    end
+
+    it 'omits the vote block when there are no votes' do
+      expect(described_class.idea(brainstorming)[:blocks].size).to eq(2)
+    end
+  end
 end
