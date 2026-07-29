@@ -58,10 +58,13 @@ describe SlackIdeasNotificationWorker do
         allow(client).to receive(:add_reaction)
       end
 
-      it 'posts the parent card first (no thread)' do
+      it 'posts the parent card (no thread) before the ideas' do
         worker.run_notification
 
-        expect(client).to have_received(:post_message).with(channel: 'C1', blocks: [:parent], text: 'Prompt?').ordered
+        expect(client).to have_received(:post_message)
+          .with(channel: 'C1', blocks: [:parent], text: 'Prompt?').ordered
+        expect(client).to have_received(:post_message)
+          .with(channel: 'C1', blocks: [:a], text: 'a', thread_ts: 'parent_ts').ordered
       end
 
       it 'posts each idea as a threaded reply under the parent' do
