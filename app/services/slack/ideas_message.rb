@@ -2,12 +2,11 @@
 
 module Slack
   class IdeasMessage
-    # Vote types come from the frontend (consts.js: BRAINSTORMING_ALLOWED_EMOJIS); keep the codes in sync.
     VOTE_TYPES = {
-      '1f44d' => { reaction: 'thumbsup', emoji: '👍' }, # interesting
-      '1f525' => { reaction: 'fire',     emoji: '🔥' }, # high impact
-      '1f9e0' => { reaction: 'brain',    emoji: '🧠' }, # clever
-      '1f680' => { reaction: 'rocket',   emoji: '🚀' }  # explore
+      '1f44d' => { reaction: 'thumbsup', emoji: '👍' },
+      '1f525' => { reaction: 'fire',     emoji: '🔥' },
+      '1f9e0' => { reaction: 'brain',    emoji: '🧠' },
+      '1f680' => { reaction: 'rocket',   emoji: '🚀' }
     }.freeze
 
     HEADER = 'Weekly Idea Prompt'
@@ -40,19 +39,23 @@ module Slack
     end
 
     def self.reactions_for(brainstorming)
-      present = brainstorming.emojis.map(&:emoji_code).uniq
-      VOTE_TYPES.filter_map { |code, meta| meta[:reaction] if present.include?(code) }
+      vote_counts(brainstorming).keys.map { |code| VOTE_TYPES[code][:reaction] }
     end
 
     def self.vote_summary(brainstorming)
-      counts = brainstorming.emojis.group_by(&:emoji_code).transform_values(&:size)
-      parts = VOTE_TYPES.filter_map do |code, meta|
-        count = counts[code]
-        "#{meta[:emoji]} #{count}" if count&.positive?
-      end
+      parts = vote_counts(brainstorming).map { |code, count| "#{VOTE_TYPES[code][:emoji]} #{count}" }
       return if parts.empty?
 
       "#{VOTES_LABEL} #{parts.join(' · ')}"
     end
+
+    def self.vote_counts(brainstorming)
+      counts = brainstorming.emojis.group_by(&:emoji_code).transform_values(&:size)
+      VOTE_TYPES.keys.each_with_object({}) do |code, result|
+        count = counts[code]
+        result[code] = count if count&.positive?
+      end
+    end
+    private_class_method :vote_counts
   end
 end

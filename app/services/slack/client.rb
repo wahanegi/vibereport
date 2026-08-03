@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Slack
-  # Wrapper around the Slack Web API — the app's single point of contact with Slack.
   class Client
     ALREADY_REACTED = 'already_reacted'
 
