@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class SlackIdeasNotificationWorker
-  attr_reader :client, :digest, :channel
-
-  def initialize(client: Slack::Client.new, digest: Slack::IdeasDigest.new, channel: ENV.fetch('SLACK_IDEAS_CHANNEL'))
+  def initialize(client: nil, digest: nil, channel: nil)
     @client = client
     @digest = digest
     @channel = channel
@@ -14,6 +12,18 @@ class SlackIdeasNotificationWorker
     return unless digest.postable?
 
     post_ideas!
+  end
+
+  def client
+    @client ||= Slack::Client.new
+  end
+
+  def digest
+    @digest ||= Slack::IdeasDigest.new
+  end
+
+  def channel
+    @channel ||= ENV.fetch('SLACK_IDEAS_CHANNEL')
   end
 
   private

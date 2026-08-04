@@ -36,6 +36,15 @@ describe SlackIdeasNotificationWorker do
 
         expect(digest).not_to have_received(:postable?)
       end
+
+      it 'does not build a Slack client when none was injected' do
+        allow(Date).to receive(:current).and_return(wednesday)
+        allow(Slack::Client).to receive(:new)
+
+        described_class.new.run_notification
+
+        expect(Slack::Client).not_to have_received(:new)
+      end
     end
 
     context 'when there is nothing to post' do
