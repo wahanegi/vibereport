@@ -48,27 +48,14 @@ RSpec.describe Slack::IdeasMessage do
   describe '.reactions_for' do
     let(:brainstorming) { create(:innovation_brainstorming) }
 
-    def react(code, user)
-      create(:emoji, emoji_code: code, emoji_name: 'x', user:, emojiable: brainstorming)
+    it 'always returns all four default reactions in canonical order' do
+      expect(described_class.reactions_for(brainstorming)).to eq(%w[thumbsup fire brain rocket])
     end
 
-    it 'maps distinct vote codes to Slack reaction names in canonical order' do
-      react('1f680', create(:user)) # 🚀
-      react('1f44d', create(:user)) # 👍
-      react('1f44d', create(:user)) # 👍 again (different user) -> still one reaction
+    it 'returns the same four reactions regardless of how the idea was voted on during check-in' do
+      create(:emoji, emoji_code: '1f680', emoji_name: 'x', user: create(:user), emojiable: brainstorming)
 
-      expect(described_class.reactions_for(brainstorming)).to eq(%w[thumbsup rocket])
-    end
-
-    it 'ignores unknown emoji codes' do
-      react('1f44d', create(:user))
-      react('abc123', create(:user)) # not one of the four vote types
-
-      expect(described_class.reactions_for(brainstorming)).to eq(%w[thumbsup])
-    end
-
-    it 'returns an empty array when there are no reactions' do
-      expect(described_class.reactions_for(brainstorming)).to eq([])
+      expect(described_class.reactions_for(brainstorming)).to eq(%w[thumbsup fire brain rocket])
     end
   end
 

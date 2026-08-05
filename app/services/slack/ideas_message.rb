@@ -38,8 +38,8 @@ module Slack
       { text: "#{author}: #{body}", blocks: }
     end
 
-    def self.reactions_for(brainstorming)
-      vote_counts(brainstorming).keys.map { |code| VOTE_TYPES[code][:reaction] }
+    def self.reactions_for(_brainstorming)
+      VOTE_TYPES.values.map { |vote_type| vote_type[:reaction] }
     end
 
     def self.vote_summary(brainstorming)
