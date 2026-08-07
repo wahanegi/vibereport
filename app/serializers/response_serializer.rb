@@ -3,7 +3,8 @@
 # Table name: responses
 #
 #  id                          :bigint           not null, primary key
-#  celebrate_comment           :string
+#  ai_answer                   :text
+#  ai_question                 :string
 #  comment                     :text
 #  completed_at                :date
 #  draft                       :boolean          default(FALSE), not null
@@ -53,5 +54,6 @@ class ResponseSerializer
 
   attributes :id, :time_period_id, :emotion_id, :steps, :gif, :rating, :comment, :productivity,
              :productivity_comment, :fun_question_id, :fun_question_answer_id, :shoutout_id, :completed_at, :draft,
-             :not_working, :celebrate_comment, :innovation_topic_id, :innovation_brainstorming_id
+             :not_working, :ai_question, :ai_answer, :innovation_topic_id,
+             :innovation_brainstorming_id
 end

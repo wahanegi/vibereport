@@ -32,7 +32,7 @@ const ProductivityBadFollowUp = ({
     if (data.timesheet_enabled) {
       steps.push('timesheet');
     } else {
-      steps.push('causes-to-celebrate');
+      steps.push('this-week-in-ai');
     }
     saveDataToDb(steps, {productivity_comment: comment, draft: false});
   };

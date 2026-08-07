@@ -131,7 +131,6 @@ ActiveAdmin.register Team do
         only: %i[
           emotion_index
           productivity_verbatims
-          celebrate_verbatims
           verbatim_list
           emotion_index_all
           responses_data_all
@@ -173,8 +172,6 @@ ActiveAdmin.register Team do
 
             productivity_verbatims = vars[:productivity_verbatims]
 
-            celebrate_verbatims = vars[:celebrate_verbatims]
-
             shoutout_user_names = vars[:shoutout_user_names]
 
             shoutouts_count = shoutout_user_names.values.sum
@@ -196,28 +193,6 @@ ActiveAdmin.register Team do
                   end
                 else
                   div productivity_verbatims
-                end
-              end
-
-              row :Celebration_Verbatims do
-                if celebrate_verbatims.is_a?(Array)
-
-                  celebrate_verbatims.compact_blank!
-
-                  ul class: 'bubble-list', id: 'celebration-list' do
-                    celebrate_verbatims.each_with_index do |comment, index|
-                      li class: "bubble #{index > (VISIBLE_BUBBLES - 1) ? 'display-none' : ''}" do
-                        span strip_tags(comment)
-                      end
-                    end
-                  end
-
-                  if celebrate_verbatims.size > VISIBLE_BUBBLES
-                    button 'More', class: 'margin-top-1',
-                                   onclick: "showMore(event, \"celebration-list\", #{VISIBLE_BUBBLES});"
-                  end
-                else
-                  div celebrate_verbatims
                 end
               end
 

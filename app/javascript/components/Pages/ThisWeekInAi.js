@@ -3,46 +3,46 @@ import {MAX_CHAR_LIMIT} from '../helpers/consts';
 import Layout from '../Layout';
 import BlockLowerBtns from '../UI/BlockLowerBtns';
 
-const CausesToCelebrate = ({
-                             data,
-                             setData,
-                             saveDataToDb,
-                             steps,
-                             service,
-                             draft,
-                           }) => {
+const AI_QUESTION = 'What was your most memorable interaction with AI this week?';
+
+const ThisWeekInAi = ({
+                        data,
+                        setData,
+                        saveDataToDb,
+                        steps,
+                        service,
+                        draft,
+                      }) => {
   const {response} = data;
   const {isLoading, error} = service;
-  const {celebrate_comment} = response.attributes;
-  const [celebrateComment, setCelebrateComment] = useState(
-    celebrate_comment || ''
-  );
+  const {ai_answer} = response.attributes;
+  const [aiAnswer, setAiAnswer] = useState(ai_answer || '');
   const [isDraft, setIsDraft] = useState(draft);
 
   const handleSaveDraft = () => {
-    const dataDraft = {celebrate_comment: celebrateComment, draft: true};
+    const dataDraft = {ai_question: AI_QUESTION, ai_answer: aiAnswer, draft: true};
     saveDataToDb(steps, dataDraft);
     setIsDraft(true);
   };
 
   const onClickSkip = () => {
     steps.push('recognition');
-    saveDataToDb(steps, {celebrate_comment: null});
+    saveDataToDb(steps, {ai_question: AI_QUESTION, ai_answer: null});
   };
 
   const onCommentChange = (e) => {
-    setCelebrateComment(e.target.value);
+    setAiAnswer(e.target.value);
   };
 
   useEffect(() => {
-    if (celebrate_comment !== celebrateComment && isDraft) {
+    if (ai_answer !== aiAnswer && isDraft) {
       setIsDraft(false);
     }
-  }, [celebrateComment]);
+  }, [aiAnswer]);
 
   const handlingOnClickNext = () => {
     steps.push('recognition');
-    saveDataToDb(steps, {celebrate_comment: celebrateComment, draft: false});
+    saveDataToDb(steps, {ai_question: AI_QUESTION, ai_answer: aiAnswer, draft: false});
   };
 
   if (!!error) return <p>{error.message}</p>;
@@ -57,13 +57,13 @@ const CausesToCelebrate = ({
                 draft={isDraft}
                 handleSaveDraft={handleSaveDraft}>
                 <div className="w-100 mx-1 d-flex flex-column align-items-center">
-                    <h1 className="fs-md-1 mb-5">
-                        Are there any recent <br/> causes to celebrate?
+                    <h1 className="fs-md-1 mb-5 col-12 col-lg-6 mx-auto text-center">
+                        {AI_QUESTION}
                     </h1>
                     <form className="wrap-textarea-bad-follow mx-auto w-100">
                           <textarea className="w-100 p-1 h-100 fs-8 fs-md-7 border-1 shadow-none resize-none text-black fs-7 fs-md-6"
-                                    placeholder="Are you grateful for anything that happened at work recently?"
-                                    defaultValue={celebrateComment}
+                                    placeholder="Tell us about a memorable moment you had with AI this week."
+                                    defaultValue={aiAnswer}
                                     onChange={onCommentChange}
                                     maxLength={MAX_CHAR_LIMIT}/>
                     </form>
@@ -77,4 +77,4 @@ const CausesToCelebrate = ({
     );
 };
 
-export default CausesToCelebrate;
+export default ThisWeekInAi;

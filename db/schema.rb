@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_07_120000) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_21_120001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,7 +106,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_07_120000) do
   end
 
   create_table "responses", force: :cascade do |t|
-    t.string "celebrate_comment"
+    t.text "ai_answer"
+    t.string "ai_question"
     t.text "comment"
     t.date "completed_at"
     t.datetime "created_at", null: false
