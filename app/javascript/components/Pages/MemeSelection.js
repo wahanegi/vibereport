@@ -77,7 +77,10 @@ const MemeSelection = ({
 
   const handlingOnClickSkip = () => {
     steps.push('emotion-intensity');
-    saveDataToDb(steps, {gif: null, draft: false});
+    setGifUrl({});
+    setSelectedGifIndex(null);
+    setIsCustomGif(false);
+    saveDataToDb(steps, {gif: {}, draft: false});
   };
 
   const chooseGIPHYHandling = () => {
