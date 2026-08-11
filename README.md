@@ -24,6 +24,8 @@ The Vibe Report App is built on:
 
 [Start Rails server](#start-rails-server)
 
+[Time Periods and Slack Notifications](#time-periods-and-slack-notifications)
+
 [OpenSSL::Cipher::CipherError](#opensslcipherciphererror)
 
 [How to Add Your Own Logo and Favicon to the Vibe Report App](#how-to-add-your-own-logo-and-favicon-to-the-vibe-report-app)
@@ -234,6 +236,48 @@ Once logged in, complete the following steps in the Admin Dashboard:
 1. The [Letter Opener](https://github.com/ryanb/letter_opener) gem will open a new tab displaying the email.
 2. Click on the **Access Site** link in the email to log into the application.
 
+
+## Time Periods and Slack Notifications
+
+### How a Time Period Works
+
+A time period is one check-in week and is created automatically:
+
+- **Start date**: the `START_WEEK_DAY` of the current week (`monday` when the variable is not set).
+- **End date**: the start date plus 6 days, so a period always covers seven calendar days.
+- **Due date**: the `DAY_TO_SEND_INVITES` inside that range, when the check-in invitation goes out.
+
+At the moment `START_WEEK_DAY` is set to `tuesday`, so a period runs from Tuesday to Monday: the check-in week is closed on Monday and the results are received on Tuesday. Keep this in mind whenever you schedule something relative to a period.
+
+### Weekly Ideas Digest to the #ideas Channel
+
+To post the digest, run on the server:
+
+        $ rake notifications:post_ideas_to_slack
+
+The task posts only when the current day matches `DAY_TO_SEND_IDEAS_TO_SLACK`. On any other day it exits without posting.
+
+What is sent to the channel:
+
+1. The idea prompt of the period, with a legend explaining the vote reactions.
+2. Every idea of that period as a separate message in the thread, showing its author and the votes it already received in Vibe.Report.
+3. All four vote reactions (👍 🔥 🧠 🚀) added to each idea, so the channel can vote as well.
+
+`SLACK_IDEAS_TIME_PERIOD` selects the period the digest covers:
+
+- `previous` (default) — the period that has already closed.
+- `current` — the period that is still open. Ideas and votes submitted after the task has run are not included.
+
+Note that if the period has no idea topic or no ideas at all, nothing is posted. There is also no protection against posting twice: running the task again on the same day posts everything one more time.
+
+### Required Environment Variables
+
+- `SLACK_BOT_TOKEN` — the Slack bot token, with the `chat:write` and `reactions:write` scopes. The bot also has to be invited to the channel.
+- `SLACK_IDEAS_CHANNEL` — the ID of the channel the digest is posted to.
+- `DAY_TO_SEND_IDEAS_TO_SLACK` — the day the digest is posted.
+- `SLACK_IDEAS_TIME_PERIOD` — `previous` (default) or `current`.
+- `START_WEEK_DAY` — the day a time period starts on.
+- `DAY_TO_SEND_INVITES` — the day the check-in invitation goes out.
 
 ## OpenSSL::Cipher::CipherError
 
