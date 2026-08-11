@@ -69,8 +69,45 @@ RSpec.describe Slack::IdeasDigest do
   end
 
   describe 'default time period' do
-    it 'uses the previous time period' do
+    let(:current_period) { create(:time_period) }
+
+    before do
       allow(TimePeriod).to receive(:previous_time_period).and_return(time_period)
+      allow(TimePeriod).to receive(:find_or_create_time_period).and_return(current_period)
+    end
+
+    it 'uses the previous time period when SLACK_IDEAS_TIME_PERIOD is not set' do
+      stub_const('ENV', ENV.to_hash.except('SLACK_IDEAS_TIME_PERIOD'))
+
+      expect(described_class.new.time_period).to eq(time_period)
+    end
+
+    it "uses the previous time period when SLACK_IDEAS_TIME_PERIOD is 'previous'" do
+      stub_const('ENV', ENV.to_hash.merge('SLACK_IDEAS_TIME_PERIOD' => 'previous'))
+
+      expect(described_class.new.time_period).to eq(time_period)
+    end
+
+    it "uses the current time period when SLACK_IDEAS_TIME_PERIOD is 'current'" do
+      stub_const('ENV', ENV.to_hash.merge('SLACK_IDEAS_TIME_PERIOD' => 'current'))
+
+      expect(described_class.new.time_period).to eq(current_period)
+    end
+
+    it 'ignores surrounding whitespace and casing' do
+      stub_const('ENV', ENV.to_hash.merge('SLACK_IDEAS_TIME_PERIOD' => ' Current '))
+
+      expect(described_class.new.time_period).to eq(current_period)
+    end
+
+    it 'falls back to the previous time period on an unknown value' do
+      stub_const('ENV', ENV.to_hash.merge('SLACK_IDEAS_TIME_PERIOD' => 'last'))
+
+      expect(described_class.new.time_period).to eq(time_period)
+    end
+
+    it 'falls back to the previous time period on a blank value' do
+      stub_const('ENV', ENV.to_hash.merge('SLACK_IDEAS_TIME_PERIOD' => '  '))
 
       expect(described_class.new.time_period).to eq(time_period)
     end
