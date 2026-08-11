@@ -2,11 +2,6 @@
 
 module Slack
   class IdeasDigest
-    PERIOD_SELECTORS = {
-      'previous' => -> { TimePeriod.previous_time_period },
-      'current' => -> { TimePeriod.find_or_create_time_period }
-    }.freeze
-
     DEFAULT_PERIOD_NAME = 'previous'
 
     attr_reader :time_period
@@ -20,9 +15,10 @@ module Slack
     # last day of the period itself, before the check-in closes. Anything else falls
     # back to the previous period.
     def self.default_time_period
-      name = ENV.fetch('SLACK_IDEAS_TIME_PERIOD', DEFAULT_PERIOD_NAME).strip.downcase
-      selector = PERIOD_SELECTORS.fetch(name) { PERIOD_SELECTORS.fetch(DEFAULT_PERIOD_NAME) }
-      selector.call
+      case ENV.fetch('SLACK_IDEAS_TIME_PERIOD', DEFAULT_PERIOD_NAME).strip.downcase
+      when 'current' then TimePeriod.find_or_create_time_period
+      else TimePeriod.previous_time_period
+      end
     end
 
     def postable?
