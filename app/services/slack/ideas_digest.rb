@@ -7,7 +7,7 @@ module Slack
       'current' => -> { TimePeriod.find_or_create_time_period }
     }.freeze
 
-    DEFAULT_PERIOD_SELECTOR = 'previous'
+    DEFAULT_PERIOD_NAME = 'previous'
 
     attr_reader :time_period
 
@@ -20,8 +20,8 @@ module Slack
     # last day of the period itself, before the check-in closes. Anything else falls
     # back to the previous period.
     def self.default_time_period
-      name = ENV.fetch('SLACK_IDEAS_TIME_PERIOD', DEFAULT_PERIOD_SELECTOR).strip.downcase
-      selector = PERIOD_SELECTORS.fetch(name, PERIOD_SELECTORS[DEFAULT_PERIOD_SELECTOR])
+      name = ENV.fetch('SLACK_IDEAS_TIME_PERIOD', DEFAULT_PERIOD_NAME).strip.downcase
+      selector = PERIOD_SELECTORS.fetch(name) { PERIOD_SELECTORS.fetch(DEFAULT_PERIOD_NAME) }
       selector.call
     end
 
@@ -47,7 +47,7 @@ module Slack
       return [] unless topic
 
       time_period.responses
-                 .includes(innovation_brainstorming: [:user, :emojis])
+                 .includes(innovation_brainstorming: %i[user emojis])
                  .filter_map(&:innovation_brainstorming)
     end
   end
