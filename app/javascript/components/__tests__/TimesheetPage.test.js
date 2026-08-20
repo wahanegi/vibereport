@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TimesheetPage from '../Pages/TimesheetPage';
 import { apiRequest } from '../requests/axios_requests';
 
 jest.mock('../helpers/helpers', () => ({
   calculateBillableHours: jest.fn(() => 0),
+  checkCompanyProjectsSelection: jest.fn(() => null),
   calculateTotalHours: jest.fn((rows) =>
     rows.reduce((total, row) => total + (parseInt(row.time, 10) || 0), 0)
   ),
@@ -73,9 +74,12 @@ describe('TimesheetPage', () => {
 
   let entriesResponse;
 
+  const timePeriodId = 1561;
+
   const baseProps = {
     data: {
       time_period: {
+        id: timePeriodId,
         first_working_day: '2025-01-06',
         last_working_day: '2025-01-10',
       },
@@ -112,7 +116,7 @@ describe('TimesheetPage', () => {
         onSuccess({ data: projectsResponse });
       }
 
-      if (method === 'GET' && url === '/api/v1/time_sheet_entries') {
+      if (method === 'GET' && url.startsWith('/api/v1/time_sheet_entries')) {
         onSuccess(entriesResponse);
       }
 
@@ -152,5 +156,25 @@ describe('TimesheetPage', () => {
       screen.queryByText('Total hours per period must not exceed 168')
     ).not.toBeInTheDocument();
     expect(screen.getByTestId('submit-btn')).toBeEnabled();
+  });
+
+  it('sends the rendered time period when reading and when submitting', async () => {
+    entriesResponse = { ...entriesResponse, data: [entriesResponse.data[0]] };
+
+    render(<TimesheetPage {...baseProps} />);
+
+    const readCall = apiRequest.mock.calls.find(
+      ([method, , , , url]) => method === 'GET' && url.startsWith('/api/v1/time_sheet_entries')
+    );
+
+    expect(readCall[4]).toBe(`/api/v1/time_sheet_entries?time_period_id=${timePeriodId}`);
+
+    fireEvent.click(screen.getByTestId('submit-btn'));
+
+    const upsertCall = apiRequest.mock.calls.find(
+      ([method, , , , url]) => method === 'POST' && url === '/api/v1/time_sheet_entries/upsert'
+    );
+
+    expect(upsertCall[1].time_period_id).toBe(timePeriodId);
   });
 });

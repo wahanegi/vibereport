@@ -2,6 +2,7 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   MAX_PERIOD_HOURS = 168
   PERIOD_HOURS_LIMIT_EXCEEDED_CODE = 'period_hours_limit_exceeded'.freeze
   PERIOD_HOURS_LIMIT_EXCEEDED_MESSAGE = 'Total hours per period must not exceed 168'.freeze
+  TIME_PERIOD_UNAVAILABLE_MESSAGE = 'This week is not available for editing'.freeze
 
   before_action :authenticate_user!, except: [:direct_entry]
 
@@ -9,6 +10,8 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
 
   def index
     time_period = effective_time_period
+    return render_error(TIME_PERIOD_UNAVAILABLE_MESSAGE) if time_period.blank?
+
     time_sheet_entries = time_period.time_sheet_entries.includes(:project).where(user_id: current_user.id)
 
     render json: TimeSheetEntrySerializer.new(time_sheet_entries, { include: [:project] }).serializable_hash, status: :ok
@@ -24,6 +27,7 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
     return render_error('Each project can be selected only once') if duplicate_project_ids?(time_sheet_entries_params)
 
     time_period = effective_time_period
+    return render_error(TIME_PERIOD_UNAVAILABLE_MESSAGE) if time_period.blank?
     return if validate_period_hours_limit_exceeded(time_period)
 
     saved_entries = process_time_sheet_entries(time_period)
@@ -88,15 +92,9 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
 
     ActiveRecord::Base.transaction do
       time_sheet_entries_params.each do |entry_params|
-        merged_params = entry_params.merge(user_id: current_user.id, time_period_id: time_period.id)
         time_sheet_entry =
           if entry_params[:id].present?
-            found = TimeSheetEntry.find_by(id: entry_params[:id], user_id: current_user.id)
-            unless found
-              render json: { error: 'Time sheet entry not found' }, status: :not_found
-              raise ActiveRecord::Rollback
-            end
-            found
+            time_period.time_sheet_entries.find_by(id: entry_params[:id], user_id: current_user.id)
           else
             TimeSheetEntry.find_or_initialize_by(
               user_id: current_user.id,
@@ -105,7 +103,12 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
             )
           end
 
-        time_sheet_entry.assign_attributes(merged_params)
+        unless time_sheet_entry
+          render json: { error: 'Time sheet entry not found' }, status: :not_found
+          raise ActiveRecord::Rollback
+        end
+
+        time_sheet_entry.assign_attributes(entry_params.except(:id))
 
         unless time_sheet_entry.save
           render json: { errors: time_sheet_entry.errors.full_messages }, status: :unprocessable_entity
@@ -124,6 +127,25 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   end
 
   def effective_time_period
+    return requested_time_period if params[:time_period_id].present?
+
+    Rails.logger.warn "[VB-57] #{action_name} without time_period_id for user #{current_user.id}, " \
+                      'falling back to session/current period'
+    session_or_current_time_period
+  end
+
+  def requested_time_period
+    time_period = TimePeriod.find_by(id: params[:time_period_id])
+    return if time_period.blank?
+    return time_period if TimePeriod.current&.id == time_period.id
+    return unless current_user.teams.exists?(timesheet_enabled: true)
+
+    time_period if TimePeriod.overdue_after_forced_date.exists?(id: time_period.id)
+  end
+
+  # Kept for one release: bundles cached in browsers still post without the
+  # parameter. Remove once the [VB-57] warning stops appearing in the logs.
+  def session_or_current_time_period
     direct_id = session[:direct_timesheet_time_period_id]
     return TimePeriod.find_or_create_time_period if direct_id.blank?
 
