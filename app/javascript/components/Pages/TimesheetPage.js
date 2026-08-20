@@ -35,9 +35,8 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
 
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
-  const timesheetsIndexURL = timePeriodId
-    ? `${timesheetsURL}?time_period_id=${timePeriodId}`
-    : timesheetsURL;
+  const timePeriodQuery = timePeriodId ? `?time_period_id=${timePeriodId}` : '';
+  const timesheetsIndexURL = `${timesheetsURL}${timePeriodQuery}`;
   const upsertURL = '/api/v1/time_sheet_entries/upsert';
 
   // Fetch projects and timesheet entries on component mount
@@ -211,7 +210,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
           setRowsData((prevRows) => prevRows.filter((row) => row.id !== id));
         },
         () => { },
-        `${timesheetsURL}/${id}`,
+        `${timesheetsURL}/${id}${timePeriodQuery}`,
         (error) => {
           setFetchError(`Failed to delete timesheet entry: ${error.message}`);
         }

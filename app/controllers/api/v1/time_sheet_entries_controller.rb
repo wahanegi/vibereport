@@ -135,7 +135,10 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   end
 
   def requested_time_period
-    time_period = TimePeriod.find_by(id: params[:time_period_id])
+    requested_id = Integer(params[:time_period_id], exception: false)
+    return if requested_id.blank?
+
+    time_period = TimePeriod.find_by(id: requested_id)
     return if time_period.blank?
     return time_period if TimePeriod.current&.id == time_period.id
     return unless current_user.teams.exists?(timesheet_enabled: true)
@@ -153,7 +156,10 @@ class Api::V1::TimeSheetEntriesController < ApplicationController
   end
 
   def set_time_sheet_entry
-    @time_sheet_entry = TimeSheetEntry.find_by(id: params[:id], user_id: current_user.id)
+    time_period = effective_time_period
+    return render_error(TIME_PERIOD_UNAVAILABLE_MESSAGE) if time_period.blank?
+
+    @time_sheet_entry = time_period.time_sheet_entries.find_by(id: params[:id], user_id: current_user.id)
     render json: { error: 'Time sheet entry not found' }, status: :not_found unless @time_sheet_entry
   end
 

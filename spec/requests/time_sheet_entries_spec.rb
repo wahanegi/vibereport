@@ -372,6 +372,17 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         expect(json_response['error']).to eq('This week is not available for editing')
         expect(TimeSheetEntry.count).to eq(0)
       end
+
+      it 'rejects a malformed period instead of coercing it' do
+        ['abc', "#{overdue_period.id} OR 1=1", [overdue_period.id, time_period.id], { id: overdue_period.id }].each do |value|
+          post '/api/v1/time_sheet_entries/upsert', params: valid_params.merge(time_period_id: value)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json_response['error']).to eq('This week is not available for editing')
+        end
+
+        expect(TimeSheetEntry.count).to eq(0)
+      end
     end
   end
 
@@ -488,8 +499,38 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
     let!(:entry2) { create(:time_sheet_entry, user: other_user, project: project2, time_period: time_period, total_hours: 5) }
 
+    # The factory builds a future week, so it has to stand in for the current
+    # one here - otherwise the request is not allowed to touch it.
+    before { allow(TimePeriod).to receive(:current).and_return(time_period) }
+
+    context 'when the entry belongs to another period' do
+      let!(:other_period) { create(:time_period) }
+      let!(:entry_elsewhere) do
+        create(:time_sheet_entry, user: user, project: project2, time_period: other_period, total_hours: 4)
+      end
+
+      it 'returns not found and keeps the entry' do
+        delete "/api/v1/time_sheet_entries/#{entry_elsewhere.id}", params: { time_period_id: time_period.id }
+
+        expect(response).to have_http_status(:not_found)
+        expect(TimeSheetEntry.exists?(entry_elsewhere.id)).to be_truthy
+      end
+    end
+
+    context 'when the requested period may not be edited' do
+      it 'returns unprocessable entity and keeps the entry' do
+        closed_period = create(:time_period, start_date: 60.days.ago.to_date, end_date: 55.days.ago.to_date)
+
+        delete "/api/v1/time_sheet_entries/#{entry1.id}", params: { time_period_id: closed_period.id }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to eq('This week is not available for editing')
+        expect(TimeSheetEntry.exists?(entry1.id)).to be_truthy
+      end
+    end
+
     context 'when the entry exists and belongs to the current user' do
-      before { delete "/api/v1/time_sheet_entries/#{entry1.id}" }
+      before { delete "/api/v1/time_sheet_entries/#{entry1.id}", params: { time_period_id: time_period.id } }
 
       it 'returns http status no content' do
         expect(response).to have_http_status(:ok)
@@ -501,7 +542,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     end
 
     context 'when the entry does not exist' do
-      before { delete '/api/v1/time_sheet_entries/9999' }
+      before { delete '/api/v1/time_sheet_entries/9999', params: { time_period_id: time_period.id } }
 
       it 'returns http status not found' do
         expect(response).to have_http_status(:not_found)
@@ -513,7 +554,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     end
 
     context 'when the entry belongs to another user' do
-      before { delete "/api/v1/time_sheet_entries/#{entry2.id}" }
+      before { delete "/api/v1/time_sheet_entries/#{entry2.id}", params: { time_period_id: time_period.id } }
 
       it 'returns http status not found' do
         expect(response).to have_http_status(:not_found)
