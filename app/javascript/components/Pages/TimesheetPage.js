@@ -31,9 +31,12 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
 
   const timesheetDate = rangeFormat(data.time_period || {});
   const isDirectTimesheetMode = Boolean(data?.direct_timesheet);
+  const timePeriodId = data?.time_period?.id;
 
   const projectsURL = '/api/v1/projects';
   const timesheetsURL = '/api/v1/time_sheet_entries';
+  const timePeriodQuery = timePeriodId ? `?time_period_id=${timePeriodId}` : '';
+  const timesheetsIndexURL = `${timesheetsURL}${timePeriodQuery}`;
   const upsertURL = '/api/v1/time_sheet_entries/upsert';
 
   // Fetch projects and timesheet entries on component mount
@@ -52,7 +55,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
         if (transformedEntries.length === 0) {
           handleAddRow();
         }
-      }, () => { }, timesheetsURL),
+      }, () => { }, timesheetsIndexURL),
     ]).catch((error) => setFetchError(error.message))
       .finally(() => setIsLoading(false));
   }, []);
@@ -92,6 +95,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
     const payload = {
       time_sheet_entries: formattedEntries,
       final_submit: isDirectTimesheetMode && !isDraft,
+      time_period_id: timePeriodId,
     };
 
     setIsLoading(true);
@@ -161,7 +165,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
           return;
         }
 
-        setFetchError('Failed to save timesheet. Please try again.');
+        setFetchError(error?.response?.data?.error || 'Failed to save timesheet. Please try again.');
         setIsLoading(false);
         console.error('Upsert failed:', error);
       }
@@ -206,7 +210,7 @@ const TimesheetPage = ({ data, setData, saveDataToDb, steps, service }) => {
           setRowsData((prevRows) => prevRows.filter((row) => row.id !== id));
         },
         () => { },
-        `${timesheetsURL}/${id}`,
+        `${timesheetsURL}/${id}${timePeriodQuery}`,
         (error) => {
           setFetchError(`Failed to delete timesheet entry: ${error.message}`);
         }

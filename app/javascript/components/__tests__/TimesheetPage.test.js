@@ -6,6 +6,7 @@ import { apiRequest } from '../requests/axios_requests';
 
 jest.mock('../helpers/helpers', () => ({
   calculateBillableHours: jest.fn(() => 0),
+  checkCompanyProjectsSelection: jest.fn(() => null),
   calculateTotalHours: jest.fn((rows) =>
     rows.reduce((total, row) => total + (parseInt(row.time, 10) || 0), 0)
   ),
