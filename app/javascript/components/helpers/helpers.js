@@ -17,11 +17,19 @@ export const backHandling = () => {
   window.history.back()
 }
 
+// `new Date('2026-07-27')` is parsed as UTC midnight, while getDate()/toLocaleString read it
+// back in the viewer's timezone, so date-only values from the API shift a day west of UTC.
+// Build such dates in local time to render them exactly as the server sent them.
+export const parseDateOnly = (value) => {
+  const parts = typeof value === 'string' && value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  return parts ? new Date(+parts[1], +parts[2] - 1, +parts[3]) : new Date(value)
+}
+
 export const rangeFormat = (tp) => {
   if (isBlank(tp)) return null
 
-  const start_date = new Date(tp.first_working_day)
-  const end_date = new Date(tp.last_working_day)
+  const start_date = parseDateOnly(tp.first_working_day)
+  const end_date = parseDateOnly(tp.last_working_day)
 
   const month_start = shortMonth(start_date)
   const month_end = shortMonth(end_date)
@@ -34,7 +42,7 @@ export const rangeFormat = (tp) => {
 }
 
 export const datePrepare = (time) => {
-  const date = new Date(time)
+  const date = parseDateOnly(time)
   const month = shortMonth(date)
   return `${month} ${date.getDate()}`
 }
