@@ -75,6 +75,22 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
       end
     end
 
+    context 'with an explicit time_period_id' do
+      let!(:other_period_entry) do
+        create(:time_sheet_entry, user: user, project: project, time_period: other_period, total_hours: 7)
+      end
+      let(:other_period) { create(:time_period, start_date: 2.weeks.from_now.to_date, end_date: 3.weeks.from_now.to_date) }
+
+      it 'returns the entries of the requested period' do
+        allow(TimePeriod).to receive(:current).and_return(other_period)
+
+        get '/api/v1/time_sheet_entries', params: { time_period_id: other_period.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response['data'].map { |d| d['id'].to_i }).to contain_exactly(other_period_entry.id)
+      end
+    end
+
     context 'when an unexpected error occurs' do
       before do
         allow(TimePeriod).to receive(:current).and_raise(StandardError.new('Something went wrong'))
@@ -200,15 +216,21 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
         create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 3)
       end
 
+      # The factory builds a future week, so it has to stand in for the current
+      # one here - otherwise the request is not allowed to edit it.
+      before { allow(TimePeriod).to receive(:current).and_return(time_period) }
+
       it 'updates the existing entry' do
         post '/api/v1/time_sheet_entries/upsert', params: {
           time_sheet_entries: [
             { id: existing_entry.id, project_id: project.id, total_hours: 10 }
-          ]
+          ],
+          time_period_id: time_period.id
         }
 
         expect(response).to have_http_status(:ok)
-        expect(TimeSheetEntry.find(existing_entry.id).total_hours).to eq(10)
+        expect(TimeSheetEntry.find(existing_entry.id))
+          .to have_attributes(total_hours: 10, time_period_id: time_period.id)
       end
 
       context 'when duplicate project_ids are provided' do
@@ -293,6 +315,73 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(session[:direct_timesheet_time_period_id]).to eq(overdue_period.id)
+      end
+    end
+
+    context 'with an explicit time_period_id' do
+      let!(:team) { create(:team, timesheet_enabled: true) }
+      let!(:user_team_record) { create(:user_team, user: user, team: team) }
+      let!(:overdue_period) do
+        create(:time_period, start_date: 3.weeks.ago.to_date, end_date: 2.weeks.ago.to_date, due_date: 10.days.ago.to_date)
+      end
+      let(:overdue_params) { valid_params.merge(time_period_id: overdue_period.id, final_submit: true) }
+
+      it 'writes to the requested period and keeps it when the submit is repeated' do
+        post '/api/v1/time_sheet_entries/upsert', params: overdue_params
+
+        expect(TimeSheetEntry.distinct.pluck(:time_period_id)).to eq([overdue_period.id])
+
+        created = TimeSheetEntry.where(time_period_id: overdue_period.id)
+        repeated_entries = created.map do |entry|
+          { id: entry.id, project_id: entry.project_id, total_hours: entry.total_hours }
+        end
+
+        2.times do
+          post '/api/v1/time_sheet_entries/upsert', params: {
+            time_sheet_entries: repeated_entries,
+            time_period_id: overdue_period.id,
+            final_submit: true
+          }
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        expect(TimeSheetEntry.distinct.pluck(:time_period_id)).to eq([overdue_period.id])
+        expect(TimeSheetEntry.count).to eq(2)
+      end
+
+      it 'does not touch an entry that belongs to another period' do
+        entry_of_other_period = create(:time_sheet_entry, user: user, project: project,
+                                                          time_period: time_period, total_hours: 3)
+
+        post '/api/v1/time_sheet_entries/upsert', params: {
+          time_sheet_entries: [{ id: entry_of_other_period.id, project_id: project.id, total_hours: 10 }],
+          time_period_id: overdue_period.id
+        }
+
+        expect(response).to have_http_status(:not_found)
+        expect(entry_of_other_period.reload).to have_attributes(total_hours: 3, time_period_id: time_period.id)
+      end
+
+      it 'rejects a period the user may not edit' do
+        closed_period = create(:time_period, start_date: 60.days.ago.to_date, end_date: 55.days.ago.to_date)
+
+        post '/api/v1/time_sheet_entries/upsert', params: valid_params.merge(time_period_id: closed_period.id)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to eq('This week is not available for editing')
+        expect(TimeSheetEntry.count).to eq(0)
+      end
+
+      it 'rejects a malformed period instead of coercing it' do
+        ['abc', "#{overdue_period.id} OR 1=1", [overdue_period.id, time_period.id], { id: overdue_period.id }].each do |value|
+          post '/api/v1/time_sheet_entries/upsert', params: valid_params.merge(time_period_id: value)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json_response['error']).to eq('This week is not available for editing')
+        end
+
+        expect(TimeSheetEntry.count).to eq(0)
       end
     end
   end
@@ -410,8 +499,38 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     let!(:entry1) { create(:time_sheet_entry, user: user, project: project, time_period: time_period, total_hours: 8) }
     let!(:entry2) { create(:time_sheet_entry, user: other_user, project: project2, time_period: time_period, total_hours: 5) }
 
+    # The factory builds a future week, so it has to stand in for the current
+    # one here - otherwise the request is not allowed to touch it.
+    before { allow(TimePeriod).to receive(:current).and_return(time_period) }
+
+    context 'when the entry belongs to another period' do
+      let!(:other_period) { create(:time_period) }
+      let!(:entry_elsewhere) do
+        create(:time_sheet_entry, user: user, project: project2, time_period: other_period, total_hours: 4)
+      end
+
+      it 'returns not found and keeps the entry' do
+        delete "/api/v1/time_sheet_entries/#{entry_elsewhere.id}", params: { time_period_id: time_period.id }
+
+        expect(response).to have_http_status(:not_found)
+        expect(TimeSheetEntry.exists?(entry_elsewhere.id)).to be_truthy
+      end
+    end
+
+    context 'when the requested period may not be edited' do
+      it 'returns unprocessable entity and keeps the entry' do
+        closed_period = create(:time_period, start_date: 60.days.ago.to_date, end_date: 55.days.ago.to_date)
+
+        delete "/api/v1/time_sheet_entries/#{entry1.id}", params: { time_period_id: closed_period.id }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to eq('This week is not available for editing')
+        expect(TimeSheetEntry.exists?(entry1.id)).to be_truthy
+      end
+    end
+
     context 'when the entry exists and belongs to the current user' do
-      before { delete "/api/v1/time_sheet_entries/#{entry1.id}" }
+      before { delete "/api/v1/time_sheet_entries/#{entry1.id}", params: { time_period_id: time_period.id } }
 
       it 'returns http status no content' do
         expect(response).to have_http_status(:ok)
@@ -423,7 +542,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     end
 
     context 'when the entry does not exist' do
-      before { delete '/api/v1/time_sheet_entries/9999' }
+      before { delete '/api/v1/time_sheet_entries/9999', params: { time_period_id: time_period.id } }
 
       it 'returns http status not found' do
         expect(response).to have_http_status(:not_found)
@@ -435,7 +554,7 @@ RSpec.describe 'TimeSheetEntries API', type: :request do
     end
 
     context 'when the entry belongs to another user' do
-      before { delete "/api/v1/time_sheet_entries/#{entry2.id}" }
+      before { delete "/api/v1/time_sheet_entries/#{entry2.id}", params: { time_period_id: time_period.id } }
 
       it 'returns http status not found' do
         expect(response).to have_http_status(:not_found)
