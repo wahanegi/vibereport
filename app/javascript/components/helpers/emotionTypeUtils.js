@@ -10,11 +10,11 @@ export const handleOnClickNext = (emotion, emotions, steps, saveDataToDb, dataRe
   );
   if (existingEmotion) {
     steps.push("meme-selection");
-    saveDataToDb(steps, { emotion_id: existingEmotion.id, draft: false });
+    saveDataToDb(steps, { emotion_id: existingEmotion.id, draft: false, gif: {} });
   } else {
     saveDataEmotion(dataRequest, (word) => {
       steps.push("meme-selection");
-      saveDataToDb(steps, { emotion_id: word.data.id, draft: false });
+      saveDataToDb(steps, { emotion_id: word.data.id, draft: false, gif: {} });
     });
   }
 };
